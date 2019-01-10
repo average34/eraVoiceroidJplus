@@ -1,0 +1,239 @@
+﻿@COM_ABLE393
+;見つめあう実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+RETURN 1
+
+@COM393
+;見つめあう
+;笑うなよｗｗｗ
+;通常は何もしないと同じ効果。ただし、対象が[敏感]持ちのときには敏感な部分が大変なくらいｷｭﾝｷｭﾝになっちゃうの的なあれ→関数化し口上側で関数を呼んだ時のみに変更
+
+PRINTL 見つめあう
+STR:0 = 見つめあう
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 0
+LOSEBASE:1 += 30
+
+SOURCE:14 = 50
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	SOURCE:12 = 10
+ELSEIF PALAM:5 < PALAMLV:2
+	SOURCE:12 = 30
+ELSEIF PALAM:5 < PALAMLV:3
+	SOURCE:12 = 60
+ELSEIF PALAM:5 < PALAMLV:4
+	SOURCE:12 = 100
+ELSEIF PALAM:5 >= PALAMLV:4
+	SOURCE:12 = 150
+ENDIF
+
+;奉仕精神をみる
+IF ABL:6 == 0
+	SOURCE:3 = 0
+ELSEIF ABL:6 == 1
+	SOURCE:3 = 20
+ELSEIF ABL:6 == 2
+	SOURCE:3 = 40
+ELSEIF ABL:6 == 3
+	SOURCE:3 = 70
+ELSEIF ABL:6 == 4
+	SOURCE:3 = 110
+ELSE
+	SOURCE:3 = 50 + (ABL:6 * 20)
+ENDIF
+
+;ABL:マゾっ気をみる
+IF ABL:8 == 0
+	TIMES SOURCE:3 , 0.80
+	TIMES SOURCE:12 , 0.80
+	SOURCE:10 = 0
+	SOURCE:11 = 0
+ELSEIF ABL:8 == 1
+	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:12 , 1.00
+	SOURCE:10 = 20
+	SOURCE:11 = 30
+ELSEIF ABL:8 == 2
+	TIMES SOURCE:3 , 1.30
+	TIMES SOURCE:12 , 1.20
+	SOURCE:10 = 40
+	SOURCE:11 = 70
+ELSEIF ABL:8 == 3
+	TIMES SOURCE:3 , 1.40
+	TIMES SOURCE:12 , 1.40
+	SOURCE:10 = 70
+	SOURCE:11 = 120
+ELSEIF ABL:8 == 4
+	TIMES SOURCE:3 , 1.70
+	TIMES SOURCE:12 , 1.50
+	SOURCE:10 = 110
+	SOURCE:11 = 180
+ELSE
+	SOURCE:3 = SOURCE:3 * (ABL:8 * 15 + 125) / 100
+	SOURCE:12 = SOURCE:12 * (ABL:8 * 10 + 120) / 100
+	SOURCE:10 = 50 + (ABL:8 * 20)
+	SOURCE:11 = 75 + (ABL:8 * 35)
+ENDIF
+
+RETURN 1
+
+;-------------------------------------------------
+;対象が[敏感]持ちのときだけの特別処理
+;通常は呼ばれず口上側で呼ばれることを想定された処理
+;-------------------------------------------------
+@SOURCE_COM393
+;所持している[敏感]の数を記録
+VARSET LOCAL, 0
+;102,Ｃ敏感
+SIF TALENT:102
+	LOCAL:1 += 1
+;104,Ｖ敏感
+SIF TALENT:104
+	LOCAL:1 += 1
+;106,Ａ敏感
+SIF TALENT:106
+	LOCAL:1 += 1
+;108,Ｂ敏感
+SIF TALENT:108
+	LOCAL:1 += 1
+;597,Ｍ敏感
+SIF TALENT:597
+	LOCAL:1 += 1
+
+FOR LOCAL, 0, 5
+	IF LOCAL == 0
+		;3,Ｃ感覚
+		;0,快Ｃ
+		;102,Ｃ敏感
+		A = 3
+		S = 0
+		T = 102
+	ELSEIF LOCAL == 1
+		;4,Ｖ感覚
+		;1,快Ｖ
+		;104,Ｖ敏感
+		A = 4
+		S = 1
+		T = 104
+	ELSEIF LOCAL == 2
+		;5,Ａ感覚
+		;2,快Ａ
+		;106,Ａ敏感
+		A = 5
+		S = 2
+		T = 106
+	ELSEIF LOCAL == 3
+		;14,Ｂ感覚
+		;17,快Ｂ
+		;108,Ｂ敏感
+		A = 14
+		S = 17
+		T = 108
+	ELSEIF LOCAL == 4
+		;17,Ｍ感覚
+		;24,快Ｍ
+		;597,Ｍ敏感
+		A = 17
+		S = 24
+		T = 597
+	ENDIF
+
+
+	;各敏感もちなら各快感SOURCE取得
+	IF TALENT:T
+		LOSEBASE:1 += 10
+		
+		;ABL:親密をみる
+		IF ABL:0 == 0
+			SOURCE:S = 2
+		ELSEIF ABL:0 == 1
+			SOURCE:S = 4
+		ELSEIF ABL:0 == 2
+			SOURCE:S = 6
+		ELSEIF ABL:0 == 3
+			SOURCE:S = 8
+		ELSEIF ABL:0 == 4
+			SOURCE:S = 10
+		ELSE
+			SOURCE:S = ABL:0 * 2
+		ENDIF
+		
+		;TALENT:恋慕をみる
+		SIF TALENT:85
+			SOURCE:S *= 10
+		;TALENT:恋人をみる
+		SIF TALENT:153
+			TIMES SOURCE:S , 1.10
+		;TALENT:親愛をみる
+		SIF TALENT:88
+			TIMES SOURCE:S , 1.20
+		
+		;ABL:各感覚をみる
+		IF ABL:A == 0
+			TIMES SOURCE:S , 0.10
+		ELSEIF ABL:A == 1
+			TIMES SOURCE:S , 0.20
+		ELSEIF ABL:A == 2
+			TIMES SOURCE:S , 0.40
+		ELSEIF ABL:A == 3
+			TIMES SOURCE:S , 0.60
+		ELSEIF ABL:A == 4
+			TIMES SOURCE:S , 0.80
+		ELSE
+			SOURCE:S = SOURCE:S * (ABL:A * 10 + 50) / 100
+		ENDIF
+		
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES SOURCE:S , 0.50
+		ELSEIF ABL:1 == 1
+			TIMES SOURCE:S , 0.80
+		ELSEIF ABL:1 == 2
+			TIMES SOURCE:S , 1.00
+		ELSEIF ABL:1 == 3
+			TIMES SOURCE:S , 1.10
+		ELSEIF ABL:1 == 4
+			TIMES SOURCE:S , 1.20
+		ELSE
+			SOURCE:S = SOURCE:S * (ABL:1 * 10 + 100) / 100
+		ENDIF
+
+		;PALAM:欲情をみる
+		IF PALAM:5 < PALAMLV:1
+			TIMES SOURCE:S , 1.00
+		ELSEIF PALAM:5 < PALAMLV:2
+			TIMES SOURCE:S , 1.25
+		ELSEIF PALAM:5 < PALAMLV:3
+			TIMES SOURCE:S , 1.50
+		ELSEIF PALAM:5 < PALAMLV:4
+			TIMES SOURCE:S , 1.75
+		ELSEIF PALAM:5 >= PALAMLV:4
+			TIMES SOURCE:S , 2.00
+		ENDIF
+		
+		;[敏感]の数に応じてSOURCE減少
+		SOURCE:S /= LOCAL:1
+		
+		;潤滑
+		SOURCE:10 += SOURCE:S
+	ENDIF
+NEXT
+
+;-------------------------------------------------
+;地の文
+;-------------------------------------------------
+@TRAIN_MESSAGE_COM393
+;何もしない同様地の文なし
+

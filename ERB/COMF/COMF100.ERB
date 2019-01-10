@@ -1,0 +1,1039 @@
+﻿@COM100
+;触手召喚
+PRINTL 触手召喚
+STR:0 = 触手召喚
+CALL TRAIN_MESSAGE_B
+
+T = 0
+IF TEQUIP:90
+	TEQUIP:90 = 0
+	;触手挿入(バイブ)
+	TEQUIP:11 = 0
+	;アナル触手(アナルバイブ)
+	TEQUIP:13 = 0
+	;触手クリ責め(クリキャップ)
+	TEQUIP:14 = 0
+	;触手乳首責め(二プルキャップ)
+	TEQUIP:15 = 0
+	;触手搾乳(搾乳器)
+	TEQUIP:16 = 0
+	;触手ペニス責め(オナホ)
+	TEQUIP:17 = 0
+	;触手緊縛(縄)
+	TEQUIP:44 = 0
+	;触手浣腸(浣腸器)
+	TEQUIP:46 = 0
+	;触手口辱
+	TEQUIP:98 = 0
+ELSE
+	TEQUIP:90 = 1
+
+	;触手の共通ソース
+	CALL T_SOURCE
+ENDIF
+RETURN 1
+
+;---------------------------------------------------------
+;地の文
+;---------------------------------------------------------
+@TRAIN_MESSAGE_COM100
+IF TEQUIP:90
+	PRINTFORML 触手を送り還し、%CALLNAME:TARGET%の体を解放した…
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%の呼び出した異形の触手が、%CALLNAME:TARGET%の体を絡め取った…
+ENDIF
+
+;---------------------------------------------------------
+;触手の共通ソース
+;---------------------------------------------------------
+@T_SOURCE
+A = 100
+;触手変身中
+IF TEQUIP:89
+	;触手変身中は好感度と触手経験が影響
+	IF EXP:55 < EXPLV:1
+		TIMES A , 1.80
+	ELSEIF EXP:55 < EXPLV:2
+		TIMES A , 1.75
+	ELSEIF EXP:55 < EXPLV:3
+		TIMES A , 1.60
+	ELSEIF EXP:55 < EXPLV:4
+		TIMES A , 0.90
+	ELSEIF EXP:55 < EXPLV:5
+		TIMES A , 0.80
+	ELSE
+		TIMES A , 0.70
+	ENDIF
+
+	IF CFLAG:2 < 10000
+		TIMES A , 1.80
+	ELSEIF CFLAG:2 < 10400
+		TIMES A , 1.75
+	ELSEIF CFLAG:2 < 12000
+		TIMES A , 1.60
+	ELSEIF CFLAG:2 < 15000
+		TIMES A , 0.90
+	ELSEIF CFLAG:2 < 30000
+		TIMES A , 0.80
+	ELSE
+		TIMES A , 0.70
+	ENDIF
+ELSE
+	;触手召喚中は触手経験が影響
+	IF EXP:55 < EXPLV:1
+		TIMES A , 3.00
+	ELSEIF EXP:55 < EXPLV:2
+		TIMES A , 2.50
+	ELSEIF EXP:55 < EXPLV:3
+		TIMES A , 2.00
+	ELSEIF EXP:55 < EXPLV:4
+		TIMES A , 1.00
+	ELSEIF EXP:55 < EXPLV:5
+		TIMES A , 0.80
+	ELSE
+		TIMES A , 0.60
+	ENDIF
+ENDIF
+
+;触手変身中かつ好感度30000以上なら臆病の影響無し
+IF TEQUIP:89 && CFLAG:2 >= 30000
+	;臆病
+	SIF TALENT:10
+		TIMES A , 2.00
+ELSE
+	;臆病
+	SIF TALENT:10
+		TIMES A , 2.00
+ENDIF
+
+;感情乏しい
+SIF TALENT:22
+	TIMES A , 0.60
+
+LOSEBASE:0 += A
+LOSEBASE:1 += A * 2
+
+UP:10 += A * 20
+SOURCE:14 += A * 5
+
+;---------------------------------------------------------
+;触手変身
+;---------------------------------------------------------
+@COM99
+;触手変身
+PRINTL 触手変身
+STR:0 = 触手変身
+CALL TRAIN_MESSAGE_B
+
+T = 0
+IF TEQUIP:90
+	TEQUIP:90 = 0
+	;触手挿入(バイブ)
+	TEQUIP:11 = 0
+	;アナル触手(アナルバイブ)
+	TEQUIP:13 = 0
+	;触手クリ責め(クリキャップ)
+	TEQUIP:14 = 0
+	;触手乳首責め(二プルキャップ)
+	TEQUIP:15 = 0
+	;触手搾乳(搾乳器)
+	TEQUIP:16 = 0
+	;触手ペニス責め(オナホ)
+	TEQUIP:17 = 0
+	;触手緊縛(縄)
+	TEQUIP:44 = 0
+	;触手浣腸(浣腸器)
+	TEQUIP:46 = 0
+	;触手口辱
+	TEQUIP:98 = 0
+	;触手変身
+	TEQUIP:89 = 0
+ELSE
+	TEQUIP:90 = 1
+	;触手変身
+	TEQUIP:89 = 1
+
+	;触手の共通ソース
+	CALL T_SOURCE
+ENDIF
+RETURN 1
+
+;---------------------------------------------------------
+;地の文
+;---------------------------------------------------------
+@TRAIN_MESSAGE_COM99
+IF TEQUIP:90
+	PRINTFORML %CALLNAME:PLAYER%は触手の変身を解き、%CALLNAME:TARGET%の体を解放した…
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%は魔法で異形の触手に変身し、%CALLNAME:TARGET%の全身に絡み付いた…
+ENDIF
+
+;---------------------------------------------------------
+;触手調教中
+;---------------------------------------------------------
+@EQUIP_COM100
+;触手調教中
+IF TEQUIP:89
+	PRINTL ＜触手変身中＞
+ELSE
+	PRINTL ＜触手召喚中＞
+ENDIF
+
+;触手の共通ソース
+CALL T_SOURCE
+
+SOURCE:8 += A * 10
+SOURCE:10 += 2000
+
+TIMES SOURCE:0 , 2.00
+TIMES SOURCE:1 , 2.00
+TIMES SOURCE:2 , 2.00
+TIMES SOURCE:17 , 2.00
+TIMES SOURCE:24 , 2.00
+TIMES SOURCE:13 , 1.80
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+IF MAXBASE:PLAYER:7 != 0
+	B = 0
+	;ABL:技巧をみる
+	IF ABL:2 == 0
+		B = 500
+	ELSEIF ABL:2 == 1
+		B = 600
+	ELSEIF ABL:2 == 2
+		B = 800
+	ELSEIF ABL:2 == 3
+		B = 1000
+	ELSEIF ABL:2 == 4
+		B = 1400
+	ELSE
+		B = 2000
+	ENDIF
+
+	;ABL:従順をみる
+	IF ABL:0 == 0
+		TIMES B , 0.80
+	ELSEIF ABL:0 == 1
+		TIMES B , 0.90
+	ELSEIF ABL:0 == 2
+		TIMES B , 1.00
+	ELSEIF ABL:0 == 3
+		TIMES B , 1.10
+	ELSEIF ABL:0 == 4
+		TIMES B , 1.20
+	ELSE
+		B = B * (ABL:0 * 5 + 105) / 100
+	ENDIF
+
+	;PALAM:欲情をみる
+	IF PALAM:5 < PALAMLV:1
+		TIMES B , 1.00
+	ELSEIF PALAM:5 < PALAMLV:2
+		TIMES B , 1.10
+	ELSEIF PALAM:5 < PALAMLV:3
+		TIMES B , 1.20
+	ELSEIF PALAM:5 < PALAMLV:4
+		TIMES B , 1.30
+	ELSEIF PALAM:5 < PALAMLV:5
+		TIMES B , 1.40
+	ELSE
+		TIMES B , 1.50
+	ENDIF
+
+	;触手挿入
+	SIF TEQUIP:11
+		TIMES B , 1.50
+	;アナル触手
+	SIF TEQUIP:13
+		TIMES B , 1.50
+	;触手クリ責め
+	SIF TEQUIP:14
+		TIMES B , 1.20
+	;触手乳首責め
+	SIF TEQUIP:15
+		TIMES B , 1.20
+	;触手搾乳
+	SIF TEQUIP:16
+		TIMES B , 1.30
+	;触手ペニス責め
+	SIF TEQUIP:17
+		TIMES B , 1.10
+	;触手緊縛
+	SIF TEQUIP:44
+		TIMES B , 1.20
+	;触手浣腸
+	SIF TEQUIP:46
+		TIMES B , 1.30
+	;触手口辱
+	SIF TEQUIP:98
+		TIMES B , 1.50
+
+	BASE:PLAYER:7 += B
+
+	S = BASE:PLAYER:7
+	EJAC = MAXBASE:PLAYER:7
+
+	IF  S > EJAC * 2
+		E = 2
+	ELSEIF S > EJAC
+		E = 1
+	ELSE
+		E = 0
+	ENDIF
+
+	;Tは触手経験加算に利用
+	;各@EQUIPでTに加算していたが、どこでTを初期化されるか分からないのでここでまとめて処理
+	;各@EQUIPのT += 1は意味がないがあっても問題ないので修正せず
+	T = 0
+	;触手挿入(バイブ)
+	SIF TEQUIP:11
+		T += 1
+	;アナル触手(アナルバイブ)
+	SIF TEQUIP:13
+		T += 1
+	;触手クリ責め(クリキャップ)
+	SIF TEQUIP:14
+		T += 1
+	;触手乳首責め(二プルキャップ)
+	SIF TEQUIP:15
+		T += 1
+	;触手搾乳(搾乳器)
+	SIF TEQUIP:16
+		T += 1
+	;触手ペニス責め(オナホ)
+	SIF TEQUIP:17
+		T += 1
+	;触手緊縛(縄)
+	SIF TEQUIP:44
+		T += 1
+	;触手浣腸(浣腸器)
+	SIF TEQUIP:46
+		T += 1
+	;触手口辱
+	SIF TEQUIP:98
+		T += 1
+
+	;大量射精
+	IF E == 2
+		EXP:20 += 3
+		PRINTL 触手大量射精
+		PRINTL 精液経験＋３
+		TFLAG:15 = 2
+		T += 1
+
+		BASE:PLAYER:7 -= EJAC*2
+		SIF BASE:PLAYER:7 >= EJAC
+			BASE:PLAYER:7 = EJAC-1
+
+	;通常の射精
+	ELSEIF E == 1
+		EXP:20 += 1
+		PRINTL 触手射精
+		PRINTL 精液経験＋１
+		TFLAG:15 = 1
+		T += 1
+
+		BASE:PLAYER:7 -= EJAC
+		SIF BASE:PLAYER:7 >= EJAC
+			BASE:PLAYER:7 = EJAC-1
+	ENDIF
+ENDIF
+
+EXP:50 += 3
+PRINTL 異常経験＋3
+
+T += 1
+PRINT 触手経験＋
+PRINTVL T
+EXP:55 += T
+T = 0
+RETURN 1
+
+
+@COM101
+;触手バイブ
+JUMP COM11
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM101
+CALL TRAIN_MESSAGE_COM11
+
+;固有の実行判定
+@COM_ORDER_101
+TRYCALL COM_ORDER_11
+
+@COM102
+;アナル触手
+JUMP COM13
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM102
+CALL TRAIN_MESSAGE_COM13
+
+;固有の実行判定
+@COM_ORDER_102
+TRYCALL COM_ORDER_13
+
+@COM103
+;触手クリ責め
+JUMP COM14
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM103
+CALL TRAIN_MESSAGE_COM14
+
+;固有の実行判定
+@COM_ORDER_103
+TRYCALL COM_ORDER_14
+
+@COM104
+;触手乳首責め
+JUMP COM15
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM104
+CALL TRAIN_MESSAGE_COM15
+
+;固有の実行判定
+@COM_ORDER_104
+TRYCALL COM_ORDER_15
+
+@COM105
+;触手搾乳
+JUMP COM16
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM105
+CALL TRAIN_MESSAGE_COM16
+
+;固有の実行判定
+@COM_ORDER_105
+TRYCALL COM_ORDER_16
+
+@COM106
+;触手緊縛
+JUMP COM44
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM106
+CALL TRAIN_MESSAGE_COM44
+
+;固有の実行判定
+@COM_ORDER_106
+TRYCALL COM_ORDER_44
+
+@COM107
+;触手浣腸
+JUMP COM46
+RETURN 1
+
+;地の文
+@TRAIN_MESSAGE_COM107
+CALL TRAIN_MESSAGE_COM46
+
+;固有の実行判定
+@COM_ORDER_107
+TRYCALL COM_ORDER_46
+
+@COM108
+;触手口辱
+PRINTL 触手口辱
+STR:0 = 触手口辱
+CALL TRAIN_MESSAGE_B
+
+LOSEBASE:0 += 80
+LOSEBASE:1 += 100
+
+;Ｍ感覚を設定している場合快Ｍソース取得
+CALL SOURCE_M_COM108
+SOURCE:24 += M
+
+;ABL:奉仕精神をみる
+IF ABL:6 == 0
+	SOURCE:4 += 200
+	 A = 100
+ELSEIF ABL:6 == 1
+	SOURCE:4 += 300
+	A = 200
+ELSEIF ABL:6 == 2
+	SOURCE:4 += 400
+	A = 400
+ELSEIF ABL:6 == 3
+	SOURCE:4 += 500
+	A = 600
+ELSEIF ABL:6 == 4
+	SOURCE:4 += 600
+	A = 800
+ELSE
+	SOURCE:4 += 300 + (ABL:6 * 100)
+	A = 350 + (ABL:6 * 150)
+ENDIF
+
+;ABL:技巧をみる
+IF ABL:2 == 0
+	TIMES SOURCE:4 , 0.50
+ELSEIF ABL:2 == 1
+	TIMES SOURCE:4 , 0.80
+ELSEIF ABL:2 == 2
+	TIMES SOURCE:4 , 1.00
+ELSEIF ABL:2 == 3
+	TIMES SOURCE:4 , 1.20
+ELSEIF ABL:2 == 4
+	TIMES SOURCE:4 , 1.50
+ELSE
+	IF SOURCE:4 < 100000
+		SOURCE:4 = SOURCE:4 * (ABL:2 * 25 + 75) / 100
+	ELSEIF SOURCE:4 < 100000000
+		SOURCE:4 = SOURCE:4 / 100 * (ABL:2 * 25 + 75)
+	ENDIF
+ENDIF
+
+SOURCE:13 += A
+SOURCE:16 += A
+
+;触手の抜き挿し
+IF TEQUIP:98
+	TEQUIP:98 = 0
+ELSE
+	TEQUIP:98 = 1
+	STAIN:0 |= 2
+	STAIN:0 |= 4
+ENDIF
+
+EXP:22 += 1
+PRINTL フェラ経験＋１
+RETURN 1
+
+@TRAIN_MESSAGE_COM108
+;触手の抜き挿し
+IF TEQUIP:98
+	PRINTFORML 触手は%CALLNAME:TARGET%の口から引き抜かれた
+ELSE
+	PRINTFORML 濡れ光る触手が%CALLNAME:TARGET%の口に侵入した
+ENDIF
+
+@EQUIP_COM108
+;触手口辱中
+PRINTL ＜触手口辱中＞
+
+LOSEBASE:0 += 80
+LOSEBASE:1 += 100
+
+;Ｍ感覚を設定している場合快Ｍソース取得
+CALL SOURCE_M_COM108
+SOURCE:24 += M / 10
+
+;ABL:奉仕精神をみる
+IF ABL:6 == 0
+	SOURCE:4 += 200
+	 A = 100
+ELSEIF ABL:6 == 1
+	SOURCE:4 += 300
+	A = 200
+ELSEIF ABL:6 == 2
+	SOURCE:4 += 400
+	A = 400
+ELSEIF ABL:6 == 3
+	SOURCE:4 += 500
+	A = 600
+ELSEIF ABL:6 == 4
+	SOURCE:4 += 600
+	A = 800
+ELSE
+	SOURCE:4 += 300 + (ABL:6 * 100)
+	A = 350 + (ABL:6 * 150)
+ENDIF
+
+;ABL:技巧をみる
+IF ABL:2 == 0
+	TIMES SOURCE:4 , 0.50
+ELSEIF ABL:2 == 1
+	TIMES SOURCE:4 , 0.80
+ELSEIF ABL:2 == 2
+	TIMES SOURCE:4 , 1.00
+ELSEIF ABL:2 == 3
+	TIMES SOURCE:4 , 1.20
+ELSEIF ABL:2 == 4
+	TIMES SOURCE:4 , 1.50
+ELSE
+	IF SOURCE:4 < 100000
+		SOURCE:4 = SOURCE:4 * (ABL:2 * 25 + 75) / 100
+	ELSEIF SOURCE:4 < 100000000
+		SOURCE:4 = SOURCE:4 / 100 * (ABL:2 * 25 + 75)
+	ENDIF
+ENDIF
+
+SOURCE:13 += A
+SOURCE:16 += A
+
+EXP:22 += 1
+PRINTL フェラ経験＋１
+RETURN 1
+
+;触手口辱の快Ｍについて
+@SOURCE_M_COM108
+;ABL:Ｍ感覚をみる
+IF ABL:17 == 0
+	M = 10
+ELSEIF ABL:17 == 1
+	M = 50
+ELSEIF ABL:17 == 2
+	M = 200
+ELSEIF ABL:17 == 3
+	M = 500
+ELSEIF ABL:17 == 4
+	M = 1000
+ELSE
+	M = 400 + (ABL:17 * 200)
+ENDIF
+
+;ABL:奉仕精神をみる
+IF ABL:6 == 0
+	TIMES M , 0.25
+ELSEIF ABL:6 == 1
+	TIMES M , 0.33
+ELSEIF ABL:6 == 2
+	TIMES M , 0.75
+ELSEIF ABL:6 == 3
+	TIMES M , 1.50
+ELSEIF ABL:6 == 4
+	TIMES M , 3.00
+ELSE
+	TIMES M , 6.00
+ENDIF
+
+;ABL:技巧をみる
+IF ABL:2 == 0
+	TIMES M , 0.50
+ELSEIF ABL:2 == 1
+	TIMES M , 0.80
+ELSEIF ABL:2 == 2
+	TIMES M , 1.00
+ELSEIF ABL:2 == 3
+	TIMES M , 1.20
+ELSEIF ABL:2 == 4
+	TIMES M , 1.50
+ELSE
+	IF M < 100000
+		M = M * (ABL:2 * 5 + 195) / 100
+	ELSEIF M < 100000000
+		M = M / 100 * (ABL:2 * 5 + 195)
+	ENDIF
+ENDIF
+
+;TALENT:舌使いをみる
+SIF TALENT:52
+	TIMES M , 2.00
+
+@COM109
+;触手ペニス責め
+JUMP COM17
+RETURN 1
+
+@SYOKUSYU_MILK
+;［Ｂ感度］３以上、［母乳体質］無しかつ［小柄体系］で［貧乳］無しかつ［オトコ］無し
+IF ABL:TARGET:14 >= 3 && TALENT:130 == 0 && (TALENT:100 == 0 || TALENT:109 == 0 ) && TALENT:122 == 0 
+	PRINT 触手に乳を吸われるうちに
+	PRINTS NAME:TARGET
+	PRINTW は母乳が出るようになった。
+	TALENT:130 = 1
+ENDIF
+
+;---------------------------------------------------------
+;触手同時責め
+;触手挿入、アナル触手、触手クリ責め、触手乳首責め、触手口辱
+;---------------------------------------------------------
+@COM_ABLE116
+;触手同時責め
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手プレイ中じゃないとダメ
+SIF TEQUIP:90 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;触手浣腸中は不可
+SIF TEQUIP:46
+	RETURN 0
+;触手搾乳中は不可
+SIF TEQUIP:16
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+RETURN 1
+
+@COM116
+;触手同時責め
+PRINTL 触手同時責め
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+STR:0 = 触手同時責め
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;実行決定
+;-------------------------------------------------
+;触手挿入(バイブ)
+TEQUIP:11 = 1
+;アナル触手(アナルバイブ)
+TEQUIP:13 = 1
+;触手クリ責め(クリキャップ)
+TEQUIP:14 = 1
+;触手乳首責め(二プルキャップ)
+TEQUIP:15 = 1
+;触手口辱
+TEQUIP:98 = 1
+
+;各汚れ
+STAIN:3 |= 2
+STAIN:3 |= 4
+
+STAIN:4 |= 2
+STAIN:4 |= 4
+
+STAIN:3 |= 2
+STAIN:3 |= 4
+
+STAIN:5 |= 2
+STAIN:5 |= 4
+
+STAIN:0 |= 2
+STAIN:0 |= 4
+
+RETURN 1
+
+;---------------------------------------------------------
+;地の文
+;---------------------------------------------------------
+@TRAIN_MESSAGE_COM116
+;触手変身
+IF TEQUIP:89
+	PRINTFORML %CALLNAME:PLAYER%が変身した異形の触手が、%CALLNAME:TARGET%の体に殺到した…
+ELSE
+	PRINTFORML %CALLNAME:PLAYER%の呼び出した異形の触手が、%CALLNAME:TARGET%の体に殺到した…
+ENDIF
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_116
+A = 0
+S = 0
+V = 110
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+CALL COM_ORDER
+
+;ABL:欲望
+IF ABL:1
+	A += ABL:1 * 3
+ENDIF
+;ABL:奉仕精神
+IF ABL:6
+	A += ABL:6 * 4
+ENDIF
+
+IF MARK:1
+	A += MARK:1 * 3
+ENDIF
+
+;PALAM:潤滑（の不足）
+IF PALAM:3 < PALAMLV:3
+	A -= 5
+ENDIF
+;PALAM:欲情
+IF PALAM:5 < PALAMLV:1
+	L = 0
+ELSEIF PALAM:5 < PALAMLV:2
+	L = 1
+ELSEIF PALAM:5 < PALAMLV:3
+	L = 2
+ELSEIF PALAM:5 < PALAMLV:4
+	L = 3
+ELSEIF PALAM:5 < PALAMLV:5
+	L = 4
+ELSE
+	L = 5
+ENDIF
+IF L
+	A += L * 3
+ENDIF
+
+;恥じらい
+IF TALENT:35
+	A -= 2
+	S = 1
+ENDIF
+;快感の否定
+IF TALENT:71
+	A -= 5
+ENDIF
+;男嫌い
+IF TALENT:82 && TALENT:PLAYER:122
+	A -= 12
+ENDIF
+;恋慕
+IF TALENT:85 && ASSIPLAY == 0
+	A += 5
+ENDIF
+
+;処女
+IF TALENT:0
+	A -= 20
+ELSEIF EXP:0 < EXPLV:2
+	A -= 5
+ENDIF
+
+;媚薬
+IF TEQUIP:21
+	A += 6
+ENDIF
+
+Y = 0
+;愛液の汚れ
+SIF STAIN:PLAYER:2 & 1
+	Y += 1
+;精液の汚れ
+SIF STAIN:PLAYER:2 & 4
+	Y += 3
+;アナルの汚れ
+SIF STAIN:PLAYER:2 & 8
+	Y += 7
+SIF STAIN:PLAYER:2 & 16
+	Y += 15
+
+SIF TALENT:61
+	Y /= 3
+SIF TALENT:62
+	Y *= 2
+
+;汚れあり
+IF Y
+	A -= Y
+ENDIF
+
+;好感度
+IF CFLAG:2 < 1500
+	B = 0
+	IF CFLAG:2 < 500
+		B = 50
+	ELSEIF CFLAG:2 < 1000
+		B = 20
+	ELSEIF CFLAG:2 < 1300
+		B = 10
+	ELSE
+		B = 5
+	ENDIF
+	A -= B
+ENDIF
+;好感度
+IF CFLAG:2 >= 2000
+	B = 0
+	IF CFLAG:2 < 3000
+		B = 5
+	ELSE
+		B = CFLAG:2 / 200
+	ENDIF
+	A += B
+	S = 1
+ENDIF
+
+IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
+	;ABL:欲望
+	IF ABL:1
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:1
+		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		S = 1
+	ENDIF
+	;ABL:奉仕精神
+	IF ABL:6
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:6
+		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		S = 1
+	ENDIF
+
+	IF MARK:1
+		SIF S
+			PRINT  + 
+		PRINTS MARKNAME:1
+		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		S = 1
+	ENDIF
+
+	;PALAM:潤滑（の不足）
+	IF PALAM:3 < PALAMLV:3
+		PRINT  - 
+		PRINT 潤滑不足
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+	;PALAM:欲情
+	IF L
+		SIF S
+			PRINT  + 
+		PRINTS PALAMNAME:5
+		PRINTV 'LV,L,'(,L * 3,')
+		S = 1
+	ENDIF
+
+	;恥じらい
+	IF TALENT:35
+		PRINT  - 
+		PRINTS TALENTNAME:35
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+	;快感の否定
+	IF TALENT:71
+		PRINT  - 
+		PRINTS TALENTNAME:71
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+	;男嫌い
+	IF TALENT:82 && TALENT:PLAYER:122
+		PRINT  - 
+		PRINTS TALENTNAME:82
+		PRINTV '(,12,')
+		S = 1
+	ENDIF
+	;恋慕
+	IF TALENT:85 && ASSIPLAY == 0
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:85
+		PRINTV '(,5,')
+		S = 5
+	ENDIF
+
+	;処女
+	IF TALENT:0
+		PRINT  - 
+		PRINTS TALENTNAME:0
+		PRINTV '(,20,')
+		S = 1
+	ELSEIF EXP:0 < EXPLV:2
+		PRINT  - 
+		PRINTS EXPNAME:0
+		PRINT 不足
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+
+	;媚薬
+	IF TEQUIP:21
+		SIF S
+			PRINT  + 
+		PRINTS ITEMNAME:26
+		PRINTV '(,6,')
+		S = 1
+	ENDIF
+
+	Y = 0
+	;愛液の汚れ
+	SIF STAIN:PLAYER:2 & 1
+		Y += 1
+	;精液の汚れ
+	SIF STAIN:PLAYER:2 & 4
+		Y += 3
+	;アナルの汚れ
+	SIF STAIN:PLAYER:2 & 8
+		Y += 7
+	SIF STAIN:PLAYER:2 & 16
+		Y += 15
+
+	SIF TALENT:61
+		Y /= 3
+	SIF TALENT:62
+		Y *= 2
+
+	;汚れあり
+	IF Y
+		PRINT  - 
+		A -= Y
+		;汚臭鈍感
+		IF TALENT:61
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:61
+		ELSEIF TALENT:62
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:62
+		ELSE
+			PRINT 汚れあり
+		ENDIF
+		PRINTV '(,Y,')
+		S = 1
+	ENDIF
+
+	;好感度
+	IF CFLAG:2 < 1500
+		B = 0
+		PRINT  - 
+		IF CFLAG:2 < 500
+			B = 50
+		ELSEIF CFLAG:2 < 1000
+			B = 20
+		ELSEIF CFLAG:2 < 1300
+			B = 10
+		ELSE
+			B = 5
+		ENDIF
+		PRINT 好感度不足
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+	;好感度
+	IF CFLAG:2 >= 2000
+		B = 0
+		SIF S
+			PRINT  + 
+		IF CFLAG:2 < 3000
+			B = 5
+		ELSE
+			B = CFLAG:2 / 200
+		ENDIF
+		PRINT 好感度
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+
+	;合計を表示(110以上で実行)
+	PRINT  = 
+	PRINTV A
+
+	SIF A < V
+		PRINT  < 
+	SIF A == V
+		PRINT  = 
+	SIF A > V
+		PRINT  > 
+	PRINT 実行値
+	PRINTV V
+	WAIT
+ENDIF
+

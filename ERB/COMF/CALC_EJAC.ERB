@@ -1,0 +1,5033 @@
+﻿;[?] 正常位させる、後背位させる、騎乗位する
+;[!] アナルに入れさせる、助手を犯させる
+;[?] TALENT:119
+;-------------------------------------------------
+;射精ゲージをチェック
+;-------------------------------------------------
+@CALC_EJAC(ARG:0, ARG:1)
+#FUNCTION
+B = 0
+SELECTCASE ARG:0
+;-------------------------------------------------
+;キス
+;-------------------------------------------------
+CASE 6
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 50
+		ELSEIF ABL:2 == 1
+			B = 200
+		ELSEIF ABL:2 == 2
+			B = 300
+		ELSEIF ABL:2 == 3
+			B = 400
+		ELSEIF ABL:2 == 4
+			B = 500
+		ELSE
+			B = 350 + (ABL:2 * 50)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;正常位
+;-------------------------------------------------
+CASE 20
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;後背位
+;-------------------------------------------------
+CASE 21
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;アナルセックス
+;-------------------------------------------------
+CASE 22
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 2700
+		ELSEIF ABL:2 <= 3
+			B = 2800
+		ELSEIF ABL:2 <= 5
+			B = 2900
+		ELSEIF ABL:2 <= 8
+			B = 3100
+		ELSEIF ABL:2 <= 11
+			B = 3200
+		ELSE
+			B = 2700 + (ABL:2 * 50)
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.40
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.70
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.30
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.60
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;逆レイプ
+;-------------------------------------------------
+CASE 23
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 50
+		ELSEIF ABL:2 <= 3
+			B = 300
+		ELSEIF ABL:2 <= 5
+			B = 800
+		ELSEIF ABL:2 <= 8
+			B = 1500
+		ELSEIF ABL:2 <= 11
+			B = 2000
+		ELSE
+			B = 200 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:PLAYER:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:PLAYER:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:PLAYER:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:PLAYER:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:PLAYER:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;対面座位
+;-------------------------------------------------
+CASE 24
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 700 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 800 + ABL:2 * 100
+		ELSE
+			B = 800 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 3
+			TIMES B , 1.30
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.60
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.90
+		ELSEIF ABL:0 <= 11
+			TIMES B , 2.10
+		ELSE
+			B = B * (ABL:0 * 10 + 120) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;背面座位
+;-------------------------------------------------
+CASE 25
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 100
+		ELSE
+			B = 500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;正常位アナル
+;-------------------------------------------------
+CASE 26
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 1500
+		ELSEIF ABL:2 == 1
+			B = 1600
+		ELSEIF ABL:2 == 2
+			B = 1800
+		ELSEIF ABL:2 == 3
+			B = 2000
+		ELSEIF ABL:2 == 4
+			B = 2400
+		ELSE
+			B = 1500 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;後背位アナル
+;-------------------------------------------------
+CASE 27
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 2700
+		ELSEIF ABL:2 == 1
+			B = 2800
+		ELSEIF ABL:2 == 2
+			B = 2900
+		ELSEIF ABL:2 == 3
+			B = 3100
+		ELSEIF ABL:2 == 4
+			B = 3200
+		ELSE
+			B = 3050 + (ABL:2 * 50)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.40
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.70
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.30
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.60
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;対面座位アナル
+;-------------------------------------------------
+CASE 28
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 800
+		ELSEIF ABL:2 == 1
+			B = 1000
+		ELSEIF ABL:2 == 2
+			B = 1200
+		ELSEIF ABL:2 == 3
+			B = 1400
+		ELSEIF ABL:2 == 4
+			B = 1600
+		ELSE
+			B = 1300 + (ABL:2 * 100)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 1
+			TIMES B , 1.30
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.60
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.90
+		ELSEIF ABL:0 == 4
+			TIMES B , 2.10
+		ELSE
+			B = B * (ABL:0 * 15 + 165) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:0 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;背面座位アナル
+;-------------------------------------------------
+CASE 29
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 900
+		ELSEIF ABL:2 == 1
+			B = 1100
+		ELSEIF ABL:2 == 2
+			B = 1300
+		ELSEIF ABL:2 == 3
+			B = 1500
+		ELSEIF ABL:2 == 4
+			B = 1700
+		ELSE
+			B = 1400 + (ABL:2 * 100)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:0 * 5 + 125) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;手淫
+;-------------------------------------------------
+CASE 30
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 200 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 300 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 300 + ABL:2 * 150
+		ELSEIF ABL:2 <= 8
+			B = 500 + ABL:2 * 150
+		ELSEIF ABL:2 <= 11
+			B = 200 + ABL:2 * 200
+		ELSE
+			B = 500 + ABL:2 * 200
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;対象が恋慕さとりだと変化
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+			TIMES B, 2.00
+	ENDIF
+;-------------------------------------------------
+;フェラチオ
+;-------------------------------------------------
+CASE 31
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1000 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 240
+		ELSE
+			B = 1000 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+		
+		;対象が恋慕さとりだと変化
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+			TIMES B, 2.00
+	ENDIF
+;-------------------------------------------------
+;パイズリ
+;-------------------------------------------------
+CASE 32
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 3
+			B = 900 + ABL:2 * 170
+		ELSEIF ABL:2 <= 5
+			B = 900 + ABL:2 * 200
+		ELSEIF ABL:2 <= 8
+			B = 1200 + ABL:2 * 250
+		ELSEIF ABL:2 <= 11
+			B = 1000 + ABL:2 * 300
+		ELSE
+			B = 1400 + ABL:2 * 350
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:11 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:11 * 5 + 105) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+			TIMES B , 5.00
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;素股
+;-------------------------------------------------
+CASE 33
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 250 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 170
+		ELSEIF ABL:2 <= 8
+			B = 600 + ABL:2 * 190
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 250
+		ELSE
+			B = 700 + ABL:2 * 300
+		ENDIF
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:2
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:3
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:4
+			B += 300
+		ELSEIF PALAM:3 < PALAMLV:5
+			B += 600
+		ELSE
+			B += 1000
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;騎乗位
+;-------------------------------------------------
+CASE 34
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 120
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 8
+			B = 700 + ABL:2 * 180
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 220
+		ELSE
+			B = 500 + ABL:2 * 350
+		ENDIF
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.20
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.50
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 < PALAMLV:5
+			TIMES B , 1.50
+		ELSE
+			TIMES B , 2.00
+		ENDIF
+
+		;PALAM:欲情
+		IF PALAM:5 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:5 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:5 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:5 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:5 < PALAMLV:5
+			TIMES B , 1.40
+		ELSE
+			TIMES B , 1.70
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.30
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.70
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 7 + 100) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;EXP:Ｖ経験をみる
+		;Ｖ経験が多くなると少し下がる
+		IF EXP:0 < EXPLV:1
+			TIMES B , 1.50
+
+			IF ASSIPLAY && TALENT:PLAYER:122 == 0
+				EXP:50 += 5
+				PRINTFORML %EXPNAME:50%＋５
+		;	ELSE
+		;		EXP:50 += 2
+		;		PRINTFORML %EXPNAME:50%＋２
+			ENDIF
+		ELSEIF EXP:0 < EXPLV:2
+			TIMES B , 1.00
+		ELSEIF EXP:0 < EXPLV:3
+			TIMES B , 0.90
+		ELSEIF EXP:0 < EXPLV:4
+			TIMES B , 0.80
+		ELSEIF EXP:0 < EXPLV:5
+			TIMES B , 0.70
+		ELSE
+			TIMES B , 0.60
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;泡踊り
+;-------------------------------------------------
+CASE 35
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 3
+			B = 900 + ABL:2 * 170
+		ELSEIF ABL:2 <= 5
+			B = 900 + ABL:2 * 200
+		ELSEIF ABL:2 <= 8
+			B = 1200 + ABL:2 * 250
+		ELSEIF ABL:2 <= 11
+			B = 1000 + ABL:2 * 300
+		ELSE
+			B = 1400 + ABL:2 * 350
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:11 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:11 * 5 + 105) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;騎乗位アナル
+;-------------------------------------------------
+CASE 36
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 1000
+		ELSEIF ABL:2 == 1
+			B = 1300
+		ELSEIF ABL:2 == 2
+			B = 1700
+		ELSEIF ABL:2 == 3
+			B = 2200
+		ELSEIF ABL:2 == 4
+			B = 3000
+		ELSE
+			B = 750 + (ABL:2 * 750)
+		ENDIF
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.20
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.50
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 < PALAMLV:5
+			TIMES B , 1.50
+		ELSE
+			TIMES B , 2.00
+		ENDIF
+
+		;PALAM:欲情
+		IF PALAM:5 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:5 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:5 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:5 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:5 < PALAMLV:5
+			TIMES B , 1.40
+		ELSE
+			TIMES B , 1.70
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.30
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.70
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 15 + 105) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;EXP:Ａ経験をみる
+		;Ａ経験が多くなると少し下がる
+		IF EXP:1 < EXPLV:1
+			TIMES B , 1.50
+		ELSEIF EXP:1 < EXPLV:2
+			TIMES B , 1.00
+		ELSEIF EXP:1 < EXPLV:3
+			TIMES B , 0.90
+		ELSEIF EXP:1 < EXPLV:4
+			TIMES B , 0.80
+		ELSEIF EXP:1 < EXPLV:5
+			TIMES B , 0.70
+		ELSE
+			TIMES B , 0.60
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;足扱き
+;-------------------------------------------------
+CASE 37
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 350
+		ELSEIF ABL:2 == 1
+			B = 700
+		ELSEIF ABL:2 == 2
+			B = 1300
+		ELSEIF ABL:2 == 3
+			B = 1800
+		ELSEIF ABL:2 == 4
+			B = 2600
+		ELSE
+			B = 3500
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.30
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			TIMES B , 2.40
+		ENDIF
+
+		;プレイヤーのABL:マゾっ気をみる
+		IF ABL:PLAYER:8 == 0
+			TIMES B , 0.90
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 1.10
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 1.30
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			TIMES B , 5.00
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;尻素股
+;-------------------------------------------------
+CASE 38
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 250 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 170
+		ELSEIF ABL:2 <= 8
+			B = 600 + ABL:2 * 190
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 250
+		ELSE
+			B = 700 + ABL:2 * 300
+		ENDIF
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:2
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:3
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:4
+			B += 300
+		ELSEIF PALAM:3 < PALAMLV:5
+			B += 600
+		ELSE
+			B += 1000
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;オナホ手淫
+;-------------------------------------------------
+CASE 39
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 500 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 500 + ABL:2 * 150
+		ELSEIF ABL:2 <= 8
+			B = 800 + ABL:2 * 150
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 200
+		ELSE
+			B = 800 + ABL:2 * 200
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;助手を犯す
+;-------------------------------------------------
+CASE 56
+	IF ARG:1 == MASTER
+		;ABL:技巧をみる
+		IF ABL:ASSI:2 == 0
+			B = 50
+		ELSEIF ABL:ASSI:2 == 1
+			B = 300
+		ELSEIF ABL:ASSI:2 == 2
+			B = 800
+		ELSEIF ABL:ASSI:2 == 3
+			B = 1500
+		ELSEIF ABL:ASSI:2 == 4
+			B = 2000
+		ELSE
+			B = 200 + (ABL:ASSI:2 * 600)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:ASSI:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:ASSI:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:ASSI:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:ASSI:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:ASSI:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:ASSI:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:ASSI:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:ASSI:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:ASSI:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:ASSI:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:ASSI:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:ASSI:6 * 30 + 90) / 100
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:ASSI:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:ASSI:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:ASSI:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:ASSI:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:ASSI:4 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:ASSI:4 * 25 + 75) / 100
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:ASSI:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:ASSI:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:ASSI:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:ASSI:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:ASSI:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:MASTER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:MASTER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:MASTER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:MASTER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:MASTER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:MASTER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;助手にキス
+;-------------------------------------------------
+CASE 60
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 50
+		ELSEIF ABL:2 == 1
+			B = 200
+		ELSEIF ABL:2 == 2
+			B = 300
+		ELSEIF ABL:2 == 3
+			B = 400
+		ELSEIF ABL:2 == 4
+			B = 500
+		ELSE
+			B = 350 + (ABL:2 * 50)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;クンニ強制
+;-------------------------------------------------
+CASE 61
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 100
+		ELSEIF ABL:2 == 1
+			B = 500
+		ELSEIF ABL:2 == 2
+			B = 900
+		ELSEIF ABL:2 == 3
+			B = 1200
+		ELSEIF ABL:2 == 4
+			B = 1500
+		ELSE
+			B = 750 + (ABL:2 * 250)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;ダブル素股
+;-------------------------------------------------
+CASE 62
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 250 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 170
+		ELSEIF ABL:2 <= 8
+			B = 600 + ABL:2 * 190
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 250
+		ELSE
+			B = 700 + ABL:2 * 300
+		ENDIF
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:2
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:3
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:4
+			B += 300
+		ELSEIF PALAM:3 < PALAMLV:5
+			B += 600
+		ELSE
+			B += 1000
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;3P
+;-------------------------------------------------
+CASE 64
+	IF ARG:1 == MASTER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 2700
+		ELSEIF ABL:2 <= 3
+			B = 2800
+		ELSEIF ABL:2 <= 5
+			B = 2900
+		ELSEIF ABL:2 <= 8
+			B = 3100
+		ELSEIF ABL:2 <= 11
+			B = 3200
+		ELSE
+			B = 2700 + (ABL:2 * 50)
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.40
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.70
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.30
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.60
+		ENDIF
+	ELSEIF ARG:1 == ASSI
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1500
+		ELSEIF ABL:2 <= 3
+			B = 1600
+		ELSEIF ABL:2 <= 5
+			B = 1800
+		ELSEIF ABL:2 <= 8
+			B = 2000
+		ELSEIF ABL:2 <= 11
+			B = 2400
+		ELSE
+			B = 600 + (ABL:2 * 200)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;助手を犯させる
+;-------------------------------------------------
+CASE 65
+	IF ARG:1 == TARGET
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 50
+		ELSEIF ABL:2 <= 3
+			B = 300
+		ELSEIF ABL:2 <= 5
+			B = 800
+		ELSEIF ABL:2 <= 8
+			B = 1500
+		ELSEIF ABL:2 <= 11
+			B = 2000
+		ELSE
+			B = 200 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:ASSI:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:ASSI:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:ASSI:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:ASSI:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:ASSI:4 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:ASSI:4 * 25 + 75) / 100
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:ASSI:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:ASSI:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:ASSI:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:ASSI:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:ASSI:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;Ｗフェラ
+;-------------------------------------------------
+CASE 66
+	;ABL:技巧をみる
+	IF ABL:2 <= 1
+		B = 400 + ABL:2 * 130
+	ELSEIF ABL:2 <= 3
+		B = 600 + ABL:2 * 150
+	ELSEIF ABL:2 <= 5
+		B = 600 + ABL:2 * 180
+	ELSEIF ABL:2 <= 8
+		B = 1000 + ABL:2 * 200
+	ELSEIF ABL:2 <= 11
+		B = 400 + ABL:2 * 240
+	ELSE
+		B = 1000 + ABL:2 * 250
+	ENDIF
+
+	;ABL:従順をみる
+	IF ABL:0 <= 1
+		TIMES B , 0.80
+	ELSEIF ABL:0 <= 3
+		TIMES B , 0.90
+	ELSEIF ABL:0 <= 5
+		TIMES B , 1.00
+	ELSEIF ABL:0 <= 8
+		TIMES B , 1.10
+	ELSEIF ABL:0 <= 11
+		TIMES B , 1.20
+	ELSE
+		B = B * (ABL:0 * 2 + 105) / 100
+	ENDIF
+
+	;ABL:奉仕精神をみる
+	IF ABL:6 <= 1
+		TIMES B , 0.50
+	ELSEIF ABL:6 <= 3
+		TIMES B , 0.80
+	ELSEIF ABL:6 <= 5
+		TIMES B , 1.20
+	ELSEIF ABL:6 <= 8
+		TIMES B , 1.50
+	ELSEIF ABL:6 <= 11
+		TIMES B , 1.80
+	ELSE
+		B = B * (ABL:6 * 10 + 90) / 100
+	ENDIF
+
+	;ABL:精液中毒をみる
+	IF ABL:11 == 0
+		TIMES B , 1.00
+	ELSEIF ABL:11 == 1
+		TIMES B , 1.20
+	ELSEIF ABL:11 == 2
+		TIMES B , 1.30
+	ELSEIF ABL:11 == 3
+		TIMES B , 1.50
+	ELSEIF ABL:11 == 4
+		TIMES B , 1.70
+	ELSE
+		B = B * (ABL:11 * 15 + 125) / 100
+	ENDIF
+	
+	;TALENT:舌使いをみる
+	SIF TALENT:52
+		TIMES B , 2.00
+	
+	IF ARG:1 == MASTER
+		;主人のABL:Ｃ感覚をみる
+		IF ABL:MASTER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:MASTER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:MASTER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:MASTER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:MASTER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:MASTER:3
+		ENDIF
+	ELSEIF ARG:1 == ASSI
+		;助手のABL:Ｃ感覚をみる
+		IF ABL:ASSI:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:ASSI:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:ASSI:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:ASSI:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:ASSI:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:ASSI:3
+		ENDIF
+	ELSE
+		B = 0
+	ENDIF
+;-------------------------------------------------
+;ダブルフェラ
+;-------------------------------------------------
+CASE 68
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1000 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 240
+		ELSE
+			B = 1000 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;助手のABL:技巧をみる
+		IF ABL:ASSI:2 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:ASSI:2 <= 8
+			TIMES B , 1.20
+		ELSEIF ABL:ASSI:2 <= 11
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:ASSI:2 * 7 + 100) / 100
+		ENDIF
+
+		;助手のTALENT:舌使いをみる
+		SIF TALENT:ASSI:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:MASTER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:MASTER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:MASTER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:MASTER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:MASTER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:MASTER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;シックスナイン
+;-------------------------------------------------
+CASE 69
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 500 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 700 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 700 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1100 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 240
+		ELSE
+			B = 1100 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;イラマチオ
+;-------------------------------------------------
+CASE 80
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1000 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 240
+		ELSE
+			B = 1000 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;乱れ牡丹
+;-------------------------------------------------
+CASE 88
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 700 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 800 + ABL:2 * 100
+		ELSE
+			B = 800 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;アナル愛撫させる
+;-------------------------------------------------
+CASE 90
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 50
+		ELSEIF ABL:2 == 1
+			B = 100
+		ELSEIF ABL:2 == 2
+			B = 200
+		ELSEIF ABL:2 == 3
+			B = 400
+		ELSEIF ABL:2 == 4
+			B = 800
+		ELSE
+			B = 400 + (ABL:2 * 240)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.40
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.60
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.80
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 7 + 115) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;TALENT:献身的、サド、小悪魔をみる
+		SIF TALENT:63 || TALENT:83 || TALENT:87
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ａ感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:4
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;プレイヤーのEXP:Ａ経験をみる
+		IF EXP:PLAYER:1 < EXPLV:3
+			TIMES B , 0.25
+		ELSEIF EXP:PLAYER:1 < EXPLV:4
+			TIMES B , 0.75
+		ELSEIF EXP:PLAYER:1 < EXPLV:5
+			TIMES B , 1.00
+		ELSE
+			B = B * (EXP:PLAYER:1 / 200)
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;アナル奉仕強制
+;-------------------------------------------------
+CASE 93
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 100
+		ELSEIF ABL:2 == 1
+			B = 300
+		ELSEIF ABL:2 == 2
+			B = 500
+		ELSEIF ABL:2 == 3
+			B = 800
+		ELSEIF ABL:2 == 4
+			B = 1200
+		ELSE
+			B = 600 + (ABL:2 * 200)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;キス正常位
+;-------------------------------------------------
+CASE 120
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;キス後背位
+;-------------------------------------------------
+CASE 121
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;キス対面座位
+;-------------------------------------------------
+CASE 122
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 700 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 700 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 800 + ABL:2 * 100
+		ELSE
+			B = 800 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 3
+			TIMES B , 1.30
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.60
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.90
+		ELSEIF ABL:0 <= 11
+			TIMES B , 2.10
+		ELSE
+			B = B * (ABL:0 * 10 + 120) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;キス背面座位
+;-------------------------------------------------
+CASE 123
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 100
+		ELSE
+			B = 500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.10
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.30
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;キス騎乗位
+;-------------------------------------------------
+CASE 124
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.30
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.70
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 7 + 100) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;尻尾コキ
+;-------------------------------------------------
+CASE 140
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 6
+			B = 300 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 300 + ABL:2 * 150
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 150
+		ELSEIF ABL:2 <= 16
+			B = 200 + ABL:2 * 200
+		ELSE
+			B = 500 + ABL:2 * 200
+		ENDIF
+
+		;ABL:親密をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 6
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 9
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 14
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;ウサ耳コキ
+;-------------------------------------------------
+CASE 146
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 8
+			B = 300 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 300 + ABL:2 * 150
+		ELSEIF ABL:2 <= 16
+			B = 500 + ABL:2 * 150
+		ELSEIF ABL:2 <= 21
+			B = 200 + ABL:2 * 200
+		ELSE
+			B = 500 + ABL:2 * 200
+		ENDIF
+
+		;ABL:親密をみる
+		IF ABL:0 <= 7
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 9
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 14
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 16
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 7
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 9
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.10
+		ELSEIF ABL:6 <= 14
+			TIMES B , 1.30
+		ELSEIF ABL:6 <= 16
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 8 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;半霊を犯す
+;-------------------------------------------------
+CASE 152
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 1500
+		ELSEIF ABL:2 == 1
+			B = 1600
+		ELSEIF ABL:2 == 2
+			B = 1800
+		ELSEIF ABL:2 == 3
+			B = 2000
+		ELSEIF ABL:2 == 4
+			B = 2400
+		ELSE
+			B = 1500 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;全身コキ
+;-------------------------------------------------
+CASE 160
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 450
+		ELSEIF ABL:2 == 1
+			B = 1000
+		ELSEIF ABL:2 == 2
+			B = 1600
+		ELSEIF ABL:2 == 3
+			B = 2200
+		ELSEIF ABL:2 == 4
+			B = 2700
+		ELSE
+			B = 3200
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.30
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			TIMES B , 2.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			TIMES B , 5.00
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;口移し
+;-------------------------------------------------
+CASE 185
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 25
+		ELSEIF ABL:2 == 1
+			B = 100
+		ELSEIF ABL:2 == 2
+			B = 150
+		ELSEIF ABL:2 == 3
+			B = 200
+		ELSEIF ABL:2 == 4
+			B = 250
+		ELSE
+			B = 200 + (ABL:2 * 50)
+		ENDIF
+
+		;ABL:親密をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.10
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.25
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 30 + 70) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.75
+		ELSEIF ABL:11 == 4
+			TIMES B , 2.00
+		ELSE
+			B = B * (ABL:11 * 30 + 70) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる(精液中毒Lv1以上の場合)
+		SIF TALENT:52 && ABL:11 >= 1
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;正常位させる
+;-------------------------------------------------
+CASE 193
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 40
+		ELSEIF ABL:2 == 1
+			B = 250
+		ELSEIF ABL:2 == 2
+			B = 600
+		ELSEIF ABL:2 == 3
+			B = 1300
+		ELSEIF ABL:2 == 4
+			B = 1700
+		ELSE
+			B = 2800
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.30
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			TIMES B , 2.40
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 1.50
+		ELSE
+			TIMES B , 2.00
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:PLAYER:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:PLAYER:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:PLAYER:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:PLAYER:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:PLAYER:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			TIMES B , 5.00
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;後背位させる
+;-------------------------------------------------
+CASE 194
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 50
+		ELSEIF ABL:2 == 1
+			B = 300
+		ELSEIF ABL:2 == 2
+			B = 800
+		ELSEIF ABL:2 == 3
+			B = 1500
+		ELSEIF ABL:2 == 4
+			B = 2000
+		ELSE
+			B = 3200
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.30
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			TIMES B , 2.40
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 1.50
+		ELSE
+			TIMES B , 2.00
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:PLAYER:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:PLAYER:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:PLAYER:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:PLAYER:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:PLAYER:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			TIMES B , 5.00
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;騎乗位する
+;-------------------------------------------------
+CASE 195
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 50
+		ELSEIF ABL:2 <= 3
+			B = 300
+		ELSEIF ABL:2 <= 5
+			B = 800
+		ELSEIF ABL:2 <= 8
+			B = 1500
+		ELSEIF ABL:2 <= 11
+			B = 2000
+		ELSE
+			B = 200 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;助手のABL:V感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+		ENDIF
+
+		;助手のEXP:Ｖ経験をみる
+		IF EXP:PLAYER:0 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:PLAYER:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:PLAYER:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:PLAYER:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:PLAYER:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;アナルに入れさせる
+;-------------------------------------------------
+CASE 204
+	IF ARG:1 == TARGET
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 50
+		ELSEIF ABL:2 <= 3
+			B = 300
+		ELSEIF ABL:2 <= 5
+			B = 800
+		ELSEIF ABL:2 <= 8
+			B = 1500
+		ELSEIF ABL:2 <= 11
+			B = 2000
+		ELSE
+			B = 200 + (ABL:2 * 300)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:A感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 1.20
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+		ENDIF
+
+		;プレイヤーのEXP:A経験をみる
+		IF EXP:PLAYER:1 < EXPLV:1
+			TIMES B , 0.20
+		ELSEIF EXP:PLAYER:0 < EXPLV:2
+			TIMES B , 0.50
+		ELSEIF EXP:PLAYER:0 < EXPLV:3
+			TIMES B , 0.80
+		ELSEIF EXP:PLAYER:0 < EXPLV:4
+			TIMES B , 1.00
+		ELSEIF EXP:PLAYER:0 < EXPLV:5
+			TIMES B , 1.20
+		ELSE
+			TIMES B , 1.40
+		ENDIF
+
+		;ABL:Ｃ感覚をみる
+		IF ABL:TARGET:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:3
+		ENDIF
+	ELSEIF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 100
+		ELSEIF ABL:2 == 1
+			B = 300
+		ELSEIF ABL:2 == 2
+			B = 500
+		ELSEIF ABL:2 == 3
+			B = 800
+		ELSEIF ABL:2 == 4
+			B = 1200
+		ELSE
+			B = 600 + (ABL:2 * 200)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 == 0
+			TIMES B , 0.50
+		ELSEIF ABL:6 == 1
+			TIMES B , 0.80
+		ELSEIF ABL:6 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:6 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:6 == 4
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 30 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ａ感覚をみる
+		IF ABL:PLAYER:4 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:4 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:4 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:4 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:4 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:4
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;自慰見せつけ
+;-------------------------------------------------
+CASE 205
+	IF ARG:1 == PLAYER
+		;調教者のABL:2(技巧)をみる
+		IF ABL:PLAYER:2 <= 1
+			B = 200 + ABL:PLAYER:2 * 200
+		ELSEIF ABL:PLAYER:2 <= 3
+			B = 300 + ABL:PLAYER:2 * 200
+		ELSEIF ABL:PLAYER:2 <= 5
+			B = 300 + ABL:PLAYER:2 * 300
+		ELSEIF ABL:PLAYER:2 <= 8
+			B = 500 + ABL:PLAYER:2 * 300
+		ELSEIF ABL:PLAYER:2 <= 11
+			B = 200 + ABL:PLAYER:2 * 400
+		ELSE
+			B = 500 + ABL:PLAYER:2 * 400
+		ENDIF
+
+		;プレイヤーのABL:3(Ｃ感覚)をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;Ｃ感覚の上げられない主人かつオトコの場合、倍率ドン(ということにしておく＆それでも10000には届かないんだぜウフフ)
+		;このあたりの処理はYMの同名コマンドを参考に独自に改変
+		IF ASSIPLAY == 0 && TALENT:PLAYER:122
+			;パートナーの虜の場合は6倍
+			IF ASSIPLAY == 0 && TALENT:MASTER:219 && TALENT:TARGET:220
+				TIMES B , 6.00
+			;そうでない場合は3倍
+			ELSE
+				TIMES B , 3.00
+			ENDIF
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;挿入Ｇスポ責め
+;-------------------------------------------------
+CASE 255
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 500
+		ELSEIF ABL:2 == 1
+			B = 600
+		ELSEIF ABL:2 == 2
+			B = 700
+		ELSEIF ABL:2 == 3
+			B = 900
+		ELSEIF ABL:2 == 4
+			B = 1200
+		ELSE
+			B = 500 + (ABL:2 * 200)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲情をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;挿入子宮口責め
+;-------------------------------------------------
+CASE 256
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 == 0
+			B = 1500
+		ELSEIF ABL:2 == 1
+			B = 1600
+		ELSEIF ABL:2 == 2
+			B = 1800
+		ELSEIF ABL:2 == 3
+			B = 2000
+		ELSEIF ABL:2 == 4
+			B = 2400
+		ELSE
+			B = 1000 + (ABL:2 * 400)
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:0 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:0 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:0 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:0 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 5 + 105) / 100
+		ENDIF
+
+		;ABL:欲情をみる
+		IF ABL:1 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:1 == 1
+			TIMES B , 1.10
+		ELSEIF ABL:1 == 2
+			TIMES B , 1.20
+		ELSEIF ABL:1 == 3
+			TIMES B , 1.30
+		ELSEIF ABL:1 == 4
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 5 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;セックス[着衣正常位]
+;-------------------------------------------------
+CASE 363
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;着衣後背位
+;-------------------------------------------------
+CASE 365
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;着衣騎乗位
+;-------------------------------------------------
+CASE 366
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 120
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 8
+			B = 700 + ABL:2 * 180
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 220
+		ELSE
+			B = 500 + ABL:2 * 350
+		ENDIF
+
+
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.20
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.50
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 < PALAMLV:5
+			TIMES B , 1.50
+		ELSE
+			TIMES B , 2.00
+		ENDIF
+
+		;PALAM:欲情
+		IF PALAM:5 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:5 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:5 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:5 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:5 < PALAMLV:5
+			TIMES B , 1.40
+		ELSE
+			TIMES B , 1.70
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.30
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.70
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.50
+		ELSE
+			B = B * (ABL:6 * 7 + 100) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;EXP:Ｖ経験をみる
+		;Ｖ経験が多くなると少し下がる
+		IF EXP:0 < EXPLV:1
+			TIMES B , 1.50
+
+			IF ASSIPLAY && TALENT:PLAYER:122 == 0
+				EXP:50 += 5
+				PRINTFORML %EXPNAME:50%＋５
+		;	ELSE
+		;		EXP:50 += 2
+		;		PRINTFORML %EXPNAME:50%＋２
+			ENDIF
+		ELSEIF EXP:0 < EXPLV:2
+			TIMES B , 1.00
+		ELSEIF EXP:0 < EXPLV:3
+			TIMES B , 0.90
+		ELSEIF EXP:0 < EXPLV:4
+			TIMES B , 0.80
+		ELSEIF EXP:0 < EXPLV:5
+			TIMES B , 0.70
+		ELSE
+			TIMES B , 0.60
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;炬燵かがり
+;-------------------------------------------------
+CASE 368
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 1400 + ABL:2 * 50
+		ELSEIF ABL:2 <= 3
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 8
+			B = 1400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 11
+			B = 1500 + ABL:2 * 100
+		ELSE
+			B = 1500 + ABL:2 * 150
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:欲望をみる
+		IF ABL:1 <= 1
+			TIMES B , 1.00
+		ELSEIF ABL:1 <= 3
+			TIMES B , 1.10
+		ELSEIF ABL:1 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:1 <= 8
+			TIMES B , 1.30
+		ELSEIF ABL:1 <= 11
+			TIMES B , 1.40
+		ELSE
+			B = B * (ABL:1 * 2 + 125) / 100
+		ENDIF
+
+		;PALAM:潤滑をみる
+		IF PALAM:3 < PALAMLV:1
+			TIMES B , 0.60
+		ELSEIF PALAM:3 < PALAMLV:2
+			TIMES B , 0.80
+		ELSEIF PALAM:3 < PALAMLV:3
+			TIMES B , 1.00
+		ELSEIF PALAM:3 < PALAMLV:4
+			TIMES B , 1.20
+		ELSEIF PALAM:3 >= PALAMLV:4
+			TIMES B , 1.40
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;抱き合う
+;-------------------------------------------------
+CASE 370
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 3
+			B = 900 + ABL:2 * 170
+		ELSEIF ABL:2 <= 5
+			B = 900 + ABL:2 * 200
+		ELSEIF ABL:2 <= 8
+			B = 1200 + ABL:2 * 250
+		ELSEIF ABL:2 <= 11
+			B = 1000 + ABL:2 * 300
+		ELSE
+			B = 1400 + ABL:2 * 350
+		ENDIF
+
+		;ABL:親密をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 0.80
+		ELSEIF ABL:11 == 1
+			TIMES B , 0.90
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.10
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:11 * 5 + 105) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+
+		;着衣補正
+		B = B / 2
+		;何時もの
+		SIF TFLAG:17 != 2
+			B = 0
+	ENDIF
+;-------------------------------------------------
+;着衣フェラチオ
+;-------------------------------------------------
+CASE 373
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1000 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 240
+		ELSE
+			B = 1000 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:MASTER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:MASTER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:MASTER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:MASTER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:MASTER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:MASTER:3
+		ENDIF
+		
+		;対象が恋慕さとりだと変化
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+			TIMES B, 2.00
+	ENDIF
+ENDSELECT
+RETURNF B
+
+;-------------------------------------------------
+;射精ゲージをチェック（パートナーのターン）
+;-------------------------------------------------
+@CALC_EJAC_P(ARG:0, ARG:1)
+#FUNCTION
+B = 0
+SELECTCASE ARG:0
+;-------------------------------------------------
+;玉揉み
+;-------------------------------------------------
+CASE 31
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 200 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 300 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 300 + ABL:2 * 150
+		ELSEIF ABL:2 <= 8
+			B = 500 + ABL:2 * 150
+		ELSEIF ABL:2 <= 11
+			B = 200 + ABL:2 * 200
+		ELSE
+			B = 500 + ABL:2 * 200
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;玉含み
+;-------------------------------------------------
+CASE 33
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 400 + ABL:2 * 130
+		ELSEIF ABL:2 <= 3
+			B = 600 + ABL:2 * 150
+		ELSEIF ABL:2 <= 5
+			B = 600 + ABL:2 * 180
+		ELSEIF ABL:2 <= 8
+			B = 1000 + ABL:2 * 200
+		ELSEIF ABL:2 <= 11
+			B = 400 + ABL:2 * 240
+		ELSE
+			B = 1000 + ABL:2 * 250
+		ENDIF
+
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+
+		;ABL:精液中毒をみる
+		IF ABL:11 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:11 == 1
+			TIMES B , 1.20
+		ELSEIF ABL:11 == 2
+			TIMES B , 1.30
+		ELSEIF ABL:11 == 3
+			TIMES B , 1.50
+		ELSEIF ABL:11 == 4
+			TIMES B , 1.70
+		ELSE
+			B = B * (ABL:11 * 15 + 125) / 100
+		ENDIF
+
+		;TALENT:舌使いをみる
+		SIF TALENT:52
+			TIMES B , 2.00
+
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+;-------------------------------------------------
+;性器擦り合い
+;-------------------------------------------------
+CASE 40
+	IF ARG:1 == PLAYER
+		;ABL:技巧をみる
+		IF ABL:2 <= 1
+			B = 250 + ABL:2 * 100
+		ELSEIF ABL:2 <= 3
+			B = 400 + ABL:2 * 100
+		ELSEIF ABL:2 <= 5
+			B = 400 + ABL:2 * 170
+		ELSEIF ABL:2 <= 8
+			B = 600 + ABL:2 * 190
+		ELSEIF ABL:2 <= 11
+			B = 500 + ABL:2 * 250
+		ELSE
+			B = 700 + ABL:2 * 300
+		ENDIF
+		
+		;PALAM:潤滑
+		IF PALAM:3 < PALAMLV:1
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:2
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:3
+			B += 0
+		ELSEIF PALAM:3 < PALAMLV:4
+			B += 300
+		ELSEIF PALAM:3 < PALAMLV:5
+			B += 600
+		ELSE
+			B += 1000
+		ENDIF
+		
+		;ABL:従順をみる
+		IF ABL:0 <= 1
+			TIMES B , 0.80
+		ELSEIF ABL:0 <= 3
+			TIMES B , 0.90
+		ELSEIF ABL:0 <= 5
+			TIMES B , 1.00
+		ELSEIF ABL:0 <= 8
+			TIMES B , 1.10
+		ELSEIF ABL:0 <= 11
+			TIMES B , 1.20
+		ELSE
+			B = B * (ABL:0 * 2 + 105) / 100
+		ENDIF
+		
+		;ABL:奉仕精神をみる
+		IF ABL:6 <= 1
+			TIMES B , 0.50
+		ELSEIF ABL:6 <= 3
+			TIMES B , 0.80
+		ELSEIF ABL:6 <= 5
+			TIMES B , 1.20
+		ELSEIF ABL:6 <= 8
+			TIMES B , 1.50
+		ELSEIF ABL:6 <= 11
+			TIMES B , 1.80
+		ELSE
+			B = B * (ABL:6 * 10 + 90) / 100
+		ENDIF
+		
+		;プレイヤーのABL:Ｃ感覚をみる
+		IF ABL:PLAYER:3 == 0
+			TIMES B , 1.00
+		ELSEIF ABL:PLAYER:3 == 1
+			TIMES B , 1.50
+		ELSEIF ABL:PLAYER:3 == 2
+			TIMES B , 2.00
+		ELSEIF ABL:PLAYER:3 == 3
+			TIMES B , 2.50
+		ELSEIF ABL:PLAYER:3 == 4
+			TIMES B , 3.50
+		ELSE
+			B = B * ABL:PLAYER:3
+		ENDIF
+	ENDIF
+ENDSELECT
+RETURNF B

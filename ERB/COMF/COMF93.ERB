@@ -1,0 +1,431 @@
+﻿@COM93
+;アナル奉仕強制
+
+PRINTL アナル奉仕強制
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+STR:0 = アナル奉仕強制
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;実行決定
+;-------------------------------------------------
+;-------------------------------------------------
+;射精ゲージチェック（ふたなりの場合）
+;-------------------------------------------------
+SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 10
+LOSEBASE:1 += 100
+
+SOURCE:13 = 3000
+SOURCE:14 = 5000
+
+;上のほうで計算した汚れデータ
+SOURCE:8 = Y*80 + 50
+
+;ABL:奉仕精神をみる
+IF ABL:6 == 0
+	SOURCE:4 = 420
+	SOURCE:5 = 150
+	TIMES SOURCE:8 , 4.00
+ELSEIF ABL:6 == 1
+	SOURCE:4 = 500
+	SOURCE:5 = 300
+	TIMES SOURCE:8 , 2.50
+ELSEIF ABL:6 == 2
+	SOURCE:4 = 580
+	SOURCE:5 = 600
+	TIMES SOURCE:8 , 1.50
+ELSEIF ABL:6 == 3
+	SOURCE:4 = 660
+	SOURCE:5 = 900
+	TIMES SOURCE:8 , 1.00
+ELSEIF ABL:6 == 4
+	SOURCE:4 = 740
+	SOURCE:5 = 1500
+	TIMES SOURCE:8 , 0.50
+ELSE
+	SOURCE:4 = 620 + (ABL:6 * 40)
+	SOURCE:5 = 450 + (ABL:6 * 350)
+	TIMES SOURCE:8 , 0.10
+ENDIF
+
+
+;ABL:技巧をみる
+IF ABL:2 == 0
+	TIMES SOURCE:4 , 0.50
+	TIMES SOURCE:5 , 0.50
+ELSEIF ABL:2 == 1
+	TIMES SOURCE:4 , 0.80
+	TIMES SOURCE:5 , 0.80
+ELSEIF ABL:2 == 2
+	TIMES SOURCE:4 , 1.00
+	TIMES SOURCE:5 , 1.00
+ELSEIF ABL:2 == 3
+	TIMES SOURCE:4 , 1.50
+	TIMES SOURCE:5 , 1.50
+ELSEIF ABL:2 == 4
+	TIMES SOURCE:4 , 2.50
+	TIMES SOURCE:5 , 2.50
+ELSE
+	SOURCE:4 = SOURCE:4 * (ABL:2 * 75 + 25) / 100
+	SOURCE:5 = SOURCE:5 * (ABL:2 * 75 + 25) / 100
+ENDIF
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+CALL SAMEN_CHECK
+;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
+;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
+;	BASE:PLAYER:2 = 100000000
+;ENDIF
+;S = BASE:PLAYER:2
+;EJAC = MAXBASE:PLAYER:2
+;
+;IF  S > EJAC * 2
+;	E = 2
+;ELSEIF S > EJAC
+;	E = 1
+;ELSE
+;	E = 0
+;ENDIF
+
+IF E
+;射精している
+	TIMES SOURCE:4 , 3.00
+
+	;ABL:精液中毒をみる
+	IF ABL:11 == 0
+		SOURCE:7 = 0
+		TIMES SOURCE:5 , 2.00
+		TIMES SOURCE:13, 2.00
+	ELSEIF ABL:11 == 1
+		SOURCE:7 = 200
+		TIMES SOURCE:5 , 2.50
+		TIMES SOURCE:13, 1.60
+	ELSEIF ABL:11 == 2
+		SOURCE:7 = 500
+		TIMES SOURCE:5 , 3.00
+		TIMES SOURCE:13, 1.00
+	ELSEIF ABL:11 == 3
+		SOURCE:7 = 1200
+		TIMES SOURCE:5 , 4.50
+		TIMES SOURCE:13, 0.70
+	ELSEIF ABL:11 == 4
+		SOURCE:7 = 2500
+		TIMES SOURCE:5 , 6.00
+		TIMES SOURCE:13, 0.40
+	ELSE
+		SOURCE:7 = (ABL:11 * 1200) - 1000
+		SOURCE:5 = SOURCE:5 * (ABL:11 + 3)
+		TIMES SOURCE:13, 0.10
+	ENDIF
+
+	;射精先タイプの設定
+	TFLAG:703 = 7
+	;射精先選択の可・不可
+	TFLAG:704 = 0
+	;汎用的な処理はこの関数で行う
+	;（射精ゲージの再計算や射精経験の上昇と共通部分の表示）
+	CALL SAMEN_SHOOT
+ENDIF
+
+;;大量射精
+;IF E == 2
+;	TIMES SOURCE:7 , 2.00
+;	TIMES SOURCE:5 , 1.50
+;
+;	EXP:PLAYER:3 += 2
+;	EXP:20 += 4
+;	PRINTL 大量射精
+;	PRINTL 精液経験＋４
+;	;精液汚れ
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC*2
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;クンニで射精させたフラグ
+;	TFLAG:5 = 2
+;;通常の射精
+;ELSEIF E == 1
+;	EXP:PLAYER:3 += 1
+;	EXP:20 += 1
+;	PRINTL 射精
+;	PRINTL 精液経験＋１
+;	;精液汚れ
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;クンニで射精させたフラグ
+;	TFLAG:5 = 1
+;ENDIF
+
+;奴隷の口⇔調教者のＡの汚れが移動
+STAIN:0 |= STAIN:PLAYER:4
+STAIN:PLAYER:4 |= STAIN:0
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +6
+	EXP:40 += 6
+ENDIF
+
+TFLAG:100 = 1
+
+;既成事実２に相当
+TFLAG:200 = 2
+
+RETURN 1
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_93
+A = 0
+S = 0
+V = 23
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+CALL COM_ORDER
+
+;ABL:欲望
+IF ABL:1
+	A += ABL:1 * 1
+ENDIF
+;ABL:奉仕精神
+IF ABL:6
+	A += ABL:6 * 3
+ENDIF
+
+IF MARK:1
+	A += MARK:1 * 2
+ENDIF
+
+;恥じらい
+IF TALENT:35
+	A -= 1
+ENDIF
+;汚臭鈍感
+IF TALENT:61
+	A += 2
+ENDIF
+;汚臭敏感
+IF TALENT:62
+	A -= 5
+ENDIF
+;献身的
+IF TALENT:63
+	A += 4
+ENDIF
+;汚れ無視
+IF TALENT:64
+	A += 3
+ENDIF
+;快感の否定
+IF TALENT:71
+	A -= 1
+ENDIF
+;倒錯的
+IF TALENT:80
+	A += 3
+ENDIF
+;サド
+IF TALENT:PLAYER:83
+	A += 3
+ENDIF
+;恋慕
+IF TALENT:85 && ASSIPLAY == 0
+	A += 5
+	S = 5
+ENDIF
+
+
+Y = 0
+;愛液の汚れ
+SIF STAIN:PLAYER:3 & 1
+	Y += 1
+;精液の汚れ
+SIF STAIN:PLAYER:3 & 4
+	Y += 3
+;アナルの汚れ
+SIF STAIN:PLAYER:3 & 8
+	Y += 7
+SIF STAIN:PLAYER:3 & 16
+	Y += 15
+
+SIF TALENT:61
+	Y /= 3
+SIF TALENT:62
+	Y *= 2
+
+;汚れあり
+IF Y
+	A -= Y
+ENDIF
+
+IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
+	;ABL:欲望
+	IF ABL:1
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:1
+		PRINTV 'LV,ABL:1,'(,ABL:1 * 1,')
+		S = 1
+	ENDIF
+	;ABL:奉仕精神
+	IF ABL:6
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:6
+		PRINTV 'LV,ABL:6,'(,ABL:6 * 3,')
+		S = 1
+	ENDIF
+
+	IF MARK:1
+		SIF S
+			PRINT  + 
+		PRINTS MARKNAME:1
+		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		S = 1
+	ENDIF
+
+	;恥じらい'
+	IF TALENT:35
+		PRINT  - 
+		PRINTS TALENTNAME:35
+		PRINTV '(,1,')
+		S = 1
+	ENDIF
+	;汚臭鈍感
+	IF TALENT:61
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:61
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+	;汚臭敏感
+	IF TALENT:62
+		PRINT  - 
+		PRINTS TALENTNAME:62
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+	;献身的
+	IF TALENT:63
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:63
+		PRINTV '(,4,')
+		S = 1
+	ENDIF
+	;汚れ無視
+	IF TALENT:64
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:64
+		PRINTV '(,3,')
+		S = 1
+	ENDIF
+	;快感の否定
+	IF TALENT:71
+		PRINT  - 
+		PRINTS TALENTNAME:71
+		PRINTV '(,1,')
+		S = 1
+	ENDIF
+	;倒錯的
+	IF TALENT:80
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:80
+		PRINTV '(,3,')
+		S = 1
+	ENDIF
+	;サド
+	IF TALENT:PLAYER:83
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:83
+		PRINTV '(,3,')
+		S = 1
+	ENDIF
+	;恋慕
+	IF TALENT:85 && ASSIPLAY == 0
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:85
+		PRINTV '(,5,')
+		S = 5
+	ENDIF
+
+
+	Y = 0
+	;愛液の汚れ
+	SIF STAIN:PLAYER:3 & 1
+		Y += 1
+	;精液の汚れ
+	SIF STAIN:PLAYER:3 & 4
+		Y += 3
+	;アナルの汚れ
+	SIF STAIN:PLAYER:3 & 8
+		Y += 7
+	SIF STAIN:PLAYER:3 & 16
+		Y += 15
+
+	SIF TALENT:61
+		Y /= 3
+	SIF TALENT:62
+		Y *= 2
+
+	;汚れあり
+	IF Y
+		PRINT  - 
+		;汚臭鈍感
+		IF TALENT:61
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:61
+		ELSEIF TALENT:62
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:62
+		ELSE
+			PRINT 汚れあり
+		ENDIF
+		PRINTV '(,Y,')
+		S = 1
+	ENDIF
+
+
+	;合計を表示(23以上で実行)
+	PRINT  = 
+	PRINTV A
+
+	SIF A < V
+		PRINT  < 
+	SIF A == V
+		PRINT  = 
+	SIF A > V
+		PRINT  > 
+	PRINT 実行値
+	PRINTV V
+	WAIT
+ENDIF
+

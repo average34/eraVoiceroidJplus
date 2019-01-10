@@ -1,0 +1,309 @@
+﻿;---------------------------------------------------------
+;コンドーム射精の処理
+;コンドーム射精が独立していないので作成
+;V系セックス以外の射精でも使用可能にした
+;ほとんど他の射精と一緒だが、TFLAGを立てず（膣射阻止）、精液経験も増やさない
+;---------------------------------------------------------
+@CONDOM_CHECK
+IF ASSIPLAY == 0
+	IF TEQUIP:MASTER:85 == 1
+		PRINTL コンドーム射精
+		CFLAG:105 = 1
+		;射精時の共通処理
+		CALL SAMEN_SHOOT_CALC
+		;コンドームに精液溜まる
+		CFLAG:107 |= 1
+		RETURN 1
+	ENDIF
+ELSE
+	IF TEQUIP:ASSI:85 == 1
+		PRINTL コンドーム射精(助手)
+		CFLAG:105 = 1
+		;射精時の共通処理
+		CALL SAMEN_SHOOT_CALC
+		;コンドームに精液溜まる
+		CFLAG:107 |= 2
+		RETURN 1
+	ENDIF
+ENDIF
+RETURN 0
+
+;---------------------------------------------------------
+;プレイや及び助手の各コマンドでの中田氏チェック
+;各コマンドへの影響を小さくするのが目的（関数を呼ぶ、もしくはオミットするだけで良い）
+;TFLAG:302（中田氏）とTEQUIP:85（コンドーム）を条件に膣射を増やす処理を持つ
+;---------------------------------------------------------
+@IN_VAGINA_CHECK
+;妊娠機能がOFFならRETURN
+SIF (FLAG:62 & 1) == 0
+	RETURN 0
+
+;3P時のTFLAG用
+L = 40 + ASSIPLAY
+
+VARSET LOCAL, 0
+LOCAL = TFLAG:302
+;挿入子宮口責めの場合、膣射精液にボーナス有
+SIF SELECTCOM == 256
+	LOCAL = TFLAG:302 * 2
+
+IF TFLAG:703 == 1 || TFLAG:703 == 9 || TFLAG:703 == 6 || TFLAG:703 == 8 || (TFLAG:703 == 12 && TFLAG:L == 1)
+	IF TFLAG:302 > 0
+		PRINT 膣内
+		IF TFLAG:302 >= 4
+			PRINT 超大量
+		ELSEIF TFLAG:302 >= 2
+			PRINT 大量
+		ENDIF
+		PRINTL 射精
+	ENDIF
+ENDIF
+
+;コマンドごとの分岐
+;通常セックス系
+L = 40 + ASSIPLAY
+IF (TFLAG:703 == 1 || TFLAG:703 == 9)
+	;マスターによる奴隷への中田氏
+	IF ASSIPLAY == 0
+		IF TFLAG:302 > 0
+			PRINTFORML 膣射精液+{LOCAL}
+			CFLAG:101 += LOCAL
+		ENDIF
+	;助手による奴隷への中田氏
+	ELSE
+		IF TFLAG:302 > 0
+			PRINTFORML 膣射精液（助手）+{LOCAL}
+			CFLAG:102 += LOCAL
+		ENDIF
+	ENDIF
+;素股
+ELSEIF TFLAG:703 == 5
+	;排卵誘発剤使用時+大量射精以上の時のみわずかに増加
+	;マスターによる奴隷への中田氏
+	IF ASSIPLAY == 0
+		IF TFLAG:302 >= 2 && TEQUIP:86
+			PRINTFORML 膣射精液+{TFLAG:302 / 2}
+			CFLAG:101 += TFLAG:302 / 2
+		ENDIF
+	;助手による奴隷への中田氏
+	ELSE
+		IF TFLAG:302 >= 2 && TEQUIP:86
+			PRINTFORML 膣射精液（助手）+{TFLAG:302 / 2}
+			CFLAG:102 += TFLAG:302 / 2
+		ENDIF
+	ENDIF
+;助手を犯す
+ELSEIF TFLAG:703 == 6
+	IF TFLAG:302 > 0
+		PRINTFORML 膣射精液+{TFLAG:302}（助手）
+		CFLAG:ASSI:101 += TFLAG:302
+	ENDIF
+;助手を犯させる
+ELSEIF TFLAG:703 == 8
+	IF TFLAG:302 > 0
+		PRINTFORML 膣射精液（%CALLNAME:P%）+{TFLAG:302}（助手）
+		CFLAG:ASSI:101 += TFLAG:302
+	ENDIF
+;3P
+ELSEIF (TFLAG:703 == 12 && TFLAG:L == 1)
+	;マスターによる奴隷への中田氏
+	IF ASSIPLAY == 0
+		IF TFLAG:302 > 0
+			PRINTFORML 膣射精液+{LOCAL}
+			CFLAG:101 += LOCAL
+		ENDIF
+	;助手による奴隷への中田氏
+	ELSE
+		IF TFLAG:302 > 0
+			PRINTFORML 膣射精液（助手）+{LOCAL}
+			CFLAG:102 += LOCAL
+		ENDIF
+	ENDIF
+ENDIF
+
+@IN_VAGINA_CHECK_T
+;奴隷の各コマンドでの中田氏チェック
+;各コマンドへの影響を小さくするのが目的（関数を呼ぶ、もしくはオミットするだけで良い）
+;TFLAG:2（中田氏）とTEQUIP:85（コンドーム）を条件に膣射を増やす処理を持つ
+
+;妊娠機能がOFFならRETURN
+SIF (FLAG:62 & 1) == 0
+	RETURN 0
+
+;まずコンドームで分岐
+IF TEQUIP:85 == 1
+	PRINTL パートナーコンドーム射精
+	CFLAG:107 |= 4
+	TEQUIP:TARGET:85 = 0
+;;妊娠モードであり、コンドームをしてないかつセックス系コマンドなら中出し
+;コンドームをしてないかつセックス系コマンドなら中出し
+ELSEIF (SELECTCOM == 23 || SELECTCOM == 65 || SELECTCOM == 171 || SELECTCOM == 193 || SELECTCOM == 194 || SELECTCOM == 195)
+	IF E > 0
+		PRINT 膣内
+		SIF E >= 2
+			PRINT 大量
+		PRINTL 射精
+		PRINTFORML パートナー精液+{E}
+		CFLAG:PLAYER:103 += E
+	ENDIF
+	CALL SAMEN_SHOOTINGH_SOURCE
+ENDIF
+
+@SAMEN_SHOOT_SOURCE
+;中田氏時の恐怖判定等
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+;Aは不潔のソースに追加
+;Bは液体追加のソースに追加
+;Cは逸脱のソースに追加
+;Dは恐怖に追加
+A = 200
+B = 500
+C = 500
+D = 2000
+D:1 = 0
+
+;大量射精時
+IF E == 2
+	TIMES A , 2.00
+	TIMES B , 2.00
+	TIMES C , 1.50
+	TIMES D , 1.50
+ENDIF
+
+;恋慕＋恋人、妄信、服従、親愛、相愛、淫乱
+IF (TALENT:85 && TALENT:153) || TALENT:86 || TALENT:180 || TALENT:88 || TALENT:89 || TALENT:76
+	C = 0
+	D = 0
+	GOTO ADDING1
+ENDIF
+
+;貞操観念、貞操無頓着
+IF TALENT:30 && (TALENT:TARGET:89 && ASSIPLAY == 0) == 0
+	TIMES C , 3.00
+	TIMES D , 3.00
+ELSEIF TALENT:31
+	TIMES C , 0.50
+	TIMES D , 0.50
+ENDIF
+
+;月経関係
+;危険日
+IF TALENT:137
+	TIMES C , 3.00
+	TIMES D , 3.00
+;生理中
+ELSEIF TALENT:138
+	TIMES C , 1.50
+	TIMES D , 1.50
+;通常
+ELSE
+	TIMES C , 0.70
+	TIMES D , 0.70
+ENDIF
+
+D:1 = D
+
+;ABL:親密をみる
+IF ABL:0 < 3
+	TIMES D, 1.00
+ELSEIF ABL:0 < 5
+	TIMES D , 0.95
+ELSEIF ABL:0 < 10
+	TIMES D , 0.90
+ELSEIF ABL:0 < 13 && TALENT:TARGET:85 == 0
+	TIMES D , 0.80
+ELSEIF ABL:0 < 15
+	TIMES D , 0.40
+ELSEIF ABL:0 >= 18 && TALENT:TARGET:88
+	TIMES D , 0.00
+ELSE
+	TIMES D , 0.20
+ENDIF
+
+$ADDING1
+SOURCE:8 += A
+SOURCE:10 += B
+SOURCE:14 += C
+UP:10 += D
+SOURCE:23 = D:1 - D
+
+
+
+@SAMEN_SHOOTINGH_SOURCE
+;中田氏時の懐疑判定等
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+B = 1000
+C = 300
+D = 2000
+
+;大量射精時
+IF E == 2
+	TIMES B , 1.50
+	TIMES C , 1.50
+	TIMES D , 1.50
+ENDIF
+
+;恋慕＋恋人、妄信、服従、親愛、相愛、淫乱
+IF (TALENT:85 && TALENT:153) || TALENT:86 || TALENT:180 || TALENT:88 || TALENT:89 || TALENT:76
+	C = 0
+	D = 0
+	GOTO ADDING2
+ENDIF
+
+;ABL:親密をみる
+IF ABL:0 < 3
+	TIMES D, 1.00
+ELSEIF ABL:0 < 5
+	TIMES D , 0.95
+ELSEIF ABL:0 < 10
+	TIMES D , 0.90
+ELSEIF ABL:0 < 13 && TALENT:TARGET:85 == 0
+	TIMES D , 0.80
+ELSEIF ABL:0 < 15
+	TIMES D , 0.40
+ELSEIF ABL:0 >= 18 && TALENT:TARGET:88
+	TIMES D , 0.00
+ELSE
+	TIMES D , 0.20
+ENDIF
+
+;貞操観念、貞操無頓着
+IF TALENT:30 && (TALENT:TARGET:89 && ASSIPLAY == 0) == 0
+	TIMES C , 3.00
+	TIMES D , 3.00
+ELSEIF TALENT:31
+	TIMES C , 0.50
+	TIMES D , 0.50
+ENDIF
+
+;小悪魔
+SIF TALENT:87
+	TIMES D , 0.25
+
+;サド
+SIF TALENT:83
+	TIMES D , 0.50
+
+IF TFLAG:45
+	;反発感情
+	IF MARK:3 == 1
+		TIMES B , 1.20
+	ELSEIF MARK:3 == 2
+		TIMES B , 1.80
+	ELSEIF MARK:3 >= 3
+		TIMES B , 2.50
+	ENDIF
+	SOURCE:20 += B
+ELSE
+	SOURCE:21 += B
+ENDIF
+$ADDING2
+SOURCE:14 += C
+SOURCE:22 += D
+
+
+

@@ -1,0 +1,2441 @@
+﻿@COM_ABLE309
+;素材探し実行判定
+;バグのもとなので封印
+RETURN 0
+
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+RETURN 1
+
+@COM309
+;素材探し
+PRINTL 素材探し
+
+;アイテム数99以上の素材はアイテム数99に。
+G = 0
+REPEAT 100
+	G = COUNT + 900
+	SIF ITEM:G >= 99
+		ITEM:G = 99
+REND
+
+
+;最高級素材入手→TFLAG:18 = 1
+;なにも見つからなかった時、失敗→TFLAG:18 = -1
+;ランク4素材入手→TFLAG:17 = 4
+;ランク3素材入手→TFLAG:17 = 3
+;ランク2素材入手→TFLAG:17 = 2
+;ランク1素材入手→TFLAG:17 = 1
+
+;TFLAG初期化
+TFLAG:17 = 0
+TFLAG:18 = 0
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+STR:0 = 素材探し
+
+;素材探索後口上表示(調教時メッセージはなし)
+CALL SOZAI_SEARCH
+CALL TRAIN_MESSAGE_B
+
+LOSEBASE:0 += 50
+LOSEBASE:1 += 100
+
+;恋慕・恋人による気力消費軽減
+SIF TALENT:85
+	LOSEBASE:1 -= 15
+SIF TALENT:153
+	LOSEBASE:1 -= 15
+;親愛による体力・気力消費軽減
+IF TALENT:88
+	LOSEBASE:0 -= 20
+	LOSEBASE:1 -= 20
+ENDIF
+
+;固定で獲得するソース
+SOURCE:18 = 50
+SOURCE:19 = 200
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	SOURCE:18 += (ABL:0 * 10)
+	SOURCE:19 += (ABL:0 * 35)
+ELSEIF ABL:0 <= 3
+	SOURCE:18 += 80 + (ABL:0 * 10)
+	SOURCE:19 += 200 + (ABL:0 * 40)
+ELSEIF ABL:0 <= 5
+	SOURCE:18 += 120 + (ABL:0 * 10)
+	SOURCE:19 += 300 + (ABL:0 * 40)
+ELSEIF ABL:0 <= 8
+	SOURCE:18 += 200 + (ABL:0 * 20)
+	SOURCE:19 += 400 + (ABL:0 * 60)
+ELSEIF ABL:0 <= 11
+	SOURCE:18 += 300 + (ABL:0 * 20)
+	SOURCE:19 += 500 + (ABL:0 * 60)
+ELSE
+	SOURCE:18 += 500 + (ABL:0 * 10)
+	SOURCE:19 += 800 + (ABL:0 * 70)
+ENDIF
+
+;好感度をみる
+IF CFLAG:2 <= 300
+	SOURCE:18 += CFLAG:2 / 3
+ELSEIF CFLAG:2 <= 5000
+	SOURCE:18 += 400 + (CFLAG:2 - 500) / 3
+ELSE
+	SOURCE:18 += 800 + (CFLAG:2 - 5000) / 5
+ENDIF
+SIF SOURCE:18 < 0
+	SOURCE:18 = 0
+
+
+;ABL:技巧をみる
+SOURCE:19 = SOURCE:19 * (ABL:2 * 3 + 100) / 100
+
+;ABL:料理技術をみる
+SOURCE:18 += ABL:90 * 10
+SOURCE:19 = SOURCE:19 * (ABL:90 * 15 + 100) / 100
+
+;調合知識を持っていると効果上昇
+IF TALENT:TARGET:55
+	TIMES SOURCE:19 , 2.00
+ENDIF
+
+;主導権をチェック
+IF TFLAG:45 == 0
+	;主導権が主人公側
+	;ABL:従順をみる
+	IF ABL:0 <= 1
+		SOURCE:21 += 100 + (ABL:0 * 20)
+	ELSEIF ABL:0 <= 3
+		SOURCE:21 += 200 + (ABL:0 * 30)
+	ELSEIF ABL:0 <= 5
+		SOURCE:21 += 300 + (ABL:0 * 40)
+	ELSEIF ABL:0 <= 8
+		SOURCE:21 += 400 + (ABL:0 * 50)
+	ELSEIF ABL:0 <= 11
+		SOURCE:21 += 500 + (ABL:0 * 60)
+	ELSE
+		SOURCE:21 += 600 + (ABL:0 * 70)
+	ENDIF
+ELSE
+	;主導権が相手
+	;ABL:サドっ気をみる
+	IF ABL:15 == 0
+		SOURCE:20 = 200
+	ELSEIF ABL:15 == 1
+		SOURCE:20 = 300
+	ELSEIF ABL:15 == 2
+		SOURCE:20 = 400
+	ELSEIF ABL:15 == 3
+		SOURCE:20 = 550
+	ELSEIF ABL:15 == 4
+		SOURCE:20 = 700
+	ELSE
+		SOURCE:20 = 300 + (ABL:15 * 100)
+	ENDIF
+ENDIF
+
+;好感度ランダム変化
+A = RAND:5 - 2
+TFLAG:30 += A
+B = 1
+
+IF TFLAG:18 == -1
+	TIMES SOURCE:18 , 0.10
+	TIMES SOURCE:19 , 0.50
+	TFLAG:30 -= 5
+	TFLAG:37 -= 2
+ELSEIF TFLAG:18 == 0
+	TIMES SOURCE:18 , 1.00
+	TIMES SOURCE:19 , 1.00
+	TFLAG:37 += 1
+ELSE
+	TIMES SOURCE:18 , 2.00
+	TIMES SOURCE:19 , 2.00
+	TFLAG:30 += 2
+	TFLAG:37 += 2 + A
+	B += 1
+ENDIF
+;ムードが高いと下がる
+SIF TFLAG:37 > 100
+	TFLAG:37 -= RAND:5
+RETURN 1
+
+;-------------------------------------------------
+;素材探索
+;-------------------------------------------------
+@SOZAI_SEARCH
+PRINTFORML 
+PRINTFORMW %CALLNAME:TARGET%と調合に使えそうなものがないか辺りを探索した…
+PRINTFORMW ……
+PRINTFORMW …
+
+;参考書入手判定
+CALL REFERENCE_BOOK_GET
+
+;変数初期化
+E = 0
+U = 0
+W = 0
+D = 0
+F = 0
+;TFLAG初期化
+TFLAG:17 = 0
+TFLAG:18 = 0
+TFLAG:800 = 0
+A = 0
+REPEAT 100
+	A = COUNT + 900
+	TFLAG:A = 0
+REND
+
+;Tがランク決定の基準
+T = RAND:100
+
+;実行者またはパートナーがてゐの場合良いものを見つけやすくする
+SIF NO:TARGET == 27 || NO:PLAYER == 27
+	T -= 7
+;実行者またはパートナーがナズーリンの場合良いものを若干見つけやすくする（食べ物は子ネズミが食べてしまうので精度はそこまで良くない感じ）
+SIF NO:TARGET == 91 || NO:PLAYER == 91
+	T -= 5
+;ペンデュラムを持っている場合
+IF TEQUIP:5 == 2
+	;何も見つからない場合を減らす
+	IF T > 90
+		T -= 7
+	ELSE
+		T -= 3
+	ENDIF
+	;実行者またはパートナーがナズーリンの場合効果アップ
+	SIF NO:TARGET == 91 || NO:PLAYER == 91
+		T -= 2
+ENDIF
+
+$SOZAI_SEARCH
+
+;実行者の技巧が1以下かつ相手の技巧が1以下かつ調合知識・禁断の知識をどちらも持っていないかつペンデュラムを持っていないと必ず失敗
+IF ABL:TARGET:2 <= 1 && ABL:PLAYER:2 <= 1 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+	PRINTFORMW しかし何も見つけることはできなかった
+	TFLAG:18 = -1
+;実行者と相手の技巧の合計が6以下で双方が調合・禁断の知識を持っていないかつペンデュラムを持っていないと雑草しか手に入らない
+ELSEIF (ABL:TARGET:2 + ABL:PLAYER:2) <= 6 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+	IF T >= 50
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;それ以外は場所でそれぞれ判定
+ELSE
+	TRYCCALLFORM SOZAI_SEARCH_TEQUIP2_{TEQUIP:2}
+	CATCH
+		;念のため場所ごとの入手アイテム設定がない場所の場合はレシピの断片入手
+		TFLAG:800 = 1
+		;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+		TFLAG:17 = 1
+	ENDCATCH
+ENDIF
+
+CALL SOZAI_ITEM_CHECK
+SIF RESULT
+	GOTO SOZAI_SEARCH
+
+
+
+@SOZAI_ITEM_CHECK
+VARSET LOCAL, 0
+
+;実行者と相手の技巧の合計でアイテム入手数設定。また、相手と自分の調合知識でそれぞれランダム追加
+D = 1 + RAND:2 + RAND:(ABL:TARGET:2 + ABL:PLAYER:2)/6
+
+SIF TALENT:PLAYER:55 == 1
+	D += 1
+SIF TALENT:TARGET:55 == 1
+	D += 1
+
+SIF D >= 9
+	D = 9
+
+IF TFLAG:800
+	PRINTFORMW 探索の結果、[レシピの断片]を{D}個手に入れました
+	ITEM:800 += D
+	RETURN 0
+ENDIF
+
+FOR LOCAL, 900, 1000
+	;見つけた素材を99個以上所持している場合
+	IF TFLAG:LOCAL && ITEM:LOCAL >= 99
+		TFLAG:LOCAL = 0
+	ELSEIF TFLAG:LOCAL
+		PRINTFORMW 探索の結果、[%ITEMNAME:LOCAL%]を{D}個手に入れました
+		ITEM:LOCAL += D
+		RETURN 0
+	ENDIF
+NEXT
+
+CALL SOZAI_RANK
+TFLAG:17 = 0
+TFLAG:18 = 0
+IF RAND:7 == 0 && RESULT == 1
+	TFLAG:18 = 1
+ELSEIF RAND:6 == 0
+	TFLAG:17 = 4
+ELSEIF RAND:5 == 0
+	TFLAG:17 = 3
+ELSEIF RAND:4 == 0
+	TFLAG:17 = 2
+ELSEIF RAND:3 == 0
+	TFLAG:17 = 1
+	TFLAG:800 = 1
+ELSEIF RAND:2 == 0
+	TFLAG:17 = 0
+	TFLAG:901 = 1
+ELSE
+	TFLAG:17 = 0
+	TFLAG:900 = 1
+ENDIF
+RETURN 1
+
+
+@SOZAI_RANK
+;手に入る素材のランク決定　Tと各条件で最高ランク～入手失敗まで判断
+;最高ランク～ランク１は各デート先でそれぞれ手に入る素材を設定
+;薬草、雑草、レシピの断片のように共通しているアイテムはここで入手。
+
+;初期化
+VARSET LOCAL, 0
+
+;TFLAG:17,TFLAG:18が設定済みの場合は省略
+IF TFLAG:17 || TFLAG:18 || TFLAG:900 || TFLAG:901
+	RETURN 0
+ENDIF
+
+;素材ランク数３つのデート先（主に外界）
+IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
+	;実行者の技巧4以上かつ相手の技巧6以上
+	IF ABL:TARGET:2 >= 6 && ABL:PLAYER:2 >= 4
+		;まずLOCAL = 1し、最高ランク条件を満たしていなかった場合　LOCAL = 0にして手に入る素材を変える
+		LOCAL = 1
+		;各デート場所固有の最高ランク条件。こちらまで満たせば最高ランクまで解禁
+		
+		;遊園地　相手が親愛or相愛or恋慕＋親愛15以上
+		IF TEQUIP:2 == 10 && (TALENT:TARGET:88 || TALENT:TARGET:89 || (TALENT:TARGET:85 && ABL:0 >= 15))
+		
+		;水族館 日付が3の倍数
+		ELSEIF TEQUIP:2 == 11 && (DAY:1 % 3 == 0)
+		
+		;動物園 サドっ気orマゾっ気が4以上
+		ELSEIF TEQUIP:2 == 12 && (ABL:TARGET:8 >= 4 || ABL:TARGET:15 >= 4)
+		
+		;繁華街 夜
+		ELSEIF TEQUIP:2 == 13 && TIME == 1
+		
+		;海 自慰中毒or精液中毒orレズ中毒のいずれかが5以上(海＝溺れるのイメージ)
+		ELSEIF TEQUIP:2 == 14 && (ABL:TARGET:10 >= 5 || ABL:TARGET:11 >= 5 || ABL:TARGET:12 >= 5)
+		
+		;博物館 どちらかの技巧が10以上(習得の珠が博物館で入るから)
+		ELSEIF TEQUIP:2 == 17 && (ABL:TARGET:2 >= 10 || ABL:PLAYER:2 >= 10)
+		
+		;遊覧船 ムード80以上
+		ELSEIF TEQUIP:2 == 23 && (TFLAG:37 >= 80)
+		
+		;魔界 自慰経験が100以上
+		ELSEIF TEQUIP:2 == 32 && EXP:TARGET:10 >= 100
+		
+		;牧場 噴乳経験が80以上
+		ELSEIF TEQUIP:2 == 33 && EXP:TARGET:54 >= 80
+		
+		;教会 愛情経験が300以上
+		ELSEIF TEQUIP:2 == 34 && EXP:TARGET:23 >= 300
+		
+		;上記デート場所の条件を満たしていない場合、ランク２まで解禁。
+		ELSEIF (TEQUIP:2 >= 10 && TEQUIP:2 <= 14) || TEQUIP:2 == 17 || TEQUIP:2 == 23 || (TEQUIP:2 >= 32 && TEQUIP:2 <= 34)
+			LOCAL = 0
+		;それ以外のデート先(外界） 好感度が8000未満なら、ランク２まで解禁。
+		ELSEIF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36)) && CFLAG:TARGET:2 < 8000
+			LOCAL = 0
+		ENDIF
+		
+		;最高ランクまで入手可能
+		IF LOCAL
+			IF T <= 19
+				;最高ランク
+				TFLAG:18 = 1
+			ELSEIF T <= 59
+				;ランク２
+				TFLAG:17 = 3
+			ELSEIF T <= 89
+				;ランク１
+				TFLAG:17 = 2
+			ELSEIF T <= 94 && (TEQUIP:2 == 17 || TEQUIP:2 == 32)
+				TFLAG:800 = 1
+				;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+				TFLAG:17 = 1
+			ELSE
+				TFLAG:900 = 1
+				;PRINTFORMW 探索の結果、[雑草]を手に入れました
+				TFLAG:17 = 0
+			ENDIF
+		;ランク２まで入手可能
+		ELSE
+			IF T <= 49
+				;ランク２
+				TFLAG:17 = 3
+			ELSEIF T <= 84
+				;ランク１
+				TFLAG:17 = 2
+			ELSEIF T <= 94 && (TEQUIP:2 == 17 || TEQUIP:2 == 32)
+				TFLAG:800 = 1
+				;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+				TFLAG:17 = 1
+			ELSE
+				TFLAG:900 = 1
+				;PRINTFORMW 探索の結果、[雑草]を手に入れました
+				TFLAG:17 = 0
+			ENDIF
+		ENDIF
+	;実行者の技巧3以下もしくは相手の技巧が5以下
+	ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+		;ランク１まで入手可能
+		IF T <= 59
+			;ランク１
+			TFLAG:17 = 2
+		ELSEIF T <= 69 && (TEQUIP:2 == 17 || TEQUIP:2 == 32)
+			TFLAG:800 = 1
+			;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+			TFLAG:17 = 1
+		ELSEIF T <= 89
+			TFLAG:900 = 1
+			;PRINTFORMW 探索の結果、[雑草]を手に入れました
+			TFLAG:17 = 0
+		ELSE
+			PRINTFORMW しかし何も見つけることはできなかった
+			TFLAG:18 = -1
+		ENDIF
+	ENDIF
+;素材ランク数４つのデート先
+ELSE
+	;実行者の技巧5以上かつ相手の技巧8以上かつ調合知識か禁断の知識を実行者と相手のいずれかが持っている
+	IF ABL:TARGET:2 >= 8 && ABL:PLAYER:2 >= 5 && (TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1)
+		;まずLOCAL = 1し、最高ランク条件を満たしていなかった場合　LOCAL = 0にして手に入る素材を変える
+		LOCAL = 1
+		
+		;各デート場所固有の最高ランク条件。こちらまで満たせば最高ランクまで解禁
+		
+		;家 相手の料理技能と金銭感覚がともに4以上(家なので生活の珠関連の条件)
+		IF TEQUIP:2 == 0 && ABL:TARGET:89 >= 4 && ABL:TARGET:90 >= 4
+		
+		;街 デート経験400以上(街＝歓楽だけどそれに対応させるのがむずい)
+		ELSEIF TEQUIP:2 == 1 && EXP:TARGET:94 >= 400
+		
+		;神社 所持金が80万以上(お賽銭無いんなら帰れ！！)
+		ELSEIF TEQUIP:2 == 2 && MONEY >= 800000
+		
+		;湖 カエルの数が8以上ケロケーロ
+		ELSEIF TEQUIP:2 == 3 && ITEM:915 >= 8
+		
+		;花畑 好感度が8000以上
+		ELSEIF TEQUIP:2 == 4 && CFLAG:TARGET:2 >= 8000
+		
+		;肝試し 戦闘経験が600以上
+		ELSEIF TEQUIP:2 == 5 && EXP:TARGET:95 >= 600
+		
+		;温泉 天気が快晴・雪・狐の嫁入り・細氷（特にこれらの天気をえらんだ理由は無い、こんな感じの日に温泉てよくね？程度）
+		ELSEIF TEQUIP:2 == 7 && (TIME:5 == 1 || TIME:5 == 5 || TIME:5 == 7 || TIME:5 == 8)
+		
+		;図書館 VBAC感覚の合計が20以上(物知り的なイメージ？もうわからんくなってきたｗ)
+		ELSEIF TEQUIP:2 == 8 && (ABL:TARGET:3 + ABL:TARGET:4 + ABL:TARGET:5 + ABL:TARGET:14) >= 20
+		
+		;白玉楼 欲望11以上（ゆゆさまの食事は始まったばかりだ！）
+		ELSEIF TEQUIP:2 == 9 && ABL:TARGET:1 >= 11
+		
+		;月の都 実行者か相手が蓬莱人・月光浴・処女・淫乱のいずれかを持っている
+		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:0 == 1 || TALENT:TARGET:0 == 1 || TALENT:PLAYER:76 == 1 || TALENT:TARGET:76 == 1 || TALENT:PLAYER:116 == 1 || TALENT:TARGET:116 == 1 || TALENT:PLAYER:128 == 1 || TALENT:TARGET:128 == 1)
+		
+		;妖怪の山 季節が秋か、実行者か相手のどちらかが妄信か解放を持っているか、露出癖5以上(ゆがんだ信仰or常識に囚われない)
+		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:86 == 1 || TALENT:TARGET:86 == 1 || TALENT:PLAYER:33 == 1 || TALENT:TARGET:33 == 1 || ABL:TARGET:7 >= 5)
+		
+		;有頂天 実行者か相手がサド・マゾのいずれかを持っている(実行者がサドの場合、相手がマゾっ気3以上が必要)
+		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:79 == 1 || TALENT:TARGET:79 == 1 || TALENT:TARGET:83 == 1 || (TALENT:PLAYER:83 == 1 && ABL:TARGET:8 >= 3))
+		
+		;地霊殿 実行者か相手が異常経験3以上
+		ELSEIF TEQUIP:2 == 28 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
+		
+		;間欠泉地下センター どちらかの技巧が10以上
+		ELSEIF TEQUIP:2 == 29 && (ABL:TARGET:2 >= 10 || ABL:PLAYER:2 >= 10)
+		
+		;魔法の森 実行者か相手が異常経験3以上(犯罪臭)
+		ELSEIF TEQUIP:2 == 30 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
+		
+		;命蓮寺 V経験とA経験が0or100以上
+		ELSEIF TEQUIP:2 == 31 && ((EXP:0 == 0 && EXP:1 == 0) || (EXP:0 >= 100 && EXP:1 >= 100))
+		
+		;上記デート場所の条件を満たしていない場合、ランク３まで解禁。
+		ELSEIF ((TEQUIP:2 >= 0 && TEQUIP:2 <= 9) || (TEQUIP:2 >= 25 && TEQUIP:2 <= 31))
+			LOCAL = 0
+		;それ以外のデート先(幻想郷） 好感度が8000未満なら、ランク３まで解禁。
+		ELSEIF TEQUIP:2 > 0 && CFLAG:TARGET:2 < 8000
+			LOCAL = 0
+		ENDIF
+		
+		;最高ランクまで入手可能
+		IF LOCAL
+			IF T <= 4
+				;最高ランク
+				TFLAG:18 = 1
+			ELSEIF T <= 29
+				;ランク３
+				TFLAG:17 = 4
+			ELSEIF T <= 59
+				;ランク２
+				TFLAG:17 = 3
+			ELSEIF T <= 79
+				;ランク１
+				TFLAG:17 = 2
+			ELSEIF T <= 84 && (TEQUIP:2 == 1 || TEQUIP:2 == 2 || TEQUIP:2 == 8 || TEQUIP:2 == 9 || TEQUIP:2 == 25 || (TEQUIP:2 >= 27  && TEQUIP:2 <= 31))
+				TFLAG:800 = 1
+				;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+				TFLAG:17 = 1
+			ELSEIF T <= 94
+				TFLAG:901 = 1
+				;PRINTFORMW 探索の結果、[薬草]を手に入れました
+				TFLAG:17 = 0
+			ELSE
+				TFLAG:900 = 1
+				;PRINTFORMW 探索の結果、[雑草]を手に入れました
+				TFLAG:17 = 0
+			ENDIF
+		;ランク３まで入手可能
+		ELSE
+			IF T <= 24
+				;ランク３
+				TFLAG:17 = 4
+			ELSEIF T <= 59
+				;ランク２
+				TFLAG:17 = 3
+			ELSEIF T <= 74
+				;ランク１
+				TFLAG:17 = 2
+			ELSEIF T <= 84 && (TEQUIP:2 == 1 || TEQUIP:2 == 2 || TEQUIP:2 == 8 || TEQUIP:2 == 9 || TEQUIP:2 == 25 || (TEQUIP:2 >= 27  && TEQUIP:2 <= 31))
+				TFLAG:800 = 1
+				;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+				TFLAG:17 = 1
+			ELSEIF T <= 94
+				TFLAG:901 = 1
+				;PRINTFORMW 探索の結果、[薬草]を手に入れました
+				TFLAG:17 = 0
+			ELSE
+				TFLAG:900 = 1
+				;PRINTFORMW 探索の結果、[雑草]を手に入れました
+				TFLAG:17 = 0
+			ENDIF
+		ENDIF
+	;実行者の技能4以上かつ相手の技巧6以上
+	ELSEIF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6
+		;ランク２まで入手可能
+		IF T <= 41
+			;ランク２
+			TFLAG:17 = 3
+		ELSEIF T <= 81
+			;ランク１
+			TFLAG:17 = 2
+		ELSEIF T <= 84 && (TEQUIP:2 == 1 || TEQUIP:2 == 2 || TEQUIP:2 == 8 || TEQUIP:2 == 9 || TEQUIP:2 == 25 || (TEQUIP:2 >= 27  && TEQUIP:2 <= 31))
+			TFLAG:800 = 1
+			;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+			TFLAG:17 = 1
+		ELSEIF T <= 91
+			TFLAG:900 = 1
+			;PRINTFORMW 探索の結果、[雑草]を手に入れました
+			TFLAG:17 = 0
+		ELSE
+			PRINTFORMW しかし何も見つけることはできなかった
+			TFLAG:18 = -1
+		ENDIF
+	;実行者の技巧3以下もしくは相手の技巧が5以下
+	ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+		;ランク１まで入手可能
+		IF T <= 56
+			;ランク１
+			TFLAG:17 = 2
+		ELSEIF T <= 59 && (TEQUIP:2 == 1 || TEQUIP:2 == 2 || TEQUIP:2 == 8 || TEQUIP:2 == 9 || TEQUIP:2 == 25 || (TEQUIP:2 >= 27  && TEQUIP:2 <= 31))
+			TFLAG:800 = 1
+			;PRINTFORMW 探索の結果、[レシピの断片]を手に入れました
+			TFLAG:17 = 1
+		ELSEIF T <= 86
+			TFLAG:900 = 1
+			;PRINTFORMW 探索の結果、[雑草]を手に入れました
+			TFLAG:17 = 0
+		ELSE
+			PRINTFORMW しかし何も見つけることはできなかった
+			TFLAG:18 = -1
+		ENDIF
+	ENDIF
+ENDIF
+
+;最高ランクが手に入る時はRETURN 1して判定できるようにする
+IF LOCAL
+	RETURN 1
+ELSE
+	RETURN 0
+ENDIF
+
+;-------------------------------------------------
+;場所ごとの入手アイテム設定
+;-------------------------------------------------
+;家
+@SOZAI_SEARCH_TEQUIP2_0
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:905 = 1
+	;PRINTFORMW 探索の結果、[四葉のクローバー]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:904 = 1
+	;PRINTFORMW 探索の結果、[牛乳]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:903 = 1
+	;PRINTFORMW 探索の結果、[りんご]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:902 = 1
+	;PRINTFORMW 探索の結果、[どんぐり]を手に入れました
+ENDIF
+
+;街
+@SOZAI_SEARCH_TEQUIP2_1
+
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:909 = 1
+	;PRINTFORMW 探索の結果、[ポーション]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:908 = 1
+	;PRINTFORMW 探索の結果、[ヤツメウナギ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:907 = 1
+	;PRINTFORMW 探索の結果、[カレー粉]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:906 = 1
+	;PRINTFORMW 探索の結果、[長ネギ]を手に入れました
+ENDIF
+
+;神社
+@SOZAI_SEARCH_TEQUIP2_2
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:913 = 1
+	;PRINTFORMW 探索の結果、[お札]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:912 = 1
+	;PRINTFORMW 探索の結果、[紅白まんじゅう]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:911 = 1
+	;PRINTFORMW 探索の結果、[亀の甲羅]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:910 = 1
+	;PRINTFORMW 探索の結果、[茶葉]を手に入れました
+ENDIF
+
+;湖
+@SOZAI_SEARCH_TEQUIP2_3
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:917 = 1
+	;PRINTFORMW 探索の結果、[紅い霧の瓶詰め]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:916 = 1
+	;PRINTFORMW 探索の結果、[氷精の氷]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:915 = 1
+	;PRINTFORMW 探索の結果、[カエル]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:914 = 1
+	;PRINTFORMW 探索の結果、[湖の水]を手に入れました
+ENDIF
+
+;花畑
+@SOZAI_SEARCH_TEQUIP2_4
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:921 = 1
+	;PRINTFORMW 探索の結果、[プロテア]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:920 = 1
+	;PRINTFORMW 探索の結果、[蓮の花]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:919 = 1
+	;PRINTFORMW 探索の結果、[蜂蜜]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:918 = 1
+	;PRINTFORMW 探索の結果、[ひまわり]を手に入れました
+ENDIF
+
+;肝試し
+@SOZAI_SEARCH_TEQUIP2_5
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:925 = 1
+	;PRINTFORMW 探索の結果、[小さなヒトダマ]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:924 = 1
+	;PRINTFORMW 探索の結果、[大理石のカケラ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:923 = 1
+	;PRINTFORMW 探索の結果、[コウモリの羽]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:922 = 1
+	;PRINTFORMW 探索の結果、[ベニテングタケ]を手に入れました
+ENDIF
+
+;カラオケ
+@SOZAI_SEARCH_TEQUIP2_6
+;実行者の技能4以上かつ相手の技巧6以上かつ歌唱技能7以上
+IF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6 && ABL:TARGET:92 >= 7
+	TFLAG:926 = 1
+	;PRINTFORMW 探索の結果、[電池]を手に入れました
+	TFLAG:17 = 2
+;実行者の技能4以上かつ相手の技巧6以上
+ELSEIF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6
+	IF T <= 49
+		TFLAG:926 = 1
+		;PRINTFORMW 探索の結果、[電池]を手に入れました
+		TFLAG:17 = 2
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+;実行者の技巧3以下もしくは相手の技巧が5以下
+ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+	IF T <= 9
+		TFLAG:926 = 1
+		;PRINTFORMW 探索の結果、[電池]を手に入れました
+		TFLAG:17 = 2
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+
+;温泉
+@SOZAI_SEARCH_TEQUIP2_7
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:930 = 1
+	;PRINTFORMW 探索の結果、[湯の花]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:929 = 1
+	;PRINTFORMW 探索の結果、[硫黄]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:928 = 1
+	;PRINTFORMW 探索の結果、[温泉卵]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:927 = 1
+	;PRINTFORMW 探索の結果、[温泉のお湯]を手に入れました
+ENDIF
+
+;図書館
+@SOZAI_SEARCH_TEQUIP2_8
+;実行者またはパートナーがつづみの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 51 || NO:PLAYER == 51
+	T -= 5
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:934 = 1
+	;PRINTFORMW 探索の結果、[禁書目録]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:933 = 1
+	;PRINTFORMW 探索の結果、[パチュリー(お香)]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:932 = 1
+	;PRINTFORMW 探索の結果、[銀の食器]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:931 = 1
+	;PRINTFORMW 探索の結果、[アオカビ]を手に入れました
+ENDIF
+
+;白玉楼
+@SOZAI_SEARCH_TEQUIP2_9
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:938 = 1
+	;PRINTFORMW 探索の結果、[西行妖の花びら]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:937 = 1
+	;PRINTFORMW 探索の結果、[ふしぎなキノコ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:936 = 1
+	;PRINTFORMW 探索の結果、[焼き鳥]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:935 = 1
+	;PRINTFORMW 探索の結果、[桜の花びら]を手に入れました
+ENDIF
+
+;遊園地
+@SOZAI_SEARCH_TEQUIP2_10
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:941 = 1
+	;PRINTFORMW 探索の結果、[ネズミのしっぽ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:940 = 1
+	;PRINTFORMW 探索の結果、[ソフトクリーム]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:939 = 1
+	;PRINTFORMW 探索の結果、[ポップコーン]を手に入れました
+ENDIF
+
+;水族館
+@SOZAI_SEARCH_TEQUIP2_11
+;実行者またはパートナーがウナの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 81 || NO:PLAYER == 81
+	T -= 5
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:944 = 1
+	;PRINTFORMW 探索の結果、[サンゴ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:943 = 1
+	;PRINTFORMW 探索の結果、[ガラスのカケラ]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:942 = 1
+	;PRINTFORMW 探索の結果、[ヒトデ]を手に入れました
+ENDIF
+
+;動物園
+@SOZAI_SEARCH_TEQUIP2_12
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:946 = 1
+	;PRINTFORMW 探索の結果、[ライオンの鬣]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:945 = 1
+	;PRINTFORMW 探索の結果、[孔雀の羽]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:903 = 1
+	;PRINTFORMW 探索の結果、[りんご]を手に入れました
+ENDIF
+
+;繁華街
+@SOZAI_SEARCH_TEQUIP2_13
+IF T <= 19
+	ITEM:26 += 1
+	PRINTFORMW 探索の結果、[媚薬]を手に入れました
+	TFLAG:17 = 4
+ELSEIF T <= 59
+	ITEM:25 += 1
+	PRINTFORMW 探索の結果、[ローション]を手に入れました
+	TFLAG:17 = 3
+ELSEIF T <= 89
+	PRINTFORMW 探索の結果、[肉まん]を手に入れました
+	PRINTFORMW ……が、あまりにおいしそうだったので%CALLNAME:TARGET%と二人で食べてしまった
+	PRINTFORML 
+	PRINTFORMW %CALLNAME:TARGET%の体力が50回復した
+	;ひそかに耐力も回復
+	BASE:TARGET:0 += 50
+	BASE:TARGET:4 += 50
+	TFLAG:17 = 2
+ELSEIF T <= 99
+	TFLAG:900 = 1
+	;PRINTFORMW 探索の結果、[雑草]を手に入れました
+	TFLAG:17 = 0
+ELSE
+	PRINTFORMW しかし何も見つけることはできなかった
+	TFLAG:18 = -1
+ENDIF
+
+;海
+@SOZAI_SEARCH_TEQUIP2_14
+;実行者またはパートナーがあかりの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 11 || NO:PLAYER == 11
+	T -= 5
+;実行者またはパートナーがウナの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 81 || NO:PLAYER == 81
+	T -= 5
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:949 = 1
+	;PRINTFORMW 探索の結果、[真珠]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:948 = 1
+	;PRINTFORMW 探索の結果、[貝殻]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:947 = 1
+	;PRINTFORMW 探索の結果、[海水]を手に入れました
+ENDIF
+
+;ゲームセンター
+@SOZAI_SEARCH_TEQUIP2_15
+T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+MONEY += T * 100
+PRINTFORMW 素材は見つからなかったが、${T * 100}拾った
+
+;カジノ
+@SOZAI_SEARCH_TEQUIP2_16
+T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+MONEY += T * 100
+PRINTFORMW 素材は見つからなかったが、落ちていたチップを{T}枚拾って換金した
+PRINTFORML 
+PRINTFORMW お金＋${T * 100}
+
+;博物館
+@SOZAI_SEARCH_TEQUIP2_17
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:952 = 1
+	;PRINTFORMW 探索の結果、[化石]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:951 = 1
+	;PRINTFORMW 探索の結果、[ミイラ]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:950 = 1
+	;PRINTFORMW 探索の結果、[漢書]を手に入れました
+ENDIF
+;映画館(コメディ)
+@SOZAI_SEARCH_TEQUIP2_18
+;実行者またはパートナーが茜の場合良いものを若干見つけやすくする
+SIF NO:TARGET == 6 || NO:PLAYER == 6
+	T -= 3
+;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
+IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+	IF T <= 29
+		TFLAG:954 = 1
+		;PRINTFORMW 探索の結果、[豆]を手に入れました
+		TFLAG:18 = 1
+	ELSEIF T <= 84
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;実行者の技巧4以下もしくは相手の技巧が6以下
+ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+	IF T <= 59
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSEIF T <= 89
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+;映画館(アクション)
+@SOZAI_SEARCH_TEQUIP2_19
+;実行者またはパートナーがゆかりの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 4 || NO:PLAYER == 4
+	T -= 3
+;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
+IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+	IF T <= 29
+		TFLAG:955 = 1
+		;PRINTFORMW 探索の結果、[銃弾]を手に入れました
+		TFLAG:18 = 1
+	ELSEIF T <= 84
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;実行者の技巧4以下もしくは相手の技巧が6以下
+ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+	IF T <= 59
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSEIF T <= 89
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+;映画館(ホラー)
+@SOZAI_SEARCH_TEQUIP2_20
+
+;実行者またはパートナーがマキの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 3 || NO:PLAYER == 3
+	T -= 3
+;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
+IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+	IF T <= 29
+		TFLAG:956 = 1
+		;PRINTFORMW 探索の結果、[黒い髪]を手に入れました
+		TFLAG:18 = 1
+	ELSEIF T <= 84
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;実行者の技巧4以下もしくは相手の技巧が6以下
+ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+	IF T <= 59
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSEIF T <= 89
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+;映画館(恋愛)
+@SOZAI_SEARCH_TEQUIP2_21
+;実行者またはパートナーがマキの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 3 || NO:PLAYER == 3
+	T -= 3
+;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
+IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+	IF T <= 29
+		TFLAG:957 = 1
+		;PRINTFORMW 探索の結果、[リボン]を手に入れました
+		TFLAG:18 = 1
+	ELSEIF T <= 84
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;実行者の技巧4以下もしくは相手の技巧が6以下
+ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+	IF T <= 59
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSEIF T <= 89
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+;映画館(ポルノ)
+@SOZAI_SEARCH_TEQUIP2_22
+
+;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
+IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+	IF T <= 29
+		ITEM:29 += 1
+		PRINTFORMW 探索の結果、[コンドーム]を手に入れました
+		TFLAG:18 = 1
+	ELSEIF T <= 84
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSE
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ENDIF
+;実行者の技巧4以下もしくは相手の技巧が6以下
+ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+	IF T <= 59
+		TFLAG:953 = 1
+		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
+		TFLAG:17 = 3
+	ELSEIF T <= 89
+		TFLAG:900 = 1
+		;PRINTFORMW 探索の結果、[雑草]を手に入れました
+		TFLAG:17 = 0
+	ELSE
+		PRINTFORMW しかし何も見つけることはできなかった
+		TFLAG:18 = -1
+	ENDIF
+ENDIF
+
+;遊覧船
+@SOZAI_SEARCH_TEQUIP2_23
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:959 = 1
+	;JOJO好きな人はコメントアウトを外せばいいと思うよ！
+	;PRINTFORMW 探索の結果、[カモメ]を手に入れました
+	;PRINTFORMW ………いや、違う……
+	;PRINTFORMW こりゃあカモメじゃねーぜ…
+	;PRINTFORMW ニャアニャア鳴くのはウミネコだ……
+	
+	;PRINTFORMW 探索の結果、[ウミネコ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:958 = 1
+	;PRINTFORMW 探索の結果、[魚]を手に入れました
+ELSEIF TFLAG:17 == 2
+	PRINTFORMW 探索の結果、[氷山のカケラ]を手に入れました
+	PRINTFORMW ……不吉なので捨てました
+	;不安のソース追加
+	SOURCE:23 += 100
+ENDIF
+;彼岸
+@SOZAI_SEARCH_TEQUIP2_24
+
+;実行者の技巧4以上かつ相手の技巧6以上だと彼岸花を入手できる可能性がある
+IF T <= 29 && ABL:TARGET:2 >= 6 && ABL:PLAYER:2 >= 4
+	TFLAG:960 = 1
+	;PRINTFORMW 探索の結果、[真っ赤な彼岸花]を手に入れました
+	TFLAG:18 = 1
+ELSEIF T <= 69
+	T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+	MONEY += T * 10
+	PRINTFORMW 素材は見つからなかったが、小銭を${T * 10}拾った
+ELSEIF T <= 89
+	TFLAG:900 = 1
+	;PRINTFORMW 探索の結果、[雑草]を手に入れました
+	TFLAG:17 = 0
+ELSE
+	PRINTFORMW しかし何も見つけることはできなかった
+	TFLAG:18 = -1
+ENDIF
+;月の都
+@SOZAI_SEARCH_TEQUIP2_25
+
+
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:964 = 1
+	;PRINTFORMW 探索の結果、[月の石]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:963 = 1
+	;PRINTFORMW 探索の結果、[ロケットの破片]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:962 = 1
+	;PRINTFORMW 探索の結果、[桃]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:961 = 1
+	;PRINTFORMW 探索の結果、[餅]を手に入れました
+ENDIF
+;妖怪の山
+@SOZAI_SEARCH_TEQUIP2_26
+
+CALL SOZAI_RANK
+IF T == 0
+	PRINTFORMW 探索の結果、[早苗さんのぱんつ]を見つけました！
+	;実行者が早苗の場合文変更
+	IF NO:PLAYER == 42
+		PRINTFORMW ……%CALLNAME:PLAYER%は箪笥の奥の方にぱんつを入れ直した
+		SOURCE:12 += 500
+	ELSE
+		PRINTFORMW ……箪笥に戻しておいた
+		SOURCE:12 += 150
+	ENDIF
+	TFLAG:18 = 1
+ELSEIF TFLAG:18 == 1
+	TFLAG:968 = 1
+	;PRINTFORMW 探索の結果、[御柱]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:967 = 1
+	;PRINTFORMW 探索の結果、[天狗の羽]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:966 = 1
+	;PRINTFORMW 探索の結果、[鉄クズ]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:965 = 1
+	;PRINTFORMW 探索の結果、[汚れた布きれ]を手に入れました
+ENDIF
+;有頂天
+@SOZAI_SEARCH_TEQUIP2_27
+
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:971 = 1
+	;PRINTFORMW 探索の結果、[無縫の天衣]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:970 = 1
+	;PRINTFORMW 探索の結果、[小さな要石]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:969 = 1
+	;PRINTFORMW 探索の結果、[まな板]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:962 = 1
+	;PRINTFORMW 探索の結果、[桃]を手に入れました
+ENDIF
+;地霊殿
+@SOZAI_SEARCH_TEQUIP2_28
+
+
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:975 = 1
+	;PRINTFORMW 探索の結果、[不思議な眼球]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:974 = 1
+	;PRINTFORMW 探索の結果、[黒太陽の炎]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:973 = 1
+	;PRINTFORMW 探索の結果、[車輪]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:972 = 1
+	;PRINTFORMW 探索の結果、[骨]を手に入れました
+ENDIF
+;間欠泉地下センター
+@SOZAI_SEARCH_TEQUIP2_29
+;実行者またはパートナーが諏訪子の場合良いものを若干見つけやすくする
+SIF NO:TARGET == 44 || NO:PLAYER == 44
+	T -= 3
+;実行者またはパートナーがにとりの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 40 || NO:PLAYER == 55
+	T -= 3
+;実行者またはパートナーが空の場合良いものを若干見つけやすくする
+SIF NO:TARGET == 83 || NO:PLAYER == 83
+	T -= 3
+;一度の探索での回数カウント
+F += 1
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:978 = 1
+	;PRINTFORMW 探索の結果、[マグマの杖]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:974 = 1
+	;PRINTFORMW 探索の結果、[黒太陽の炎]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:977 = 1
+	;PRINTFORMW 探索の結果、[鉄板]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:976 = 1
+	;PRINTFORMW 探索の結果、[ハリボテ]を手に入れました
+ENDIF
+;魔法の森
+@SOZAI_SEARCH_TEQUIP2_30
+;実行者またはパートナーが魔理沙の場合良いものを若干見つけやすくする
+SIF NO:TARGET == 2 || NO:PLAYER == 2
+	T -= 5
+;実行者またはパートナーがアリスの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 14 || NO:PLAYER == 14
+	T -= 5
+;実行者またはパートナーがサニーの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 45 || NO:PLAYER == 45
+	T -= 3
+;実行者またはパートナーがルナの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 46 || NO:PLAYER == 46
+	T -= 3
+;実行者またはパートナーがスターの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 47 || NO:PLAYER == 47
+	T -= 4
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:981 = 1
+	;PRINTFORMW 探索の結果、[盗品]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:937 = 1
+	;PRINTFORMW 探索の結果、[ふしぎなキノコ]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:980 = 1
+	;PRINTFORMW 探索の結果、[妖精の羽]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:979 = 1
+	;PRINTFORMW 探索の結果、[丈夫な糸]を手に入れました
+ENDIF
+;命蓮寺
+@SOZAI_SEARCH_TEQUIP2_31
+
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:985 = 1
+	;PRINTFORMW 探索の結果、[数珠]を手に入れました
+ELSEIF TFLAG:17 == 4
+	TFLAG:984 = 1
+	;PRINTFORMW 探索の結果、[船の一部]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:983 = 1
+	;PRINTFORMW 探索の結果、[虎の毛皮]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:982 = 1
+	;PRINTFORMW 探索の結果、[掴める雲]を手に入れました
+ENDIF
+;魔界
+@SOZAI_SEARCH_TEQUIP2_32
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:988 = 1
+	;PRINTFORMW 探索の結果、[ダークマター]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:987 = 1
+	;PRINTFORMW 探索の結果、[バラの棘]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:986 = 1
+	;PRINTFORMW 探索の結果、[アホ毛]を手に入れました
+ENDIF
+;牧場
+@SOZAI_SEARCH_TEQUIP2_33
+;実行者またはパートナーがマキの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 3 || NO:PLAYER == 3
+	T -= 3
+;実行者またはパートナーがあかりの場合良いものを若干見つけやすくする
+SIF NO:TARGET == 11 || NO:PLAYER == 11
+	T -= 3
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:990 = 1
+	;PRINTFORMW 探索の結果、[騎馬の手綱]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:989 = 1
+	;PRINTFORMW 探索の結果、[肉]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:904 = 1
+	;PRINTFORMW 探索の結果、[牛乳]を手に入れました
+ENDIF
+;教会
+@SOZAI_SEARCH_TEQUIP2_34
+CALL SOZAI_RANK
+IF TFLAG:18 == 1
+	TFLAG:992 = 1
+	;PRINTFORMW 探索の結果、[聖骸布]を手に入れました
+ELSEIF TFLAG:17 == 3
+	TFLAG:943 = 1
+	;PRINTFORMW 探索の結果、[ガラスのカケラ]を手に入れました
+ELSEIF TFLAG:17 == 2
+	TFLAG:991 = 1
+	;PRINTFORMW 探索の結果、[十字架]を手に入れました
+ENDIF
+;スポーツ観戦
+@SOZAI_SEARCH_TEQUIP2_35
+IF T <= 59
+	PRINTFORMW 探索の結果、[オレンジジュース]を手に入れました
+	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と二人で乾いた喉を潤しました
+	PRINTFORML 
+	PRINTFORMW %CALLNAME:TARGET%の体力が30回復した
+	;ひそかに耐力も回復
+	BASE:TARGET:0 += 30
+	BASE:TARGET:4 += 30
+	TFLAG:17 = 2
+ELSEIF T <= 89
+	TFLAG:900 = 1
+	;PRINTFORMW 探索の結果、[雑草]を手に入れました
+	TFLAG:17 = 0
+ELSE
+	PRINTFORMW しかし何も見つけることはできなかった
+	TFLAG:18 = -1
+ENDIF
+;星蓮船
+@SOZAI_SEARCH_TEQUIP2_50
+IF T <= 59
+	PRINTFORMW 探索の結果、[乗船券の半券]を見つけました
+	PRINTFORMW %CALLNAME:MASTER%はちゃんとゴミ箱に捨てました
+	PRINTFORML 
+	PRINTFORMW %CALLNAME:TARGET%はゴミを拾って捨てたことに感心しているようだ
+	CFLAG:2 += 3
+	TFLAG:17 = 2
+ELSEIF T <= 89
+	TFLAG:900 = 1
+	;PRINTFORMW 探索の結果、[雑草]を手に入れました
+	TFLAG:17 = 0
+ELSE
+	PRINTFORMW しかし何も見つけることはできなかった
+	TFLAG:18 = -1
+ENDIF
+
+
+
+@EARN_SOZAI_1
+;１人でお金を稼いだ場合
+;内職60%で
+IF TFLAG:17 == 1 && RAND:5 < 3
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [亀の甲羅]
+		ITEM:911 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [ひまわり]
+		ITEM:918 += 1
+	ELSE
+		PRINTFORM [コウモリの羽]
+		ITEM:923 += 1
+	ENDIF
+	PRINTFORMW をオマケとして貰った
+;街60%で
+ELSEIF TFLAG:17 == 2 && RAND:5 < 3
+	PRINTFORM また、
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [長ネギ]
+		ITEM:906 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [温泉卵]
+		ITEM:928 += 1
+	ELSE
+		PRINTFORM [カレー粉]
+		ITEM:907 += 1
+	ENDIF
+	PRINTFORMW をオマケとして貰った
+;畑仕事60%で
+ELSEIF TFLAG:17 == 3 && RAND:5 < 3
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [りんご]
+		ITEM:903 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [茶葉]
+		ITEM:910 += 1
+	ELSE
+		PRINTFORM [桃]
+		ITEM:962 += 1
+	ENDIF
+	PRINTFORMW をオマケとして貰った
+;モンスター退治80%で
+ELSEIF TFLAG:17 == 4 && RAND:5 < 4
+	PRINTFORM また、道中で
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [鉄クズ]
+		ITEM:966 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [車輪]
+		ITEM:973 += 1
+	ELSE
+		PRINTFORM [汚れた布きれ]
+		ITEM:965 += 1
+	ENDIF
+	PRINTFORMW を拾った
+ENDIF
+
+@EARN_SOZAI_2
+;２人でお金を稼いだ場合
+;雑貨屋（60%）
+IF TFLAG:17 == 1 && RAND:5 < 3
+	PRINTFORM また、代金の一部として
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:10 == 1
+		PRINTFORM [化石]
+		ITEM:952 += 1
+	ELSEIF RAND:9 == 1
+		PRINTFORM [サンゴ]
+		ITEM:944 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [亀の甲羅]
+		ITEM:911 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [貝殻]
+		ITEM:948 += 1
+	ELSE
+		PRINTFORM [ガラスのカケラ]
+		ITEM:943 += 1
+	ENDIF
+	PRINTFORML を貰った
+;内職（80%）
+ELSEIF TFLAG:17 == 2 && RAND:5 < 4
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [亀の甲羅]
+		ITEM:911 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [ひまわり]
+		ITEM:918 += 1
+	ELSE
+		PRINTFORM [コウモリの羽]
+		ITEM:923 += 1
+	ENDIF
+	PRINTFORML をオマケとして貰った
+;街（80%）
+ELSEIF TFLAG:17 == 3 && RAND:5 < 4
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [ヤツメウナギ]
+		ITEM:908 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [蜂蜜]
+		ITEM:919 += 1
+	ELSE
+		PRINTFORM [カレー粉]
+		ITEM:907 += 1
+	ENDIF
+	PRINTFORML をオマケとして貰った
+;畑仕事（80%）
+ELSEIF TFLAG:17 == 4 && RAND:5 < 4
+	IF RAND:10 == 0
+		PRINTFORM [レシピの断片]
+		ITEM:800 += 1
+	ELSEIF RAND:3 == 1
+		PRINTFORM [りんご]
+		ITEM:903 += 1
+	ELSEIF RAND:2 == 1
+		PRINTFORM [茶葉]
+		ITEM:910 += 1
+	ELSE
+		PRINTFORM [桃]
+		ITEM:962 += 1
+	ENDIF
+	PRINTFORML をオマケとして貰った
+ENDIF
+
+@ADD_SOZAI_TFLAG
+;ボス撃破時素材入手。
+
+;FLAG:1000-が2なら一度仲間になった経験有
+;既に一度仲間になっているか
+T = FLAG:25
+CALL GET_EXISTANCE2
+
+;TFLAG初期化
+FOR LOCAL, 900, 1000
+	TFLAG:LOCAL = 0
+NEXT
+
+;なっていない
+IF E == 0 && FLAG:(999 + FLAG:25) != 2
+	;霊夢
+	;IF FLAG:25 == 1
+		;PRINTFORM [お札][茶葉][紅白まんじゅう]
+	;	TFLAG:913 += 1
+	;	TFLAG:910 += 1
+	;	TFLAG:912 += 1
+	IF 0
+	ELSE
+		;レア度4
+		IF RAND:13 == 1
+			;PRINTFORM [ネズミのしっぽ]、
+			TFLAG:941 += 1
+		ELSEIF RAND:12 == 1
+			;PRINTFORM [サンゴ]、
+			TFLAG:944 += 1
+		ELSEIF RAND:11 == 1
+			;PRINTFORM [ライオンの鬣]、
+			TFLAG:946 += 1
+		ELSEIF RAND:10 == 1
+			;PRINTFORM [真珠]、
+			TFLAG:949 += 1
+		ELSEIF RAND:9 == 1
+			;PRINTFORM [化石]、
+			TFLAG:952 += 1
+		ELSEIF RAND:8 == 1
+			;PRINTFORM [豆]、
+			TFLAG:954 += 1
+		ELSEIF RAND:7 == 1
+			;PRINTFORM [銃弾]、
+			TFLAG:955 += 1
+		ELSEIF RAND:6 == 1
+			;PRINTFORM [黒い髪]、
+			TFLAG:956 += 1
+		ELSEIF RAND:5 == 1
+			;PRINTFORM [リボン]、
+			TFLAG:957 += 1
+		ELSEIF RAND:4 == 1
+			;PRINTFORM [ウミネコ]、
+			TFLAG:959 += 1
+		ELSEIF RAND:3 == 1
+			;PRINTFORM [ダークマター]、
+			TFLAG:988 += 1
+		ELSEIF RAND:2 == 1
+			;PRINTFORM [騎馬の手綱]、
+			TFLAG:990 += 1
+		ELSE
+			;PRINTFORM [聖骸布]、
+			TFLAG:992 += 1
+		ENDIF
+		;レア度2
+		IF RAND:9 == 1
+			;PRINTFORM [ガラスのカケラ]、
+			TFLAG:940 += 1
+		ELSEIF RAND:8 == 1
+			;PRINTFORM [ガラスのカケラ]、
+			TFLAG:943 += 1
+		ELSEIF RAND:7 == 1
+			;PRINTFORM [孔雀の羽]、
+			TFLAG:945 += 1
+		ELSEIF RAND:6 == 1
+			;PRINTFORM [貝殻]、
+			TFLAG:948 += 1
+		ELSEIF RAND:5 == 1
+			;PRINTFORM [ミイラ]、
+			TFLAG:951 += 1
+		ELSEIF RAND:4 == 1
+			;PRINTFORM [フィルムの切れ端]、
+			TFLAG:953 += 1
+		ELSEIF RAND:3 == 1
+			;PRINTFORM [魚]、
+			TFLAG:958 += 1
+		ELSEIF RAND:2 == 1
+			;例外
+			;PRINTFORM [バラの棘]、
+			TFLAG:987 += 1
+		ELSE
+			;PRINTFORM [肉]、
+			TFLAG:989 += 1
+		ENDIF
+		;レア度1
+		IF RAND:6 == 1
+			;PRINTFORM [ポップコーン]
+			TFLAG:939 += 1
+		ELSEIF RAND:5 == 1
+			;PRINTFORM [ヒトデ]
+			TFLAG:942 += 1
+		ELSEIF RAND:4 == 1
+			;PRINTFORM [海水]
+			TFLAG:947 += 1
+		ELSEIF RAND:3 == 1
+			;PRINTFORM [漢書]
+			TFLAG:950 += 1
+		ELSEIF RAND:2 == 1
+			;例外
+			;PRINTFORM [アホ毛]
+			TFLAG:986 += 1
+		ELSE
+			;PRINTFORM [十字架]
+			TFLAG:991 += 1
+		ENDIF
+	ENDIF
+;既に一度仲間になっている（レア度2×2、レア度1）
+ELSE
+	REPEAT 2
+		IF RAND:14 == 1
+			;PRINTFORM [カレー粉]、
+			TFLAG:907 += 1
+		ELSEIF RAND:13 == 1
+			;PRINTFORM [亀の甲羅]、
+			TFLAG:911 += 1
+		ELSEIF RAND:12 == 1
+			;PRINTFORM [カエル]、
+			TFLAG:915 += 1
+		ELSEIF RAND:11 == 1
+			;PRINTFORM [蜂蜜]、
+			TFLAG:919 += 1
+		ELSEIF RAND:10 == 1
+			;PRINTFORM [コウモリの羽]、
+			TFLAG:923 += 1
+		ELSEIF RAND:9 == 1
+			;PRINTFORM [温泉卵]、
+			TFLAG:928 += 1
+		ELSEIF RAND:8 == 1
+			;PRINTFORM [銀の食器]、
+			TFLAG:932 += 1
+		ELSEIF RAND:7 == 1
+			;PRINTFORM [焼き鳥]、
+			TFLAG:936 += 1
+		ELSEIF RAND:6 == 1
+			;PRINTFORM [まな板]、
+			TFLAG:969 += 1
+		ELSEIF RAND:5 == 1
+			;PRINTFORM [鉄クズ]、
+			TFLAG:966 += 1
+		ELSEIF RAND:4 == 1
+			;PRINTFORM [車輪]、
+			TFLAG:973 += 1
+		ELSEIF RAND:3 == 1
+			;PRINTFORM [鉄板]、
+			TFLAG:977 += 1
+		ELSEIF RAND:2 == 1
+			;PRINTFORM [妖精の羽]、
+			TFLAG:980 += 1
+		ELSE
+			;PRINTFORM [虎の毛皮]、
+			TFLAG:983 += 1
+		ENDIF
+	REND
+	IF RAND:14 == 1
+		;PRINTFORM [長ネギ]
+		TFLAG:906 += 1
+	ELSEIF RAND:13 == 1
+		;PRINTFORM [茶葉]
+		TFLAG:910 += 1
+	ELSEIF RAND:12 == 1
+		;PRINTFORM [霧の湖の水]
+		TFLAG:914 += 1
+	ELSEIF RAND:11 == 1
+		;PRINTFORM [ひまわり]
+		TFLAG:918 += 1
+	ELSEIF RAND:10 == 1
+		;PRINTFORM [ベニテングタケ]
+		TFLAG:922 += 1
+	ELSEIF RAND:9 == 1
+		;PRINTFORM [温泉の湯]
+		TFLAG:927 += 1
+	ELSEIF RAND:8 == 1
+		;PRINTFORM [アオカビ]
+		TFLAG:931 += 1
+	ELSEIF RAND:7 == 1
+		;PRINTFORM [桜の花びら]
+		TFLAG:935 += 1
+	ELSEIF RAND:6 == 1
+		;PRINTFORM [桃]
+		TFLAG:962 += 1
+	ELSEIF RAND:5 == 1
+		;PRINTFORM [汚れた布きれ]
+		TFLAG:965 += 1
+	ELSEIF RAND:4 == 1
+		;PRINTFORM [骨]
+		TFLAG:972 += 1
+	ELSEIF RAND:3 == 1
+		;PRINTFORM [ハリボテ]
+		TFLAG:976 += 1
+	ELSEIF RAND:2 == 1
+		;PRINTFORM [丈夫な糸]
+		TFLAG:979 += 1
+	ELSE
+		;PRINTFORM [掴める雲]
+		TFLAG:982 += 1
+	ENDIF
+ENDIF
+
+@ADD_SOZAI_ITEM
+;ボス撃破時素材入手設定呼び出し
+TRYCALL ADD_SOZAI_TFLAG
+
+;素材を手に入れたかの判定と、素材数が99を超える場合の調整
+VARSET LOCAL, 0
+FOR LOCAL, 900, 1000
+	SIF ITEM:LOCAL + TFLAG:LOCAL >= 99
+		TFLAG:LOCAL = 99 - ITEM:LOCAL
+	SIF TFLAG:LOCAL > 0
+		LOCAL:1 = 1
+NEXT
+
+;素材を手に入れてなければRETURN
+SIF LOCAL:1 == 0
+	RETURN 0
+
+;IF TARGET < 0 && ASSI < 0
+;	PRINTFORM %CALLNAME:MASTER%はモンスター退治の報酬として${M}
+;ELSE
+;	PRINTFORM %CALLNAME:MASTER%達はモンスター退治の報酬として${M}
+;ENDIF
+PRINT と
+VARSET LOCAL, 0
+FOR LOCAL, 900, 1000
+	IF TFLAG:LOCAL > 0
+		PRINTFORM [%ITEMNAME:LOCAL%]
+		ITEM:LOCAL += TFLAG:LOCAL
+		TFLAG:LOCAL = 0
+	ENDIF
+NEXT
+;PRINTW を手に入れました
+
+@REFERENCE_BOOK_GET
+;参考書入手
+LOCAL = 0
+IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
+	;外界
+ELSE
+	;幻想郷内
+	;パートナーの調合経験が一定以上で参考書入手
+	IF ITEM:804 == 0 && EXP:89 >= 1000
+		;高等錬金術講座
+		LOCAL = 804
+	ELSEIF ITEM:803 == 0 && EXP:89 >= 500
+		;中等錬金術講座
+		LOCAL = 803
+	ELSEIF ITEM:802 == 0 && EXP:89 >= 300
+		;初等錬金術講座
+		LOCAL = 802
+	ELSEIF ITEM:801 == 0 && EXP:89 >= 1
+		;絵で見る錬金術
+		LOCAL = 801
+	ENDIF
+	IF LOCAL
+		PRINTFORMW 探索の結果、[%ITEMNAME:LOCAL%]を手に入れました
+		PRINTFORMW 役に立つレシピが書いてあるようだ……
+		ITEM:LOCAL += 1
+	ENDIF
+ENDIF
+
+@REFERENCE_BOOK
+;参考書を読む。条件を満たせばレシピを取得
+
+DRAWLINE
+PRINTFORML どの参考書を読みますか？
+PRINTL 
+REPEAT 10
+	;T:COUNTの初期化（INPUT時の判断に使用）
+	T:COUNT = 0
+
+	;レシピの断片はCONTINUE
+	SIF COUNT == 0
+		CONTINUE
+
+	IF ITEM:(COUNT + 800)
+		;絵で見る錬金術～高等錬金術講座には章が設定されており、条件(調合経験)を満たした章まで読める
+		IF COUNT <= 4
+			;各参考書の条件をLOCAL～で設定。第１章は入手時の条件があるのでこちらでは設定しなくてOK
+			;絵で見る錬金術
+			IF COUNT == 1
+				LOCAL:1 = 0
+				LOCAL:2 = 50
+				LOCAL:3 = 100
+				LOCAL:4 = 150
+				LOCAL:5 = 200
+			;初等錬金術講座
+			ELSEIF COUNT == 2
+				LOCAL:1 = 0
+				LOCAL:2 = 350
+				LOCAL:3 = 400
+				LOCAL:4 = 450
+				LOCAL:5 = 500
+			;中等錬金術講座
+			ELSEIF COUNT == 3
+				LOCAL:1 = 0
+				LOCAL:2 = 550
+				LOCAL:3 = 600
+				LOCAL:4 = 650
+				LOCAL:5 = 700
+			;高等錬金術講座
+			ELSEIF COUNT == 4
+				LOCAL:1 = 0
+				LOCAL:2 = 1100
+				LOCAL:3 = 1200
+				LOCAL:4 = 1300
+				LOCAL:5 = 1400
+			ENDIF
+			;読めなくても表示はされる。表示される場合T:COUNT = 1
+			PRINTFORM [{COUNT, 3}] %ITEMNAME:(COUNT + 800)%
+			T:COUNT = 1
+			;第５章まで読み終わってる場合第○章は表示されない
+			IF ITEM:(COUNT + 800) <= 5
+				PRINTFORM  第{ITEM:(COUNT + 800)}章 
+				;読める場合 * が表示される
+				IF EXP:89 >= LOCAL:(ITEM:(COUNT + 800))
+					PRINT  *
+					;読める場合T:COUNT = 2
+					T:COUNT = 2
+				ENDIF
+			ENDIF
+			PRINTL 
+		ELSE
+			;一応例外処理を設定。T:COUNT = 1だと表示されるだけなので注意。
+			PRINTFORML [{COUNT, 3}] %ITEMNAME:(COUNT + 800)%
+			T:COUNT = 1
+		ENDIF
+	ENDIF
+REND
+PRINTL [100] やめる
+
+$INPUT_REFERENCE_BOOK
+INPUT
+
+;LOCAL初期化
+REPEAT 200
+	LOCAL:COUNT = 0
+REND
+LOCAL = RESULT + 800
+
+IF RESULT == 100
+	PRINTFORMW 参考書を読むのを止めました
+	RETURN 0
+ELSEIF RESULT > 100
+	PRINTL 正しい数値を入力してください
+	GOTO INPUT_REFERENCE_BOOK
+ELSEIF T:RESULT == 0
+	;所持していない参考書は読めない
+	PRINTL 正しい数値を入力してください
+	GOTO INPUT_REFERENCE_BOOK
+ELSEIF T:RESULT != 2
+	IF ITEM:LOCAL > 5
+		;読む章がない場合は読めない
+		PRINTFORMW %CALLNAME:MASTER%達は[%ITEMNAME:LOCAL%]でレシピを復習した
+	ELSE
+		;条件を満たしていない参考書は読めない
+		PRINTL 条件を満たしていません。
+	ENDIF
+	GOTO INPUT_REFERENCE_BOOK
+ELSEIF ITEM:LOCAL
+	;参考書を持っていたら使用
+	PRINTFORMW %CALLNAME:MASTER%達は[%ITEMNAME:LOCAL%]でレシピを学んだ
+	
+	;LOCAL:(レシピの番号) = 1で覚えられるレシピを記録
+	;絵で見る錬金術～高等錬金術講座には章が設定されており、条件を満たした章まで読める
+	;絵で見る錬金術
+	IF LOCAL == 801
+		;１章
+		IF ITEM:LOCAL == 1
+			;[  5]回復薬(小) レア度: 0
+			LOCAL:5 = 1
+			;[106]厄草 レア度: 1
+			LOCAL:106 = 1
+			;[110]回復厄 レア度: 1
+			LOCAL:110 = 1
+			;[ 10]毒薬 レア度: 2
+			LOCAL:10 = 1
+			;[ 16]博麗のお茶 レア度: 2
+			LOCAL:16 = 1
+			;[ 41]東方美人茶 レア度: 2
+			LOCAL:41 = 1
+			;[ 45]薬湯 レア度: 2
+			LOCAL:45 = 1
+			;[ 73]兵書「五十歩百歩」 レア度: 2
+			LOCAL:73 = 1
+			;[ 89]草餅 レア度: 2
+			LOCAL:89 = 1
+			;[108]厄湯 レア度: 2
+			LOCAL:108 = 1
+			;[159]漢方薬 レア度: 2
+			LOCAL:159 = 1
+			;[160]回復薬（中） レア度: 2
+			LOCAL:160 = 1
+			;１章読了
+			ITEM:LOCAL += 1
+		;２章
+		ELSEIF ITEM:LOCAL == 2
+			;[  9]木の実パン レア度: 3
+			LOCAL:9 = 1
+			;[ 18]ねぎま レア度: 3
+			LOCAL:18 = 1
+			;[ 34]月見天道晴れ模様 レア度: 3
+			LOCAL:34 = 1
+			;[ 71]フラワーロック レア度: 3
+			LOCAL:71 = 1
+			;[ 74]豆煮 レア度: 3
+			LOCAL:74 = 1
+			;[ 87]桜餅 レア度: 3
+			LOCAL:87 = 1
+			;[ 91]ピーチティー レア度: 3
+			LOCAL:91 = 1
+			;２章読了
+			ITEM:LOCAL += 1
+		;３章
+		ELSEIF ITEM:LOCAL == 3
+			;[ 96]ハニーパイ レア度: 3
+			LOCAL:96 = 1
+			;[ 98]桃の切り身 レア度: 3
+			LOCAL:98 = 1
+			;[109]毒厄 レア度: 3
+			LOCAL:109 = 1
+			;[123]洗濯板 レア度: 3
+			LOCAL:123 = 1
+			;[129]くらげの骨 レア度: 3
+			LOCAL:129 = 1
+			;[138]占卜亀甲獣骨 レア度: 3
+			LOCAL:138 = 1
+			;[163]碁石黒茶 レア度: 3
+			LOCAL:163 = 1
+			;[166]ミスフォーチュンズホイール レア度: 3
+			LOCAL:166 = 1
+			;３章読了
+			ITEM:LOCAL += 1
+		;４章
+		ELSEIF ITEM:LOCAL == 4
+			;[ 20]ブルーチーズ レア度: 4
+			LOCAL:20 = 1
+			;[ 28]花火 レア度: 4
+			LOCAL:28 = 1
+			;[ 32]不自然な雲 レア度: 4
+			LOCAL:32 = 1
+			;[ 33]雨雲 レア度: 4
+			LOCAL:33 = 1
+			;[ 37]冬の贈り物 レア度: 4
+			LOCAL:37 = 1
+			;[ 47]フルーツ牛乳 レア度: 4
+			LOCAL:47 = 1
+			;[ 48]水蓮の花びら レア度: 4
+			LOCAL:48 = 1
+			;[ 61]キャラメルコーン レア度: 4
+			LOCAL:61 = 1
+			;[ 78]納豆 レア度: 4
+			LOCAL:78 = 1
+			;[ 84]魚の塩焼き レア度: 4
+			LOCAL:84 = 1
+			;[ 93]冷凍桃 レア度: 4
+			LOCAL:93 = 1
+			;４章読了
+			ITEM:LOCAL += 1
+		;５章
+		ELSEIF ITEM:LOCAL == 5
+			;[ 97]ピーチソフト レア度: 4
+			LOCAL:97 = 1
+			;[107]厄ルト レア度: 4
+			LOCAL:107 = 1
+			;[113]銀のナイフ レア度: 4
+			LOCAL:113 = 1
+			;[117]『真っ二つ』― 魚切丸 レア度: 4
+			LOCAL:117 = 1
+			;[122]りんごの切り身 レア度: 4
+			LOCAL:122 = 1
+			;[124]魚の三枚おろし レア度: 4
+			LOCAL:124 = 1
+			;[135]ネギ焼き レア度: 4
+			LOCAL:135 = 1
+			;[142]湯豆腐 レア度: 4
+			LOCAL:142 = 1
+			;[171]古びた日本人形 レア度: 4
+			LOCAL:171 = 1
+			;[172]インツタントカーメン レア度: 4
+			LOCAL:172 = 1
+			;[176]小さなお墓 レア度: 4
+			LOCAL:176 = 1
+			;５章読了
+			ITEM:LOCAL += 1
+		ENDIF
+	;初等錬金術講座
+	ELSEIF LOCAL == 802
+		;１章
+		IF ITEM:LOCAL == 1
+			;[  6]シダーウッド レア度: 5
+			LOCAL:6 = 1
+			;[  7]ジャスミン レア度: 5
+			LOCAL:7 = 1
+			;[ 11]カレーまん レア度: 5
+			LOCAL:11 = 1
+			;[ 17]ローストチキン レア度: 5
+			LOCAL:17 = 1
+			;[ 22]ハニーソフト レア度: 5
+			LOCAL:22 = 1
+			;[ 26]ドロドロした白い何か レア度: 5
+			LOCAL:26 = 1
+			;[ 30]爆竹 レア度: 5
+			LOCAL:30 = 1
+			;１章読了
+			ITEM:LOCAL += 1
+		;２章
+		ELSEIF ITEM:LOCAL == 2
+			;[ 31]フェニックスの尾 レア度: 5
+			LOCAL:31 = 1
+			;[ 40]ウナギの塩焼き レア度: 5
+			LOCAL:40 = 1
+			;[ 53]電気ウナギ レア度: 5
+			LOCAL:53 = 1
+			;[ 54]ハイポーション レア度: 5
+			LOCAL:54 = 1
+			;[ 55]レッドハーブ レア度: 5
+			LOCAL:55 = 1
+			;[ 62]生キャラメル レア度: 5
+			LOCAL:62 = 1
+			;[ 64]琥珀 レア度: 5
+			LOCAL:64 = 1
+			;２章読了
+			ITEM:LOCAL += 1
+		;３章
+		ELSEIF ITEM:LOCAL == 3
+			;[ 75]キーマカレー レア度: 5
+			LOCAL:75 = 1
+			;[ 79]シルバーバレット レア度: 5
+			LOCAL:79 = 1
+			;[ 80]鳥鍋 レア度: 5
+			LOCAL:80 = 1
+			;[ 83]まな板の上の恋 レア度: 5
+			LOCAL:83 = 1
+			;[ 85]冥王のくちづけ レア度: 5
+			LOCAL:85 = 1
+			;[ 90]煎餅 レア度: 5
+			LOCAL:90 = 1
+			;[131]焼きリンゴ レア度: 5
+			LOCAL:131 = 1
+			;３章読了
+			ITEM:LOCAL += 1
+		;４章
+		ELSEIF ITEM:LOCAL == 4
+			;[133]ディアボロ風カエル焼き レア度: 5
+			LOCAL:133 = 1
+			;[140]黄身時雨 レア度: 5
+			LOCAL:140 = 1
+			;[146]カキ氷 レア度: 5
+			LOCAL:146 = 1
+			;[147]う巻き レア度: 5
+			LOCAL:147 = 1
+			;[148]パパラッチフィルム レア度: 5
+			LOCAL:148 = 1
+			;[152]千里眼の薬 レア度: 5
+			LOCAL:152 = 1
+			;[153]積乱雲 レア度: 5
+			LOCAL:153 = 1
+			;４章読了
+			ITEM:LOCAL += 1
+		;５章
+		ELSEIF ITEM:LOCAL == 5
+			;[155]サテライトひまわり レア度: 5
+			LOCAL:155 = 1
+			;[156]冷凍カエル レア度: 5
+			LOCAL:156 = 1
+			;[157]病気平癒守 レア度: 5
+			LOCAL:157 = 1
+			;[158]竜印香炉 レア度: 5
+			LOCAL:158 = 1
+			;[164]白毫銀針茶 レア度: 5
+			LOCAL:164 = 1
+			;[169]かえんぐるま レア度: 5
+			LOCAL:169 = 1
+			;[170]ミスタービーン レア度: 5
+			LOCAL:170 = 1
+			;[186]塩 レア度:5
+			LOCAL:186 = 1
+			;[187]干物 レア度:5
+			LOCAL:187 = 1
+			;５章読了
+			ITEM:LOCAL += 1
+		ENDIF
+	;中等錬金術講座
+	ELSEIF LOCAL == 803
+		;１章
+		IF ITEM:LOCAL == 1
+			;[  3]バーモントカレー レア度: 6
+			LOCAL:3 = 1
+			;[  8]ペパーミント レア度: 6
+			LOCAL:8 = 1
+			;[ 13]水槽入りのカエル レア度: 6
+			LOCAL:13 = 1
+			;[ 14]光る鉱石 レア度: 6
+			LOCAL:14 = 1
+			;[ 35]一日氷結娘 レア度: 6
+			LOCAL:35 = 1
+			;[ 42]花のサラダ レア度: 6
+			LOCAL:42 = 1
+			;[ 43]濃縮温泉 レア度: 6
+			LOCAL:43 = 1
+			;１章読了
+			ITEM:LOCAL += 1
+		;２章
+		ELSEIF ITEM:LOCAL == 2
+			;[ 44]花の湯 レア度: 6
+			LOCAL:44 = 1
+			;[ 60]チキン＆エッグカレー レア度: 6
+			LOCAL:60 = 1
+			;[ 65]孔雀石 レア度: 6
+			LOCAL:65 = 1
+			;[ 76]豆饅頭 レア度: 6
+			LOCAL:76 = 1
+			;[ 92]フルーツヨーグルト レア度: 6
+			LOCAL:92 = 1
+			;[ 94]ピーチジャム レア度: 6
+			LOCAL:94 = 1
+			;[130]鉄の環 レア度: 6
+			LOCAL:130 = 1
+			;[132]黒のホットミルク レア度: 6
+			LOCAL:132 = 1
+			;２章読了
+			ITEM:LOCAL += 1
+		;３章
+		ELSEIF ITEM:LOCAL == 3
+			;[134]地獄茹で卵 レア度: 6
+			LOCAL:134 = 1
+			;[136]焼きキノコ レア度: 6
+			LOCAL:136 = 1
+			;[137]黒豆 レア度: 6
+			LOCAL:137 = 1
+			;[154]胡散臭い雨雲 レア度: 6
+			LOCAL:154 = 1
+			;[161]白桃のシャーベット レア度: 6
+			LOCAL:161 = 1
+			;[162]ホットケーキ レア度: 6
+			LOCAL:162 = 1
+			;[173]ジュラシックパーク レア度: 6
+			LOCAL:173 = 1
+			;[174]地震ローター レア度: 6
+			LOCAL:174 = 1
+			;[189]地震ローターB レア度:6
+			LOCAL:189 = 1
+			;３章読了
+			ITEM:LOCAL += 1
+		;４章
+		ELSEIF ITEM:LOCAL == 4
+			;[ 27]レッドローション レア度: 7
+			LOCAL:27 = 1
+			;[ 36]豪華冬の訪れギフト レア度: 7
+			LOCAL:36 = 1
+			;[ 38]ウィル・オ・ウィスプ レア度: 7
+			LOCAL:38 = 1
+			;[ 46]卵サラダ レア度: 7
+			LOCAL:46 = 1
+			;[ 50]アダマンタイト レア度: 7
+			LOCAL:50 = 1
+			;[ 51]ねずみ花火 レア度: 7
+			LOCAL:51 = 1
+			;[ 56]りんごジャム レア度: 7
+			LOCAL:56 = 1
+			;[ 59]苛烈たるスカーレットカレーマイスタ レア度: 7
+			LOCAL:59 = 1
+			;[ 67]ハチクロ レア度: 7
+			LOCAL:67 = 1
+			;４章読了
+			ITEM:LOCAL += 1
+		;５章
+		ELSEIF ITEM:LOCAL == 5
+			;[ 81]鳥の丸焼 レア度: 7
+			LOCAL:81 = 1
+			;[ 95]ピーチパイ レア度: 7
+			LOCAL:95 = 1
+			;[ 99]ロケット花火 レア度: 7
+			LOCAL:99 = 1
+			;[111]星屑のブローチ レア度: 7
+			LOCAL:111 = 1
+			;[112]破魔の矢尻 レア度: 7
+			LOCAL:112 = 1
+			;[145]プリン レア度: 7
+			LOCAL:145 = 1
+			;[149]フィルム心象風景 レア度: 7
+			LOCAL:149 = 1
+			;[151]逆巻き銀時計 レア度: 7
+			LOCAL:151 = 1
+			;[165]老君眉茶 レア度: 7
+			LOCAL:165 = 1
+			;[183]キメラの翼 レア度: 7
+			LOCAL:183 = 1
+			;５章読了
+			ITEM:LOCAL += 1
+		ENDIF
+	;高等錬金術講座
+	ELSEIF LOCAL == 804
+		;１章
+		IF ITEM:LOCAL == 1
+			;[ 19]大ガマガエル レア度: 8
+			LOCAL:19 = 1
+			;[ 24]巫女魔女メイド返り討ち レア度: 8
+			LOCAL:24 = 1
+			;[ 49]墨染めの水蓮 レア度: 8
+			LOCAL:49 = 1
+			;[ 52]粘り強き一振り レア度: 8
+			LOCAL:52 = 1
+			;[ 57]アップルパイ レア度: 8
+			LOCAL:57 = 1
+			;[ 68]けもみみそうる レア度: 8
+			LOCAL:68 = 1
+			;[ 69]動物バスター レア度: 8
+			LOCAL:69 = 1
+			;[ 70]絢爛な食器 レア度: 8
+			LOCAL:70 = 1
+			;[ 72]太古の巨大魚 レア度: 8
+			LOCAL:72 = 1
+			;１章読了
+			ITEM:LOCAL += 1
+		;２章
+		ELSEIF ITEM:LOCAL == 2
+			;[ 77]炒り豆 レア度: 8
+			LOCAL:77 = 1
+			;[ 86]お雑煮 レア度: 8
+			LOCAL:86 = 1
+			;[100]一尺玉打ち上げ花火 レア度: 8
+			LOCAL:100 = 1
+			;[104]月見草 レア度: 8
+			LOCAL:104 = 1
+			;[105]月の骨 レア度: 8
+			LOCAL:105 = 1
+			;[114]ルーンメタル レア度: 8
+			LOCAL:114 = 1
+			;[115]蝶の妖刀 レア度: 8
+			LOCAL:115 = 1
+			;[119]スピードドリンク レア度: 8
+			LOCAL:119 = 1
+			;[120]守矢のお茶 レア度: 8
+			LOCAL:120 = 1
+			;２章読了
+			ITEM:LOCAL += 1
+		;３章
+		ELSEIF ITEM:LOCAL == 3
+			;[121]電信御柱 レア度: 8
+			LOCAL:121 = 1
+			;[126]緋色の羽衣 レア度: 8
+			LOCAL:126 = 1
+			;[139]マジックポーション レア度: 8
+			LOCAL:139 = 1
+			;[144]アイスクリーム レア度: 8
+			LOCAL:144 = 1
+			;[150]未練がましい骨と皮 レア度: 8
+			LOCAL:150 = 1
+			;[168]欲望の緑翠眼 レア度: 8
+			LOCAL:168 = 1
+			;[177]赤より紅い花 レア度: 8
+			LOCAL:177 = 1
+			;[182]フルーツパフェ レア度: 8
+			LOCAL:182 = 1
+			;[184]風の翼 レア度: 8
+			LOCAL:184 = 1
+			;３章読了
+			ITEM:LOCAL += 1
+		;４章
+		ELSEIF ITEM:LOCAL == 4
+			;[  4]精力剤 レア度: 9
+			LOCAL:4 = 1
+			;[ 63]シグナルグラス レア度: 9
+			LOCAL:63 = 1
+			;[ 82]流し雛 レア度: 9
+			LOCAL:82 = 1
+			;[ 88]月餅 レア度: 9
+			LOCAL:88 = 1
+			;[118]セラミック刀 レア度: 9
+			LOCAL:118 = 1
+			;[125]黒絹のゴシックドレス レア度: 9
+			LOCAL:125 = 1
+			;[141]麻婆豆腐 レア度: 9
+			LOCAL:141 = 1
+			;[190]不夜城レッド レア度:9
+			LOCAL:190 = 1
+			;４章読了
+			ITEM:LOCAL += 1
+		;５章
+		ELSEIF ITEM:LOCAL == 5
+			;[ 12]エリクサー レア度: 10
+			LOCAL:12 = 1
+			;[ 21]月光花 レア度: 10
+			LOCAL:21 = 1
+			;[ 25]アコヤガイの置物 レア度: 10
+			LOCAL:25 = 1
+			;[ 66]ミニチュア水族館 レア度: 10
+			LOCAL:66 = 1
+			;[167]黒炎の真珠 レア度: 10
+			LOCAL:167 = 1
+			;[175]リアル目玉焼き レア度: 10
+			LOCAL:175 = 1
+			;[178]キョンシー レア度: 10
+			LOCAL:178 = 1
+			;[179]即席巨乳薬 レア度: 10
+			LOCAL:179 = 1
+			;[180]即席貧乳薬 レア度: 10
+			LOCAL:180 = 1
+			;５章読了
+			ITEM:LOCAL += 1
+		ENDIF
+	ENDIF
+	LOCAL:999 = 0
+	;レシピ名取得
+	CALL RECIPE_NAME
+	REPEAT 200
+		SIF COUNT == 0
+			CONTINUE
+		;LOCAL:(レシピの番号)が１　かつ　レシピを作ったことがない　かつ　レシピが判明していないならレシピ取得
+		IF LOCAL:COUNT && FLAG:(2000+COUNT) != 1 && FLAG:(2000+COUNT) != 2
+			A = 2000 + COUNT
+			FLAG:(2000+COUNT) = 2
+			PRINTFORML [{COUNT,3}][%STR:A%]
+			PRINTFORM 　　　
+			CALL RECIPE_BOOK_LIST_NAME
+			;LOCAL:999は取得したレシピ数
+			LOCAL:999 += 1
+		ENDIF
+	REND
+	IF LOCAL:999
+		PRINTFORMW 以上のレシピを覚えた
+		SIF ITEM:LOCAL > 5
+			PRINTFORMW この参考書は全て読み終えたようだ
+	ELSE
+		PRINTFORMW しかし既に知っているレシピばかりだった……
+	ENDIF
+ELSE
+	PRINTL 正しい数値を入力してください
+	GOTO INPUT_REFERENCE_BOOK
+ENDIF
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_309
+
+A = 0
+S = 0
+V = 18
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+CALL COM_ORDER
+
+;男嫌い
+IF TALENT:82 && TALENT:PLAYER:122
+	A -= 7
+ENDIF
+
+;好感度
+IF CFLAG:2 < 100
+	B = 0
+	IF CFLAG:2 < 0
+		B = 20
+	ELSEIF CFLAG:2 < 50
+		B = 10
+	ELSE
+		B = 5
+	ENDIF
+	A -= B
+ENDIF
+
+;好感度
+IF CFLAG:2 >= 200
+	B = 0
+	B = CFLAG:2 / 30
+	A += B
+ENDIF
+
+IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
+	;男嫌い
+	IF TALENT:82 && TALENT:PLAYER:122
+		PRINT  - 
+		PRINTS TALENTNAME:82
+		PRINTV '(,7,')
+		S = 1
+	ENDIF
+
+	;好感度
+	IF CFLAG:2 < 100
+		B = 0
+		PRINT  - 
+		IF CFLAG:2 < 0
+			B = 20
+		ELSEIF CFLAG:2 < 50
+			B = 10
+		ELSE
+			B = 5
+		ENDIF
+		PRINT 好感度不足
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+
+	;好感度
+	IF CFLAG:2 >= 200
+		B = 0
+		SIF S
+			PRINT  + 
+		B = CFLAG:2 / 30
+		PRINT 好感度
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+
+	;合計を表示(18以上で実行)
+	PRINT  = 
+	PRINTV A
+
+	IF A < V
+		PRINT  < 
+		PRINT 実行値
+		PRINTV V
+	ELSEIF A == V
+		PRINT  = 
+		PRINT 実行値
+		PRINTV V
+	ELSEIF A > V
+		PRINT  > 
+		PRINT 実行値
+		PRINTV V
+	ENDIF
+	WAIT
+ENDIF
+
+
+

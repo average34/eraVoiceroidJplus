@@ -1,0 +1,143 @@
+﻿;5ターン継続、使用中奉仕効果増大、体力減少大
+;TEQUIP:23を使わせてもらいました
+;奉仕行動以外はほぼ体力消費するだけの悲しい効果
+@COM_ABLE400
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;幽明の苦輪（妖夢専用）
+
+SIF NO:TARGET != 19
+	RETURN 0
+IF ASSI > 0
+	SIF NO:TARGET == 19 && NO:ASSI == 87
+		RETURN 0
+ENDIF
+;親密10以上、技巧5以上、奉仕精神5以上
+SIF ABL:0 < 10 || ABL:2 <5 || ABL:6 < 5
+	RETURN 0
+RETURN 1
+
+@COM400
+;幽明の苦輪
+PRINTFORML 幽明の苦輪
+STR:0 = 幽明の苦輪
+
+CALL TRAIN_MESSAGE_B
+
+;幽明の苦輪発動もしくは終了
+IF TEQUIP:23 > 0
+	LOSEBASE:0 += 0
+	LOSEBASE:1 += 30
+	TEQUIP:23 = 0
+ELSE
+	LOSEBASE:0 += 0
+	LOSEBASE:1 += 40
+	TEQUIP:23 = 6
+ENDIF
+
+
+;好感度ランダム変化
+A = RAND:5 + 5
+;合意がないと好感度が下がる、おまけ程度の反感
+IF TALENT:152 == 0 && TFLAG:48 == 0
+	A -= 5
+	SOURCE:15 += 50
+ENDIF
+TFLAG:30 += A
+TFLAG:37 += A / 2
+
+;口上の呼び出し
+CALL SELF_KOJO
+
+RETURN 1
+
+@TRAIN_MESSAGE_COM400
+;幽明の苦輪発動もしくは終了
+IF TEQUIP:23 > 0
+	IF TFLAG:45 == 0
+		PRINTFORMW %CALLNAME:TARGET%に幽明の苦輪をやめさせた。
+	ELSE
+		PRINTFORMW %CALLNAME:TARGET%は幽明の苦輪をやめた。
+	ENDIF
+ELSE
+	IF TFLAG:45 == 0
+		PRINTFORMW %CALLNAME:TARGET%に幽明の苦輪を使わせた。
+	ELSE
+		PRINTFORMW %CALLNAME:TARGET%は幽明の苦輪を使った。
+	ENDIF
+ENDIF
+
+@EQUIP_COM400
+;幽明の苦輪発動中
+
+TEQUIP:23 -= 1
+ PRINTFORML ＜幽明の苦輪発動中＞
+
+
+LOSEBASE:0 += LOSEBASE:1 * 4 / 5
+LOSEBASE:1 += 20
+
+SOURCE:5 += 300
+SOURCE:14 += 200
+IF (SELECTCOM >= 30 && SELECTCOM <= 37) || (SELECTCOM >= 60 && SELECTCOM <= 69) || SELECTCOM == 201
+	PRINTFORMW 妖夢は半霊と一緒に奉仕をしている…
+	SOURCE:0 *= 8
+	SOURCE:0 /= 5
+	SOURCE:3 *= 9
+	SOURCE:3 /= 5
+	SOURCE:4 *= 9
+	SOURCE:4 /= 5
+	SOURCE:5 *= 2
+	SOURCE:6 *= 6
+	SOURCE:6 /= 5
+	SOURCE:7 *= 9
+	SOURCE:7 /= 5
+	SOURCE:8 *= 6
+	SOURCE:8 /= 5
+	SOURCE:9 *= 9
+	SOURCE:9 /= 5
+	SOURCE:10 *= 3
+	SOURCE:10 /= 2
+	SOURCE:14 *= 9
+	SOURCE:14 /= 5
+	SOURCE:16 *= 7
+	SOURCE:16 /= 5
+	SOURCE:17 *= 9
+	SOURCE:17 /= 5
+	SOURCE:20 *= 8
+	SOURCE:20 /= 5
+	SOURCE:23 *= 6
+	SOURCE:23 /= 5
+ELSEIF SELECTCOM == 300
+	PRINTFORML 妖夢は半霊と一緒に攻撃してきた
+	PRINTFORMW 戦闘経験+2
+		EXP:95 += 2
+	SOURCE:5 *= 2
+	SOURCE:18 *= 8
+	SOURCE:18 /= 5
+	SOURCE:20 *= 2
+	SOURCE:21 *= 9
+	SOURCE:21 /= 5
+ELSEIF SELECTCOM == 308
+	PRINTFORML 妖夢は半霊と一緒に家事をこなしている…
+	PRINTFORMW %EXPNAME:90%+2
+		EXP:90 += 2
+	SOURCE:5 *= 2
+	SOURCE:18 *= 6
+	SOURCE:18 /= 5
+	SOURCE:19 *= 2
+	SOURCE:20 *= 2
+	SOURCE:21 *= 9
+	SOURCE:21 /= 5
+ELSE
+	SOURCE:22 += 200
+	SOURCE:22 *= 3
+	SOURCE:22 /= 2
+ENDIF
+
+SIF TEQUIP:23 == 0
+	PRINTFORMW ＜幽明の苦輪が終了しました＞
+
+RETURN 1

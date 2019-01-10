@@ -1,0 +1,430 @@
+﻿@COM23
+;逆レイプ
+
+PRINTL 逆レイプ
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+STR:0 = 逆レイプ
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;実行決定
+;-------------------------------------------------
+;-------------------------------------------------
+;射精ゲージチェック
+;-------------------------------------------------
+SIF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
+	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 40
+LOSEBASE:1 += 220
+
+SOURCE:13 = 1500
+SOURCE:14 = 800
+
+;ABL:Ｃ感覚をみる
+IF ABL:3 == 0
+	SOURCE:0 = 800
+	SOURCE:4 = 1600
+ELSEIF ABL:3 == 1
+	SOURCE:0 = 1400
+	SOURCE:4 = 1900
+ELSEIF ABL:3 == 2
+	SOURCE:0 = 2000
+	SOURCE:4 = 2300
+ELSEIF ABL:3 == 3
+	SOURCE:0 = 2500
+	SOURCE:4 = 2700
+ELSEIF ABL:3 == 4
+	SOURCE:0 = 2900
+	SOURCE:4 = 3100
+ELSE
+	SOURCE:0 = 2450 + (ABL:3 * 150)
+	SOURCE:4 = 2500 + (ABL:3 * 200)
+ENDIF
+
+
+;ABL:技巧をみる
+IF ABL:PLAYER:2 == 0
+	TIMES SOURCE:0 , 0.50
+	TIMES SOURCE:4 , 0.50
+ELSEIF ABL:PLAYER:2 == 1
+	TIMES SOURCE:0 , 0.80
+	TIMES SOURCE:4 , 0.80
+ELSEIF ABL:PLAYER:2 == 2
+	TIMES SOURCE:0 , 1.00
+	TIMES SOURCE:4 , 1.00
+ELSEIF ABL:PLAYER:2 == 3
+	TIMES SOURCE:0 , 1.50
+	TIMES SOURCE:4 , 1.50
+ELSEIF ABL:PLAYER:2 == 4
+	TIMES SOURCE:0 , 2.50
+	TIMES SOURCE:4 , 2.50
+ELSE
+	SOURCE:0 = SOURCE:0 * (ABL:PLAYER:2 * 75 + 25) / 100
+	SOURCE:4 = SOURCE:4 * (ABL:PLAYER:2 * 75 + 25) / 100
+ENDIF
+
+;ABL:サドっ気をみる
+IF ABL:PLAYER:15 == 0
+	TIMES SOURCE:0 , 1.00
+	TIMES SOURCE:4 , 1.00
+ELSEIF ABL:PLAYER:15 == 1
+	TIMES SOURCE:0 , 1.05
+	TIMES SOURCE:4 , 1.05
+ELSEIF ABL:PLAYER:15 == 2
+	TIMES SOURCE:0 , 1.10
+	TIMES SOURCE:4 , 1.10
+ELSEIF ABL:PLAYER:15 == 3
+	TIMES SOURCE:0 , 1.20
+	TIMES SOURCE:4 , 1.20
+ELSEIF ABL:PLAYER:15 == 4
+	TIMES SOURCE:0 , 1.30
+	TIMES SOURCE:4 , 1.30
+ELSE
+	SOURCE:0 = SOURCE:0 * (ABL:PLAYER:15 * 5 + 125) / 100
+	SOURCE:4 = SOURCE:4 * (ABL:PLAYER:15 * 5 + 125) / 100
+ENDIF
+
+;調教者が処女
+IF TALENT:PLAYER:0 == 1
+	TIMES SOURCE:13 , 20.00
+	TIMES SOURCE:14 , 3.00
+	TALENT:PLAYER:0 = 0
+
+	PRINTFORML ＜%CALLNAME:PLAYER%が処女＞
+
+	EXP:50 += 5
+	PRINTFORML %EXPNAME:50%＋５
+
+	IF ABL:0 < 1
+		PRINTFORML そして%ABLNAME:0%が1になった
+		ABL:0 = 1
+	ENDIF
+ENDIF
+EXP:PLAYER:0 += 1
+
+
+;主導権をチェック
+IF TFLAG:45 == 0
+	;主導権が主人公側
+	;ABL:従順をみる
+	IF ABL:0 <= 1
+		SOURCE:21 += 300 + (ABL:0 * 80)
+	ELSEIF ABL:0 <= 3
+		SOURCE:21 += 600 + (ABL:0 * 130)
+	ELSEIF ABL:0 <= 5
+		SOURCE:21 += 800 + (ABL:0 * 150)
+	ELSEIF ABL:0 <= 8
+		SOURCE:21 += 1000 + (ABL:0 * 170)
+	ELSEIF ABL:0 <= 11
+		SOURCE:21 += 1200 + (ABL:0 * 190)
+	ELSE
+		SOURCE:21 += 1500 + (ABL:0 * 210)
+	ENDIF
+ELSE
+	;主導権が相手側
+	;ABL:サドっ気をみる
+	IF ABL:15 == 0
+		SOURCE:20 = 600
+	ELSEIF ABL:15 == 1
+		SOURCE:20 = 900
+	ELSEIF ABL:15 == 2
+		SOURCE:20 = 1200
+	ELSEIF ABL:15 == 3
+		SOURCE:20 = 1600
+	ELSEIF ABL:15 == 4
+		SOURCE:20 = 2000
+	ELSE
+		SOURCE:20 = 1000 + (ABL:15 * 300)
+	ENDIF
+ENDIF
+
+;好感度ランダム変化
+A = RAND:10 + 5
+SIF TALENT:85 || TALENT:153
+	A += 5
+SIF TALENT:88
+	A += 5
+;合意がないと好感度が下がる
+IF TALENT:152 == 0 && TFLAG:48 == 0
+	A -= 10
+	SOURCE:15 += 500
+ENDIF
+TFLAG:30 += A
+TFLAG:37 += A / 2
+
+;既成事実3に相当
+TFLAG:200 = 3
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+CALL SAMEN_CHECK
+
+;射精時の処理
+IF E >= 1
+	;コマンドごとに固有の処理はこの下に書く
+	TIMES SOURCE:4 , 3.00
+
+	;ABL:精液中毒をみる
+	IF ABL:11 == 0
+		SOURCE:7 = 0
+		TIMES SOURCE:0 , 2.00
+		TIMES SOURCE:13, 2.00
+	ELSEIF ABL:11 == 1
+		SOURCE:7 = 50
+		TIMES SOURCE:0 , 2.50
+		TIMES SOURCE:13, 1.60
+	ELSEIF ABL:11 == 2
+		SOURCE:7 = 150
+		TIMES SOURCE:0 , 3.00
+		TIMES SOURCE:13, 1.00
+	ELSEIF ABL:11 == 3
+		SOURCE:7 = 300
+		TIMES SOURCE:0 , 4.50
+		TIMES SOURCE:13, 0.70
+	ELSEIF ABL:11 == 4
+		SOURCE:7 = 600
+		TIMES SOURCE:0 , 6.00
+		TIMES SOURCE:13, 0.40
+	ELSE
+		SOURCE:7 = (ABL:11 * 300) - 300
+		SOURCE:0 = SOURCE:0 * (ABL:11 + 3)
+		TIMES SOURCE:13, 0.10
+	ENDIF
+
+	;射精先タイプの設定
+	TFLAG:703 = 9
+	;射精先選択の可・不可
+	;TFLAG:704 = 0
+	;汎用的な処理はこの関数で行う
+	;（射精ゲージの再計算や射精経験の上昇と共通部分の表示）
+	CALL SAMEN_SHOOT
+ENDIF
+
+IF TALENT:119 || TALENT:121 || TALENT:122
+	;奴隷のＰ⇔調教者のＶの汚れが移動
+	STAIN:2 |= STAIN:PLAYER:3
+	STAIN:PLAYER:3 |= STAIN:2
+ENDIF
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +4
+	EXP:40 += 4
+	EXP:PLAYER:40 += 4
+ENDIF
+
+TFLAG:100 = 1
+
+RETURN 1
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_23
+A = 0
+S = 0
+V = 15
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+CALL COM_ORDER
+
+;ABL:従順
+IF ABL:0
+	A += ABL:0 * 4
+ENDIF
+
+;ABL:欲望
+IF ABL:1
+	A += ABL:1 * 2
+ENDIF
+
+IF MARK:1
+	A += MARK:1 * 2
+ENDIF
+
+;PALAM:欲情
+IF PALAM:5 < PALAMLV:1
+	L = 0
+ELSEIF PALAM:5 < PALAMLV:2
+	L = 1
+ELSEIF PALAM:5 < PALAMLV:3
+	L = 2
+ELSEIF PALAM:5 < PALAMLV:4
+	L = 3
+ELSEIF PALAM:5 < PALAMLV:5
+	L = 4
+ELSE
+	L = 5
+ENDIF
+IF L
+	A += L * 2
+ENDIF
+
+;快感に素直
+IF TALENT:70
+	A += 2
+ENDIF
+;快感の否定
+IF TALENT:71
+	A -= 2
+ENDIF
+;恋慕
+IF TALENT:85 && ASSIPLAY == 0
+	A += 5
+ENDIF
+
+;調教者が処女
+IF EXP:PLAYER:0 == 0
+	A -= 15
+ENDIF
+
+;調教者が貞操観念
+IF TALENT:PLAYER:30
+	A -= 10
+ENDIF
+
+;調教者が貞操無頓着
+IF TALENT:PLAYER:30
+	A += 5
+ENDIF
+
+;調教者のABL:技巧
+IF ABL:PLAYER:2
+	A += ABL:PLAYER:2 * 4
+ENDIF
+
+IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
+	;ABL:従順
+	IF ABL:0
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:0
+		PRINTV 'LV,ABL:0,'(,ABL:0 * 4,')
+		S = 1
+	ENDIF
+
+	;ABL:欲望
+	IF ABL:1
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:1
+		PRINTV 'LV,ABL:1,'(,ABL:1 * 2,')
+		S = 1
+	ENDIF
+
+	IF MARK:1
+		SIF S
+			PRINT  + 
+		PRINTS MARKNAME:1
+		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		S = 1
+	ENDIF
+
+	;PALAM:欲情
+	IF PALAM:5 < PALAMLV:1
+		L = 0
+	ELSEIF PALAM:5 < PALAMLV:2
+		L = 1
+	ELSEIF PALAM:5 < PALAMLV:3
+		L = 2
+	ELSEIF PALAM:5 < PALAMLV:4
+		L = 3
+	ELSEIF PALAM:5 < PALAMLV:5
+		L = 4
+	ELSE
+		L = 5
+	ENDIF
+	IF L
+		SIF S
+			PRINT  + 
+		PRINTS PALAMNAME:5
+		PRINTV 'LV,L,'(,L * 2,')
+		S = 1
+	ENDIF
+
+	;快感に素直
+	IF TALENT:70
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:70
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+	;快感の否定
+	IF TALENT:71
+		PRINT  - 
+		PRINTS TALENTNAME:71
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+	;恋慕
+	IF TALENT:85 && ASSIPLAY == 0
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:85
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+
+	;調教者が処女
+	IF EXP:PLAYER:0 == 0
+		PRINT  - 
+		PRINTFORM %NAME:PLAYER%が処女
+		PRINTV '(,15,')
+		S = 1
+	ENDIF
+
+	;調教者が貞操観念
+	IF TALENT:PLAYER:30
+		PRINT  - 
+		PRINTFORM %NAME:PLAYER%が貞操観念
+		PRINTV '(,10,')
+		S = 1
+	ENDIF
+
+	;調教者が貞操無頓着
+	IF TALENT:PLAYER:30
+		PRINT  + 
+		PRINTFORM %NAME:PLAYER%が貞操無頓着
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+
+	;調教者のABL:技巧
+	IF ABL:PLAYER:2
+		SIF S
+			PRINT  + 
+		PRINTFORM %NAME:PLAYER%の
+		PRINTS ABLNAME:2
+		PRINTV 'LV,ABL:PLAYER:2,'(,ABL:PLAYER:2 * 4,')
+		S = 1
+	ENDIF
+
+	;合計を表示(15以上で実行)
+	PRINT  = 
+	PRINTV A
+
+
+	SIF A < V
+		PRINT  < 
+	SIF A == V
+		PRINT  = 
+	SIF A > V
+		PRINT  > 
+	PRINT 実行値
+	PRINTV V
+	WAIT
+ENDIF

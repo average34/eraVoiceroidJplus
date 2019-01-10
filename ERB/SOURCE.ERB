@@ -1,0 +1,2893 @@
+﻿@SOURCE_CHECK
+;-------------------------------------------------
+;接触の継続状態を管理
+;-------------------------------------------------
+TRYCALL TOUCH_SUCCESSION(TARGET)
+
+;-------------------------------------------------
+;コマンド実行時の口上
+;-------------------------------------------------
+CALL KOJO_MESSAGE_COM_MASTER
+CALL KOJO_MESSAGE_COM_ASSI
+CALL KOJO_MESSAGE_COM
+
+;-------------------------------------------------
+;バイブなど付けっぱなしアイテムのチェック
+;-------------------------------------------------
+CALL EQUIP_CHECK
+
+;生理中
+SIF TALENT:138 && (FLAG:62 & 1)
+	TRYCALL EVENT_MENSTRUAL_PAIN
+
+;-------------------------------------------------
+;同性のチェック、調教者の能力のチェック
+;-------------------------------------------------
+CALL SOURCE_SEX_CHECK
+CALL PLAYER_SKILL_CHECK
+CALL MASTER_SKILL_CHECK
+
+;-------------------------------------------------
+;処女喪失のチェック
+;-------------------------------------------------
+IF EXP:0 && TALENT:0 && TFLAG:19
+	PRINTW 処女喪失
+	TALENT:0 = 0
+
+	;処女喪失フラグ(今回のコマンド)
+	TFLAG:3 = 1
+	;処女喪失フラグ(今回の調教)
+	TFLAG:31 = 1
+	;処女喪失フラグ(ビデオ撮影)
+	SIF TEQUIP:53
+		TFLAG:32 |= 1
+ENDIF
+;素質発覚イベント
+SIF EXP:0 && TFLAG:19
+	CALL FINE_VIRGIN
+
+;-------------------------------------------------
+;童貞喪失（各種計算に童貞の有無が関係するので、実際の喪失処理は最後）
+;-------------------------------------------------
+;フラグ追加とか面倒なので力技
+;喪失の可能性のあるコマンドを実行すれば喪失
+IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 34 || SELECTCOM == 88 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366) && TALENT:PLAYER:154
+	PRINTFORMW %CALLNAME:PLAYER%は童貞を失った
+	TALENT:PLAYER:154 = 2
+	;一部の反感に関係するソースを半減
+	SOURCE:14 /= 2
+	SOURCE:15 /= 2
+	;対象のキャラ番号を記憶
+	FLAG:47 = NO:TARGET
+ENDIF
+
+;-------------------------------------------------
+;ソース上限値チェック
+;-------------------------------------------------
+;ソースを1京でカンストさせる
+REPEAT 25
+	SOURCE:COUNT = LIMIT(SOURCE:COUNT, 0, 10000000000000000)
+REND
+
+;=============================================================================
+;ソース計算(快楽系)
+;=============================================================================
+CALL CALC_SOURCE0
+CALL CALC_SOURCE1
+CALL CALC_SOURCE2
+CALL CALC_SOURCE17
+CALL CALC_SOURCE24
+
+;-------------------------------------------------
+;同じコマンドの連続実行による上下の処理（快楽系）
+;気力０による上下の処理（快楽系）
+;異常経験による上下の処理（快楽系）
+;-------------------------------------------------
+
+;LOCAL:0～に快楽系のUPを順番に代入し、REPEAT処理に利用する
+VARSET LOCAL, 0
+LOCAL:0 = 0
+LOCAL:1 = 1
+LOCAL:2 = 2
+LOCAL:3 = 14
+LOCAL:4 = 18
+
+;快楽系のUPは絶頂に絡むので先に処理してある
+REPEAT 5
+	;同じコマンドの連続実行による上下の処理（快楽系）
+	SIF SELECTCOM == PREVCOM
+		UP:(LOCAL:COUNT) /= 2
+	;気力０による上下の処理（快楽系）
+	SIF BASE:1 <= 0
+		UP:(LOCAL:COUNT) /= 2
+	;異常経験による上下の処理（快楽系）
+	;異常経験を100以上稼ぐメリットが欲しくて追加。
+	;異常経験1000で約1.5倍、10000で約6倍、それ以上は増加率がかなり下がります。
+	IF EXP:50 >= 1000000
+		UP:(LOCAL:COUNT) = UP:(LOCAL:COUNT) * (12 + (EXP:50 / 1000000 * 5 + 95) / 100)
+	ELSEIF EXP:50 >= 10000
+		UP:(LOCAL:COUNT) = UP:(LOCAL:COUNT) * (6 + (EXP:50 / 10000 * 5 + 95) / 100)
+	ELSEIF EXP:50 >= 100
+		UP:(LOCAL:COUNT) = UP:(LOCAL:COUNT) * (EXP:50 / 100 * 5 + 95) / 100
+	ENDIF
+REND
+
+;-------------------------------------------------
+;相性による上下の処理（快楽系）
+;-------------------------------------------------
+R = NO:PLAYER
+IF RELATION:R != 0
+	RELATION:R = LIMIT (RELATION:R, 0, 1000)
+	REPEAT 5
+		UP:(LOCAL:COUNT) = UP:(LOCAL:COUNT) * RELATION:R / 100
+	REND
+ENDIF
+
+;-------------------------------------------------
+;素質などによる上下の処理（快楽系）
+;-------------------------------------------------
+CALL UP_TALENT_CVA_CHECK
+
+;-------------------------------------------------
+;愛液処理
+;-------------------------------------------------
+CALL LOVE_JUICE
+
+;-------------------------------------------------
+;絶頂処理
+;-------------------------------------------------
+CALL ORGASM_PROCESS
+
+;-------------------------------------------------
+;調教対象の射精チェック（ふたなり・オトコ）
+;-------------------------------------------------
+CALL TARGET_EJAC_CHECK
+
+;-------------------------------------------------
+;調教対象の射精チェック（噴乳）
+;-------------------------------------------------
+CALL TARGET_MILK_CHECK
+
+;-------------------------------------------------
+;主人による調教の経験値
+;-------------------------------------------------
+CALL MASTER_FLAG_CHECK
+
+;=============================================================================
+;ソース計算(快楽以外)
+;=============================================================================
+REPEAT 30
+	;快楽系は処理済み
+	IF COUNT == 0 || COUNT == 1 || COUNT == 2 || COUNT == 17 || COUNT == 24
+		CONTINUE
+	ELSE
+		TRYCALLFORM CALC_SOURCE{COUNT}
+	ENDIF
+REND
+
+;-------------------------------------------------
+;調教ソースの表示
+;-------------------------------------------------
+;表示関連は後回し
+;CALL SHOW_SOURCE
+
+;-------------------------------------------------
+;素質などによる上下の処理
+;-------------------------------------------------
+CALL UP_TALENT_CHECK
+
+;-------------------------------------------------
+;相性による上下の処理
+;-------------------------------------------------
+R = NO:PLAYER
+IF RELATION:R != 0
+	;PRINTFORML ＜相性{RELATION:R/100}.{RELATION:R%100}倍＞
+
+	IF UP:4 < 500000
+		UP:4 = UP:4 * RELATION:R / 100
+	ELSEIF UP:4 < 100000000
+		UP:4 = UP:4 / 100 * RELATION:R
+	ENDIF
+	IF UP:5 < 500000
+		UP:5 = UP:5 * RELATION:R / 100
+	ELSEIF UP:5 < 100000000
+		UP:5 = UP:5 / 100 * RELATION:R
+	ENDIF
+	IF UP:7 < 500000
+		UP:7 = UP:7 * RELATION:R / 100
+	ELSEIF UP:7 < 100000000
+		UP:7 = UP:7 / 100 * RELATION:R
+	ENDIF
+	IF UP:11 < 500000
+		UP:11 = UP:11 * 100 / RELATION:R
+	ELSEIF UP:11 < 100000000
+		UP:11 = UP:11 / RELATION:R * 100
+	ENDIF
+	IF UP:12 < 500000
+		UP:12 = UP:12 * 100 / RELATION:R
+	ELSEIF UP:12 < 100000000
+		UP:12 = UP:12 / RELATION:R * 100
+	ENDIF
+	IF UP:13 < 500000
+		UP:13 = UP:13 * 100 / RELATION:R
+	ELSEIF UP:13 < 100000000
+		UP:13 = UP:13 / RELATION:R * 100
+	ENDIF
+	IF UP:15 < 500000
+		UP:15 = UP:15 * RELATION:R / 100
+	ELSEIF UP:15 < 100000000
+		UP:15 = UP:15 / 100 * RELATION:R
+	ENDIF
+
+ENDIF
+
+;-------------------------------------------------
+;同じコマンドの連続実行による上下の処理
+;-------------------------------------------------
+;一部の連続実行前提コマンドは除外させる
+IF SELECTCOM == PREVCOM && SELECTCOM != 303
+	;UP:0,1,2,14,18は絶頂に絡むので先に処理してある
+	;PRINTL ＜同一コマンド連続実行＞
+	UP:4 /= 2
+	UP:5 /= 2
+	UP:6 /= 2
+	UP:7 /= 2
+	UP:8 /= 2
+	UP:10 /= 2
+	UP:15 /= 2
+	UP:16 /= 2
+	UP:17 /= 2
+	;ムード減少。1割減
+	TIMES TFLAG:37 , 0.90
+ENDIF
+
+;今回のコマンドを「前回のコマンド」とする
+;PREVCOM = SELECTCOM
+
+;前回の調教者が助手か主人か
+;IF ASSIPLAY
+	;TFLAG:50 == 1
+;ELSE
+	;TFLAG:50 == 0
+;ENDIF
+
+;-------------------------------------------------
+;気力０による上下の処理
+;-------------------------------------------------
+IF BASE:1 <= 0
+	;PRINTL ★気力０★
+	;UP:0,1,2,14,18は絶頂に絡むので先に処理してある
+	UP:3 /= 2
+	UP:4 /= 2
+	UP:5 /= 2
+	UP:7 /= 2
+	UP:9 /= 2
+	UP:13 /= 2
+	UP:15 /= 2
+	UP:16 /= 2
+	UP:17 /= 2
+
+	LOSEBASE:0 *= 2
+	LOSEBASE:0 += 80
+ENDIF
+
+;-------------------------------------------------
+;苦痛からくる体力・気力の減少
+;-------------------------------------------------
+D = UP:9/16
+
+;プレイヤーのサドっ気が高すぎる場合の軽減措置
+IF ABL:PLAYER:15 > 15
+	D = D * 50000 / (ABL:PLAYER:15 * 5 + 125) / (ABL:PLAYER:15 * 10 + 100)
+ENDIF
+
+;ABL:マゾっ気をみる
+IF ABL:8 == 0
+	TIMES D , 1.00
+ELSEIF ABL:8 == 1
+	TIMES D , 0.95
+ELSEIF ABL:8 == 2
+	TIMES D , 0.90
+ELSEIF ABL:8 == 3
+	TIMES D , 0.80
+ELSEIF ABL:8 == 4
+	TIMES D , 0.65
+ELSE
+	IF ABL:8 <= 10
+		IF D < 100000
+			D = D * (75 - ABL:8 * 5) / 100
+		ELSEIF D < 100000000
+			D = D / 100 * (75 - ABL:8 * 5)
+		ENDIF
+	ELSEIF ABL:8 <= 25
+		IF D < 100000
+			D = D * (30 - ABL:8) / 100
+		ELSEIF D < 100000000
+			D = D / 100 * (30 - ABL:8)
+		ENDIF
+	ELSEIF ABL:8 <= 50
+		TIMES D , 0.05
+	ELSEIF ABL:8 <= 98
+		TIMES D , 0.02
+	ELSE
+		TIMES D , 0.01
+	ENDIF
+ENDIF
+
+;消費量が高すぎる場合の軽減措置
+;400を超えた分は25%OFF
+SIF D >= 400
+	A = 400 + (D - 400) * 3 / 4
+;補正後、500を超えていたらその分を更に50%OFF
+SIF D >= 500
+	D = 500 + (D - 500) / 2
+;補正後、600を超えていたらその分を更に50%OFF
+SIF D >= 600
+	D = 600 + (D - 600) / 2
+;補正後、800を超えていたらその分を更に75%OFF
+SIF D >= 800
+	D = 800 + (D - 800) / 4
+;補正後、1000を超えていたらその分を更に50%OFF
+SIF D >= 1000
+	D = 1000 + (D - 1000) / 2
+
+;痛みに弱い
+SIF TALENT:40
+	TIMES D , 1.20
+;痛みに強い
+SIF TALENT:41
+	TIMES D , 0.80
+
+E = D
+;マゾ
+IF TALENT:79
+	TIMES D , 0.50
+	TIMES E , 0.20
+ENDIF
+
+LOSEBASE:0 += D
+LOSEBASE:1 += E
+
+;-------------------------------------------------
+;体力・気力の減少
+;-------------------------------------------------
+;インセンスによる軽減処理（ついでにムードも）
+IF TEQUIP:3
+	IF TEQUIP:3 == 1
+		TIMES LOSEBASE:0 , 0.90
+	ELSEIF TEQUIP:3 == 2
+		TIMES LOSEBASE:0 , 0.80
+	ELSEIF TEQUIP:3 == 3
+		TIMES LOSEBASE:0 , 0.50
+	ELSEIF TEQUIP:3 == 4
+		TIMES LOSEBASE:1 , 0.90
+	ELSEIF TEQUIP:3 == 5
+		TIMES LOSEBASE:1 , 0.80
+	ELSEIF TEQUIP:3 == 6
+		TIMES LOSEBASE:1 , 0.50
+	ELSEIF TEQUIP:3 == 7
+		TFLAG:37 += 2
+	ELSEIF TEQUIP:3 == 8
+		TFLAG:37 += 4
+	ELSEIF TEQUIP:3 == 9
+		TFLAG:37 += 10
+	ELSEIF TEQUIP:3 == 10
+		TIMES LOSEBASE:0 , 0.70
+		TIMES LOSEBASE:1 , 0.70
+		TFLAG:37 += 5
+	;竜印香炉による回復
+	ELSEIF TEQUIP:3 == 11
+		BASE:0 += 50
+	;ネクロパフューム
+	ELSEIF TEQUIP:3 == 12
+		IF NO:TARGET == 16 || NO:TARGET == 17 || NO:TARGET == 18 || NO:TARGET == 20 || NO:TARGET == 51 || NO:TARGET == 68 || NO:TARGET == 94 || NO:TARGET == 102 || NO:TARGET == 104
+			TIMES LOSEBASE:0 , 0.60
+			TIMES LOSEBASE:1 , 0.60
+			TFLAG:37 += 4
+		;妖夢・半霊は効果半分
+		ELSEIF NO:TARGET == 19 || NO:TARGET == 87
+			TIMES LOSEBASE:0 , 0.80
+			TIMES LOSEBASE:1 , 0.80
+			TFLAG:37 += 2
+		ENDIF
+		TFLAG:37 += 1
+	ENDIF
+	;1ターンごとにTFLAG:93に+1し、15になったらインセンスの香りが消える
+	TFLAG:93 += 1
+	IF TFLAG:93 == 15
+		PRINTW インセンスの香りが消えた…
+		TEQUIP:3 = 0
+		TFLAG:93 = 0
+	ENDIF
+ENDIF
+
+;天気の影響（ウフフ中だと軽減）
+IF TFLAG:44 == 1
+	IF TIME:5 >= 3 && TIME:5 <= 7
+		LOSEBASE:1 *= 3
+		LOSEBASE:1 /= 4
+	ELSEIF TIME:5 == 8
+		LOSEBASE:1 /= 2
+	ENDIF
+	IF TIME:8 == 1
+		LOSEBASE:1 *= 2
+		LOSEBASE:1 /= 3
+	ENDIF
+ENDIF
+
+;調合アイテム使用時
+;病気平癒守による回復
+IF TEQUIP:5 == 1
+	IF BASE:0 < MAXBASE:0
+		BASE:0 += 100
+	ENDIF
+	IF BASE:4 < MAXBASE:4
+		BASE:4 += MAXBASE:4 / 100
+	ENDIF
+	;痛覚ソースが入るか、気力が0だと解除
+	SIF BASE:1 <= 0 || SOURCE:6 > 0
+		TEQUIP:5 = 0
+;魔法瓶による効果(デート中のみ)
+ELSEIF TEQUIP:5 == 3 && TEQUIP:2
+	;体力消費がある場合軽減
+	SIF LOSEBASE:0 >= 10
+		LOSEBASE:0 -= 10
+	;気力消費がある場合軽減
+	SIF LOSEBASE:1 >= 10
+		LOSEBASE:1 -= 10
+ENDIF
+
+BASE:0 -= LOSEBASE:0
+BASE:1 -= LOSEBASE:1
+
+;PRINT 体力-
+;PRINTV LOSEBASE:0
+;PRINT  気力-
+;PRINTVL LOSEBASE:1
+
+;-------------------------------------------------
+;メッセージ表示
+;-------------------------------------------------
+CALL TRAIN_MESSAGE_A
+
+;-------------------------------------------------
+;パラメータ変動による口上
+;-------------------------------------------------
+CALL KOJO_MESSAGE_PALAMCNG
+
+;-------------------------------------------------
+;苦痛快楽経験、奉仕快楽経験のチェック
+;-------------------------------------------------
+CALL EXP_GOT_CHECK
+
+;-------------------------------------------------
+;刻印取得のチェック
+;-------------------------------------------------
+CALL MARK_GOT_CHECK
+CALL KOJO_MESSAGE_MARKCNG
+
+;-------------------------------------------------
+;個別イベントの呼び出し
+;-------------------------------------------------
+CALL KOJO_EVENT_COM
+
+;-------------------------------------------------
+;パラメータ上昇量上限値チェック
+;-------------------------------------------------
+;上昇後が1京未満になるようにする
+REPEAT 25
+	;パラメータが1京を越える場合、キャップをかける
+	PALAM:COUNT = LIMIT(PALAM:COUNT, 0, 9999999999999999)
+	;上昇後が1京を越える場合、キャップをかける
+	IF (PALAM:COUNT + UP:COUNT) >= 10000000000000000
+		UP:COUNT = 10000000000000000 - PALAM:COUNT - 1
+		;快Ｃ快Ｖ快Ａ快Ｂ快ＭはDOWNにもキャップをかける
+		SIF COUNT == 0 || COUNT == 1 || COUNT == 2 || COUNT == 14 || COUNT == 18
+			DOWN:COUNT = 9999999999990000
+	ENDIF
+	;上昇前が限界値だった場合、上昇させない
+	SIF PALAM:COUNT >= 9999999999999999
+		UP:COUNT = 0
+REND
+
+;-------------------------------------------------
+;調教ソースの表示
+;-------------------------------------------------
+CALL SHOW_SOURCE
+
+;-------------------------------------------------
+;数値変動の表示
+;-------------------------------------------------
+;相性
+R = NO:PLAYER
+SIF RELATION:R != 0
+	PRINTFORML ＜相性{RELATION:R/100}.{RELATION:R%100}倍＞
+
+;同じコマンドの連続実行
+SIF SELECTCOM == PREVCOM
+	PRINTL ＜同一コマンド連続実行＞
+
+;前回の調教者が助手か主人か
+IF ASSIPLAY
+	TFLAG:50 = 1
+ELSE
+	TFLAG:50 = 0
+ENDIF
+
+;気力０
+SIF BASE:1 <= 0
+	PRINTFORML %NAME:TARGET%の★気力０★
+
+;体力・気力の減少
+PRINTFORML %NAME:TARGET%の体力-{LOSEBASE:0} 気力-{LOSEBASE:1}
+IF DOWNBASE:MASTER:0
+	PRINTFORML %NAME:MASTER%の体力-{DOWNBASE:MASTER:0}
+	BASE:MASTER:0 -= DOWNBASE:MASTER:0
+	DOWNBASE:MASTER:0 = 0
+ENDIF
+
+;-------------------------------------------------
+;[即落ち]のチェック
+;-------------------------------------------------
+CALL SOKUOCHI_CHECK
+
+;-------------------------------------------------
+;テキストの表示
+;-------------------------------------------------
+;そのままでは見にくいので全角空白で改行を入れてみる
+PRINTL 　
+CALL TEXT
+PRINTL 　
+
+;-------------------------------------------------
+;パラメータの上昇＆表示（DOWNもここで）
+;-------------------------------------------------
+IF FLAG:23 & 1p28
+	CALL UPCHECK_ANIME
+ELSE
+	UPCHECK
+ENDIF
+
+;-------------------------------------------------
+;フラグの初期化
+;-------------------------------------------------
+TFLAG:18 = 0
+;コンドーム射精した時に1になるフラグ初期化
+CFLAG:105 = 0
+;射精量記録フラグ初期化
+TFLAG:302 = 0
+
+;-------------------------------------------------
+;童貞喪失（各種計算に童貞の有無が関係するので、喪失処理は最後）
+;-------------------------------------------------
+;TALENTが2になってる場合喪失フラグがONとみなす
+IF TALENT:PLAYER:154 == 2
+	TALENT:PLAYER:154 = 0
+ENDIF
+
+;今回のコマンドを「前回のコマンド」とする
+;但し「何もしない」は除外
+SIF SELECTCOM != 7
+	PREVCOM = SELECTCOM
+
+;-------------------------------------------------
+;MASTERの体力が限界の際の終了
+;-------------------------------------------------
+SIF BASE:MASTER:0 <= 500
+	CALL COUNTER_DOWN
+
+;-------------------------------------------------
+;ムード表示用フラグのセット
+;-------------------------------------------------
+TFLAG:96 = TFLAG:37 - TFLAG:95
+
+;-------------------------------------------------
+;バイブなど付けっぱなしアイテムのチェック
+;-------------------------------------------------
+@EQUIP_CHECK
+
+;デート中
+SIF TEQUIP:2
+	TRYCALL EQUIP_COM2
+
+;炬燵にあたってる
+SIF TEQUIP:7
+	TRYCALL EQUIP_COM314
+
+;バイブ装着中
+SIF TEQUIP:11
+	TRYCALL EQUIP_COM11
+
+;アナルバイブ装着中
+SIF TEQUIP:13
+	TRYCALL EQUIP_COM13
+
+;クリキャップ装着中
+SIF TEQUIP:14
+	TRYCALL EQUIP_COM14
+
+SIF TEQUIP:15
+;二プルキャップ装着中
+	TRYCALL EQUIP_COM15
+
+;搾乳器装着中
+SIF TEQUIP:16
+	TRYCALL EQUIP_COM16
+
+;オナホール装着中
+SIF TEQUIP:17
+	TRYCALL EQUIP_COM17
+
+;シャワー使用中
+SIF TEQUIP:18
+	TRYCALL EQUIP_COM18
+
+;アナルビーズ使用中
+SIF TEQUIP:19
+	TRYCALL EQUIP_COM19
+
+;オムツ着用中
+SIF TEQUIP:20
+	TRYCALL EQUIP_COM371
+
+;着衣ローター使用中
+SIF TEQUIP:36
+	TRYCALL EQUIP_COM367
+
+;アイマスク装着中
+SIF TEQUIP:43 && TEQUIP:73 == 0
+	TRYCALL EQUIP_COM43
+
+;荊で緊縛中
+IF TEQUIP:44 && TEQUIP:72 && TEQUIP:73 == 0
+	TRYCALL EQUIP_COM72
+;蜘蛛の糸で緊縛中
+ELSEIF TEQUIP:44 && TEQUIP:73 && TEQUIP:72 == 0
+	TRYCALL EQUIP_COM73
+;縄で緊縛中
+ELSEIF TEQUIP:44
+	TRYCALL EQUIP_COM44
+ENDIF
+
+;ボールギャグ装着中
+SIF TEQUIP:45
+	TRYCALL EQUIP_COM45
+
+;あなた拘束系
+;あなたアイマスク装着中
+SIF TEQUIP:PLAYER:43
+	TRYCALL EQUIP_COM130
+;あなた縄で緊縛中
+SIF TEQUIP:PLAYER:44
+	TRYCALL EQUIP_COM131
+;あなたボールギャグ装着中
+SIF TEQUIP:PLAYER:45
+	TRYCALL EQUIP_COM132
+
+;浣腸＋アナルプラグ装着中
+SIF TEQUIP:46
+	TRYCALL EQUIP_COM46
+
+;空気浣腸＋アナルプラグ装着中
+SIF TEQUIP:47
+	TRYCALL EQUIP_COM47
+
+;拡張バルーン装着中
+SIF TEQUIP:48
+	TRYCALL EQUIP_COM48
+
+;アナル電極装着中
+SIF TEQUIP:49
+	TRYCALL EQUIP_COM49
+
+;ビデオ撮影中
+SIF TEQUIP:53
+	TRYCALL EQUIP_COM53
+
+;野外プレイ中
+SIF TEQUIP:54
+	TRYCALL EQUIP_COM54
+
+;羞恥プレイ中(浄玻璃の鏡)
+IF TEQUIP:57 == 2
+	TRYCALL EQUIP_COM56
+;羞恥プレイ中
+ELSEIF TEQUIP:57
+	TRYCALL EQUIP_COM57
+ENDIF
+
+;お風呂場プレイ中
+SIF TEQUIP:58
+	TRYCALL EQUIP_COM58
+
+;新妻プレイ中
+SIF TEQUIP:59
+	TRYCALL EQUIP_COM59
+
+;スク水プレイ中
+SIF TEQUIP:60
+	TRYCALL EQUIP_COM60
+
+;クスコ挿入中
+SIF TEQUIP:61
+	TRYCALL EQUIP_COM110
+
+;お医者プレイ中
+SIF TEQUIP:62
+	TRYCALL EQUIP_COM115
+
+;コスプレ中
+SIF TEQUIP:65
+	TRYCALL EQUIP_COM391
+
+;女体盛りプレイ中
+SIF TEQUIP:69
+	TRYCALL EQUIP_COM89
+
+;巨峰挿入中
+SIF TEQUIP:70
+	TRYCALL EQUIP_COM155
+
+;焼芋挿入中
+SIF TEQUIP:71
+	TRYCALL EQUIP_COM154
+
+;鈴蘭の毒効果発揮中
+SIF TEQUIP:74
+	TRYCALL EQUIP_COM161
+
+;サラシ装着中
+SIF TEQUIP:76
+	TRYCALL EQUIP_COM76
+
+;鰻風呂入浴中
+SIF TEQUIP:78
+	TRYCALL EQUIP_COM78
+
+;氷柱挿入中
+SIF TEQUIP:79
+	TRYCALL EQUIP_COM79
+
+;暗闇展開中
+SIF TEQUIP:80
+	TRYCALL EQUIP_COM151
+
+;蟲風呂入浴中
+SIF TEQUIP:92
+	TRYCALL EQUIP_COM92
+
+;触手口辱中
+SIF TEQUIP:98
+	TRYCALL EQUIP_COM108
+
+;触手調教中
+SIF TEQUIP:90
+	TRYCALL EQUIP_COM100
+
+;アクセサリ装備中
+SIF TEQUIP:4
+	TRYCALL EQUIP_COM4
+
+;幽明の苦輪中
+SIF TEQUIP:23 > 0
+	TRYCALL EQUIP_COM400
+
+;-------------------------------------------------
+;愛液処理
+;-------------------------------------------------
+@LOVE_JUICE
+A = UP:0 + UP:1 + UP:2 + UP:17
+SIF UP:24 > 1000
+	A += UP:24 / 1000
+;快Ｃ＋快Ｖ＋快Ａ＋快Ｂが合わせて100以上上昇ならその20%の液体のソースが加わる（オトコはダメ）
+;快Ｍは他の感覚より液体ソースへの影響が少ない
+IF A > 100 && TALENT:122 == 0
+	A /= 5
+	;濡れやすいと濡れにくいはここで処理
+	SIF TALENT:42
+		TIMES A , 3.00
+	SIF TALENT:43
+		TIMES A , 0.40
+	SOURCE:10 += A
+ENDIF
+
+;-------------------------------------------------
+;絶頂処理
+;-------------------------------------------------
+@ORGASM_PROCESS
+C = 0
+V = 0
+A = 0
+B = 0
+M = 0
+
+;LOCAL:0 各感覚のUP,PALAM番号
+;LOCAL:1 絶頂数（絶頂の強度）（絶頂 = 1、強絶頂 = 2、超強絶頂 = 4、最強絶頂 = 9）
+;LOCAL:98 UP + PALAM 絶頂の強度判定に使用
+;LOCAL:99 DOWNで使用
+VARSET LOCAL, 0
+
+;表示用
+LOCALS:0 = 絶頂Ｃ
+LOCALS:1 = 絶頂Ｖ
+LOCALS:2 = 絶頂Ａ
+LOCALS:3 = 絶頂Ｂ
+LOCALS:4 = 絶頂Ｍ
+;LOCALS:10 表示に使用
+
+;絶頂
+REPEAT 5
+	;各UP,PALAMを指定
+	IF COUNT == 0
+		LOCAL:0 = 0
+	ELSEIF COUNT == 1
+		LOCAL:0 = 1
+	ELSEIF COUNT == 2
+		LOCAL:0 = 2
+	ELSEIF COUNT == 3
+		LOCAL:0 = 14
+	ELSEIF COUNT == 4
+		LOCAL:0 = 18
+	ENDIF
+	
+	LOCAL:99 = UP:(LOCAL:0) + PALAM:(LOCAL:0)
+	IF LOCAL:99 >= PALAMLV:4
+		LOCAL:98 = PALAMLV:4 * 2
+		IF 0
+		;EX絶頂
+		ELSEIF LOCAL:99 >= 30000000000
+			LOCAL:1 = 100
+			SETCOLOR 217, 217, 140
+			PRINT EX最強
+		ELSEIF LOCAL:99 >= 20000000000
+			LOCAL:1 = 81
+			PRINT EX超強
+		ELSEIF LOCAL:99 >= 15000000000
+			LOCAL:1 = 64
+			PRINT EX強
+		;SS絶頂
+		ELSEIF LOCAL:99 >= 10000000000
+			LOCAL:1 = 49
+			PRINT SS最強
+		ELSEIF LOCAL:99 >= 2000000000
+			LOCAL:1 = 36
+			PRINT SS超強
+		ELSEIF LOCAL:99 >= 200000000
+			LOCAL:1 = 30
+			PRINT SS強
+		;S絶頂
+		ELSEIF LOCAL:99 >= 100000000
+			LOCAL:1 = 25
+			PRINT S最強
+		ELSEIF LOCAL:99 >= 20000000
+			LOCAL:1 = 16
+			PRINT S超強
+		ELSEIF LOCAL:99 >= 2000000
+			LOCAL:1 = 12
+			PRINT S強
+		;通常
+		ELSEIF LOCAL:99 >= 1000000
+			LOCAL:1 = 9
+			PRINT 最強
+		ELSEIF LOCAL:99 >= 200000
+			LOCAL:1 = 4
+			PRINT 超強
+		ELSEIF LOCAL:99 >= 20000
+			LOCAL:1 = 2
+			PRINT 強
+		ELSE
+			LOCAL:1 = 1
+			LOCAL:98 = PALAMLV:4
+		ENDIF
+		PRINTFORML %LOCALS:COUNT%
+		RESETCOLOR
+		DOWN:(LOCAL:0) = (LOCAL:98 - 1000)
+		;DOWNで下げても絶頂以上なら
+		;その値-1になるように調整（10000で絶頂なら9999）
+		SIF LOCAL:99 - DOWN:(LOCAL:0) >= PALAMLV:4
+			DOWN:(LOCAL:0) = LOCAL:99 - PALAMLV:4 + 1
+		
+		;各変数に絶頂数をいれる
+		IF COUNT == 0
+			C = LOCAL:1
+		ELSEIF COUNT == 1
+			V = LOCAL:1
+		ELSEIF COUNT == 2
+			A = LOCAL:1
+		ELSEIF COUNT == 3
+			B = LOCAL:1
+		ELSEIF COUNT == 4
+			M = LOCAL:1
+		ENDIF
+		
+		;絶頂経験を増やす
+		EXP:2 += LOCAL:1
+		SIF ASSIPLAY == 0
+			CFLAG:MASTER:2 += LOCAL:1
+	ENDIF
+REND
+
+CALL ECST_CHECK
+
+;LOCAL:0-7を初期化
+;LOCAL:0-4 CVABMの値を代入
+;LOCAL:5 絶頂の種類数カウント
+;LOCAL:6 最強絶頂数カウント
+;LOCAL:7 珠を○倍するか
+
+;LOCAL:10 S絶頂以上の種類数カウント
+;LOCAL:11 SS絶頂以上の種類数カウント
+;LOCAL:12 EX絶頂以上の種類数カウント
+
+;LOCAL:20 S最強絶頂数カウント
+;LOCAL:21 SS最強絶頂数カウント
+;LOCAL:22 EX最強絶頂数カウント
+
+;LOCAL:30 最強絶頂以上の絶頂数カウント
+;LOCAL:31 S最強絶頂以上の絶頂数カウント
+;LOCAL:32 SS最強絶頂以上の絶頂数カウント
+
+VARSET LOCAL, 0
+
+;四重絶頂以上かチェック
+REPEAT 5
+	IF C && COUNT == 0
+		LOCAL:COUNT = C
+	ELSEIF V && COUNT == 1
+		LOCAL:COUNT = V
+	ELSEIF A && COUNT == 2
+		LOCAL:COUNT = A
+	ELSEIF B && COUNT == 3
+		LOCAL:COUNT = B
+	ELSEIF M && COUNT == 4
+		LOCAL:COUNT = M
+	ELSE
+		CONTINUE
+	ENDIF
+	
+	;絶頂の種類数カウント
+	LOCAL:5 += 1
+	;S絶頂以上の種類数カウント
+	SIF LOCAL:COUNT >= 12
+		LOCAL:10 += 1
+	;SS絶頂以上の種類数カウント
+	SIF LOCAL:COUNT >= 30
+		LOCAL:11 += 1
+	;EX絶頂以上の種類数カウント
+	SIF LOCAL:COUNT >= 64
+		LOCAL:12 += 1
+	
+	
+	;最強絶頂数カウント
+	SIF LOCAL:COUNT == 9
+		LOCAL:6 += 1
+	;S最強絶頂数カウント
+	SIF LOCAL:COUNT == 25
+		LOCAL:20 += 1
+	;SS最強絶頂数カウント
+	SIF LOCAL:COUNT == 49
+		LOCAL:21 += 1
+	;EX最強絶頂数カウント
+	SIF LOCAL:COUNT == 100
+		LOCAL:22 += 1
+
+	;最強絶頂以上の絶頂数カウント
+	SIF LOCAL:COUNT >= 9
+		LOCAL:30 += 1
+	;S最強絶頂以上の絶頂数カウント
+	SIF LOCAL:COUNT >= 25
+		LOCAL:31 += 1
+	;SS最強絶頂以上の絶頂数カウント
+	SIF LOCAL:COUNT >= 49
+		LOCAL:32 += 1
+REND
+
+IF LOCAL:5 == 5
+	;五重絶頂
+	IF LOCAL:22 == 5
+		SETCOLOR 217, 217, 140
+		PRINT EX 最 強 
+	ELSEIF LOCAL:12 == 5
+		PRINT EX 
+	ELSEIF LOCAL:32 == 5
+		PRINT SS 最 強 
+	ELSEIF LOCAL:11 == 5
+		PRINT SS 
+	ELSEIF LOCAL:31 == 5
+		PRINT S 最 強 
+	ELSEIF LOCAL:10 == 5
+		PRINT S 
+	ELSEIF LOCAL:30 == 5
+		PRINT 最 強 
+	ENDIF
+	PRINTL 五 重 絶 頂
+	RESETCOLOR
+	LOCAL:7 = 5
+	SIF LOCAL:10 == 5
+		LOCAL:7 += 1
+	SIF LOCAL:11 == 5
+		LOCAL:7 += 1
+	SIF LOCAL:12 == 5
+		LOCAL:7 += 1
+	SIF LOCAL:22 == 5
+		LOCAL:7 += 2
+ELSEIF LOCAL:5 == 4
+	;四重絶頂
+	IF LOCAL:22 == 4
+		SETCOLOR 217, 217, 140
+		PRINT EX 最 強 
+	ELSEIF LOCAL:12 == 4
+		PRINT EX 
+	ELSEIF LOCAL:32 == 4
+		PRINT SS 最 強 
+	ELSEIF LOCAL:11 == 4
+		PRINT SS 
+	ELSEIF LOCAL:31 == 4
+		PRINT S 最 強 
+	ELSEIF LOCAL:10 == 4
+		PRINT S 
+	ELSEIF LOCAL:30 == 4
+		PRINT 最 強 
+	ENDIF
+	PRINTL 四 重 絶 頂
+	RESETCOLOR
+	LOCAL:7 = 4
+	SIF LOCAL:10 == 4
+		LOCAL:7 += 1
+	SIF LOCAL:11 == 4
+		LOCAL:7 += 1
+	SIF LOCAL:12 == 4
+		LOCAL:7 += 1
+	SIF LOCAL:22 == 4
+		LOCAL:7 += 1
+ELSEIF LOCAL:5 >= 2
+	;LOCAL:5-7を初期化
+	LOCAL:5 = 0
+	LOCAL:6 = 0
+	LOCAL:7 = 0
+	REPEAT 5
+		SIF COUNT != 0 && LOCAL:5 && LOCAL:(COUNT)
+			PRINT ＆
+		
+		IF C && COUNT == 0
+			PRINT Ｃ
+		ELSEIF V && COUNT == 1
+			PRINT Ｖ
+		ELSEIF A && COUNT == 2
+			PRINT Ａ
+		ELSEIF B && COUNT == 3
+			PRINT Ｂ
+		ELSEIF M && COUNT == 4
+			PRINT Ｍ
+		ELSE
+			CONTINUE
+		ENDIF
+		
+		;絶頂の種類数カウント
+		LOCAL:5 += 1
+		;最強絶頂数カウント
+		SIF LOCAL:COUNT >= 9
+			LOCAL:6 += 1
+	REND
+	PRINTL 絶頂
+ENDIF
+
+IF LOCAL:5 == 3
+	LOCAL:7 = 3
+ELSEIF LOCAL:5 == 2
+	LOCAL:7 = 2
+ENDIF
+IF LOCAL:7
+	PRINTFORML (それぞれ{LOCAL:7}倍の珠が得られます)
+ELSE
+	LOCAL:7 = 1
+ENDIF
+C *= LOCAL:7
+V *= LOCAL:7
+A *= LOCAL:7
+B *= LOCAL:7
+M *= LOCAL:7
+
+IF C
+	SOURCE:12 += 500 * C
+	SOURCE:13 += 200 * C
+	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
+	IF ABL:3 > 5 && ABL:3 <= 15
+		LOSEBASE:0 += 25 - ABL:3
+		LOSEBASE:1 += 13 - (ABL:3 / 2)
+	ELSEIF ABL:3 > 15
+		LOSEBASE:0 += 10
+		LOSEBASE:1 += 5
+	ELSE
+		LOSEBASE:0 += 20
+		LOSEBASE:1 += 10
+	ENDIF
+
+	IF C >= 2
+		;既成事実１に相当
+		SIF TFLAG:200 < 1
+			TFLAG:200 = 1
+	ENDIF
+ENDIF
+IF V
+	SOURCE:12 += 700 * V
+	SOURCE:13 += 400 * V
+	SOURCE:11 += 800 * V
+	SOURCE:16 += 500 * V
+	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
+	IF ABL:4 > 5 && ABL:4 <= 15
+		LOSEBASE:0 += 50 - (ABL:4 * 2)
+		LOSEBASE:1 += 25 - ABL:4
+	ELSEIF ABL:4 > 15
+		LOSEBASE:0 += 20
+		LOSEBASE:1 += 10
+	ELSE
+		LOSEBASE:0 += 40
+		LOSEBASE:1 += 20
+	ENDIF
+
+	IF V == 1
+		;既成事実１に相当
+		SIF TFLAG:200 < 1
+			TFLAG:200 = 1
+	ELSEIF V >= 2
+		;既成事実２に相当
+		SIF TFLAG:200 < 2
+			TFLAG:200 = 2
+	ENDIF
+ENDIF
+IF A
+	SOURCE:12 += 1200 * A
+	SOURCE:13 += 4500 * A
+	SOURCE:11 += 3500 * A
+	SOURCE:16 += 1500 * A
+	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
+	IF ABL:5 > 5 && ABL:5 <= 15
+		LOSEBASE:0 += 75 - (ABL:5 * 3)
+		LOSEBASE:1 += 38 - (ABL:5 * 3 / 2)
+	ELSEIF ABL:5 > 15
+		LOSEBASE:0 += 30
+		LOSEBASE:1 += 15
+	ELSE
+		LOSEBASE:0 += 60
+		LOSEBASE:1 += 30
+	ENDIF
+
+	;既成事実２に相当
+	SIF TFLAG:200 < 2
+		TFLAG:200 = 2
+ENDIF
+IF B
+	SOURCE:12 += 500 * B
+	SOURCE:13 += 200 * B
+	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
+	IF ABL:14 > 5 && ABL:14 <= 15
+		LOSEBASE:0 += 25 - ABL:14
+		LOSEBASE:1 += 13 - (ABL:14 / 2)
+	ELSEIF ABL:14 > 15
+		LOSEBASE:0 += 10
+		LOSEBASE:1 += 5
+	ELSE
+		LOSEBASE:0 += 20
+		LOSEBASE:1 += 10
+	ENDIF
+
+	IF B >= 2
+		;既成事実１に相当
+		SIF TFLAG:200 < 1
+			TFLAG:200 = 1
+	ENDIF
+ENDIF
+IF M
+	SOURCE:3 += 500 * M
+	SOURCE:13 += 200 * M
+	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
+	IF ABL:17 > 5 && ABL:17 <= 15
+		LOSEBASE:0 += 25 - ABL:17
+		LOSEBASE:1 += 13 - (ABL:17 / 2)
+	ELSEIF ABL:17 > 15
+		LOSEBASE:0 += 10
+		LOSEBASE:1 += 5
+	ELSE
+		LOSEBASE:0 += 20
+		LOSEBASE:1 += 10
+	ENDIF
+
+	IF M >= 2
+		;既成事実１に相当
+		SIF TFLAG:200 < 1
+			TFLAG:200 = 1
+	ENDIF
+ENDIF
+;絶頂による欲望ＬＶアップ
+L = 0
+SIF B
+	L = 1
+SIF M
+	L = 1
+SIF C
+	L = 2
+SIF V
+	L = 4
+SIF A
+	L = 7
+SIF C && B && L < 3
+	L = 3
+SIF (C || B) && V && L < 5
+	L = 5
+SIF C && B && V && L < 6
+	L = 6
+SIF (C >= 4 || B >= 4) && A >= 4 && L < 8
+	L = 8
+SIF V >= 4 && A >= 4 && L < 9
+	L = 9
+SIF (C >= 8 || B >= 8) && V >= 8 && A >= 8
+	L = 10
+;自制心があると１下がる
+SIF TALENT:20
+	L = L-1
+;四重絶頂
+SIF LOCAL:5 == 4
+	L = 10
+;五重絶頂
+SIF LOCAL:5 == 5
+	L = 15
+;最強四重絶頂
+SIF LOCAL:30 == 4
+	L = 30
+;最強五重絶頂
+SIF LOCAL:30 == 5
+	L = 50
+;S最強四重絶頂
+SIF LOCAL:31 == 4
+	L = 70
+;S最強五重絶頂
+SIF LOCAL:31 == 5
+	L = 90
+;SS最強四重絶頂
+SIF LOCAL:32 == 4
+	L = 300
+;SS最強五重絶頂
+SIF LOCAL:32 == 5
+	L = 500
+;EX最強四重絶頂
+SIF LOCAL:22 == 4
+	L = 3000
+;EX最強五重絶頂
+SIF LOCAL:22 == 5
+	L = 5000
+IF ABL:1 < L
+	ABL:1 = L
+	PRINTFORML そして%ABLNAME:1%がLV{L}になった
+	;欲望の上昇による[抑圧][抵抗]の消滅をチェック
+	CALL YOKUBO_UP_CHECK
+ENDIF
+
+;NOWEXにデータを入れる（絶頂時口上に使う）
+NOWEX:0 = C
+NOWEX:1 = V
+NOWEX:2 = A
+NOWEX:3 = B
+NOWEX:6 = M
+
+;絶頂回数を増やす
+EX:0 += C
+EX:1 += V
+EX:2 += A
+EX:3 += B
+EX:6 += M
+
+;実績判定
+CALL TROPHY_CHECK_201, LOCAL:5, LOCAL:30
+
+;絶頂強度を返す
+RETURN C, V, A, B, M
+
+;-------------------------------------------------
+;調教ソースの表示（DOWNもここで）
+;-------------------------------------------------
+@SHOW_SOURCE
+SIF SOURCE:0 > 0
+	PRINTFORM 快Ｃ({SOURCE:0}) 
+SIF SOURCE:1 > 0
+	PRINTFORM 快Ｖ({SOURCE:1}) 
+SIF SOURCE:2 > 0
+	PRINTFORM 快Ａ({SOURCE:2}) 
+SIF SOURCE:17 > 0
+	PRINTFORM 快Ｂ({SOURCE:17}) 
+SIF SOURCE:24 > 0
+	PRINTFORM 快Ｍ({SOURCE:24}) 
+SIF SOURCE:3 > 0
+	PRINTFORM 情愛({SOURCE:3}) 
+SIF SOURCE:4 > 0
+	PRINTFORM 性行動({SOURCE:4}) 
+SIF SOURCE:5 > 0
+	PRINTFORM 達成感({SOURCE:5}) 
+SIF SOURCE:6 > 0
+	PRINTFORM 痛み({SOURCE:6}) 
+SIF SOURCE:7 > 0
+	PRINTFORM 中毒充足({SOURCE:7}) 
+SIF SOURCE:8 > 0
+	PRINTFORM 不潔({SOURCE:8}) 
+SIF SOURCE:10 > 0
+	PRINTFORM 液体追加({SOURCE:10}) 
+SIF SOURCE:11 > 0
+	PRINTFORM 欲情追加({SOURCE:11}) 
+SIF SOURCE:16 > 0
+	PRINTFORM 恭順追加({SOURCE:16}) 
+SIF SOURCE:12 > 0
+	PRINTFORM 露出({SOURCE:12}) 
+SIF SOURCE:13 > 0
+	PRINTFORM 屈従({SOURCE:13}) 
+SIF SOURCE:14 > 0
+	PRINTFORM 逸脱({SOURCE:14}) 
+SIF SOURCE:15 > 0
+	PRINTFORM 反感追加({SOURCE:15}) 
+SIF SOURCE:9 > 0
+	PRINTFORM 接触({SOURCE:9}) 
+SIF SOURCE:18 > 0
+	PRINTFORM 歓楽({SOURCE:18}) 
+SIF SOURCE:19 > 0
+	PRINTFORM 家務({SOURCE:19}) 
+SIF SOURCE:20 > 0
+	PRINTFORM 征服({SOURCE:20}) 
+SIF SOURCE:21 > 0
+	PRINTFORM 受動({SOURCE:21}) 
+SIF SOURCE:22 > 0
+	PRINTFORM 懐疑({SOURCE:22}) 
+SIF SOURCE:23 > 0
+	PRINTFORM 不安({SOURCE:23}) 
+PRINTL 　
+
+;=============================================================================
+;ソース計算(快楽系)
+;=============================================================================
+;-------------------------------------------------
+;快Ｃのソース
+;-------------------------------------------------
+@CALC_SOURCE0
+;Ｃ敏感とＣ鈍感はここで処理
+SIF TALENT:101
+	TIMES SOURCE:0 , 0.50
+SIF TALENT:102
+	TIMES SOURCE:0 , 2.00
+
+A = SOURCE:0
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES A , 0.50
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES A , 0.70
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES A , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES A , 1.30
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES A , 1.80
+ENDIF
+
+B = SOURCE:0
+
+;ABL:欲望をみる
+SIF ABL:1 == 0
+	TIMES B , 0.10
+SIF ABL:1 == 1
+	TIMES B , 0.15
+SIF ABL:1 == 2
+	TIMES B , 0.20
+SIF ABL:1 == 3
+	TIMES B , 0.25
+SIF ABL:1 == 4
+	TIMES B , 0.30
+IF ABL:1 >= 5
+	IF B < 100000
+		B = B * (ABL:1 * 5 + 15) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 5 + 15)
+	ENDIF
+ENDIF
+
+;快感の否定、抑圧、抵抗
+IF TALENT:32 || TALENT:34 || TALENT:71
+	C = SOURCE:0 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES C , 1.00
+	SIF ABL:1 == 1
+		TIMES C , 0.85
+	SIF ABL:1 == 2
+		TIMES C , 0.70
+	SIF ABL:1 == 3
+		TIMES C , 0.40
+	SIF ABL:1 == 4
+		TIMES C , 0.30
+	SIF ABL:1 >= 5
+		TIMES C , 0.10
+ELSE
+	C = 0
+ENDIF
+
+D = 0
+
+;淫核
+IF TALENT:75
+	TIMES A , 1.50
+	TIMES B , 1.20
+	TIMES C , 0.50
+	D = (A+B)/2
+ENDIF
+
+UP:0 += A
+UP:5 += B
+UP:13 += C
+IF D
+	UP:3 += D
+	D = (A+B)/3
+	UP:7 += D
+ENDIF
+
+;-------------------------------------------------
+;快Ｖのソース
+;-------------------------------------------------
+@CALC_SOURCE1
+;Ｖ敏感とＶ鈍感はここで処理
+SIF TALENT:103
+	TIMES SOURCE:1 , 0.50
+SIF TALENT:104
+	TIMES SOURCE:1 , 2.00
+
+A = SOURCE:1
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES A , 0.30
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES A , 0.50
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES A , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES A , 1.50
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES A , 2.00
+ENDIF
+
+B = SOURCE:1
+
+;ABL:欲望をみる
+SIF ABL:1 == 0
+	TIMES B , 0.10
+SIF ABL:1 == 1
+	TIMES B , 0.15
+SIF ABL:1 == 2
+	TIMES B , 0.20
+SIF ABL:1 == 3
+	TIMES B , 0.25
+SIF ABL:1 == 4
+	TIMES B , 0.30
+IF ABL:1 >= 5
+	IF B < 100000
+		B = B * (ABL:1 * 5 + 15) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 5 + 15)
+	ENDIF
+ENDIF
+
+;快感の否定、抑圧、抵抗
+IF TALENT:32 || TALENT:34 || TALENT:71
+	C = SOURCE:1 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES C , 1.00
+	SIF ABL:1 == 1
+		TIMES C , 0.85
+	SIF ABL:1 == 2
+		TIMES C , 0.70
+	SIF ABL:1 == 3
+		TIMES C , 0.40
+	SIF ABL:1 == 4
+		TIMES C , 0.30
+	SIF ABL:1 >= 5
+		TIMES C , 0.10
+ELSE
+	C = 0
+ENDIF
+
+D = 0
+
+;淫壷
+IF TALENT:74
+	IF PLAYER == MASTER
+		TIMES A , 2.50
+		TIMES B , 1.50
+		TIMES C , 0.30
+	ELSE
+		TIMES A , 1.50
+		TIMES B , 1.20
+		TIMES C , 0.50
+	ENDIF
+	D = (A+B)/3
+ENDIF
+
+UP:1 += A
+UP:4 += B
+UP:5 += B
+UP:13 += C
+SIF D
+	UP:3 += D
+
+;-------------------------------------------------
+;快Ａのソース
+;-------------------------------------------------
+@CALC_SOURCE2
+;Ａ敏感とＡ鈍感はここで処理
+SIF TALENT:105
+	TIMES SOURCE:2 , 0.50
+SIF TALENT:106
+	TIMES SOURCE:2 , 2.00
+
+A = SOURCE:2
+
+;PALAM:欲情をみる
+;快ＡはあまりPALAM:欲情では差が出ない
+IF PALAM:5 < PALAMLV:1
+	TIMES A , 0.60
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES A , 0.80
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES A , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES A , 1.20
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES A , 1.40
+ENDIF
+
+B = SOURCE:2
+
+;ABL:欲望をみる
+SIF ABL:1 == 0
+	TIMES B , 0.05
+SIF ABL:1 == 1
+	TIMES B , 0.10
+SIF ABL:1 == 2
+	TIMES B , 0.40
+SIF ABL:1 == 3
+	TIMES B , 0.80
+SIF ABL:1 == 4
+	TIMES B , 1.20
+IF ABL:1 >= 5
+	IF B < 100000
+		B = B * (ABL:1 * 30 + 30) / 100
+	ELSEIF B < 10000000
+		B = B / 100 * (ABL:1 * 30 + 30)
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 15 + 30)
+	ENDIF
+ENDIF
+
+;快感の否定、抑圧、抵抗
+IF TALENT:32 || TALENT:34 || TALENT:71
+	C = SOURCE:2 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES C , 1.00
+	SIF ABL:1 == 1
+		TIMES C , 0.85
+	SIF ABL:1 == 2
+		TIMES C , 0.70
+	SIF ABL:1 == 3
+		TIMES C , 0.40
+	SIF ABL:1 == 4
+		TIMES C , 0.30
+	SIF ABL:1 >= 5
+		TIMES C , 0.10
+ELSE
+	C = 0
+ENDIF
+
+;尻穴狂い
+IF TALENT:77
+	TIMES A , 1.50
+	TIMES B , 1.20
+	TIMES C , 0.50
+ENDIF
+
+
+UP:2 += A
+UP:6 += B
+UP:5 += B
+UP:13 += C
+
+;-------------------------------------------------
+;快Ｂのソース
+;-------------------------------------------------
+@CALC_SOURCE17
+;Ｂ敏感とＢ鈍感はここで処理
+SIF TALENT:107
+	TIMES SOURCE:17 , 0.50
+SIF TALENT:108
+	TIMES SOURCE:17 , 2.00
+
+A = SOURCE:17
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES A , 0.50
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES A , 0.70
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES A , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES A , 1.30
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES A , 1.80
+ENDIF
+
+B = SOURCE:17
+
+;ABL:欲望をみる
+SIF ABL:1 == 0
+	TIMES B , 0.10
+SIF ABL:1 == 1
+	TIMES B , 0.15
+SIF ABL:1 == 2
+	TIMES B , 0.20
+SIF ABL:1 == 3
+	TIMES B , 0.25
+SIF ABL:1 == 4
+	TIMES B , 0.30
+IF ABL:1 >= 5
+	IF B < 100000
+		B = B * (ABL:1 * 5 + 15) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 5 + 15)
+	ENDIF
+ENDIF
+
+;快感の否定、抑圧、抵抗
+IF TALENT:32 || TALENT:34 || TALENT:71
+	C = SOURCE:17 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES C , 1.00
+	SIF ABL:1 == 1
+		TIMES C , 0.85
+	SIF ABL:1 == 2
+		TIMES C , 0.70
+	SIF ABL:1 == 3
+		TIMES C , 0.40
+	SIF ABL:1 == 4
+		TIMES C , 0.30
+	SIF ABL:1 >= 5
+		TIMES C , 0.10
+ELSE
+	C = 0
+ENDIF
+
+;淫乳
+IF TALENT:78
+	TIMES A , 1.50
+	TIMES B , 1.20
+	TIMES C , 0.50
+ENDIF
+
+UP:14 += A
+UP:5 += B
+UP:13 += C
+
+;-------------------------------------------------
+;快Ｍのソース
+;-------------------------------------------------
+@CALC_SOURCE24
+;コンフィグでＭ感覚がOFFになっていたら快Ｍソースを0にして終了
+IF (FLAG:62 & 4194304) == 0
+	SOURCE:24 = 0
+	RETURN 0
+ENDIF
+
+;Ｍ敏感とＭ鈍感はここで処理
+SIF TALENT:596
+	TIMES SOURCE:24 , 0.50
+SIF TALENT:597
+	TIMES SOURCE:24 , 2.00
+
+A = SOURCE:24
+B = A
+
+;PALAM:欲情をみる・欲情による変動が少ない
+IF PALAM:5 < PALAMLV:1
+	TIMES A , 0.80
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES A , 0.90
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES A , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES A , 1.10
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES A , 1.20
+ENDIF
+
+;ABL:欲望をみる
+SIF ABL:1 == 0
+	TIMES B , 0.10
+SIF ABL:1 == 1
+	TIMES B , 0.15
+SIF ABL:1 == 2
+	TIMES B , 0.20
+SIF ABL:1 == 3
+	TIMES B , 0.25
+SIF ABL:1 == 4
+	TIMES B , 0.30
+IF ABL:1 >= 5
+	IF B < 100000
+		B = B * (ABL:1 * 5 + 15) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 5 + 15)
+	ENDIF
+ENDIF
+
+;快感の否定、抑圧、抵抗
+IF TALENT:32 || TALENT:34 || TALENT:71
+	C = SOURCE:24 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES C , 1.00
+	SIF ABL:1 == 1
+		TIMES C , 0.85
+	SIF ABL:1 == 2
+		TIMES C , 0.70
+	SIF ABL:1 == 3
+		TIMES C , 0.40
+	SIF ABL:1 == 4
+		TIMES C , 0.30
+	SIF ABL:1 >= 5
+		TIMES C , 0.10
+ELSE
+	C = 0
+ENDIF
+
+;蕩唇
+IF TALENT:589
+	TIMES A , 1.50
+	TIMES B , 1.20
+	TIMES C , 0.50
+ENDIF
+
+;キス魔
+IF TALENT:155
+	TIMES A , 1.50
+	TIMES B , 1.20
+	TIMES C , 0.50
+ENDIF
+
+UP:18 += A
+UP:4 += B
+UP:5 += B
+UP:13 += C
+
+;=============================================================================
+;ソース計算(快楽以外)
+;=============================================================================
+;-------------------------------------------------
+;情愛のソース
+;-------------------------------------------------
+@CALC_SOURCE3
+A = SOURCE:3
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES A , 0.10
+ELSEIF ABL:0 <= 3
+	TIMES A , 0.25
+ELSEIF ABL:0 <= 5
+	TIMES A , 0.40
+ELSEIF ABL:0 <= 8
+	TIMES A , 0.60
+ELSEIF ABL:0 <= 11
+	TIMES A , 0.80
+ELSE
+	IF A < 100000
+		A = A * (ABL:0 * 5 + 50) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:0 * 5 + 50)
+	ENDIF
+ENDIF
+
+B = SOURCE:3
+
+IF ABL:1 <= 1
+	TIMES B , 0.00
+ELSEIF ABL:1 <= 3
+	TIMES B , 0.05
+ELSEIF ABL:1 <= 5
+	TIMES B , 0.10
+ELSEIF ABL:1 <= 8
+	TIMES B , 0.20
+ELSEIF ABL:1 <= 11
+	TIMES B , 0.30
+ELSE
+	IF B < 100000
+		B = B * (ABL:1 * 3 + 15) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 3 + 15)
+	ENDIF
+ENDIF
+
+UP:4 += A
+UP:5 += B
+
+;-------------------------------------------------
+;性行動のソース
+;-------------------------------------------------
+@CALC_SOURCE4
+A = SOURCE:4
+
+;ABL:奉仕精神をみる
+IF ABL:6 <= 1
+	TIMES A , 0.60
+ELSEIF ABL:6 <= 3
+	TIMES A , 0.80
+ELSEIF ABL:6 <= 5
+	TIMES A , 1.00
+ELSEIF ABL:6 <= 8
+	TIMES A , 1.20
+ELSEIF ABL:6 <= 11
+	TIMES A , 1.40
+ELSE
+	IF A < 100000
+		A = A * (ABL:6 * 10 + 95) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:6 * 10 + 95)
+	ENDIF
+ENDIF
+
+;抑圧か抵抗がある場合はPALAM:抑鬱が上がる
+IF TALENT:32 || TALENT:34
+	B = SOURCE:4 / 5
+	;ABL:奉仕精神をみる
+	IF ABL:6 <= 1
+		TIMES B , 1.80
+	ELSEIF ABL:6 <= 3
+		TIMES B , 1.30
+	ELSEIF ABL:6 <= 5
+		TIMES B , 0.90
+	ELSEIF ABL:6 <= 8
+		TIMES B , 0.70
+	ELSEIF ABL:6 <= 11
+		TIMES B , 0.50
+	ELSE
+		IF ABL:6 <= 27
+			IF B < 100000
+				B = B * (55 - ABL:6 * 2) / 100
+			ELSEIF B < 100000000
+				B = B / 100 * (55 - ABL:6 * 2)
+			ENDIF
+		ELSE
+			TIMES B , 0.01
+		ENDIF
+	ENDIF
+ELSE
+	B = 0
+ENDIF
+
+UP:7 += A
+UP:13 += B
+
+;-------------------------------------------------
+;達成のソース
+;-------------------------------------------------
+@CALC_SOURCE5
+A = SOURCE:5
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES A , 0.50
+ELSEIF ABL:0 <= 3
+	TIMES A , 0.80
+ELSEIF ABL:0 <= 5
+	TIMES A , 1.00
+ELSEIF ABL:0 <= 8
+	TIMES A , 1.20
+ELSEIF ABL:0 <= 11
+	TIMES A , 1.40
+ELSE
+	IF A < 100000
+		A = A * (ABL:0 * 5 + 110) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:0 * 5 + 110)
+	ENDIF
+ENDIF
+
+;ABL:奉仕精神をみる
+IF ABL:6 <= 1
+	TIMES A , 0.00
+ELSEIF ABL:6 <= 3
+	TIMES A , 0.40
+ELSEIF ABL:6 <= 5
+	TIMES A , 0.80
+ELSEIF ABL:6 <= 8
+	TIMES A , 1.20
+ELSEIF ABL:6 <= 11
+	TIMES A , 1.60
+ELSE
+	IF A < 100000
+		A = A * (ABL:6 * 10 + 100) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:6 * 10 + 100)
+	ENDIF
+ENDIF
+
+UP:4 += A
+
+;-------------------------------------------------
+;痛覚のソース
+;-------------------------------------------------
+@CALC_SOURCE6
+A = SOURCE:6
+
+B = SOURCE:6
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES B , 0.80
+ELSEIF ABL:0 <= 3
+	TIMES B , 0.70
+ELSEIF ABL:0 <= 5
+	TIMES B , 0.55
+ELSEIF ABL:0 <= 8
+	TIMES B , 0.45
+ELSEIF ABL:0 <= 11
+	TIMES B , 0.35
+ELSE
+	IF ABL:0 < 25
+		IF B < 100000
+			B = B * (50 - ABL:0 * 2) / 100
+		ELSEIF B < 100000000
+			B = B / 100 * (50 - ABL:0 * 2)
+		ENDIF
+	ELSE
+		TIMES B , 0.01
+	ENDIF
+ENDIF
+
+C = SOURCE:6
+
+IF ABL:0 <= 1
+	TIMES C , 0.80
+ELSEIF ABL:0 <= 3
+	TIMES C , 0.60
+ELSEIF ABL:0 <= 5
+	TIMES C , 0.50
+ELSEIF ABL:0 <= 8
+	TIMES C , 0.40
+ELSEIF ABL:0 <= 11
+	TIMES C , 0.20
+ELSE
+	TIMES C , 0.05
+ENDIF
+
+D = SOURCE:6
+
+IF ABL:8 == 0
+	TIMES C , 1.00
+	TIMES D , 0.00
+ENDIF
+IF ABL:8 == 1
+	TIMES C , 0.80
+	TIMES D , 0.10
+ENDIF
+IF ABL:8 == 2
+	TIMES C , 0.50
+	TIMES D , 0.20
+ENDIF
+IF ABL:8 == 3
+	TIMES C , 0.30
+	TIMES D , 0.30
+ENDIF
+IF ABL:8 == 4
+	TIMES C , 0.10
+	TIMES D , 0.45
+ENDIF
+IF ABL:8 >= 5
+	TIMES C , 0.05
+	IF D < 100000
+		D = D * (ABL:8 * 10 + 10) / 100
+	ELSEIF D < 100000000
+		D = D / 100 * (ABL:8 * 10 + 10)
+	ENDIF
+ENDIF
+
+;痛みに弱い
+IF TALENT:40
+	TIMES D , 4.00
+ENDIF
+
+;マゾ
+IF TALENT:79
+	TIMES A , 1.50
+	TIMES C , 0.50
+	TIMES D , 2.50
+ENDIF
+
+;助手によるプレイ
+IF ASSIPLAY
+	TIMES C , 0.40
+ENDIF
+
+;調教者が【サド】
+IF TALENT:PLAYER:83
+	TIMES D , 2.50
+ENDIF
+IF ABL:PLAYER:15 > 0
+	IF D < 100000
+		D = D * (ABL:PLAYER:15 * 10 + 100) / 100
+	ELSEIF D < 100000000
+		D = D / 100 * (ABL:PLAYER:15 * 10 + 100)
+	ENDIF
+ENDIF
+
+;プレイヤーのサドっ気が高すぎる場合の軽減措置
+IF ABL:PLAYER:15 > 15
+	C = C * 15 / ABL:PLAYER:15
+ENDIF
+
+UP:9 += A
+UP:10 += B
+UP:11 += C
+UP:5 += D
+;マゾっ気があるとPALAM:欲情も上がる
+;そのとき調教者が【サド】だと効果的
+
+;-------------------------------------------------
+;中毒充足のソース
+;-------------------------------------------------
+@CALC_SOURCE7
+A = SOURCE:7
+B = SOURCE:7
+
+IF ABL:1 <= 1
+	TIMES A , 0.10
+	TIMES B , 0.20
+ELSEIF ABL:1 <= 3
+	TIMES A , 0.15
+	TIMES B , 0.30
+ELSEIF ABL:1 <= 5
+	TIMES A , 0.20
+	TIMES B , 0.40
+ELSEIF ABL:1 <= 8
+	TIMES A , 0.25
+	TIMES B , 0.50
+ELSEIF ABL:1 <= 11
+	TIMES A , 0.30
+	TIMES B , 0.60
+ELSE
+	IF A < 100000
+		A = A * (ABL:1 + 25) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:1 + 25)
+	ENDIF
+	IF B < 100000
+		B = B * (ABL:1 * 2 + 45) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:1 * 2 + 45)
+	ENDIF
+ENDIF
+
+;マゾ
+IF TALENT:79
+	TIMES A , 1.20
+	TIMES B , 1.50
+ENDIF
+
+UP:4 += A
+UP:5 += B
+
+;-------------------------------------------------
+;不潔のソース
+;-------------------------------------------------
+@CALC_SOURCE8
+A = SOURCE:8
+B = SOURCE:8
+
+IF ABL:0 <= 1
+	TIMES A , 0.60
+	TIMES B , 1.00
+ELSEIF ABL:0 <= 3
+	TIMES A , 0.40
+	TIMES B , 0.80
+ELSEIF ABL:0 <= 5
+	TIMES A , 0.25
+	TIMES B , 0.60
+ELSEIF ABL:0 <= 8
+	TIMES A , 0.10
+	TIMES B , 0.30
+ELSEIF ABL:0 <= 11
+	TIMES A , 0.00
+	TIMES B , 0.10
+ELSE
+	TIMES A , 0.00
+	TIMES B , 0.00
+ENDIF
+
+UP:11 += A
+UP:12 += B
+
+;-------------------------------------------------
+;接触のソース
+;-------------------------------------------------
+@CALC_SOURCE9
+;恥じらいと恥薄いはここで処理
+SIF TALENT:35
+	TIMES SOURCE:9 , 2.00
+SIF TALENT:36
+	TIMES SOURCE:9 , 0.50
+
+A = SOURCE:9
+C = SOURCE:9
+
+;ABL:従順をみる
+IF ABL:0 == 0
+	TIMES A , 0.01
+	TIMES C , 1.50
+ELSEIF ABL:0 == 1
+	TIMES A , 0.05
+	TIMES C , 1.20
+ELSEIF ABL:0 == 2
+	TIMES A , 0.10
+	TIMES C , 1.00
+ELSEIF ABL:0 == 3
+	TIMES A , 0.50
+	TIMES C , 0.70
+ELSEIF ABL:0 == 4
+	TIMES A , 0.80
+	TIMES C , 0.55
+ELSEIF ABL:0 == 5
+	TIMES A , 1.00
+	TIMES C , 0.40
+ELSEIF ABL:0 == 6
+	TIMES A , 1.10
+	TIMES C , 0.30
+ELSEIF ABL:0 == 7
+	TIMES A , 1.20
+	TIMES C , 0.20
+ELSEIF ABL:0 == 8
+	TIMES A , 1.30
+	TIMES C , 0.10
+ELSEIF ABL:0 == 9
+	TIMES A , 1.40
+	TIMES C , 0.05
+ELSEIF ABL:0 >= 10
+	IF A < 100000
+		A = A * (ABL:0 * 5 + 100) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:0 * 5 + 100)
+	ENDIF
+	TIMES C , 0.00
+ENDIF
+
+;好感度を見る
+IF CFLAG:2 <= 10
+	TIMES A , 0.01
+	TIMES C , 5.00
+ELSEIF CFLAG:2 <= 50
+	TIMES A , 0.05
+	TIMES C , 2.50
+ELSEIF CFLAG:2 <= 100
+	TIMES A , 0.10
+	TIMES C , 1.50
+ELSEIF CFLAG:2 <= 300
+	TIMES A , 0.20
+	TIMES C , 1.00
+ELSEIF CFLAG:2 <= 500
+	TIMES A , 0.50
+	TIMES C , 0.70
+ELSEIF CFLAG:2 <= 700
+	TIMES A , 1.00
+	TIMES C , 0.40
+ELSEIF CFLAG:2 <= 1000
+	TIMES A , 1.10
+	TIMES C , 0.30
+ELSEIF CFLAG:2 <= 3000
+	TIMES A , 1.30
+	TIMES C , 0.20
+ELSEIF CFLAG:2 <= 5000
+	TIMES A , 1.40
+	TIMES C , 0.10
+ELSEIF CFLAG:2 > 5000
+	TIMES A , 1.50
+	TIMES C , 0.00
+ENDIF
+
+;恋慕
+SIF TALENT:85
+	TIMES A , 1.50
+
+;親愛
+SIF TALENT:88
+	TIMES A , 2.00
+
+;恋人
+SIF TALENT:153
+	TIMES A , 1.50
+
+;恋慕かつ恋人
+SIF TALENT:85 && TALENT:153
+	TIMES C , 0.00
+
+;キス魔
+;ボールギャグ装着中・縄拘束中・触手召喚中は無効
+IF TALENT:155 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
+	TIMES A , 1.20
+ENDIF
+
+;天気：雪
+SIF TIME:5 == 5 || TIME:5 == 6
+	TIMES C , 0.70
+SIF TIME:5 == 8
+	TIMES C , 0.20
+
+UP:4 += A
+UP:11 += C
+
+
+;-------------------------------------------------
+;液体追加のソース
+;-------------------------------------------------
+@CALC_SOURCE10
+A = SOURCE:10
+
+UP:3 += A
+
+;-------------------------------------------------
+;欲情追加のソース
+;-------------------------------------------------
+@CALC_SOURCE11
+A = SOURCE:11
+
+UP:5 += A
+
+
+;-------------------------------------------------
+;露出のソース
+;-------------------------------------------------
+@CALC_SOURCE12
+;恥じらいと恥薄いはここで処理
+SIF TALENT:35
+	TIMES SOURCE:12 , 2.00
+SIF TALENT:36
+	TIMES SOURCE:12 , 0.50
+
+;潤滑アップの50％を露出のソースに加える
+;ただし液体追加のソースのぶんは引く
+SOURCE:12 += (UP:3-SOURCE:10) / 2
+
+A = SOURCE:12
+
+;ABL:露出癖をみる
+SIF ABL:7 == 0
+	TIMES A , 0.00
+SIF ABL:7 == 1
+	TIMES A , 0.10
+SIF ABL:7 == 2
+	TIMES A , 0.20
+SIF ABL:7 == 3
+	TIMES A , 0.40
+SIF ABL:7 == 4
+	TIMES A , 0.60
+IF ABL:7 >= 5
+	IF A < 100000
+		A = A * (ABL:7 * 10 + 30) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:7 * 10 + 30)
+	ENDIF
+ENDIF
+
+B = SOURCE:12
+
+;PALAM:恥情をみる
+;恥ずかしさを感じれば感じるほどあまり恥ずかしくなくなる
+;言葉責めは逆
+IF SELECTCOM == 75
+	IF PALAM:8 < PALAMLV:1
+		TIMES B , 1.00
+	ELSEIF PALAM:8 < PALAMLV:2
+		TIMES B , 1.10
+	ELSEIF PALAM:8 < PALAMLV:3
+		TIMES B , 1.30
+	ELSEIF PALAM:8 < PALAMLV:4
+		TIMES B , 1.50
+	ELSEIF PALAM:8 >= PALAMLV:4
+		TIMES B , 1.70
+	ENDIF
+ELSE
+	IF PALAM:8 < PALAMLV:1
+		TIMES B , 1.00
+	ELSEIF PALAM:8 < PALAMLV:2
+		TIMES B , 0.90
+	ELSEIF PALAM:8 < PALAMLV:3
+		TIMES B , 0.70
+	ELSEIF PALAM:8 < PALAMLV:4
+		TIMES B , 0.50
+	ELSEIF PALAM:8 >= PALAMLV:4
+		TIMES B , 0.30
+	ENDIF
+ENDIF
+
+C = SOURCE:12
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES C , 0.50
+ELSEIF ABL:0 <= 3
+	TIMES C , 0.30
+ELSEIF ABL:0 <= 5
+	TIMES C , 0.15
+ELSEIF ABL:0 <= 8
+	TIMES C , 0.05
+ELSEIF ABL:0 <= 11
+	TIMES C , 0.00
+ELSE
+	TIMES C , 0.00
+ENDIF
+
+;ABL:露出癖をみる
+SIF ABL:7 == 0
+	TIMES C , 1.00
+SIF ABL:7 == 1
+	TIMES C , 0.90
+SIF ABL:7 == 2
+	TIMES C , 0.70
+SIF ABL:7 == 3
+	TIMES C , 0.50
+SIF ABL:7 == 4
+	TIMES C , 0.30
+SIF ABL:7 >= 5
+	TIMES C , 0.10
+
+;マゾ
+IF TALENT:79
+	TIMES A , 1.50
+	TIMES B , 1.50
+	TIMES C , 0.50
+ENDIF
+
+UP:5 += A
+UP:8 += B
+
+UP:11 += C
+
+;-------------------------------------------------
+;屈従のソース
+;-------------------------------------------------
+@CALC_SOURCE13
+A = SOURCE:13
+B = SOURCE:13
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES A , 0.12
+	TIMES B , 0.50
+ELSEIF ABL:0 <= 3
+	TIMES A , 0.10
+	TIMES B , 0.80
+ELSEIF ABL:0 <= 5
+	TIMES A , 0.05
+	TIMES B , 1.00
+ELSEIF ABL:0 <= 8
+	TIMES A , 0.02
+	TIMES B , 1.10
+ELSEIF ABL:0 <= 11
+	TIMES A , 0.00
+	TIMES B , 1.20
+ELSE
+	TIMES A , 0.00
+	IF B < 100000
+		B = B * (ABL:0 * 2 + 105) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:0 * 2 + 105)
+	ENDIF
+ENDIF
+
+UP:13 += A
+UP:6 += B
+
+;-------------------------------------------------
+;逸脱のソース
+;-------------------------------------------------
+@CALC_SOURCE14
+;好奇心と保守的はここで処理
+SIF TALENT:23
+	TIMES SOURCE:14 , 0.30
+SIF TALENT:24
+	TIMES SOURCE:14 , 3.00
+
+A = SOURCE:14
+
+;ABL:従順をみる
+IF ABL:0 <= 1
+	TIMES A , 1.00
+ELSEIF ABL:0 <= 3
+	TIMES A , 0.80
+ELSEIF ABL:0 <= 5
+	TIMES A , 0.70
+ELSEIF ABL:0 <= 8
+	TIMES A , 0.40
+ELSEIF ABL:0 <= 11
+	TIMES A , 0.20
+ELSE
+	TIMES A , 0.00
+ENDIF
+
+;ABL:欲望をみる
+IF ABL:1 <= 1
+	TIMES A , 0.90
+ELSEIF ABL:1 <= 3
+	TIMES A , 0.70
+ELSEIF ABL:1 <= 5
+	TIMES A , 0.50
+ELSEIF ABL:1 <= 8
+	TIMES A , 0.30
+ELSEIF ABL:1 <= 11
+	TIMES A , 0.10
+ELSE
+	TIMES A , 0.00
+ENDIF
+
+;マゾ
+SIF TALENT:79
+	TIMES A , 0.50
+
+UP:11 += A
+
+;-------------------------------------------------
+;反感追加のソース
+;-------------------------------------------------
+@CALC_SOURCE15
+A = SOURCE:15
+
+UP:11 += A
+
+;-------------------------------------------------
+;恭順追加のソース
+;-------------------------------------------------
+@CALC_SOURCE16
+A = SOURCE:16
+
+UP:4 += A
+
+;-------------------------------------------------
+;歓楽のソース
+;-------------------------------------------------
+@CALC_SOURCE18
+A = SOURCE:18
+
+;恋慕
+SIF TALENT:85
+	TIMES A , 1.20
+
+;親愛
+SIF TALENT:88
+	TIMES A , 1.50
+
+;恋人
+SIF TALENT:153
+	TIMES A , 1.20
+
+;キス魔
+;ボールギャグ装着中・縄拘束中・触手召喚中は無効
+IF TALENT:155 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
+	TIMES A , 1.20
+ENDIF
+
+;ABL:従順をみる
+IF A < 100000
+	A = A * (ABL:0 * 5 + 100) / 100
+ELSEIF A < 100000000
+	A = A / 100 * (ABL:0 * 5 + 100)
+ENDIF
+
+;ABL:欲望をみる
+IF A < 100000
+	A = A * (ABL:1 * 5 + 100) / 100
+ELSEIF A < 100000000
+	A = A / 100 * (ABL:1 * 5 + 100)
+ENDIF
+
+;好感度を見る
+IF CFLAG:2 <= 10
+	TIMES A , 0.50
+ELSEIF CFLAG:2 <= 50
+	TIMES A , 0.80
+ELSEIF CFLAG:2 <= 100
+	TIMES A , 1.00
+ELSEIF CFLAG:2 <= 300
+	TIMES A , 1.10
+ELSEIF CFLAG:2 <= 500
+	TIMES A , 1.20
+ELSEIF CFLAG:2 <= 700
+	TIMES A , 1.30
+ELSEIF CFLAG:2 <= 1000
+	TIMES A , 1.40
+ELSEIF CFLAG:2 <= 3000
+	TIMES A , 1.50
+ELSEIF CFLAG:2 <= 5000
+	TIMES A , 1.70
+ELSE
+	IF A < 100000
+		A = A * (CFLAG:2 / 50 + 100) / 100
+	ELSEIF A < 10000000
+		A = A / 100 * (CFLAG:2 / 50 + 100)
+	ELSEIF A < 100000000
+		IF CFLAG:2 <= 50000
+			A = A / 100 * (CFLAG:2 / 50 + 100)
+		ELSE
+			A = 1000000000
+		ENDIF
+	ENDIF
+ENDIF
+
+UP:15 += A
+
+;-------------------------------------------------
+;家務のソース
+;-------------------------------------------------
+@CALC_SOURCE19
+A = SOURCE:19
+B = SOURCE:19
+
+;ABL:奉仕精神をみる
+IF ABL:6 == 0
+	TIMES A , 0.30
+	TIMES B , 0.80
+ELSEIF ABL:6 == 1
+	TIMES A , 0.50
+	TIMES B , 0.90
+ELSEIF ABL:6 == 2
+	TIMES A , 0.70
+	TIMES B , 1.00
+ELSEIF ABL:6 == 3
+	TIMES A , 0.80
+	TIMES B , 1.10
+ELSEIF ABL:6 == 4
+	TIMES A , 0.90
+	TIMES B , 1.20
+ELSEIF ABL:6 >= 5
+	IF A < 100000
+		A = A * (ABL:6 * 10 + 50) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:6 * 10 + 50)
+	ENDIF
+	IF B < 100000
+		B = B * (ABL:6 * 5 + 100) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:6 * 5 + 100)
+	ENDIF
+ENDIF
+
+;ABL:技巧を見る
+IF B < 100000
+	B = B * (ABL:2 * 10 + 100) / 100
+ELSEIF B < 100000000
+	B = B / 100 * (ABL:2 * 10 + 100)
+ENDIF
+
+UP:7 += A
+UP:16 += B
+
+;-------------------------------------------------
+;征服のソース
+;-------------------------------------------------
+@CALC_SOURCE20
+B = 0
+C = 0
+
+;主導権基準値で分岐
+T = TARGET
+CALL GET_INITIATIVE_RATE
+IF R > 0
+	;強気なキャラ
+	B = SOURCE:20 / 4
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES B , 0.10
+	SIF ABL:1 == 1
+		TIMES B , 0.15
+	SIF ABL:1 == 2
+		TIMES B , 0.20
+	SIF ABL:1 == 3
+		TIMES B , 0.25
+	SIF ABL:1 == 4
+		TIMES B , 0.30
+	IF ABL:1 >= 5
+		IF B < 100000
+			B = B * (ABL:1 * 5 + 15) / 100
+		ELSEIF B < 100000000
+			B = B / 100 * (ABL:1 * 5 + 15)
+		ENDIF
+	ENDIF
+	;ABL:サドっ気をみる
+	IF B < 100000
+		B = B * (ABL:15 * 30 + 100) / 100
+	ELSEIF B < 100000000
+		B = B / 100 * (ABL:15 * 30 + 100)
+	ENDIF
+ELSE
+	;弱気なキャラ
+	C = SOURCE:20 / 2
+	;ABL:従順をみる
+	SIF ABL:0 == 0
+		TIMES C , 0.10
+	SIF ABL:0 == 1
+		TIMES C , 0.15
+	SIF ABL:0 == 2
+		TIMES C , 0.20
+	SIF ABL:0 == 3
+		TIMES C , 0.25
+	SIF ABL:0 == 4
+		TIMES C , 0.30
+	IF ABL:0 >= 5
+		IF C < 100000
+			C = C * (ABL:0 * 5 + 15) / 100
+		ELSEIF B < 100000000
+			C = C / 100 * (ABL:0 * 5 + 15)
+		ENDIF
+	ENDIF
+ENDIF
+
+A = SOURCE:20
+;ABL:サドっ気をみる
+IF ABL:15 == 0
+	TIMES A , 0.70
+ELSEIF ABL:15 == 1
+	TIMES A , 1.00
+ELSEIF ABL:15 == 2
+	TIMES A , 1.30
+ELSEIF ABL:15 == 3
+	TIMES A , 1.70
+ELSEIF ABL:15 == 4
+	TIMES A , 2.00
+ELSEIF ABL:15 >= 5
+	IF A < 100000
+		A = A * (ABL:15 * 15 + 175) / 100
+	ELSEIF A < 100000000
+		A = A / 100 * (ABL:15 * 15 + 175)
+	ENDIF
+ENDIF
+
+UP:17 += A
+UP:5 += B
+UP:8 += C
+
+;-------------------------------------------------
+;受動のソース
+;-------------------------------------------------
+@CALC_SOURCE21
+B = 0
+C = 0
+
+;主導権基準値で分岐
+T = TARGET
+CALL GET_INITIATIVE_RATE
+IF R > 0
+	;強気なキャラ
+	B = SOURCE:21 / 3
+	;ABL:欲望をみる
+	SIF ABL:1 == 0
+		TIMES B , 0.30
+	SIF ABL:1 == 1
+		TIMES B , 0.35
+	SIF ABL:1 == 2
+		TIMES B , 0.40
+	SIF ABL:1 == 3
+		TIMES B , 0.45
+	SIF ABL:1 == 4
+		TIMES B , 0.50
+	IF ABL:1 >= 5
+		IF B < 100000
+			B = B * (ABL:1 * 10 + 10) / 100
+		ELSEIF B < 100000000
+			B = B / 100 * (ABL:1 * 10 + 10)
+		ENDIF
+	ENDIF
+ELSE
+	;弱気なキャラ
+	C = SOURCE:21 / 2
+	;ABL:奉仕精神をみる
+	SIF ABL:6 == 0
+		TIMES C , 0.30
+	SIF ABL:6 == 1
+		TIMES C , 0.35
+	SIF ABL:6 == 2
+		TIMES C , 0.40
+	SIF ABL:6 == 3
+		TIMES C , 0.45
+	SIF ABL:6 == 4
+		TIMES C , 0.50
+	IF ABL:6 >= 5
+		IF C < 100000
+			C = C * (ABL:6 * 10 + 10) / 100
+		ELSEIF B < 100000000
+			C = C / 100 * (ABL:6 * 10 + 10)
+		ENDIF
+	ENDIF
+ENDIF
+
+A = SOURCE:21
+;ABL:従順をみる
+IF A < 100000
+	A = A * (ABL:0 * 10 + 70) / 100
+ELSEIF A < 100000000
+	A = A / 100 * (ABL:0 * 10 + 70)
+ENDIF
+
+UP:15 += A
+UP:6 += B
+UP:4 += C
+
+;-------------------------------------------------
+;懐疑のソース
+;-------------------------------------------------
+@CALC_SOURCE22
+A = SOURCE:22
+B = SOURCE:22
+
+;ABL:従順をみる
+SIF ABL:0 == 0
+	TIMES B , 0.80
+SIF ABL:0 == 1
+	TIMES B , 0.70
+SIF ABL:0 == 2
+	TIMES B , 0.55
+SIF ABL:0 == 3
+	TIMES B , 0.45
+SIF ABL:0 == 4
+	TIMES B , 0.35
+IF ABL:0 >= 5
+	IF ABL:0 <= 10
+		IF B < 100000
+			B = B * (50 - ABL:0 * 5) / 100
+		ELSEIF B < 100000000
+			B = B / 100 * (50 - ABL:0 * 5)
+		ENDIF
+	ELSE
+		TIMES B , 0.01
+	ENDIF
+ENDIF
+
+;好感度を見る
+IF CFLAG:2 <= 10
+	TIMES A , 1.50
+	TIMES B , 2.50
+ELSEIF CFLAG:2 <= 50
+	TIMES A , 1.00
+	TIMES B , 1.50
+ELSEIF CFLAG:2 <= 100
+	TIMES A , 0.60
+	TIMES B , 1.00
+ELSEIF CFLAG:2 <= 300
+	TIMES A , 0.50
+	TIMES B , 0.60
+ELSEIF CFLAG:2 <= 500
+	TIMES A , 0.50
+	TIMES B , 0.40
+ELSEIF CFLAG:2 <= 700
+	TIMES A , 0.50
+	TIMES B , 0.30
+ELSEIF CFLAG:2 <= 1000
+	TIMES A , 0.50
+	TIMES B , 0.20
+ELSEIF CFLAG:2 <= 3000
+	TIMES A , 0.40
+	TIMES B , 0.10
+ELSEIF CFLAG:2 <= 5000
+	TIMES A , 0.40
+	TIMES B , 0.05
+ELSEIF CFLAG:2 > 5000
+	TIMES A , 0.30
+	TIMES B , 0.00
+ENDIF
+
+UP:10 += A
+UP:12 += B
+
+;-------------------------------------------------
+;不安のソース
+;-------------------------------------------------
+@CALC_SOURCE23
+;ここで手に入る恐怖は、お化け屋敷で女の子がくっついてきて「怖かったよー」とか言うイメージなので
+;弱気だったり好感度が高かったりすると多く手に入るという事で
+
+;天気:大雨
+SIF TIME:5 == 4
+	SOURCE:23 *= 2
+
+A = SOURCE:23
+B = SOURCE:23 / 5
+
+;臆病(重複前提)
+IF TALENT:10
+	TIMES A , 1.50
+	TIMES B , 2.00
+ENDIF
+
+;大人しい
+IF TALENT:14
+	TIMES A , 1.20
+ENDIF
+
+;無関心・感情乏しい
+IF TALENT:21 || TALENT:22
+	TIMES A , 0.70
+ENDIF
+
+
+;ABL:従順をみる
+SIF ABL:0 == 0
+	TIMES B , 0.80
+SIF ABL:0 == 1
+	TIMES B , 0.70
+SIF ABL:0 == 2
+	TIMES B , 0.55
+SIF ABL:0 == 3
+	TIMES B , 0.45
+SIF ABL:0 == 4
+	TIMES B , 0.35
+IF ABL:0 >= 5
+	IF ABL:0 <= 10
+		IF B < 100000
+			B = B * (50 - ABL:0 * 5) / 100
+		ELSEIF B < 100000000
+			B = B / 100 * (50 - ABL:0 * 5)
+		ENDIF
+	ELSE
+		TIMES B , 0.01
+	ENDIF
+ENDIF
+
+;好感度を見る
+IF CFLAG:2 <= 10
+	TIMES A , 0.50
+	TIMES B , 2.50
+ELSEIF CFLAG:2 <= 50
+	TIMES A , 0.70
+	TIMES B , 1.50
+ELSEIF CFLAG:2 <= 100
+	TIMES A , 0.90
+	TIMES B , 1.00
+ELSEIF CFLAG:2 <= 300
+	TIMES A , 1.00
+	TIMES B , 0.60
+ELSEIF CFLAG:2 <= 500
+	TIMES A , 1.20
+	TIMES B , 0.40
+ELSEIF CFLAG:2 <= 700
+	TIMES A , 1.50
+	TIMES B , 0.30
+ELSEIF CFLAG:2 <= 1000
+	TIMES A , 1.70
+	TIMES B , 0.20
+ELSEIF CFLAG:2 <= 3000
+	TIMES A , 2.00
+	TIMES B , 0.10
+ELSEIF CFLAG:2 <= 5000
+	TIMES A , 2.25
+	TIMES B , 0.05
+ELSEIF CFLAG:2 <= 1000000
+	IF A < 100000
+		A = A * (20 + CFLAG:2 / 1000) / 10
+	ELSEIF A < 10000000
+		A = A / 10 * (20 + CFLAG:2 / 1000)
+	ENDIF
+	TIMES B , 0.00
+ELSEIF CFLAG:2 > 1000000
+	IF A < 10000000
+		TIMES A , 100.00
+	ELSE
+		A = 999999999
+	ENDIF
+	TIMES B , 0.00
+ENDIF
+
+UP:10 += A
+UP:11 += B
+

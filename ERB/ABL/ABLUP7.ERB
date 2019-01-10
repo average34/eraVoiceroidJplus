@@ -1,0 +1,204 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/露出癖upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;露出癖up本体
+;-------------------------------------------------
+@ABLUP7MAIN
+DRAWLINE
+IF ABL:7 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP7
+
+;欲望が露出癖＋１レベルでないといけない
+PRINTFORML %ABLNAME:1%{ABL:7+1}LV以上、かつ
+
+;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
+IF F
+	PRINTFORML %EXPNAME:50%{F}以上、かつ
+ENDIF
+
+PRINTFORM [0] - %PALAMNAME:8%の珠×{A}
+IF ABL:7 < 2
+	PRINTFORM 、%EXPNAME:2%{1}以上
+ELSE
+	PRINTFORM 、%EXPNAME:11%{1}以上
+ENDIF
+PRINT ……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [20] - %PALAMNAME:8%の珠で限界まであげる
+
+PRINT ……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+
+PRINTL [100] - やめる
+
+
+INPUT
+IF (RESULT < 0 || RESULT > 0) && RESULT != 100 && RESULT != 20
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:7 += 1
+
+IF RESULT == 0
+	JUEL:8 -= A
+ELSEIF RESULT == 20
+	CALL AUT_ROSHITU_0
+ENDIF
+
+PRINTS ABLNAME:7
+PRINT のレベルが
+PRINTV ABL:7
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;露出癖が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP7
+IF ABL:7 >= 9999
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+;能力アップに必要なコストを計算
+CALL COSTABLUP7
+
+;条件別にＯＫかダメかを記録する
+I = 0
+J = 0
+K = 0
+;能力アップ可能なら1にする
+Z = 0
+
+;欲望が露出癖＋１レベルでないといけない
+IF ABL:1 < ABL:7+1
+	;欲望が不足
+	I |= 4
+ENDIF
+
+;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
+IF EXP:50 < F
+	;異常経験が不足
+	I |= 2
+ENDIF
+
+;恥情の珠で上げる
+SIF JUEL:8 < A
+	I |= 1
+IF ABL:7 < 2
+	;絶頂経験が必要
+	SIF EXP:2 == 0
+		I |= 2
+ELSE
+	;調教自慰経験が必要
+	SIF EXP:11 == 0
+		I |= 2
+ENDIF
+
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;露出癖を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP7
+IF ABL:7 == 0
+	A = 100
+ELSEIF ABL:7 == 1
+	A = 1000
+ELSEIF ABL:7 == 2
+	A = 5000
+ELSEIF ABL:7 == 3
+	A = 15000
+	;一線越えない
+	SIF TALENT:27
+		TIMES A , 1.10
+ELSEIF ABL:7 == 4
+	A = 35000
+	;一線越えない
+	SIF TALENT:27
+		TIMES A , 1.30
+ELSE
+	A = 35000
+	
+	A = A * (ABL:7 - 3)
+	;一線越えない
+	SIF TALENT:27
+		TIMES A , 1.30
+ENDIF
+
+;倒錯的
+IF TALENT:80
+	TIMES A , 0.75
+ENDIF
+
+;目立ちたがり
+IF TALENT:28
+	TIMES A , 0.50
+ENDIF
+
+;マゾ
+IF TALENT:79
+	TIMES A , 0.75
+ENDIF
+
+;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
+IF ABL:7 >= 3 && TALENT:28 == 0
+	F = ABL:7 * 3
+ELSE
+	F = 0
+ENDIF
+

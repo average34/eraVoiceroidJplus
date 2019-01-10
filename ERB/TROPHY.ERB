@@ -1,0 +1,1773 @@
+﻿;--------------------------------------------------
+;実績一覧
+;--------------------------------------------------
+;GLOBALについて
+;0-154をゲーム開始時の主人公の素質記録
+;199を互換用に使用
+;900-1000のうちいくつかをコンフィグ等の記録
+;1000-1999をクリアチェック関数@GLOBALEVENTで使用
+;実績一覧では200～使用。ビット演算で実績取得済みか判定
+;200:イベント編
+;201:ウフフ編
+;202:イベント編-Lunatic-
+;203:ウフフ編-Lunatic-
+;FLAG:57 どの実績を開いていたかの記録に使用
+;--------------------------------------------------
+@TROPHY
+CALL TROPHY_CHECK_200
+CALL TROPHY_CHECK_202
+
+VARSET B, 0
+VARSET S, 0
+VARSET G, 0
+VARSET P, 0
+VARSET LOCAL, 0
+LOCAL:2 = 200+FLAG:57
+
+$PRINT_LIST
+VARSET RESULT, 0
+DRAWLINE
+PRINTFORM  ■ トロフィー　
+IF FLAG:57 == 0
+	PRINTFORML イベント編　　
+ELSEIF FLAG:57 == 1
+	PRINTFORML ウフフ編　　
+ELSEIF FLAG:57 == 2
+	PRINTFORML イベント編-Lunatic-　　
+;ELSEIF FLAG:57 == 3
+;	PRINTFORML ウフフ編-Lunatic-　　
+ENDIF
+DRAWLINE
+FOR LOCAL, 0, 50
+	TRYCALLFORM TROPHY_{LOCAL:2}_{LOCAL}
+	SIF RESULTS:0 == ""
+		CONTINUE
+	GETBIT GLOBAL:(LOCAL:2), LOCAL
+	IF RESULTS:0 == "ブロンズ"
+		SETCOLOR 151, 107, 47
+		PRINT [B] 
+	ELSEIF RESULTS:0 == "シルバー"
+		SETCOLOR 158, 158, 158
+		PRINT [S] 
+	ELSEIF RESULTS:0 == "ゴールド"
+		SETCOLOR 180, 158, 83
+		PRINT [G] 
+	ELSEIF RESULTS:0 == "プラチナ"
+		SETCOLOR 217, 217, 140
+		PRINT [P] 
+	ENDIF
+	RESETCOLOR
+	SIF RESULT == 0
+		SETCOLOR 105, 105, 105
+	SIF RESULT == 0 && (RESULTS:0 == "シルバー" || RESULTS:0 == "ゴールド" || RESULTS:0 == "プラチナ")
+		RESULTS:1 = ？？？
+	SIF RESULT == 0 && (RESULTS:0 == "ゴールド" || RESULTS:0 == "プラチナ")
+		RESULTS:2 = ？？？
+	;イベント編-Lunatic-は実績名長
+	IF FLAG:57 == 2
+		PRINTFORM %RESULTS:1,28,LEFT%%RESULTS:2%
+	ELSE
+		PRINTFORM %RESULTS:1,22,LEFT%%RESULTS:2%
+	ENDIF
+	;実績によっては現在の達成率をパーセント表示
+	IF RESULT:1 && RESULT == 0
+		PRINT [ 現在
+		PRINTFORM {RESULT:1}
+		PRINT % ]
+	ENDIF
+	PRINTL 
+	VARSET RESULT, 0
+	VARSET RESULTS, ""
+	RESETCOLOR
+NEXT
+
+DRAWLINE
+;実績数カウント
+CALL TROPHY_COUNT(LOCAL:2)
+;実績数表示
+CALL TROPHY_COUNT_PRINT
+DRAWLINE
+PRINTFORML 全実績総合
+;全実績数カウント
+CALL TROPHY_COUNT_ALL
+;実績数表示
+CALL TROPHY_COUNT_PRINT
+DRAWLINE
+PRINTFORML [  0] イベント編
+PRINTFORML [  1] ウフフ編
+SIF GLOBAL:202
+	PRINTFORML [  2] イベント編-Lunatic-
+;PRINTFORML [  3] ウフフ編-Lunatic-
+PRINTFORML [ 99] 実績リセット
+PRINTFORML [100] 戻る
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 99
+	CALL TROPHY_RESET
+	CALL TROPHY_CHECK_200
+	GOTO PRINT_LIST
+ELSEIF RESULT >= 0 && RESULT <= 1
+	FLAG:57 = RESULT
+	LOCAL:2 = 200+FLAG:57
+	GOTO PRINT_LIST
+ELSEIF RESULT == 2 && GLOBAL:202
+	FLAG:57 = RESULT
+	LOCAL:2 = 200+FLAG:57
+	GOTO PRINT_LIST
+ELSE
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+
+;--------------------------------------------------
+;実績リセット
+;--------------------------------------------------
+@TROPHY_RESET
+LOADGLOBAL
+PRINTFORML 実績をリセットしますか？
+PRINTL 
+PRINTFORML [  0] イベント編のみ
+PRINTFORML [  1] ウフフ編のみ
+PRINTFORML [  2] イベント編-Lunatic-のみ
+PRINTFORML [ 99] 全実績
+PRINTFORML [100] 戻る
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 99
+	PRINTFORML 全実績をリセットしますか？
+	CALL TROPHY_RESET_CHECK
+	IF RESULT == 0
+		PRINTFORMW 全実績をリセットしました
+		GLOBAL:200 = 0
+		GLOBAL:201 = 0
+		GLOBAL:202 = 0
+	ELSE
+		PRINTFORMW 全実績リセットを中止しました
+	ENDIF
+ELSEIF RESULT == 0
+	PRINTFORML イベント編の実績をリセットしますか？
+	CALL TROPHY_RESET_CHECK
+	IF RESULT == 0
+		PRINTFORMW イベント編の実績をリセットしました
+		GLOBAL:200 = 0
+	ELSE
+		PRINTFORMW イベント編の実績リセットを中止しました
+	ENDIF
+ELSEIF RESULT == 1
+	PRINTFORML ウフフ編の実績をリセットしますか？
+	CALL TROPHY_RESET_CHECK
+	IF RESULT == 0
+		PRINTFORMW ウフフ編の実績をリセットしました
+		GLOBAL:201 = 0
+	ELSE
+		PRINTFORMW ウフフ編の実績リセットを中止しました
+	ENDIF
+ELSEIF RESULT == 2
+	PRINTFORML イベント編-Lunatic-の実績をリセットしますか？
+	CALL TROPHY_RESET_CHECK
+	IF RESULT == 0
+		PRINTFORMW イベント編-Lunatic-の実績をリセットしました
+		GLOBAL:202 = 0
+	ELSE
+		PRINTFORMW イベント編-Lunatic-の実績リセットを中止しました
+	ENDIF
+ELSE
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+SAVEGLOBAL
+RETURN 0
+
+@TROPHY_RESET_CHECK
+PRINTL [0] はい
+PRINTL [1] いいえ
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	RETURN 0
+ELSEIF RESULT == 1
+	RETURN 1
+ELSE
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+
+;--------------------------------------------------
+;実績数カウント
+;--------------------------------------------------
+@TROPHY_COUNT(ARG)
+LOADGLOBAL
+
+VARSET B, 0
+VARSET S, 0
+VARSET G, 0
+VARSET P, 0
+VARSET LOCAL, 0
+
+
+FOR LOCAL, 0, 50
+	TRYCALLFORM TROPHY_{ARG}_{LOCAL}
+	SIF RESULTS:0 == ""
+		CONTINUE
+	GETBIT GLOBAL:(ARG), LOCAL
+	IF RESULTS:0 == "ブロンズ"
+		B:0 += 1
+		B:1 += RESULT
+	ELSEIF RESULTS:0 == "シルバー"
+		S:0 += 1
+		S:1 += RESULT
+	ELSEIF RESULTS:0 == "ゴールド"
+		G:0 += 1
+		G:1 += RESULT
+	ELSEIF RESULTS:0 == "プラチナ"
+		P:0 += 1
+		P:1 += RESULT
+	ENDIF
+	VARSET RESULTS, ""
+NEXT
+
+;--------------------------------------------------
+;全実績数カウント
+;--------------------------------------------------
+@TROPHY_COUNT_ALL
+#DIM LCOUNT, 1
+VARSET LOCAL, 0
+
+FOR LCOUNT, 200, 203
+	CALL TROPHY_COUNT(LCOUNT)
+	LOCAL:0 += B:0
+	LOCAL:1 += S:0
+	LOCAL:2 += G:0
+	LOCAL:3 += P:0
+	
+	LOCAL:10 += B:1
+	LOCAL:11 += S:1
+	LOCAL:12 += G:1
+	LOCAL:13 += P:1
+NEXT
+B:0 = LOCAL:0
+S:0 = LOCAL:1
+G:0 = LOCAL:2
+P:0 = LOCAL:3
+
+B:1 = LOCAL:10
+S:1 = LOCAL:11
+G:1 = LOCAL:12
+P:1 = LOCAL:13
+
+;--------------------------------------------------
+;実績数表示
+;--------------------------------------------------
+@TROPHY_COUNT_PRINT
+LOCAL:0 = B:0 + S:0 + G:0 + P:0
+LOCAL:1 = B:1 + S:1 + G:1 + P:1
+PRINTFORM 達成率 {(LOCAL:1)*100/(LOCAL:0)}％　
+CALL PRINT_BAR, LOCAL:1, LOCAL:0, 32, UNICODE(0x2585), UNICODE(0x2585), 0x0082FF, 0x002050
+IF LOCAL:0 == LOCAL:1
+	SETCOLOR 217, 217, 140 
+	PRINT [P]
+	RESETCOLOR
+ENDIF
+PRINTL 
+PRINTFORML 実績数 {LOCAL:1}/{LOCAL:0}
+SETCOLOR 217, 217, 140 
+PRINT [P]
+RESETCOLOR
+PRINTFORM {P:1} 
+
+SETCOLOR 180, 158, 83
+PRINT [G]
+RESETCOLOR
+PRINTFORM {G:1} 
+
+SETCOLOR 158, 158, 158
+PRINT [S]
+RESETCOLOR
+PRINTFORM {S:1} 
+
+SETCOLOR 151, 107, 47
+PRINT [B]
+RESETCOLOR
+PRINTFORM {B:1} 
+
+PRINTL 
+
+;--------------------------------------------------
+;判定（GLOBAL:200）
+;--------------------------------------------------
+@TROPHY_CHECK_200
+LOADGLOBAL
+
+VARSET T, 0
+VARSET LOCAL, 0
+;経験～～以上等の実績はここで一括して判定
+FOR LOCAL, 1, CHARANUM
+	;好感度
+	SIF CFLAG:LOCAL:2 >= 1000
+		GLOBAL:200 |= 1p20
+	SIF CFLAG:LOCAL:2 >= 10000
+		GLOBAL:200 |= 1p21
+	SIF CFLAG:LOCAL:2 >= 50000
+		GLOBAL:200 |= 1p22
+	SIF CFLAG:LOCAL:2 >= 100000
+		GLOBAL:200 |= 1p23
+	;戦闘力
+	T = LOCAL
+	CALL GET_BATTLE_POWER
+	SIF P >= 10000
+		GLOBAL:200 |= 1p24
+	SIF P >= 100000
+		GLOBAL:200 |= 1p25
+	SIF P >= 530000
+		GLOBAL:200 |= 1p26
+	SIF P >= 1000000
+		GLOBAL:200 |= 1p27
+	SIF P >= 10000000
+		GLOBAL:200 |= 1p28
+NEXT
+
+VARSET LOCAL, 0
+FOR LOCAL, 0, 50
+	;条件をクリアしているか
+	TRYCALLFORM TROPHY_200_{LOCAL}
+	SIF RESULT
+		SETBIT GLOBAL:200, LOCAL
+NEXT
+
+SAVEGLOBAL
+
+;全実績取得判定
+;実績数カウント
+CALL TROPHY_COUNT(200)
+LOCAL:0 = B:0 + S:0 + G:0
+LOCAL:1 = B:1 + S:1 + G:1
+SIF LOCAL:0 == LOCAL:1
+	GLOBAL:200 |= 1p0
+
+SAVEGLOBAL
+
+;--------------------------------------------------
+;イベント編実績（GLOBAL:200）
+;--------------------------------------------------
+;例
+;@TROPHY_200_X
+;RESULTS:0 = 実績のランク
+;RESULTS:1 = 実績名
+;RESULTS:2 = 説明文
+;;達成判定(条件を達成したらRETURN 1)
+;SIF 1
+;	RETURN 1
+
+@TROPHY_200_0
+RESULTS:0 = プラチナ
+RESULTS:1 = eraVoiceroidJ+制覇
+RESULTS:2 = イベント編全実績取得
+;達成判定は別
+
+@TROPHY_200_1
+RESULTS:0 = ブロンズ
+RESULTS:1 = eraVoiceroidJ+デビュー
+RESULTS:2 = eraVoiceroidJ+をプレイした
+;達成判定
+RETURN 1
+
+@TROPHY_200_2
+RESULTS:0 = ブロンズ
+RESULTS:1 = 千里の道も一歩から
+RESULTS:2 = Stage1をクリア
+;達成判定
+SIF FLAG:42 > 1
+	RETURN 1
+
+@TROPHY_200_3
+RESULTS:0 = ブロンズ
+RESULTS:1 = 事件解決！
+RESULTS:2 = 霧の事件を解決する
+;達成判定
+SIF FLAG:42 > 6
+	RETURN 1
+
+@TROPHY_200_4
+RESULTS:0 = ブロンズ
+RESULTS:1 = まだ終わらない
+RESULTS:2 = Stage10をクリア
+SIF FLAG:42 < 10
+	RESULT:1 = FLAG:42 * 100 / 10
+
+;達成判定
+SIF FLAG:42 > 10
+	RETURN 1
+
+@TROPHY_200_5
+RESULTS:0 = シルバー
+RESULTS:1 = 戦いは永遠に
+RESULTS:2 = Stage50をクリア
+SIF FLAG:42 < 50
+	RESULT:1 = FLAG:42 * 100 / 50
+
+;達成判定
+SIF FLAG:42 > 50
+	RETURN 1
+
+@TROPHY_200_6
+RESULTS:0 = ゴールド
+RESULTS:1 = 無限の闘争
+RESULTS:2 = Stage99をクリア
+SIF FLAG:42 < 99
+	RESULT:1 = FLAG:42 * 100 / 99
+
+;達成判定
+SIF FLAG:42 > 99
+	RETURN 1
+
+@TROPHY_200_7
+RESULTS:0 = ブロンズ
+RESULTS:1 = 新たな人物
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に勝利する
+ELSE
+	RESULTS:2 = ？？？に勝利する
+ENDIF
+;達成判定
+SIF FLAG:45 >= 1
+	RETURN 1
+
+@TROPHY_200_8
+RESULTS:0 = シルバー
+RESULTS:1 = 新たな実況者
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に50勝する
+ELSE
+	RESULTS:2 = ？？？に50勝する
+ENDIF
+SIF FLAG:45 < 50
+	RESULT:1 = FLAG:45 * 100 / 50
+
+;達成判定
+SIF FLAG:45 >= 50
+	RETURN 1
+
+@TROPHY_200_9
+RESULTS:0 = ゴールド
+RESULTS:1 = 新たな主人公
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に99勝する
+ELSE
+	RESULTS:2 = ？？？に99勝する
+ENDIF
+SIF FLAG:45 < 99
+	RESULT:1 = FLAG:45 * 100 / 99
+
+;達成判定
+SIF FLAG:45 >= 99
+	RETURN 1
+
+@TROPHY_200_10
+RESULTS:0 = ブロンズ
+RESULTS:1 = 貯金好き
+RESULTS:2 = 所持金$100000以上達成
+;達成判定
+SIF MONEY >= 100000
+	RETURN 1
+
+@TROPHY_200_11
+RESULTS:0 = ブロンズ
+RESULTS:1 = ミリオンダラー！
+RESULTS:2 = 所持金$1000000以上達成
+;達成判定
+SIF MONEY >= 1000000
+	RETURN 1
+
+@TROPHY_200_12
+RESULTS:0 = シルバー
+RESULTS:1 = この世は金
+RESULTS:2 = 所持金$10000000以上達成
+;達成判定
+SIF MONEY >= 10000000
+	RETURN 1
+
+@TROPHY_200_13
+RESULTS:0 = ゴールド
+RESULTS:1 = 億万長者！
+RESULTS:2 = 所持金$100000000以上達成
+;達成判定
+SIF MONEY >= 100000000
+	RETURN 1
+
+@TROPHY_200_14
+RESULTS:0 = ブロンズ
+RESULTS:1 = 見習い錬金術師
+RESULTS:2 = 調合を行う
+;達成判定
+VARSET LOCAL, 0
+FOR LOCAL, 2001, 2700
+	;調合済みレシピ数確認
+	SIF FLAG:LOCAL == 1
+		LOCAL:1 += 1
+NEXT
+;1種調合していれば達成
+SIF LOCAL:1 >= 1
+	RETURN 1
+
+@TROPHY_200_15
+RESULTS:0 = ブロンズ
+RESULTS:1 = 普通の錬金術師
+RESULTS:2 = 50種類調合する
+;達成判定
+VARSET LOCAL, 0
+FOR LOCAL, 2001, 2700
+	;調合済みレシピ数確認
+	SIF FLAG:LOCAL == 1
+		LOCAL:1 += 1
+NEXT
+SIF LOCAL:1 < 50
+	RESULT:1 = LOCAL:1 * 100 / 50
+
+;50種調合していれば達成
+SIF LOCAL:1 >= 50
+	RETURN 1
+
+@TROPHY_200_16
+RESULTS:0 = シルバー
+RESULTS:1 = ベテラン錬金術師
+RESULTS:2 = 100種類調合する
+;達成判定
+VARSET LOCAL, 0
+FOR LOCAL, 2001, 2700
+	;調合済みレシピ数確認
+	SIF FLAG:LOCAL == 1
+		LOCAL:1 += 1
+NEXT
+SIF LOCAL:1 < 100
+	RESULT:1 = LOCAL:1 * 100 / 100
+
+;100種調合していれば達成
+SIF LOCAL:1 >= 100
+	RETURN 1
+
+@TROPHY_200_17
+RESULTS:0 = シルバー
+RESULTS:1 = アンビリーバボー！
+RESULTS:2 = 奇跡の薬を調合する
+;達成判定
+SIF FLAG:2666 == 1
+	RETURN 1
+
+@TROPHY_200_18
+RESULTS:0 = シルバー
+RESULTS:1 = 禁断の知識
+RESULTS:2 = 蓬莱の薬を調合する
+;達成判定
+SIF FLAG:2002 == 1
+	RETURN 1
+
+@TROPHY_200_19
+RESULTS:0 = ゴールド
+RESULTS:1 = 偉業達成
+RESULTS:2 = 全種類調合する
+;達成判定
+CALL RECIPE_NAME
+VARSET LOCAL, 0
+FOR LOCAL, 2001, 2700
+	;レシピが設定されていて調合してなければダメ
+	SIF FLAG:LOCAL == 1
+		LOCAL:1 += 1
+	SIF STR:LOCAL != ""
+		LOCAL:2 += 1
+NEXT
+SIF LOCAL:1 < LOCAL:2
+	RESULT:1 = LOCAL:1 * 100 / LOCAL:2
+
+;全て調合していれば達成
+SIF LOCAL:1 == LOCAL:2
+	RETURN 1
+
+@TROPHY_200_20
+RESULTS:0 = ブロンズ
+RESULTS:1 = I like Anata
+RESULTS:2 = 好感度1000以上
+;達成判定は一括
+
+
+@TROPHY_200_21
+RESULTS:0 = ブロンズ
+RESULTS:1 = I love Anata
+RESULTS:2 = 好感度10000以上
+;達成判定は一括
+
+
+@TROPHY_200_22
+RESULTS:0 = シルバー
+RESULTS:1 = I love only Anata
+RESULTS:2 = 好感度50000以上
+;達成判定は一括
+
+
+
+@TROPHY_200_23
+RESULTS:0 = ゴールド
+RESULTS:1 = 愛は永遠に
+RESULTS:2 = 好感度100000以上
+;達成判定は一括
+
+
+@TROPHY_200_24
+RESULTS:0 = ブロンズ
+RESULTS:1 = 超人
+RESULTS:2 = 戦闘力10000以上
+;達成判定は一括
+
+
+@TROPHY_200_25
+RESULTS:0 = ブロンズ
+RESULTS:1 = 鉄人
+RESULTS:2 = 戦闘力100000以上
+;達成判定は一括
+
+
+@TROPHY_200_26
+RESULTS:0 = シルバー
+RESULTS:1 = サイヤ人
+RESULTS:2 = 戦闘力530000以上
+;達成判定は一括
+
+
+@TROPHY_200_27
+RESULTS:0 = シルバー
+RESULTS:1 = 前代未聞
+RESULTS:2 = 戦闘力1000000以上
+;達成判定は一括
+
+
+@TROPHY_200_28
+RESULTS:0 = ゴールド
+RESULTS:1 = 世界最強
+RESULTS:2 = 戦闘力10000000以上
+;達成判定は一括
+
+@TROPHY_200_29
+RESULTS:0 = ブロンズ
+RESULTS:1 = 100人斬り
+RESULTS:2 = Stage攻略中の敵撃破数100以上
+SIF FLAG:43 < 100
+	RESULT:1 = FLAG:43 * 100 / 100
+
+;達成判定
+SIF FLAG:43 >= 100
+	RETURN 1
+
+@TROPHY_200_30
+RESULTS:0 = シルバー
+RESULTS:1 = 500人斬り
+RESULTS:2 = Stage攻略中の敵撃破数500以上
+SIF FLAG:43 < 500
+	RESULT:1 = FLAG:43 * 100 / 500
+
+;達成判定
+SIF FLAG:43 >= 500
+	RETURN 1
+
+@TROPHY_200_31
+RESULTS:0 = ゴールド
+RESULTS:1 = 1000人斬り
+RESULTS:2 = Stage攻略中の敵撃破数1000以上
+SIF FLAG:43 < 1000
+	RESULT:1 = FLAG:43 * 100 / 1000
+
+;達成判定
+SIF FLAG:43 >= 1000
+	RETURN 1
+
+;--------------------------------------------------
+;判定（GLOBAL:201）
+;--------------------------------------------------
+@TROPHY_CHECK_201(ARG, ARG:1)
+LOADGLOBAL
+VARSET LOCAL, 0
+
+;ARG　4：四重絶頂、5：五重絶頂
+;ARG:1　4：最強四重絶頂、5：最強五重絶頂
+IF ARG == 4
+	GLOBAL:201 |= 1p1
+	LOCAL:10 = 1
+ENDIF
+IF ARG:1 == 4
+	GLOBAL:201 |= 1p2
+	LOCAL:10 = 1
+ENDIF
+IF ARG == 5
+	GLOBAL:201 |= 1p3
+	LOCAL:10 = 1
+ENDIF
+IF ARG:1 == 5
+	GLOBAL:201 |= 1p4
+	LOCAL:10 = 1
+ENDIF
+
+FOR LOCAL, 0, 50
+	;条件をクリアしているか
+	TRYCALLFORM TROPHY_201_{LOCAL}
+	IF RESULT
+		SETBIT GLOBAL:201, LOCAL
+		LOCAL:10 = 1
+	ENDIF
+NEXT
+
+;SAVEGLOBALを呼び出しすぎると強制終了しやすいので
+;最小限呼び出すようにした
+SIF LOCAL:10 == 1
+	SAVEGLOBAL
+
+
+VARSET LOCAL, 0
+;全実績取得判定
+;実績数カウント
+CALL TROPHY_COUNT(201)
+LOCAL:0 = B:0 + S:0 + G:0
+LOCAL:1 = B:1 + S:1 + G:1
+IF LOCAL:0 == LOCAL:1
+	GLOBAL:201 |= 1p0
+	SAVEGLOBAL
+ENDIF
+	
+
+
+;--------------------------------------------------
+;ウフフ編実績（GLOBAL:201）
+;--------------------------------------------------
+;例
+;@TROPHY_201_X
+;RESULTS:0 = 実績のランク
+;RESULTS:1 = 実績名
+;RESULTS:2 = 説明文
+;;達成判定(条件を達成したらRETURN 1)
+;SIF 1
+;	RETURN 1
+
+@TROPHY_201_0
+RESULTS:0 = プラチナ
+RESULTS:1 = ウフフマスター
+RESULTS:2 = ウフフ編全実績取得
+;達成判定は別
+
+@TROPHY_201_1
+RESULTS:0 = ブロンズ
+RESULTS:1 = 四重絶頂！
+RESULTS:2 = 四重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_201_2
+RESULTS:0 = シルバー
+RESULTS:1 = 最強四重絶頂！
+RESULTS:2 = 最強四重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_201_3
+RESULTS:0 = シルバー
+RESULTS:1 = 五重絶頂！
+RESULTS:2 = 五重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_201_4
+RESULTS:0 = ゴールド
+RESULTS:1 = 最強五重絶頂！
+RESULTS:2 = 最強五重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_201_5
+RESULTS:0 = ブロンズ
+RESULTS:1 = クリ好き
+RESULTS:2 = C絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 25
+	RETURN 1
+
+@TROPHY_201_6
+RESULTS:0 = シルバー
+RESULTS:1 = クリトリスマニア
+RESULTS:2 = C絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 50
+	RETURN 1
+
+@TROPHY_201_7
+RESULTS:0 = ゴールド
+RESULTS:1 = クリトリスマスター
+RESULTS:2 = C絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 100
+	RETURN 1
+
+@TROPHY_201_8
+RESULTS:0 = ブロンズ
+RESULTS:1 = 秘所好き
+RESULTS:2 = V絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 50
+	RETURN 1
+
+@TROPHY_201_9
+RESULTS:0 = シルバー
+RESULTS:1 = 秘所マニア
+RESULTS:2 = V絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 100
+	RETURN 1
+
+@TROPHY_201_10
+RESULTS:0 = ゴールド
+RESULTS:1 = 秘所マスター
+RESULTS:2 = V絶頂200回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 200
+	RETURN 1
+
+@TROPHY_201_11
+RESULTS:0 = ブロンズ
+RESULTS:1 = アナル好き
+RESULTS:2 = A絶頂30回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 30
+	RETURN 1
+
+@TROPHY_201_12
+RESULTS:0 = シルバー
+RESULTS:1 = アナルマニア
+RESULTS:2 = A絶頂70回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 70
+	RETURN 1
+
+@TROPHY_201_13
+RESULTS:0 = ゴールド
+RESULTS:1 = アナルマスター
+RESULTS:2 = A絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 100
+	RETURN 1
+
+@TROPHY_201_14
+RESULTS:0 = ブロンズ
+RESULTS:1 = 乳好き
+RESULTS:2 = B絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 25
+	RETURN 1
+
+@TROPHY_201_15
+RESULTS:0 = シルバー
+RESULTS:1 = 乳マニア
+RESULTS:2 = B絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 50
+	RETURN 1
+
+@TROPHY_201_16
+RESULTS:0 = ゴールド
+RESULTS:1 = 乳マスター
+RESULTS:2 = B絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 100
+	RETURN 1
+
+@TROPHY_201_17
+RESULTS:0 = ブロンズ
+RESULTS:1 = キス好き
+RESULTS:2 = M絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 25
+	RETURN 1
+
+@TROPHY_201_18
+RESULTS:0 = シルバー
+RESULTS:1 = キスマニア
+RESULTS:2 = M絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 50
+	RETURN 1
+
+@TROPHY_201_19
+RESULTS:0 = ゴールド
+RESULTS:1 = キスマスター
+RESULTS:2 = M絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 100
+	RETURN 1
+
+
+
+;--------------------------------------------------
+;判定（GLOBAL:202　イベント編-Lunatic-）
+;--------------------------------------------------
+@TROPHY_CHECK_202
+LOADGLOBAL
+
+VARSET T, 0
+VARSET LOCAL, 0
+;経験～～以上等の実績はここで一括して判定
+FOR LOCAL, 1, CHARANUM
+	;好感度
+	SIF CFLAG:LOCAL:2 >= 200000
+		GLOBAL:202 |= 1p20
+	SIF CFLAG:LOCAL:2 >= 300000
+		GLOBAL:202 |= 1p21
+	SIF CFLAG:LOCAL:2 >= 500000
+		GLOBAL:202 |= 1p22
+	SIF CFLAG:LOCAL:2 >= 999999
+		GLOBAL:202 |= 1p23
+	;戦闘力
+	T = LOCAL
+	CALL GET_BATTLE_POWER
+	SIF P >= 99999999
+		GLOBAL:202 |= 1p24
+	SIF P >= 9999999999
+		GLOBAL:202 |= 1p25
+	SIF P >= 999999999999
+		GLOBAL:202 |= 1p26
+	SIF P >= 99999999999999
+		GLOBAL:202 |= 1p27
+	SIF P >= 9999999999999999
+		GLOBAL:202 |= 1p28
+NEXT
+
+VARSET LOCAL, 0
+FOR LOCAL, 0, 50
+	;条件をクリアしているか
+	TRYCALLFORM TROPHY_202_{LOCAL}
+	SIF RESULT
+		SETBIT GLOBAL:202, LOCAL
+NEXT
+
+SIF GLOBAL:202
+	GLOBAL:202 |= 1p1
+
+SAVEGLOBAL
+
+;全実績取得判定
+;実績数カウント
+CALL TROPHY_COUNT(202)
+LOCAL:0 = B:0 + S:0 + G:0
+LOCAL:1 = B:1 + S:1 + G:1
+SIF LOCAL:0 == LOCAL:1
+	GLOBAL:202 |= 1p0
+
+SAVEGLOBAL
+
+;--------------------------------------------------
+;イベント編-Lunatic-実績（GLOBAL:202）
+;--------------------------------------------------
+;例
+;@TROPHY_202_X
+;RESULTS:0 = 実績のランク
+;RESULTS:1 = 実績名
+;RESULTS:2 = 説明文
+;;達成判定(条件を達成したらRETURN 1)
+;SIF 1
+;	RETURN 1
+
+@TROPHY_202_0
+RESULTS:0 = プラチナ
+RESULTS:1 = eraVoiceroidJ+完全制覇
+RESULTS:2 = イベント編-Lunatic-全実績取得
+;達成判定は別
+
+@TROPHY_202_1
+RESULTS:0 = ブロンズ
+RESULTS:1 = Lunaticデビュー
+RESULTS:2 = イベント編全実績取得orイベント編-Lunatic-の実績取得
+;達成判定
+GETBIT GLOBAL:200, 0
+SIF RESULT
+	RETURN 1
+
+;@TROPHY_202_2
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = 千里の道も一歩から
+;RESULTS:2 = Stage1をクリア
+;;達成判定
+;SIF FLAG:42 > 1
+;	RETURN 1
+
+;@TROPHY_202_3
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = 事件解決！
+;RESULTS:2 = 霧の事件を解決する
+;;達成判定
+;SIF FLAG:42 > 6
+;	RETURN 1
+
+;@TROPHY_202_4
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = まだ終わらない
+;RESULTS:2 = Stage10をクリア
+;;達成判定
+;SIF FLAG:42 > 10
+;	RETURN 1
+
+;@TROPHY_202_5
+;RESULTS:0 = シルバー
+;RESULTS:1 = 戦いは永遠に
+;RESULTS:2 = Stage50をクリア
+;;達成判定
+;SIF FLAG:42 > 50
+;	RETURN 1
+
+@TROPHY_202_6
+RESULTS:0 = ブロンズ
+RESULTS:1 = 修練者
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に300勝する
+ELSE
+	RESULTS:2 = ？？？に300勝する
+ENDIF
+SIF FLAG:45 < 300
+	RESULT:1 = FLAG:45 * 100 / 300
+
+;達成判定
+SIF FLAG:45 >= 300
+	RETURN 1
+
+
+@TROPHY_202_7
+RESULTS:0 = ブロンズ
+RESULTS:1 = 挑戦者
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に500勝する
+ELSE
+	RESULTS:2 = ？？？に500勝する
+ENDIF
+SIF FLAG:45 < 500
+	RESULT:1 = FLAG:45 * 100 / 500
+
+;達成判定
+SIF FLAG:45 >= 500
+	RETURN 1
+
+@TROPHY_202_8
+RESULTS:0 = シルバー
+RESULTS:1 = 実力者
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に700勝する
+ELSE
+	RESULTS:2 = ？？？に700勝する
+ENDIF
+SIF FLAG:45 < 700
+	RESULT:1 = FLAG:45 * 100 / 700
+
+;達成判定
+SIF FLAG:45 >= 700
+	RETURN 1
+
+@TROPHY_202_9
+RESULTS:0 = ゴールド
+RESULTS:1 = 達成者
+IF FLAG:45 >= 1
+	RESULTS:2 = ゆかり様に999勝する
+ELSE
+	RESULTS:2 = ？？？に999勝する
+ENDIF
+SIF FLAG:45 < 999
+	RESULT:1 = FLAG:45 * 100 / 999
+
+;達成判定
+SIF FLAG:45 >= 999
+	RETURN 1
+
+@TROPHY_202_10
+RESULTS:0 = ブロンズ
+RESULTS:1 = ゴールデン・セレクション
+RESULTS:2 = 所持金$999999999999999達成
+;達成判定
+SIF MONEY >= 999999999999999
+	RETURN 1
+
+@TROPHY_202_11
+RESULTS:0 = ブロンズ
+RESULTS:1 = プラチナ・ハート
+RESULTS:2 = 所持金$9999999999999999達成
+;達成判定
+SIF MONEY >= 9999999999999999
+	RETURN 1
+
+@TROPHY_202_12
+RESULTS:0 = シルバー
+RESULTS:1 = ダイヤモンド・ウェディング
+RESULTS:2 = 所持金$99999999999999999達成
+;達成判定
+SIF MONEY >= 99999999999999999
+	RETURN 1
+
+@TROPHY_202_13
+RESULTS:0 = ゴールド
+RESULTS:1 = GOLD RUSH!!
+RESULTS:2 = 所持金$999999999999999999(最大値)達成
+;達成判定
+SIF MONEY >= 999999999999999999
+	RETURN 1
+
+;@TROPHY_202_14
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = 見習い錬金術師
+;RESULTS:2 = 調合を行う
+;;達成判定
+;VARSET LOCAL, 0
+;FOR LOCAL, 2001, 2700
+;	;調合済みレシピ数確認
+;	SIF FLAG:LOCAL == 1
+;		LOCAL:1 += 1
+;NEXT
+;;1種調合していれば達成
+;SIF LOCAL:1 >= 1
+;	RETURN 1
+
+;@TROPHY_202_15
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = 普通の錬金術師
+;RESULTS:2 = 50種類調合する
+;;達成判定
+;VARSET LOCAL, 0
+;FOR LOCAL, 2001, 2700
+;	;調合済みレシピ数確認
+;	SIF FLAG:LOCAL == 1
+;		LOCAL:1 += 1
+;NEXT
+;;50種調合していれば達成
+;SIF LOCAL:1 >= 50
+;	RETURN 1
+
+;@TROPHY_202_16
+;RESULTS:0 = シルバー
+;RESULTS:1 = ベテラン錬金術師
+;RESULTS:2 = 100種類調合する
+;;達成判定
+;VARSET LOCAL, 0
+;FOR LOCAL, 2001, 2700
+;	;調合済みレシピ数確認
+;	SIF FLAG:LOCAL == 1
+;		LOCAL:1 += 1
+;NEXT
+;;100種調合していれば達成
+;SIF LOCAL:1 >= 100
+;	RETURN 1
+
+;@TROPHY_202_17
+;RESULTS:0 = シルバー
+;RESULTS:1 = アンビリーバボー！
+;RESULTS:2 = 奇跡の薬を調合する
+;;達成判定
+;SIF FLAG:2666
+;	RETURN 1
+
+;@TROPHY_202_18
+;RESULTS:0 = シルバー
+;RESULTS:1 = 禁断の知識
+;RESULTS:2 = 蓬莱の薬を調合する
+;;達成判定
+;SIF FLAG:2002 == 1
+;	RETURN 1
+
+;@TROPHY_202_19
+;RESULTS:0 = ゴールド
+;RESULTS:1 = 偉業達成
+;RESULTS:2 = 全種類調合する
+;;達成判定
+;CALL RECIPE_NAME
+;VARSET LOCAL, 0
+;FOR LOCAL, 2001, 2700
+;	;レシピが設定されていて調合してなければダメ
+;	SIF STR:LOCAL != "" && FLAG:LOCAL != 1
+;		LOCAL:1 = 1
+;NEXT
+;;全て調合していれば達成
+;SIF LOCAL:1 == 0
+;	RETURN 1
+
+@TROPHY_202_20
+RESULTS:0 = ブロンズ
+RESULTS:1 = プラトニック・ラブ
+RESULTS:2 = 好感度200000以上
+;達成判定は一括
+
+
+@TROPHY_202_21
+RESULTS:0 = ブロンズ
+RESULTS:1 = ハッピー・デイズ
+RESULTS:2 = 好感度300000以上
+;達成判定は一括
+
+
+@TROPHY_202_22
+RESULTS:0 = シルバー
+RESULTS:1 = スウィート・メモリーズ
+RESULTS:2 = 好感度500000以上
+;達成判定は一括
+
+
+
+@TROPHY_202_23
+RESULTS:0 = ゴールド
+RESULTS:1 = 変わらぬ愛
+RESULTS:2 = 好感度999999以上
+;達成判定は一括
+
+
+@TROPHY_202_24
+RESULTS:0 = ブロンズ
+RESULTS:1 = クロス・ザ・ルビコン
+RESULTS:2 = 戦闘力99999999以上
+;達成判定は一括
+
+
+@TROPHY_202_25
+RESULTS:0 = ブロンズ
+RESULTS:1 = 超サイヤ人
+RESULTS:2 = 戦闘力9999999999以上
+;達成判定は一括
+
+
+@TROPHY_202_26
+RESULTS:0 = シルバー
+RESULTS:1 = 超サイヤ人2
+RESULTS:2 = 戦闘力999999999999以上
+;達成判定は一括
+
+
+@TROPHY_202_27
+RESULTS:0 = シルバー
+RESULTS:1 = 超サイヤ人3
+RESULTS:2 = 戦闘力99999999999999以上
+;達成判定は一括
+
+
+@TROPHY_202_28
+RESULTS:0 = ゴールド
+RESULTS:1 = 真・世界最強
+RESULTS:2 = 戦闘力9999999999999999達成
+;達成判定は一括
+
+;@TROPHY_202_29
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = 100人斬り
+;RESULTS:2 = Stage攻略中の敵撃破数100以上
+;;達成判定
+;SIF FLAG:43 >= 100
+;	RETURN 1
+
+;@TROPHY_202_30
+;RESULTS:0 = シルバー
+;RESULTS:1 = 500人斬り
+;RESULTS:2 = Stage攻略中の敵撃破数500以上
+;;達成判定
+;SIF FLAG:43 >= 500
+;	RETURN 1
+
+;@TROPHY_202_31
+;RESULTS:0 = ゴールド
+;RESULTS:1 = 1000人斬り
+;RESULTS:2 = Stage攻略中の敵撃破数1000以上
+;;達成判定
+;SIF FLAG:43 >= 1000
+;	RETURN 1
+
+;--------------------------------------------------
+;判定（GLOBAL:203）
+;--------------------------------------------------
+@TROPHY_CHECK_203(ARG, ARG:1)
+LOADGLOBAL
+
+;ARG　4：四重絶頂、5：五重絶頂
+;ARG:1　4：最強四重絶頂、5：最強五重絶頂
+SIF ARG == 4
+	GLOBAL:203 |= 1p1
+SIF ARG:1 == 4
+	GLOBAL:203 |= 1p2
+SIF ARG == 5
+	GLOBAL:203 |= 1p3
+SIF ARG:1 == 5
+	GLOBAL:203 |= 1p4
+
+VARSET LOCAL, 0
+FOR LOCAL, 0, 50
+	;条件をクリアしているか
+	TRYCALLFORM TROPHY_203_{LOCAL}
+	SIF RESULT
+		SETBIT GLOBAL:203, LOCAL
+NEXT
+
+SAVEGLOBAL
+
+VARSET LOCAL, 0
+;全実績取得判定
+;実績数カウント
+CALL TROPHY_COUNT(203)
+LOCAL:0 = B:0 + S:0 + G:0
+LOCAL:1 = B:1 + S:1 + G:1
+SIF LOCAL:0 == LOCAL:1
+	GLOBAL:203 |= 1p0
+
+SAVEGLOBAL
+
+;--------------------------------------------------
+;ウフフ編実績（GLOBAL:203）
+;--------------------------------------------------
+;例
+;@TROPHY_203_X
+;RESULTS:0 = 実績のランク
+;RESULTS:1 = 実績名
+;RESULTS:2 = 説明文
+;;達成判定(条件を達成したらRETURN 1)
+;SIF 1
+;	RETURN 1
+
+@TROPHY_203_0
+RESULTS:0 = プラチナ
+RESULTS:1 = ウフフマスター
+RESULTS:2 = ウフフ編全実績取得
+;達成判定は別
+
+@TROPHY_203_1
+RESULTS:0 = ブロンズ
+RESULTS:1 = 四重絶頂！
+RESULTS:2 = 四重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_203_2
+RESULTS:0 = シルバー
+RESULTS:1 = 最強四重絶頂！
+RESULTS:2 = 最強四重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_203_3
+RESULTS:0 = シルバー
+RESULTS:1 = 五重絶頂！
+RESULTS:2 = 五重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_203_4
+RESULTS:0 = ゴールド
+RESULTS:1 = 最強五重絶頂！
+RESULTS:2 = 最強五重絶頂を達成する
+;達成判定は一括
+
+@TROPHY_203_5
+RESULTS:0 = ブロンズ
+RESULTS:1 = クリ好き
+RESULTS:2 = C絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 25
+	RETURN 1
+
+@TROPHY_203_6
+RESULTS:0 = シルバー
+RESULTS:1 = クリトリスマニア
+RESULTS:2 = C絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 50
+	RETURN 1
+
+@TROPHY_203_7
+RESULTS:0 = ゴールド
+RESULTS:1 = クリトリスマスター
+RESULTS:2 = C絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:0 >= 100
+	RETURN 1
+
+@TROPHY_203_8
+RESULTS:0 = ブロンズ
+RESULTS:1 = 秘所好き
+RESULTS:2 = V絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 50
+	RETURN 1
+
+@TROPHY_203_9
+RESULTS:0 = シルバー
+RESULTS:1 = 秘所マニア
+RESULTS:2 = V絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 100
+	RETURN 1
+
+@TROPHY_203_10
+RESULTS:0 = ゴールド
+RESULTS:1 = 秘所マスター
+RESULTS:2 = V絶頂200回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:1 >= 200
+	RETURN 1
+
+@TROPHY_203_11
+RESULTS:0 = ブロンズ
+RESULTS:1 = アナル好き
+RESULTS:2 = A絶頂30回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 30
+	RETURN 1
+
+@TROPHY_203_12
+RESULTS:0 = シルバー
+RESULTS:1 = アナルマニア
+RESULTS:2 = A絶頂70回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 70
+	RETURN 1
+
+@TROPHY_203_13
+RESULTS:0 = ゴールド
+RESULTS:1 = アナルマスター
+RESULTS:2 = A絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:2 >= 100
+	RETURN 1
+
+@TROPHY_203_14
+RESULTS:0 = ブロンズ
+RESULTS:1 = 乳好き
+RESULTS:2 = B絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 25
+	RETURN 1
+
+@TROPHY_203_15
+RESULTS:0 = シルバー
+RESULTS:1 = 乳マニア
+RESULTS:2 = B絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 50
+	RETURN 1
+
+@TROPHY_203_16
+RESULTS:0 = ゴールド
+RESULTS:1 = 乳マスター
+RESULTS:2 = B絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:3 >= 100
+	RETURN 1
+
+@TROPHY_203_17
+RESULTS:0 = ブロンズ
+RESULTS:1 = キス好き
+RESULTS:2 = M絶頂25回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 25
+	RETURN 1
+
+@TROPHY_203_18
+RESULTS:0 = シルバー
+RESULTS:1 = キスマニア
+RESULTS:2 = M絶頂50回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 50
+	RETURN 1
+
+@TROPHY_203_19
+RESULTS:0 = ゴールド
+RESULTS:1 = キスマスター
+RESULTS:2 = M絶頂100回以上を達成する
+;達成判定
+SIF TARGET > 0 && EX:6 >= 100
+	RETURN 1
+
+
+
+
+
+
+
+;--------------------------------------------------
+;特殊能力取得
+;--------------------------------------------------
+@TROPHY_FEAT_GET
+CALL TROPHY_CHECK_200
+
+DRAWLINE
+PRINTFORML 取得条件を満たした特殊能力を身に付けることが出来ます
+PRINTL 
+PRINTFORML 　　　【特殊能力】　　　　【取得条件】
+PRINTL 
+VARSET LOCALS, ""
+LOCALS:0 = 恋人ボーナス
+LOCALS:1 = 恋人ボーナス強化
+LOCALS:2 = 恋慕ボーナス
+LOCALS:3 = 恋慕ボーナス強化
+LOCALS:4 = 親愛ボーナス
+LOCALS:5 = 親愛ボーナス強化
+LOCALS:6 = 淫乱ボーナス
+LOCALS:7 = 淫乱ボーナス強化
+LOCALS:8 = 舌使い
+LOCALS:9 = 針さばき
+LOCALS:10 = 調合知識
+LOCALS:11 = 魅惑
+LOCALS:12 = 魅力
+LOCALS:13 = 回復早い
+LOCALS:14 = 日光浴
+LOCALS:15 = 月光浴
+LOCALS:16 = 治療
+LOCALS:17 = 鼓舞
+LOCALS:18 = 酒豪
+LOCALS:19 = 千里眼
+LOCALS:20 = 淫具知識
+
+FOR LOCAL, 0, 21
+	PRINTFORM [{LOCAL,3}] 
+	TRYCALLFORM TROPHY_FEAT_GET_%LOCALS:LOCAL%
+	IF RESULT
+		SIF TALENT:MASTER:(LOCALS:LOCAL)
+			SETCOLOR 0xFFFFF
+		LOCALS:99 = 【%LOCALS:LOCAL%】
+	ELSE
+		SETCOLOR 105, 105, 105
+		LOCALS:99 = 【？？？】
+	ENDIF
+	PRINTFORM %LOCALS:99,21,LEFT%
+	RESETCOLOR
+	PRINTFORML %RESULTS:2%
+NEXT
+PRINTL 
+DRAWLINE
+PRINTL [ 98] 全特殊能力取得
+PRINTL [ 99] 全特殊能力封印
+PRINTL [100] 戻る
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 98
+	FOR LOCAL, 0, 21
+		TRYCALLFORM TROPHY_FEAT_GET_%LOCALS:LOCAL%
+		SIF RESULT
+			TALENT:MASTER:(LOCALS:LOCAL) = 1
+	NEXT
+	PRINTFORMW 全特殊能力を取得しました
+	RESTART
+ELSEIF RESULT == 99
+	FOR LOCAL, 0, 21
+		TRYCALLFORM TROPHY_FEAT_GET_%LOCALS:LOCAL%
+		TALENT:MASTER:(LOCALS:LOCAL) = 0
+	NEXT
+	PRINTFORMW 全特殊能力を封印しました
+	RESTART
+ELSEIF RESULT >= 100 || LOCALS:RESULT == ""
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+
+LOCAL = RESULT
+RESULT = 0
+TRYCALLFORM TROPHY_FEAT_GET_%LOCALS:LOCAL%
+
+IF RESULT && TALENT:MASTER:(LOCALS:LOCAL)
+	PRINTFORML 既に取得済みです
+	PRINTFORML 【%LOCALS:LOCAL%】を封印しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP1
+	INPUT
+	IF RESULT == 0
+		PRINTFORMW 【%LOCALS:LOCAL%】を封印しました
+		TALENT:MASTER:(LOCALS:LOCAL) = 0
+		IF LOCALS:LOCAL == "恋人ボーナス"
+			TALENT:MASTER:恋人ボーナス強化 = 0
+		ELSEIF LOCALS:LOCAL == "恋慕ボーナス"
+			TALENT:MASTER:恋慕ボーナス強化 = 0
+		ELSEIF LOCALS:LOCAL == "親愛ボーナス"
+			TALENT:MASTER:親愛ボーナス強化 = 0
+		ELSEIF LOCALS:LOCAL == "淫乱ボーナス"
+			TALENT:MASTER:淫乱ボーナス強化 = 0
+		ENDIF
+		RESTART
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		PRINTFORML 正しい値を入力してください
+		GOTO INPUT_LOOP1
+	ENDIF
+	RESTART
+ELSEIF RESULT
+	;効果説明
+	PRINTFORML %RESULTS:3%
+	PRINTFORML 【%LOCALS:LOCAL%】を取得しますか？
+	PRINTL [0] はい
+	PRINTL [1] いいえ
+	$INPUT_LOOP2
+	INPUT
+	IF RESULT == 0
+		PRINTFORMW 【%LOCALS:LOCAL%】を取得しました
+		TALENT:MASTER:(LOCALS:LOCAL) = 1
+		IF LOCALS:LOCAL == "恋人ボーナス強化"
+			TALENT:MASTER:恋人ボーナス = 1
+		ELSEIF LOCALS:LOCAL == "恋慕ボーナス強化"
+			TALENT:MASTER:恋慕ボーナス = 1
+		ELSEIF LOCALS:LOCAL == "親愛ボーナス強化"
+			TALENT:MASTER:親愛ボーナス = 1
+		ELSEIF LOCALS:LOCAL == "淫乱ボーナス強化"
+			TALENT:MASTER:淫乱ボーナス = 1
+		ENDIF
+		RESTART
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		PRINTFORML 正しい値を入力してください
+		GOTO INPUT_LOOP2
+	ENDIF
+	RESTART
+ELSE
+	PRINTFORMW 取得条件を満たしていません
+	RESTART
+ENDIF
+
+@TROPHY_FEAT_GET_恋人ボーナス
+;Stage50をクリア
+CALL TROPHY_200_5
+RESULTS:3 = 恋人の人数によって戦闘力ボーナスが得られます
+SIF GLOBAL:200 & 1p5
+	RETURN 1
+
+@TROPHY_FEAT_GET_恋人ボーナス強化
+;Stage99をクリア
+CALL TROPHY_200_6
+RESULTS:3 = 恋人の人数に応じて得られる戦闘能力ボーナスが1.5倍になります
+SIF GLOBAL:200 & 1p6
+	RETURN 1
+
+@TROPHY_FEAT_GET_恋慕ボーナス
+;好感度50000以上
+CALL TROPHY_200_22
+RESULTS:3 = 恋慕の人数によって戦闘時の防御力ボーナスが得られます
+SIF GLOBAL:200 & 1p22
+	RETURN 1
+
+@TROPHY_FEAT_GET_恋慕ボーナス強化
+;好感度100000以上
+CALL TROPHY_200_23
+RESULTS:3 = 恋慕の人数に応じて得られる防御力ボーナスが2倍になります
+SIF GLOBAL:200 & 1p23
+	RETURN 1
+
+@TROPHY_FEAT_GET_親愛ボーナス
+;ゆかり様に50勝する
+CALL TROPHY_200_8
+RESULTS:3 = 親愛の人数によって戦闘力ボーナスが得られます
+SIF GLOBAL:200 & 1p8
+	RETURN 1
+
+@TROPHY_FEAT_GET_親愛ボーナス強化
+;ゆかり様に99勝する
+CALL TROPHY_200_9
+RESULTS:3 = 親愛の人数に応じて得られる戦闘能力ボーナスが3倍になります
+SIF GLOBAL:200 & 1p9
+	RETURN 1
+
+@TROPHY_FEAT_GET_淫乱ボーナス
+;最強四重絶頂を達成する
+CALL TROPHY_201_1
+RESULTS:3 = 淫乱の人数によって耐力・魔力ボーナスが得られます
+SIF GLOBAL:201 & 1p1
+	RETURN 1
+
+@TROPHY_FEAT_GET_淫乱ボーナス強化
+;最強五重絶頂を達成する
+CALL TROPHY_201_3
+RESULTS:3 = 淫乱の人数に応じて得られる耐力・魔力ボーナスが3倍になります
+SIF GLOBAL:201 & 1p3
+	RETURN 1
+
+@TROPHY_FEAT_GET_舌使い
+;M絶頂100回以上を達成する
+CALL TROPHY_201_18
+RESULTS:3 = フェラ系コマンドの効果が高くなります
+SIF GLOBAL:201 & 1p18
+	RETURN 1
+
+@TROPHY_FEAT_GET_針さばき
+;ゆかり様に勝利する
+CALL TROPHY_200_7
+RESULTS:3 = 「針」の効果が高くなります
+SIF GLOBAL:200 & 1p7
+	RETURN 1
+
+@TROPHY_FEAT_GET_調合知識
+;全種類調合する
+CALL TROPHY_200_19
+RESULTS:3 = 特殊なアイテムを購入でき、コマンド「媚薬」の体力と気力の消費が少なくなります
+SIF GLOBAL:200 & 1p19
+	RETURN 1
+
+@TROPHY_FEAT_GET_魅惑
+;四重絶頂を達成する
+CALL TROPHY_201_0
+RESULTS:3 = コマンドを実行しやすくなり、パラメータを全体的に上げやすくなります
+SIF GLOBAL:201 & 1p0
+	RETURN 1
+
+@TROPHY_FEAT_GET_魅力
+;五重絶頂を達成する
+CALL TROPHY_201_2
+RESULTS:3 = コマンド実行時のムード上昇量が+1されます
+SIF GLOBAL:201 & 1p2
+	RETURN 1
+
+@TROPHY_FEAT_GET_回復早い
+;戦闘力1000000以上
+CALL TROPHY_200_27
+RESULTS:3 = 体力の回復量が上昇します
+SIF GLOBAL:200 & 1p27
+	RETURN 1
+
+@TROPHY_FEAT_GET_日光浴
+;ゴールドトロフィー取得
+CALL TROPHY_COUNT_ALL
+RESULTS:2 = ゴールドトロフィー取得
+RESULTS:3 = 昼休憩時に体力の回復量が上昇します
+SIF G:1
+	RETURN 1
+
+@TROPHY_FEAT_GET_月光浴
+;戦闘力530000以上
+CALL TROPHY_200_26
+RESULTS:3 = 夜休憩時に体力の回復量が上昇します
+SIF GLOBAL:200 & 1p26
+	RETURN 1
+
+@TROPHY_FEAT_GET_治療
+;100種類調合する
+CALL TROPHY_200_16
+RESULTS:3 = 仲間の体力の回復量が上昇します
+SIF GLOBAL:200 & 1p16
+	RETURN 1
+
+@TROPHY_FEAT_GET_鼓舞
+;Stage50をクリア
+CALL TROPHY_200_5
+RESULTS:3 = コマンドを実行しやすくなり、パートナーと過ごす終了後の自慰回数が増加します
+SIF GLOBAL:200 & 1p5
+	RETURN 1
+
+@TROPHY_FEAT_GET_酒豪
+;戦闘力10000000以上
+CALL TROPHY_200_28
+RESULTS:3 = 実行できるコマンドが増加し、プレゼントの種類に酒樽が追加されます
+SIF GLOBAL:200 & 1p28
+	RETURN 1
+
+@TROPHY_FEAT_GET_千里眼
+;Stage攻略中の敵撃破数1000以上
+CALL TROPHY_200_31
+RESULTS:3 = Stage攻略中に常に中ボス・ボスの居場所が分かるようになります
+SIF GLOBAL:200 & 1p31
+	RETURN 1
+
+@TROPHY_FEAT_GET_淫具知識
+;最強五重絶頂を達成する
+CALL TROPHY_201_3
+RESULTS:3 = 道具を使ったコマンドの効果が上昇します
+SIF GLOBAL:201 & 1p3
+	RETURN 1
+

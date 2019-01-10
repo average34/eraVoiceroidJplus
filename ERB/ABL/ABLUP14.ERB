@@ -1,0 +1,168 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/B感覚upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;B感覚up本体
+;-------------------------------------------------
+@ABLUP14MAIN
+DRAWLINE
+IF ABL:14 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP14
+
+PRINTFORM [0] - %PALAMNAME:14%の珠×{A}……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [20] - %PALAMNAME:14%の珠で限界まであげる……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTL [100] - やめる
+
+
+INPUT
+IF (RESULT < 0 || RESULT > 0) && RESULT != 100 && RESULT != 20
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:14 += 1
+
+IF RESULT == 0
+	JUEL:14 -= A
+ELSEIF RESULT == 20
+	CALL AUT_B_0
+ENDIF
+
+PRINTS ABLNAME:14
+PRINT のレベルが
+PRINTV ABL:14
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;B感覚が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP14
+IF ABL:14 >= 9999
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+
+;能力アップに必要なコストを計算
+CALL COSTABLUP14
+
+;条件別にＯＫかダメかを記録する
+I = 0
+;能力アップ可能なら1にする
+Z = 0
+
+;快Ｂの珠で上げる
+SIF JUEL:14 < A
+	I |= 1
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;B感覚を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP14
+IF ABL:14 == 0
+	A = 1
+ELSEIF ABL:14 == 1
+	A = 20
+ELSEIF ABL:14 == 2
+	A = 400
+ELSEIF ABL:14 == 3
+	A = 5000
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.10
+	ENDIF
+ELSEIF ABL:14 == 4
+	A = 20000
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+	ENDIF
+ELSE
+	A = 20000
+	
+	A = A * (ABL:14 - 3)
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+	ENDIF
+ENDIF
+
+;B鈍感
+IF TALENT:107
+	TIMES A , 1.20
+ENDIF
+
+;B敏感
+IF TALENT:108
+	TIMES A , 0.80
+ENDIF
+
+;淫乱化
+IF TALENT:76
+	TIMES A , 0.80
+ENDIF
+
+;貧乳
+IF TALENT:109
+	TIMES A , 0.80
+ENDIF
+
+;巨乳
+IF TALENT:110
+	TIMES A , 1.10
+ENDIF
+
+;淫乳
+IF TALENT:78
+	TIMES A , 0.80
+ENDIF

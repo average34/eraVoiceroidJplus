@@ -1,0 +1,285 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/ＢＬっ気upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+@ABLUP13MAIN
+SIF TALENT:122 == 0
+	RETURN 0
+
+DRAWLINE
+IF ABL:13 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP13
+
+;ＬＶ３から４、４から５に上げるときは異常経験必要
+IF F
+	PRINTFORML %EXPNAME:50%{F}以上、かつ
+ENDIF
+
+PRINTFORM [0] - %PALAMNAME:5%の珠×{A}
+IF C > 0
+	PRINTFORM 、%PALAMNAME:6%の珠×{C}
+ENDIF
+PRINTFORM 、%EXPNAME:41%{B}以上……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+IF D > 0
+	PRINTFORM [1] - %PALAMNAME:0%の珠×{D}、%EXPNAME:41%{B}以上……
+	
+	IF J == 0
+		PRINT ＯＫ
+	ELSE
+		SIF J & 1
+			PRINT 珠不足 
+		SIF J & 2
+			PRINT 経験不足 
+		SIF J & 4
+			PRINT 能力不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+PRINTFORM [20] - %PALAMNAME:5%の珠
+IF C > 0
+	PRINTFORM 、%PALAMNAME:6%の珠
+ENDIF
+PRINTFORM 、で限界まであげる……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+IF D > 0
+	PRINTFORM [21] - %PALAMNAME:0%の珠で限界まであげる……
+	
+	IF J == 0
+		PRINT ＯＫ
+	ELSE
+		SIF J & 1
+			PRINT 珠不足 
+		SIF J & 2
+			PRINT 経験不足 
+		SIF J & 4
+			PRINT 能力不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+
+
+PRINTL [100] - やめる
+
+
+INPUT
+IF (RESULT < 0 || RESULT > 1) && RESULT != 100 && (RESULT < 20 || RESULT > 21)
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF D <= 0 && RESULT == 1
+	RESTART
+ELSEIF J != 0 && RESULT == 1
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF D <= 0 && RESULT == 21
+	RESTART
+ELSEIF J != 0 && RESULT == 21
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:13 += 1
+
+IF RESULT == 0
+	JUEL:5 -= A
+	JUEL:6 -= C
+ELSEIF RESULT == 1
+	JUEL:0 -= D
+ELSEIF RESULT == 20
+	CALL AUT_BLKKE_0
+ELSEIF RESULT == 21
+	CALL AUT_BLKKE_1
+ENDIF
+
+PRINTS ABLNAME:13
+PRINT のレベルが
+PRINTV ABL:13
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;ＢＬっ気が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP13
+IF ABL:13 >= 9999 || !TALENT:122
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+;能力アップに必要なコストを計算
+CALL COSTABLUP13
+
+;条件別にＯＫかダメかを記録する
+I = 0
+J = 0
+;能力アップ可能なら1にする
+Z = 0
+
+;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
+IF ABL:13 >= 3 && TALENT:81 == 0
+	F = ABL:13 * 3
+	IF EXP:50 < F
+		;異常経験が不足
+		I |= 2
+		J |= 2
+	ENDIF
+ENDIF
+;欲情の珠で上げる
+SIF JUEL:5 < A
+	I |= 1
+;屈服の珠で上げる
+SIF JUEL:6 < C
+	I |= 1
+;レズ経験が必要
+SIF EXP:41 < B
+	I |= 2
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF D > 0
+	;快Ｃの珠で上げる
+	SIF JUEL:0 < D
+		J |= 1
+	;レズ経験が必要
+	SIF EXP:41 < B
+		J |= 2
+	
+	IF J == 0
+		Z = 1
+	ENDIF
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;ＢＬっ気を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP13
+IF ABL:13 == 0
+	A = 200
+	B = 50
+	C = 0
+	D = 1000
+ELSEIF ABL:13 == 1
+	A = 1000
+	B = 200
+	C = 0
+	D = 5000
+ELSEIF ABL:13 == 2
+	A = 3000
+	B = 500
+	C = 1000
+	D = 0
+ELSEIF ABL:13 == 3
+	A = 8000
+	B = 1000
+	C = 2000
+	D = 0
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.10
+		TIMES B , 1.10
+		TIMES C , 1.10
+	ENDIF
+ELSEIF ABL:13 == 4
+	A = 20000
+	B = 2000
+	C = 5000
+	D = 0
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES C , 1.30
+	ENDIF
+ELSE
+	A = 20000
+	B = 2000
+	C = 5000
+	D = 0
+	
+	A = A * (ABL:13 - 3)
+	B = B * (ABL:13 - 2) / 2
+	C = C * (ABL:13 - 3)
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES C , 1.30
+	ENDIF
+ENDIF
+
+;レズ素質
+;IF TALENT:81
+;	TIMES A , 0.25
+;	TIMES B , 0.25
+;	TIMES C , 0.25
+;	TIMES D , 0.25
+;ENDIF
+
+;倒錯的
+IF TALENT:80
+	TIMES A , 0.75
+	TIMES B , 0.75
+	TIMES C , 0.75
+	TIMES D , 0.75
+ENDIF
+
+;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
+;IF ABL:13 >= 3 && TALENT:81 == 0
+IF ABL:13 >= 3
+	F = ABL:13 * 3
+ELSE
+	F = 0
+ENDIF
+

@@ -1,0 +1,346 @@
+﻿@COM26
+;正常位アナル
+
+;前回の調教が3Pのとき3Pへ
+TFLAG:42 = 0
+IF PREVCOM == 64
+	CALL COMABLE_3P
+	IF RESULT == 1
+		TFLAG:42 = 1
+		JUMP COM64
+	ENDIF
+;調教者が前回:助手で今回:主人か、前回:主人で今回:助手のとき
+ELSEIF (ASSIPLAY && TFLAG:50 == 0) || (ASSIPLAY == 0 && TFLAG:50)
+	;前回の調教がフェラチオかイラマチオのときは3Pへ
+	IF PREVCOM == 31 || PREVCOM == 80
+		CALL COMABLE_3P
+		SIF RESULT == 1
+			JUMP COM64
+	ENDIF
+ENDIF
+
+PRINTL 正常位アナル
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+STR:0 = 正常位アナル
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;射精ゲージチェック
+;-------------------------------------------------
+SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 80
+LOSEBASE:1 += 120
+
+SOURCE:12 = 400
+
+;ABL:Ａ感覚をみる
+IF ABL:5 == 0
+	SOURCE:2 = 10
+	SOURCE:3 = 10
+	SOURCE:13 = 100
+ELSEIF ABL:5 == 1
+	SOURCE:2 = 30
+	SOURCE:3 = 30
+	SOURCE:13 = 500
+ELSEIF ABL:5 == 2
+	SOURCE:2 = 400
+	SOURCE:3 = 150
+	SOURCE:13 = 1200
+ELSEIF ABL:5 == 3
+	SOURCE:2 = 900
+	SOURCE:3 = 300
+	SOURCE:13 = 2400
+ELSEIF ABL:5 == 4
+	SOURCE:2 = 1600
+	SOURCE:3 = 500
+	SOURCE:13 = 3600
+ELSE
+	SOURCE:2 = 850 + (ABL:5 * 250)
+	SOURCE:3 = (ABL:5 * 200) - 100
+	SOURCE:13 = 1500 + (ABL:5 * 700)
+ENDIF
+
+;EXP:Ａ経験をみる
+IF EXP:1 < EXPLV:1
+	TIMES SOURCE:2 , 0.10
+	SOURCE:6 = 20000
+	LOSEBASE:0 += 50
+	LOSEBASE:1 += 100
+ELSEIF EXP:1 < EXPLV:2
+	TIMES SOURCE:2 , 0.30
+	SOURCE:6 = 12000
+	LOSEBASE:0 += 40
+	LOSEBASE:1 += 80
+ELSEIF EXP:1 < EXPLV:3
+	TIMES SOURCE:2 , 0.50
+	SOURCE:6 = 5000
+	LOSEBASE:0 += 30
+	LOSEBASE:1 += 60
+ELSEIF EXP:1 < EXPLV:4
+	TIMES SOURCE:2 , 1.00
+	SOURCE:6 = 1800
+	LOSEBASE:0 += 20
+	LOSEBASE:1 += 40
+ELSEIF EXP:1 < EXPLV:5
+	TIMES SOURCE:2 , 1.40
+	SOURCE:6 = 1000
+	LOSEBASE:0 += 10
+	LOSEBASE:1 += 20
+ELSE
+	TIMES SOURCE:2 , 1.60
+	SOURCE:6 = 600
+	LOSEBASE:0 += 0
+	LOSEBASE:1 += 0
+ENDIF
+
+;PALAM:潤滑をみる
+IF PALAM:3 < PALAMLV:1
+	TIMES SOURCE:2 , 0.40
+	SOURCE:6 += 10000
+ELSEIF PALAM:3 < PALAMLV:2
+	TIMES SOURCE:2 , 0.80
+	SOURCE:6 += 3600
+ELSEIF PALAM:3 < PALAMLV:3
+	TIMES SOURCE:2 , 1.00
+	SOURCE:6 += 1200
+ELSEIF PALAM:3 < PALAMLV:4
+	TIMES SOURCE:2 , 1.40
+	SOURCE:6 += 200
+ELSEIF PALAM:3 >= PALAMLV:4
+	TIMES SOURCE:2 , 1.80
+	SOURCE:6 += 100
+ENDIF
+
+;調教者がふたなり
+IF ASSIPLAY
+	SIF TALENT:ASSI:121
+		TIMES SOURCE:1 , 2.50
+ENDIF
+
+;小柄体形
+SIF TALENT:100
+	TIMES SOURCE:6 , 2.00
+
+;貞操観念
+IF TALENT:30
+	IF EXP:1 == 0
+		TIMES SOURCE:3 , 1.20
+		TIMES SOURCE:16 , 1.10
+		SOURCE:15 = 500
+	ELSE
+		TIMES SOURCE:3 , 1.20
+		TIMES SOURCE:16 , 1.10
+		SOURCE:15 = 0
+	ENDIF
+ENDIF
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES SOURCE:2 , 0.60
+	TIMES SOURCE:13 , 0.60
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES SOURCE:2 , 0.80
+	TIMES SOURCE:13 , 0.80
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES SOURCE:2 , 1.00
+	TIMES SOURCE:13 , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES SOURCE:2 , 1.20
+	TIMES SOURCE:13 , 1.20
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES SOURCE:2 , 1.40
+	TIMES SOURCE:13 , 1.40
+ENDIF
+
+;ABL:従順をみる
+IF ABL:0 == 0
+	TIMES SOURCE:3 , 0.60
+	TIMES SOURCE:15 , 2.00
+ELSEIF ABL:0 == 1
+	TIMES SOURCE:3 , 0.80
+	TIMES SOURCE:15 , 1.50
+ELSEIF ABL:0 == 2
+	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:15 , 1.00
+ELSEIF ABL:0 == 3
+	TIMES SOURCE:3 , 1.20
+	TIMES SOURCE:15 , 0.80
+ELSEIF ABL:0 == 4
+	TIMES SOURCE:3 , 1.40
+	TIMES SOURCE:15 , 0.60
+ELSE
+	SOURCE:3 = SOURCE:3 * (ABL:0 * 10 + 110) / 100
+	TIMES SOURCE:15 , 0.30
+ENDIF
+
+;Ａ敏感、鈍感をみる
+;快Ａ自体のチェックは後でまとめてやる
+IF TALENT:105
+	TIMES SOURCE:6 , 1.50
+	TIMES SOURCE:13 , 1.50
+	TIMES SOURCE:14 , 1.50
+ELSEIF TALENT:106
+	TIMES SOURCE:6 , 0.60
+	TIMES SOURCE:13 , 0.60
+	TIMES SOURCE:14 , 0.60
+ENDIF
+
+;主導権をチェック
+IF TFLAG:45 == 0
+	;主導権が主人公側
+	;ABL:従順をみる
+	IF ABL:0 <= 1
+		SOURCE:21 += 300 + (ABL:0 * 50)
+	ELSEIF ABL:0 <= 3
+		SOURCE:21 += 600 + (ABL:0 * 100)
+	ELSEIF ABL:0 <= 5
+		SOURCE:21 += 800 + (ABL:0 * 120)
+	ELSEIF ABL:0 <= 8
+		SOURCE:21 += 1000 + (ABL:0 * 140)
+	ELSEIF ABL:0 <= 11
+		SOURCE:21 += 1200 + (ABL:0 * 160)
+	ELSE
+		SOURCE:21 += 1500 + (ABL:0 * 180)
+	ENDIF
+ELSE
+	;主導権が相手側
+	;ABL:サドっ気をみる
+	IF ABL:15 == 0
+		SOURCE:20 = 600
+	ELSEIF ABL:15 == 1
+		SOURCE:20 = 900
+	ELSEIF ABL:15 == 2
+		SOURCE:20 = 1200
+	ELSEIF ABL:15 == 3
+		SOURCE:20 = 1600
+	ELSEIF ABL:15 == 4
+		SOURCE:20 = 2000
+	ELSE
+		SOURCE:20 = 1000 + (ABL:15 * 300)
+	ENDIF
+ENDIF
+
+;好感度ランダム変化
+A = RAND:10 + 5
+SIF TALENT:85 || TALENT:153
+	A += 5
+SIF TALENT:88
+	A += 5
+;合意がないと好感度が下がる
+IF TALENT:152 == 0 && TFLAG:48 == 0
+	A -= 10
+	SOURCE:15 += 500
+ENDIF
+TFLAG:30 += A
+TFLAG:37 += A / 2
+
+EXP:1 += 2
+PRINTL Ａ経験＋２
+
+;異常経験増加
+EXP:50 += 1
+PRINTFORML %EXPNAME:50%＋１
+
+;既成事実3に相当
+TFLAG:200 = 3
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+CALL SAMEN_CHECK
+;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
+;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
+;	BASE:PLAYER:2 = 100000000
+;ENDIF
+;S = BASE:PLAYER:2
+;EJAC = MAXBASE:PLAYER:2
+;
+;IF  S > EJAC * 2
+;	E = 2
+;ELSEIF S > EJAC
+;	E = 1
+;ELSE
+;	E = 0
+;ENDIF
+
+IF E >= 1
+	SIF ABL:0 >= 3 && ABL:1 >= 3 && FLAG:6
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に足を絡め腰を押し付けてきた…
+
+	;射精先タイプの設定
+	TFLAG:703 = 2
+	;射精先選択の可・不可
+	TFLAG:704 = 0
+	;汎用的な処理はこの関数で行う
+	;（射精ゲージの再計算や射精経験の上昇と共通部分の表示）
+	CALL SAMEN_SHOOT
+ENDIF
+
+;;大量射精
+;IF E == 2
+;	EXP:PLAYER:3 += 2
+;	EXP:20 += 1
+;	PRINTL 大量射精
+;	PRINTL 精液経験＋１
+;	;Ｐに精液汚れ
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC*2
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 2
+;;通常の射精
+;ELSEIF E == 1
+;	EXP:PLAYER:3 += 1
+;	;Ｐに精液汚れ
+;	PRINTL 射精
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 1
+;ENDIF
+
+;奴隷のＡ⇔調教者のＰの汚れが移動
+STAIN:4 |= STAIN:PLAYER:2
+STAIN:PLAYER:2 |= STAIN:4
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +4
+	EXP:40 += 4
+ENDIF
+
+IF ASSIPLAY == 0
+	IF ABL:5 >= 3
+		TFLAG:30 += 2
+	ELSE
+		TFLAG:30 += 1
+	ENDIF
+ENDIF
+
+RETURN 1
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_26
+CALL COM_ORDER_22
+

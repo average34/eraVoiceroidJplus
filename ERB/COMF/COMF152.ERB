@@ -1,0 +1,214 @@
+﻿@COM_ABLE152
+;半霊を犯す
+;やるならイタコさんのＮＨＫ犯すとかになるのかなあ
+;でも需要なさそうなので実行不可
+RETURN 0
+
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教対象が妖夢でないとダメ
+SIF NO:TARGET != 19
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+RETURN 1
+
+@COM152
+;半霊を犯す
+;ベースは正常位
+;処女のまま快Ｖ稼ぐとか反則だろ常考…
+
+PRINTL 半霊を犯す
+STR:0 = 半霊を犯す
+CALL TRAIN_MESSAGE_B
+
+;-------------------------------------------------
+;射精ゲージチェック
+;-------------------------------------------------
+SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 0
+LOSEBASE:1 += 200
+
+SOURCE:12 = 800
+
+;ABL:Ｖ感覚をみる
+IF ABL:4 == 0
+	SOURCE:1 = 800
+	SOURCE:3 = 150
+ELSEIF ABL:4 == 1
+	SOURCE:1 = 1000
+	SOURCE:3 = 250
+ELSEIF ABL:4 == 2
+	SOURCE:1 = 1200
+	SOURCE:3 = 350
+ELSEIF ABL:4 == 3
+	SOURCE:1 = 1400
+	SOURCE:3 = 500
+ELSEIF ABL:4 == 4
+	SOURCE:1 = 1600
+	SOURCE:3 = 700
+ELSE
+	SOURCE:1 = 1300 + (ABL:4 * 100)
+	SOURCE:3 = 250 + (ABL:4 * 150)
+ENDIF
+
+;EXP:Ｖ経験をみる
+IF EXP:0 < EXPLV:1
+	TIMES SOURCE:1 , 0.80
+
+ELSEIF EXP:0 < EXPLV:2
+	TIMES SOURCE:1 , 0.90
+ELSEIF EXP:0 < EXPLV:3
+	TIMES SOURCE:1 , 1.00
+ELSEIF EXP:0 < EXPLV:4
+	TIMES SOURCE:1 , 1.10
+ELSEIF EXP:0 < EXPLV:5
+	TIMES SOURCE:1 , 1.20
+ELSE
+	TIMES SOURCE:1 , 1.30
+ENDIF
+
+
+;調教者がふたなり
+IF ASSIPLAY
+	SIF TALENT:ASSI:121
+		TIMES SOURCE:1 , 2.50
+ENDIF
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES SOURCE:1 , 0.60
+	TIMES SOURCE:3 , 0.30
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES SOURCE:1 , 0.80
+	TIMES SOURCE:3 , 0.60
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:3 , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES SOURCE:1 , 1.20
+	TIMES SOURCE:3 , 1.50
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES SOURCE:1 , 1.50
+	TIMES SOURCE:3 , 1.80
+ENDIF
+
+;ABL:従順をみる
+IF ABL:0 == 0
+	TIMES SOURCE:1 , 0.50
+	TIMES SOURCE:3 , 0.60
+	TIMES SOURCE:15 , 2.00
+ELSEIF ABL:0 == 1
+	TIMES SOURCE:1 , 0.80
+	TIMES SOURCE:3 , 0.80
+	TIMES SOURCE:15 , 1.50
+ELSEIF ABL:0 == 2
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:15 , 1.00
+ELSEIF ABL:0 == 3
+	TIMES SOURCE:1 , 1.30
+	TIMES SOURCE:3 , 1.20
+	TIMES SOURCE:15 , 0.80
+ELSEIF ABL:0 == 4
+	TIMES SOURCE:1 , 1.60
+	TIMES SOURCE:3 , 1.40
+	TIMES SOURCE:15 , 0.60
+ELSE
+	SOURCE:1 = SOURCE:1 * (ABL:0 * 20 + 100) / 100
+	SOURCE:3 = SOURCE:3 * (ABL:0 * 10 + 110) / 100
+	TIMES SOURCE:15 , 0.30
+ENDIF
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+CALL SAMEN_CHECK
+;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
+;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
+;	BASE:PLAYER:2 = 100000000
+;ENDIF
+;
+;S = BASE:PLAYER:2
+;EJAC = MAXBASE:PLAYER:2
+;
+;IF  S > EJAC * 2
+;	E = 2
+;ELSEIF S > EJAC
+;	E = 1
+;ELSE
+;	E = 0
+;ENDIF
+
+IF E >= 1
+	SIF ABL:0 >= 3 && ABL:1 >= 3 && FLAG:6
+		PRINTFORML %CALLNAME:TARGET%の半霊は%CALLNAME:PLAYER%に絡みついてきた…
+
+;射精先タイプの設定(処理が一緒なのでA中出しとして扱う)
+	TFLAG:703 = 2
+	;射精先選択の可・不可
+	TFLAG:704 = 0
+	;汎用的な処理はこの関数で行う
+	;（射精ゲージの再計算や射精経験の上昇と共通部分の表示）
+	CALL SAMEN_SHOOT
+ENDIF
+
+;;大量射精
+;IF E == 2
+;	EXP:PLAYER:3 += 2
+;	EXP:20 += 1
+;	PRINTL 大量射精
+;	PRINTL 精液経験＋１
+;	;Ｐに精液汚れ
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC*2
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 2
+;;通常の射精
+;ELSEIF E == 1
+;	EXP:PLAYER:3 += 1
+;	;Ｐに精液汚れ
+;	PRINTL 射精
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 1
+;ENDIF
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +4
+	EXP:40 += 4
+ENDIF
+
+IF ASSIPLAY == 0
+	IF ABL:4 >= 3
+		TFLAG:30 += 2
+	ELSE
+		TFLAG:30 += 1
+	ENDIF
+ENDIF
+
+RETURN 1
+
+;半霊を犯す
+@TRAIN_MESSAGE_COM152
+

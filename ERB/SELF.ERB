@@ -1,0 +1,1037 @@
+﻿;調教後性交渉追加版(2008/04/17 byα)
+;夜、厳しい条件をクリアすると…？
+
+@SELF_CHECK
+;合意持ち、かつ、ウフフに突入していたなら終了後にハッスルする可能性アリ(主人公が童貞だと発生しない)
+SIF TALENT:152 && TFLAG:44 && TALENT:MASTER:154 == 0
+	CALL AFTER_V_CHECK
+;[キス魔]などの淫系素質チェック
+CALL AFTER_TALENT_CHECK
+;恋慕持ちか、極端に欲望が高いと自慰をする可能性アリ
+SIF TALENT:85 || ABL:1 >= 10
+	CALL AFTER_S_CHECK
+;レズプレイチェック
+CALL AFTER_L_CHECK
+;晩酌チェック
+CALL SELF_SAKE_CHECK
+;合意持ちなら夜這いに来る可能性アリ(主人公が童貞だと発生しない)
+SIF TALENT:152 && TALENT:MASTER:154 == 0
+	CALL SELF_CHECK2
+
+WAIT
+
+@AFTER_V_CHECK
+;恋慕、非処女による調教後性交渉チェック
+
+;体力余って、[恋慕]がないとダメ
+SIF BASE:0 < 500 || TALENT:TARGET:85 == 0 || TFLAG:301
+	RETURN 0
+;カットフラグが立っていたらリターン
+SIF CFLAG:98 & 1
+	RETURN 0
+
+;TFLAG:15を借りますよ
+TFLAG:15 = 0
+
+;ターゲットに挿入
+SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:0 == 0 && TALENT:122 == 0
+	TFLAG:15 |= 1
+;マスターに挿入
+SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:0 == 0
+	TFLAG:15 |= 2
+;両方出来るならランダムで決定
+SIF TFLAG:15 == 3
+	TFLAG:15 -= 1 + RAND:2
+
+VARSET S, 0
+
+;ターゲットに挿入する場合はV感覚
+IF TFLAG:15 & 1
+	A = 4
+;ターゲットが挿入、もしくは非挿入の場合はC感覚
+ELSE
+	A = 3
+ENDIF
+
+;C/V感覚
+IF ABL:A == 1
+	S = 1
+ELSEIF ABL:A == 2
+	S = 2
+ELSEIF ABL:A == 3
+	S = 2
+ELSEIF ABL:A == 4
+	S = 3
+ELSEIF ABL:A >= 5
+	S = 1 + (ABL:A / 2)
+ENDIF
+
+;欲望と奉仕精神によるボーナス
+IF ABL:1 == 4 && ABL:6 >= 4 && PALAM:5 >= PALAMLV:4
+	S += 1
+ELSEIF ABL:1 >= 5 && ABL:6 >= 4 && PALAM:5 >= PALAMLV:4
+	S += ABL:1 / 2
+ENDIF
+
+;C/V感覚が充分にあれば、欲望ＬＶ３でもSに+1する
+IF ABL:1 >= 3 && ABL:A >= 3 && PALAM:5 >= PALAMLV:3
+	S += 1
+ENDIF
+
+;快感に素直、快感の否定、淫乱化
+IF TALENT:70 && S
+	S += 1
+ELSEIF TALENT:71 && S
+	S -= 2
+ENDIF
+
+;淫乱
+IF TALENT:76 && S
+	S += 1
+ENDIF
+
+;淫核/淫壷
+IF ((TALENT:74 && A == 4) || (TALENT:75 && A == 3)) && S
+	S += 1
+ENDIF
+
+;回数と経験は上限9
+S:1 = S
+SIF S >= 9
+	S = 9
+
+;変数退避
+LOCAL = S
+LOCAL:1 = S:1
+IF S > 0
+	DRAWLINE
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	;ターゲットが挿入されるなら元々の調教後セックスを呼び出す
+	IF TFLAG:15 & 1
+		TFLAG:13 = 4
+	;そうでないなら、独自仕様なので、別の番号を呼び出す。
+	ELSE
+		TFLAG:13 = 92
+	ENDIF
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF (CFLAG:99 & 1) == 0
+		PRINTFORM %CALLNAME:MASTER%と%CALLNAME:TARGET%はまだ冷めやらぬ昂奮を抑えきれず、
+		PRINTV S
+		PRINTL 回ベッドの上でまぐわった…
+	ENDIF
+	;ターゲットが挿入されるなら元々の調教後セックスを呼び出す
+;	IF TFLAG:15 & 1
+;		TFLAG:13 = 4
+	;そうでないなら、独自仕様なので、別の番号を呼び出す。
+;	ELSE
+;		TFLAG:13 = 92
+;	ENDIF
+	CALL SELF_KOJO
+	;変数を戻す
+	S = LOCAL
+	S:1 = LOCAL:1
+	;ターゲットが挿入されるならV経験が付く
+	IF TFLAG:15 & 1
+		PRINTFORML %EXPNAME:0%＋{S}
+		EXP:0 += S
+	ENDIF
+	;精液経験が付くか
+	IF TALENT:MASTER:121 || TALENT:MASTER:122
+		PRINTFORML %EXPNAME:20%＋{S*5}
+		EXP:20 += S * 5
+	ENDIF
+	PRINTFORML %EXPNAME:2%＋{S}
+	EXP:2 += S
+	;射精経験
+	IF TALENT:122 || TALENT:121
+		PRINTFORML %EXPNAME:3%＋{S}
+		EXP:3 += S
+	ENDIF
+	;レズ経験
+	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		EXP:40 += S * 20
+		EXP:MASTER:40 += S * 20
+		PRINTFORML %EXPNAME:40%＋{S*20}
+	ENDIF
+	
+	;ターゲットが挿入されるときはV
+	IF TFLAG:15 & 1
+		PRINTFORML %PALAMNAME:1%の珠＋{S:1*200}
+		GOTJUEL:1 += S:1*200
+	;ターゲットが挿入する時はC
+	ELSEIF TFLAG:15 & 2
+		PRINTFORML %PALAMNAME:0%の珠＋{S:1*200}
+		GOTJUEL:0 += S:1*200
+	;非挿入の時はBC
+	ELSE
+		PRINTFORML %PALAMNAME:0%の珠＋{S:1*150}
+		GOTJUEL:0 += S:1*150
+		PRINTFORML %PALAMNAME:14%の珠＋{S:1*100}
+		GOTJUEL:14 += S:1*100
+	ENDIF
+	PRINTFORML %PALAMNAME:4%の珠＋{S:1*100}
+	PRINTFORML %PALAMNAME:5%の珠＋{S:1*250}
+	IF TALENT:122 || TALENT:121
+		T = TARGET
+		PLAYER = MASTER
+		CALL GET_INITIATIVE_RATE
+		;ターゲットが挿入し、強気だと優越の珠
+		IF TFLAG:15 & 2 && R > 0
+			PRINTFORML %PALAMNAME:17%の珠＋{S:1*100}
+			GOTJUEL:17 += S:1*100
+		;そうでなければ恥情の珠
+		ELSE
+			PRINTFORML %PALAMNAME:8%の珠＋{S:1*100}
+			GOTJUEL:8 += S:1*100
+		ENDIF
+	ENDIF
+	GOTJUEL:4 += S:1*100
+	GOTJUEL:5 += S:1*250
+	IF ABL:0+ABL:4+ABL:6 >= 13 && TALENT:153 && (CFLAG:99 & 1) == 0
+		PRINTFORM 我に返り、痴態を省みて赤面する%CALLNAME:TARGET%に苦笑いしながらそっとキスをすると、
+		IF TIME == 1
+			PRINTFORML お休みを告げて部屋を出た
+		ELSE
+			PRINTFORML 別れを告げて部屋を出た
+		ENDIF
+	ENDIF
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ENDIF
+TFLAG:15 = 0
+RETURN 0
+
+@AFTER_S_CHECK
+;カットフラグが立っていたらリターン
+SIF CFLAG:98 & 2
+	RETURN 0
+;自慰中毒による自慰チェック
+VARSET A, 0
+VARSET B, 0
+VARSET C, 0
+
+IF ABL:10 == 1
+	A = 1
+ELSEIF ABL:10 == 2
+	A = 2
+ELSEIF ABL:10 == 3
+	A = 4
+ELSEIF ABL:10 == 4
+	A = 6
+ELSEIF ABL:10 >= 5
+	A = (ABL:10 * 2) - 1
+ENDIF
+
+IF ABL:1 == 4 && ABL:3 >= 4 && PALAM:5 >= PALAMLV:4
+	A += 1
+ELSEIF ABL:1 >= 5 && ABL:3 >= 4 && PALAM:5 >= PALAMLV:4
+	A += ABL:1 / 2
+ENDIF
+
+;自慰しやすい
+IF TALENT:60
+	A *= 2
+	;欲望ＬＶ３でもAに+1する
+	SIF ABL:1 >= 3 && ABL:3 >= 3 && PALAM:5 >= PALAMLV:3
+		A += 1
+ENDIF
+
+;快感に素直、快感の否定、淫乱化
+IF TALENT:70 && A
+	A += 1
+ELSEIF TALENT:71 && A
+	A -= 2
+ENDIF
+IF TALENT:76 && A
+	A += 1
+ENDIF
+
+;鼓舞
+IF ASSI >= 0
+	SIF (TALENT:ASSI:118 || TALENT:MASTER:118) && A
+		A += 1
+ELSE
+	SIF TALENT:MASTER:118 && A
+		A += 1
+ENDIF
+
+;自慰、アナニー判定。ポイントが同じ場合は自慰優先(Ｃ感覚が０の場合はアナニーのみ)
+;Ａ感覚見る
+IF ABL:5 == 1
+	B += 1
+ELSEIF ABL:5 == 2
+	B += 2
+ELSEIF ABL:5 == 3
+	B += 3
+ELSEIF ABL:5 == 4
+	B += 4
+ELSEIF ABL:5 >= 5
+	B += ABL:5
+ENDIF
+;Ｃ感覚見る
+IF ABL:3 == 0
+	C = 0
+ELSEIF ABL:3 == 1
+	C += 1
+ELSEIF ABL:3 == 2
+	C += 2
+ELSEIF ABL:3 == 3
+	C += 3
+ELSEIF ABL:3 == 4
+	C += 4
+ELSEIF ABL:3 >= 5
+	C += ABL:3
+ENDIF
+
+;調教時にＡ快楽、Ｃ快楽をより稼いだほうに+1
+IF PALAM:2 > PALAM:0
+	B += 1
+ELSEIF PALAM:0 > PALAM:2
+	C += 1
+ENDIF
+
+;尻穴狂いだとアナニーしやすい+
+IF TALENT:77
+	B += 1
+ENDIF
+
+;淫核だと通常オナニーしやすい
+IF TALENT:75
+	C += 1
+ENDIF
+
+;体力が500未満だと半分になる
+IF BASE:0 <= 500
+	A /= 2
+	;Aが6回以上だったら5回以下にする
+	SIF A > 6
+		A %= 6
+	;Aが0だった場合1にする
+	SIF A < 1
+		A = 1
+ENDIF
+
+;回数と経験は上限9
+A:1 = A
+SIF A >= 9
+	A = 9
+
+;変数退避
+LOCAL = A
+LOCAL:1 = A:1
+
+IF A > 0 && (C >= B)
+	DRAWLINE
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	TFLAG:13 = 1
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF CFLAG:99 & 1
+;		TFLAG:13 = 1
+		CALL SELF_KOJO
+	ELSE
+		PRINTFORM %CALLNAME:MASTER%が出て行った後、%CALLNAME:TARGET%は
+		PRINTV A
+		PRINTL 回自慰をしたようだ。
+;		TFLAG:13 = 1
+		CALL SELF_KOJO
+	ENDIF
+	
+	;変数を戻す
+	A = LOCAL
+	A:1 = LOCAL:1
+	
+	PRINTFORML %EXPNAME:10%＋{A}
+	SIF A / 5 > 0
+		PRINTFORML %EXPNAME:2%＋{A/5}
+	PRINTFORML %PALAMNAME:0%の珠＋{A:1*500}
+	PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
+	PRINTFORMW %PALAMNAME:5%の珠＋{A:1*250}
+	EXP:10 += A
+	EXP:2 += A / 5
+	GOTJUEL:0 += A:1*500
+	GOTJUEL:4 += A:1*100
+	GOTJUEL:5 += A:1*250
+
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ELSEIF A > 0 && (B > C)
+	DRAWLINE
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	TFLAG:13 = 1
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF CFLAG:99 & 1
+;		TFLAG:13 = 1
+		CALL SELF_KOJO
+	ELSE
+		PRINTFORM %CALLNAME:MASTER%が出て行った後、%CALLNAME:TARGET%は
+		PRINTV A
+		PRINTL 回後ろで自慰をしたようだ。
+;		TFLAG:13 = 1
+		CALL SELF_KOJO
+	ENDIF
+	
+	;変数を戻す
+	A = LOCAL
+	A:1 = LOCAL:1
+	
+	PRINTFORML %EXPNAME:10%＋{A}
+	PRINTFORML %EXPNAME:1%＋{A}
+	SIF A / 5 > 0
+		PRINTFORML %EXPNAME:2%＋{A/5}
+	PRINTFORML %PALAMNAME:2%の珠＋{A:1*500}
+	PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
+	PRINTFORMW %PALAMNAME:5%の珠＋{A:1*250}
+	EXP:10 += A
+	EXP:1 += A
+	EXP:2 += A / 5
+	GOTJUEL:2 += A:1*500
+	GOTJUEL:4 += A:1*100
+	GOTJUEL:5 += A:1*250
+	
+	IF ABL:0 + ABL:7 * 3 + ABL:8 * 3 >= 30 && TIME == 0 && TALENT:152
+		SIF (CFLAG:99 & 1) == 0
+			PRINTFORML そのことを%NAME:TARGET%は報告してきた。
+		PRINTFORML %PALAMNAME:8%の珠＋{A:1*200}
+		GOTJUEL:8 += A:1*200
+	ENDIF
+	
+	IF (ABL:0 >= 10 || ABL:1 >= 10) && TALENT:85 && (CFLAG:99 & 1) == 0
+		PRINTFORML しかし何度自分を慰めてみても、%CALLNAME:MASTER%への欲望は満たされなかった。
+	ENDIF
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+	RETURN 0
+ENDIF
+
+;レズプレイ
+@AFTER_L_CHECK
+;カットフラグが立っていたらリターン
+SIF CFLAG:98 & 4
+	RETURN 0
+;レズ中毒によるレズチェック
+SIF ASSI < 0
+	RETURN 0
+
+;オトコはだめ
+SIF TALENT:122 || TALENT:ASSI:122
+	RETURN 0
+
+;一定能力必要
+SIF ABL:9 < 2 || ABL:3 < 3 || ABL:0 < 2 || ABL:1 < 5
+	RETURN 0
+
+;レズ中毒必要
+SIF ABL:12 == 0 && ABL:ASSI:12 == 0
+	RETURN 0
+
+;体力必要
+SIF BASE:0 < 500 || TFLAG:301
+	RETURN 0
+
+VARSET N, 0
+
+IF ABL:12 == 1
+	N += 1
+ELSEIF ABL:12 == 2
+	N += 2
+ELSEIF ABL:12 == 3
+	N += 3
+ELSEIF ABL:12 == 4
+	N += 5
+ELSEIF ABL:12 >= 5
+	N += 2 + ABL:12
+ENDIF
+IF ABL:ASSI:12 == 1
+	N += 1
+ELSEIF ABL:ASSI:12 == 2
+	N += 2
+ELSEIF ABL:ASSI:12 == 3
+	N += 5
+ELSEIF ABL:ASSI:12 == 4
+	N += 8
+ELSEIF ABL:ASSI:12 >= 5
+	N += 3 + (ABL:ASSI:12 * 2)
+ENDIF
+
+R = NO:ASSI
+IF RELATION:R > 0
+	N *= RELATION:R
+	N /= 100
+ENDIF
+
+;0回レズプレイの報告がスレであったので、弾いておく
+SIF N <= 0
+	RETURN 0
+
+;回数と経験は上限9
+N:1 = N
+SIF N >= 9
+	N = 9
+
+;変数退避
+LOCAL = N
+LOCAL:1 = N:1
+
+;カットフラグを退避
+LOCAL:100 = CFLAG:99
+;口上開始前の地の文をカットするか
+TFLAG:13 = 2
+CALL SELF_MAEKOJO
+;地の文章カット
+IF CFLAG:99 ==1
+;	TFLAG:13 = 2
+	CALL SELF_KOJO
+ELSE
+	PRINTFORML %CALLNAME:MASTER%と別れた後、{N}回レズプレイをしたようだ。
+;	TFLAG:13 = 2
+	CALL SELF_KOJO
+ENDIF
+
+;変数を戻す
+N = LOCAL
+N:1 = LOCAL:1
+
+PRINTFORML %EXPNAME:40%＋{N*20}
+SIF N*100*ABL:0/500 > 0
+	PRINTFORML %EXPNAME:2%＋{N*100*ABL:0/500}
+PRINTFORML %PALAMNAME:0%の珠＋{N:1*100*ABL:0}
+PRINTFORML %PALAMNAME:5%の珠＋{N:1*200}
+
+EXP:40 += N*20
+EXP:ASSI:40 += N*20
+EXP:2 += N*100*ABL:0/500
+
+GOTJUEL:0 += N:1*100*ABL:0
+GOTJUEL:5 += N:1*200
+IF TALENT:ASSI:121
+	PRINTFORML %EXPNAME:20%＋{N}
+	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100*(ABL:2+ABL:6)}
+	PRINTFORML %PALAMNAME:7%の珠＋{N:1*100*(ABL:2+ABL:6)}
+
+	EXP:20 += N
+	GOTJUEL:6 += N:1*100*(ABL:2+ABL:6)
+	GOTJUEL:7 += N:1*100*(ABL:2+ABL:6)
+ELSE
+	PRINTFORML %PALAMNAME:6%の珠＋{N:1*50*(ABL:2+ABL:6)}
+	PRINTFORML %PALAMNAME:7%の珠＋{N:1*50*(ABL:2+ABL:6)}
+
+	GOTJUEL:6 += N:1*50*(ABL:2+ABL:6)
+	GOTJUEL:7 += N:1*50*(ABL:2+ABL:6)
+ENDIF
+IF TALENT:ASSI:83
+	PRINTFORML %EXPNAME:30%＋{N}
+	SIF N*100*ABL:8 > 0
+		PRINTFORML %PALAMNAME:9%の珠＋{N:1*100*ABL:8}
+
+	GOTJUEL:9 += N:1*100*ABL:8
+	EXP:30 += N
+ENDIF
+IF TALENT:121
+	PRINTFORML %EXPNAME:3%＋{N}
+	PRINTFORML %PALAMNAME:8%の珠＋{N:1*100}
+
+	EXP:3 += N
+	GOTJUEL:8 += N:1*100
+ENDIF
+IF TALENT:121 && TALENT:ASSI:121 && ABL:6 >= 8 && ABL:11 >= 3
+	IF (CFLAG:99 & 1) == 0
+		PRINTFORML %NAME:ASSI%と%NAME:TARGET%は
+		IF TIME == 0
+			PRINTFORML 日が暮れるまで互いのペニスをしゃぶりあった。
+		ELSE
+			PRINTFORML 一晩中互いのペニスをしゃぶりあった。
+		ENDIF
+	ENDIF
+	PRINTFORML %EXPNAME:3%＋{N}
+	PRINTFORML %EXPNAME:20%＋{N}
+	PRINTFORML %EXPNAME:21%＋{N}
+	PRINTFORML %EXPNAME:22%＋{N}
+	PRINTFORML %PALAMNAME:5%の珠＋{N:1*100}
+	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100}
+	PRINTFORML %PALAMNAME:8%の珠＋{N:1*100}
+
+	EXP:3 += N
+	EXP:20 += N
+	EXP:21 += N
+	EXP:22 += N
+	GOTJUEL:5 += N:1*100
+	GOTJUEL:6 += N:1*100
+	GOTJUEL:8 += N:1*100
+ENDIF
+;カットフラグを戻す
+CFLAG:99 = LOCAL:100
+RETURN 0
+
+@SELF_SAKE_CHECK
+;晩酌イベントチェック
+;カットフラグが立っていたらリターン
+SIF CFLAG:98 & 8
+	RETURN 0
+;反発感情あり、夜でない、体力５００以下の場合はだめ
+SIF MARK:TARGET:3 >= 1 || TIME == 0 || BASE:0 < 500
+	RETURN 0
+IF (MARK:TARGET:2 >= 1 && CFLAG:2 >= 500) || (TALENT:TARGET:217 == 1 && CFLAG:2 >= 200)
+	S = 10
+	;酒豪なら効果上昇
+	SIF TALENT:TARGET:217
+		S += 10
+	;マスターが酒豪なら効果上昇
+	SIF TALENT:MASTER:217
+		S += 10
+	;恋慕なら気を許しているので効果上昇
+	SIF TALENT:TARGET:85
+		S += 5
+	;親愛の場合さらに気を許しているので効果上昇
+	SIF TALENT:TARGET:88
+		S += 5
+	;自制心の場合、飲み過ぎないように気をつけてしまうので効果半減
+	SIF TALENT:TARGET:20
+		TIMES S , 0.50
+	
+	;好感度上昇
+	CFLAG:2 += S
+	;変数退避
+	LOCAL = S
+	DRAWLINE
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	TFLAG:13 = 82
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF CFLAG:99 ==1
+;		TFLAG:13 = 82
+		CALL SELF_KOJO
+	ELSE
+		PRINTFORML %CALLNAME:MASTER%が寝る準備をしていると%CALLNAME:TARGET%が晩酌に誘いに来た
+;		TFLAG:13 = 82
+		CALL SELF_KOJO
+		PRINTFORML それからしばらく%CALLNAME:TARGET%と%CALLNAME:MASTER%は楽しく酒を飲み交わした
+	ENDIF
+	;変数を戻す
+	S = LOCAL
+	PRINTFORML 
+	PRINTFORML 好感度上昇:{S}
+	SIF ((FLAG:23 & 1p26) == 0) && FLAG:2 != 1
+		PRINTFORML 好感度合計:{CFLAG:2}
+	PRINTFORMW 
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ENDIF
+RETURN 0
+
+@SELF_CHECK2
+
+;恋慕で体力が500以上有って夜じゃなきゃダメ
+SIF TALENT:TARGET:85 == 0 || BASE:0 < 500 || TIME == 0
+	RETURN 0
+
+;夜這いをランダムにしてみる
+A = 0
+SIF (ABL:1 * 3 + ABL:4 * 2 + ABL:0 + ABL:6) > 50 && TALENT:76 == 1 && (CFLAG:98 & 16) == 0
+	A |= 1
+SIF ABL:1 * 3 + ABL:0 + ABL:6 >= 25 && TALENT:151 == 0 && (CFLAG:98 & 32) == 0
+	A |= 2
+SIF ABL:0 * 3 + ABL:6 >= 20 && (CFLAG:98 & 64) == 0
+	A |= 4
+
+IF A == 0
+	RETURN 0
+ELSEIF A == 1
+	CALL SELF_YOBAI
+ELSEIF A == 2
+	CALL SELF_KISSYOBAI
+ELSEIF A == 4
+	CALL SELF_SOINE
+ELSEIF A == 3
+	IF RAND:2
+		CALL SELF_YOBAI
+	ELSE
+		CALL SELF_KISSYOBAI
+	ENDIF
+ELSEIF A == 5
+	IF RAND:2
+		CALL SELF_YOBAI
+	ELSE
+		CALL SELF_SOINE
+	ENDIF
+ELSEIF A == 6
+	IF RAND:2
+		CALL SELF_KISSYOBAI
+	ELSE
+		CALL SELF_SOINE
+	ENDIF
+ELSEIF A == 7
+	IF RAND:3
+		CALL SELF_YOBAI
+	ELSEIF RAND:2
+		CALL SELF_KISSYOBAI
+	ELSE
+		CALL SELF_SOINE
+	ENDIF
+ENDIF
+
+;通常の夜這い
+;IF TALENT:TARGET:0 == 0 && (ABL:1 * 3 + ABL:4 * 2 + ABL:0 + ABL:6) > 50 && TALENT:76 == 1
+@SELF_YOBAI
+;TFLAG:15を借りますよ
+TFLAG:15 = 0
+
+;ターゲットに挿入
+SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:0 == 0
+	TFLAG:15 |= 1
+;マスターに挿入
+SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:0 == 0
+	TFLAG:15 |= 2
+;両方出来るならランダムで決定
+SIF TFLAG:15 == 3
+	TFLAG:15 -= 1 + RAND:2
+
+VARSET S, 0
+
+;ターゲットに挿入する場合はV感覚
+IF TFLAG:15 & 1
+	A = 4
+;ターゲットが挿入、もしくは非挿入の場合はC感覚
+ELSE
+	A = 3
+ENDIF
+
+;C/V感覚
+IF ABL:A == 4
+	S = 2
+ELSEIF ABL:A >= 5
+	S = ABL:A - 1
+ENDIF
+;淫核/淫壷
+IF (TALENT:74 && A == 4) || (TALENT:75 && A == 3)
+	S += 1
+ENDIF
+
+;回数と経験は上限9
+S:1 = S
+SIF S >= 9
+	S = 9
+
+;変数退避
+LOCAL = S
+LOCAL:1 = S:1
+DRAWLINE
+IF S > 0
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	;ターゲットが挿入されるなら元々の夜這いを呼び出す
+	IF TFLAG:15 & 1
+		TFLAG:13 = 5
+	;そうでないなら、独自仕様なので、別の番号を呼び出す。
+	ELSE
+		TFLAG:13 = 104
+	ENDIF
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF CFLAG:99 & 1
+;		TFLAG:13 = 5
+		CALL SELF_KOJO
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%と別れ、%CALLNAME:MASTER%が床に就こうとしたとき、突然%CALLNAME:TARGET%が部屋を訪ねてきた
+		PRINTFORM そのまま彼女は%CALLNAME:MASTER%を押し倒し、
+		IF TFLAG:15 & 1
+			PRINTFORML 蜜壷でペニスを咥え込み激しく腰を打ち付け始めた
+		ELSEIF TFLAG:15 & 2
+			;濡らす描写を入れようか迷った
+			PRINTFORML 漲る怒張を膣口に押し当て一息に貫いた
+		ELSE
+			PRINTFORML 体をまさぐりながら唇を奪った
+		ENDIF
+;		TFLAG:13 = 5
+		CALL SELF_KOJO
+		IF TFLAG:15 & 1
+			PRINTFORML 飢えた獣の口は涎を滴らせて怒張を貪り、子宮の渇きを癒している…
+		ELSEIF TFLAG:15 & 2
+			PRINTFORML 衰えることを知らぬ怒張で子宮を突き上げ、膣内を貪っている…
+		ELSE
+			PRINTFORML 体を絡ませ攻め立てながら自らの秘所に指を這わせ、疼き鎮めている…
+		ENDIF
+	ENDIF
+	;変数を戻す
+	S = LOCAL
+	S:1 = LOCAL
+	;ターゲットが挿入されるならV経験が付く
+	IF TFLAG:15 & 1
+		PRINTFORML %EXPNAME:0%＋{S}
+		EXP:0 += S
+	ENDIF
+	;精液経験が付くか
+	IF TALENT:MASTER:121 || TALENT:MASTER:122
+		PRINTFORML %EXPNAME:20%＋{S*5}
+		EXP:20 += S * 5
+	ENDIF
+	PRINTFORML %EXPNAME:2%＋{S}
+	EXP:2 += S
+	;射精経験
+	IF TALENT:122 || TALENT:121
+		PRINTFORML %EXPNAME:3%＋{S}
+		EXP:3 += S
+	ENDIF
+	;レズ経験
+	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		EXP:40 += S * 20
+		EXP:MASTER:40 += S * 20
+		PRINTFORML %EXPNAME:40%＋{S*20}
+	ENDIF
+	
+	;ターゲットが挿入されるときはV
+	IF TFLAG:15 & 1
+		PRINTFORML %PALAMNAME:1%の珠＋{S:1*200}
+		GOTJUEL:1 += S:1*200
+	;ターゲットが挿入する時はC
+	ELSEIF TFLAG:15 & 2
+		PRINTFORML %PALAMNAME:0%の珠＋{S:1*200}
+		GOTJUEL:0 += S:1*200
+	;非挿入の時はBC
+	ELSE
+		PRINTFORML %PALAMNAME:0%の珠＋{S:1*150}
+		GOTJUEL:0 += S:1*150
+		PRINTFORML %PALAMNAME:14%の珠＋{S:1*100}
+		GOTJUEL:14 += S:1*100
+	ENDIF
+	PRINTFORML %PALAMNAME:4%の珠＋{S:1*100}
+	PRINTFORML %PALAMNAME:5%の珠＋{S:1*250}
+	IF TALENT:122 || TALENT:121
+		T = TARGET
+		PLAYER = MASTER
+		CALL GET_INITIATIVE_RATE
+		;ターゲットが挿入し、強気だと優越の珠
+		IF TFLAG:15 & 2 && R > 0
+			PRINTFORML %PALAMNAME:17%の珠＋{S:1*100}
+			GOTJUEL:17 += S:1*100
+		;そうでなければ恥情の珠
+		ELSE
+			PRINTFORML %PALAMNAME:8%の珠＋{S:1*100}
+			GOTJUEL:8 += S:1*100
+		ENDIF
+	ENDIF
+	GOTJUEL:4 += S:1*100
+	GOTJUEL:5 += S:1*250
+	IF (CFLAG:99 & 1) == 0
+		PRINTFORM %CALLNAME:TARGET%の
+		PRINTV S
+		PRINT 回目の絶頂の後、想いを遂げた二人は
+		IF TFLAG:15
+			PRINT 繋がったまま
+		ELSE
+			PRINT 体を絡ませ
+		ENDIF
+		PRINTL 抱き合い、深い眠りに落ちた
+	ENDIF
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ENDIF
+
+;キス夜這い
+@SELF_KISSYOBAI
+S = 0
+
+;M感覚
+IF ABL:17 == 4
+	S = 2
+ELSEIF ABL:17 >= 5
+	S = ABL:17 - 1
+ENDIF
+;恋慕あり
+SIF TALENT:TARGET:85
+	S += 1
+;親愛あり
+SIF TALENT:TARGET:88
+	S += 1
+;相愛あり
+SIF TALENT:TARGET:89
+	S += 1
+;恋人あり
+SIF TALENT:TARGET:153
+	S += 1
+;童貞あり
+SIF TALENT:TARGET:154
+	S += 1
+;キス魔あり
+SIF TALENT:TARGET:155
+	S += 1
+
+;回数と経験は上限9
+S:1 = S
+SIF S >= 9
+	S = 9
+
+;変数退避
+LOCAL = S
+LOCAL:1 = S:1
+
+DRAWLINE
+IF S > 0
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	TFLAG:13 = 76
+	CALL SELF_MAEKOJO
+	;地の文章カット
+	IF CFLAG:99 & 1
+;		TFLAG:13 = 76
+		CALL SELF_KOJO
+	ELSE
+		;親愛または相愛
+		IF TALENT:88 || TALENT:89
+			PRINTFORML %CALLNAME:MASTER%が%CALLNAME:TARGET%と床に就き、%CALLNAME:MASTER%が寝付いた後
+		ELSE
+			PRINTFORMW %CALLNAME:MASTER%が床に就くと、%CALLNAME:TARGET%はこっそり部屋に忍び込んだ
+		ENDIF
+		PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:MASTER%の寝顔をのぞき込み、想いを抑えきれず唇を奪った
+;		TFLAG:13 = 76
+		CALL SELF_KOJO
+		;地の文章カット2　口上内でCFLAG:99に1を入れればカットされず目を覚ますか決められる…と思う
+		SIF (CFLAG:99 & 1) == 0
+			PRINTFORMW %CALLNAME:MASTER%が目を醒まさない事を良い事に、何度も貪るように口付けを重ねている……
+;		CFLAG:99 = 0
+	ENDIF
+	;変数を戻す
+	S = LOCAL
+	S:1 = LOCAL:1
+	PRINTFORML %EXPNAME:23%＋{S}
+	PRINTFORML %EXPNAME:96%＋{S*2}
+	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		EXP:40 += S * 10
+		EXP:MASTER:40 += S * 10
+		PRINTFORML %EXPNAME:40%＋{S*10}
+	ENDIF
+	PRINTFORML %PALAMNAME:4%の珠＋{S:1*400}
+	PRINTFORML %PALAMNAME:7%の珠＋{S:1*200}
+	PRINTFORMW %PALAMNAME:8%の珠＋{S:1*200}
+	
+	CFLAG:2 += S*5
+	CFLAG:MASTER:2 += S
+	EXP:23 += S
+	EXP:96 += S*2
+	GOTJUEL:4 += S:1*400
+	GOTJUEL:7 += S:1*200
+	GOTJUEL:8 += S:1*200
+	;Ｍ感覚を設定している場合快Ｍの珠取得
+	IF FLAG:62 & 4194304
+		PRINTFORMW %PALAMNAME:18%の珠＋{S:1*200}
+		GOTJUEL:18 += S:1*200
+	ENDIF
+	IF (CFLAG:99 & 1) == 0
+		PRINTFORML {S*5}分もの密かな行為を終え、唇に残る感触を思い出しながら
+		;親愛または相愛
+		IF TALENT:88 || TALENT:89
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に寄り添い眠りについた…
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%は名残惜しそうに部屋を後にした
+		ENDIF
+	ENDIF
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ENDIF
+
+;添い寝(ヘタレとも言う)
+@SELF_SOINE
+S = 0
+
+;親密
+IF ABL:0 < 8
+	S = 0
+ELSEIF ABL:0 < 15
+	S = 1
+ELSE
+	S = ABL:0 - 13
+ENDIF
+
+;恋慕あり
+SIF TALENT:TARGET:85
+	S += 1
+;親愛あり
+SIF TALENT:TARGET:88
+	S += 1
+;相愛あり
+SIF TALENT:TARGET:89
+	S += 1
+;恋人あり
+SIF TALENT:TARGET:153
+	S += 1
+;童貞あり
+SIF TALENT:TARGET:154
+	S += 1
+
+;回数と経験は上限9
+S:1 = S
+SIF S >= 9
+	S = 9
+
+;変数退避
+LOCAL = S
+LOCAL:1 = S:1
+
+DRAWLINE
+IF S > 0
+	;カットフラグを退避
+	LOCAL:100 = CFLAG:99
+	;口上開始前の地の文をカットするか
+	TFLAG:13 = 80
+	CALL SELF_MAEKOJO
+	;CFLAG:99が立ってると地の文章カット
+	IF (CFLAG:99 & 1) == 0
+		;親愛または相愛
+		IF TALENT:88 || TALENT:89
+			PRINTFORMW %CALLNAME:MASTER%が床に就くと、%CALLNAME:TARGET%は%CALLNAME:MASTER%の隣に潜り込んだ
+			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:MASTER%に寄り添い、幸せそうに微笑んだ
+		ELSE
+			PRINTFORMW %CALLNAME:MASTER%が床に就くと、%CALLNAME:TARGET%はこっそり部屋に忍び込んだ
+			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:MASTER%の寝顔をのぞき込み、真っ赤な顔でしばらくそうしていた
+			PRINTFORMW しかし、結局何も出来ずに、%CALLNAME:MASTER%の隣に潜り込んだ
+		ENDIF
+	ENDIF
+;		TFLAG:13 = 80
+		CALL SELF_KOJO
+	IF (CFLAG:99 & 1) == 0
+		SIF TALENT:88 == 0 && TALENT:89 == 0
+			PRINTFORMW %CALLNAME:TARGET%はときおり%CALLNAME:MASTER%の方をチラチラと見ながら悶々としている
+	ENDIF
+	;変数を戻す
+	S = LOCAL
+	S:1 = LOCAL:1
+	PRINTFORML %EXPNAME:23%＋{S}
+	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		EXP:40 += S * 2
+		EXP:MASTER:40 += S * 2
+		PRINTFORML %EXPNAME:40%＋{S*2}
+	ENDIF
+	PRINTFORML %PALAMNAME:4%の珠＋{S:1*400}
+	PRINTFORMW %PALAMNAME:8%の珠＋{S:1*300}
+	CFLAG:2 += S*5
+	CFLAG:MASTER:2 += S
+	EXP:23 += S
+	GOTJUEL:4 += S:1*400
+	GOTJUEL:8 += S:1*300
+	IF (CFLAG:99 & 1) == 0
+		IF TALENT:88 || TALENT:89
+			PRINTFORML {S*5}分ほど%CALLNAME:TARGET%は%CALLNAME:MASTER%を眺めていたが、
+			PRINTFORML そろそろ寝ようと思った矢先に、寝返りを打った%CALLNAME:MASTER%が覆い被さってきた
+			PRINTFORML %CALLNAME:TARGET%は眠っている%CALLNAME:MASTER%に微笑みかけ、楽な姿勢に直し抱き合いながら眠りについた…
+		ELSE
+			PRINTFORML {S*5}分後、諦めて抜け出そうとした%CALLNAME:TARGET%に、寝返りを打った%CALLNAME:MASTER%が覆い被さってきた
+			PRINTFORML %CALLNAME:TARGET%は顔を赤くしたまま固まってしまい、されるがままにになっている
+			PRINTFORML %CALLNAME:TARGET%の眠れない夜は、まだまだ続くようだ…
+		ENDIF
+	ENDIF
+	;カットフラグを戻す
+	CFLAG:99 = LOCAL:100
+ENDIF
+

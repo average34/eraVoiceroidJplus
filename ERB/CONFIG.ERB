@@ -1,0 +1,1106 @@
+﻿;---------------------------------------------------------
+;コンフィグ設定
+;---------------------------------------------------------
+@START_CONFIGURE
+;SHOP.ERB冒頭でCALL LOAD_GLOBAL_CONFIGURE
+;グローバル変数読み込み
+LOADGLOBAL
+
+PRINTFORML どの設定を変更しますか？
+PRINTFORML [0] システムユーティリティ
+PRINTFORML [1] イベント拡張
+PRINTFORML [2] コマンド拡張
+PRINTFORM [3] 口上表示    
+IF FLAG:7 < 0
+	PRINTFORML OFF
+ELSEIF FLAG:7 == 1
+	PRINTFORML ON
+ELSE
+	PRINTFORML MAX
+ENDIF
+PRINTFORM [4] 地の文表示  
+IF FLAG:6 == 0
+	PRINTFORML OFF
+ELSE
+	PRINTFORML ON
+ENDIF
+SIF NAME:MASTER != "イカサマ"
+	PRINTFORML [5] プレイヤーの名前変更
+SIF TARGET >= 0
+	PRINTFORML [6] パートナーの名前変更
+PRINTFORML [7] セーブデータ名変更
+PRINTFORML [8] コマンドフィルター設定
+PRINTFORML [9] 必殺技変更
+DRAWLINE
+IF GLOBAL:920
+	PRINTFORML [90] コンフィグを手動で同期する(自動同期解除)
+ELSE
+	PRINTFORML [90] コンフィグを自動的に同期する
+	PRINTFORML [91] 現在のコンフィグを共有する
+	PRINTFORML [92] 共有しているコンフィグをロードする
+ENDIF
+PRINTL 
+PRINTFORML [96] コンフィグ　よくあるQ&A
+PRINTFORML [97] 全てをデフォルトに戻す
+PRINTFORML [100] 戻る
+$INPUT_LOOP
+INPUT
+
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 90 && !GLOBAL:920
+	PRINTFORML コンフィグを他のセーブデータと自動的に同期する事が出来ます
+	PRINTFORML 共有しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_90
+	INPUT
+	IF RESULT == 0
+		CALL SET_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_90
+	ENDIF
+ELSEIF RESULT == 90
+	PRINTFORML コンフィグの自動同期を解除しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_91_2
+	INPUT
+	IF RESULT == 0
+		CALL SET_GLOBAL_CONFIGURE, 0
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_91_2
+	ENDIF
+ELSEIF RESULT == 91 && !GLOBAL:920
+	PRINTFORML 現在のコンフィグを他のセーブデータから読み込める様に保存できます
+	PRINTFORML 保存しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_91
+	INPUT
+	IF RESULT == 0
+		CALL STORE_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_91
+	ENDIF
+ELSEIF RESULT == 92 && !GLOBAL:920
+	PRINTFORML 他のセーブデータで保存したコンフィグを読み込むことが出来ます
+	PRINTFORML 読み込みますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_92
+	INPUT
+	IF RESULT == 0
+		CALL LOAD_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_92
+	ENDIF
+ELSEIF RESULT == 96
+	;コンフィグ　よくあるQ&A
+	CALL DICTIONARY_CONFIG_MAIN
+ELSEIF RESULT == 97
+	PRINTFORMW コンフィグをデフォルトに戻します
+	CALL CONFIGURE_ALL_DEFAULT
+ELSEIF RESULT == 0
+	PRINTL システムユーティリティの設定を変更します
+	CALL SET_CONFIGURE, 23
+ELSEIF RESULT == 1
+	PRINTL イベント拡張の設定を変更します
+	CALL SET_CONFIGURE, 62
+ELSEIF RESULT == 2
+	PRINTL コマンド拡張の設定を変更します
+	CALL SET_CONFIGURE, 61
+ELSEIF RESULT == 3
+	CALL KOJO_HYOUJI
+ELSEIF RESULT == 4
+	IF FLAG:6 == 1
+		PRINTW テキスト表示をOFFにします
+		FLAG:6 = 0
+	ELSE
+		PRINTW テキスト表示をONにします
+		FLAG:6 = 1
+	ENDIF
+ELSEIF RESULT == 5 && NAME:MASTER != "イカサマ"
+	A = MASTER
+	CALL NAME_CONVERT
+ELSEIF RESULT == 6 && TARGET >= 0
+	A = TARGET
+	CALL NAME_CONVERT
+ELSEIF RESULT == 7
+	CALL SET_SAVEDATANAME
+ELSEIF RESULT == 8
+	PRINTL コマンドフィルター設定を変更します
+	CALL SHOW_CHARA_LIST_COM_FILTERING
+ELSEIF RESULT == 9
+	IF TARGET >= 0
+		A = TARGET
+	ELSE
+		A = MASTER
+	ENDIF
+	CALL CHANGE_SPELL
+ELSE
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+
+;共通コンフィグ自動保存
+CALL STORE_GLOBAL_CONFIGURE
+
+RESTART
+
+;---------------------------------------------------------
+;ビット演算用の変数
+;---------------------------------------------------------
+@BIT_T
+T:0 = 1
+T:1 = 2
+T:2 = 4
+T:3 = 8
+T:4 = 16
+T:5 = 32
+T:6 = 64
+T:7 = 128
+T:8 = 256
+T:9 = 512
+T:10 = 1024
+T:11 = 2048
+T:12 = 4096
+T:13 = 8192
+T:14 = 16384
+T:15 = 32768
+T:16 = 65536
+T:17 = 131072
+T:18 = 262144
+T:19 = 524288
+T:20 = 1048576
+T:21 = 2097152
+T:22 = 4194304
+T:23 = 8388608
+T:24 = 16777216
+T:25 = 33554432
+T:26 = 67108864
+T:27 = 134217728
+T:28 = 268435456
+T:29 = 536870912
+T:30 = 1073741824
+
+;---------------------------------------------------------
+;システムユーティリティ・イベント拡張
+;---------------------------------------------------------
+@SET_CONFIGURE, ARG
+;初期化
+VARSET LOCAL, 0
+VARSET TSTR, ""
+
+;ビット演算用の変数呼び出し
+CALL BIT_T
+
+;各設定のTSTR代入
+CALLFORM SET_CONFIGURE_TSTR_{ARG}
+
+;他のコンフィグがON（OFF）になってないと選択できないコンフィグはここでLOCAL:0～を-1にして表示しない
+;システムユーティリティの場合
+IF ARG == 23
+	;「パラメータ表示用のゲージをカラーバーで表示する」がONだと「パラメータ表示用のゲージの記号を全部分ける」は表示しない
+	SIF (FLAG:23 & 1p8)
+		LOCAL:9 = -1
+	;「Stage攻略中に倒したキャラを自動的に仲間にしない」がOFFだと「Stage攻略中に倒したキャラを自動的に仲間にしない」は表示しない
+	SIF (FLAG:23 & 1p16) == 0
+		LOCAL:17 = -1
+	;インビジブルモードの場合「好感度非表示」「実行判定非表示」は表示しない（コンフィグに関わらずON状態なので紛らわしいため）
+	IF FLAG:2 == 1
+		LOCAL:26 = -1
+		LOCAL:27 = -1
+	ENDIF
+	;「PALAM獲得アニメを表示する」がOFFだと「PALAM獲得アニメ表示中の右クリックを表示加速に設定（加速orスキップ）」は表示しない
+	SIF (FLAG:23 & 1p28) == 0
+		LOCAL:29 = -1
+;イベント拡張の場合
+ELSEIF ARG == 62
+	;「金銭感覚自動上昇」がOFFだと「金銭感覚自動上昇詳細報告」は表示しない
+	SIF (FLAG:62 & 1p15) == 0
+		LOCAL:16 = -1
+;コマンド拡張の場合
+ELSEIF ARG == 61
+	;「異常経験が付くコマンドを表示する」がONだと「パートナーが[親愛]なら異常経験が付くコマンドを表示する」は表示しない
+	SIF (FLAG:61 & 1)
+		LOCAL:1 = -1
+ENDIF
+
+PRINTFORML 現在の設定は以下のようになっています。変更したい内容を選択してください
+REPEAT 40
+	;TSTR:COUNTが設定されていなかったら表示しない
+	IF TSTR:COUNT == ""
+		CONTINUE
+	;LOCAL:COUNTが-1なら表示しない（LOCAL:100には加算する）
+	ELSEIF LOCAL:COUNT < 0
+		;全てONにする用の変数
+		LOCAL:100 += T:COUNT
+		CONTINUE
+	ENDIF
+
+	PRINTFORM [{COUNT,2}] %TSTR:COUNT, 60, LEFT%
+	IF FLAG:ARG & (T:COUNT)
+		PRINTL  ON
+	ELSE
+		PRINTL OFF
+	ENDIF
+	
+	;選択時の判定用の変数
+	LOCAL:COUNT = 1
+	;全てONにする用の変数
+	LOCAL:100 += T:COUNT
+REND
+DRAWLINE
+;-------------------------------------------------
+IF GLOBAL:920
+	PRINTFORML [90] コンフィグを手動で同期する(自動同期解除)
+ELSE
+	PRINTFORML [90] コンフィグを自動的に同期する
+	PRINTFORML [91] 現在のコンフィグを共有する
+	PRINTFORML [92] 共有しているコンフィグをロードする
+ENDIF
+PRINTFORML [96] コンフィグ　よくあるQ&A
+PRINTFORML [97] 全てをデフォルトに戻す
+IF ARG != 23 && FLAG:ARG < LOCAL:100
+	PRINTL [98] 表示中の全コンフィグON
+ENDIF
+IF ARG != 23 && FLAG:ARG
+	PRINTL [99] 表示中の全コンフィグOFF
+ENDIF
+PRINTFORML [100] キャンセル
+
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 100
+	RETURN 0
+ELSEIF RESULT > 100
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 90 && !GLOBAL:920
+	PRINTFORML コンフィグを他のセーブデータと自動的に同期する事が出来ます
+	PRINTFORML 共有しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_90
+	INPUT
+	IF RESULT == 0
+		CALL SET_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_90
+	ENDIF
+ELSEIF RESULT == 90
+	PRINTFORML コンフィグの自動同期を解除しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_91_2
+	INPUT
+	IF RESULT == 0
+		CALL SET_GLOBAL_CONFIGURE, 0
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_91_2
+	ENDIF
+ELSEIF RESULT == 91 && !GLOBAL:920
+	PRINTFORML 現在のコンフィグを他のセーブデータから読み込める様に保存できます
+	PRINTFORML 保存しますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_91
+	INPUT
+	IF RESULT == 0
+		CALL STORE_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_91
+	ENDIF
+ELSEIF RESULT == 92 && !GLOBAL:920
+	PRINTFORML 他のセーブデータで保存したコンフィグを読み込むことが出来ます
+	PRINTFORML 読み込みますか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP_92
+	INPUT
+	IF RESULT == 0
+		CALL LOAD_GLOBAL_CONFIGURE, 1
+	ELSEIF RESULT == 1
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_92
+	ENDIF
+ELSEIF RESULT == 96
+	;コンフィグ　よくあるQ&A
+	CALL DICTIONARY_CONFIG_MAIN
+ELSEIF RESULT == 97
+	PRINTFORMW コンフィグをデフォルトに戻します
+	CALL CONFIGURE_ALL_DEFAULT
+ELSEIF RESULT == 98 && ARG != 23 && FLAG:ARG < LOCAL:100
+	PRINTFORMW 表示中の全コンフィグをONに設定しました
+	FLAG:ARG = LOCAL:100
+ELSEIF RESULT == 99 && ARG != 23 && FLAG:ARG
+	PRINTFORMW 表示中の全コンフィグをOFFに設定しました
+	FLAG:ARG = 0
+ELSEIF LOCAL:RESULT
+	IF FLAG:ARG & (T:RESULT)
+		;OFF時
+		PRINTFORMW %TSTR:(100+RESULT)%
+		FLAG:ARG -= T:RESULT
+		;OFF時に追加の説明文・処理があればここで呼び出す
+		TRYCALLFORM CONFIGURE_{ARG}_OFF_{RESULT}
+	ELSE
+		;ON時
+		PRINTFORMW %TSTR:(200+RESULT)%
+		FLAG:ARG |= T:RESULT
+		;ON時に追加の説明文・処理があればここで呼び出す
+		TRYCALLFORM CONFIGURE_{ARG}_ON_{RESULT}
+	ENDIF
+ELSE
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP
+ENDIF
+
+;共通コンフィグ自動保存
+CALL STORE_GLOBAL_CONFIGURE
+
+RESTART
+
+;-------------------------------------------------
+;共通コンフィグ読み込み
+;-------------------------------------------------
+@LOAD_GLOBAL_CONFIGURE, ARG
+;グローバル変数読み込み
+LOADGLOBAL
+
+;グローバルコンフィグを使う設定か自動読み込みでないならロード
+IF GLOBAL:920 || ARG
+	FLAG:23 = GLOBAL:923
+	FLAG:61 = GLOBAL:961
+	FLAG:62 = GLOBAL:962
+	;コマンドフィルターの共通設定
+	FOR LOCAL, SET_COM_FILTERING_NUM(), SET_COM_FILTERING_NUM()+16
+		CFLAG:MASTER:LOCAL = GLOBAL:(900+LOCAL)
+	NEXT
+;そうでなければリターン
+ELSE
+	RETURN 0
+ENDIF
+
+
+
+;-------------------------------------------------
+;共通コンフィグ保存
+;-------------------------------------------------
+@STORE_GLOBAL_CONFIGURE, ARG
+;グローバル変数読み込み
+LOADGLOBAL
+
+;グローバルコンフィグを使う設定か自動保存でないなら保存
+IF GLOBAL:920 || ARG
+	GLOBAL:923 = FLAG:23
+	GLOBAL:961 = FLAG:61
+	GLOBAL:962 = FLAG:62
+	;コマンドフィルターの共通設定
+	FOR LOCAL, SET_COM_FILTERING_NUM(), SET_COM_FILTERING_NUM()+16
+		GLOBAL:(900+LOCAL) = CFLAG:MASTER:LOCAL
+	NEXT
+	SAVEGLOBAL
+;そうでなければリターン
+ELSE
+	RETURN 0
+ENDIF
+
+
+
+;-------------------------------------------------
+;共通コンフィグ使用設定変更
+;-------------------------------------------------
+@SET_GLOBAL_CONFIGURE, ARG
+;グローバル変数読み込み
+LOADGLOBAL
+
+;とりあえず変数位置を固めると言うことで20を使用
+GLOBAL:920 = ARG
+
+;グローバル変数保存
+SAVEGLOBAL
+
+;-------------------------------------------------
+;口上表示頻度設定
+;-------------------------------------------------
+@KOJO_HYOUJI
+PRINTL キャラ口上の表示頻度を設定します
+PRINTL [0] - 表示OFF
+PRINTL [1] - 表示ON
+PRINTL [2] - 表示頻度MAX
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	PRINTW キャラ口上の表示をOFFにします
+	FLAG:7 = -1
+ELSEIF RESULT == 1
+	PRINTW キャラ口上の表示をONにします
+	FLAG:7 = 1
+ELSEIF RESULT == 2
+	PRINTW キャラ口上の表示頻度をMAXにします
+	FLAG:7 = 2
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+;-------------------------------------------------
+;プレイヤー、パートナーの名前変更
+;-------------------------------------------------
+@NAME_CONVERT
+IF A == MASTER
+	PRINTFORM プレイヤー
+ELSE
+	PRINTFORM パートナー
+ENDIF
+PRINTFORML の名前を変更できます（名前：%NAME:A%　呼び名：%CALLNAME:A%）
+PRINTL [0] 名前を変更
+PRINTL [1] 名前をデフォルトに戻す
+PRINTL [100] 戻る
+$INPUT_LOOP_NAME
+INPUT
+IF RESULT == 0
+	PRINTFORML %NAME:A%の名前を変更します
+	PRINTFORML 名前を入力して下さい
+	INPUTS
+
+	IF RESULTS == ""
+		REUSELASTLINE 
+		RESTART
+	ELSE
+		PRINTFORML %RESULTS%でよろしいですか？
+		PRINTFORML [0] はい
+		PRINTFORML [1] いいえ
+		$INPUT_LOOP
+		INPUT
+		IF RESULT != 0 && RESULT != 1
+			REUSELASTLINE 正しい値を入力してください
+			GOTO INPUT_LOOP
+		ELSEIF RESULT == 0
+			NAME:A = %RESULTS%
+			$INPUTS_LOOP
+			PRINTFORML 普段の呼び名はどうしますか？
+			PRINTFORML 何も入力せずに決定すると、先ほど入力した名前になります
+			INPUTS
+			IF RESULTS == ""
+				CALLNAME:A = %NAME:A%
+			ELSE
+				PRINTFORML %RESULTS%でよろしいですか？
+				PRINTFORML [0] はい
+				PRINTFORML [1] いいえ
+				$INPUT_LOOP2
+				INPUT
+				IF RESULT != 0 && RESULT != 1
+					REUSELASTLINE 正しい値を入力してください
+					GOTO INPUT_LOOP2
+				ELSEIF RESULT == 0
+					CALLNAME:A = %RESULTS%
+					PRINTFORMW 名前を変更しました（名前：%NAME:A%　呼び名：%CALLNAME:A%）
+				ELSE
+					GOTO INPUTS_LOOP
+				ENDIF
+			ENDIF
+		ELSE
+			RESTART
+		ENDIF
+	ENDIF
+ELSEIF RESULT == 1
+	PRINTFORML %NAME:A%の名前をデフォルトに戻します
+	PRINTFORML よろしいですか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP3
+	INPUT
+	IF RESULT == 0
+		IF CFLAG:A:0 == 0
+			CSVNAME NO:A,0
+			NAME:A = %RESULTS%
+			CSVCALLNAME NO:A,0
+			CALLNAME:A = %RESULTS%
+		ELSE
+			CSVNAME NO:A,1
+			NAME:A = %RESULTS%
+			CSVCALLNAME NO:A,1
+			CALLNAME:A = %RESULTS%
+		ENDIF
+		PRINTFORMW 名前をデフォルトに戻しました（名前：%NAME:A%　呼び名：%CALLNAME:A%）
+	ELSEIF RESULT == 1
+		PRINTW 変更しませんでした
+	ELSE
+		GOTO INPUT_LOOP3
+	ENDIF
+ELSEIF RESULT == 100
+	;戻る
+ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_NAME
+ENDIF
+
+;-------------------------------------------------
+;必殺技名変更
+;-------------------------------------------------
+@CHANGE_SPELL
+TRYCALL SPELL_NAME_CHANGE
+PRINTFORML %NAME:A%の必殺技を変更できます（通常必殺技：%CSTR:A:21%「%CSTR:A:22%」　上級必殺技：%CSTR:A:23%「%CSTR:A:24%」）
+SETCOLOR 0xC0C000
+PRINTFORML ※技名が入っていない場合特殊攻撃は霊撃になります
+RESETCOLOR
+PRINTL [0] 通常必殺技を変更
+PRINTL [1] 上級必殺技を変更
+PRINTL [2] 必殺技をデフォルトに戻す
+IF TARGET >= 0
+	PRINT [9] 対象を
+	IF A == MASTER
+		PRINT パートナー
+	ELSE
+		PRINT プレイヤー
+	ENDIF
+	PRINTL に変更する
+ENDIF
+PRINTL [100] 戻る
+$INPUT_LOOP_SPL
+INPUT
+IF RESULT == 0
+	PRINTFORML %NAME:A%の通常必殺技を変更します（接頭辞：%CSTR:A:21%　技名：%CSTR:A:22%）
+	PRINTFORML [0] 接頭辞を変更する
+	PRINTFORML [1] 技名を変更する
+	PRINTFORML [2] やっぱりやめる
+	$INPUT_LOOP_SPL_2
+	INPUT
+	
+	IF RESULT == 0
+		$INPUT_LOOP_SPL_3
+		PRINTFORML %NAME:A%の接頭辞を変更します
+		PRINTFORML 付けたい接頭辞を入力して下さい　※何も入力しないこともできます
+		INPUTS
+		PRINTFORML %RESULTS%でよろしいですか？
+		PRINTFORML [0] はい
+		PRINTFORML [1] いいえ
+		$INPUT_LOOP_SPL_4
+		INPUT
+		IF RESULT != 0 && RESULT != 1
+			GOTO INPUT_LOOP_SPL_4
+		ELSEIF RESULT == 0
+			CSTR:A:21 = %RESULTS%
+			PRINTFORMW 接頭辞を変更しました
+		ELSE
+			GOTO INPUT_LOOP_SPL_3
+		ENDIF
+		
+	ELSEIF RESULT == 1
+		$INPUT_LOOP_SPL_5
+		PRINTFORML %NAME:A%の技名を変更します
+		PRINTFORML 付けたい技名を入力して下さい
+		INPUTS
+		IF RESULTS == ""
+			SETCOLOR 0xFF0000
+			PRINTFORML ※入力しないと特殊攻撃は霊撃になります！
+			RESETCOLOR
+			PRINTL よろしいですか？
+			PRINTL [0] いいよ
+			PRINTL [1] だめ
+			$INPUT_LOOP_END
+			INPUT
+			IF RESULT == 0
+				CSTR:A:22 = %RESULTS%
+				PRINTFORMW 必殺技を使用しないようにしました
+			ELSEIF RESULT == 1
+				GOTO INPUT_LOOP_SPL_5
+			ELSE
+				GOTO INPUT_LOOP_END
+			ENDIF
+		ELSE
+			PRINTFORML %RESULTS%でよろしいですか？
+			PRINTFORML [0] はい
+			PRINTFORML [1] いいえ
+			$INPUT_LOOP_SPL_6
+			INPUT
+			IF RESULT != 0 && RESULT != 1
+				GOTO INPUT_LOOP_SPL_6
+			ELSEIF RESULT == 0
+				CSTR:A:22 = %RESULTS%
+				PRINTFORMW 技名を変更しました
+			ELSE
+				GOTO INPUT_LOOP_SPL_5
+			ENDIF
+		ENDIF
+	ELSEIF RESULT == 2
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_SPL_2
+	ENDIF
+ELSEIF RESULT == 1
+	PRINTFORML %NAME:A%の上級必殺技を変更します（接頭辞：%CSTR:A:23%　技名：%CSTR:A:24%）
+	PRINTFORML [0] 接頭辞を変更する
+	PRINTFORML [1] 技名を変更する
+	PRINTFORML [2] やっぱりやめる
+	$INPUT_LOOP_SPL_B
+	INPUT
+	
+	IF RESULT == 0
+		$INPUT_LOOP_SPL_C
+		PRINTFORML %NAME:A%の接頭辞を変更します
+		PRINTFORML 付けたい接頭辞を入力して下さい　※何も入力しないこともできます
+		INPUTS
+		PRINTFORML %RESULTS%でよろしいですか？
+		PRINTFORML [0] はい
+		PRINTFORML [1] いいえ
+		$INPUT_LOOP_SPL_D
+		INPUT
+		IF RESULT != 0 && RESULT != 1
+			GOTO INPUT_LOOP_SPL_D
+		ELSEIF RESULT == 0
+			CSTR:A:23 = %RESULTS%
+			PRINTFORMW 接頭辞を変更しました
+		ELSE
+			GOTO INPUT_LOOP_SPL_C
+		ENDIF
+		
+	ELSEIF RESULT == 1
+		$INPUT_LOOP_SPL_E
+		PRINTFORML %NAME:A%の技名を変更します
+		PRINTFORML 付けたい技名を入力して下さい
+		INPUTS
+		IF RESULTS == ""
+			SETCOLOR 0xFF0000
+			PRINTFORML ※入力しないと特殊攻撃は霊撃になります！
+			RESETCOLOR
+			PRINTL よろしいですか？
+			PRINTL [0] いいよ
+			PRINTL [1] だめ
+			$INPUT_LOOP_END2
+			INPUT
+			IF RESULT == 0
+				CSTR:A:24 = %RESULTS%
+				PRINTFORMW 必殺技を使用しないようにしました
+			ELSEIF RESULT == 1
+				GOTO INPUT_LOOP_SPL_E
+			ELSE
+				GOTO INPUT_LOOP_END2
+			ENDIF
+		ELSE
+			PRINTFORML %RESULTS%でよろしいですか？
+			PRINTFORML [0] はい
+			PRINTFORML [1] いいえ
+			$INPUT_LOOP_SPL_F
+			INPUT
+			IF RESULT != 0 && RESULT != 1
+				GOTO INPUT_LOOP_SPL_F
+			ELSEIF RESULT == 0
+				CSTR:A:24 = %RESULTS%
+				PRINTFORMW 技名を変更しました
+			ELSE
+				GOTO INPUT_LOOP_SPL_E
+			ENDIF
+		ENDIF
+	ELSEIF RESULT == 2
+		RESTART
+	ELSE
+		GOTO INPUT_LOOP_SPL_B
+	ENDIF
+
+ELSEIF RESULT == 2
+	PRINTFORML %NAME:A%の必殺技をデフォルトに戻します
+	PRINTFORML よろしいですか？
+	PRINTFORML [0] はい
+	PRINTFORML [1] いいえ
+	$INPUT_LOOP3
+	INPUT
+	IF RESULT == 0
+		IF CFLAG:A:0 == 0
+			CSVCSTR NO:A, 21, 0
+			CSTR:A:21 = %RESULTS%
+			CSVCSTR NO:A, 22, 0
+			CSTR:A:22 = %RESULTS%
+			CSVCSTR NO:A, 23, 0
+			CSTR:A:23 = %RESULTS%
+			CSVCSTR NO:A, 24, 0
+			CSTR:A:24 = %RESULTS%
+		ELSE
+			CSVCSTR NO:A, 21, 1
+			CSTR:A:21 = %RESULTS%
+			CSVCSTR NO:A, 22, 1
+			CSTR:A:22 = %RESULTS%
+			CSVCSTR NO:A, 23, 1
+			CSTR:A:23 = %RESULTS%
+			CSVCSTR NO:A, 24, 1
+			CSTR:A:24 = %RESULTS%
+		ENDIF
+		TRYCALL SPELL_NAME_CHANGE
+		PRINTFORML 必殺技をデフォルトに戻しました（通常必殺技：%CSTR:A:21%「%CSTR:A:22%」　上級必殺技：%CSTR:A:23%「%CSTR:A:24%」）
+	ELSEIF RESULT == 1
+		PRINTW 変更しませんでした
+	ELSE
+		GOTO INPUT_LOOP3
+	ENDIF
+ELSEIF RESULT == 100
+	;戻る
+ELSEIF RESULT == 9 && TARGET >= 0
+	IF A == MASTER
+		PRINTW 対象をパートナーに変更しました
+		A = TARGET
+	ELSE
+		PRINTW 対象をプレイヤーに変更しました
+		A = MASTER
+	ENDIF
+	CLEARLINE 9
+	RESTART
+ELSE
+	PRINTL 正しい値を入力してください
+	GOTO INPUT_LOOP_SPL
+ENDIF
+
+
+;-------------------------------------------------
+;セーブデータ名変更
+;-------------------------------------------------
+@SET_SAVEDATANAME
+PRINTL デフォルトのパートナー:現在のパートナー(好感度)方式から
+PRINTL 嫁:任意の名称(プレイスタイル)方式や任意の名前に
+PRINTL セーブデータの名前を変更することが出来ます
+IF STRLENS(SAVESTR:11)
+	PRINTFORML 現在の名称は　%SAVESTR:11%　です
+ELSE
+	PRINTFORML 現在の名称はデフォルトです
+ENDIF
+PRINTL 
+PRINTL [0] デフォルトにする
+PRINTL [1] 嫁:任意の名称(プレイスタイル)方式にする
+PRINTL [2] 任意のセーブデータ名にする
+PRINTL [100] 戻る
+$INPUT_LOOP
+INPUT
+IF RESULT == 0
+	PRINTW セーブデータの名前をデフォルトにしました
+	SAVESTR:11 = 
+	RETURN 0
+ELSEIF RESULT == 100
+	RETURN 0
+ELSEIF RESULT == 1 || RESULT == 2
+	LOCAL = RESULT
+	$INPUT_LOOP2
+	IF LOCAL == 1
+		;嫁:任意の名称(プレイスタイル)方式
+		PRINTL 嫁の名前をいれてください
+		$INPUT_LOOP_NAME1
+		INPUTS
+		IF RESULTS != ""
+			LOCALS = 嫁:%RESULTS%
+		ELSE
+			GOTO INPUT_LOOP_NAME1
+		ENDIF
+		PRINTL プレイスタイルをいれてください
+		$INPUT_LOOP_NAME2
+		INPUTS
+		IF RESULTS != ""
+			LOCALS = %LOCALS%(%RESULTS%)
+		ELSE
+			GOTO INPUT_LOOP_NAME2
+		ENDIF
+	ELSE
+		;任意のセーブデータ名
+		PRINTL セーブデータ名をいれてください
+		$INPUT_LOOP_NAME3
+		INPUTS
+		IF RESULTS != ""
+			LOCALS = %RESULTS%
+		ELSE
+			GOTO INPUT_LOOP_NAME3
+		ENDIF
+	ENDIF
+	PRINTFORML %LOCALS%でよろしいですか？
+	PRINTL [0] はい
+	PRINTL [1] いいえ
+	PRINTL [100] 変更をやめる
+	$INPUT_LOOP3
+	INPUT
+	IF RESULT == 0
+		SAVESTR:11 = %LOCALS%
+		RETURN 0
+	ELSEIF RESULT == 1
+		PRINTW では、入力をやり直してください
+		GOTO INPUT_LOOP2
+	ELSEIF RESULT == 100
+		RETURN 0
+	ENDIF
+	GOTO INPUT_LOOP3
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+GOTO INPUT_LOOP
+
+;---------------------------------------------------------
+;コマンドフィルター設定
+;---------------------------------------------------------
+;フィルタリングのCFLAGの先頭の位置を返す。移動するときはここだけ変えればおｋ
+@SET_COM_FILTERING_NUM(ARG)
+#FUNCTION
+RETURNF 44
+
+;コマンドフィルター設定をする
+@SHOW_CHARA_LIST_COM_FILTERING
+LOCAL = 0
+PRINTL  
+
+REPEAT CHARANUM
+	SIF COUNT == MASTER
+		CONTINUE
+	SIF CFLAG:COUNT:別れ
+		CONTINUE
+	;非表示かつ見えない設定だと見えなく
+	SIF CFLAG:COUNT:非表示 == 1 && LOCAL:1 == 0
+		CONTINUE
+	PRINTFORM [{COUNT,3}] %NAME:COUNT,16,LEFT%
+	;改行処理
+	LOCAL += 1
+	SIF LOCAL % 3 == 0
+		PRINTL 
+REND
+PRINTL  
+PRINTL [300] 戻る
+IF LOCAL:1
+	PRINTL [301] 休憩所のキャラを表示しない
+ELSE
+	PRINTL [301] 休憩所のキャラを表示する
+ENDIF
+
+$INPUTLOOP
+INPUT
+IF RESULT == 300
+	RETURN 1
+ELSEIF RESULT == 301
+	PRINTW 表示を変更します
+	;LOCAL:1を1,0で切り替える（INVERTBITはビットを反転させるビット操作関数）
+	INVERTBIT LOCAL:1, 0
+	RESTART
+ELSEIF RESULT == MASTER || CFLAG:RESULT:別れ == 1
+	GOTO INPUTLOOP
+ELSEIF RESULT < CHARANUM && RESULT != 0
+	PRINTFORML %CALLNAME:RESULT%のフィルター設定に移ります
+	CALL SHOW_COM_FILTERING(RESULT)
+	RESTART
+ELSEIF RESULT < 0 || RESULT >= CHARANUM
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUTLOOP
+ELSE
+	GOTO INPUTLOOP
+ENDIF
+;COMにフィルターかけるための設定
+;キャラごとに変えれたほうが汎用性高いと思うので
+@SHOW_COM_FILTERING(ARG)
+;改行用カウントをリセットしておく
+LOCAL:1 = 0
+DRAWLINE
+IF GET_COM_FILTERING(1001, ARG)
+	PRINTL 【共通設定】
+ELSE
+	PRINTFORML 【%CALLNAME:ARG%の個別設定】
+ENDIF
+;フィルターかかってるコマンドは灰色に
+SETCOLOR 102, 102, 102
+;ページの決定で、LOCAL:3は開始のTRAIN、LOCAL:4が終了位置
+IF LOCAL:3 == 0
+	LOCAL:4 = 81
+ELSEIF LOCAL:3 == 81
+	LOCAL:4 = 300
+ELSE
+	LOCAL:4 = 1000
+ENDIF
+;コマンドを全て表示
+FOR LOCAL, LOCAL:3, LOCAL:4
+	;名前の長さが0の場合、ないものとみなす
+	SIF STRLENS(TRAINNAME:LOCAL) == 0
+		CONTINUE
+	;共通設定モードの時は共通設定（つまりマスターのフラグを見る）
+	IF GET_COM_FILTERING(1001, ARG)
+		IF GET_COM_FILTERING(LOCAL, MASTER)
+			PRINTFORMC %TRAINNAME:LOCAL%[{LOCAL,3}]
+		ELSE
+			PRINTFORMCD %TRAINNAME:LOCAL%[{LOCAL,3}]
+		ENDIF
+	ELSE
+		;フィルタリングフラグが立ってないとき、通常表示、つまり立ってる時だけ灰色
+		IF GET_COM_FILTERING(LOCAL, ARG)
+			PRINTFORMC %TRAINNAME:LOCAL%[{LOCAL,3}]
+		ELSE
+			PRINTFORMCD %TRAINNAME:LOCAL%[{LOCAL,3}]
+		ENDIF
+	ENDIF
+	;改行処理
+	LOCAL:1 += 1
+	SIF (LOCAL:1 % PRINTCPERLINE()) == 0
+		PRINTL 
+NEXT
+IF (LOCAL:1 % PRINTCPERLINE())
+	PRINTL 
+	LOCAL:1 = 0
+ENDIF
+;現在ページも色で表す
+IF LOCAL:3 == 0
+	PRINTCD [1000] ウフフコマンド１
+ELSE
+	PRINTC [1000] ウフフコマンド１
+ENDIF
+IF LOCAL:3 == 81
+	PRINTCD [1001] ウフフコマンド２
+ELSE
+	PRINTC [1001] ウフフコマンド２
+ENDIF
+IF LOCAL:3 == 300
+	PRINTCD [1002] 純愛コマンド
+ELSE
+	PRINTC [1002] 純愛コマンド
+ENDIF
+PRINTL 
+;色を戻す
+RESETCOLOR
+DRAWLINE
+PRINTL [1003] 戻る
+IF GET_COM_FILTERING(1001, ARG)
+	PRINTL [1004] 個別設定を利用する
+ELSE
+	PRINTL [1004] 共通設定を利用する
+ENDIF
+IF GET_COM_FILTERING(1001, ARG)
+	PRINTL [1005] 個別設定を現在表示されてる共通設定で上書きする
+ELSE
+	PRINTL [1005] 共通設定を現在表示されている個別設定で上書きする
+ENDIF
+IF GET_COM_FILTERING(1001, ARG)
+	PRINTL [1006] 共通設定をリセットする
+ELSE
+	PRINTL [1006] 個別設定をリセットする
+ENDIF
+$INPUT_LOOP
+INPUT
+IF RESULT == 1000
+	LOCAL:3 = 0
+ELSEIF RESULT == 1001
+	LOCAL:3 = 81
+ELSEIF RESULT == 1002
+	LOCAL:3 = 300
+ELSEIF RESULT == 1003
+	RETURN 1
+ELSEIF RESULT == 1004
+	IF GET_COM_FILTERING(1001, ARG)
+		PRINTL 個別設定を利用します
+		PRINTW 画面には個別設定を表示します
+	ELSE
+		PRINTL 共通設定を利用します
+		PRINTL 画面には共通設定を表示します
+		PRINTL また、共通設定はコンフィグの共有を選択することで
+		PRINTW 他のセーブデータとの間で共有することが出来ます
+	ENDIF
+	CALL INVERT_COM_FILTERING(1001, ARG)
+ELSEIF RESULT == 1005
+	IF GET_COM_FILTERING(1001, ARG)
+		FOR LOCAL, SET_COM_FILTERING_NUM(), SET_COM_FILTERING_NUM()+16
+			CFLAG:ARG:LOCAL = CFLAG:MASTER:LOCAL
+		NEXT
+	ELSE
+		FOR LOCAL, SET_COM_FILTERING_NUM(), SET_COM_FILTERING_NUM()+16
+			CFLAG:MASTER:LOCAL = CFLAG:ARG:LOCAL
+		NEXT
+	ENDIF
+ELSEIF RESULT == 1006
+	IF GET_COM_FILTERING(1001, ARG)
+		LOCAL:1 = 0
+	ELSE
+		LOCAL:1 = ARG
+	ENDIF
+	FOR LOCAL, SET_COM_FILTERING_NUM(), SET_COM_FILTERING_NUM()+16
+		CFLAG:(LOCAL:1):LOCAL = 0
+	NEXT
+	SIF LOCAL:1 == 0
+		CALL INVERT_COM_FILTERING(1001, ARG)
+ELSEIF RESULT < 0 || RESULT > 1000
+	GOTO INPUT_LOOP
+ELSEIF STRLENS(TRAINNAME:RESULT)
+	IF GET_COM_FILTERING(1001, ARG)
+		CALL INVERT_COM_FILTERING(RESULT, MASTER)
+	ELSE
+		CALL INVERT_COM_FILTERING(RESULT, ARG)
+	ENDIF
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+RESTART
+
+@GET_COM_FILTERING(ARG, ARG:1 = -123456789)
+#FUNCTION
+;隠し番号入力で対象をTARGETにもとい、省略でTARGET
+SIF ARG:1 == -123456789
+	ARG:1 = TARGET
+SIF ARG:1 < 0 || ARG:1 >= CHARANUM
+	STR:99 = "ARG:1の値が異常です"
+SIF ARG < 0 || ARG >1008
+	STR:99 = "ARGの値が異常です"
+;使うCFLAGの決定
+LOCAL = ARG / 63 + SET_COM_FILTERING_NUM()
+;そのCFLAGの何番目のBITか
+LOCAL:1 = ARG % 63
+;フラグチェック
+SIF GETBIT(CFLAG:(ARG:1):LOCAL, LOCAL:1)
+	RETURNF 1
+RETURNF 0
+@INVERT_COM_FILTERING(ARG, ARG:1 = -123456789)
+;隠し番号入力で対象をTARGETにもとい、省略でTARGET
+SIF ARG:1 == -123456789
+	ARG:1 = TARGET
+SIF ARG:1 < 0 || ARG:1 >= CHARANUM
+	PRINTW ARG:1の値が異常です
+SIF ARG < 0 || ARG >1008
+	PRINTW ARGの値が異常です
+;使うCFLAGの決定
+LOCAL = ARG / 63 + SET_COM_FILTERING_NUM()
+;そのCFLAGの何番目のBITか
+LOCAL:1 = ARG % 63
+;フラグ反転
+INVERTBIT CFLAG:(ARG:1):LOCAL, LOCAL:1
+RETURN 0
+
+;-------------------------------------------------
+;コンフィグ　よくあるQ&A
+;-------------------------------------------------
+@DICTIONARY_CONFIG_MAIN
+DRAWLINE
+PRINTFORML ★★コンフィグ　よくあるQ&A★★
+PRINTFORML 
+PRINTFORML Q:ウフフ時に%CALLNAME:MASTER%の耐力が減少する／%CALLNAME:MASTER%の耐力が0になって強制終了する
+PRINTFORML A:カウンターシステムONの場合%CALLNAME:MASTER%の耐力が減少するようになります
+PRINTFORML 
+PRINTFORML Q:条件を満たしているはずのコマンドが表示されない
+PRINTFORML A:「異常経験が付くコマンドを表示する」や「～～コマンド拡張」をONにすると表示されます
+PRINTFORML 　一部のＡ系コマンドなどは複数のコンフィグをONにする必要があるので注意
+PRINTFORML 
+PRINTFORML Q:「特定のアイテム使用時に不自然になる可能性がある口上を表示する」コンフィグについて
+PRINTFORML A:後から追加されたアイテムを使用する場合、そのアイテムを
+PRINTFORML 　想定していない口上が不自然になる可能性があります
+PRINTFORML 　（例：主人公が目隠しされているのに見えているように話す）
+PRINTFORML 　それを防ぐためこのコンフィグがONの場合、該当アイテム使用
+PRINTFORML 　時は口上が表示されなくなります
+PRINTFORML 　（ただし想定している口上はONでも表示されます）
+PRINTFORML 　現在該当しているアイテムは以下の通り
+PRINTFORML 　「オムツ」「着衣ローター」
+PRINTFORML 　「主人公にアイマスク」「主人公を縄で緊縛」「主人公にボールギャグ」
+DRAWLINE
+WAIT
+
+
+

@@ -1,0 +1,244 @@
+﻿@COM399
+;告白する
+
+PRINTL 告白する
+STR:0 = 告白する
+CALL TRAIN_MESSAGE_B
+LOSEBASE:1 += 10
+
+IF TFLAG:45 == 0
+	;主導権が主人公
+
+	A = 0
+	;目標難易度は110
+	V = 110
+
+	;純愛系コマンド実行値取得
+	CALL GET_JUN_VALUE
+
+	;好感度
+	A += CFLAG:2 / 50
+
+	;キス未経験
+	SIF TALENT:151
+		A -= 10
+
+	;恋慕
+	SIF TALENT:85
+		A += 30
+
+	;悲観的
+	SIF TALENT:26
+		A -= 5
+
+	;一線越えない
+	SIF TALENT:27
+		A -= 15
+
+	;Aの値を退避
+	Z = A
+	;主導権基準値ボーナス
+	T = TARGET
+	CALL GET_INITIATIVE_RATE
+	;退避させた値を戻す
+	A = Z
+
+	;従順なキャラには－ボーナス、強気なキャラには＋ボーナス
+	IF R > 0
+		A += R / 5 + 5
+	ELSEIF R < 0
+		;負の値の計算がeramakerのバグで怪しいので要注意
+		R = R * -1
+		A -= R / 5
+	ENDIF
+
+	;ムードボーナス この値が本命
+	IF TFLAG:37 < 10
+		A -= 10
+	ELSEIF TFLAG:37 < 30
+		A -= 1
+	ELSEIF TFLAG:37 < 50
+		A += 3
+	ELSEIF TFLAG:37 < 100
+		A += TFLAG:37 / 4
+	ELSEIF TFLAG:37 < 300
+		A += TFLAG:37 / 2
+	ELSE
+		A += TFLAG:37
+	ENDIF
+
+	;デート経験 これも割と大きい
+	IF EXP:94 < 50
+		A -= 5
+	ELSEIF EXP:94 < 100
+		A += 5
+	ELSEIF EXP:94 < 500
+		A += EXP:94 / 10
+	ELSE
+		A += EXP:94 / 7
+	ENDIF
+
+	;判定成功
+	IF A >= V
+		;この辺の描写は口上との兼ね合いが難しいけど、とりあえず暫定処置
+		;口上表示
+		TFLAG:600 = 2
+		TALENT:153 = 1
+		CALL KOJO_JUN
+		SIF TALENT:153 == 0
+			RETURN 0
+		T = TARGET
+		CALL GET_LOVERS
+		IF TALENT:151
+			TALENT:151 = 0
+			PRINTFORML %EXPNAME:96%＋１
+			EXP:96 += 1
+			EXP:PLAYER:96 += 1
+			IF TALENT:PLAYER:151
+				PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
+				TALENT:PLAYER:151 = 0
+			ENDIF
+			PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
+			TFLAG:38 = 1
+		ENDIF
+		;既成事実２に相当
+		TFLAG:200 = 2
+	;判定失敗
+	ELSE
+		;この辺の描写は口上との兼ね合いが難しいけど、とりあえず暫定処置
+		;口上表示
+		TFLAG:600 = 3
+		CALL KOJO_JUN
+		IF TALENT:85 == 0
+			PRINTFORMW %CALLNAME:TARGET%の好感度が50下がりました
+			CFLAG:2 -= 50
+		ENDIF
+	ENDIF
+ELSE
+	;主導権が相手
+
+	A = 0
+	;目標難易度は110
+	V = 110
+
+	;純愛系コマンド実行値取得
+	CALL GET_JUN_VALUE
+
+	;相手側の告白は欲望Lvが少しだけ影響
+	A += ABL:1 / 2
+
+	;好感度
+	A += CFLAG:2 / 50
+
+	;キス未経験
+	SIF TALENT:151
+		A -= 10
+
+	;恋慕
+	SIF TALENT:85
+		A += 30
+
+	;臆病
+	SIF TALENT:10
+		A -= 10
+
+	;恥じらい
+	SIF TALENT:35
+		A -= 10
+
+	;恥薄い
+	SIF TALENT:36
+		A += 5
+
+	;悲観的
+	SIF TALENT:26
+		A -= 5
+
+	;一線越えない
+	SIF TALENT:27
+		A -= 15
+
+	;Aの値を退避
+	Z = A
+	;主導権基準値ボーナス
+	T = TARGET
+	CALL GET_INITIATIVE_RATE
+	;退避させた値を戻す
+	A = Z
+	;従順なキャラには＋ボーナス、強気なキャラには－ボーナス
+	IF R < 0
+		;負の値の計算がeramakerのバグで怪しいので要注意
+		R = R * -1
+		A += R / 5 + 5
+	ELSEIF R > 0
+		A -= R / 5
+	ENDIF
+
+	;ムードボーナス この値が本命
+	IF TFLAG:37 < 10
+		A -= 10
+	ELSEIF TFLAG:37 < 30
+		A -= 1
+	ELSEIF TFLAG:37 < 50
+		A += 3
+	ELSEIF TFLAG:37 < 100
+		A += TFLAG:37 / 4
+	ELSEIF TFLAG:37 < 300
+		A += TFLAG:37 / 2
+	ELSE
+		A += TFLAG:37
+	ENDIF
+
+	;デート経験 これも割と大きい
+	IF EXP:94 < 50
+		A -= 5
+	ELSEIF EXP:94 < 100
+		A += 5
+	ELSEIF EXP:94 < 500
+		A += EXP:94 / 10
+	ELSE
+		A += EXP:94 / 7
+	ENDIF
+
+	;判定成功
+	IF A >= V
+		;この辺の描写は口上との兼ね合いが難しいけど、とりあえず暫定処置
+		;口上表示
+		TFLAG:600 = 2
+		CALL KOJO_JUN
+		TALENT:153 = 1
+		PRINTFORMW %CALLNAME:TARGET%と【恋人】になりました
+		FLAG:48 += 1
+		CALL CHECK_FEAT
+		TFLAG:39 = 1
+		IF TALENT:151
+			TALENT:151 = 0
+			PRINTFORML %EXPNAME:96%＋１
+			EXP:96 += 1
+			EXP:PLAYER:96 += 1
+			IF TALENT:PLAYER:151
+				PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
+				TALENT:PLAYER:151 = 0
+			ENDIF
+			PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
+			TFLAG:38 = 1
+		ENDIF
+		;既成事実２に相当
+		TFLAG:200 = 2
+	;判定失敗
+	ELSE
+		;この辺の描写は口上との兼ね合いが難しいけど、とりあえず暫定処置
+		;口上表示
+		TFLAG:600 = 3
+		CALL KOJO_JUN
+		IF TALENT:85 == 0
+			PRINTFORMW %CALLNAME:TARGET%の好感度が50下がりました
+			CFLAG:2 -= 50
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
+RETURN 1
+

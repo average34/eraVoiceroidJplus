@@ -1,0 +1,233 @@
+﻿@OPENING_STORY
+
+;主人公によって分岐するオープニング口上1
+CALL KOJO_PRE_OPENING_STORY
+
+;上からRETURN 1すると、デフォのオープニングはカット
+SIF RESULT
+	RETURN 1
+
+;;2週目以降用のオープニング口上（デフォルトではコメントアウト）
+;IF FLAG:26 > 1
+;	CALL OPENING_STORY_2
+;	;主人公によって分岐するオープニング口上2
+;	CALL KOJO_POST_OPENING_STORY
+;	RETURN 1
+;ENDIF
+
+IF NO:MASTER == 0
+	PRINTFORML %CALLNAME:MASTER%は、今日も普段と変わらない気ままな生活を送っていた
+	PRINTFORMW しかし……
+	PRINTL  
+ELSE
+	PRINTFORML %CALLNAME:MASTER%は、今日も普段と変わらない気ままな生活を送っていた
+	PRINTFORMW しかし……
+	PRINTL  
+ENDIF
+PRINTFORML いつもと変わらない日常が始まる……そう思っていた%CALLNAME:MASTER%の視界に、桃色の霧が映った
+PRINTFORMW 試しにその霧に触れてみた%CALLNAME:MASTER%だったが、特に何の影響も感じられない
+PRINTL  
+PRINTFORML 特に害も無さそうだし、何かあるからといって自分にはどうすることもできない
+PRINTFORML そのうちなんとかなるだろう、と%CALLNAME:MASTER%はこの霧を放っておく事にした
+PRINTFORML あぁ、洗濯物を早く乾かしておけば良かった、この霧はいつ晴れるのだろう……
+PRINTFORMW そんな事を思いながら……
+PRINTL  
+PRINTL  
+PRINTFORML 数日後、霧が薄くなったり濃くなったりする事に気付いた%CALLNAME:MASTER%は
+PRINTFORML 霧が薄いうちに洗濯物を干す事で、当面の問題を解決する事ができた
+PRINTFORML まったく、一体どこの誰がこんな霧を出しているのだろうか……
+PRINTFORMW そう思いはするものの、まだまだ霧のことを深刻には考えてはいなかった
+PRINTL  
+PRINTL  
+PRINTFORML さらに数日後の濃霧の日、たまたま街を訪れた%CALLNAME:MASTER%は、この霧が普通の霧でない事を知った
+PRINTFORML ……あらゆる人間が、人目もはばからず街中で性行為を行っていたのだ
+PRINTFORMW 近くに居た少女達に襲われそうになった%CALLNAME:MASTER%は、ひとまず退散する事にした
+PRINTL  
+PRINTFORML さて一体どうしたものか。調べてみると霧が薄くなると正気に戻る人も出てくるようだ
+PRINTFORML 今のところ濃霧が続くような事は無いので、本格的な危機というわけでは無さそうだが
+PRINTFORMW 流石に霧の特徴を知ってしまった今、完全に放置すると言うわけにもいかなくなった
+PRINTL  
+IF TARGET > 0
+	PRINTFORML %CALLNAME:MASTER%には影響が無い事、%CALLNAME:MASTER%に近付いた人が正気を取り戻しやすくなった事から
+	PRINTFORML 何故かは分からないが、%CALLNAME:MASTER%にはこの霧の影響を無効化・軽減する力があるようだ
+	PRINTFORMW これなら何とか霧の事件を解決できるだろう……そう思っていたところに、来客があった
+	PRINTL  
+	PRINTFORML ……来客は%CALLNAME:TARGET%だった。　一応、正気を失っているわけではないようだ
+	PRINTFORML どこで聞いたのか、%CALLNAME:MASTER%が霧の中でも正気を保っていられる事を知った%CALLNAME:TARGET%は、
+	PRINTFORMW %CALLNAME:MASTER%に事件の解決を焚きつけるため、そして解決を手伝うためにやって来たらしい
+	PRINTL  
+	PRINTFORML まずはその能力を把握しないと動けない！　そう言われた%CALLNAME:MASTER%は、自分の能力の詳細を把握する事に数日を費やした
+	PRINTFORML 結果として、周囲に居る者が受ける霧の影響を軽減し、正気を失わせづらくすること、
+	PRINTFORMW その効果はより親しい者にほど発揮される事、そして、気絶させた相手を正気に戻させる事ができると分かった
+	PRINTL  
+	PRINTFORML %CALLNAME:MASTER%はこれから先、%CALLNAME:TARGET%との交友関係を深めつつ、
+	PRINTFORML この霧の中で二人で有効に戦う術も身に付けていかなくてはならない
+	PRINTFORMW そして、事件の元凶を捕まえてこう言ってやらねばならないだろう
+	PRINTL  
+	PRINTFORMW 何で自分だけ霧の勢いに任せてあんな事やこんな事ができないんだ！！……と
+	PRINTL  
+ELSE
+	PRINTFORML %CALLNAME:MASTER%には影響が無い事、%CALLNAME:MASTER%に近付いた人が正気を取り戻しやすくなった事から
+	PRINTFORML 何故かは分からないが、%CALLNAME:MASTER%にはこの霧の影響を無効化・軽減する力があるようだ
+	PRINTFORMW これなら何とか霧の事件を解決できるだろう……
+	PRINTL  
+	PRINTFORML %CALLNAME:MASTER%はこれから先、この霧の中で有効に戦う術を身に付けていかなくてはならない
+	PRINTFORMW そして、霧の事件の元凶を捕まえてこう言ってやらねばならないだろう
+	PRINTL  
+	PRINTFORMW 何で自分だけ霧の勢いに任せてあんな事やこんな事ができないんだ！！……と
+	PRINTL  
+ENDIF
+
+;主人公によって分岐するオープニング口上2
+CALL KOJO_POST_OPENING_STORY
+
+RETURN 1
+
+@OPENING_STORY_2
+PRINTFORML 桃色の霧が発生するという霧の事件を解決してから暫くして
+PRINTFORMW 霧が発生したという話も最近では聞かなくなりようやく平穏な日常が取り戻されつつあった
+PRINTL 
+PRINTFORM %CALLNAME:MASTER%
+SIF TARGET > 0 && TALENT:153
+	PRINTFORM と%CALLNAME:TARGET%
+PRINTFORML は未だ霧の影響下にある人を救い出しながらいつも通りの生活を続けていた
+PRINTFORMW しかしある日のこと……
+PRINTL 
+PRINTFORML 昼下がりでうとうとしていた%CALLNAME:MASTER%の目の前に桃色の濃霧が映った
+PRINTFORML 夢でも見ているのかと思って意識をはっきりとさせ確認してみるとどうやら夢ではないらしい
+PRINTFORML ここ暫くは桃霧が発生したという話は聞いていなかったため
+PRINTFORMW %CALLNAME:MASTER%はまた誰かが同じ事件を起こしたのではないかと推測した
+PRINTL 
+
+IF TARGET <= 0
+	PRINTFORML ならばこの霧を対処できるのは自分しかいない
+	PRINTFORMW そう思った、%CALLNAME:MASTER%は新たな霧の事件の元凶を懲らしめることにした
+ELSEIF TALENT:153
+	PRINTFORML ならばこの霧を対処できるのは自分しかいない
+	PRINTFORM そう思った、%CALLNAME:MASTER%は
+	IF TALENT:89
+		PRINTFORM 嫁である
+	ELSE
+		PRINTFORM 恋人である
+	ENDIF
+	PRINTFORMW %CALLNAME:TARGET%と二人で新たな霧の事件の元凶を懲らしめることにした
+ELSE
+	PRINTFORML ならばこの霧を対処できるのは自分しかいないのだが過去の霧の事件の元凶の実力を見るに一人で解決するのは難しいだろう
+	PRINTFORMW そう判断し頭を抱えていた%CALLNAME:MASTER%の前に来客があった
+	PRINTL 
+	PRINTFORM ……来客は
+	IF TALENT:150
+		PRINTFORM 先の霧の事件を共に解決した
+	ELSE
+		PRINTFORM 先の霧の事件で救出した
+	ENDIF
+	PRINTFORML %CALLNAME:TARGET%だった
+	PRINTFORMW %CALLNAME:MASTER%一人で解決するのは大変だろうから手伝おう、とやって来たらしい
+	PRINTL 
+	PRINTFORML 一人では解決が困難でも二人でならば乗り越えるだろう
+	PRINTFORMW そう考えながら二人は霧の事件の解決に向かうことにした
+	PRINTL 
+ENDIF
+
+@STAGE_3_CLEAR
+;予定としては、これ以降のボスは戦闘訓練だけじゃなくて、ネチョい事もして満足させないと正気に戻らないので
+;お前達ももうちょっとネチョ技を磨いて頑張るんだねー、ってラスボスが助言しに来る予定
+PRINTL 
+;ノーマル難易度
+IF FLAG:5 == 0 ||  FLAG:5 == 1 ||  FLAG:5 == 2 ||  FLAG:5 == 3
+	T = 5
+	CALL GET_EXISTANCE
+	;ずん子が既に居る(＝パートナー)場合、きりたん
+	IF E
+
+		PRINTFORML %CALLNAME:MASTER%達が%STR:1%を仲間に入れ、一旦自宅に連れ帰っていると、珍しい来客があった
+		PRINTFORMW 東北邸に住む東北三姉妹の三女、東北きりたんだ
+		PRINTFORMW 「こんばんは、今日は皆さんにお話があって参りました」
+		PRINTFORML 「あなたが霧の事件を止めようとしている方ですね？」
+		PRINTFORMW 「実は、この霧の正体についてお伝えしなければならないことがあります」
+		PRINTFORMW 「ここで説明できる内容ではありませんので、是非とも私たちの家にお越しください」
+		PRINTFORML 「ただ、私たちの家の周りは特に霧が濃いので、性欲に飢えた人が多くて危険ですから、」
+		PRINTFORMW 「貴方がたも恥ずかしがらずにヤることヤッて、対処の練習してみてはどうでしょうか？」
+		PRINTFORMW 「それでは、私の家でお待ちしております――」
+		PRINTFORML そう言い残して、きりたんは去っていった
+
+		PRINTFORMW 何やら怪しい気もするが、どうやら東北邸に向かってみるしか無いようだ……
+		PRINTL  
+		PRINTFORMW ＜「服を脱がせる」が必ず成功するようになりました＞
+	ELSE
+		PRINTFORML %CALLNAME:MASTER%達が%STR:1%を仲間に入れ、一旦自宅に連れ帰っていると、珍しい来客があった
+		PRINTFORMW 東北邸に住む東北三姉妹の次女、東北ずん子だ
+		PRINTFORMW 「こんばんは、今日は皆さんにお話があって参りました」
+		PRINTFORML 「あなたが霧の事件を止めようとしている方ですね？」
+		PRINTFORMW 「実は、この霧の原因についてお伝えしなければならないことがあります」
+		PRINTFORMW 「ここで説明できる内容ではありませんので、是非とも私の家にお越しください」
+		PRINTFORML 「ただ、私の家の周りは特に霧が濃いので、性欲に飢えた人が多くて危険ですから、」
+		PRINTFORMW 「貴方がたも恥ずかしがらずにヤることヤッて、彼女らの対処の練習してみてはどうでしょう？」
+		PRINTFORMW 「それでは、私の家でお待ちしております♪うふふふっ」
+		PRINTFORML そう言い残して、ずん子は去っていった
+		PRINTFORMW 何やら怪しい気もするが、どうやら東北邸に向かってみるしか無いようだ……
+		PRINTL  
+		PRINTFORMW ＜「服を脱がせる」が必ず成功するようになりました＞
+	ENDIF
+ENDIF
+
+RETURN 1
+
+
+@STAGE_6_BOSS
+
+;ずん子
+
+IF FLAG:25 == 5
+
+	PRINTFORMW 「あら♪もう来てしまったんですね」
+	PRINTFORMW 東北ずん子の持つ小瓶からは、桃色の霧が次々と湧き出しているように見える
+	IF TARGET > 0
+		PRINTFORMW 近くに居た%CALLNAME:TARGET%の頬がどんどん赤く染まっていく。これはもしや……
+	ELSE
+		PRINTFORMW これはもしや……
+	ENDIF
+	PRINTFORMW 「そう、ここが霧の発生源です」
+	PRINTFORMW 「どうですか？外の人の様子は素晴らしかったでしょう？」
+	PRINTFORMW 「人々は快楽を貪り、本能のままに腰を振り続け」
+	PRINTFORMW 「己が性欲を満たし、その欲望は止まるところを知らず」
+	PRINTFORMW 「互いが互いを欲し続け、みんなが幸福に満たされる」
+	PRINTFORMW 「ああ、なんて素晴らしい世界なのでしょう♪」
+	PRINTFORMW ずん子は小瓶を高らかに掲げ、恍惚とした表情で語り続ける
+	PRINTFORMW 「残念ながら貴方がたにはこの霧の素晴らしさがわかって頂けないようですね」
+	PRINTFORMW 「でもそれも分かるようになりますよ」
+	PRINTFORMW そしてずん子はこちらに振り返る
+	PRINTFORMW 「私がこの霧の良さを直々に教えてあげますから」
+	FLAG:27 = 21
+ENDIF
+
+
+;きりたん
+IF FLAG:25 == 10
+	PRINTFORMW 東北邸の奥に進むと、何やらぐちゅぐちゅと淫猥な物音が聞こえる
+	PRINTFORMW 「んっ……んんっ……おや、もう来たようですね」
+	PRINTFORMW 音の発生源は東北きりたんのようだ
+	PRINTFORMW そばの台座の上にある小瓶からは、桃色の霧が次々と湧き出しているように見える
+	IF TARGET > 0
+		PRINTFORMW 近くに居た%CALLNAME:TARGET%の頬がどんどん赤く染まっていく。これはもしや……
+	ELSE
+		PRINTFORMW これはもしや……
+	ENDIF
+	PRINTFORMW 「そう、ここが霧の発生源です」
+	PRINTFORMW 「えへへ……この霧が出てると、なんかすっごくよくなっちゃうんですよね」
+	PRINTFORMW ぐちゅぐちゅと未発達な股間をまさぐり続けながら、きりたんは話し続ける
+	PRINTFORMW 「ここ触るとすっごく楽しくて、身体があつくなって、ふわーってなって」
+	PRINTFORMW 「ずっと止まらなくなっちゃうんですよ……ふへへ」
+	PRINTFORMW 「みんなにもこの楽しさをわけてあげようと思って、霧を流し続けてるんです」
+	PRINTFORMW 「街のみんなも楽しそうでしたよっ………んっ……んんっ！」
+	PRINTFORMW きりたんは身体を大きくビクつかせ、恍惚とした表情で絶頂の余韻を味わっている
+	PRINTFORMW 「さて……」
+	PRINTFORMW 彼女は衣類を軽く整え、そしてこちらに振り向く
+	PRINTFORMW 「貴方がたも一緒に、この霧を楽しみませんか？」
+	FLAG:27 = 21
+ENDIF
+
+
+RETURN 1
+
+;ENDING.ERBへENDING関係を移動
