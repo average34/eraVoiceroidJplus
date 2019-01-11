@@ -1,4 +1,4 @@
-﻿;-------------------------------------------------
+;-------------------------------------------------
 ;Ｊ＋用きりたんサンプル口上
 ;サンプル。途中まで作って投げ出した。
 
@@ -230,7 +230,7 @@ IF TFLAG:600 == 28
 	PRINTFORMW 「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」
 IF CSTR:1 == CALLNAME:MASTER
 	PRINTFORMW 改めてそう呼ばれるとすこし気恥かしいが、構わない、と伝えた
-ELSEIF CSTR:1 == "あにさま" || CSTR:1 == "マスター"
+ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
 	PRINTFORMW 随分と珍しい呼ばれ方に少し驚いたが、構わない、と伝えた
 ELSE
 	PRINTFORMW 構わない、と伝えた
@@ -269,7 +269,7 @@ ENDIF
 IF TFLAG:600 == 38
 	;デート後一回目
 	IF EXP:94 > 0 && CFLAG:221 < 1
-		PRINTFORMW 「ふぁー、おはようございます、あにさま」
+		PRINTFORMW 「ふぁー、おはようございます、%CSTR:1%」
 		PRINTFORMW おはよう、と後から起きてきたきりたんに返事する
 		PRINTFORMW 「この前のおでかけは楽しかったですね、また次も連れてってください」
 		CFLAG:221 = 1
@@ -281,7 +281,7 @@ IF TFLAG:600 == 38
 	ELSEIF TALENT:85 == 1 && CFLAG:221 < 3
 		PRINTFORMW 「お、おはようございます」
 		PRINTFORMW きりたんが珍しく朝から起きている
-		PRINTFORMW 「朝起きるのが遅いですよ、あにさま」
+		PRINTFORMW 「朝起きるのが遅いですよ、%CSTR:1%」
 		PRINTFORMW ……いつも遅く起きているのはきりたんなのだが……
 		PRINTFORMW もしかしてあまり深く眠れていないのでは？
 		PRINTFORMW 「……なんでもありません、しっかり寝ましたよ」
@@ -431,21 +431,22 @@ ENDIF
 IF TFLAG:600 == 6
 	;初めて
 	IF CFLAG:225 == 0
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+		PRINTFORMW 「え？服を脱いで裸になってほしいんですか？」
+		PRINTFORMW 「嫌ですよ、なんでそんなことしなきゃいけないんですか」
+		PRINTFORMW あっさりと断られてしまった
 		CFLAG:225 = 1
 	;二回目以降
 	ELSE
 		;恋慕または恋人
 		IF (TALENT:85 == 1 || TALENT:153 == 1) && (CFLAG:225 < 3 || FLAG:7 == 2)
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
+			PRINTFORMW 「私は○学五年生なんですから、いくら頼まれたってえっちなことはしませんよ」
+			PRINTFORMW そこをなんとか！
+			PRINTFORMW 「ダメです。この変態」
 			CFLAG:225 = 3
 		;それ以外
 		ELSEIF CFLAG:225 < 2 || FLAG:7 == 2
-			PRINTFORMW 
+			PRINTFORMW 「だーかーらー、嫌って言ってるじゃないですか」
+			PRINTFORMW 「この変態、ロリコン、クズ」
 			CFLAG:225 = 2
 		ENDIF
 	ENDIF
@@ -512,7 +513,7 @@ ENDIF
 IF TFLAG:600 == 8
 	;恋慕
 	IF TALENT:85 == 1 && (CFLAG:227 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「やりましたね！あにさま！」
+		PRINTFORMW 「やりましたね！%CSTR:1%！」
 		CFLAG:227 = 3
 	;恋人
 	ELSEIF TALENT:153 == 1 && (CFLAG:227 < 2 || FLAG:7 == 2)
@@ -561,10 +562,18 @@ IF TFLAG:600 == 40
 		PRINTFORMW 「なにいってんだこいつ」
 		;扱いが雑である
 		TFLAG:120 = 1
+	;ウナ
+	ELSEIF FLAG:25 == 81
+		PRINTFORMW 「音街！？ぶじだったの！？」
+		PRINTFORMW 『とーほくー！セックスしようぜ！』
+		PRINTFORMW 「なにいってんだこいつ」
+		;扱いが雑である
+		TFLAG:120 = 1
 	;ラスボスじゃないずん子
 	ELSEIF FLAG:25 == 5
 		PRINTFORMW 「ずんねえさま！生きていたんですね」
-		PRINTFORMW 
+		PRINTFORMW 『あらきりたん。きりたんも一緒にちんぽを食い漁りましょう？』
+		PRINTFORMW 「なにいってんだこいつ」
 		TFLAG:120 = 1
 	ENDIF
 ENDIF
@@ -639,30 +648,30 @@ IF TFLAG:600 == 11
 	IF FLAG:24 <= 3
 		;恋人
 		IF TALENT:153 == 1 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 3
 		;キス経験有り
 		ELSEIF EXP:96 > 0 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 2
 		;それ以外
 		ELSEIF CFLAG:230 < 5 || FLAG:7 == 2
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 1
 		ENDIF
 	;三面以降（六面ラスボス除く）
 	ELSEIF FLAG:24 > 3 && (FLAG:24 != 6 || FLAG:27 == 10)
 		;恋慕
 		IF TALENT:85 == 1 && (CFLAG:230 < 6 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 6
 		;恋人
 		ELSEIF TALENT:153 == 1 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 5
 		;それ以外
 		ELSEIF CFLAG:230 < 5 || FLAG:7 == 2
-			PRINTFORMW 「やりましたね！あにさま！」
+			PRINTFORMW 「やりましたね！%CSTR:1%！」
 			CFLAG:230 = 2
 		ENDIF
 	;ラストバトル
@@ -693,12 +702,12 @@ IF TFLAG:600 == 12
 	;三面まで
 	IF FLAG:24 <= 3
 		;恋人
-		IF TALENT:153 == 1 && (CFLAG:231 < 5 || FLAG:7 == 2)
+		IF TALENT:153 == 1 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
 			PRINTFORMW 
 			PRINTFORMW 
 			CFLAG:231 = 3
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2)
+		ELSEIF EXP:96 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
 			PRINTFORMW 
 			CFLAG:231 = 2
 		;それ以外
@@ -793,7 +802,7 @@ FORCEWAIT
 			ENDIF
 			PRINTL
 			PRINTFORMW 急いでずん子からきりたんをひっぺがす
-			PRINTFORMW 「はぇ……？あにさま……？」
+			PRINTFORMW 「はぇ……？%CSTR:1%……？」
 			PRINTFORML きりたんはトロンとした目つきで力なく腕にしなだれる
 			PRINTFORMW どうやらあまりの快感に朦朧としているようだ
 			PRINTL
@@ -863,7 +872,7 @@ IF TFLAG:600 == 31
 		IF RESULT == 0
 			PRINTFORMW 思わずその言葉に言い淀む。確かにきりたんとの性行為は気持ち良いものだった
 			PRINTFORMW きりたんも絶頂するたびに恍惚とした表情を見せていたし……
-			PRINTFORMW 「ちょっとあにさま！ずんねえさまのたわごとに惑わされないでください！」
+			PRINTFORMW 「ちょっと%CSTR:1%！ずんねえさまのたわごとに惑わされないでください！」
 			PRINTFORMW はっ、と我に帰る。性行為の是非どうこうではなく、今は東北ずん子を正気に戻さねば
 			PRINTFORMW 平和な街を、そしてきりたんを守るためにも
 		ELSEIF RESULT == 1
@@ -1013,15 +1022,17 @@ ENDIF
 IF TFLAG:600 == 18
 	;恋慕
 	IF TALENT:85 == 1 && (CFLAG:241 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
+		PRINTFORMW きりたんもすっかり料理上手だね
+		PRINTFORMW 「えへへ、ありがとうございます」
 		CFLAG:241 = 3
 	;恋人
 	ELSEIF TALENT:153 == 1 && (CFLAG:241 < 2 || FLAG:7 == 2)
-		PRINTFORMW 
+		PRINTFORMW きりたんもだいぶ料理の腕が上達してきたね
+		PRINTFORMW 「まあ私ならこのくらい当然ですよ」
 		CFLAG:241 = 2
 	;それ以外
 	ELSEIF CFLAG:241 < 1 || FLAG:7 == 2
-		PRINTFORMW 
+		PRINTFORMW 「ちゃんと売れてよかったです」
 		CFLAG:241 = 1
 	ENDIF
 ENDIF
@@ -1059,7 +1070,7 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 20
 	;親愛
-	IF TALENT:88
+	IF 0
 		IF ABL:88 > 9
 			IF RAND:3 == 2
 				PRINTFORMW 
@@ -1082,7 +1093,7 @@ IF TFLAG:600 == 20
 		ELSE
 		ENDIF
 	;恋慕または恋人
-	ELSEIF TALENT:85 || TALENT:153
+	ELSEIF 0
 		IF ABL:88 > 9
 			IF RAND:3 == 2
 				PRINTFORMW 
@@ -1111,11 +1122,10 @@ IF TFLAG:600 == 20
 	ELSE
 		IF ABL:88 > 9
 			IF RAND:2 == 1
-				PRINTFORMW 
-				PRINTFORMW 
+				PRINTFORMW 「ずんねえさまのためにも、早く強くならなきゃ」
 			ELSE
-				PRINTFORMW 
-				PRINTFORMW 
+				PRINTFORMW 「すっかり、体力もついてきましたね」
+				PRINTFORMW 「でもまだまだです。もっと強くならないと」
 			ENDIF
 		ELSEIF ABL:88 > 3 && ABL:88 < 10
 			IF RAND:2 == 1
@@ -1141,11 +1151,9 @@ IF TFLAG:600 == 21
 		CFLAG:244 = 3
 	;恋人
 	ELSEIF TALENT:153 == 1 && (CFLAG:244 < 2 || FLAG:7 == 2)
-		PRINTFORMW 
 		CFLAG:244 = 2
 	;それ以外
 	ELSEIF CFLAG:244 < 1 || FLAG:7 == 2
-		PRINTFORMW 
 		PRINTFORMW 
 		CFLAG:244 = 1
 	ENDIF
@@ -1347,11 +1355,11 @@ IF TFLAG:600 == 29
 	PRINTFORML 
 	PRINTFORMW 「はうぁっ！」
 	PRINTFORMW 東北ずん子に核心の一撃を与えると、彼女は地面にうずくまる
-	PRINTFORMW 「あにさま今です！早くあの小瓶を！」
+	PRINTFORMW 「%CSTR:1%今です！早くあの小瓶を！」
 	PRINTFORMW 近くにあったコルクを小瓶の口にはめる──
 	PRINTFORML 
 	PRINTFORMW すると、たちまち桃色の霧は晴れ、紅潮していたきりたんの顔色ももとに戻る
-	PRINTFORMW 「……やりましたね！あにさま！」
+	PRINTFORMW 「……やりましたね！%CSTR:1%！」
 	PRINTFORMW きりたんは嬉々とした表情でガッツポーズする
 	PRINTFORMW これでようやく街にも平和が戻るだろう……
 	PRINTFORML 
@@ -1419,14 +1427,14 @@ IF TFLAG:600 == 29
 		PRINTFORMW 「ここならゲームしててもタコねえさまは文句言ってきませんし」
 		PRINTFORMW いや、そういう問題ではないのだが……
 		PRINTFORML
-		PRINTFORMW 「……あにさまも、なんだかんだ言って私のこと気に入ってるじゃないですか」
+		PRINTFORMW 「……%CSTR:1%も、なんだかんだ言って私のこと気に入ってるじゃないですか」
 		PRINTFORMW まあ、実のところそうなのだ
 		PRINTFORMW きりたんがこの家に来てからというもの、日々が楽しくなったように感じる
 		PRINTFORMW このゲームを買ったらきりたんが喜ぶだろう、とか、次はどこに遊びに行こうか、とか、楽しいことばかり考えるようになった
 		PRINTFORMW 霧の事件で大変だったというのもあるが、真面目にお金を稼ごう、とか、きりたんのためにも食生活をきちんとしよう、とか、
 		PRINTFORMW そういった生活の基礎的なところも改善しつつある
 		PRINTFORMW 「でしょ？やっぱりいいことづくめじゃないですか、私」
-		PRINTFORMW 「だからこれからも、よろしくおねがいします、あにさま！」
+		PRINTFORMW 「だからこれからも、よろしくおねがいします、%CSTR:1%！」
 		PRINTFORMW 　　　　　　　　　　── Good Ending 『そしてこれからも』
 
 	ENDIF
@@ -1506,13 +1514,13 @@ IF TFLAG:13 == 3
 		PRINTFORMW 「おはようございま……うぉっ」
 		PRINTFORMW きりたんの眼前には%CALLNAME:MASTER%のもっこりと膨らんだ股間がある
 		PRINTFORMW 「………」
-		PRINTFORMW 「……あにさまが悪いんですからね……」
+		PRINTFORMW 「……%CSTR:1%が悪いんですからね……」
 		PRINTFORML きりたんは%CALLNAME:MASTER%の股間からいきり立ったモノを露出させ、
 		PRINTFORMW ペロペロと丁寧に舐め始めた
 		PRINTL 
 		PRINTFORMW ……気持ちいい……
 		PRINTFORMW ふわふわとしたいい気持ちで目覚めると、視界の下には──
-		PRINTFORMW 「あ、ほはようほはいはふ、あにさま」
+		PRINTFORMW 「あ、ほはようほはいはふ、%CSTR:1%」
 		PRINTFORMW ……？きりたんがいる
 		PRINTFORMW 「ほら、もう目も覚めたことだしイッちゃいましょう」
 		PRINTFORMW そういうときりたんは何かを激しく動かし──！？
@@ -1520,7 +1528,7 @@ IF TFLAG:13 == 3
 		PRINTFORMW きりたんがその小さな手でイチモツを上下に強く擦り続けている
 		PRINTFORMW ああ、身体の奥からのこみ上げる感覚を止められない──
 		PRINTFORMW 「あははっ、情けなく射精しちゃいましたね」
-		PRINTFORMW 「こっちのほうもおはようございます、あにさま」
+		PRINTFORMW 「こっちのほうもおはようございます、%CSTR:1%」
 		PRINTFORMW どくどくと精液を排出するイチモツに、きりたんは軽くキスをする
 		CFLAG:303 = 3
 ;	;奉仕精神Lv5以上
@@ -1597,7 +1605,7 @@ IF TFLAG:13 == 80
 	IF (TALENT:88 || TALENT:89) && (CFLAG:311 < 2 || FLAG:7 == 2)
 		PRINTFORMW 寝ようと思ったら、なぜか自分の布団の中にきりたんが入っている
 		PRINTFORMW 「えへへ……きちゃいました」
-		PRINTFORMW 「あにさまの布団の中、入ってもいいですか？」
+		PRINTFORMW 「%CSTR:1%の布団の中、入ってもいいですか？」
 		PRINTFORMW もう入っているじゃないか……
 		CFLAG:311 = 2
 	;それ以外
@@ -1998,10 +2006,10 @@ ENDIF
 ;【恋慕】取得（親密10以上好感度3000以上）
 ;----------------------------------------------------------------
 IF TFLAG:13 == 33
-	PRINTFORMW （あにさまはいま出かけてるみたいですね）
-	PRINTFORMW （……あにさまのいないこの家って、こんなに静かでしたっけ）
+	PRINTFORMW （%CSTR:1%はいま出かけてるみたいですね）
+	PRINTFORMW （……%CSTR:1%のいないこの家って、こんなに静かでしたっけ）
 	PRINTFORMW （……）
-	PRINTFORMW （一人でゲームしても、あにさまが家にいないと安心できない）
+	PRINTFORMW （一人でゲームしても、%CSTR:1%が家にいないと安心できない）
 	PRINTFORMW （……はやく帰ってきてほしいなあ）
 ENDIF
 
@@ -2381,7 +2389,7 @@ IF TFLAG:13 == 7
 	PRINTFORML 
 	PRINTFORMW 「へへっ、へへへへ……」
 	PRINTFORMW きりたんは不意に笑い出す
-	PRINTFORMW 「おかしいでずよ、グズッ、あにさま、」
+	PRINTFORMW 「おかしいでずよ、グズッ、%CSTR:1%、」
 	PRINTFORMW 「わたしなんか、まだ未成年で、ｸﾞｽｯ結婚なんかしぢゃいげないのに」
 	PRINTFORMW 「なんで、なんでこんなに、なみだ、とまらな、」
 	PRINTFORMW 「おかじいじゃないですか、いけないごどなのに、わだし、へんなの」
@@ -2394,7 +2402,7 @@ IF TFLAG:13 == 7
 	PRINTFORMW 本当にいいのか。きりたんに問いかける
 	PRINTFORMW 「……はい。これはいいんです」
 	PRINTFORMW 「一晩だけ、ほんとに一晩だけなら、これはお嫁さんごっこです」
-	PRINTFORMW 「だから、あにさまのきもち、一晩だけ受け取らせてください」
+	PRINTFORMW 「だから、%CSTR:1%のきもち、一晩だけ受け取らせてください」
 	PRINTFORML 
 	PRINTFORML 
 	PRINTFORMW 箱から指輪を出し、きりたんの薬指にゆっくりと指輪をはめる
@@ -2408,14 +2416,14 @@ IF TFLAG:13 == 7
 	PRINTFORMW きりたんに喜んでもらって良かった、今まで頑張った甲斐があったものだ
 	PRINTFORML
 	PRINTFORMW 「どうせこれ、給料何ヶ月分、ってやつですよね」
-	PRINTFORMW 「それだけあればいっぱいゲーム買えるのに、ほんとばかなあにさま」
+	PRINTFORMW 「それだけあればいっぱいゲーム買えるのに、ほんとばかな%CSTR:1%」
 	PRINTFORMW そうは言うが、嬉しさ満面の笑顔で言われてもきりたんの言葉に刺々しさは無い
 	PRINTFORMW 「もう、ばかばっかりです、本当に」
 	PRINTFORMW 「こんな指輪ひとつで、嬉しくなっちゃうんですもん……」
 	PRINTFORML
 	PRINTFORML 
 	PRINTFORMW 「……まだ、お礼言ってませんでしたね」
-	PRINTFORMW 「ありがとうございます、あにさま」
+	PRINTFORMW 「ありがとうございます、%CSTR:1%」
 	PRINTFORMW 「この指輪、大切にしますね」
 
 	;相愛取得
@@ -2526,7 +2534,7 @@ ELSEIF TALENT:TARGET:親愛 == 1 && CFLAG:201 < 6
 	PRINTFORMW きっとそうさ　きりたんももう十分に大人みたいな心持ちだし、歳相応になれば、その時期がくるさ
 	PRINTFORMW 「……ありがとうございます。私、このことでずっとひとりで不安で……誰にもいえなくて……」
 	PRINTFORMW きりたんは涙をぽろぽろと流す。それを見て、自分はその小さな身体をそっと抱き寄せる
-	PRINTFORMW 「ありがとう……ありがとう……あにさま……」
+	PRINTFORMW 「ありがとう……ありがとう……%CSTR:1%……」
 	PRINTFORMW 
 	CFLAG:201 = 6
 	RETURN 1
@@ -2614,15 +2622,15 @@ IF MARK:3 >= 1 && FLAG:7 == 2
 
 ;相愛
 ELSEIF RAND:4 == 0 && TALENT:89
-;	PRINTFORMW 
+	PRINTFORMW 「今日は何して過ごしましょう？」
 	RETURN 1
 ;親愛
 ELSEIF TALENT:88
-;	PRINTFORMW 
+	PRINTFORMW 「今日は何して過ごしましょう？」
 	RETURN 1
 ;恋人かつ恋慕
 ELSEIF TALENT:85 && TALENT:153
-;	PRINTFORMW 
+	PRINTFORMW 「今日は何して過ごしましょう？」
 	RETURN 1
 ;恋慕または恋人
 ELSEIF TALENT:85 || TALENT:153
@@ -2637,7 +2645,7 @@ ELSE
 	ELSE
 		PRINTFORML 「早くずんねえさまを救い出したいところですが……」
 	ENDIF
-	PRINTFORMW 「あにさまがそういうなら今日はゆったりしましょう」
+	PRINTFORMW 「%CSTR:1%がそういうなら今日はゆったりしましょう」
 	RETURN 1
 ENDIF
 RETURN 0
@@ -2738,12 +2746,9 @@ SIF TEQUIP:45
 IF TFLAG:22 == 3 && CFLAG:397 == 0
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+;		PRINTFORMW 
 	ELSE
-		PRINTFORMW 
-		PRINTFORMW 
+;		PRINTFORMW 
 	ENDIF
 		CFLAG:397 = 1
 ENDIF
@@ -2754,11 +2759,9 @@ ENDIF
 IF TFLAG:23 == 3 && CFLAG:398 == 0
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+;		PRINTFORMW 
 	ELSE
-		PRINTFORMW 
+;		PRINTFORMW 
 	ENDIF
 		CFLAG:398 = 1
 ENDIF
@@ -2770,27 +2773,27 @@ ENDIF
 IF TFLAG:24 == 3 && CFLAG:399 < 3
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+;		PRINTFORMW 
 	ELSE
-		PRINTFORMW 
+;		PRINTFORMW 
 	ENDIF
 		CFLAG:399 = 3
 ;既成事実Lv2
 ELSEIF TFLAG:24 == 2 && CFLAG:399 < 2
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+;		PRINTFORMW 
 	ELSE
-		PRINTFORMW 
+;		PRINTFORMW 
 	ENDIF
 		CFLAG:399 = 2
 ;既成事実Lv1
 ELSEIF TFLAG:24 == 1 && CFLAG:399 < 1
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+;		PRINTFORMW 
 	ELSE
-		PRINTFORMW 
+;		PRINTFORMW 
 	ENDIF
 		CFLAG:399 = 1
 ENDIF
@@ -2802,27 +2805,27 @@ ENDIF
 IF TFLAG:21 == 3 && CFLAG:400 < 3
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+		PRINTFORMW （耐えろ自分！これはずんねえさまの……ずんねえさまのため……）
 	ELSE
-		PRINTFORMW 
+		PRINTFORMW （耐えろ自分！これはずんねえさまの……ずんねえさまのため……）
 	ENDIF
 		CFLAG:400 = 3
 ;反発感情Lv2
 ELSEIF TFLAG:21 == 2 && CFLAG:400 < 2
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+		PRINTFORMW （いくら%CSTR:1%でも、これはちょっと……）
 	ELSE
-		PRINTFORMW 
+		PRINTFORMW （このひとやっぱり変だ……どうしよう）
 	ENDIF
 		CFLAG:400 = 2
 ;反発感情Lv1
 ELSEIF TFLAG:21 == 1 && CFLAG:400 < 1
 	;恋慕
 	IF TALENT:85 == 1
-		PRINTFORMW 
+		PRINTFORMW （うう、我慢、我慢……）
 	ELSE
-		PRINTFORMW 
+		PRINTFORMW （うう、やっぱり変な人じゃないかなこの人……）
 	ENDIF
 		CFLAG:400 = 1
 ENDIF
@@ -2976,6 +2979,13 @@ IF SELECTCOM == 301
 				PRINTFORMW 「親ですか、親は……その……」
 				PRINTFORMW ああ、無理に話さなくてもいいんだ
 				PRINTFORMW 「……すみません」
+			ELSEIF RAND:2 == 1
+				PRINTFORMW きりたんって学校に通ってるんだよね
+				PRINTFORMW 「はい」
+				PRINTFORMW 友達とはどんな遊びしてるの？
+				PRINTFORMW 「………」
+				PRINTFORMW ………
+				PRINTFORMW ……なるほどなぁ
 			ELSE
 				PRINTFORMW きりたんって学校に通ってるんだよね
 				PRINTFORMW 「はい」
@@ -2987,7 +2997,7 @@ IF SELECTCOM == 301
 		;親愛
 		ELSEIF TALENT:88
 			IF RAND:3 == 0
-				PRINTFORML 「あにさま～、ゲーム買ってください～」
+				PRINTFORML 「%CSTR:1%～、ゲーム買ってください～」
 				PRINTFORMW きりたんが媚び媚びの声色で、しかも身体を押し付けながらお願いをしてくる
 				PRINTFORMW ぐ、こんな色仕掛けに負けるわけには……
 				PRINTFORML 「買ってくださいよぉ～」
@@ -3002,7 +3012,7 @@ IF SELECTCOM == 301
 		;恋人かつ恋慕
 		ELSEIF TALENT:85 && TALENT:153
 			IF CFLAG:402 == 300 || CFLAG:402 < 300 
-				PRINTFORML 「あにさま～、お願いがあるんですけど～」
+				PRINTFORML 「%CSTR:1%～、お願いがあるんですけど～」
 				PRINTFORMW きりたんが媚び媚びの声色でおねだりをしてくる
 				PRINTFORML 「新しいゲーム、買ってくれませんかぁ？」
 				PRINTFORMW 駄目だ
@@ -3013,7 +3023,7 @@ IF SELECTCOM == 301
 				PRINTFORMW 
 				CFLAG:402 == 302
 			ELSE
-				PRINTFORMW 「あにさまと話していると、時間を忘れますね」
+				PRINTFORMW 「%CSTR:1%と話していると、時間を忘れますね」
 				PRINTFORMW 「ゲームする時間よりも楽しいです」
 				CFLAG:402 == 300
 			ENDIF
@@ -3068,7 +3078,7 @@ IF SELECTCOM == 301
 				PRINTFORMW 普通の女子高生というにはいささかハイスペックな気もするが……
 					CFLAG:402 == 206
 			ELSE
-				PRINTFORMW 「あにさま、新しいゲーム買ってください」
+				PRINTFORMW 「%CSTR:1%、新しいゲーム買ってください」
 				PRINTFORMW この前買ったばかりじゃないか……
 				PRINTFORMW 「買ってー買ってー」
 				PRINTFORMW ……きりたんもこういうところは歳相応なんだな
@@ -3100,7 +3110,7 @@ IF SELECTCOM == 301
 				PRINTFORMW ……近頃の子供はなんて危険な遊びをやっているんだ
 				CFLAG:402 == 103
 			ELSEIF CFLAG:402 == 103
-				PRINTFORMW 「あにさまの好きなゲームって何ですか？」
+				PRINTFORMW 「%CSTR:1%の好きなゲームって何ですか？」
 				PRINTFORMW 好きなゲームか……ゲームはあまりやらないのだが
 				PRINTFORMW 強いて言えばポケモンは昔やっていただろうか
 				PRINTFORMW 「ポケモンですか、ポケモンは……ネット対戦のガルーラが強すぎてやめちゃいましたね」
@@ -3111,7 +3121,7 @@ IF SELECTCOM == 301
 				PRINTFORMW ……話についていけそうにない
 				CFLAG:402 == 104
 			ELSE
-				PRINTFORMW 「あにさまが安全そうな人で良かった」
+				PRINTFORMW 「%CSTR:1%が安全そうな人で良かった」
 				PRINTFORMW 「だって、もしこれが不審者に捕まってたら、いまごろ私は……私は……」
 				PRINTFORMW 「……あまり考えないことにしましょう」
 				CFLAG:402 == 100
@@ -3135,12 +3145,12 @@ IF SELECTCOM == 302
 				PRINTFORMW 「えへへ、私まで嬉しくなっちゃいます」
 			;お酒
 			ELSEIF TFLAG:17 == 1
-				PRINTFORMW 「うわ、あにさまもしかして私を酔わせて襲おうとしてません？」
+				PRINTFORMW 「うわ、%CSTR:1%もしかして私を酔わせて襲おうとしてません？」
 				PRINTFORMW 「このスケベ」
 			;日用品、ここではゲーム
 			ELSEIF TFLAG:17 == 2
 				PRINTFORMW 「あっ、最新作のゲームじゃないですか！ありがとうございます！」
-				PRINTFORMW 「あにさま、一緒に遊びましょう！」
+				PRINTFORMW 「%CSTR:1%、一緒に遊びましょう！」
 			;アクセサリ
 			ELSEIF TFLAG:17 == 3
 				SELECTCASE RAND:2
@@ -3175,7 +3185,7 @@ IF SELECTCOM == 302
 				PRINTFORMW 「じゃあ、一口だけこっそりいただきます」
 			ELSEIF TFLAG:17 == 2
 				PRINTFORMW 「わーーーいゲームだ！」
-				PRINTFORMW 「あにさま、一緒に遊びましょう！」
+				PRINTFORMW 「%CSTR:1%、一緒に遊びましょう！」
 			ELSEIF TFLAG:17 == 3
 				PRINTFORMW 「お、このずんねえさまストラップ、欲しかったやつなんですよ」
 				PRINTFORMW 「ありがとうございます」
@@ -3241,7 +3251,7 @@ IF SELECTCOM == 303
 		IF TALENT:相愛 == 1 && RAND:15 == 0
 			PRINTFORMW きりたんのお腹をぽんぽんと触っている
 			PRINTFORMW 「えへへ……」
-			PRINTFORMW 「あにさまは何人くらい、子供欲しいですか？」
+			PRINTFORMW 「%CSTR:1%は何人くらい、子供欲しいですか？」
 		;恋慕または恋人
 		ELSEIF TALENT:恋慕 || TALENT:恋人
 			LOCAL = RAND:9
@@ -3303,7 +3313,7 @@ IF SELECTCOM == 303
 				PRINTFORMW 「私のふともももすべすべな自信があります」
 				PRINTFORMW 「なんってったって、あのずんねえさまの妹ですからね！」
 				PRINTFORMW にしては筋肉が足りなくてぷよぷよだ。もっと運動するべきではなかろうか
-				PRINTFORMW 「触らせてあげてるのに、何様ですかあにさまは……」
+				PRINTFORMW 「触らせてあげてるのに、何様ですか%CSTR:1%は……」
 			ENDIF
 		;それ以外
 		ELSE
@@ -3312,7 +3322,7 @@ IF SELECTCOM == 303
 				PRINTFORMW きりたんは難しい顔をして、自分への接触を許している
 				PRINTFORMW 「う～～～～～～～～ん」
 			ELSE
-				PRINTFORMW 「まぁ、あにさまがそういうなら触ってもいいですよ……」
+				PRINTFORMW 「まぁ、%CSTR:1%がそういうなら触ってもいいですよ……」
 			ENDIF
 		ENDIF
 	ENDIF
@@ -3324,7 +3334,7 @@ ENDIF
 IF SELECTCOM == 304
 	;初めて
 	IF CFLAG:408 == 0
-		PRINTFORMW 「あにさま、よろしければ一緒にゲームやりませんか？」
+		PRINTFORMW 「%CSTR:1%、よろしければ一緒にゲームやりませんか？」
 		CFLAG:408 = 1
 	;二回目以降
 	ELSE
@@ -3337,7 +3347,7 @@ IF SELECTCOM == 304
 				;フォートナイト
 				PRINTFORMW きりたんと一緒に対人シューティングゲームをやっている
 				PRINTFORMW ……が、自分はあっさりやられてしまった
-				PRINTFORMW 「なっさけないですねー、あにさま」
+				PRINTFORMW 「なっさけないですねー、%CSTR:1%」
 				PRINTFORMW 「崖の上にあがるときは、ちゃんとふもとをクリアリングしましょう」
 			ELSEIF LOCAL == 1
 				PRINTFORMW きりたんと一緒に対人シューティングゲームをやっている
@@ -3348,7 +3358,7 @@ IF SELECTCOM == 304
 				;ぷよテト
 				PRINTFORMW きりたんと一緒に落ちものパズルゲームをやっている
 				PRINTFORMW 片方はテトリスを、もう片方はぷよぷよをやるという、異種格闘技のようなゲームだ
-				PRINTFORMW 「あにさまは、テトリスはうまいですね」
+				PRINTFORMW 「%CSTR:1%は、テトリスはうまいですね」
 				PRINTFORMW まあ、Tスピンが好きで子供のころは沢山やってたからな
 				PRINTFORMW 「DT砲とか覚えればもっと強くなりそうな気がします」
 			ELSEIF LOCAL == 3
@@ -3465,7 +3475,7 @@ IF SELECTCOM == 311
 			PRINTFORMW きりたんはデレデレとした表情を浮かべている
 		ELSE
 			PRINTFORML 「あは、あはは……」
-			PRINTFORMW 「あにさまは、冗談がお得意のようですね」
+			PRINTFORMW 「%CSTR:1%は、冗談がお得意のようですね」
 			PRINTFORMW そうは言いつつも、きりたんは照れているようだ
 		ENDIF
 	ENDIF
@@ -3473,15 +3483,18 @@ ENDIF
 
 
 ;-------------------------------------------------
-;頭を撫でる CFLAG538
+;頭を撫でる CFLAG538,CFLAG539
 ;成功判定はTFLAG:18 -1:失敗 / 0:成功 / 1:大成功
 ;TFLAG:45 0:主人公が頭を撫でる 1:キャラクターが主人公の頭を撫でる
 ;-------------------------------------------------
 IF SELECTCOM == 312
-	;初めて
-	IF CFLAG:538 == 0
-		;主導権が主人公
-		IF TFLAG:45 == 0
+	;-------------------------------------
+	;主導権が主人公
+	;-------------------------------------
+	IF TFLAG:45 == 0
+
+		;初めて
+		IF CFLAG:538 == 0
 			PRINTFORMW 「私の頭を撫でたいんですか？」
 			;失敗
 			IF TFLAG:18 == -1
@@ -3495,9 +3508,55 @@ IF SELECTCOM == 312
 				PRINTFORMW ！
 				PRINTFORMW きりたんの頭の包丁がぴこぴこ動いている……！
 			ENDIF
+			CFLAG:538 = 1
 			
-		;主導権が相手
-		ELSEIF TFLAG:45 == 1
+		;二回目以降
+		ELSE
+		
+		
+			;恋慕
+			IF TALENT:恋慕 == 1
+				;失敗
+				IF TFLAG:18 == -1
+					PRINTFORMW 「うーん……」
+					PRINTFORMW きりたんは難しい表情をしている。なでなでされる気分ではなかったようだ
+				;成功
+				ELSEIF TFLAG:18 == 0
+					PRINTFORMW 「うーん」
+					PRINTFORMW 「まあ、いくらでも触らせてあげますよ、私はかわいいので」
+					PRINTFORMW きりたんが少し調子に乗っている
+				;大成功
+				ELSE
+					PRINTFORMW 「えへへ……」
+					PRINTFORMW きりたんの頭の包丁がぴこぴこと動いている
+				ENDIF
+			;恋慕ではない
+			ELSE
+				;失敗
+				IF TFLAG:18 == -1
+					PRINTFORMW 「うーん……」
+					PRINTFORMW きりたんは難しい表情をしている。なでなでされる気分ではなかったようだ
+				;成功
+				ELSEIF TFLAG:18 == 0
+					PRINTFORMW 「うーん」
+					PRINTFORMW 「私は小動物ではないんですが……」
+				;大成功
+				ELSE
+					PRINTFORMW 「う、うーーーん……」
+					PRINTFORMW きりたんの頭の包丁がぴこぴこと動いている
+					PRINTFORMW 複雑そうな言葉とは裏腹に、なんだか嬉しそうだ
+				ENDIF
+			ENDIF
+		
+			CFLAG:538 = 2
+		ENDIF
+	;-------------------------------------
+	;主導権が相手
+	ELSEIF TFLAG:45 == 1
+	
+		;初めて
+		IF CFLAG:539 == 0
+		
 			PRINTFORMW 「頭を撫でて欲しいんですか？」
 			PRINTFORMW 「まあ、確かにお世話にはなってますが……」
 			PRINTFORMW しつこくお願いすると、きりたんはしぶしぶ撫でてくれた
@@ -3508,17 +3567,54 @@ IF SELECTCOM == 312
 			;成功
 			ELSE
 				PRINTFORMW 「うーん」
-				PRINTFORMW 「まあ、あにさまもいろいろお疲れだったんですね、よしよし」
+				PRINTFORMW 「まあ、%CSTR:1%もいろいろお疲れだったんですね、よしよし」
 			ENDIF
-		ENDIF
-		CFLAG:538 = 1
-	;二回目以降
-	ELSE
-	
-		;主導権が主人公
-		IF TFLAG:45 == 0
-		;主導権が相手
-		ELSEIF TFLAG:45 == 1
+			
+		
+			CFLAG:539 = 1
+		;二回目以降
+		ELSE
+		
+			;恋慕
+			IF TALENT:恋慕 == 1
+				;失敗
+				IF TFLAG:18 == -1
+					PRINTFORMW 「う～～～～～～～～～～ん……」
+					PRINTFORMW 「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」
+				;成功
+				ELSEIF TFLAG:18 == 0
+					PRINTFORMW 「よしよし、いつもお疲れ様でした」
+					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
+					PRINTFORMW 気持ちがいい……
+					;ママ……
+				;大成功
+				ELSE
+					PRINTFORMW 「おーよしよし、いつもお疲れ様でした」
+					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
+					PRINTFORMW 気持ちがいい……
+					PRINTFORMW 「元気になりましたか？」
+					PRINTFORMW もちろん。きりたんのおかげで癒やされた
+					PRINTFORMW 「そうですか。それはよかったです」
+				ENDIF
+			;恋慕ではない
+			ELSE
+				;失敗
+				IF TFLAG:18 == -1
+					PRINTFORMW 「う～～～～～～～～～～ん……」
+					PRINTFORMW 「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」
+				;成功
+				ELSEIF TFLAG:18 == 0
+					PRINTFORMW 「はいはい、いつもお疲れ様でした」
+					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
+				;大成功
+				ELSE
+					PRINTFORMW 「よしよし、いつもお疲れ様でした」
+					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
+					PRINTFORMW 気持ちがいい……
+				ENDIF
+			ENDIF
+			
+			CFLAG:539 = 2
 		ENDIF
 	
 	ENDIF
@@ -3553,7 +3649,7 @@ IF SELECTCOM == 315
 				PRINTFORMW 「雨……」
 				PRINTFORMW 「手、にぎってもいいですか？」
 			ELSE
-				PRINTFORMW 「まあ、あにさまと一緒なら、外もそんなに退屈でもないですね」
+				PRINTFORMW 「まあ、%CSTR:1%と一緒なら、外もそんなに退屈でもないですね」
 				PRINTFORMW きりたんはまんざらでもなさそうにしている
 			ENDIF
 			
@@ -3591,7 +3687,7 @@ IF SELECTCOM == 320
 			CFLAG:404 = 6
 		;恋人
 		ELSEIF TALENT:153 == 1 && (CFLAG:404 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「あにさまが飲んでるそのミルク、美味しそうですね」
+			PRINTFORMW 「%CSTR:1%が飲んでるそのミルク、美味しそうですね」
 			PRINTFORMW 「え、これお酒なんですか！」
 			CFLAG:404 = 5
 		;キス経験有り
@@ -3655,7 +3751,7 @@ IF SELECTCOM == 321
 		CASE 2
 			;恋慕または恋人
 			IF (TALENT:85 == 1 || TALENT:153 == 1 ) && (CFLAG:406 < 6 || FLAG:7 == 2)
-				PRINTFORML 「あにさま、そ、その、手離さないでくださいね」
+				PRINTFORML 「%CSTR:1%、そ、その、手離さないでくださいね」
 				PRINTFORMW はいはい、と震えるきりたんに言葉をかける
 				CFLAG:406 = 6
 			;それ以外
@@ -3969,10 +4065,10 @@ IF SELECTCOM == 0
 		;合意
 		IF TALENT:152 == 1
 			PRINTFORMW 「ぁ……」
-			PRINTFORMW （あにさまの手って、こんなに大きかったんだ……）
+			PRINTFORMW （%CSTR:1%の手って、こんなに大きかったんだ……）
 		ELSE
 			PRINTFORMW 「ぁ……」
-			PRINTFORMW （あにさまの手って、こんなに大きかったんだ……）
+			PRINTFORMW （%CSTR:1%の手って、こんなに大きかったんだ……）
 		ENDIF
 			CFLAG:416 = 1
 	;二回目以降
@@ -4105,17 +4201,17 @@ IF SELECTCOM == 3 && TEQUIP:18 == 0 && TEQUIP:53 == 0
 	ELSE
 		;恋慕+自慰中毒Lv5以上
 		IF TALENT:85 == 1 && ABL:10 >= 5 && (CFLAG:419 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「あにさま、私のえっちな姿、いーっぱい見てくださいね」
+			PRINTFORMW 「%CSTR:1%、私のえっちな姿、いーっぱい見てくださいね」
 			PRINTFORMW きりたん自慰を見られて興奮しているようだ。激しく自分の手で体をまさぐっている
 			CFLAG:419 = 5
 		;恋慕
 		ELSEIF TALENT:85 == 1 && (CFLAG:419 < 4 || FLAG:7 == 2)
 			B = RAND:3
 			IF B == 0
-				PRINTFORMW 「えへへっ、あにさまのために、いーっぱい自分で練習してきたんですよ」
+				PRINTFORMW 「えへへっ、%CSTR:1%のために、いーっぱい自分で練習してきたんですよ」
 				PRINTFORMW 「んっ……んふっ……きもちぃ、んあっ」
 			ELSEIF B == 1
-				PRINTFORMW 「あにさまにいろいろ教えてもらって、ひとりでも気持ちよくなれるようになってきました」
+				PRINTFORMW 「%CSTR:1%にいろいろ教えてもらって、ひとりでも気持ちよくなれるようになってきました」
 				PRINTFORMW 「あはははっ、こうやって、びりびりってして、ふわーってなるんです」
 				PRINTFORMW 「これっ、んんっ、やみつきになりますね」
 			ELSE
@@ -5100,7 +5196,7 @@ IF SELECTCOM == 30
 	ELSE
 		;恋慕+奉仕精神Lv5以上
 		IF TALENT:85 == 1 && ABL:6 >= 5 && (CFLAG:441 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「あにさまってば、おちんちん握られるとしおらしくなっちゃって」
+			PRINTFORMW 「%CSTR:1%ってば、おちんちん握られるとしおらしくなっちゃって」
 			PRINTFORMW 「なんだか、かわいいですね」
 			PRINTFORMW 「○学五年生にこのザマなんて、恥ずかしくないんですか」
 			CFLAG:441 = 5
@@ -5148,7 +5244,7 @@ IF SELECTCOM == 31
 			PRINTFORMW そんな、もう少しで出そうなのに、と我ながら情けなく抗議する
 			PRINTFORMW 「じゃあ、『きりたんの口の中に精液出させてください』、ってお願いしてみてください」
 			PRINTFORMW 少しためらったが──『きりたんのお口の中に精液を出させてください、お願いします』と告げた
-			PRINTFORMW 「しょうがないあにさまですねー」
+			PRINTFORMW 「しょうがない%CSTR:1%ですねー」
 			PRINTFORMW 「ほら、私のお口でイッちゃいましょう」
 			PRINTFORMW 股間にぬるりとした感覚が再び広がる
 			PRINTFORMW 望んでいた快感が一気に放出され──
@@ -5277,11 +5373,11 @@ IF SELECTCOM == 34
 			PRINTFORMW 「ほーら、イッちゃえ、イッちゃえ」
 			PRINTFORMW 「小学五年生の、出しちゃいけないはずの中に搾り取られて、情けなくイッちゃえ」
 			PRINTFORMW びゅるびゅると股間から精液が排出され、きりたんの膣内に精液が送り出される
-			PRINTFORMW 「あははははっ、出した、出しちゃいましたねあにさま」
+			PRINTFORMW 「あははははっ、出した、出しちゃいましたね%CSTR:1%」
 			PRINTFORMW 「きりたん、子供できちゃいますよ？いいんですか？」
 			PRINTFORMW じわじわと背徳感がこみ上げてくる。きりたんが淫靡に腰を振り続けたのが悪いとはいえ、自分はまだこんな小さい子供になんてことを──
-			PRINTFORMW 「冗談ですよ、あにさま」
-			PRINTFORMW 「私、あにさまとの子供なら喜んで産みます。だから──」
+			PRINTFORMW 「冗談ですよ、%CSTR:1%」
+			PRINTFORMW 「私、%CSTR:1%との子供なら喜んで産みます。だから──」
 			PRINTFORMW きりたんは耳元でこう囁く
 			PRINTFORMW 「──これからも、いっぱいえっちしましょうね」
 		CFLAG:445 = 10
@@ -5290,7 +5386,7 @@ IF SELECTCOM == 34
 			PRINTFORMW 「ほーら、だしちゃえ、小５ロリまんこに中出ししちゃえ」
 			PRINTFORMW どこで覚えたのか、きりたんは淫猥な言葉を並べながら腰の抽送を続けている
 			PRINTFORMW 「あははっ、いっぱい出ましたね」
-			PRINTFORMW 「あにさまの精液、暖かくて、大好きです」
+			PRINTFORMW 「%CSTR:1%の精液、暖かくて、大好きです」
 		CFLAG:445 = 11
 	 	
 		;恋慕+V感覚Lv5以上+奉仕精神Lv5以上
@@ -5567,12 +5663,12 @@ IF SELECTCOM == 57 && TEQUIP:57
 	;恋慕+露出癖Lv5以上
 	IF TALENT:85 == 1 && ABL:7 >= 5 && (CFLAG:451 < 5 || FLAG:7 == 2)
 		PRINTFORMW 「えへへ……私の恥ずかしいところ、まるみえですね」
-		PRINTFORMW 「あにさまもじっくり鑑賞してくださいね」
+		PRINTFORMW 「%CSTR:1%もじっくり鑑賞してくださいね」
 		CFLAG:451 = 5
 	;恋慕
 	ELSEIF TALENT:85 == 1 && (CFLAG:451 < 4 || FLAG:7 == 2)
 		PRINTFORMW 「わ、わぁ……」
-		PRINTFORMW （私、あにさまとするときこんなにとろけた表情してるんだ……）
+		PRINTFORMW （私、%CSTR:1%とするときこんなにとろけた表情してるんだ……）
 		CFLAG:451 = 4
 	;合意or恋人
 	ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:451 < 3 || FLAG:7 == 2)
@@ -5615,13 +5711,13 @@ ENDIF
 IF SELECTCOM == 58 && TEQUIP:58
 	;親愛
 	IF TALENT:88 == 1 && (CFLAG:453 < 5 || FLAG:7 == 2)
-		PRINTFORMW 「あにさま、お背中洗いますね」
+		PRINTFORMW 「%CSTR:1%、お背中洗いますね」
 		PRINTFORMW きりたんが小さな手で一生懸命自分の背中を洗ってくれている
 		CFLAG:453 = 5
 	;恋慕
 	ELSEIF TALENT:85 == 1 && (CFLAG:453 < 4 || FLAG:7 == 2)
 		PRINTFORMW 「お風呂ですか、いいですよ」
-		PRINTFORMW 「わっ。あにさまのそれ、おおきくなってる……」
+		PRINTFORMW 「わっ。%CSTR:1%のそれ、おおきくなってる……」
 		CFLAG:453 = 4
 	;合意or恋人
 	ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:453 < 3 || FLAG:7 == 2)
@@ -5707,7 +5803,7 @@ ENDIF
 IF SELECTCOM == 69
 	;初めて
 	IF CFLAG:457 == 0
-		PRINTFORMW 「えーっと、私があにさまの顔にまたがって、おちんちんを舐めるんですか？」
+		PRINTFORMW 「えーっと、私が%CSTR:1%の顔にまたがって、おちんちんを舐めるんですか？」
 		PRINTFORMW 「わかりました、やってみましょう」
 		CFLAG:457 = 1
 	;二回目以降
@@ -8953,7 +9049,7 @@ IF C && D == 1
 		;C強絶頂以上
 		IF NOWEX:0 > 1
 			PRINTL 「はぁっ、あっ、いいっ、くるっ、」
-			PRINTW 「きちゃう、すごいよっ、あにさまっ、ああっ──！」」
+			PRINTW 「きちゃう、すごいよっ、%CSTR:1%っ、ああっ──！」」
 		ELSE
 			PRINTL 「あ、あ……これ、すご……」
 			PRINTW 「だめ、きちゃいます……ああっ──！」
@@ -8984,7 +9080,7 @@ ELSEIF V && D == 1
 	ELSEIF TALENT:85
 		;V強絶頂以上
 		IF NOWEX:1 > 1
-			PRINTL 「あっ、あっ、あっ、あっ……あにさまっ、好きです、」
+			PRINTL 「あっ、あっ、あっ、あっ……%CSTR:1%っ、好きです、」
 			PRINTW 「んっ、んん──！」
 			PRINTL きりたんは腰をブリッジさせ、Ｇスポットを強く押し付け絶頂した
 			PRINTW 秘所からはとめどなく愛液が溢れ出て来る
