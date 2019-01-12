@@ -1,4 +1,4 @@
-;-------------------------------------------------
+﻿;-------------------------------------------------
 ;Ｊ＋用きりたんサンプル口上
 ;サンプル。途中まで作って投げ出した。
 
@@ -230,7 +230,7 @@ IF TFLAG:600 == 28
 	PRINTFORMW 「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」
 IF CSTR:1 == CALLNAME:MASTER
 	PRINTFORMW 改めてそう呼ばれるとすこし気恥かしいが、構わない、と伝えた
-ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
+ELSEIF CSTR:1 == "あにさま" || CSTR:1 == "マスター"
 	PRINTFORMW 随分と珍しい呼ばれ方に少し驚いたが、構わない、と伝えた
 ELSE
 	PRINTFORMW 構わない、と伝えた
@@ -1914,50 +1914,26 @@ IF TFLAG:13 == 23
 				;昼
 				IF TIME == 0
 					IF B == 0
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 					ELSEIF B == 1
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 					ELSE
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 					ENDIF
 				;夜
 				ELSE
 					IF B == 0
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 					ELSEIF B == 1
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 					ELSE
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
-						PRINTFORMW 
+						;PRINTFORMW 
 						
 					ENDIF
 				ENDIF
 			;上記３つがどれもない
 			ELSE
-				PRINTFORMW 
-				PRINTFORMW 
+						;PRINTFORMW 
 			ENDIF
 		;出産前
 		ELSE
@@ -1965,31 +1941,20 @@ IF TFLAG:13 == 23
 			;恋慕or相愛or恋人
 			IF TALENT:153 == 1 || TALENT:85 == 1 || TALENT:89 == 1
 				IF B == 0
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
+						;PRINTFORMW 
 				ELSEIF B == 1
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
+						;PRINTFORMW 
 				ELSE
-					PRINTFORMW 
-					PRINTFORMW 
-					PRINTFORMW 
+						;PRINTFORMW 
 				ENDIF
 			;上記３つがどれもない
 			ELSE
 				IF B == 0
-					PRINTFORMW 
-					PRINTFORMW 
+						;PRINTFORMW 
 				ELSEIF B == 1
-					PRINTFORMW 
+						;PRINTFORMW 
 				ELSE
-					PRINTFORMW 
-					PRINTFORMW 
+						;PRINTFORMW 
 				ENDIF
 			ENDIF
 		ENDIF
@@ -2019,12 +1984,10 @@ ENDIF
 IF TFLAG:13 == 34
 	;恋慕
 	IF TALENT:85
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+		;PRINTFORMW 
 	;それ以外
 	ELSE
-		PRINTFORMW 
+		;PRINTFORMW 
 	ENDIF
 ENDIF
 
@@ -2032,13 +1995,6 @@ ENDIF
 ;【親愛】取得（親密15以上奉仕精神15以上好感度10000以上かつ異常経験が初期値から増えていない）
 ;----------------------------------------------------------------
 IF TFLAG:13 == 35
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
 	PRINTFORMW 
 ENDIF
 
@@ -2475,9 +2431,6 @@ IF CFLAG:201 == 0
 	IF TALENT:150 == 1
 		PRINTFORMW 「ここが食卓、あそこの部屋がこれから泊まる私の部屋ですね」
 		PRINTFORMW 「本日からよろしくお願いいたします。」
-	;それ以外
-	;ELSE
-	;	PRINTFORMW 
 	ENDIF
 		CFLAG:201 = 1
 	RETURN 1
@@ -2844,6 +2797,7 @@ SIF TEQUIP:45 && SELECTCOM != 45
 ;コマンド実行時のセリフ CFLAG 401～500を使用
 ;-------------------------------------------------
 
+	PRINTL
 ;～～～～～～～～～～～～～～～～～～～～～～～～～
 ;コミュニケーション系コマンド
 ;～～～～～～～～～～～～～～～～～～～～～～～～～
@@ -3147,7 +3101,7 @@ IF SELECTCOM == 302
 			ELSEIF TFLAG:17 == 1
 				PRINTFORMW 「うわ、%CSTR:1%もしかして私を酔わせて襲おうとしてません？」
 				PRINTFORMW 「このスケベ」
-			;日用品、ここではゲーム
+			;ゲーム
 			ELSEIF TFLAG:17 == 2
 				PRINTFORMW 「あっ、最新作のゲームじゃないですか！ありがとうございます！」
 				PRINTFORMW 「%CSTR:1%、一緒に遊びましょう！」
@@ -3206,8 +3160,8 @@ IF SELECTCOM == 302
 				PRINTFORMW 「お酒ですか？あんまり飲まないほうがいいと思うんですけど……」
 				PRINTFORMW 「ありがとうございます。」
 			ELSEIF TFLAG:17 == 2
-				PRINTFORMW 「あ、これはかわいい文房具ですね」
-				PRINTFORMW 「ありがとうございます」
+				PRINTFORMW 「あっ、最新作のゲームじゃないですか！ありがとうございます！」
+				PRINTFORMW 「私、このゲーム欲しかったんですよねー」
 			ELSEIF TFLAG:17 == 3
 				PRINTFORMW 「ネックレスですか？私にはあんまり似合わないと思いますけど……」
 			ELSEIF TFLAG:17 == 4
@@ -3483,7 +3437,7 @@ ENDIF
 
 
 ;-------------------------------------------------
-;頭を撫でる CFLAG538,CFLAG539
+;頭を撫でる CFLAG538
 ;成功判定はTFLAG:18 -1:失敗 / 0:成功 / 1:大成功
 ;TFLAG:45 0:主人公が頭を撫でる 1:キャラクターが主人公の頭を撫でる
 ;-------------------------------------------------
@@ -3494,7 +3448,7 @@ IF SELECTCOM == 312
 	IF TFLAG:45 == 0
 
 		;初めて
-		IF CFLAG:538 == 0
+		IF !(CFLAG:538 & 1p0)
 			PRINTFORMW 「私の頭を撫でたいんですか？」
 			;失敗
 			IF TFLAG:18 == -1
@@ -3508,7 +3462,7 @@ IF SELECTCOM == 312
 				PRINTFORMW ！
 				PRINTFORMW きりたんの頭の包丁がぴこぴこ動いている……！
 			ENDIF
-			CFLAG:538 = 1
+			CFLAG:538 |= 1p0
 			
 		;二回目以降
 		ELSE
@@ -3548,14 +3502,14 @@ IF SELECTCOM == 312
 				ENDIF
 			ENDIF
 		
-			CFLAG:538 = 2
+			CFLAG:538 |= 1p0
 		ENDIF
 	;-------------------------------------
 	;主導権が相手
 	ELSEIF TFLAG:45 == 1
 	
 		;初めて
-		IF CFLAG:539 == 0
+		IF !(CFLAG:538 & 1p1)
 		
 			PRINTFORMW 「頭を撫でて欲しいんですか？」
 			PRINTFORMW 「まあ、確かにお世話にはなってますが……」
@@ -3571,7 +3525,7 @@ IF SELECTCOM == 312
 			ENDIF
 			
 		
-			CFLAG:539 = 1
+			CFLAG:538 |= 1p1
 		;二回目以降
 		ELSE
 		
@@ -3614,9 +3568,74 @@ IF SELECTCOM == 312
 				ENDIF
 			ENDIF
 			
-			CFLAG:539 = 2
+			CFLAG:538 |= 1p1
 		ENDIF
 	
+	ENDIF
+ENDIF
+
+
+;-------------------------------------------------
+;願掛け CFLAG539
+;TFLAG:17のパターンで口上変化
+;2:七夕
+;3:流星雨
+;4:流星
+;(0,1は東方固有のものだったのでパージ)
+;-------------------------------------------------
+IF SELECTCOM == 313
+	;初めて
+	IF CFLAG:539 == 0
+		PRINTFORML 「うわぁ、きれいな星空……」
+		PRINTFORMW 頭上には壮麗な星空が輝いていた。どの方角を見てもきらきらと小さな光が灯っている
+		PRINTFORML 「あまり外に出たことなかったから、こういうの見るの初めてですね」
+		PRINTFORMW 外もたまにはいいだろう？ときりたんに問いかける
+		PRINTFORML 「うーん、でもやっぱり楽しさでいえばゲームのほうが上ですね」
+		PRINTFORMW そうか……
+	ELSE
+		SELECTCASE TFLAG:17
+		;七夕
+		CASE 2
+			;失敗
+			IF TFLAG:18 == -1
+				PRINTFORMW 「短冊に字書くの難しくないですか？」
+				PRINTFORMW いくらなんでも、その歳で字が書けないことはないだろう
+				PRINTFORMW 「だってほら、吊るした状態で書こうとすると紙が安定しないじゃないですか」
+				PRINTFORMW なんであらかじめ書いてから吊るさないんだ？
+				PRINTFORMW 「……ああ、そういう手もあるんですね」
+				PRINTFORMW その手しか知りません
+			ELSE
+				PRINTFORML きりたんが何を祈願したのか気になったので
+				PRINTFORML 短冊を覗いたところ、
+				PRINTFORML 『ゲームがうまくなりたい』
+				PRINTFORML と書かれていた……
+			ENDIF
+		;流星雨
+		CASE 3
+			;失敗
+			IF TFLAG:18 == -1
+				PRINTFORMW 「流れ星いっぱいですね」
+				PRINTFORMW 願い事は言わなくてもいいのか？
+				PRINTFORMW 「あぁ……」
+				PRINTFORMW 今の今までそんなこと忘れてた、という表情をしている
+			ELSE
+				PRINTFORMW 空に流れ星がとめどなく輝いている
+				PRINTFORMW 「ずんねえさまずんねえさまずんねえさま」
+				PRINTFORMW ……それは何が叶う願い事なんだ？
+			ENDIF
+		;流星
+		CASE 4
+			;失敗
+			IF TFLAG:18 == -1
+				PRINTFORMW 「流れ星が落ちるまでに3回願い事を言うって、無理ゲーじゃないですか！？」
+				PRINTFORMW そう言われましても……
+			ELSE
+				PRINTFORMW 空に流れ星がとめどなく輝いている
+				PRINTFORMW 「ずんねえさまずんねえさまずんねえさま」
+				PRINTFORMW ……それは何が叶う願い事なんだ？
+			ENDIF
+		ENDSELECT
+		
 	ENDIF
 ENDIF
 
