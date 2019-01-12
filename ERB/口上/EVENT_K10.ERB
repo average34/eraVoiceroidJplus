@@ -140,7 +140,7 @@ ENDIF
 
 ;----------------------------------------------------------------
 ;デート先追加
-;ここでCFLAG:782を設定することと@DATE_DATE_K11にてSAVESTR:6・7を設定するとことで
+;ここでCFLAG:782を設定することと@DATE_DATE_K10にてSAVESTR:6・7を設定するとことで
 ;口上独自のデート場所を追加設定することができる
 ;なお、CFLAG:782 = 1（幻想郷のみ）　CFLAG:782 = 2(外界のみ)　CFLAG:782 = 3（両方追加）
 ;と、なっているので利用する場合は-1の部分を適当な数値に置き換えてください。
@@ -301,21 +301,14 @@ IF TFLAG:600 == 1
 	;デート経験有り&恋慕
 	IF EXP:94 > 0 && TALENT:85 == 1
 		PRINTFORMW 
-		PRINTFORMW 
 	;デート経験有り
 	ELSEIF EXP:94 > 0
-		PRINTFORMW 
 		PRINTFORMW 
 	;恋慕
 	ELSEIF TALENT:85 == 1
 		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 	;それ以外
 	ELSE
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 		PRINTFORMW 
 	ENDIF
 ENDIF
@@ -327,21 +320,8 @@ IF TFLAG:600 == 2
 	;恋慕
 	IF TALENT:85
 		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 	;それ以外
 	ELSE
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 		PRINTFORMW 
 	ENDIF
 ENDIF
@@ -375,10 +355,8 @@ IF TFLAG:600 == 4
 		;恋慕
 		IF TALENT:85 == 1
 			PRINTFORMW 
-			PRINTFORMW 
 		;それ以外
 		ELSE
-			PRINTFORMW 
 			PRINTFORMW 
 		ENDIF
 			CFLAG:223 = 1
@@ -398,6 +376,8 @@ ENDIF
 
 ;-------------------------------------------------
 ;服を脱がせる　 CFLAG224
+;酔ってるお陰で成功した場合と助手が脱がした場合以外は[合意]を得る
+;[合意]を得た後は「「合意」で服脱がせる」口上の方が表示されるので注意
 ;-------------------------------------------------
 IF TFLAG:600 == 5
 	;初めて
@@ -461,17 +441,7 @@ IF TFLAG:600 == 7
 		;恋人
 		IF TALENT:153 == 1
 			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
 		ELSE
-			PRINTFORMW 
 			PRINTFORMW 
 		ENDIF
 	CFLAG:226 = 1
@@ -480,18 +450,13 @@ IF TFLAG:600 == 7
 		;恋慕
 		IF TALENT:85 == 1 && (CFLAG:226 < 4 || FLAG:7 == 2)
 			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:226 = 4
 		;恋人
 		ELSEIF TALENT:153 == 1 && (CFLAG:226 < 3 || FLAG:7 == 2)
 			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:226 = 3
 		;それ以外
 		ELSEIF CFLAG:226 < 2 || FLAG:7 == 2
-			PRINTFORMW 
 			PRINTFORMW 
 			CFLAG:226 = 2
 		ENDIF
@@ -626,7 +591,7 @@ IF TFLAG:600 == 41
 	;キャラの指定
 	;イタコ
 	IF FLAG:25 == 12
-		PRINTFORMW 「これで参りましたか！」
+		PRINTFORMW 「これでどうだ！」
 		PRINTFORMW 『痛い痛い、参りましたわ～』
 		;表現が昭和
 		TFLAG:120 = 1
@@ -703,12 +668,13 @@ IF TFLAG:600 == 12
 	IF FLAG:24 <= 3
 		;恋人
 		IF TALENT:153 == 1 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
-			PRINTFORMW 
-			PRINTFORMW 
+			PRINTFORMW 「ぐっ……やられちゃいましたね」
+			PRINTFORMW 「鍛えて出直してきましょう」
 			CFLAG:231 = 3
 		;キス経験有り
 		ELSEIF EXP:96 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
-			PRINTFORMW 
+			PRINTFORMW 「ぐっ……やられちゃいましたね」
+			PRINTFORMW 「鍛えて出直してきましょう」
 			CFLAG:231 = 2
 		;それ以外
 		ELSEIF CFLAG:231 < 5 || FLAG:7 == 2
@@ -1018,6 +984,8 @@ ENDIF
 
 ;-------------------------------------------------
 ;弁当販売　 CFLAG241
+;K,L,M,Nは使用不可
+;Mは使用できるがあまり使わないほうが得策
 ;-------------------------------------------------
 IF TFLAG:600 == 18
 	;恋慕
@@ -1071,27 +1039,8 @@ ENDIF
 IF TFLAG:600 == 20
 	;親愛
 	IF 0
-		IF ABL:88 > 9
-			IF RAND:3 == 2
-				PRINTFORMW 
-				PRINTFORMW 
-			ELSEIF RAND:2 == 1
-				PRINTFORMW 
-				PRINTFORMW 
-			ELSE
-				PRINTFORMW 
-				PRINTFORMW 
-			ENDIF
-		ELSEIF ABL:88 > 3 && ABL:88 < 10
-			IF RAND:2 == 1
-				PRINTFORMW 
-				PRINTFORMW 
-			ELSE
-				PRINTFORMW 
-				PRINTFORMW 
-			ENDIF
-		ELSE
-		ENDIF
+		PRINTFORMW 
+		PRINTFORMW 
 	;恋慕または恋人
 	ELSEIF 0
 		IF ABL:88 > 9
@@ -1280,16 +1229,11 @@ IF TFLAG:600 == 27
 	;恋慕
 	IF TALENT:85 == 1
 		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 	;恋人
 	ELSEIF TALENT:153 == 1
 		PRINTFORMW 
-		PRINTFORMW 
 	;それ以外
 	ELSE
-		PRINTFORMW 
-		PRINTFORMW 
 		PRINTFORMW 
 	ENDIF
 ENDIF
@@ -1856,22 +1800,9 @@ IF TFLAG:13 == 21
 		;恋慕・相愛・恋人なしだと口上減少
 		IF TALENT:153 == 1 || TALENT:85 == 1 || TALENT:89 == 1
 			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
 		ENDIF
 		CFLAG:631 += 1
 		PRINTFORML 
-		PRINTFORMW 
-		PRINTFORMW 
 	ENDIF
 ENDIF
 
@@ -1881,10 +1812,6 @@ ENDIF
 ;----------------------------------------------------------------
 IF TFLAG:13 == 22 && (TALENT:153 == 1 || TALENT:85 == 1 || TALENT:89 == 1)
 	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
-	PRINTFORMW 
 ENDIF
 
 ;----------------------------------------------------------------
@@ -1893,9 +1820,6 @@ ENDIF
 IF TFLAG:13 == 25
 	;相手がマスターで恋慕or相愛or恋人
 	IF CFLAG:111 == NO:MASTER && (TALENT:153 == 1 || TALENT:85 == 1 || TALENT:89 == 1)
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 		PRINTFORMW 
 	ENDIF
 ENDIF
@@ -3146,7 +3070,7 @@ IF SELECTCOM == 302
 			ELSEIF TFLAG:17 == 4
 				PRINTFORMW 「わぁ、サイズぴったりですね！」
 				PRINTFORMW 「いつの間に計ったんですか……」
-			ELSE
+			ELSEIF TFLAG:17 == 5
 				PRINTFORMW 「おおぉ……すごく綺麗なアクセサリですね」
 				PRINTFORMW 「これを私に？似合うかなあ……ありがとうございます」
 			ENDIF
@@ -3167,7 +3091,7 @@ IF SELECTCOM == 302
 			ELSEIF TFLAG:17 == 4
 				PRINTFORMW 「ああ、そういえばこの家に来てから男物のシャツとかばっかり着てましたね」
 				PRINTFORMW 「ありがとうございます、助かります」
-			ELSE
+			ELSEIF TFLAG:17 == 5
 				PRINTFORMW 「おおぉ……すごく綺麗なアクセサリですね」
 				PRINTFORMW 「これを私に？似合うかなあ……ありがとうございます」
 			ENDIF
@@ -3406,6 +3330,61 @@ IF SELECTCOM == 305
 		ENDIF
 	ENDIF
 ENDIF
+
+
+;-------------------------------------------------
+;髪梳き CFLAG495
+;-------------------------------------------------
+IF SELECTCOM == 306
+	;初めて
+	IF CFLAG:495 == 0
+		PRINTFORMW 「～♪」
+		CFLAG:495 = 1
+	;二回目以降
+	ELSE
+		PRINTFORMW 「～♪」
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;髪を梳かす CFLAG496
+;-------------------------------------------------
+IF SELECTCOM == 307
+	;初めて
+	IF CFLAG:496 == 0
+
+		PRINTFORMW 「えっ髪を梳きたい？まぁ……いいですよ」
+		PRINTFORMW 「……本当はただ髪に触りたいだけなんじゃないですか？」
+		CFLAG:496 = 1
+	;二回目
+	ELSEIF CFLAG:496 == 1
+		PRINTFORMW 「～♪」
+		PRINTFORMW ！、きりたんの髪型、よく見るとおかっぱじゃない……？
+		PRINTFORMW ツインテールだ……！
+		CFLAG:496 = 2
+	;三回目以降
+	ELSE
+		;恋慕かつ恋人
+		IF (TALENT:85 == 1 && TALENT:153 == 1) && (CFLAG:496 < 5 || FLAG:7 == 2)
+			PRINTFORMW 「～♪」
+			PRINTFORMW きりたんはご機嫌そうにしている
+			CFLAG:496 = 5
+		;恋慕または恋人
+		ELSEIF (TALENT:85 == 1 || TALENT:153 == 1) && (CFLAG:496 < 4 || FLAG:7 == 2)
+			PRINTFORMW 「～♪」
+			PRINTFORMW きりたんはご機嫌そうにしている
+			CFLAG:496 = 4
+		;それ以外
+		ELSEIF CFLAG:496 < 3 || FLAG:7 == 2
+			PRINTFORMW 
+			PRINTFORMW 
+			CFLAG:496 = 3
+		ENDIF
+	ENDIF
+ENDIF
+
+
+
 ;-------------------------------------------------
 ;甘い言葉 CFLAG:533
 ;-------------------------------------------------
@@ -3448,7 +3427,7 @@ IF SELECTCOM == 312
 	IF TFLAG:45 == 0
 
 		;初めて
-		IF !(CFLAG:538 & 1p0)
+		IF FLAG:538 == 0
 			PRINTFORMW 「私の頭を撫でたいんですか？」
 			;失敗
 			IF TFLAG:18 == -1
@@ -3462,7 +3441,7 @@ IF SELECTCOM == 312
 				PRINTFORMW ！
 				PRINTFORMW きりたんの頭の包丁がぴこぴこ動いている……！
 			ENDIF
-			CFLAG:538 |= 1p0
+			CFLAG:538 = 1
 			
 		;二回目以降
 		ELSE
@@ -3502,14 +3481,14 @@ IF SELECTCOM == 312
 				ENDIF
 			ENDIF
 		
-			CFLAG:538 |= 1p0
+			CFLAG:538 = 2
 		ENDIF
 	;-------------------------------------
 	;主導権が相手
 	ELSEIF TFLAG:45 == 1
 	
 		;初めて
-		IF !(CFLAG:538 & 1p1)
+		IF CFLAG:591 == 0
 		
 			PRINTFORMW 「頭を撫でて欲しいんですか？」
 			PRINTFORMW 「まあ、確かにお世話にはなってますが……」
@@ -3525,7 +3504,7 @@ IF SELECTCOM == 312
 			ENDIF
 			
 		
-			CFLAG:538 |= 1p1
+			CFLAG:591 = 1
 		;二回目以降
 		ELSE
 		
@@ -3567,8 +3546,7 @@ IF SELECTCOM == 312
 					PRINTFORMW 気持ちがいい……
 				ENDIF
 			ENDIF
-			
-			CFLAG:538 |= 1p1
+			CFLAG:591 = 2
 		ENDIF
 	
 	ENDIF
@@ -3636,6 +3614,62 @@ IF SELECTCOM == 313
 			ENDIF
 		ENDSELECT
 		
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;炬燵にあたる開始 CFLAG:540
+;TFLAG:18が1なら電気式炬燵を使用
+;-------------------------------------------------
+IF SELECTCOM == 314 && TEQUIP:7 == 1
+	;初めて
+	IF CFLAG:540 == 0
+		PRINTFORMW 
+		CFLAG:540 = 1
+	;二回目以降
+	ELSE
+		;反発感情が付いてる
+		IF MARK:3 > 0
+			PRINTFORMW 
+		;親愛もしくは相愛
+		ELSEIF (TALENT:88 == 1 || TALENT:89 == 1) && (CFLAG:540 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:540 = 4
+		;恋慕または恋人
+		ELSEIF (TALENT:85 == 1 || TALENT:153 == 1) && (CFLAG:540 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:540 = 3
+		;それ以外
+		ELSEIF CFLAG:540 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:540 = 2
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;炬燵から出る CFLAG:541
+;-------------------------------------------------
+IF SELECTCOM == 314 && TEQUIP:7 == 0
+	;初めて
+	IF CFLAG:541 == 0
+		PRINTFORMW 
+		CFLAG:541 = 1
+	;二回目以降
+	ELSE
+		;反発感情が付いてる
+		IF MARK:3 > 0
+			PRINTFORMW 
+		;親愛もしくは相愛
+		ELSEIF (TALENT:88 == 1 || TALENT:89 == 1) && (CFLAG:541 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:541 = 4
+		ELSEIF (TALENT:85 == 1 || TALENT:153 == 1) && (CFLAG:541 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:541 = 3
+		ELSEIF CFLAG:541 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:541 = 2
+		ENDIF
 	ENDIF
 ENDIF
 
@@ -3797,58 +3831,6 @@ IF SELECTCOM == 322
 		CFLAG:493 = 2
 	ENDIF
 ENDIF
-
-;-------------------------------------------------
-;髪梳き CFLAG495
-;-------------------------------------------------
-IF SELECTCOM == 306
-	;初めて
-	IF CFLAG:495 == 0
-		PRINTFORMW 「～♪」
-		CFLAG:495 = 1
-	;二回目以降
-	ELSE
-		PRINTFORMW 「～♪」
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
-;髪を梳かす CFLAG496
-;-------------------------------------------------
-IF SELECTCOM == 307 && 0
-	;初めて
-	IF CFLAG:496 == 0
-
-		PRINTFORMW 「えっ髪を梳きたい？まぁ……いいですよ」
-		PRINTFORMW 「……本当はただ髪に触りたいだけなんじゃないですか？」
-		CFLAG:496 = 1
-	;二回目
-	ELSEIF CFLAG:496 == 1
-		PRINTFORMW 「～♪」
-		PRINTFORMW ！、きりたんの髪型、よく見るとおかっぱじゃない……？
-		PRINTFORMW ツインテールだ……！
-		CFLAG:496 = 2
-	;三回目以降
-	ELSE
-		;恋慕かつ恋人
-		IF (TALENT:85 == 1 && TALENT:153 == 1) && (CFLAG:496 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「～♪」
-			PRINTFORMW きりたんはご機嫌そうにしている
-			CFLAG:496 = 5
-		;恋慕または恋人
-		ELSEIF (TALENT:85 == 1 || TALENT:153 == 1) && (CFLAG:496 < 4 || FLAG:7 == 2)
-			PRINTFORMW 「～♪」
-			PRINTFORMW きりたんはご機嫌そうにしている
-			CFLAG:496 = 4
-		;それ以外
-		ELSEIF CFLAG:496 < 3 || FLAG:7 == 2
-			PRINTFORMW 
-			PRINTFORMW 
-			CFLAG:496 = 3
-		ENDIF
-	ENDIF
-ENDIF
-
 ;-------------------------------------------------
 ;デート CFLAG407
 ;TEQUIP:2で行き先が取得できる。 デート関連1015に対応
@@ -3947,20 +3929,11 @@ IF SELECTCOM == 342
 	;初めて
 	IF CFLAG:412 == 0
 		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 		CFLAG:412 = 1
 	;二回目以降
 	ELSE
 		;恋慕
 		IF TALENT:85 == 1 && (CFLAG:412 < 6 || FLAG:7 == 2)
-			PRINTFORMW 
 			PRINTFORMW 
 			CFLAG:412 = 6
 		;恋人
@@ -3970,7 +3943,6 @@ IF SELECTCOM == 342
 		;それ以外
 		ELSEIF CFLAG:412 < 2 || FLAG:7 == 2
 			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:412 = 2
 		ENDIF
 	ENDIF
@@ -3978,6 +3950,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;胸愛撫 CFLAG413
+;着衣時。
 ;-------------------------------------------------
 IF SELECTCOM == 360
 	;初めて
@@ -4005,12 +3978,13 @@ ENDIF
 
 ;-------------------------------------------------
 ;愛撫 CFLAG414
+;着衣時。
 ;-------------------------------------------------
 IF SELECTCOM == 361
 	;初めて
 	IF CFLAG:414 == 0
-		PRINTFORMW 
-		PRINTFORMW 
+		PRINTFORMW 「えっ、服の上からするんですか！？」
+		PRINTFORMW 「んっ……まあいいですけど……うぅ……服が汚れちゃう」
 		CFLAG:414 = 1
 	;二回目以降
 	ELSE
@@ -4032,9 +4006,375 @@ IF SELECTCOM == 361
 		ENDIF
 	ENDIF
 ENDIF
+;-------------------------------------------------
+;着衣指挿入れ CFLAG:523
+;V経験の追加がない = 処女が維持されるので注意
+;欲望Lv6以上、親密10以上or好感度2000以上or恋人、合意、ムードor酒の勢いが必要
+;-------------------------------------------------
+IF SELECTCOM == 362
+	;初めて
+	IF CFLAG:523 == 0
+		;非処女
+		IF EXP:0
+			;恋慕
+			IF TALENT:85
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		;処女
+		ELSE
+			;恋慕
+			IF TALENT:85
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+		ENDIF
+		CFLAG:523 = 1
+	;二回目以降
+	ELSE
+		;恋慕+V感覚Lv5以上
+		IF TALENT:85 && ABL:4 > 4 && (CFLAG:523 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:523 = 5
+		;恋慕
+		ELSEIF TALENT:85 && (CFLAG:523 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:523 = 4
+		;恋人
+		ELSEIF TALENT:153 && (CFLAG:523 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:523 = 3
+		;それ以外
+		ELSEIF CFLAG:523 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:523 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;着衣Gスポ CFLAG:524
+;-------------------------------------------------
+IF SELECTCOM == 364
+	;初めて
+	IF CFLAG:524 == 0
+		;恋慕
+		IF TALENT:85
+			PRINTFORMW 
+		;合意
+		ELSEIF TALENT:152
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:524 = 1
+	;二回目以降
+	ELSE
+		;恋慕+V感覚Lv5以上
+		IF TALENT:85 && ABL:4 > 4 && (CFLAG:524 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:524 = 5
+		;恋慕
+		ELSEIF TALENT:85 && (CFLAG:524 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:524 = 4
+		;恋人
+		ELSEIF TALENT:153 && (CFLAG:524 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:524 = 3
+		;それ以外
+		ELSEIF CFLAG:524 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:524 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;セックス CFLAG:525
+;欲望9以上、親密13もしくは好感度6000以上、合意・淫乱が必要
+;実質、恋慕は取得済みで、条件にならないので、親愛＋淫乱と淫乱のみで分岐に
+;射精はTFLAG:2で管理、通常射精1、大量射精2
+;-------------------------------------------------
+IF SELECTCOM == 363
+	;初めて
+	IF CFLAG:525 == 0
+		;親愛
+		IF TALENT:88
+			PRINTFORMW 
+		;淫乱のみ
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:525 = 1
+	;二回目以降
+	ELSE
+		;親愛+V感覚Lv5以上
+		IF TALENT:88 && ABL:4 > 4 && (CFLAG:525 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:525 = 5
+		;淫乱のみでV感覚Lv5以上
+		ELSEIF  ABL:4 > 4 && (CFLAG:525 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:525 = 4
+		;親愛でV感覚Lv5未満
+		ELSEIF TALENT:88 && (CFLAG:525 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:525 = 3
+		;淫乱のみでV感覚5未満
+		ELSEIF CFLAG:525 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:525 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;着衣後背位 CFLAG:526
+;欲望9以上、親密13もしくは好感度6000以上、合意・淫乱が必要
+;実質、恋慕は取得済みで、条件にならないので、親愛＋淫乱と淫乱のみで分岐に
+;J1.064本体に存在しないコマンド
+;射精はTFLAG:2で管理、通常射精1、大量射精2
+;-------------------------------------------------
+IF SELECTCOM == 365
+	;初めて
+	IF CFLAG:526 == 0
+		;親愛
+		IF TALENT:88
+			PRINTFORMW 
+		;淫乱のみ
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:526 = 1
+	;二回目以降
+	ELSE
+		;親愛+V感覚Lv5以上
+		IF TALENT:88 && ABL:4 > 4 && (CFLAG:526 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:526 = 5
+		;淫乱のみでV感覚Lv5以上
+		ELSEIF  ABL:4 > 4 && (CFLAG:526 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:526 = 4
+		;親愛でV感覚Lv5未満
+		ELSEIF TALENT:88 && (CFLAG:526 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:526 = 3
+		;淫乱のみでV感覚5未満
+		ELSEIF CFLAG:526 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:526 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;着衣騎乗位 CFLAG:527
+;欲望9以上、親密13もしくは好感度6000以上、合意・淫乱が必要
+;実質、恋慕は取得済みで、条件にならないので、親愛＋淫乱と淫乱のみで分岐に
+;J1.064本体に存在しないコマンド
+;射精はTFLAG:2で管理、通常射精1、大量射精2
+;-------------------------------------------------
+IF SELECTCOM == 366
+	;初めて
+	IF CFLAG:527 == 0
+		;親愛
+		IF TALENT:88
+			PRINTFORMW 
+		;淫乱のみ
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:527 = 1
+	;二回目以降
+	ELSE
+		;親愛+V感覚Lv5以上
+		IF TALENT:88 && ABL:4 > 4 && (CFLAG:527 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:527 = 5
+		;淫乱のみでV感覚Lv5以上
+		ELSEIF  ABL:4 > 4 && (CFLAG:527 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:527 = 4
+		;親愛でV感覚Lv5未満
+		ELSEIF TALENT:88 && (CFLAG:527 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:527 = 3
+		;淫乱のみでV感覚5未満
+		ELSEIF CFLAG:527 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:527 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;着衣ローター CFLAG:530
+;以前は装着系コマンドだったが2012.03.13現在は単発コマンド（ローターをつけて遊びに行く）
+;そのため開始CFLAG:530と終了CFLAG:531で分かれていたがCFLAG:530のみ使用
+;ちなみにTEQUIP:36（着衣ローター）装着時の処理は残っているので口上側で装着は可能
+;-------------------------------------------------
+IF SELECTCOM == 367
+	;初回
+	IF CFLAG:530 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:530 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;尻愛撫 CFLAG:1021
+;-------------------------------------------------
+IF SELECTCOM == 372
+	;初回
+	IF CFLAG:1021 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:1021 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;着衣フェラチオ CFLAG:1022
+;-------------------------------------------------
+IF SELECTCOM == 373
+	;初回
+	IF CFLAG:1022 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:1022 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;衣装替え CFLAG:1023
+;-------------------------------------------------
+IF SELECTCOM == 391
+	;初回
+	IF CFLAG:1023 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:1023 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;衣装破り CFLAG:1024
+;-------------------------------------------------
+IF SELECTCOM == 392
+	;初回
+	IF CFLAG:1024 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:1024 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;見つめあう CFLAG:1025
+;-------------------------------------------------
+IF SELECTCOM == 393
+	;初回
+	IF CFLAG:1025 == 0
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:1025 = 1
+	;二回目以降
+	ELSE
+		;恋慕
+		IF TALENT:TARGET:85
+			PRINTFORMW 
+		;それ以外
+		ELSE
+			PRINTFORMW 
+		ENDIF
+	ENDIF
+ENDIF
 
 ;-------------------------------------------------
 ;告白する CFLAG415
+;成功失敗にかかわらず最後に表示される
+;恋人が付いていれば成功、そうでなければ失敗
 ;-------------------------------------------------
 IF SELECTCOM == 399
 
@@ -4168,6 +4508,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;岩清水(女性が男性の顔に馬乗りになってクンニすること) CFLAG418
+;羞恥（大鏡）プレイ 時のクンニで発動
 ;-------------------------------------------------
 IF SELECTCOM == 1 && TEQUIP:57
 	;初めて
@@ -4253,6 +4594,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;シャワーオナニー（公開除く） CFLAG420
+;シャワー時に自慰で発動（撮影中ならば無効）
 ;-------------------------------------------------
 IF SELECTCOM == 3 && TEQUIP:18 && TEQUIP:53 == 0
 	;初めて
@@ -4399,7 +4741,7 @@ ENDIF
 ;-------------------------------------------------
 ;指挿入れ CFLAG424
 ;-------------------------------------------------
-IF SELECTCOM == 8
+IF SELECTCOM == 8 && TEQUIP:11 == 0
 	;初めて
 	IF CFLAG:424 == 0
 		;処女
@@ -4459,6 +4801,42 @@ IF SELECTCOM == 8
 				PRINTFORMW 
 			ENDIF
 			CFLAG:424 = 2
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;バイブ出し入れ(表示上では[指挿入れ]) CFLAG:557
+;バイブ装着時に指挿入れで発動
+;-------------------------------------------------
+IF SELECTCOM == 8 && TEQUIP:11 == 1
+	;初めて
+	IF CFLAG:557 == 0
+		;合意
+		IF TALENT:152
+			PRINTFORMW 
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:557 = 1
+	;二回目以降
+	ELSE
+		;恋慕+V感覚Lv5以上
+		IF TALENT:85 && ABL:4 > 4 && (CFLAG:557 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:557 = 5
+		;恋慕
+		ELSEIF TALENT:85 && (CFLAG:557 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:557 = 4
+		;合意or恋人
+		ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:557 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:557 = 3
+		;それ以外
+		ELSEIF CFLAG:557 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:557 = 2
 		ENDIF
 	ENDIF
 ENDIF
@@ -4621,157 +4999,6 @@ IF SELECTCOM == 11 && TEQUIP:11 == 0
 ENDIF
 
 ;-------------------------------------------------
-;Ｅマッサージャ CFLAG429
-;-------------------------------------------------
-IF SELECTCOM == 12
-	;初めて
-	IF CFLAG:429 == 0
-		;合意
-		IF TALENT:152 == 1
-			PRINTFORMW 
-		ELSE
-			PRINTFORMW 
-		ENDIF
-			CFLAG:429 = 1
-	;二回目以降
-	ELSE
-		;恋慕+C感覚Lv5以上
-		IF TALENT:85 == 1 && ABL:3 >= 5 && (CFLAG:429 < 5 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:429 = 5
-		;恋慕
-		ELSEIF TALENT:85 == 1 && (CFLAG:429 < 4 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:429 = 4
-		;合意or恋人
-		ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:429 < 3 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:429 = 3
-		;それ以外
-		ELSEIF CFLAG:429 < 2 || FLAG:7 == 2
-			PRINTFORMW 
-			CFLAG:429 = 2
-		ENDIF
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
-;クリキャップ開始時 CFLAG430
-;-------------------------------------------------
-IF SELECTCOM == 14 && TEQUIP:14
-	;初めて
-	IF CFLAG:430 == 0
-		;合意
-		IF TALENT:152 == 1
-			PRINTFORMW 
-		ELSE
-			PRINTFORMW 
-		ENDIF
-			CFLAG:430 = 1
-	;二回目以降
-	ELSE
-		;恋慕+C感覚Lv5以上
-		IF TALENT:85 == 1 && ABL:3 >= 5 && (CFLAG:430 < 5 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:430 = 5
-		;恋慕
-		ELSEIF TALENT:85 == 1 && (CFLAG:430 < 4 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:430 = 4
-		;合意or恋人
-		ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:430 < 3 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:430 = 3
-		;それ以外
-		ELSEIF CFLAG:430 < 2 || FLAG:7 == 2
-			PRINTFORMW 
-			CFLAG:430 = 2
-		ENDIF
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
-;クリキャップ終了時 CFLAG431
-;-------------------------------------------------
-IF SELECTCOM == 14 && TEQUIP:14 == 0
-	;恋慕+C感覚Lv5以上
-	IF TALENT:85 == 1 && ABL:3 >= 5 && (CFLAG:431 < 5 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:431 = 5
-	;恋慕
-	ELSEIF TALENT:85 == 1 && (CFLAG:431 < 4 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:431 = 4
-	;合意or恋人
-	ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:431 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:431 = 3
-	;それ以外
-	ELSEIF CFLAG:431 < 2 || FLAG:7 == 2
-		PRINTFORMW 
-		CFLAG:431 = 2
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
-;ニプルキャップ開始時 CFLAG432
-;-------------------------------------------------
-IF SELECTCOM == 15 && TEQUIP:15
-	;初めて
-	IF CFLAG:432 == 0
-		;合意
-		IF TALENT:152 == 1
-			PRINTFORMW 
-		ELSE
-			PRINTFORMW 
-		ENDIF
-			CFLAG:432 = 1
-	;二回目以降
-	ELSE
-		;恋慕+B感覚Lv5以上
-		IF TALENT:85 == 1 && ABL:14 >= 5 && (CFLAG:432 < 5 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:432 = 5
-		;恋慕
-		ELSEIF TALENT:85 == 1 && (CFLAG:432 < 4 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:432 = 4
-		;合意or恋人
-		ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:432 < 3 || FLAG:7 == 2)
-			PRINTFORMW 
-			CFLAG:432 = 3
-		;それ以外
-		ELSEIF CFLAG:432 < 2 || FLAG:7 == 2
-			PRINTFORMW 
-			CFLAG:432 = 2
-		ENDIF
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
-;ニプルキャップ終了時 CFLAG433
-;-------------------------------------------------
-IF SELECTCOM == 15 && TEQUIP:15 == 0
-	;恋慕+B感覚Lv5以上
-	IF TALENT:85 == 1 && ABL:14 >= 5 && (CFLAG:433 < 5 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:433 = 5
-	;恋慕
-	ELSEIF TALENT:85 == 1 && (CFLAG:433 < 4 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:433 = 4
-	;合意or恋人
-	ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:433 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
-		CFLAG:433 = 3
-	;それ以外
-	ELSEIF CFLAG:433 < 2 || FLAG:7 == 2
-		PRINTFORMW 
-		CFLAG:433 = 2
-	ENDIF
-ENDIF
-
-;-------------------------------------------------
 ;シャワー開始時 CFLAG434
 ;-------------------------------------------------
 IF SELECTCOM == 18 && TEQUIP:18
@@ -4819,6 +5046,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;正常位 CFLAG436(射精するかどうかは行為前に判定があるので、射精の分岐を入れるにより射精直前の口上を入れることが可能)
+;射精はTFLAG:2で管理、通常射精1、大量射精2
 ;-------------------------------------------------
 IF SELECTCOM == 20
 	;初めて
@@ -4854,7 +5082,6 @@ IF SELECTCOM == 20
 		;合意or恋人
 		ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:436 < 3 || FLAG:7 == 2)
 			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:436 = 3
 		;それ以外
 		ELSEIF CFLAG:436 < 2 || FLAG:7 == 2
@@ -4866,6 +5093,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;後背位 CFLAG437
+;射精はTFLAG:2で管理、通常射精1、大量射精2
 ;-------------------------------------------------
 IF SELECTCOM == 21
 	;初めて
@@ -4893,23 +5121,17 @@ IF SELECTCOM == 21
 		;恋慕+V感覚Lv5以上
 		IF TALENT:85 == 1 && ABL:4 >= 5 && (CFLAG:437 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:437 = 5
 		;恋慕
 		ELSEIF TALENT:85 == 1 && (CFLAG:437 < 4 || FLAG:7 == 2)
-			PRINTFORMW 
 			PRINTFORMW 
 			CFLAG:437 = 4
 		;合意or恋人
 		ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:437 < 3 || FLAG:7 == 2)
 			PRINTFORMW 
-			PRINTFORMW 
-			PRINTFORMW 
 			CFLAG:437 = 3
 		;それ以外
 		ELSEIF CFLAG:437 < 2 || FLAG:7 == 2
-			PRINTFORMW 
-			PRINTFORMW 
 			PRINTFORMW 
 			CFLAG:437 = 2
 		ENDIF
@@ -4926,7 +5148,6 @@ IF SELECTCOM == 24
 		IF EXP:0 == 1
 			;合意
 			IF TALENT:152 == 1
-				PRINTFORMW 
 				PRINTFORMW 
 			ELSE
 				PRINTFORMW 
@@ -4948,33 +5169,13 @@ IF SELECTCOM == 24
 			A = RAND:5
 			IF A == 0
 				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
 			ELSEIF A == 1
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
 				PRINTFORMW 
 			ELSEIF A == 2
 				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
 			ELSEIF A == 3
 				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
 			ELSE
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
-				PRINTFORMW 
 				PRINTFORMW 
 			ENDIF
 			CFLAG:438 = 4
@@ -4982,10 +5183,10 @@ IF SELECTCOM == 24
 		ELSEIF ABL:4 >= 5 && (CFLAG:438 < 3 || FLAG:7 == 2)
 			A = RAND:2
 			IF A == 0
-				PRINTFORMW 
-				PRINTFORMW 
+				PRINTFORMW 「あにさま、わたし、これ、おかしく、なっちゃう」
+				PRINTFORMW いいんだ、思いっきりおかしくなってもいい
+				PRINTFORMW 「あっ、あっ、んっ、はうっ」
 			ELSE
-				PRINTFORMW 
 				PRINTFORMW 
 			ENDIF
 			CFLAG:438 = 3
@@ -4995,7 +5196,6 @@ IF SELECTCOM == 24
 			IF A == 0
 				PRINTFORMW 
 			ELSE
-				PRINTFORMW 
 				PRINTFORMW 
 			ENDIF
 			CFLAG:438 = 2
@@ -5056,6 +5256,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;乱れ牡丹 CFLAG440
+;羞恥（大鏡）プレイ中に背面座位で発動
 ;-------------------------------------------------
 IF SELECTCOM == 25 && TEQUIP:57
 	;初めて
@@ -5198,7 +5399,7 @@ ENDIF
 ;-------------------------------------------------
 ;手淫 CFLAG441
 ;-------------------------------------------------
-IF SELECTCOM == 30
+IF SELECTCOM == 30 && TEQUIP:17 == 0
 	;初めて
 	IF CFLAG:441 == 0
 		;合意
@@ -5238,6 +5439,43 @@ IF SELECTCOM == 30
 	ENDIF
 ENDIF
 
+;-------------------------------------------------
+;オナホ手淫 CFLAG:560
+;コマンドとしての「オナホ手淫」とTEQUIPのオナホールを装着した状態での「手淫」の2種類有
+;射精フラグはTFLAG:1で管理、通常射精1、大量射精2
+;-------------------------------------------------
+IF SELECTCOM == 39 || (SELECTCOM == 30 && TEQUIP:17 == 1)
+	;初めて
+	IF CFLAG:560 == 0
+		;合意
+		IF TALENT:152
+			PRINTFORMW 
+		ELSE
+			PRINTFORMW 
+		ENDIF
+		CFLAG:560 = 1
+	;二回目以降
+	ELSE
+		;恋慕+奉仕精神Lv5以上
+		IF TALENT:85 && ABL:6 > 4 && (CFLAG:560 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:560 = 5
+		;恋慕
+		ELSEIF TALENT:85 && (CFLAG:560 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:560 = 4
+		;合意or恋人
+		ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:560 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:560 = 3
+		;それ以外
+		ELSEIF CFLAG:560 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:560 = 2
+		ENDIF
+	ENDIF
+	RETURN 0
+ENDIF
 ;-------------------------------------------------
 ;フェラチオ CFLAG442
 ;-------------------------------------------------
@@ -5437,7 +5675,9 @@ ENDIF
 
 ;-------------------------------------------------
 ;泡踊り CFLAG446
-;(マットの上にローションをまき、ソープ嬢が体をすりつけて客の全身を洗う行為（自分の陰毛や乳房等をタワシやスポンジのように用いる） 手で男性器を刺激しながら行うことが多い)
+;(マットの上にローションをまき、ソープ嬢が体をすりつけて客の全身を洗う行為)
+;(自分の陰毛や乳房等をタワシやスポンジのように用いる)
+;(手で男性器を刺激しながら行うことが多い)
 ;-------------------------------------------------
 IF SELECTCOM == 35
 	;初めて
@@ -5512,75 +5752,188 @@ IF SELECTCOM == 35
 		ENDIF
 	ENDIF
 ENDIF
-
 ;-------------------------------------------------
-;スパンキング CFLAG447
+;足扱き CFLAG:536
+;射精フラグはTFLAG:16で管理、通常射精1、大量射精2
 ;-------------------------------------------------
-IF SELECTCOM == 40
+IF SELECTCOM == 37
 	;初めて
-	IF CFLAG:447 == 0
-		;調教対象が攻め
-		IF TFLAG:45 == 1
-			;合意
-			IF TALENT:152 == 1
-;				PRINTFORMW 
-			ELSE
-;				PRINTFORMW 
-			ENDIF
-		;それ以外
+	IF CFLAG:536 == 0
+		;合意
+		IF TALENT:152
+			PRINTFORMW 
 		ELSE
-			;合意
-			IF TALENT:152 == 1
-;				PRINTFORMW 
-			ELSE
-;				PRINTFORMW 
-			ENDIF
+			PRINTFORMW 
 		ENDIF
-			CFLAG:447 = 1
+		CFLAG:536 = 1
 	;二回目以降
 	ELSE
-		;調教対象が攻め
-		IF TFLAG:45 == 1
-			;恋慕+サドっ気Lv5以上
-			IF TALENT:85 == 1 && ABL:15 >= 5 && (CFLAG:447 < 5 || FLAG:7 == 2)
-;				PRINTFORMW 
-				CFLAG:447 = 5
-			;恋慕
-			ELSEIF TALENT:85 == 1 && (CFLAG:447 < 4 || FLAG:7 == 2)
-;				PRINTFORMW 
-				CFLAG:447 = 4
-			;合意or恋人
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:447 < 3 || FLAG:7 == 2)
-;				PRINTFORMW 
-			CFLAG:447 = 3
-			;それ以外
-			ELSEIF CFLAG:447 < 2 || FLAG:7 == 2
-;				PRINTFORMW 
-				CFLAG:447 = 2
-			ENDIF
+		;反発Lv2以上
+		IF MARK:3 > 1 && (CFLAG:536 < 6 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:536 = 6
+		;恋慕+サドッ気Lv5以上
+		ELSEIF TALENT:85 && ABL:15 > 4 && (CFLAG:536 < 5 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:536 = 5
+		;恋慕
+		ELSEIF TALENT:85 && (CFLAG:536 < 4 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:536 = 4
+		;合意or恋人
+		ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:536 < 3 || FLAG:7 == 2)
+			PRINTFORMW 
+			CFLAG:536 = 3
 		;それ以外
+		ELSEIF CFLAG:536 < 2 || FLAG:7 == 2
+			PRINTFORMW 
+			CFLAG:536 = 2
+		ENDIF
+	ENDIF
+ENDIF
+;-------------------------------------------------
+;スパンキング
+;PLAYERが攻め - CFLAG:447
+;相手が攻め - CFLAG:587
+;-------------------------------------------------
+IF SELECTCOM == 40
+	;相手が攻め
+	IF TFLAG:45
+		;初めて
+		IF CFLAG:587 == 0
+			;合意
+			IF TALENT:152
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+			CFLAG:587 = 1
+		;二回目以降
+		ELSE
+			;恋慕+サドっ気Lv5以上
+			IF TALENT:85 && ABL:15 > 4 && (CFLAG:587 < 5 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:587 = 5
+			;恋慕
+			ELSEIF TALENT:85 && (CFLAG:587 < 4 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:587 = 4
+			;合意or恋人
+			ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:587 < 3 || FLAG:7 == 2)
+				PRINTFORMW 
+			CFLAG:587 = 3
+			;それ以外
+			ELSEIF CFLAG:587 < 2 || FLAG:7 == 2
+				PRINTFORMW 
+				CFLAG:587 = 2
+			ENDIF
+		ENDIF
+	;PLAYERが攻め
+	ELSE
+		
+		;初めて
+		IF CFLAG:447 == 0
+			;合意
+			IF TALENT:152
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+			CFLAG:447 = 1
+		;二回目以降
 		ELSE
 			;恋慕+マゾっ気Lv5以上
-			IF TALENT:85 == 1 && ABL:8 >= 5 && (CFLAG:447 < 5 || FLAG:7 == 2)
-;				PRINTFORMW 
+			IF TALENT:85 && ABL:8 > 4 && (CFLAG:447 < 5 || FLAG:7 == 2)
+				PRINTFORMW 
 				CFLAG:447 = 5
 			;恋慕
-			ELSEIF TALENT:85 == 1 && (CFLAG:447 < 4 || FLAG:7 == 2)
-;				PRINTFORMW 
+			ELSEIF TALENT:85 && (CFLAG:447 < 4 || FLAG:7 == 2)
+				PRINTFORMW 
 				CFLAG:447 = 4
 			;合意or恋人
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1) && (CFLAG:447 < 3 || FLAG:7 == 2)
-;				PRINTFORMW 
-			CFLAG:447 = 3
+			ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:447 < 3 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:447 = 3
 			;それ以外
 			ELSEIF CFLAG:447 < 2 || FLAG:7 == 2
-;				PRINTFORMW 
+				PRINTFORMW 
 				CFLAG:447 = 2
 			ENDIF
 		ENDIF
 	ENDIF
 ENDIF
-
+;-------------------------------------------------
+;言葉責め 
+;PLAYERが攻め - CFLAG:537
+;相手が攻め - CFLAG:588
+;SELETCOM:75
+;-------------------------------------------------
+IF SELECTCOM == 75
+	;相手が攻め
+	IF TFLAG:45
+		;初めて
+		IF CFLAG:588 == 0
+			;合意
+			IF TALENT:152
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+			CFLAG:588 = 1
+		;二回目以降
+		ELSE
+			;恋慕+サドっ気Lv5以上
+			IF TALENT:85 && ABL:15 > 4 && (CFLAG:588 < 5 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:588= 5
+			;恋慕
+			ELSEIF TALENT:85 && (CFLAG:588 < 4 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:588 = 4
+			;合意or恋人
+			ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:588 < 3 || FLAG:7 == 2)
+				PRINTFORMW 
+			CFLAG:588 = 3
+			;それ以外
+			ELSEIF CFLAG:588 < 2 || FLAG:7 == 2
+				PRINTFORMW 
+				CFLAG:588 = 2
+			ENDIF
+		ENDIF
+	;PLAYERが攻め
+	ELSE
+		
+		;初めて
+		IF CFLAG:537 == 0
+			;合意
+			IF TALENT:152
+				PRINTFORMW 
+			ELSE
+				PRINTFORMW 
+			ENDIF
+			CFLAG:537 = 1
+		;二回目以降
+		ELSE
+			;恋慕+マゾっ気Lv5以上
+			IF TALENT:85 && ABL:8 > 4 && (CFLAG:537 < 5 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:537 = 5
+			;恋慕
+			ELSEIF TALENT:85 && (CFLAG:537 < 4 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:537 = 4
+			;合意or恋人
+			ELSEIF (TALENT:152 || TALENT:153) && (CFLAG:537 < 3 || FLAG:7 == 2)
+				PRINTFORMW 
+				CFLAG:537 = 3
+			;それ以外
+			ELSEIF CFLAG:537 < 2 || FLAG:7 == 2
+				PRINTFORMW 
+				CFLAG:537 = 2
+			ENDIF
+		ENDIF
+	ENDIF
+ENDIF
 ;-------------------------------------------------
 ;アイマスク開始時 CFLAG448
 ;-------------------------------------------------
@@ -5818,6 +6171,9 @@ ENDIF
 
 ;-------------------------------------------------
 ;シックスナイン CFLAG457
+;いろいろなコマンドから分岐する。
+;フェラチオかクンニ強制かシックスナイン　→　クンニ・フェラする
+;クンニかフェラするかシックスナイン　→　フェラチオ・クンニ強制
 ;-------------------------------------------------
 IF SELECTCOM == 69
 	;初めて
@@ -5869,634 +6225,6 @@ ENDIF
 
 
 
-
-;--------------------------------------------------
-;挿入Gスポット CFLAG368
-;--------------------------------------------------
-IF SELECTCOM == 255
-	;初めて
-	IF CFLAG:368 == 0
-		;騎乗位
-		IF PREVCOM == 34
-			;合意
-			IF TALENT:152 == 1
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;反発Lv2以上
-			ELSEIF MARK:3 >= 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;合意無し
-			ELSE
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			ENDIF
-		;その他の体位
-		ELSE
-			;合意
-			IF TALENT:152 == 1
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;反発Lv2以上
-			ELSEIF MARK:3 >= 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;合意も反発も無い
-			ELSE
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			ENDIF
-		ENDIF
-		CFLAG:368 = 1
-	;二回目以降
-	ELSE
-		;騎乗位
-		IF PREVCOM == 34
-			;恋慕+V感覚Lv5以上
-			IF TALENT:85 == 1 && ABL:4 >= 5 && (CFLAG:368 < 5 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 5
-			;反発LV2以上+V感覚Lv5以上
-			ELSEIF MARK:3 >= 2 && ABL:4 >= 5 && (CFLAG:368 < 4 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 4
-			;合意or恋人or恋慕
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1 || TALENT:85 == 1) && (CFLAG:368 < 3 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 3
-			;それ以外
-			ELSEIF CFLAG:368 < 2 || FLAG:7 == 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 2
-			ENDIF
-		;その他の体位
-		ELSE
-			;恋慕+V感覚Lv5以上
-			IF TALENT:85 == 1 && ABL:4 >= 5 && (CFLAG:368 < 5 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 5
-			;反発LV2以上+V感覚Lv5以上
-			ELSEIF MARK:3 >= 2 && ABL:4 >= 5 && (CFLAG:368 < 4 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 4
-			;合意or恋人or恋慕
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1 || TALENT:85 == 1) && (CFLAG:368 < 3 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 3
-			;それ以外
-			ELSEIF CFLAG:368 < 2 || FLAG:7 == 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:368 = 2
-			ENDIF
-		ENDIF
-	ENDIF
-ENDIF
-
-;--------------------------------------------------
-;挿入子宮口 CFLAG369
-;--------------------------------------------------
-IF SELECTCOM == 256
-	;初めて
-	IF CFLAG:369 == 0
-		;騎乗位
-		IF PREVCOM == 34
-			;合意
-			IF TALENT:152 == 1
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;反発Lv2以上
-			ELSEIF MARK:3 >= 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;合意も反発も無い
-			ELSE
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			ENDIF
-		;それ以外の体位
-		ELSE
-			;合意
-			IF TALENT:152 == 1
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;反発Lv2以上
-			ELSEIF MARK:3 >= 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			;合意も反発も無い
-			ELSE
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-			ENDIF
-		ENDIF
-		CFLAG:369 = 1
-	;二回目以降
-	ELSE
-		;騎乗位
-		IF PREVCOM == 34
-			;恋慕+V感覚Lv5以上
-			IF TALENT:85 == 1 && ABL:4 >= 5 && (CFLAG:369 < 5 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 5
-			;反発LV2以上+V感覚Lv5以上
-			ELSEIF MARK:3 >= 2 && ABL:4 >= 5 && (CFLAG:369 < 4 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 4
-			;合意or恋人or恋慕
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1 || TALENT:85 == 1) && (CFLAG:369 < 3 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 3
-			;それ以外
-			ELSEIF CFLAG:369 < 2 || FLAG:7 == 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 2
-			ENDIF
-		;それ以外の体位
-		ELSE
-			;恋慕+V感覚Lv5以上
-			IF TALENT:85 == 1 && ABL:4 >= 5 && (CFLAG:369 < 5 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 5
-			;反発LV2以上+V感覚Lv5以上
-			ELSEIF MARK:3 >= 2 && ABL:4 >= 5 && (CFLAG:369 < 4 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 4
-			;合意or恋人or恋慕
-			ELSEIF (TALENT:152 == 1 || TALENT:153 == 1 || TALENT:85 == 1) && (CFLAG:369 < 3 || FLAG:7 == 2)
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 3
-			;それ以外
-			ELSEIF CFLAG:369 < 2 || FLAG:7 == 2
-				PRINTFORMW 
-				;セックスでの初射精
-				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
-					PRINTFORMW 
-					;童貞を対象に捧げた(10をキャラ番号に変換)
-					IF FLAG:47 == 10
-						PRINTFORMW 
-					;それ以外
-					ELSE
-						PRINTFORMW 
-					ENDIF
-				;二回目以降の射精
-				ELSEIF TFLAG:2 == 1 || TFLAG:2 == 2
-					PRINTFORMW 
-				; まだ射精しない
-				ELSE
-					PRINTFORMW 
-				ENDIF
-				CFLAG:369 = 2
-			ENDIF
-		ENDIF
-	ENDIF
-ENDIF
 
 ;～～～～～～～～～～～～～～～～～～～～～～～～～
 ;鬼畜系コマンド
@@ -8794,7 +8522,7 @@ ENDIF
 ;食後の運動
 ;CFLAGは純愛イベントの物を使用
 ;----------------------------------------------------------------
-
+@KOJO_LUNCH_EXERCISE_K10
 ;--------------------------------------------------
 ;特定主人時に特殊口上を呼び出す(Y1を特定主人、2をパートナーのキャラ番号に置換）
 ;--------------------------------------------------
@@ -9059,7 +8787,7 @@ IF C && D == 1
 			CASE 0
 				PRINTW この服、気に入ってるのに……」
 			CASE 1
-				PRINTFORMW ひどいよ、%CNAME_K11(NO:TARGET, NO:PLAYER)%……」
+				PRINTFORMW ひどいですよ、%CSTR:1%……」
 			CASEELSE
 				PRINTW 服が汚れちゃったじゃないですか」
 		ENDSELECT
@@ -9068,7 +8796,7 @@ IF C && D == 1
 		;C強絶頂以上
 		IF NOWEX:0 > 1
 			PRINTL 「はぁっ、あっ、いいっ、くるっ、」
-			PRINTW 「きちゃう、すごいよっ、%CSTR:1%っ、ああっ──！」」
+			PRINTW 「きちゃう、すごいっ、%CSTR:1%っ、ああっ──！」」
 		ELSE
 			PRINTL 「あ、あ……これ、すご……」
 			PRINTW 「だめ、きちゃいます……ああっ──！」
