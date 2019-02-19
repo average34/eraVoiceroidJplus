@@ -498,94 +498,48 @@ RESULTS:2 = 所持金$100000000以上達成
 ;達成判定
 SIF MONEY >= 100000000
 	RETURN 1
-
-@TROPHY_200_14
-RESULTS:0 = ブロンズ
-RESULTS:1 = 見習い錬金術師
-RESULTS:2 = 調合を行う
-;達成判定
-VARSET LOCAL, 0
-FOR LOCAL, 2001, 2700
-	;調合済みレシピ数確認
-	SIF FLAG:LOCAL == 1
-		LOCAL:1 += 1
-NEXT
-;1種調合していれば達成
-SIF LOCAL:1 >= 1
-	RETURN 1
-
-@TROPHY_200_15
-RESULTS:0 = ブロンズ
-RESULTS:1 = 普通の錬金術師
-RESULTS:2 = 50種類調合する
-;達成判定
-VARSET LOCAL, 0
-FOR LOCAL, 2001, 2700
-	;調合済みレシピ数確認
-	SIF FLAG:LOCAL == 1
-		LOCAL:1 += 1
-NEXT
-SIF LOCAL:1 < 50
-	RESULT:1 = LOCAL:1 * 100 / 50
-
-;50種調合していれば達成
-SIF LOCAL:1 >= 50
-	RETURN 1
-
-@TROPHY_200_16
-RESULTS:0 = シルバー
-RESULTS:1 = ベテラン錬金術師
-RESULTS:2 = 100種類調合する
-;達成判定
-VARSET LOCAL, 0
-FOR LOCAL, 2001, 2700
-	;調合済みレシピ数確認
-	SIF FLAG:LOCAL == 1
-		LOCAL:1 += 1
-NEXT
-SIF LOCAL:1 < 100
-	RESULT:1 = LOCAL:1 * 100 / 100
-
-;100種調合していれば達成
-SIF LOCAL:1 >= 100
-	RETURN 1
-
-@TROPHY_200_17
-RESULTS:0 = シルバー
-RESULTS:1 = アンビリーバボー！
-RESULTS:2 = 奇跡の薬を調合する
-;達成判定
-SIF FLAG:2666 == 1
-	RETURN 1
-
-@TROPHY_200_18
-RESULTS:0 = シルバー
-RESULTS:1 = 禁断の知識
-RESULTS:2 = 蓬莱の薬を調合する
-;達成判定
-SIF FLAG:2002 == 1
-	RETURN 1
-
-@TROPHY_200_19
-RESULTS:0 = ゴールド
-RESULTS:1 = 偉業達成
-RESULTS:2 = 全種類調合する
-;達成判定
-CALL RECIPE_NAME
-VARSET LOCAL, 0
-FOR LOCAL, 2001, 2700
-	;レシピが設定されていて調合してなければダメ
-	SIF FLAG:LOCAL == 1
-		LOCAL:1 += 1
-	SIF STR:LOCAL != ""
-		LOCAL:2 += 1
-NEXT
-SIF LOCAL:1 < LOCAL:2
-	RESULT:1 = LOCAL:1 * 100 / LOCAL:2
-
-;全て調合していれば達成
-SIF LOCAL:1 == LOCAL:2
-	RETURN 1
+;
+;@TROPHY_200_14
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = ダミー14
+;RESULTS:2 = ダミー14
+;;達成判定
+;	RETURN 1
+;
+;@TROPHY_200_15
+;RESULTS:0 = ブロンズ
+;RESULTS:1 = ダミー15
+;RESULTS:2 = ダミー15
+;;達成判定
+;	RETURN 1
+;
+;@TROPHY_200_16
+;RESULTS:0 = シルバー
+;RESULTS:1 = ダミー16
+;RESULTS:2 = ダミー16
+;;達成判定
+;	RETURN 1
+;
+;@TROPHY_200_17
+;RESULTS:0 = シルバー
+;RESULTS:1 = ダミー17
+;RESULTS:2 = ダミー17
+;;達成判定
+;	RETURN 1
+;
+;@TROPHY_200_18
+;RESULTS:0 = シルバー
+;RESULTS:1 = ダミー18
+;RESULTS:2 = ダミー18
+;;達成判定
+;	RETURN 1
+;
+;@TROPHY_200_19
+;RESULTS:0 = ゴールド
+;RESULTS:1 = ダミー19
+;RESULTS:2 = ダミー19
+;;達成判定
+;	RETURN 1
 
 @TROPHY_200_20
 RESULTS:0 = ブロンズ
@@ -1110,82 +1064,6 @@ RESULTS:2 = 所持金$999999999999999999(最大値)達成
 SIF MONEY >= 999999999999999999
 	RETURN 1
 
-;@TROPHY_202_14
-;RESULTS:0 = ブロンズ
-;RESULTS:1 = 見習い錬金術師
-;RESULTS:2 = 調合を行う
-;;達成判定
-;VARSET LOCAL, 0
-;FOR LOCAL, 2001, 2700
-;	;調合済みレシピ数確認
-;	SIF FLAG:LOCAL == 1
-;		LOCAL:1 += 1
-;NEXT
-;;1種調合していれば達成
-;SIF LOCAL:1 >= 1
-;	RETURN 1
-
-;@TROPHY_202_15
-;RESULTS:0 = ブロンズ
-;RESULTS:1 = 普通の錬金術師
-;RESULTS:2 = 50種類調合する
-;;達成判定
-;VARSET LOCAL, 0
-;FOR LOCAL, 2001, 2700
-;	;調合済みレシピ数確認
-;	SIF FLAG:LOCAL == 1
-;		LOCAL:1 += 1
-;NEXT
-;;50種調合していれば達成
-;SIF LOCAL:1 >= 50
-;	RETURN 1
-
-;@TROPHY_202_16
-;RESULTS:0 = シルバー
-;RESULTS:1 = ベテラン錬金術師
-;RESULTS:2 = 100種類調合する
-;;達成判定
-;VARSET LOCAL, 0
-;FOR LOCAL, 2001, 2700
-;	;調合済みレシピ数確認
-;	SIF FLAG:LOCAL == 1
-;		LOCAL:1 += 1
-;NEXT
-;;100種調合していれば達成
-;SIF LOCAL:1 >= 100
-;	RETURN 1
-
-;@TROPHY_202_17
-;RESULTS:0 = シルバー
-;RESULTS:1 = アンビリーバボー！
-;RESULTS:2 = 奇跡の薬を調合する
-;;達成判定
-;SIF FLAG:2666
-;	RETURN 1
-
-;@TROPHY_202_18
-;RESULTS:0 = シルバー
-;RESULTS:1 = 禁断の知識
-;RESULTS:2 = 蓬莱の薬を調合する
-;;達成判定
-;SIF FLAG:2002 == 1
-;	RETURN 1
-
-;@TROPHY_202_19
-;RESULTS:0 = ゴールド
-;RESULTS:1 = 偉業達成
-;RESULTS:2 = 全種類調合する
-;;達成判定
-;CALL RECIPE_NAME
-;VARSET LOCAL, 0
-;FOR LOCAL, 2001, 2700
-;	;レシピが設定されていて調合してなければダメ
-;	SIF STR:LOCAL != "" && FLAG:LOCAL != 1
-;		LOCAL:1 = 1
-;NEXT
-;;全て調合していれば達成
-;SIF LOCAL:1 == 0
-;	RETURN 1
 
 @TROPHY_202_20
 RESULTS:0 = ブロンズ

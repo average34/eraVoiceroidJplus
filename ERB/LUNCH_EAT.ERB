@@ -577,6 +577,32 @@ IF K == 0
 			TSTR:1 = きりたんぽ鍋
 			N += 100
 		ENDIF
+		
+	ELSEIF NO:TARGET == 11
+		;あかり
+		PRINT 特大おにぎり
+		N += 50
+	ELSEIF NO:TARGET == 12
+		;イタコ
+		PRINT いなり寿司
+		N += 50
+	ELSEIF NO:TARGET == 13
+		;そら
+		P = RAND:2
+		IF P == 0
+			;井上喜久子の好きな食べ物
+			PRINT 特製サラダ
+			N += 50
+		ELSE
+			PRINT オリジナルパフェ
+			N += 100
+		ENDIF
+	ELSEIF NO:TARGET == 14
+		;ついな
+		;公式の得意料理。
+		PRINT 恵方巻き
+		N += 50
+		
 	ELSEIF NO:TARGET == 50
 		;ささら
 		P = RAND:3
