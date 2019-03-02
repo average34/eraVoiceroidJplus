@@ -1,4 +1,4 @@
-;
+﻿;
 ;  eraVoiceroidJ+用 きりたん口上  Ver 0.4
 ;  作者名：average
 ;---------------------------------------------------------------------------------------------
@@ -22,7 +22,7 @@
 ;eraim@sJ 口上テンプレート
 ;eraBEMANI
 ;
-;img鯖のきりたんとあにさまたち
+;img鯖のきりたんと%CSTR:1%たち
 ;era板+のデバッグしてくださった皆様
 ;
 ;ありがとうございます！
@@ -80,7 +80,7 @@ DRAWLINE
 PRINTFORML きりたんからの呼び名を変更できます。
 PRINTFORML 名前を選択して下さい
 PRINTFORML [ 0] 自分で入力する
-PRINTFORML [ 1] あにさま ※推奨※
+PRINTFORML [ 1] %CSTR:1% ※推奨※
 PRINTFORML [ 2] マスター
 PRINTFORML [ 3] おにいさま
 PRINTFORML [ 4] おにいちゃん
@@ -99,7 +99,7 @@ ELSEIF RESULT >= 1 && RESULT <= 8
 	;あなたの名前を%CSTR:1%に格納
 	IF 0
 	ELSEIF RESULT == 1
-	CSTR:1 = あにさま
+	CSTR:1 = %CSTR:1%
 	ELSEIF RESULT == 2
 	CSTR:1 = マスター
 	ELSEIF RESULT == 3
@@ -274,7 +274,7 @@ IF TFLAG:600 == 28
 	PRINTFORMW 「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」
 IF CSTR:1 == CALLNAME:MASTER
 	PRINTFORMW 改めてそう呼ばれるとすこし気恥かしいが、構わない、と伝えた
-ELSEIF CSTR:1 == "あにさま" || CSTR:1 == "マスター"
+ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
 	PRINTFORMW 随分と珍しい呼ばれ方に少し驚いたが、構わない、と伝えた
 ELSE
 	PRINTFORMW 構わない、と伝えた
@@ -332,7 +332,7 @@ IF TFLAG:600 == 38
 		CFLAG:221 = 3
 	;エンディング後一回目
 	ELSEIF FLAG:28 > 0 && CFLAG:221 < 4
-		PRINTFORMW 「おはようございます、あにさま」
+		PRINTFORMW 「おはようございます、%CSTR:1%」
 		PRINTFORMW 「ずんねえさまも戻ってきたことですし、次は街の平和を取り戻しに行きましょう！」
 		CFLAG:221 = 4
 	ENDIF
@@ -1429,10 +1429,10 @@ IF TFLAG:13 == 3
 	;IF TALENT:恋慕 ==1 && (CFLAG:303 < 3 || FLAG:7 == 2)
 	IF (CFLAG:303 < 3 || FLAG:7 == 2)
 		PRINTFORMW 「おはようございま……うぉっ」
-		PRINTFORMW きりたんの眼前には%CALLNAME:MASTER%のもっこりと膨らんだ股間がある
+		PRINTFORMW きりたんの眼前には%CSTR:1%のもっこりと膨らんだ股間がある
 		PRINTFORMW 「………」
 		PRINTFORMW 「……%CSTR:1%が悪いんですからね……」
-		PRINTFORML きりたんは%CALLNAME:MASTER%の股間からいきり立ったモノを露出させ、
+		PRINTFORML きりたんは%CSTR:1%の股間からいきり立ったモノを露出させ、
 		PRINTFORMW ペロペロと丁寧に舐め始めた
 		PRINTFORML 
 		PRINTFORMW ……気持ちいい……
@@ -4239,7 +4239,7 @@ IF SELECTCOM == 399
 		PRINTFORMW それでも構わない、きりたんが好きだ、と答える
 		PRINTFORMW 「、っ……！」
 		PRINTFORMW 「面と向かって言われると、恥ずかしいですね……」
-		PRINTFORMW 「まったく、しょうがないあにさま」
+		PRINTFORMW 「まったく、しょうがない%CSTR:1%」
 		PRINTFORMW 「ほんと、呆れちゃいますね」
 		PRINTFORML 
 		PRINTFORMW 「……いいですよ、つきあってあげます」
@@ -4255,7 +4255,7 @@ IF SELECTCOM == 399
 		PRINTFORMW きりたんに、これからも一緒につきあって欲しい、とお願いした
 		PRINTFORMW 「はぁ……」
 		PRINTFORMW きりたんは大きくため息をついた
-		PRINTFORMW 「私、小学五年生ですよ？あにさまは情けなくないんですか？」
+		PRINTFORMW 「私、小学五年生ですよ？%CSTR:1%は情けなくないんですか？」
 		PRINTFORMW 「ほんと、呆れますね」
 		PRINTFORMW あっさり断られてしまった
 		CFLAG:415 = 2
@@ -4290,7 +4290,7 @@ IF SELECTCOM == 0
 		IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:416 < 4 || FLAG:キャラ口上の表示頻度 == 2)
 			A = RAND:3
 			IF A == 0
-				PRINTFORMW  「えへへ、あにさまの手、あったかい……」
+				PRINTFORMW  「えへへ、%CSTR:1%の手、あったかい……」
 			ELSEIF A == 1
 				PRINTFORMW  「ひゃ、触るだけじゃなくて、そろそろ、その……」
 				PRINTFORMW  きりたんはもじもじと身体をくねらせている
@@ -4583,7 +4583,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 7 && 0
 	;初めて
-	IF CFLAG:423 = 0
+	IF CFLAG:423 == 0
 		PRINTFORMW 「ぜぇ……ぜぇ……」
 		CFLAG:423 = 1
 	;二回目以降
@@ -5053,7 +5053,7 @@ IF SELECTCOM == 24
 		ELSEIF ABL:4 >= 5 && (CFLAG:438 < 3 || FLAG:7 == 2)
 			A = RAND:2
 			IF A == 0
-				PRINTFORMW 「あにさま、わたし、これ、おかしく、なっちゃう」
+				PRINTFORMW 「%CSTR:1%、わたし、これ、おかしく、なっちゃう」
 				PRINTFORMW いいんだ、思いっきりおかしくなってもいい
 				PRINTFORMW 「あっ、あっ、んっ、はうっ」
 			ELSE
