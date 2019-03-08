@@ -47,9 +47,9 @@
 ;---------------------------------------------------------------------------------------------
 ; -FlagManagement- 
 ;  CSTR:1　きりたんから主人公への呼び方
-;
 ;置換用
 ;あにさま　→　%CSTR:1%
+;置換しない箇所が2箇所あるので注意
 
 
 
@@ -80,7 +80,8 @@ DRAWLINE
 PRINTFORML きりたんからの呼び名を変更できます。
 PRINTFORML 名前を選択して下さい
 PRINTFORML [ 0] 自分で入力する
-PRINTFORML [ 1] %CSTR:1% ※推奨※
+;ここは置換しない
+PRINTFORML [ 1] あにさま ※推奨※
 PRINTFORML [ 2] マスター
 PRINTFORML [ 3] おにいさま
 PRINTFORML [ 4] おにいちゃん
@@ -96,10 +97,11 @@ IF RESULT == 0
 ELSEIF RESULT >= 1 && RESULT <= 8
 	;名前登録フラグを立てる
 	CFLAG:698 = 1
-	;あなたの名前を%CSTR:1%に格納
+	;あなたの名前をCSTR:1に格納
 	IF 0
 	ELSEIF RESULT == 1
-	CSTR:1 = %CSTR:1%
+;ここは置換しない
+	CSTR:1 = あにさま
 	ELSEIF RESULT == 2
 	CSTR:1 = マスター
 	ELSEIF RESULT == 3
@@ -8362,26 +8364,26 @@ IF TFLAG:10 > 0
 	SELECTCASE SELECTCOM
 	;手淫する
 	CASE 191
-		PRINTFORMDL %CALLNAME:PLAYER%の顔と手が精液に塗れていくのを、
+		PRINTFORMDL あなたの顔と手が精液に塗れていくのを、
 	;フェラする
 	CASE 4
-		PRINTFORMDL %CALLNAME:PLAYER%が喉を鳴らして精液を飲み干すのを、
+		PRINTFORMDL あなたが喉を鳴らして精液を飲み干すのを、
 	;パイズリする
 	CASE 192
-		PRINTFORMDL %CALLNAME:PLAYER%の胸を精液が白く染め上げるのを、
+		PRINTFORMDL あなたの胸を精液が白く染め上げるのを、
 	;クンニ
 	CASE 1
-		PRINTFORMDL %CALLNAME:PLAYER%の顔に精液が降りかかっていくのを、
+		PRINTFORMDL あなたの顔に精液が降りかかっていくのを、
 	;正常位させる OR 後背位させる OR 騎乗位させる OR 着衣セックスさせる
 	CASE 193, 194, 195, 381
 		;騎乗位させる ?
-		PRINTFORMDL ペニスを抜き去られた%CALLNAME:PLAYER%の秘裂から\@ SELECTCOM == 195 ? 肉棒を伝って # \@精液が垂れ落ちるのを、
+		PRINTFORMDL ペニスを抜き去られたあなたの秘裂から\@ SELECTCOM == 195 ? 肉棒を伝って # \@精液が垂れ落ちるのを、
 	;逆レイプ
 	CASE 23
 		RETURN 0
 	;アナルに入れさせる
 	CASE 204
-		PRINTFORMDL %CALLNAME:PLAYER%のアナルから漏れ出た精液が尻の割れ目を伝って垂れ落ちるのを、
+		PRINTFORMDL あなたのアナルから漏れ出た精液が尻の割れ目を伝って垂れ落ちるのを、
 	ENDSELECT
 	PRINTFORMDW きりたんは%RAND_SPLIT("ぼんやりと/どこか虚ろな目で/微熱の冷めやらぬ表情で")%眺めている。
 	RETURN 0
@@ -8640,7 +8642,7 @@ SIF D == 0
 ;フェラ、シックスナイン、イラマチオが該当
 IF SELECTCOM == 31 || SELECTCOM == 69 || SELECTCOM == 80 || SELECTCOM == 373
 	PRINTFORML 「ん、むっ……んっ、んんっ……んんんっ──！」
-	PRINTFORMDW %CALLNAME:PLAYER%のモノを咥えたまま、きりたんは絶頂に達した。
+	PRINTFORMDW あなたのモノを咥えたまま、きりたんは絶頂に達した。
 	PRINTFORML 
 	RETURN 0
 ENDIF
