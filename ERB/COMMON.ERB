@@ -1207,8 +1207,8 @@ ENDIF
 ;-------------------------------------------------
 @GET_BASE8(ARG)
 ;陰毛なし
-;ショウタ、アイ、きりたん、ウナ
-IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81)
+;ショウタ、アイ、きりたん、ウナ、ヒメ、ミコト
+IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81, 82, 83)
 	BASE:ARG:8 = 0
 	MAXBASE:ARG:8 = 0
 	TALENT:ARG:65 = 1

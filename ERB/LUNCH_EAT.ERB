@@ -580,27 +580,27 @@ IF K == 0
 		
 	ELSEIF NO:TARGET == 11
 		;あかり
-		PRINT 特大おにぎり
+		TSTR:1 = 特大おにぎり
 		N += 50
 	ELSEIF NO:TARGET == 12
 		;イタコ
-		PRINT いなり寿司
+		TSTR:1 = いなり寿司
 		N += 50
 	ELSEIF NO:TARGET == 13
 		;そら
 		P = RAND:2
 		IF P == 0
 			;井上喜久子の好きな食べ物
-			PRINT 特製サラダ
+			TSTR:1 = 特製サラダ
 			N += 50
 		ELSE
-			PRINT オリジナルパフェ
+			TSTR:1 = オリジナルパフェ
 			N += 100
 		ENDIF
 	ELSEIF NO:TARGET == 14
 		;ついな
 		;公式の得意料理。
-		PRINT 恵方巻き
+		TSTR:1 = 恵方巻き
 		N += 50
 		
 	ELSEIF NO:TARGET == 50
@@ -635,7 +635,14 @@ IF K == 0
 		N += 50
 	ELSEIF NO:TARGET == 53
 		;ONE
-		TSTR:1 = オレンジシャーベット
+		P = RAND:2
+		IF P == 0
+			TSTR:1 = オレンジシャーベット
+			N += 50
+		ELSE
+			TSTR:1 = チャーハン
+			N += 100
+		ENDIF
 		N += 50
 	ELSEIF NO:TARGET == 54
 		;IA
@@ -648,6 +655,14 @@ IF K == 0
 	ELSEIF NO:TARGET == 81
 		;ウナ
 		TSTR:1 = うなぎの蒲焼き
+		N += 70
+	ELSEIF NO:TARGET == 82
+		;ヒメ
+		TSTR:1 = 日の丸弁当
+		N += 70
+	ELSEIF NO:TARGET == 83
+		;ミコト
+		TSTR:1 = 日の丸弁当
 		N += 70
 	
 		

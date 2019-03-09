@@ -134,18 +134,18 @@ SIF TALENT:122
 SIF MARK:3 > 0
 	RETURN 0
 ;パイズリで起こされる
-;欲望8以上奉仕精神8以上精液経験1以上で発生、奉仕精神と精液中毒で回数判定
-IF ABL:1 >= 8 && ABL:6 >= 8 && ABL:11 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:85
-	IF ABL:6+ABL:11 < 6
+;欲望8以上奉仕精神8以上精液中毒1以上で発生、奉仕精神と精液中毒で回数判定
+IF ABL:1 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:85
+	IF ABL:奉仕精神 + ABL:精液中毒 < 6
 		A = 1
-	ELSEIF ABL:6+ABL:11 < 12
+	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 12
 		A = 2
-	ELSEIF ABL:6+ABL:11 < 18
+	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 18
 		A = 3
-	ELSEIF ABL:6+ABL:11 < 24
+	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 24
 		A = 4
-	ELSEIF ABL:6+ABL:11 >= 24
-		A = 2 + (ABL:6 / 6) + (ABL:11 / 4)
+	ELSEIF ABL:奉仕精神 + ABL:精液中毒 >= 24
+		A = 2 + (ABL:奉仕精神 / 6) + (ABL:精液中毒 / 4)
 	ENDIF
 	
 	;男嫌い
@@ -274,29 +274,29 @@ ENDIF
 ;精液経験1以上で発生、欲望と奉仕精神で回数判定
 ;条件に[合意]追加
 ;パートナーがオトコならリターン
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
-IF ABL:1 >= 8 && ABL:6 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:TARGET:152
-	IF (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:0 == 0 && EXP:0 > 0 && TALENT:MASTER:154 == 0 && (CFLAG:97 & 2) == 0
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:TARGET:152
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:0 == 0 && EXP:Ｖ経験 > 0 && EXP:精液経験 > 0 && TALENT:MASTER:154 == 0 && (CFLAG:97 & 2) == 0
 		;朝から凄いなぁ……
-		IF ABL:1+ABL:6 < 6
+		IF ABL:欲望 + ABL:奉仕精神 < 6
 			A = 1
-		ELSEIF ABL:1+ABL:6 < 12
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 12
 			A = 2
-		ELSEIF ABL:1+ABL:6 < 18
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 18
 			A = 3
-		ELSEIF ABL:1+ABL:6 < 24
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 24
 			A = 4
-		ELSEIF ABL:1+ABL:6 >= 24
-			A = 3 + (ABL:1 / 6) + (ABL:6 / 6)
+		ELSEIF ABL:欲望 + ABL:奉仕精神 >= 24
+			A = 3 + (ABL:欲望 / 6) + (ABL:奉仕精神 / 6)
 		ENDIF
 		
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:122
+		SIF TALENT:82 && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
 		SIF TALENT:63
@@ -350,7 +350,7 @@ IF ABL:1 >= 8 && ABL:6 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:
 			A = LOCAL
 			A:1 = LOCAL:1
 			
-			EXP:0 += A
+			EXP:Ｖ経験+= A
 			PRINTFORML %EXPNAME:0%＋{A}
 			EXP:2 += A/2
 			PRINTFORML %EXPNAME:2%＋{A/2}
@@ -358,7 +358,7 @@ IF ABL:1 >= 8 && ABL:6 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:
 			PRINTFORML %EXPNAME:20%＋{A/2}
 			EXP:21 += A/2
 			PRINTFORML %EXPNAME:21%＋{A/2}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
 				EXP:40 += A*2
 				EXP:MASTER:40 += A*2
@@ -377,21 +377,21 @@ IF ABL:1 >= 8 && ABL:6 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:
 			CFLAG:99 = LOCAL:100
 			RETURN 1
 		ENDIF
-	ELSEIF TALENT:MASTER:122 == 0 && TALENT:122 == 0 && ABL:12 > 0 && (CFLAG:97 & 4) == 0
-		IF ABL:1+ABL:6 < 6
+	ELSEIF TALENT:MASTER:オトコ == 0 && TALENT:オトコ == 0 && ABL:12 > 0 && (CFLAG:97 & 4) == 0
+		IF ABL:欲望 + ABL:奉仕精神 < 6
 			A = 1
-		ELSEIF ABL:1+ABL:6 < 12
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 12
 			A = 2
-		ELSEIF ABL:1+ABL:6 < 18
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 18
 			A = 3
-		ELSEIF ABL:1+ABL:6 < 24
+		ELSEIF ABL:欲望 + ABL:奉仕精神 < 24
 			A = 4
-		ELSEIF ABL:1+ABL:6 >= 24
-			A = 3 + (ABL:1 / 6) + (ABL:6 / 6)
+		ELSEIF ABL:欲望 + ABL:奉仕精神 >= 24
+			A = 3 + (ABL:欲望 / 6) + (ABL:奉仕精神 / 6)
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
 		SIF TALENT:63
@@ -449,7 +449,7 @@ IF ABL:1 >= 8 && ABL:6 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:
 			PRINTFORML %EXPNAME:2%＋{A/2}
 			EXP:21 += A/2
 			PRINTFORML %EXPNAME:21%＋{A/2}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
 				EXP:40 += A*2
 				EXP:MASTER:40 += A*2
@@ -484,26 +484,26 @@ ENDIF
 ;奉仕精神と露出癖で回数判定
 ;条件に[合意]追加
 ;パートナーがオトコならリターン
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
 IF ITEM:19 == 1 && TALENT:89
-	IF (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:0 == 0 && EXP:0 > 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
-		IF ABL:6+ABL:7 < 12
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:0 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
+		IF ABL:奉仕精神 + ABL:7 < 12
 			A = 1
-		ELSEIF ABL:6+ABL:7 < 18
+		ELSEIF ABL:奉仕精神 + ABL:7 < 18
 			A = 2
-		ELSEIF ABL:6+ABL:7 < 24
+		ELSEIF ABL:奉仕精神 + ABL:7 < 24
 			A = 3
-		ELSEIF ABL:6+ABL:7 >= 24
-			A = 2 + (ABL:6 / 6) + (ABL:7 / 6)
+		ELSEIF ABL:奉仕精神 + ABL:7 >= 24
+			A = 2 + (ABL:奉仕精神 / 6) + (ABL:7 / 6)
 		ENDIF
 	
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:122
+		SIF TALENT:82 && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
 		SIF TALENT:63
@@ -558,7 +558,7 @@ IF ITEM:19 == 1 && TALENT:89
 			A = LOCAL
 			A:1 = LOCAL:1
 			
-			EXP:0 += A
+			EXP:Ｖ経験+= A
 			PRINTFORML %EXPNAME:0%＋{A}
 			EXP:2 += A
 			PRINTFORML %EXPNAME:2%＋{A}
@@ -566,7 +566,7 @@ IF ITEM:19 == 1 && TALENT:89
 			PRINTFORML %EXPNAME:20%＋{A}
 			EXP:23 += A / 2
 			PRINTFORML %EXPNAME:23%＋{A/2}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
 				EXP:40 += A*2
 				EXP:MASTER:40 += A*2
@@ -586,22 +586,22 @@ IF ITEM:19 == 1 && TALENT:89
 			CFLAG:99 = LOCAL:100
 			RETURN 1
 		ENDIF
-	ELSEIF TALENT:122 == 0 && (CFLAG:97 & 16) == 0
-		IF ABL:6+ABL:7 < 12
+	ELSEIF TALENT:オトコ == 0 && (CFLAG:97 & 16) == 0
+		IF ABL:奉仕精神 + ABL:7 < 12
 			A = 1
-		ELSEIF ABL:6+ABL:7 < 18
+		ELSEIF ABL:奉仕精神 + ABL:7 < 18
 			A = 2
-		ELSEIF ABL:6+ABL:7 < 24
+		ELSEIF ABL:奉仕精神 + ABL:7 < 24
 			A = 3
-		ELSEIF ABL:6+ABL:7 >= 24
-			A = 2 + (ABL:6 / 6) + (ABL:7 / 6)
+		ELSEIF ABL:奉仕精神 + ABL:7 >= 24
+			A = 2 + (ABL:奉仕精神 / 6) + (ABL:7 / 6)
 		ENDIF
 	
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:122
+		SIF TALENT:82 && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
 		SIF TALENT:63
@@ -674,7 +674,7 @@ IF ITEM:19 == 1 && TALENT:89
 			PRINTFORML %EXPNAME:2%＋{A+B}
 			EXP:23 += (A + B) / 2
 			PRINTFORML %EXPNAME:23%＋{(A+B)/2}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{(A+B)*2}
 				EXP:40 += (A + B) * 2
 				EXP:MASTER:40 += (A + B) * 2
@@ -714,20 +714,20 @@ SIF CFLAG:97 & 32
 	RETURN 0
 ;キスで起こされる
 ;親密6奉仕精神6以上で発生、親密と奉仕精神で回数判定
-IF ABL:6 >= 6 && ABL:0 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
-	IF ABL:6+ABL:0 < 12
+IF ABL:奉仕精神 >= 6 && ABL:0 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
+	IF ABL:奉仕精神 + ABL:0 < 12
 		A = 1
-	ELSEIF ABL:6+ABL:0 < 18
+	ELSEIF ABL:奉仕精神 + ABL:0 < 18
 		A = 2
-	ELSEIF ABL:6+ABL:0 >= 18
-		A = (ABL:6 / 6) + (ABL:0 / 6)
+	ELSEIF ABL:奉仕精神 + ABL:0 >= 18
+		A = (ABL:奉仕精神 / 6) + (ABL:0 / 6)
 	ENDIF
 
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:122
+	SIF TALENT:82 && TALENT:MASTER:オトコ
 		A -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:122 == 0
+	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 		A += 1
 	;献身的
 	SIF TALENT:63
@@ -775,7 +775,7 @@ IF ABL:6 >= 6 && ABL:0 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
 		EXP:MASTER:96 += A
 		PRINTFORML %EXPNAME:23%＋{A/2}
 		PRINTFORML %EXPNAME:96%＋{A}
-		IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 			PRINTFORML %EXPNAME:40%＋{A*2}
 			EXP:40 += A*2
 			EXP:MASTER:40 += A*2
@@ -806,30 +806,30 @@ ENDIF
 ;マスターが非処女だと、セックスかパイズリ
 ;処女だとパイズリ
 @EVENT_NEWDAY_FEMALE
-SIF TALENT:MASTER:122
+SIF TALENT:MASTER:オトコ
 	RETURN 0
-SIF (TALENT:119 || TALENT:121 || TALENT:122) == 0
+SIF (TALENT:119 || TALENT:121 || TALENT:オトコ) == 0
 	RETURN 0
 
-IF ABL:1 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
+IF ABL:欲望 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 	A = RAND:2
 	;セックス
 	IF TALENT:MASTER:0 == 0 && A && TALENT:154 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
 		;朝から凄いなぁ……
-		IF ABL:1+ABL:15 < 5
+		IF ABL:欲望 + ABL:15 < 5
 			B = 1
-		ELSEIF ABL:1+ABL:15 < 10
+		ELSEIF ABL:欲望 + ABL:15 < 10
 			B = 2
-		ELSEIF ABL:1+ABL:15 < 15
+		ELSEIF ABL:欲望 + ABL:15 < 15
 			B = 3
-		ELSEIF ABL:1+ABL:15 < 20
+		ELSEIF ABL:欲望 + ABL:15 < 20
 			B = 4
-		ELSEIF ABL:1+ABL:15 >= 20
-			B = 3 + (ABL:1 / 6) + (ABL:15 / 3)
+		ELSEIF ABL:欲望 + ABL:15 >= 20
+			B = 3 + (ABL:欲望 / 6) + (ABL:15 / 3)
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			B += 1
 		;サド
 		SIF TALENT:83
@@ -878,7 +878,7 @@ IF ABL:1 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 			PRINTFORML %EXPNAME:2%＋{B}
 			EXP:3 += A
 			PRINTFORML %EXPNAME:3%＋{B}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{B*2}
 				EXP:40 += B*2
 				EXP:MASTER:40 += B*2
@@ -908,20 +908,20 @@ IF ABL:1 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 	;パイズリ
 	IF (A == 0 || TALENT:MASTER:0 || CFLAG:97 & 64) && (CFLAG:97 & 128) == 0
 		;朝から凄いなぁ……
-		IF ABL:1+ABL:15 < 5
+		IF ABL:欲望 + ABL:15 < 5
 			B = 1
-		ELSEIF ABL:1+ABL:15 < 10
+		ELSEIF ABL:欲望 + ABL:15 < 10
 			B = 2
-		ELSEIF ABL:1+ABL:15 < 15
+		ELSEIF ABL:欲望 + ABL:15 < 15
 			B = 3
-		ELSEIF ABL:1+ABL:15 < 20
+		ELSEIF ABL:欲望 + ABL:15 < 20
 			B = 4
-		ELSEIF ABL:1+ABL:15 >= 20
-			B = 3 + (ABL:1 / 6) + (ABL:15 / 3)
+		ELSEIF ABL:欲望 + ABL:15 >= 20
+			B = 3 + (ABL:欲望 / 6) + (ABL:15 / 3)
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			B += 1
 		;サド
 		SIF TALENT:83
@@ -981,7 +981,7 @@ IF ABL:1 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 			PRINTFORML %EXPNAME:2%＋{B}
 			EXP:3 += B
 			PRINTFORML %EXPNAME:3%＋{B}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{B*2}
 				EXP:40 += B*2
 				EXP:MASTER:40 += B*2
@@ -1023,29 +1023,29 @@ ENDIF
 ;欲望8奉仕精神8かつ[恋慕]か[淫乱]で発生
 ;[オトコ]か[ふたなり]か[半人半妖]なら精液中毒1以上でフェラ
 ;[オトコ]でないならレズ中毒1以上でクンニ
-IF ABL:1 >= 8 && ABL:6 >= 6 && (TALENT:85 || TALENT:TARGET:76)
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 	;フェラ判定
-	IF ABL:11 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && (CFLAG:97 & 256) == 0
-		IF ABL:11 == 1
+	IF ABL:精液中毒 >= 1 && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && (CFLAG:97 & 256) == 0
+		IF ABL:精液中毒 == 1
 			A = 1
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			A = 2
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			A = 3
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			A = 4
-		ELSEIF ABL:11 >= 5
-			A = 3 + (ABL:11 / 2)
+		ELSEIF ABL:精液中毒 >= 5
+			A = 3 + (ABL:精液中毒 / 2)
 		ENDIF
 		
 		;猫舌だとダメ
 		SIF TALENT:54
 			RETURN 0
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:122
+		SIF TALENT:82 && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;汚臭鈍感
 		SIF TALENT:61
@@ -1095,7 +1095,7 @@ IF ABL:1 >= 8 && ABL:6 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 			PRINTFORML %EXPNAME:22%＋{A}
 			EXP:20 += A*2
 			PRINTFORML %EXPNAME:20%＋{A*2}
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
 				EXP:40 += A*2
 				EXP:MASTER:40 += A*2
@@ -1125,7 +1125,7 @@ IF ABL:1 >= 8 && ABL:6 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 	ENDIF
 	;クンニ判定
-	IF ABL:12 >= 1 && TALENT:MASTER:122 == 0 && (CFLAG:97 & 512) == 0
+	IF ABL:12 >= 1 && TALENT:MASTER:オトコ == 0 && (CFLAG:97 & 512) == 0
 		IF ABL:12 == 1
 			A = 1
 		ELSEIF ABL:12 == 2
@@ -1142,7 +1142,7 @@ IF ABL:1 >= 8 && ABL:6 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 		SIF TALENT:54
 			RETURN 0
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:122 == 0
+		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;汚臭鈍感
 		SIF TALENT:61
@@ -1188,7 +1188,7 @@ IF ABL:1 >= 8 && ABL:6 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 			CALL SELF_KOJO
 			A = LOCAL
 			
-			IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
 				EXP:40 += A*2
 				EXP:MASTER:40 += A*2
@@ -1235,10 +1235,10 @@ IF ABL:0 >= 6 && TALENT:85
 	ENDIF
 
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:122
+	SIF TALENT:82 && TALENT:MASTER:オトコ
 		A -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:122 == 0
+	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 		A += 1
 	;恋慕
 	SIF TALENT:76
@@ -1307,10 +1307,10 @@ IF ABL:0 >= 6 && TALENT:85 && (CFLAG:97 & 4096) == 0
 	ENDIF
 	
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:122
+	SIF TALENT:82 && TALENT:MASTER:オトコ
 		B -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:122 == 0
+	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
 		B += 1
 	;恋慕
 	SIF TALENT:76
@@ -1412,7 +1412,7 @@ IF MARK:3 >= 3
 	SIF TALENT:87
 		B += 1
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:122
+	SIF TALENT:82 && TALENT:MASTER:オトコ
 		B += 1
 	;臆病
 	SIF TALENT:10
