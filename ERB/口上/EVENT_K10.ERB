@@ -531,8 +531,8 @@ IF TFLAG:600 == 9
 		CFLAG:228 = 2
 	;それ以外
 	ELSEIF CFLAG:228 < 1 || FLAG:7 == 2
-		PRINTFORMW 
-		PRINTFORMW 
+		PRINTFORMW 「うげ……やられちゃいました」
+		PRINTFORMW 「無理させないでくださいよ、まったく」
 		ENDIF
 	ENDIF
 
@@ -997,15 +997,18 @@ ENDIF
 IF TFLAG:600 == 17
 	;恋慕かつ恋人かつ合意
 	IF (TALENT:恋慕 == 1 && TALENT:合意 == 1 && TALENT:恋人 == 1) && (CFLAG:240 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
+		PRINTFORMW 「一緒に暮らす者として、働かないとですね」
 		CFLAG:240 = 3
 	;恋慕または恋人
 	ELSEIF (TALENT:恋慕 == 1 || TALENT:恋人 == 1) && (CFLAG:240 < 2 || FLAG:7 == 2)
-		PRINTFORMW 
+		PRINTFORMW 「えーまたバイトするんですか」
+		PRINTFORMW 「これ、稼いだお金ゲームに使いたいんですけど……」
 		CFLAG:240 = 2
 	;それ以外
 	ELSEIF CFLAG:240 < 1 || FLAG:7 == 2
-		PRINTFORMW 
+		PRINTFORMW 「えー、働くんですかー」
+		PRINTFORMW 「子供に労役させちゃいけないって授業で習いましたよ」
+		PRINTFORMW そうはいっても緊急事態だ、働かないわけにはいかないだろう
 		CFLAG:240 = 1
 	ENDIF
 ENDIF
@@ -1037,25 +1040,16 @@ ENDIF
 ;弁当食べる　 CFLAG242
 ;-------------------------------------------------
 IF TFLAG:600 == 19
-	;恋慕
-	IF TALENT:恋慕 == 1 && (CFLAG:242 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+	;親愛または相愛
+	IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:242 < 3 || FLAG:7 == 2)
 		PRINTFORMW 
 		CFLAG:242 = 3
-	;恋人
-	ELSEIF TALENT:恋人 == 1 && (CFLAG:242 < 2 || FLAG:7 == 2)
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+	;恋慕または恋人
+	ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:242 < 2 || FLAG:7 == 2)
 		PRINTFORMW 
 		CFLAG:242 = 2
 	;それ以外
 	ELSEIF CFLAG:242 < 1 || FLAG:7 == 2
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
 		PRINTFORMW 
 		CFLAG:242 = 1
 	ENDIF
@@ -1119,19 +1113,20 @@ IF TFLAG:600 == 20
 ENDIF
 
 ;-------------------------------------------------
-;休憩　 CFLAG244
+;休憩　 CFLAG:244
 ;-------------------------------------------------
 IF TFLAG:600 == 21
-	;恋慕
-	IF TALENT:恋慕 == 1 && (CFLAG:244 < 3 || FLAG:7 == 2)
-		PRINTFORMW 
+	;親愛または相愛
+	IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:244 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		PRINTFORMW 「今日は疲れてるし、休憩しましょう」
 		CFLAG:244 = 3
-	;恋人
-	ELSEIF TALENT:恋人 == 1 && (CFLAG:244 < 2 || FLAG:7 == 2)
+	;恋慕または恋人
+	ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:244 < 2 || FLAG:キャラ口上の表示頻度 == 2)
+		PRINTFORMW 「今日は疲れましたし、お休みしましょう」
 		CFLAG:244 = 2
 	;それ以外
-	ELSEIF CFLAG:244 < 1 || FLAG:7 == 2
-		PRINTFORMW 
+	ELSEIF (CFLAG:244 < 1 || FLAG:キャラ口上の表示頻度 == 2)
+		PRINTFORMW 「うーん、疲れました……寝ますね……」
 		CFLAG:244 = 1
 	ENDIF
 ENDIF
@@ -1250,20 +1245,49 @@ IF TFLAG:600 == 26
 
 ENDIF
 
+
 ;-------------------------------------------------
-;我慢できず押し倒される
+;我慢できず押し倒される　 CFLAG:137
 ;-------------------------------------------------
 IF TFLAG:600 == 27
-	;恋慕
-	IF TALENT:恋慕 == 1
+	;通常
+	IF TFLAG:48 == 0
 		PRINTFORMW 
-	;恋人
-	ELSEIF TALENT:恋人 == 1
+	;酔った勢い
+	ELSEIF TFLAG:48 == 1
+		PRINTFORMW 「えへへー」
+		PRINTFORMW きりたんはこちらにもたれかかって頬をすりすりしている
+		PRINTFORML ……？
+		PRINTFORML きりたんがいつの間にかこちらのズボンのベルトを外している
+		PRINTFORMW それどころかきりたんも着物をほとんど脱いでいる状態だ
+		PRINTFORMW  「わたし、なんだか身体が熱いんです」
+		PRINTFORMW そう言いながらきりたんはこちらの下着を完全に脱がした
+		PRINTFORMW 「ほら、上も脱いで」
+		PRINTFORMW 言われるがままにとりあえず服を脱いでしまう
+		PRINTFORMW 「えへへ、%CSTR:1%の身体、がっちりしてておっきい」
+		PRINTFORMW このままでは、間違いを起こしてしまうかもしれない
+		PRINTFORMW きりたんにそう言い、離れるよう要求する
+		PRINTFORML 
+		PRINTFORMW 「間違い、起こしちゃってもいいんですよ」
+		PRINTFORML
+		PRINTFORMW 彼女は耳元でそう囁いた
+		PRINTFORMW 固唾を飲む。これは心を決めるしかなさそうだ……
+	ENDIF
+	CFLAG:137 = 1
+ENDIF
+
+;-------------------------------------------------
+;我慢できず押し倒される(合意有)　CFLAG:377
+;-------------------------------------------------
+IF TFLAG:600 == 45
+	;通常
+	IF TFLAG:48 == 0
 		PRINTFORMW 
-	;それ以外
-	ELSE
+	;酔った勢い
+	ELSEIF TFLAG:48 == 1
 		PRINTFORMW 
 	ENDIF
+	CFLAG:377 = 1
 ENDIF
 
 ;-------------------------------------------------
@@ -1644,18 +1668,14 @@ ENDIF
 ;朝キス　CFLAG318（恋慕かつ親密6以上奉仕精神6以上）
 ;----------------------------------------------------------------
 IF TFLAG:13 == 19
-	PRINTFORMW 
+	PRINTFORML 
 	;親愛
 	IF TALENT:親愛 && (CFLAG:318 < 2 || FLAG:7 == 2)
-		PRINTFORMW 
-		PRINTFORMW 
+		PRINTFORMW 「はい、おはようのキスです」
 		CFLAG:318 = 2
 	;それ以外
 	ELSEIF CFLAG:318 < 1 || FLAG:7 == 2
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
-		PRINTFORMW 
+		PRINTFORMW 「にひひ、おはようございます、%CSTR:1%」
 		CFLAG:318 = 1
 	ENDIF
 ENDIF
@@ -1889,6 +1909,8 @@ ENDIF
 ;【親愛】取得（親密15以上奉仕精神15以上好感度10000以上かつ異常経験が初期値から増えていない）
 ;----------------------------------------------------------------
 IF TFLAG:13 == 35
+	PRINTFORMW 
+	PRINTFORMW 
 	PRINTFORMW 
 ENDIF
 
@@ -2860,9 +2882,15 @@ IF SELECTCOM == 301
 				PRINTFORMW 「えーっ、けちー」
 				CFLAG:402 == 301
 			ELSEIF CFLAG:402 == 301
-				PRINTFORMW 
-				PRINTFORMW 
+				PRINTFORMW 「そういえば最近、あのゲームの大型アップデートが来たみたいですね」
+				PRINTFORMW 「仕様が変わって、ほとんど別のゲームになってるみたいですよ」
+				PRINTFORMW そうか、後で一緒に遊んでみよう
+				PRINTFORMW 「はい！」
 				CFLAG:402 == 302
+			ELSEIF CFLAG:402 == 302
+				PRINTFORMW 
+				PRINTFORMW 
+				CFLAG:402 == 303
 			ELSE
 				PRINTFORMW 「%CSTR:1%と話していると、時間を忘れますね」
 				PRINTFORMW 「ゲームする時間よりも楽しいです」
@@ -4290,10 +4318,10 @@ IF SELECTCOM == 0
 	ELSE
 		;親愛または相愛
 		IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:416 < 4 || FLAG:キャラ口上の表示頻度 == 2)
-			A = RAND:3
-			IF A == 0
+			LOCAL = RAND:3
+			IF LOCAL == 0
 				PRINTFORMW  「えへへ、%CSTR:1%の手、あったかい……」
-			ELSEIF A == 1
+			ELSEIF LOCAL == 1
 				PRINTFORMW  「ひゃ、触るだけじゃなくて、そろそろ、その……」
 				PRINTFORMW  きりたんはもじもじと身体をくねらせている
 			ELSE
@@ -4349,11 +4377,11 @@ IF SELECTCOM == 1 && TEQUIP:57 == 0
 	ELSE
 		;恋慕かつＣ感覚Lv5以上
 		IF TALENT:恋慕 && ABL:Ｃ感覚 > 4 && (CFLAG:417 < 4 || FLAG:キャラ口上の表示頻度 == 2)
-			A = RAND:3
-			IF A == 0
+			LOCAL = RAND:3
+			IF LOCAL == 0
 				PRINTFORMW 「ああっ、ひゃあああああっ」
 				PRINTFORMW きりたんの股間から透明な汁がとめどなく流れてくる
-			ELSEIF A == 1
+			ELSEIF LOCAL == 1
 				PRINTFORMW 「ふわああっ、そこ、だめっ」
 			ELSE
 				PRINTFORMW 「んんんっ！〜〜〜〜〜〜〜っ！」
@@ -4362,28 +4390,28 @@ PRINTFORMW きりたんは股間からくる快感の波を受け止めきれて
 			CFLAG:417 = 4
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:417 < 3 || FLAG:キャラ口上の表示頻度 == 2)
-			A = RAND:4
-			IF A == 0
+			LOCAL = RAND:4
+			IF LOCAL == 0
 				PRINTFORMW 「ぁ……」
 				PRINTFORMW %CALLNAME:MASTER%はきりたんの秘所に顔を近づける
 				PRINTFORMW きりたんのそこからはこれから始まる行為への期待で蜜が零れていた
 				PRINTFORMW %CALLNAME:MASTER%はきりたんの膣口を舐めまわす
 				PRINTFORMW 「くひゃぁあんっ！」
 				PRINTFORMW きりたんはあまりの快感にのけぞった
-			ELSEIF A == 1
+			ELSEIF LOCAL == 1
 				PRINTFORMW 「んあっ、はっ…んくううぅっ！」
-			ELSEIF A == 2
+			ELSEIF LOCAL == 2
 				PRINTFORMW 「んあぁ！びりびりってする…そんないじらないでください…」
 			ELSE
 				PRINTFORMW 「んあっ、はっ…んくううぅっ！」
 			ENDIF
 			CFLAG:417 = 3
 		ELSE
-			B = RAND:3
-			IF B == 0
+			LOCAL = RAND:3
+			IF LOCAL == 0
 				PRINTFORMW 
 				PRINTFORMW 
-			ELSEIF B == 1
+			ELSEIF LOCAL == 1
 				PRINTFORMW 
 			ELSE
 				PRINTFORMW 
