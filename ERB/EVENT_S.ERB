@@ -847,8 +847,8 @@ ELSE
 	PRINT                
 ENDIF
 PRINTC [0]変更しない
-;3ページまでしかない
-SIF TFLAG:100 < 3
+;1ページまでしかない
+SIF TFLAG:100 < 1
 	PRINTC [9]後のページ
 PRINTL 
 
@@ -872,8 +872,8 @@ IF RESULT == 1
 ELSEIF RESULT == 9
 	;後のページ 最終ページ以上にはならないようにする
 	TFLAG:100 += 1
-	SIF TFLAG:100 >= 4
-		TFLAG:100 = 3
+	SIF TFLAG:100 >= 2
+		TFLAG:100 = 1
 
 	CALL START_PARTNER_SHOW
 	GOTO INPUT_LOOP
@@ -925,8 +925,8 @@ ELSE
 	PRINT                
 ENDIF
 PRINTC                
-;3ページまでしかない
-SIF TFLAG:100 < 3
+;1ページまでしかない
+SIF TFLAG:100 < 1
 	PRINTC [9]後のページ
 PRINTL 
 
@@ -939,8 +939,8 @@ FOR LOCAL, 0, 200
 	IF FLAG:(999+LOCAL) && LOCAL > 120 && TFLAG:100 == 3
 		;番号が飛んでいる特殊なキャラ用の処理
 	ELSE
-		;30キャラずつ表示
-		SIF LOCAL > (30 + (30 * TFLAG:100)) || LOCAL <= (0 + (30 * TFLAG:100))
+		;49キャラずつ表示
+		SIF LOCAL > (49 + (49 * TFLAG:100)) || LOCAL <= (0 + (49 * TFLAG:100))
 			CONTINUE
 	ENDIF
 
