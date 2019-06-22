@@ -1,0 +1,595 @@
+﻿;PRINT_??? 系コマンドと置き換えて使う関数集（eratohoJ対応版）
+;キャラの登録番号はあらかじめ汎用変数 W に代入しておきます
+;
+;W = ステータスを表示するキャラクターの登録番号（あらかじめ代入しておく）
+;X = @○_SORTで設定された表示する項目番号（CSVの番号と対応）
+;    表示位置あわせのための空白挿入、改行するかどうかの判断にも使用
+;A:0 = @○_SORTで設定されたREPEAT回数
+;U:1 = 項目の表示回数（ループ回数 - CONTINUEでスキップされた回数）
+;    （X を使わない場合に）改行するかどうかの判断で使用
+
+
+;=============================================================================
+;PRINT_ABL （能力）との入れ替え
+@NEW_PRINT_ABL
+;改行用にLOCAL:1を使用
+LOCAL:1 = 0
+;ABLの並び設定
+CALL ABL_SORT
+REPEAT A:0
+	;並べ直したABLをLOCALに代入
+	LOCAL = X:COUNT
+	
+	;オトコ、女でそれぞれ不要なABLを表示しない
+	SIF LOCAL == 13 && TALENT:W:122 == 0
+		CONTINUE
+	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:W:122
+		CONTINUE
+	
+	IF ABL:W:LOCAL > 0
+		;2桁までは右詰め、それ以上は左詰めで表示
+		IF ABL:W:LOCAL <= 99
+			PRINTFORM %ABLNAME:LOCAL,12%:LV{ABL:W:LOCAL,2}　
+		ELSE
+			PRINTFORM %ABLNAME:LOCAL,12%:LV{ABL:W:LOCAL,4,LEFT}
+		ENDIF
+		LOCAL:1 += 1
+		;改行するのか？ 続けて出力するのか？
+		IF LOCAL:1 > 3
+			PRINTL 
+			LOCAL:1 = 0
+		ELSE
+			PRINT 
+		ENDIF
+	ENDIF
+REND
+;最後のループで改行してなかったら、ここで改行しておく
+SIF LOCAL:1 != 0
+	PRINTL 
+
+;=============================================================================
+;PRINT_TALENT （素質）との入れ替え
+@NEW_PRINT_TALENT
+U:1 = 0
+;リピート回数-1 の番号までの素質が表示される
+;リピート回数をあらかじめ大きめに設定（最大1000）しておくと、
+;素質の最大番号が増えたときに書き換える手間が減るが、
+;増やしすぎると処理速度に影響するので要注意
+REPEAT 750
+	;危険日パッチOFF時は[危険日][生理]表示なし
+	SIF (FLAG:62 & 1) == 0 && (COUNT == 137 || COUNT == 138)
+		CONTINUE
+	
+	IF TALENT:W:COUNT
+		IF FLAG:2 == 1
+			;胸関係は別枠
+			;貧乳
+			IF COUNT == 109 && (CFLAG:W:60 & 32) == 0
+				PRINTFORM [貧乳？] 
+			;巨乳
+			ELSEIF COUNT == 110 && (CFLAG:W:60 & 32) == 0
+				;着痩せ持ちの場合一段階小さく
+				IF TALENT:W:142
+					PRINTFORM [並乳？] 
+				ELSE
+					PRINTFORM [巨乳？] 
+				ENDIF
+			ELSE
+				;インビジブルモード用素質表示判定
+				CALL PRINT_TALENT_INVISIBLE, COUNT
+				IF RESULT
+					PRINTFORM [%TALENTNAME:COUNT%] 
+				ELSE
+					PRINTFORM [？？？] 
+				ENDIF
+			ENDIF
+			;改行するのか？ 続けて出力するのか？
+			U:1 += 1
+			SIF U:1%6 == 0
+				PRINTL 
+		ELSE
+			PRINTFORM [%TALENTNAME:COUNT%] 
+			;改行するのか？ 続けて出力するのか？
+			U:1 += 1
+			SIF U:1%6 == 0
+				PRINTL 
+		ENDIF
+	;並乳処理、巨乳、貧乳両方持っていない。オトコでない。インビジブルモードの場合
+	ELSEIF COUNT == 110 && TALENT:W:109 == 0 && TALENT:W:110 == 0 && TALENT:W:122 == 0 && FLAG:2 == 1
+		;並乳発覚フラグ
+		IF (CFLAG:W:60 & 32) == 0
+			;並乳
+			;着痩せ持ちの場合一段階小さく
+			IF TALENT:W:142
+				PRINTFORM [貧乳？] 
+			ELSE
+				PRINTFORM [並乳？] 
+			ENDIF
+		ELSE
+			PRINTFORM [並乳] 
+		ENDIF
+		;改行するのか？ 続けて出力するのか？
+		U:1 += 1
+		SIF U:1%6 == 0
+			PRINTL 
+	ENDIF
+REND
+
+;最後のループで改行してなかったら、ここで改行しておく
+SIF U:1%6 != 0
+	PRINTL 
+
+;-------------------------------------------------
+;インビジブルモード用素質表示判定
+;-------------------------------------------------
+@PRINT_TALENT_INVISIBLE, ARG
+;身体的特徴
+;処女
+IF ARG == 0 && (CFLAG:W:60 & 1) == 0
+;Ｃ鈍感
+ELSEIF ARG == 101 && (CFLAG:W:60 & 2) == 0
+;Ｃ敏感
+ELSEIF ARG == 102 && (CFLAG:W:60 & 2) == 0
+;Ｖ鈍感
+ELSEIF ARG == 103 && (CFLAG:W:60 & 4) == 0
+;Ｖ敏感
+ELSEIF ARG == 104 && (CFLAG:W:60 & 4) == 0
+;Ａ鈍感
+ELSEIF ARG == 105 && (CFLAG:W:60 & 8) == 0
+;Ａ敏感
+ELSEIF ARG == 106 && (CFLAG:W:60 & 8) == 0
+;Ｂ鈍感
+ELSEIF ARG == 107 && (CFLAG:W:60 & 16) == 0
+;Ｂ敏感
+ELSEIF ARG == 108 && (CFLAG:W:60 & 16) == 0
+;貧乳
+ELSEIF ARG == 109 && (CFLAG:W:60 & 32) == 0
+;巨乳
+ELSEIF ARG == 110 && (CFLAG:W:60 & 32) == 0
+;着痩せ
+ELSEIF ARG == 142 && (CFLAG:W:60 & 32) == 0
+;回復早い
+ELSEIF ARG == 111 && (CFLAG:W:60 & 64) == 0
+;回復遅い
+ELSEIF ARG == 112 && (CFLAG:W:60 & 64) == 0
+;早漏
+ELSEIF ARG == 133 && (CFLAG:W:60 & 128) == 0
+;不思議な根
+ELSEIF ARG == 120 && (CFLAG:W:60 & 256) == 0
+;ふたなり
+ELSEIF ARG == 121 && (CFLAG:W:60 & 256) == 0
+;具現
+ELSEIF ARG == 127 && (CFLAG:W:60 & 256) == 0
+;狂気
+ELSEIF ARG == 123 && (CFLAG:W:60 & 512) == 0
+;痛みに弱い
+ELSEIF ARG == 40 && (CFLAG:W:60 & 1024) == 0
+;痛みに強い
+ELSEIF ARG == 41 && (CFLAG:W:60 & 1024) == 0
+;濡れやすい
+ELSEIF ARG == 42 && (CFLAG:W:60 & 2048) == 0
+;濡れにくい
+ELSEIF ARG == 43 && (CFLAG:W:60 & 2048) == 0
+
+;性格的特徴
+;臆病
+ELSEIF ARG == 10 && (CFLAG:W:61 & 1) == 0
+;反抗的
+ELSEIF ARG == 11 && (CFLAG:W:61 & 2) == 0
+;気丈
+ELSEIF ARG == 12 && (CFLAG:W:61 & 4) == 0
+;素直
+ELSEIF ARG == 13 && (CFLAG:W:61 & 8) == 0
+;大人しい
+ELSEIF ARG == 14 && (CFLAG:W:61 & 16) == 0
+;プライド高い
+ELSEIF ARG == 15 && (CFLAG:W:61 & 32) == 0
+;生意気
+ELSEIF ARG == 16 && (CFLAG:W:61 & 64) == 0
+;プライド低い
+ELSEIF ARG == 17 && (CFLAG:W:61 & 128) == 0
+;ツンデレ
+ELSEIF ARG == 18 && (CFLAG:W:61 & 256) == 0
+;自制心
+ELSEIF ARG == 20 && (CFLAG:W:61 & 512) == 0
+;無関心
+ELSEIF ARG == 21 && (CFLAG:W:61 & 1024) == 0
+;感情乏しい
+ELSEIF ARG == 22 && (CFLAG:W:61 & 2048) == 0
+;好奇心
+ELSEIF ARG == 23 && (CFLAG:W:61 & 4096) == 0
+;保守的
+ELSEIF ARG == 24 && (CFLAG:W:61 & 8192) == 0
+;楽観的
+ELSEIF ARG == 25 && (CFLAG:W:61 & 16384) == 0
+;悲観的
+ELSEIF ARG == 26 && (CFLAG:W:61 & 32768) == 0
+;一線越えない
+ELSEIF ARG == 27 && (CFLAG:W:61 & 65536) == 0
+;目立ちたがり
+ELSEIF ARG == 28 && (CFLAG:W:61 & 131072) == 0
+;貞操観念
+ELSEIF ARG == 30 && (CFLAG:W:61 & 262144) == 0
+;貞操無頓着
+ELSEIF ARG == 31 && (CFLAG:W:61 & 524288) == 0
+;抑圧
+ELSEIF ARG == 32 && (CFLAG:W:61 & 1048576) == 0
+;開放
+ELSEIF ARG == 33 && (CFLAG:W:61 & 2097152) == 0
+;抵抗
+ELSEIF ARG == 34 && (CFLAG:W:61 & 4194304) == 0
+;恥じらい
+ELSEIF ARG == 35 && (CFLAG:W:61 & 8388608) == 0
+;恥薄い
+ELSEIF ARG == 36 && (CFLAG:W:61 & 16777216) == 0
+
+;能力的特徴
+;習得早い
+ELSEIF ARG == 50 && (CFLAG:W:62 & 1) == 0
+;習得遅い
+ELSEIF ARG == 51 && (CFLAG:W:62 & 2) == 0
+;舌使い
+ELSEIF ARG == 52 && (CFLAG:W:62 & 4) == 0
+;針さばき
+ELSEIF ARG == 53 && (CFLAG:W:62 & 8) == 0
+;自慰しやすい
+ELSEIF ARG == 60 && (CFLAG:W:62 & 16) == 0
+;汚臭鈍感
+ELSEIF ARG == 61 && (CFLAG:W:62 & 32) == 0
+;汚臭敏感
+ELSEIF ARG == 62 && (CFLAG:W:62 & 64) == 0
+;献身的
+ELSEIF ARG == 63 && (CFLAG:W:62 & 128) == 0
+;汚れ無視
+ELSEIF ARG == 64 && (CFLAG:W:62 & 256) == 0
+;快感に素直
+ELSEIF ARG == 70 && (CFLAG:W:62 & 512) == 0
+;快感の否定
+ELSEIF ARG == 71 && (CFLAG:W:62 & 1024) == 0
+;中毒しやすい
+ELSEIF ARG == 72 && (CFLAG:W:62 & 2048) == 0
+;マゾ
+ELSEIF ARG == 79 && (CFLAG:W:62 & 4096) == 0
+;倒錯的
+ELSEIF ARG == 80 && (CFLAG:W:62 & 8192) == 0
+;両刀
+ELSEIF ARG == 81 && (CFLAG:W:62 & 16384) == 0
+;男嫌い
+ELSEIF ARG == 82 && (CFLAG:W:62 & 32768) == 0
+;サド
+ELSEIF ARG == 83 && (CFLAG:W:62 & 65536) == 0
+;嫉妬
+ELSEIF ARG == 84 && (CFLAG:W:62 & 131072) == 0
+;恋慕
+ELSEIF ARG == 85 && (CFLAG:W:62 & 262144) == 0
+;妄信
+ELSEIF ARG == 86 && (CFLAG:W:62 & 524288) == 0
+;謎の魅力
+ELSEIF ARG == 92 && (CFLAG:W:62 & 1048576) == 0
+
+ELSE
+	RETURN 1
+ENDIF
+RETURN 0
+
+;=============================================================================
+;PRINT_MARK （刻印）との入れ替え
+@NEW_PRINT_MARK
+REPEAT 4
+	PRINTFORM %MARKNAME:COUNT%:LV{MARK:W:COUNT} 
+	IF FLAG:23 & 256
+		PRINT [
+		CALL PRINT_COLORBAR, MARK:W:COUNT, 3, 3, UNICODE(0x258A), UNICODE(0x258A), BARCOLORSET("紺"), RESULT:1
+		PRINT ]
+	ELSE
+		BAR MARK:W:COUNT, 3, 3
+	ENDIF
+	
+	;最後のループ以外では間隔をあける
+	SIF COUNT < 3
+		PRINT 　
+REND
+
+PRINTL 
+
+;=============================================================================
+;PRINT_EXP （経験）との入れ替え
+@NEW_PRINT_EXP
+;改行用にLOCAL:1を使用
+LOCAL:1 = 0
+;EXPの並び設定
+CALL EXP_SORT
+REPEAT A:0
+	;並べ直したEXPをLOCALに代入
+	LOCAL = X:COUNT
+	
+	;オトコ、女でそれぞれ不要なEXPを表示しない
+	SIF LOCAL == 41 && TALENT:W:122 == 0
+		CONTINUE
+	SIF (LOCAL == 0 || LOCAL == 40) && TALENT:W:122
+		CONTINUE
+	
+	IF EXP:W:LOCAL > 0
+		;CALL VALUE_FORM, EXP:W:LOCAL, "経験"
+		PRINTFORMLC %EXPNAME:LOCAL,12%:{EXP:W:LOCAL}
+;		PRINTFORM %EXPNAME:LOCAL,12%:%RESULTS,6%　
+		LOCAL:1 += 1
+		;改行するのか？ 続けて出力するのか？
+		IF LOCAL:1 > 2
+			PRINTL 
+			LOCAL:1 = 0
+		ELSE
+			PRINT 
+		ENDIF
+	ENDIF
+REND
+;最後のループで改行してなかったら、ここで改行しておく
+SIF LOCAL:1 != 0
+	PRINTL 
+
+;=============================================================================
+;SHOW_JUEL の珠表示部分を独立した関数に
+@NEW_PRINT_JUEL
+;改行用にLOCAL:1を使用
+LOCAL:1 = 0
+;JUELの並び設定
+CALL JUEL_SORT
+REPEAT A:0
+	;並べ直したJUELをLOCALに代入
+	LOCAL = X:COUNT
+	
+;	CALL VALUE_FORM, JUEL:W:LOCAL, "珠"
+	PRINTFORMLC   %PALAMNAME:LOCAL%の珠:{JUEL:W:LOCAL}
+;	PRINTFORM %PALAMNAME:LOCAL,6%の珠:%RESULTS,7%　
+	
+	LOCAL:1 += 1
+	;改行するのか？ 続けて出力するのか？
+	IF LOCAL:1 > 2
+		PRINTL 
+		LOCAL:1 = 0
+	ELSE
+		PRINT 
+	ENDIF
+REND
+;最後のループで改行してなかったら、ここで改行しておく
+SIF LOCAL:1 != 0
+	PRINTL 
+
+;-------------------------------------------------
+;各並び設定
+;AはREPEAT数
+;-------------------------------------------------
+@ABL_SORT
+;ABLを並べて表示する際に使用。
+A = 23
+
+;表示順
+; 0,親密　　　 1,欲望　　　 2,技巧　　　
+; 3,Ｃ感覚　　 4,Ｖ感覚　　 5,Ａ感覚　　14,Ｂ感覚　　 
+; 6,奉仕精神　 7,露出癖　　 8,マゾっ気　15,サドっ気　
+;10,自慰中毒　11,精液中毒　 9,レズっ気（13,BL）　12,レズ中毒　
+;89,金銭感覚　90,料理技能　91,撮影技能　92,歌唱技能　
+;88,戦闘技能　98,戦闘素質　97,浪費癖　　
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 3
+X:4 = 4
+X:5 = 5
+X:6 = 14
+X:7 = 6
+X:8 = 7
+X:9 = 8
+X:10 = 15
+X:11 = 10
+X:12 = 11
+X:13 = 9
+X:14 = 13
+X:15 = 12
+X:16 = 89
+X:17 = 90
+X:18 = 91
+X:19 = 92
+X:20 = 88
+X:21 = 98
+X:22 = 97
+
+;Ｍ感覚を追加する場合
+SIF FLAG:62 & 4194304
+	CALL ABL_SORT_M
+
+@EXP_SORT
+;EXPを並べて表示する際に使用。
+A = 34
+
+;表示順
+; 0,　　　Ｖ経験 1,　　　Ａ経験 2,　　絶頂経験 3,　　射精経験
+;10,　　自慰経験11,調教自慰経験20,　　精液経験21,奉仕快楽経験
+;22,　フェラ経験23,　　愛情経験30,苦痛快楽経験31,　　放尿経験
+;32,　Ａ快楽経験40,　レズ経験(41,BL)　50,異常経験51,　　緊縛経験
+;52,　Ｖ拡張経験53,　Ａ拡張経験54,　　噴乳経験55,　　触手経験
+;56,　　吸血経験60,　　産卵経験61,　　出産経験89,　　調合経験
+;90,　　調理経験91,　　撮影経験92,　　被写経験93,　　歌唱経験
+;94,　デート経験95,　　戦闘経験96,　　キス経験97,　　主導経験
+;98,記憶消去経験
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 3
+X:4 = 10
+X:5 = 11
+X:6 = 20
+X:7 = 21
+X:8 = 22
+X:9 = 23
+X:10 = 30
+X:11 = 31
+X:12 = 32
+X:13 = 40
+X:14 = 41
+X:15 = 50
+X:16 = 51
+X:17 = 52
+X:18 = 53
+X:19 = 54
+X:20 = 55
+X:21 = 56
+X:22 = 60
+X:23 = 61
+X:24 = 89
+X:25 = 90
+X:26 = 91
+X:27 = 92
+X:28 = 93
+X:29 = 94
+X:30 = 95
+X:31 = 96
+X:32 = 97
+X:33 = 98
+
+@JUEL_SORT
+;JUELを並べて表示する際に使用。
+A = 15
+
+;表示順
+; 0,快Ｃ　 1,快Ｖ　 2,快Ａ  14,快Ｂ　
+; 4,恭順　 5,欲情　 6,屈服　 7,習得
+; 8,恥情　 9,苦痛　10,恐怖　15,好意
+;16,生活　17,優越 100,否定
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 14
+X:4 = 4
+X:5 = 5
+X:6 = 6
+X:7 = 7
+X:8 = 8
+X:9 = 9
+X:10 = 10
+X:11 = 15
+X:12 = 16
+X:13 = 17
+X:14 = 100
+
+;Ｍ感覚を追加する場合
+SIF FLAG:62 & 4194304
+	CALL JUEL_SORT_M
+
+@PALAM_SORT
+;PALAMを並べて表示する際に使用。
+A = 18
+
+X:0= 0
+X:1= 1
+X:2= 2
+X:3= 14
+X:4= 3
+X:5= 4
+X:6= 5
+X:7= 6
+X:8= 7
+X:9= 8
+X:10= 9
+X:11= 10
+X:12= 11
+X:13= 12
+X:14= 13
+X:15= 15
+X:16= 16
+X:17= 17
+
+;Ｍ感覚を追加する場合
+SIF FLAG:62 & 4194304
+	CALL PALAM_SORT_M
+
+;-------------------------------------------------
+;各並び設定(Ｍ感覚追加版)
+;AはREPEAT数
+;-------------------------------------------------
+@ABL_SORT_M
+;ABLを並べて表示する際に使用。
+A = 24
+
+;表示順
+; 0,親密　　　 1,欲望　　　 2,技巧　　　 3,Ｃ感覚
+; 4,Ｖ感覚　　 5,Ａ感覚　　14,Ｂ感覚　　17,Ｍ感覚
+; 6,奉仕精神　 7,露出癖　　 8,マゾっ気　15,サドっ気　
+;10,自慰中毒　11,精液中毒　 9,レズっ気（13,BL）　12,レズ中毒　
+;89,金銭感覚　90,料理技能　91,撮影技能　92,歌唱技能　
+;88,戦闘技能　98,戦闘素質　97,浪費癖　　
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 3
+X:4 = 4
+X:5 = 5
+X:6 = 14
+X:7 = 17
+X:8 = 6
+X:9 = 7
+X:10 = 8
+X:11 = 15
+X:12 = 10
+X:13 = 11
+X:14 = 9
+X:15 = 12
+X:16 = 13
+X:17 = 89
+X:18 = 90
+X:19 = 91
+X:20 = 92
+X:21 = 88
+X:22 = 98
+X:23 = 97
+
+@JUEL_SORT_M
+;JUELを並べて表示する際に使用。
+A = 16
+
+;表示順
+; 0,快Ｃ　 1,快Ｖ　 2,快Ａ  14,快Ｂ　
+; 4,恭順　 5,欲情　 6,屈服　 7,習得
+; 8,恥情　 9,苦痛　10,恐怖　15,好意
+;16,生活　17,優越  18,快Ｍ 100,否定
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 14
+X:4 = 4
+X:5 = 5
+X:6 = 6
+X:7 = 7
+X:8 = 8
+X:9 = 9
+X:10 = 10
+X:11 = 15
+X:12 = 16
+X:13 = 17
+X:14 = 18
+X:15 = 100
+
+@PALAM_SORT_M
+;PALAMを並べて表示する際に使用。
+A = 19
+
+X:0 = 0
+X:1 = 1
+X:2 = 2
+X:3 = 14
+X:4 = 18
+X:5 = 4
+X:6 = 5
+X:7 = 6
+X:8 = 7
+X:9 = 8
+X:10 = 9
+X:11 = 10
+X:12 = 11
+X:13 = 12
+X:14 = 13
+X:15 = 15
+X:16 = 16
+X:17 = 17
+X:18 = 3
+

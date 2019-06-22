@@ -1,0 +1,162 @@
+﻿@COM_ABLE181
+;コンドーム実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;実行者かパートナーがコンドーム装着済みの場合解除はいつでも可能
+SIF TEQUIP:PLAYER:85 || TEQUIP:85
+	RETURN 1
+;調教者か調教対象がオトコかふたなりじゃないとダメ
+SIF (TALENT:PLAYER:121 || TALENT:PLAYER:122 || TALENT:TARGET:121 || TALENT:TARGET:122) == 0
+	RETURN 0
+;アイテムを持っていないとダメ
+SIF (ITEM:29 == 0) && (NOITEM == 0)
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM181
+;コンドーム
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+;失敗することはない
+
+;-------------------------------------------------
+;実行決定
+;-------------------------------------------------
+PRINTL コンドーム
+STR:0 = コンドーム
+
+PRINTFORML 誰にコンドームを使用しますか？(残:{ITEM:29})
+PRINTFORML （既に装着している対象を選んだ場合、コンドームを外します）
+IF TALENT:PLAYER:121 || TALENT:PLAYER:122
+	PRINTFORM [0] %CALLNAME:PLAYER% 
+	IF TEQUIP:PLAYER:85
+		PRINTL (装着済み)
+	ELSE
+		PRINTL (未装着)
+	ENDIF
+ENDIF
+IF TALENT:121 || TALENT:122
+	PRINTFORM [1] %CALLNAME:TARGET% 
+	IF TEQUIP:85
+		PRINTL (装着済み)
+	ELSE
+		PRINTL (未装着)
+	ENDIF
+ENDIF
+PRINT [2] やめる
+
+$INPUT_LOOP_181
+INPUT
+SIF RESULT < 0 || RESULT > 2
+	GOTO INPUT_LOOP_181
+SIF (TALENT:PLAYER:121 || TALENT:PLAYER:122) == 0 && RESULT == 0
+	GOTO INPUT_LOOP_181
+SIF (TALENT:121 || TALENT:122) == 0 && RESULT == 1
+	GOTO INPUT_LOOP_181
+SIF RESULT == 2
+	RETURN 0
+
+TFLAG:17 = RESULT + 1
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 0
+LOSEBASE:1 += 10
+
+;調教対象が処女
+IF TALENT:0 == 1
+	SOURCE:3 = 10
+	SOURCE:9 = 10
+	SOURCE:11 = 20
+ELSE
+	SOURCE:3 = 10
+	SOURCE:13 = 20
+ENDIF
+
+;貞操観念
+SIF TALENT:30
+	TIMES SOURCE:3 , 1.50
+
+CALL TRAIN_MESSAGE_B
+
+;コンドームの着脱変更
+IF TFLAG:17 == 1
+	IF TEQUIP:PLAYER:85 != 0
+		TEQUIP:PLAYER:85 = 0
+	ELSE
+		TEQUIP:PLAYER:85 = 1
+		ITEM:29 -= 1
+	ENDIF
+ELSEIF TFLAG:17 == 2
+	IF TEQUIP:85 != 0
+		TEQUIP:85 = 0
+	ELSE
+		TEQUIP:85 = 1
+		ITEM:29 -= 1
+	ENDIF
+ENDIF
+
+CALL KOJO_MESSAGE_COM
+
+RETURN 0
+
+;コンドーム
+@TRAIN_MESSAGE_COM181
+IF TFLAG:17 == 1
+	IF TEQUIP:PLAYER:85 == 0
+		;奉仕精神が5以上
+		IF ABL:6 >= 5
+			PRINTFORMW %CALLNAME:TARGET%はコンドームを咥え、口を使って%CALLNAME:PLAYER%のペニスに優しくかぶせた……
+		;奉仕精神が3以上
+		ELSEIF ABL:6 > 2
+			PRINTFORMW %CALLNAME:TARGET%は、コンドームを躊躇いもなく手で%CALLNAME:PLAYER%のペニスに優しくかぶせた……
+		;奉仕精神が1以上
+		ELSEIF ABL:6 > 0
+			PRINTFORMW %CALLNAME:TARGET%は、コンドームを%CALLNAME:PLAYER%のペニスにぎこちない手つきでかぶせた……
+		ELSE
+			PRINTFORMW %CALLNAME:PLAYER%はコンドームをペニスにかぶせた……
+		ENDIF
+	ELSE
+		;奉仕精神が3以上
+		IF ABL:6 > 2
+			PRINTFORMW %CALLNAME:PLAYER%のコンドームを%CALLNAME:TARGET%に外して貰った
+		ELSE
+			PRINTFORMW %CALLNAME:PLAYER%はコンドームを外した
+		ENDIF
+	ENDIF
+ELSEIF TFLAG:17 == 2
+	IF TEQUIP:85 == 0
+		IF ASSIPLAY
+			IF ABL:PLAYER:6 >= 5
+				PRINTFORMW %CALLNAME:PLAYER%はコンドームを咥え、口を使って%CALLNAME:TARGET%のペニスに優しくかぶせた……
+			ELSEIF ABL:PLAYER:6 > 2
+				PRINTFORMW %CALLNAME:PLAYER%は、コンドームを躊躇いもなく手で%CALLNAME:TARGET%のペニスに優しくかぶせた……
+			ELSEIF ABL:PLAYER:6 > 0
+				PRINTFORMW %CALLNAME:PLAYER%は、コンドームを%CALLNAME:TARGET%のペニスにぎこちない手つきでかぶせた……
+			ELSE
+				PRINTFORMW %CALLNAME:TARGET%はコンドームをペニスにかぶせた……
+			ENDIF
+		ELSE
+			PRINTFORMW コンドームを%CALLNAME:TARGET%のペニスにかぶせた……
+		ENDIF
+	ELSE
+		;奉仕精神が3以上
+		IF ABL:6 > 2
+			PRINTFORMW %CALLNAME:TARGET%のコンドームを%CALLNAME:PLAYER%に外して貰った
+		ELSE
+			PRINTFORMW %CALLNAME:TARGET%はコンドームを外した
+		ENDIF
+	ENDIF
+ENDIF
+

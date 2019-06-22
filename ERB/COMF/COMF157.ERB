@@ -1,0 +1,375 @@
+﻿@COM_ABLE157
+;人形愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教者がアリスでないとダメ
+SIF 1
+	RETURN 0
+;人形愛撫残り使用可能回数オーバー
+SIF TFLAG:67 >= 4
+	RETURN 0
+;対象が～感覚を1つも持っていないならダメ
+SIF ABL:3 == 0 && ABL:4 == 0 && ABL:5 == 0 && ABL:14 == 0
+	RETURN 0
+;対象がふたなりかオトコならダメ(そのうち解除するかも)
+SIF TALENT:121 && TALENT:122
+	RETURN 0
+;調教者の技巧が3無いとできない
+SIF ABL:PLAYER:2 <= 2
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM157
+;人形愛撫
+
+PRINTL 人形愛撫
+STR:0 = 人形愛撫
+CALL TRAIN_MESSAGE_B
+
+LOSEBASE:0 += 15
+LOSEBASE:1 += 75
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+
+SOURCE:4 = 60
+SOURCE:12 = 200
+SOURCE:14 = 800
+
+TFLAG:67 += 1
+
+IF ABL:3 > 0
+	O = 1
+	SIF ABL:3 > 3
+		O += 1
+ELSEIF ABL:4 > 0
+	P = 1
+	SIF ABL:4 > 3
+		P += 1
+ELSEIF ABL:5 > 0
+	Q = 1
+	SIF ABL:5 > 3
+		Q += 1
+ELSEIF ABL:14 > 0
+	R = 1
+	SIF ABL:14 > 3
+		R += 1
+ELSE
+	S = 1
+ENDIF
+
+SIF P > 0 || Q > 0
+	SOURCE:6 = 600
+SIF ABL:14 > 0
+	SOURCE:13 = 500
+
+
+;ABL:Ｃ感覚をみる
+IF ABL:3 == 0
+	SOURCE:0 = 0
+ELSEIF ABL:3 == 1
+	SOURCE:0 = 100
+	SOURCE:3 += 60
+ELSEIF ABL:3 == 2
+	SOURCE:0 = 500
+	SOURCE:3 += 120
+ELSEIF ABL:3 == 3
+	SOURCE:0 = 1100
+	SOURCE:3 += 240
+ELSEIF ABL:3 == 4
+	SOURCE:0 = 1900
+	SOURCE:3 += 360
+ELSE
+	SOURCE:0 = 2700
+	SOURCE:3 += 600
+ENDIF
+
+;ABL:Ｖ感覚をみる
+IF ABL:4 == 0
+	SOURCE:1 = 0
+ELSEIF ABL:4 == 1
+	SOURCE:1 = 50
+	SOURCE:13 += 100
+ELSEIF ABL:4 == 2
+	SOURCE:1 = 200
+	SOURCE:13 += 150
+ELSEIF ABL:4 == 3
+	SOURCE:1 = 600
+	SOURCE:13 += 300
+ELSEIF ABL:4 == 4
+	SOURCE:1 = 1200
+	SOURCE:13 += 600
+ELSE
+	SOURCE:1 = 1800
+	SOURCE:13 += 700
+ENDIF
+
+;ABL:Ａ感覚をみる
+IF ABL:5 == 0
+	SOURCE:2 = 0
+ELSEIF ABL:5 == 1
+	SOURCE:2 = 75
+	SOURCE:13 += 100
+ELSEIF ABL:5 == 2
+	SOURCE:2 = 150
+	SOURCE:13 += 250
+ELSEIF ABL:5 == 3
+	SOURCE:2 = 400
+	SOURCE:13 += 500
+ELSEIF ABL:5 == 4
+	SOURCE:2 = 800
+	SOURCE:13 += 800
+ELSE
+	SOURCE:2 = 1300
+	SOURCE:13 += 1200
+ENDIF
+
+;ABL:Ｂ感覚をみる
+IF ABL:14 == 0
+	SOURCE:17 = 0
+ELSEIF ABL:14 == 1
+	SOURCE:17 = 100
+	SOURCE:3 += 50
+ELSEIF ABL:14 == 2
+	SOURCE:17 = 400
+	SOURCE:3 += 100
+ELSEIF ABL:14 == 3
+	SOURCE:17 = 1000
+	SOURCE:3 += 200
+ELSEIF ABL:14 == 4
+	SOURCE:17 = 1700
+	SOURCE:3 += 320
+ELSE
+	SOURCE:17 = 2500
+	SOURCE:3 += 450
+ENDIF
+
+
+;Ｃ敏感、鈍感をみる
+;快Ｃ自体のチェックは後でまとめてやる
+SIF TALENT:101
+	TIMES SOURCE:0 , 0.60
+SIF TALENT:102
+	TIMES SOURCE:0 , 1.50
+;Ｖ敏感、鈍感をみる
+;快Ｖ自体のチェックは後でまとめてやる
+SIF TALENT:103
+	TIMES SOURCE:1 , 0.60
+SIF TALENT:104
+	TIMES SOURCE:1 , 1.50
+;Ａ敏感、鈍感をみる
+;快Ａ自体のチェックは後でまとめてやる
+SIF TALENT:105
+	TIMES SOURCE:2 , 0.60
+SIF TALENT:106
+	TIMES SOURCE:2 , 1.50
+;Ｂ敏感、鈍感をみる
+;快Ｂ自体のチェックは後でまとめてやる
+SIF TALENT:107
+	TIMES SOURCE:17 , 0.60
+SIF TALENT:108
+	TIMES SOURCE:17 , 1.50
+
+
+;PALAM:潤滑をみる
+IF PALAM:3 < PALAMLV:1
+	TIMES SOURCE:1 , 0.10
+	TIMES SOURCE:2 , 0.10
+	TIMES SOURCE:13, 0.10
+	TIMES SOURCE:6 , 3.00
+ELSEIF PALAM:3 < PALAMLV:2
+	TIMES SOURCE:1 , 0.20
+	TIMES SOURCE:2 , 0.20
+	TIMES SOURCE:13, 0.20
+	TIMES SOURCE:6 , 2.00
+ELSEIF PALAM:3 < PALAMLV:3
+	TIMES SOURCE:1 , 0.60
+	TIMES SOURCE:2 , 0.60
+	TIMES SOURCE:13, 0.60
+	TIMES SOURCE:6 , 1.00
+ELSEIF PALAM:3 < PALAMLV:4
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:2 , 1.00
+	TIMES SOURCE:13, 1.00
+	TIMES SOURCE:6 , 0.50
+ELSEIF PALAM:3 >= PALAMLV:4
+	TIMES SOURCE:1 , 2.00
+	TIMES SOURCE:2 , 2.00
+	TIMES SOURCE:13, 2.00
+	TIMES SOURCE:6 , 0.10
+ENDIF
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES SOURCE:13, 0.30
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES SOURCE:13, 0.60
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES SOURCE:13, 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES SOURCE:13, 1.30
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES SOURCE:13, 1.60
+ENDIF
+
+
+
+;自尊心
+SIF TALENT:15
+	SOURCE:13 /= 2
+;恋慕
+SIF TALENT:85 && ASSIPLAY == 0
+	SOURCE:3 *= 2
+;保守的
+SIF TALENT:24
+	SOURCE:13 /= 3
+
+;縄で緊縛中のときは効果大
+IF TEQUIP:44
+	TIMES SOURCE:6, 1.50
+	TIMES SOURCE:14, 1.50
+ENDIF
+
+
+;1回の調教中に回数を重ねると効果ダウン
+U = TFLAG:67
+SOURCE:1 /= U
+SOURCE:2 /= U
+SOURCE:3 /= U
+SOURCE:4 /= U
+SOURCE:5 /= U
+SOURCE:6 /= U
+SOURCE:11 /= U
+SOURCE:12 /= U
+SOURCE:13 /= U
+SOURCE:14 /= U
+SOURCE:17 /= U
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +5
+	EXP:40 += 5
+ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+	PRINTS EXPNAME:41
+	PRINTL +5
+	EXP:41 += 5
+ENDIF
+
+RETURN 1
+
+@TRAIN_MESSAGE_COM157
+PRINTFORML %CALLNAME:PLAYER%が呼び出した大量の人形が、%CALLNAME:TARGET%の体へと群がっていった…
+PRINTFORM 人形達は%CALLNAME:TARGET%の
+IF O == 2 && P == 2 && Q == 2 && R == 2
+	PRINTW これ以上できないほど開発されたありとあらゆる性感帯を無慈悲なまでに蹂躙している…
+ELSEIF O == 1 && P == 1 && Q == 1 && R == 1
+	PRINTW ありとあらゆる性感帯を開発するべく執拗なまでに責めたてている…
+ELSEIF O == 2 && P == 2 && Q == 2
+	PRINTW 開発されつくした下半身へ集中的に手を伸ばしている…
+ELSEIF O == 1 && P == 1 && Q == 1
+	PRINTW 下半身に殺到し、その性器にさらなる快感を刻みこむかのごとく舐めまわしている…
+ELSEIF P == 2 && Q == 2
+	PRINTFORMW 緩みきった前後の穴に時々指を突っ込み、%CALLNAME:TARGET%の反応を楽しんでいるようだ…
+ELSEIF P == 1 && Q == 1
+	PRINTW 膣口と菊門に新たな快楽を植え付けさせるように弄んでいる
+ELSEIF O == 2 && R == 2
+	PRINTW 性感帯と化した全身にくまなく指を這わせている…
+ELSEIF O == 1 && R == 1
+	PRINTL 全身を緩急つけた動きで撫でまわしている…
+	PRINTFORMW %CALLNAME:TARGET%が嬌声を上げるたびに人形たちは刺激を与え、
+ELSEIF O == 2
+	PRINTW 膨れ上がって敏感になった陰核を中心に責め立てている…
+ELSEIF P == 2
+	PRINTW 愛液で濡れている陰唇に手を入れ、膣の中をかき回して遊んでいるように見える…
+ELSEIF Q == 2
+	PRINTW 相次ぐ調教で緩みきった後ろの穴に指を入れながら全身をまさぐっている…
+ELSEIF R == 2
+	PRINTW 尖りきった乳頭を絶妙なタイミングで弾きながら体中を撫でまわしている…
+ELSE
+	SIF O == 1
+		PRINT クリトリスを
+	SIF O == 1 && (P ==1 || Q == 1 || R == 1)
+		PRINT 、
+	SIF P == 1
+		PRINT ヴァギナを
+	SIF P == 1 && (Q == 1 || R == 1)
+		PRINT 、
+	SIF Q == 1
+		PRINT アナルを
+	SIF Q == 1 && R == 1
+		PRINT 、
+	SIF R == 1
+		PRINT バストを
+	PRINTW 弄り倒している…
+ENDIF
+PRINTL 　
+IF (TEQUIP:43 || TEQUIP:80) && TEQUIP:44 && TEQUIP:45
+	PRINTFORML 視野も言葉も自由も奪われた%CALLNAME:TARGET%はなすすべもなく人形達の責めに身を委ねている
+ELSEIF (TEQUIP:43 == 0 || TEQUIP:80 == 0) && TEQUIP:44 == 0 && TEQUIP:45 == 0
+	PRINTFORML %CALLNAME:TARGET%は懸命に抵抗するものの、大量の人形に押さえつけられて身動きが取れないようだ
+ELSE
+PRINTFORM %CALLNAME:TARGET%は
+	IF TEQUIP:44 && TEQUIP:45
+		PRINTL 手足は拘束され、口に猿轡をかませられて罵声の一つもあげることができず
+		PRINTL ただ人形達に弄ばれている自分の体を見るめることしかできずにいた…
+	ELSEIF (TEQUIP:43 || TEQUIP:80) && TEQUIP:44
+		PRINTL 目を覆われ、体は束縛されて動くことができずにいた
+		PRINTL 人形達に埋もれ弄ばれて、唯一自由だった口すらも今は愛撫でもたらされる刺激によって嬌声を上げるばかりだ…
+	ELSEIF (TEQUIP:43 || TEQUIP:80) && TEQUIP:45
+		PRINTL 布で視野を塞がれ、口枷をつけられてもなお暴れようともがくが
+		PRINTL 圧倒的な数に押さえつけられてなすすべもなく人形達に弄ばれている…
+	ELSEIF TEQUIP:44
+		PRINTL 縛り付けられて身動きが取れず、ロクな抵抗もできないまま人形達に弄ばれている…
+	ELSEIF TEQUIP:45
+		PRINTL ボールギャグを咥えさせられ、叫び声を上げることもできずに人形達に弄ばれている…
+	ELSEIF TEQUIP:43 || TEQUIP:80
+		PRINTL 視界を奪われ、断続的に聞こえる卑猥な音と自分の肌が蹂躙されている恐怖に震えながら人形達に弄ばれている…
+	ENDIF
+ENDIF
+WAIT
+

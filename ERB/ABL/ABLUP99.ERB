@@ -1,0 +1,183 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/反発感情消去の処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;反発感情消去の本体
+;-------------------------------------------------
+@ABLUP99
+DRAWLINE
+IF MARK:3 <= 0
+	PRINTW 反発感情はありません
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP99
+
+;反発感情Lvと同じLvの既成事実が必要
+PRINTFORM %MARKNAME:2%{MARK:3}LV以上（現在{MARK:2}）かつ、
+
+;反発感情Lv*3Lvの従順が必要
+PRINTFORML %ABLNAME:0%{B}LV以上
+
+PRINTFORM [0] - %PALAMNAME:6%の珠×{A}……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINTFORM %MARKNAME:2%不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [1] - %PALAMNAME:15%の珠×{C}……
+IF J == 0
+	PRINT ＯＫ
+ELSE
+	SIF J & 1
+		PRINT 珠不足 
+	SIF J & 2
+		PRINTFORM %MARKNAME:2%不足 
+	SIF J & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+PRINTL [100] - やめる
+
+INPUT
+IF RESULT != 0 && RESULT != 1 && RESULT != 100
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF J != 0 && RESULT == 1
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+MARK:3 -= 1
+
+IF RESULT == 0
+	JUEL:6 -= A
+ELSEIF RESULT == 1
+	JUEL:15 -= C
+ENDIF
+
+PRINTS MARKNAME:3
+PRINT のレベルが
+PRINTV MARK:3
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;反発感情が消去出来るかチェック
+;-------------------------------------------------
+@ISABLUP99
+;条件別にＯＫかダメかを記録する
+I = 0
+J = 0
+;能力アップ可能なら1にする
+Z = 0
+
+;LV0ならリターン
+IF MARK:3 <= 0
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+
+;能力アップに必要なコストを計算
+CALL COSTABLUP99
+
+;反発感情Lv*3Lvの従順が必要
+IF B > ABL:0
+	I |= 4
+	J |= 4
+ENDIF
+
+;反発感情Lvと同じLvの既成事実が必要
+IF MARK:3 > MARK:2
+	I |= 2
+	J |= 2
+ENDIF
+
+;屈服の珠で減らす
+SIF JUEL:6 < A
+	I |= 1
+;好意の珠で減らす
+SIF JUEL:15 < C
+	J |= 1
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF J == 0
+	Z = 1
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;反発感情を消去するのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP99
+IF MARK:3 == 1
+	A = 5000
+	C = 10000
+ELSEIF MARK:3 == 2
+	A = 10000
+	C = 25000
+ELSEIF MARK:3 == 3
+	A = 50000
+	C = 100000
+ENDIF
+
+;気丈
+IF TALENT:12
+	TIMES A , 3.00
+	TIMES C , 3.00
+ENDIF
+
+;生意気
+IF TALENT:16
+	TIMES A , 1.50
+	TIMES C , 1.50
+ENDIF
+;素直
+IF TALENT:13
+	TIMES A , 0.50
+	TIMES C , 0.50
+ENDIF
+;恋慕
+IF TALENT:85
+	TIMES A , 0.50
+	TIMES C , 0.80
+ENDIF
+;恋人
+IF TALENT:153
+	TIMES C , 0.90
+ENDIF
+;親愛
+IF TALENT:88
+	TIMES C , 0.70
+ENDIF
+
+;反発感情Lv*3Lvの従順が必要
+B = MARK:3 * 3

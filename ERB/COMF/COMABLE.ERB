@@ -1,0 +1,4045 @@
+﻿;全コマンドでTFLAG:DOTRAINとTFLAG:CALLTRAINのどちらかが立てられないとCOM_ABLEを抜けられないようになっています
+;DOTRAIN及びCALLTRAINをするときは、命令直前にそれぞれのフラグを立ててください
+;-------------------------------------------------
+;共通実行判定
+;-------------------------------------------------
+@COM_ABLE_COMMON, ARG
+;COM_ABLE強制終了フラグ
+SIF TFLAG:DOTRAIN == 0 && TFLAG:CALLTRAIN == 0
+	RETURN 0
+
+;炬燵判定
+;300;戦闘訓練 320;宴会に参加 321;遊びに行く 323;デート 305;家事 315;お散歩する
+;309;素材探し 310;調合 322;ストリートライブ 367;着衣ローター
+;363,着衣セックス 365,着衣後背位 366,着衣騎乗位 371,オムツを履かせる
+IF ARG == 300 || ARG == 320 || ARG == 321 || ARG == 323 || ARG == 305 || ARG == 315 || ARG == 309 || ARG == 310 || ARG == 322 || ARG == 363 || ARG == 365 || ARG == 366 || ARG == 367 || ARG == 371
+	;炬燵にあたっていると出られないor炬燵にあたってるとできない
+	SIF TEQUIP:7
+		RETURN 0
+ENDIF
+
+;Ａ系コマンド拡張判定
+;9,アナル舐め 19,アナルビーズ 26,正常位アナル 27,後背位アナル 28,対面座位アナル 29,背面座位アナル 36,騎乗位アナル 46,浣腸器＋プラグ
+IF ARG == 9 || ARG == 19 || ARG == 26 || ARG == 27 || ARG == 28 || ARG == 29 || ARG == 36 || ARG == 46
+	;コンフィグでＡ系コマンド拡張がONになってないと無理
+	SIF (FLAG:61 & 1p5) == 0
+		RETURN 0
+ENDIF
+
+;REVMODE関係
+IF TFLAG:34
+	IF ARG >= 500 && ARG <= 510
+		LOCAL = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+		SIF REVMODE_ACTIVE_COMABLE(LOCAL, ARG-500)
+			RETURN 1
+		RETURN 0
+	ELSE
+		RETURN 0
+	ENDIF
+;REVMODE（非ウフフ時）
+ELSEIF TFLAG:53
+	IF ARG >= 500 && ARG <= 510
+		LOCAL = PASSIVEMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:53)
+		SIF PASSIVEMODE_ACTIVE_COMABLE(LOCAL, ARG-500)
+			RETURN 1
+		RETURN 0
+	ELSE
+		RETURN 0
+	ENDIF
+ELSE
+	SIF ARG >= 500 && ARG <= 510
+		RETURN 0
+ENDIF
+
+;ウフフコマンド拡張判定
+IF ARG < 300
+	IF (ARG >= 0 && ARG <= 8) || ARG == 10 || ARG == 11 || ARG == 13 || ARG == 18 || (ARG >= 20 && ARG <= 25)
+		RETURN 1
+	ELSEIF (ARG >= 30 && ARG <= 35) || ARG == 37 || (ARG >= 40 && ARG <= 45) || (ARG >= 50 && ARG <= 59)
+		RETURN 1
+	ELSEIF ARG == 61 || ARG == 63 || (ARG >= 65 && ARG <= 68) || ARG == 75 || ARG == 80 || (ARG >= 100 && ARG <= 109) || ARG == 190
+		RETURN 1
+	ELSEIF (ARG >= 280 && ARG <= 284)
+		RETURN 1
+	ELSEIF (FLAG:61 & 1p3) == 0 
+		RETURN 0
+	ENDIF
+ENDIF
+
+;非ウフフコマンド拡張判定
+IF ARG >= 300
+	IF (ARG >= 300 && ARG <= 305) || (ARG >= 320 && ARG <= 323) || (ARG >= 340 && ARG <= 342) || (ARG >= 360 && ARG <= 363) || ARG == 390 || ARG == 399
+		RETURN 1
+	ELSEIF (ARG >= 410 && ARG <= 414)
+		RETURN 1
+	ELSEIF (FLAG:61 & 1p4) == 0 
+		RETURN 0
+	ENDIF
+ENDIF
+
+RETURN 1
+
+@COM_ABLE0
+;愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE1
+;クンニ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+	RETURN 0
+;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+IF STAIN:3 & 14 && ASSIPLAY
+	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+		RETURN 0
+ENDIF
+;調教者が猫舌だとできない
+SIF TALENT:PLAYER:54
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE2
+;アナル愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナル愛撫はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE3
+;自慰実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && TEQUIP:53
+	RETURN 0
+;従順3以下・レズっ気3以下のASSIの場合自慰はできない（小悪魔ならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:87 == 0
+		RETURN 0
+ENDIF
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE4
+;フェラする実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;性器が汚れているとMASTERの場合フェラするはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
+SIF STAIN:2 & 12 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+	RETURN 0
+;性器が汚れており、汚臭敏感で従順3以下のASSIの場合フェラはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
+IF STAIN:2 & 12 && ASSIPLAY
+	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+		RETURN 0
+ENDIF
+;調教者が猫舌だとできない
+SIF TALENT:PLAYER:54
+	RETURN 0
+;オトコかふたなりじゃないとダメ
+SIF TALENT:121 == 0 && TALENT:122 == 0
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+;オナホール使用中はダメ
+SIF TEQUIP:17
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE5
+;胸愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+RETURN 1
+
+@COM_ABLE6
+;キスする実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;口が汚れているとダメ（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+SIF STAIN:0 & 14 && TALENT:PLAYER:64 == 0
+	RETURN 0
+;対象か調教者が猫舌だとできない
+SIF  TALENT:54 || TALENT:PLAYER:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE7
+;何もしない実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE8
+;指挿入れ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE9
+;アナル舐め実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルが汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+IF STAIN:4 & 14 && ASSIPLAY
+	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+		RETURN 0
+ENDIF
+;調教者が猫舌だとできない
+SIF TALENT:PLAYER:54
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+RETURN 1
+
+@COM_ABLE10
+;ローター実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:0 == 0 && NOITEM == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE11
+;バイブ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1)
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:11
+	RETURN 1
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:1 == 0 && NOITEM == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合バイブはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合バイブはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE12
+;Ｅマッサージャ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:2 == 0 && NOITEM == 0
+	RETURN 0
+;ASSIの場合、技巧3以上かサドじゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3 && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+RETURN 1
+
+@COM_ABLE13
+;アナルバイブ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:13
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:3 == 0 && NOITEM == 0
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナルバイブはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;浣腸＋アナルプラグ使用中はダメ
+SIF TEQUIP:46
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+RETURN 1
+
+@COM_ABLE14
+;電動クリキャップ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:14
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:7 == 0 && NOITEM == 0
+	RETURN 0
+;オトコやふたなりはダメ
+SIF TALENT:121 == 1 || TALENT:122 == 1
+	RETURN 0
+;ASSIの場合、技巧3以上じゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3
+		RETURN 0
+ENDIF
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+RETURN 1
+
+@COM_ABLE15
+;クリップローター実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:15
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:8 == 0 && NOITEM == 0
+	RETURN 0
+;搾乳器使用中は不可
+SIF TEQUIP:16
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;ASSIの場合、技巧3以上じゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3
+		RETURN 0
+ENDIF
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+RETURN 1
+
+@COM_ABLE16
+;搾乳器実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:16
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:17 == 0 && NOITEM == 0
+	RETURN 0
+;母乳体質でないと使えない
+SIF TALENT:130 == 0
+	RETURN 0
+;クリップローター使用中は不可
+SIF TEQUIP:15
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;Ｂ感度2以下はダメ
+SIF ABL:TARGET:14 <= 2 
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;ASSIの場合、技巧3以上じゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3
+		RETURN 0
+ENDIF
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE17
+;オナホール実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:17
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:12 == 0 && NOITEM == 0
+	RETURN 0
+;オトコやふたなりじゃないとダメ
+SIF TALENT:121 == 0 && TALENT:122 == 0
+	RETURN 0
+;ASSIの場合、技巧3以上じゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3
+		RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE18
+;シャワー実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:18
+	RETURN 1
+;お風呂中じゃないとダメ
+SIF TEQUIP:58 == 0
+	RETURN 0
+;クリキャップ使用中は不可
+SIF TEQUIP:14
+	RETURN 0
+;クリップローター使用中は不可
+SIF TEQUIP:15
+	RETURN 0
+;搾乳器使用中は不可
+SIF TEQUIP:16
+	RETURN 0
+;吸血鬼や動物耳には従順10がないと使用不可（サドならＯＫ）
+IF TALENT:114 || TALENT:124
+SIF ABL:0 < 10 && TALENT:PLAYER:83 == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE19
+;アナルビーズ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:19
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:20 == 0 && NOITEM == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE20
+;正常位実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE21
+;後背位実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合後背位はできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE22
+;アナルセックス実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;浣腸＋アナルプラグ使用中はダメ
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;潤滑不足で、従順4以下・レズっ気4以下のASSIの場合アナルセックスはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+RETURN 1
+
+@COM_ABLE23
+;逆レイプ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (TALENT:PLAYER:0 == 1)
+	RETURN 0
+;調教者がオトコだとダメ
+SIF TALENT:PLAYER:122
+	RETURN 0
+;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;オトコ、半人半妖、ふたなりでないとダメ
+SIF TALENT:119 == 0 && TALENT:121 == 0 && TALENT:122 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE24
+;対面座位実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位はできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE25
+;背面座位実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位はできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE26
+;正常位アナル実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合正常位アナルはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位アナルはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE27
+;後背位アナル実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合後背位アナルはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位アナルはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE28
+;対面座位アナル実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE29
+;背面座位アナル実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE30
+;手淫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE31
+;フェラチオ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;[猫舌]だとダメ
+SIF TALENT:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE32
+;パイズリ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;[巨乳]でなければ技巧7以上、[貧乳]だと技巧10以上必要
+SIF (TALENT:110 == 0 && ABL:2 < 7) || (TALENT:109 && ABL:2 < 10)
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE33
+;素股実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;潤滑が高くないとダメ
+SIF PALAM:3 < 2000
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE34
+;騎乗位実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE35
+;泡踊り実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;お風呂場プレイ中でプレイマットが無いとダメ
+SIF TEQUIP:58 == 0
+	RETURN 0
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;クリキャップ使用中は不可
+SIF TEQUIP:14
+	RETURN 0
+;クリップローター使用中は不可
+SIF TEQUIP:15
+	RETURN 0
+;搾乳器使用中は不可
+SIF TEQUIP:16
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;オナホール使用中はダメ
+SIF TEQUIP:17
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:43
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;アイマスク使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+RETURN 1
+
+@COM_ABLE36
+;騎乗位アナル実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ挿入中はダメ
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;調教者がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE40
+;スパンキング実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;従順4以下・レズっ気4以下のASSIの場合スパンキングはできない（サドならＯＫ）
+IF ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE41
+;鞭実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:10 == 0 && NOITEM == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;従順4以下・レズっ気4以下のASSIの場合鞭はできない（サドならＯＫ）
+IF ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE42
+;針実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:11 == 0 && NOITEM == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;従順5・レズっ気5・サドでないとダメ（針さばきならＯＫ）
+IF ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4 || TALENT:ASSI:83 == 0) && TALENT:ASSI:53 == 0
+		RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE43
+;アイマスク実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:43
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:5 == 0 && NOITEM == 0
+	RETURN 0
+;主導権が主人にないとダメ
+SIF TFLAG:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE44
+;縄実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;鰻風呂入浴中、蟲風呂入浴中、荊で緊縛中、蜘蛛の糸で緊縛中はダメ
+SIF TEQUIP:72 || TEQUIP:73 || TEQUIP:78 || TEQUIP:92
+	RETURN 0
+;解除は女体盛り中以外ならいつでも可能
+SIF TEQUIP:44 && TEQUIP:69 == 0
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定で無いとダメ
+SIF ITEM:14 == 0 && NOITEM == 0
+	RETURN 0
+;調教者の技巧が3無いとできない
+SIF ABL:PLAYER:2 <= 2
+	RETURN 0
+;助手は技巧5でないとダメ
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 4
+		RETURN 0
+ENDIF
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+;主導権が主人にないとダメ
+SIF TFLAG:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE45
+;ボールギャグ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手口辱中だとダメ
+SIF TEQUIP:98
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:45
+	RETURN 1
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:9 == 0 && NOITEM == 0
+	RETURN 0
+;ASSIの場合、技巧3以上じゃないと使えない。
+IF ASSIPLAY
+	SIF ABL:ASSI:2 < 3
+		RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;主導権が主人にないとダメ
+SIF TFLAG:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE46
+;浣腸実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:46
+	RETURN 1
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:15 == 0 && NOITEM == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;Ａ経験が100未満じゃできない
+SIF EXP:1 < 100 
+	RETURN 0
+;露出癖、欲望、従順の合計が10ないとできない
+SIF ABL:0 + ABL:1 + ABL:7 < 10 
+	RETURN 0
+RETURN 1
+
+@COM_ABLE47
+;空気浣腸実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:47
+	RETURN 1
+;異常経験フィルタ(まとめのみの条件。Jオリジナルでは封印コマンド＆異常経験つかないのでこの条件なし)
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:21 == 0 && NOITEM == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;Ａ経験が50未満じゃできない
+SIF EXP:1 < 50
+	RETURN 0
+;露出癖、欲望、従順の合計が10ないとできない
+SIF ABL:0 + ABL:1 + ABL:7 < 10
+	RETURN 0
+RETURN 1
+
+@COM_ABLE48
+;拡張バルーン実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:48
+	RETURN 1
+;異常経験フィルタ(もっと条件細かくなるけど、封印コマンドだし良いよね？)
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:22 == 0 && NOITEM == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+RETURN 1
+
+@COM_ABLE49
+;電極実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:49
+	RETURN 1
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:23 == 0 && NOITEM == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+RETURN 1
+
+@COM_ABLE50
+;ローション実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:25 == 0 && NOITEM == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+RETURN 1
+
+@COM_ABLE51
+;媚薬実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定か触手調教中でないとダメ
+SIF ITEM:26 == 0 && NOITEM == 0 && TEQUIP:90 == 0
+	RETURN 0
+;薬毒耐性だとダメ
+SIF TALENT:56
+	RETURN 0
+RETURN 1
+
+@COM_ABLE52
+;利尿剤実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定か触手調教中でないとダメ
+SIF ITEM:27 == 0 && NOITEM == 0 && TEQUIP:90 == 0
+	RETURN 0
+;薬毒耐性の場合、直接注入以外ダメ
+SIF TALENT:56 && TEQUIP:90 == 0
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE53
+;ビデオ撮影実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:53
+	RETURN 1
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;カメラのアイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:6 == 0 && NOITEM == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE54
+;野外プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;女体盛りプレイ中でなければ解除はいつでも可能
+SIF TEQUIP:54 && TEQUIP:69 == 0
+	RETURN 1
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;アイテム｢首輪｣を持っているか、アイテムなし設定でないとダメ
+SIF ITEM:18 == 0 && NOITEM == 0
+	RETURN 0
+;従順10かマゾっ気が3以上ないとダメ
+SIF ABL:0 < 10 && ABL:8 <= 2
+	RETURN 0
+;対象か助手か主人が吸血鬼で、時間が昼かつ曇りでないだとダメ
+SIF (TALENT:114 || TALENT:MASTER:114) && TIME == 0 && TIME:5 != 2
+	RETURN 0
+IF ASSI > 0
+	SIF TALENT:ASSI:114 && TIME == 0 && TIME:5 != 2
+		RETURN 0
+ENDIF
+;大雨、吹雪だとダメ
+SIF TIME:5 == 4 || TIME:5 == 6
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;女体盛りプレイ中はダメ
+SIF TEQUIP:69
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE56
+;助手を犯す実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;主人じゃないとダメ
+SIF ASSIPLAY
+	RETURN 0
+;助手がオトコだとダメ
+SIF TALENT:ASSI:122
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0) && (TALENT:ASSI:0 == 1)
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;主人がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;縄使用中か従順が10以上ないとダメ
+SIF TEQUIP:44 == 0 && ABL:0 < 10
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+	SIF ITEM:13 == 0 && NOITEM == 0
+		RETURN 0
+ENDIF
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;対象と助手の相性が良くないとダメ
+R = NO:ASSI
+SIF RELATION:R > 100
+	RETURN 1
+RETURN 0
+
+@COM_ABLE57
+;羞恥プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:57
+	RETURN 1
+;調教者が映姫様以外のときはアイテム｢大鏡｣を持っているか、アイテムなし設定でないとダメ
+IF NAME_CSV(NO:PLAYER, 0) != "四季映姫"
+	SIF ITEM:16 == 0 && NOITEM == 0
+		RETURN 0
+ENDIF
+;従順が5以上ないとダメ
+SIF ABL:0 < 5
+	RETURN 0
+;野外プレイ中はダメ
+SIF TEQUIP:54
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+RETURN 1
+
+@COM_ABLE58
+;お風呂場プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:58
+	RETURN 1
+;従順が5以上ないとダメ
+SIF ABL:0 < 5
+	RETURN 0
+;対象か助手が動物耳で、従順が9以下だとダメ
+SIF TALENT:124 && ABL:0 < 10
+	RETURN 0
+IF ASSI >= 0
+	SIF TALENT:ASSI:124 && ABL:0 < 10
+		RETURN 0
+ENDIF
+;野外プレイ中はダメ
+SIF TEQUIP:54
+	RETURN 0
+;羞恥プレイ中はダメ
+SIF TEQUIP:57
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE59
+;新妻プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:59
+	RETURN 1
+;アイテム｢エプロン｣を持っているか、アイテムなし設定でないとダメ
+SIF ITEM:19 == 0 && NOITEM == 0
+	RETURN 0
+;助手じゃダメ
+SIF ASSIPLAY
+	RETURN 0
+;従順が10以上ないとダメ
+SIF ABL:0 < 10
+	RETURN 0
+;野外プレイ中はダメ
+SIF TEQUIP:54
+	RETURN 0
+;羞恥プレイ中はダメ
+SIF TEQUIP:57
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE60
+;助手にキス実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手じゃないとダメ
+SIF PLAYER != ASSI
+	RETURN 0
+;対象か調教者が猫舌だとできない
+SIF TALENT:54 || TALENT:PLAYER:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE61
+;クンニ強制実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教者がオトコだとダメ
+SIF TALENT:PLAYER:122
+	RETURN 0
+;[猫舌]だとダメ
+SIF TALENT:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE62
+;ダブル素股実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;主人がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE63
+;貝あわせ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコかふたなりだとダメ
+SIF TALENT:121 || TALENT:122
+	RETURN 0
+;調教者がオトコかふたなりだとダメ
+SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+	RETURN 0
+;欲望3以下の場合貝あわせはできない（小悪魔、相性良好ならＯＫ）
+R = NO:PLAYER
+IF ASSIPLAY
+	SIF ABL:ASSI:1 <= 3 && TALENT:ASSI:87 == 0 && RELATION:R < 150
+		RETURN 0
+ENDIF
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE64
+;3P実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;バイブ装着中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+A = 0
+;MASTERがオトコ、半人半妖、ふたなり
+SIF TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122
+	A += 1
+;ASSIがオトコ、半人半妖、ふたなり
+SIF TALENT:ASSI:119 || TALENT:ASSI:121 || TALENT:ASSI:122
+	A += 1
+;ペニスバンドとあわせて二本ないとだめ
+SIF A + ITEM:PBAND < 2
+	RETURN 0
+;処女で、従順4以下・レズっ気4以下のASSIの場合二本刺しはできない（サドならＯＫ）
+IF EXP:0 == 0 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;主人、対象、助手のいずれかに小人体型持ちがいる場合、主人が禁断の知識を持っていないとダメ
+SIF (TALENT:MASTER:149 || TALENT:TARGET:149 || TALENT:ASSI:149) && TALENT:MASTER:125 == 0
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合二本刺しはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;一定のＡ経験が必要
+SIF EXP:1 < EXPLV:3
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE65
+;助手を犯させる実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;異常経験フィルタ
+SIF ((FLAG:61 & 1) == 0)
+	RETURN 0
+;助手がオトコだとダメ
+SIF TALENT:ASSI:122
+	RETURN 0
+;助手が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:ASSI:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:ASSI:149 == 0)
+	RETURN 0
+;オトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:119 == 0 && TALENT:121 == 0 && TALENT:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+	SIF ITEM:13 == 0 && NOITEM == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE66
+;Ｗフェラ実行判定
+;パートナーに主人と助手のペニスに同時に奉仕させる
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;主人がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+	RETURN 0
+;助手がオトコかふたなりじゃないとダメ
+SIF TALENT:ASSI:119 == 0 && TALENT:ASSI:121 == 0 && TALENT:ASSI:122 == 0
+	RETURN 0
+;主人が【魅惑】か【謎の魅力】じゃないとダメ
+SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
+	RETURN 0
+;[猫舌]だとダメ
+SIF TALENT:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE67
+;足コキする実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコかふたなりじゃないとダメ
+SIF TALENT:121 == 0 && TALENT:122 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE68
+;ダブルフェラ実行判定
+;パートナーと助手が主人のペニスに二人でフェラ
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;主人がオトコか半人半妖かふたなりじゃないとダメ
+SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+	RETURN 0
+;主人が【魅惑】か【謎の魅力】じゃないとダメ
+SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
+	RETURN 0
+;助手が奉仕精神ＬＶ３以上、技巧ＬＶ３以上じゃないとダメ
+SIF ABL:ASSI:2 < 3 || ABL:ASSI:6 < 3
+	RETURN 0
+;対象か助手が猫舌だとできない
+SIF  TALENT:54 || TALENT:ASSI:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE69
+;シックスナイン実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;欲望3以下・レズっ気3以下のASSIの場合シックスナインはできない（小悪魔、相性良好ならＯＫ）
+R = NO:PLAYER
+IF ASSIPLAY
+	SIF (ABL:ASSI:1 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:87 == 0 && RELATION:R < 150
+		RETURN 0
+ENDIF
+;小人体型持ちは、双方が調教者と調教対象ならOK
+;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE70
+;罵倒実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;NORMALモードでは主人公か助手のどちらかがサド持ちじゃないとダメ
+;EXTRAモードでは調教者がサド持ちじゃないとダメ
+IF FLAG:5 == 9
+	SIF TALENT:PLAYER:83 == 0
+		RETURN 0
+ELSE
+	IF ASSI > 0
+		SIF TALENT:MASTER:83 == 0 && TALENT:ASSI:83 == 0
+			RETURN 0
+	ELSE
+		SIF TALENT:MASTER:83 == 0
+			RETURN 0
+	ENDIF
+ENDIF
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE71
+;秘貝開帳実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;従順が6未満だとダメ
+SIF ABL:0 < 6
+	RETURN 0
+;処女の場合、従順10以上または露出癖3以上または淫乱がないとダメ
+SIF TALENT:0 && ABL:0 < 10 && ABL:7 < 3 && TALENT:76 == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;クスコ挿入中はダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋挿入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE72
+;サラシ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;ニプルキャップ装着中はダメ
+SIF TEQUIP:15
+	RETURN 0
+;搾乳機装着中はダメ
+SIF TEQUIP:16
+	RETURN 0
+;解除は女体盛り中以外ならいつでも可能
+SIF TEQUIP:76 && TEQUIP:69 == 0
+	RETURN 1
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;緊縛中はダメ
+SIF TEQUIP:44
+	RETURN 0
+;技巧3以下のASSIの場合、うまくサラシを巻けない
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 3
+		RETURN 0
+ENDIF
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:43 == 0 && NOITEM == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE73
+;スク水プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除は女体盛り中以外ならいつでも可能
+SIF TEQUIP:60 && TEQUIP:69 == 0
+	RETURN 1
+;アイテム｢スクール水着｣を持っているか、アイテムなし設定でないとダメ
+SIF ITEM:44 == 0 && NOITEM == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;従順が10以上ないとダメ
+SIF ABL:0 < 10
+	RETURN 0
+;ニプルキャップ装着中はダメ
+SIF TEQUIP:15
+	RETURN 0
+;搾乳機装着中はダメ
+SIF TEQUIP:16
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;アイマスク装着中はダメ
+SIF TEQUIP:43
+	RETURN 0
+;緊縛中はダメ
+SIF TEQUIP:44
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+	SIF ITEM:13 == 0 && NOITEM == 0
+		RETURN 0
+ENDIF
+;鰻風呂入浴中はダメ
+SIF TEQUIP:78
+	RETURN 0
+;蟲風呂入浴中はダメ
+SIF TEQUIP:92
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE74
+;公開野外ライブ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;歌唱素質が3以上ない場合は歌唱技能が2以上ないとダメ
+IF ABL:52 < 3
+	SIF ABL:92 < 2
+		RETURN 0
+ENDIF
+;露出癖が2以下だとダメ。ただし持っている素質によって値が変動
+A = 3
+;臆病
+SIF TALENT:10
+	A += 1
+;目立ちたがり
+SIF TALENT:28
+	A -= 1
+;抑圧
+SIF TALENT:32
+	A += 1
+;解放
+SIF TALENT:33
+	A -= 1
+;恥じらい
+SIF TALENT:35
+	A += 1
+;恥薄い
+SIF TALENT:36
+	A -= 1
+;求められる露出癖が0～5となるように
+SIF A < 0
+	A = 0
+SIF A > 5
+	A = 5
+SIF ABL:7 < A
+	RETURN 0
+;恋慕を持っていないまたは従順が5未満だとダメ
+SIF ABL:7 < 5 && TALENT:85 == 0
+	RETURN 0
+;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
+SIF ITEM:45 == 0 && NOITEM == 0
+	RETURN 0
+;一度公開野外ライブを実行しているとダメ
+SIF TFLAG:79
+	RETURN 0
+;野外プレイ中でないとダメ
+SIF TEQUIP:54 == 0
+	RETURN 0
+;緊縛しているとダメ
+SIF TEQUIP:44
+	RETURN 0
+;猿轡しているとダメ
+SIF TEQUIP:45
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;お医者さんプレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+;女体盛り中はダメ
+SIF TEQUIP:69
+	RETURN 0
+RETURN 1
+
+
+@COM_ABLE75
+;言葉責め実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;気力が残ってないと無理
+SIF BASE:1 <= 0
+	RETURN 0
+;相手を責める場合
+IF CFLAG:15 == 0 || CFLAG:15 == 1
+	;こっちがサド持ちかサドっ気3以上、もしくは相手がマゾっ気3以上が必要
+	SIF TALENT:PLAYER:83 || ABL:PLAYER:15 >= 3 || ABL:8 >= 3
+		RETURN 1
+ENDIF
+;こっちを責める場合
+IF CFLAG:15 == 0 || CFLAG:15 == 2
+	;相手側がサド持ちかサドっ気3以上、もしくはこっちがマゾっ気3以上が必要
+	SIF TALENT:83 || ABL:15 >= 3 || ABL:PLAYER:8 >= 3
+		RETURN 1
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+ENDIF
+RETURN 0
+
+@COM_ABLE77
+;ビデオ鑑賞
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;ビデオ鑑賞中はダメ
+;SIF TEQUIP:52
+;	RETURN 0
+;ビデオ撮影中はだめ
+SIF TEQUIP:53
+	RETURN 0
+;録画ビデオを持っていないとだめ
+SIF FLAG:41 != 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE80
+;イラマチオ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;調教者がオトコかふたなりじゃないとダメ
+SIF TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;[猫舌]だとダメ
+SIF TALENT:54
+	RETURN 0
+;従順、欲望の合計が18以上ないとダメ
+SIF ABL:0 + ABL:1 < 18
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+RETURN 1
+
+@COM_ABLE81
+;フィストファック
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;一定のＶ経験が必要
+SIF EXP:0 < 150
+	RETURN 0
+;バイブ使用中は不可
+SIF TEQUIP:11
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;ASSIの場合、従順4以上かサドじゃないとできない。
+IF ASSIPLAY
+	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+	RETURN 0
+	ENDIF
+;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
+IF TALENT:100
+	SIF ABL:0 <= 11 || ABL:8 <= 3
+		RETURN 0
+ENDIF
+;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE82
+;アナルフィスト
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;一定のＡ経験が必要
+SIF EXP:1 < 150
+	RETURN 0
+;浣腸＋アナルプラグ使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;ASSIの場合、従順3以上かサドじゃないとできない。
+IF ASSIPLAY
+	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+	RETURN 0
+	ENDIF
+;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
+IF TALENT:100
+	SIF ABL:0 <= 11 || ABL:8 <= 3
+		RETURN 0
+ENDIF
+;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE83
+;両穴フィスト
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;バイブ使用中は不可
+SIF TEQUIP:11
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;浣腸＋アナルプラグ使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0	
+;一定のＶ・Ａ経験が必要
+IF EXP:0 < 300 || EXP:1 < 300
+	RETURN 0
+	ENDIF
+;ASSIの場合、従順4以上かサドじゃないとできない。
+IF ASSIPLAY
+	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;小柄体型なら従順が12以上かつマゾっ気が4以上かつ拡張経験10以上じゃないと実行できない
+IF TALENT:100
+	SIF ABL:0 <= 11 || ABL:8 <= 3 || EXP:53 < 10
+		RETURN 0
+ENDIF
+;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
+SIF TALENT:149 && TALENT:MASTER:125 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;シャワー中はダメ
+SIF TEQUIP:18
+	RETURN 0
+;お風呂場プレイ中はプレイマットが無いとダメ
+IF TEQUIP:58
+SIF ITEM:13 == 0 && NOITEM == 0
+	RETURN 0
+ENDIF
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+RETURN 1
+
+@COM_ABLE84
+;Gスポット刺激
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;主人の技巧が3以下はだめ
+SIF ABL:PLAYER:2 < 3
+	RETURN 0
+;乗馬中はダメ
+SIF TEQUIP:41
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE85
+;放尿実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;利尿剤使用中かおもらし癖ありでないとダメ
+SIF TEQUIP:22 == 0 && TALENT:57 == 0
+	RETURN 0
+;従順10以上でないとダメ（お風呂場ならＯＫ）
+IF TEQUIP:58 == 0
+SIF ABL:0 < 10
+	RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE86
+;強制放尿実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;利尿剤使用中かおもらし癖ありでないとダメ
+SIF TEQUIP:22 == 0 && TALENT:57 == 0
+	RETURN 0
+;従順10以上でないとダメ（お風呂場ならＯＫ）
+IF TEQUIP:58 == 0
+SIF ABL:0 < 10
+	RETURN 0
+ENDIF
+;おもらし癖ありで利尿剤が無いまたはおもらし癖なしかつ従順４以上欲望３以上マゾっ気３以上でないとダメ
+SIF (TALENT:57 == 0 && (ABL:0 <= 3 || ABL:1 <= 2 || ABL:8 <= 2)) || (TALENT:57 && TEQUIP:22 == 1)
+	RETURN 0
+RETURN 1
+
+@COM_ABLE87
+;岩清水実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;羞恥プレイ中じゃないとダメ
+SIF TEQUIP:57 == 0
+	RETURN 0
+;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+SIF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+	RETURN 0
+;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
+IF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY
+	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+		RETURN 0
+ENDIF
+;調教者が猫舌だとできない
+SIF TALENT:PLAYER:54
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;乗馬中はダメ
+SIF TEQUIP:41
+	RETURN 0
+;女体盛り中はダメ
+SIF TEQUIP:69
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;調教者がボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE88
+;乱れ牡丹実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;羞恥プレイ中じゃないとダメ
+SIF TEQUIP:57 == 0
+	RETURN 0
+;処女はダメ
+SIF EXP:0 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
+SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+	RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合乱れ牡丹はできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;乗馬中はダメ
+SIF TEQUIP:41
+	RETURN 0
+;女体盛り中はダメ
+SIF TEQUIP:69
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+@COM_ABLE89
+;女体盛り実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;助手がいないとダメ
+SIF ASSI < 1
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:69
+	RETURN 1
+;アイテム｢具材セット｣を持っているか、アイテムなし設定でないとダメ
+SIF ITEM:30 == 0 && NOITEM == 0
+	RETURN 0
+;従順が10以上ないとダメ
+SIF ABL:0 < 10
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;クスコ着けているとダメ
+SIF TEQUIP:61
+	RETURN 0
+;酒恥肉倫を発生させた場合はダメ
+SIF TFLAG:77 == 3
+	RETURN 0
+RETURN 1
+
+@COM_ABLE93
+;アナル奉仕強制実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;[猫舌]だとダメ
+SIF TALENT:54
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+RETURN 1
+
+@COM_ABLE99
+;触手変身実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;触手召喚中はダメ
+SIF TEQUIP:90 && TEQUIP:89 == 0
+	RETURN 0
+;調教者が禁断の知識をもっていないとダメ
+SIF TALENT:PLAYER:125 == 0
+	RETURN 0
+;調教者が変身魔法をもっていないとダメ
+SIF TALENT:PLAYER:211 == 0
+	RETURN 0
+;道具使用中はダメ
+SIF TEQUIP:90 == 0 && (TEQUIP:11 || TEQUIP:13 || TEQUIP:14 || TEQUIP:15 || TEQUIP:16 || TEQUIP:17 || TEQUIP:19 || TEQUIP:44 || TEQUIP:46|| TEQUIP:47 || TEQUIP:48 || TEQUIP:49 || TEQUIP:54 || TEQUIP:61 || TEQUIP:69 || TEQUIP:70 || TEQUIP:71 || TEQUIP:72 || TEQUIP:79)
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+;スク水プレイ中はダメ
+SIF TEQUIP:60
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;鰻風呂入浴中、蟲風呂入浴中はダメ
+SIF TEQUIP:78 || TEQUIP:92
+	RETURN 0
+;調教者が拘束中だとダメ
+SIF TEQUIP:PLAYER:43 || TEQUIP:PLAYER:44 || TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE100
+;触手召喚実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;異常経験フィルタ
+SIF (FLAG:61 & 1) == 0
+	RETURN 0
+;触手変身中はダメ
+SIF TEQUIP:90 && TEQUIP:89
+	RETURN 0
+;調教者が禁断の知識をもっていないとダメ
+SIF TALENT:PLAYER:125 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:24 == 0 && NOITEM == 0
+	RETURN 0
+;道具使用中はダメ
+SIF TEQUIP:90 == 0 && (TEQUIP:11 || TEQUIP:13 || TEQUIP:14 || TEQUIP:15 || TEQUIP:16 || TEQUIP:17 || TEQUIP:19 || TEQUIP:44 || TEQUIP:46|| TEQUIP:47 || TEQUIP:48 || TEQUIP:49 || TEQUIP:54 || TEQUIP:61 || TEQUIP:69 || TEQUIP:70 || TEQUIP:71 || TEQUIP:72 || TEQUIP:79)
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;お医者プレイ中はダメ
+SIF TEQUIP:62
+	RETURN 0
+;スク水プレイ中はダメ
+SIF TEQUIP:60
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;鰻風呂入浴中、蟲風呂入浴中はダメ
+SIF TEQUIP:78 || TEQUIP:92
+	RETURN 0
+;調教者が拘束中だとダメ
+SIF TEQUIP:PLAYER:43 || TEQUIP:PLAYER:44 || TEQUIP:PLAYER:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE101
+;COM_ABLE共通判定
+;触手ヴァギナ
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+RETURN 1
+
+@COM_ABLE102
+;触手アナル
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;触手浣腸中は不可
+SIF TEQUIP:46
+	RETURN 0
+RETURN 1
+
+@COM_ABLE103
+;触手クリ責め
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+RETURN 1
+
+@COM_ABLE104
+;触手乳首責め
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;触手搾乳中は不可
+SIF TEQUIP:16
+	RETURN 0
+RETURN 1
+
+@COM_ABLE105
+;触手搾乳
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;触手乳首責め中は不可
+SIF TEQUIP:15
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+RETURN 1
+
+@COM_ABLE106
+;触手緊縛
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE107
+;触手浣腸
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;アナル触手中は不可
+SIF TEQUIP:13
+	RETURN 0
+RETURN 1
+
+@COM_ABLE108
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;触手イラマチオ
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+RETURN 1
+
+@COM_ABLE109
+;触手ペニス責め
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+SIF TEQUIP:90 == 0
+	RETURN 0
+;オトコかふたなりじゃないとダメ
+SIF TALENT:121 == 0 && TALENT:122 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE110
+;クスコ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;解除はいつでも可能
+SIF TEQUIP:61
+	RETURN 1
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:40 == 0 && NOITEM == 0
+	RETURN 0
+;処女だとダメ
+SIF EXP:0 == 0
+	RETURN 0
+;従順4以下・レズっ気4以下のASSIの場合クスコはできない（サドならＯＫ）
+IF ASSIPLAY
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合クスコはできない（サドならＯＫ）
+IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+RETURN 1
+
+@COM_ABLE111
+;クリトリス注射実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;クリキャップ装着中だとダメ
+SIF TEQUIP:14
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;薬毒耐性だとダメ
+SIF TALENT:56
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+		RETURN 0
+ENDIF
+;触手だと可
+SIF TEQUIP:90
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:26 == 0 && NOITEM == 0
+	RETURN 0
+SIF ITEM:41 == 0 && NOITEM == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE112
+;ヴァギナ注射実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+;バイブ挿入中はダメ
+SIF TEQUIP:11
+	RETURN 0
+;焼芋入中は不可
+SIF TEQUIP:71
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;薬毒耐性だとダメ
+SIF TALENT:56
+	RETURN 0
+;オトコだとダメ
+SIF TALENT:122
+	RETURN 0
+;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+		RETURN 0
+ENDIF
+;触手だと可
+SIF TEQUIP:90
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:26 == 0 && NOITEM == 0
+	RETURN 0
+SIF ITEM:41 == 0 && NOITEM == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE113
+;アナル注射実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;アイテムを持っているか、アイテムなし設定でないとダメ
+;アナルバイブ使用中は不可
+SIF TEQUIP:13
+	RETURN 0
+;アナルビーズ使用中は不可
+SIF TEQUIP:19
+	RETURN 0
+;普通の浣腸使用中は不可
+SIF TEQUIP:46
+	RETURN 0
+;空気浣腸使用中は不可
+SIF TEQUIP:47
+	RETURN 0
+;バルーン使用中は不可
+SIF TEQUIP:48
+	RETURN 0
+;電極使用中は不可
+SIF TEQUIP:49
+	RETURN 0
+;巨峰挿入中は不可
+SIF TEQUIP:70
+	RETURN 0
+;氷柱挿入中は不可
+SIF TEQUIP:79
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;薬毒耐性だとダメ
+SIF TALENT:56
+	RETURN 0
+;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+		RETURN 0
+ENDIF
+;触手だと可
+SIF TEQUIP:90
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:26 == 0 && NOITEM == 0
+	RETURN 0
+SIF ITEM:41 == 0 && NOITEM == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE114
+;バスト注射実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;ニプルキャップ装着中はダメ
+SIF TEQUIP:15
+	RETURN 0
+;搾乳機装着中はダメ
+SIF TEQUIP:16
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;サラシ装着中はダメ
+SIF TEQUIP:76
+	RETURN 0
+;薬毒耐性だとダメ
+SIF TALENT:56
+	RETURN 0
+;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
+IF ASSIPLAY
+	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+		RETURN 0
+ENDIF
+;触手だと可
+SIF TEQUIP:90
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:26 == 0 && NOITEM == 0
+	RETURN 0
+SIF ITEM:41 == 0 && NOITEM == 0
+	RETURN 0
+RETURN 1
+
+
+@COM_ABLE115
+;お医者プレイ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;解除はいつでも可
+SIF TEQUIP:62
+	RETURN 1
+;アイテムを持っているか、アイテムなし設定でないとダメ
+SIF ITEM:42 == 0 && NOITEM == 0
+	RETURN 0
+;縄使用中は不可
+SIF TEQUIP:44
+	RETURN 0
+;ボールギャグ使用中は不可
+SIF TEQUIP:45
+	RETURN 0
+;野外プレイ中はダメ
+SIF TEQUIP:54
+	RETURN 0
+;お風呂場プレイ中はダメ
+SIF TEQUIP:58
+	RETURN 0
+;新妻プレイ中はダメ
+SIF TEQUIP:59
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+RETURN 1
+
+;---------------------------------------------------------
+;以下純愛用
+;---------------------------------------------------------
+@COM_ABLE300
+;戦闘訓練実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;デート中でも可能ということで
+RETURN 1
+
+@COM_ABLE301
+;会話実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+RETURN 1
+@COM_ABLE302
+;プレゼント実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE320
+;宴会に参加実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;資金3000以上持ってないと無理
+SIF MONEY < 3000
+	RETURN 0
+;デート中でも可能。宴会と言うより２人で酒を飲む？
+RETURN 1
+
+@COM_ABLE303
+;スキンシップ実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+RETURN 1
+
+@COM_ABLE321
+;遊びに行く実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;デート中は無理
+SIF TEQUIP:2
+	RETURN 0
+;大雨、吹雪だとダメ
+SIF TIME:5 == 4 || TIME:5 == 6
+	RETURN 0
+;資金1500以上持ってないと無理
+SIF MONEY < 1500
+	RETURN 0
+RETURN 1
+
+@COM_ABLE323
+;デート実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;終わるのはいつでもOK
+SIF TEQUIP:2
+	RETURN 1
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;資金5000以上持ってないと無理
+SIF MONEY < 5000
+	RETURN 0
+;大雨、吹雪だとダメ
+SIF TIME:5 == 4 || TIME:5 == 6
+	RETURN 0
+RETURN 1
+
+@COM_ABLE304
+;まったりする実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;従順3以上or好感度300以上or恋人が必要(遊んでないでさっさと解決しろ！って言われる)
+SIF ABL:0 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE305
+;家事実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;デート中は無理
+SIF TEQUIP:2
+	RETURN 0
+;従順4以上or好感度400以上or恋人が必要(何でそんな事しないといけないの！って言われる)
+SIF ABL:0 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE340
+;バードキス実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;従順4以上or好感度400以上or恋人が必要
+SIF ABL:0 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE341
+;ソフトキス実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;従順5以上or好感度500以上or恋人が必要
+SIF ABL:0 < 5 && CFLAG:2 < 500 && TALENT:153 == 0
+	RETURN 0
+RETURN 1
+
+@COM_ABLE342
+;ディープキス実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;調教者が猫舌だとできない
+SIF TALENT:PLAYER:54
+	RETURN 0
+;相手が猫舌だとできない
+SIF TALENT:54
+	RETURN 0
+;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
+SIF ABL:1 < 3 || (ABL:0 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+	RETURN 0
+RETURN 1
+
+@COM_ABLE360
+;胸愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;デート中は淫乱じゃないと無理
+SIF TEQUIP:2 && TALENT:76 == 0
+	RETURN 0
+;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
+SIF ABL:1 < 3 || (ABL:0 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+	RETURN 0
+RETURN 1
+
+@COM_ABLE361
+;愛撫実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;デート中は淫乱じゃないと無理
+SIF TEQUIP:2 && TALENT:76 == 0
+	RETURN 0
+;欲望5以上かつ、従順7以上or好感度700以上or恋人が必要
+SIF ABL:1 < 5 || (ABL:0 < 7 && CFLAG:2 < 700 && TALENT:153 == 0)
+	RETURN 0
+RETURN 1
+
+@COM_ABLE399
+;告白する実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中は無理
+SIF TFLAG:44 == 1
+	RETURN 0
+;心苦しいけど助手では無理
+SIF ASSIPLAY
+	RETURN 0
+;もう恋人だと無理
+SIF TALENT:153
+	RETURN 0
+RETURN 1
+

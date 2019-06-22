@@ -1,0 +1,128 @@
+﻿@LUNCH_SALE
+;料理技能5以上が必須で、親密10以上or好感度1000以上or恋人のとき
+;パートナーといっしょに弁当を作らせて売るオプション。
+;-------------------------------------------------
+;K = 料理の種類
+;L = 料理の値段,習得の珠取得量の補正を決定
+;M = 料理の値段
+;N = 料理の値段の基礎
+;P = 固有料理の種類
+;P:1 = 乱数処理
+;Q = 習得の珠取得数
+;R = 料理の出来栄え
+;S = 奉仕快楽経験上昇値
+;-------------------------------------------------
+;料理関係の共通処理
+CALL LUNCH_COMMON
+
+;地の文カット
+IF FLAG:6 == 1
+	PRINTL 
+	PRINTFORMW %CALLNAME:TARGET%に料理を作らせた
+	PRINTL 
+ENDIF
+
+;一文字変数をローカル変数に保存
+LOCAL:0 = K
+LOCAL:1 = L
+LOCAL:2 = M
+LOCAL:3 = N
+LOCAL:4 = Q
+LOCAL:5 = R
+LOCAL:6 = S
+;弁当口上(LLのSHOP.ERBより拝借)
+TFLAG:600 = 18
+CALL KOJO_JUN
+;ローカル変数から一文字変数復帰
+K = LOCAL:0
+L = LOCAL:1
+M = LOCAL:2
+N = LOCAL:3
+Q = LOCAL:4
+R = LOCAL:5
+S = LOCAL:6
+
+BASE:MASTER:4 -= 400
+BASE:TARGET:0 -= 500
+
+;地の文カット
+SIF CFLAG:99 == 1
+	GOTO LUNCH_EVALUATE
+
+IF TALENT:153
+	PRINTW   「♪～」
+	PRINTW  「♪♪～」
+	PRINTW 「♪～♪～」
+	PRINTW      !
+ELSE
+	PRINTW      ･
+	PRINTW      ･
+	PRINTW      ･
+	PRINTW      !
+ENDIF
+PRINTL 
+PRINTFORM %CALLNAME:MASTER%と%CALLNAME:TARGET%は２人で
+SIF TALENT:153
+	PRINT 愛情たっぷりの
+
+IF R <= 2
+	PRINT 微妙な
+ELSEIF R <= 4
+	PRINT 普通の
+ELSEIF R <= 6
+	PRINT 美味しい
+ELSEIF R <= 8
+	PRINT 非常に美味しい
+ELSEIF R <= 10
+	PRINT 最高の味がする
+ENDIF
+SIF K == 0 && TFLAG:14 == 1
+	PRINT おいしそうな香りがする
+PRINTFORMW %TSTR:1%を作った。
+PRINTL      ･
+PRINTL      ･
+PRINTL      ･
+PRINTL 
+
+PRINTFORM %CALLNAME:MASTER%と%CALLNAME:TARGET%の２人が
+SIF TALENT:153
+	PRINT 愛を込めて
+
+PRINTFORML 作った料理には{M}の買値が付いた。
+$LUNCH_EVALUATE
+MONEY += M
+PRINTFORML 所持金 {M}増加
+PRINTL 
+PRINTFORML %PALAMNAME:7%の珠＋{Q}
+JUEL:7 += Q
+PRINTFORML %PALAMNAME:16%の珠＋{ABL:TARGET:90 * SQRT( ABL:TARGET:90 ) * R * 15}
+JUEL:16 += ABL:TARGET:90 * SQRT( ABL:TARGET:90 ) * R * 15
+PRINTFORML %EXPNAME:21% ＋{S}
+EXP:21 += S
+IF R >= 10
+	LOCAL = 5
+	SIF ABL:TARGET:90 > 99
+		LOCAL = ABL:TARGET:90 / 20
+	PRINTFORML %EXPNAME:90% ＋{LOCAL}
+	EXP:90 += LOCAL
+ELSEIF R >= 5
+	PRINTFORML %EXPNAME:90% ＋4
+	EXP:90 += 4
+ELSE
+	PRINTFORML %EXPNAME:90% ＋3
+	EXP:90 += 3
+ENDIF
+;好感度増加（浪費癖/10をマイナスし、Aがマイナスになる場合好感度は増加しない）
+A = RAND:51 + 50 - (ABL:97 / 10)
+IF A > 0
+	CFLAG:2 += A
+	PRINTFORMW 好感度が {A} 増えた
+ENDIF
+WAIT
+
+TFLAG:14 = 0
+
+;休憩フラグを立てる
+FLAG:0 = 1
+BEGIN TURNEND
+RETURN 1

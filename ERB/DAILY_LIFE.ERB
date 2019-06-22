@@ -1,0 +1,1686 @@
+﻿@DAILY_LIFE
+#DIM LCOUNT, 1
+
+;表示頻度
+SIF FLAG:7 <= 0
+	RETURN 1
+
+;調教をまだ行っていなければ引き返す
+VARSET LOCALS
+FOR LCOUNT, 0, CHARANUM
+	;主人公を除く
+	SIF LCOUNT == MASTER
+		CONTINUE
+	;別れていない && (初調教口上が表示済み || 好感度 > 30) && 妊娠していない
+	SIF CFLAG:LCOUNT:21 == 0 && (CFLAG:LCOUNT:201 == 1 || CFLAG:LCOUNT:2 > 30) && (MARK:LCOUNT:90 == 0)
+		LOCALS += TOSTR(LCOUNT) + "/"
+NEXT
+SIF STRCOUNT(LOCALS, "/") == 0
+	RETURN 1
+
+DRAWLINE
+
+;メインキャラを選ぶ
+LOCAL = AUTO_SPLIT_INT(LOCALS, "/", RAND:STRCOUNT(LOCALS, "/"))
+
+;個別
+TRYCCALLFORM DAILY_LIFE_MESSAGE_{NO:LOCAL}(LOCAL)
+;共通
+CATCH
+	CALL DAILY_LIFE_MESSAGE(LOCAL)
+ENDCATCH
+
+@DAILY_LIFE_MESSAGE(ARG)
+#DIM LCOUNT, 1
+#DIMS LLIST, 2
+
+VARSET LLIST
+FOR LCOUNT, 0, CHARANUM
+	;主人公を除く
+	SIF LCOUNT == MASTER
+		CONTINUE
+	;メインキャラを除く
+	SIF LCOUNT == ARG
+		CONTINUE
+	;別れたキャラを除く
+	SIF CFLAG:LCOUNT:21 == 1
+		CONTINUE
+	LLIST += TOSTR(LCOUNT) + "/"
+NEXT
+
+;体力1000以下
+IF BASE:ARG:0 <= 1000
+	;吸血鬼 && 昼
+	IF TALENT:ARG:114 && TIME == 0
+		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
+		PRINTFORMW カーテンの締めきられた真っ暗な部屋に、蓋のきっちり閉じられた棺桶が置いてある
+;		PRINTFORMW 恐らく棺桶の中で寝ているのだろう……
+	;日光浴 && 昼
+	ELSEIF TALENT:ARG:115 && TIME == 0
+		;動物耳の時・マーメイドは…多分ないと思う
+		IF TALENT:ARG:124
+			PRINTFORMW 通りすがりに、庭の日のあたる場所で%CALLNAME:ARG%を見つけた……
+			PRINTFORMW %CALLNAME:ARG%は毛布を敷いてその上で丸くなって眠っている
+		ELSE
+			PRINTFORMW 通りすがりに、庭の日のあたる場所で眠っている%CALLNAME:ARG%を見つけた……
+			PRINTFORMW %CALLNAME:ARG%は木にかけたハンモックに毛布を敷いて寝ている
+		ENDIF
+	;月光浴 && 夜
+	ELSEIF TALENT:ARG:116 && (TIME:5 == 0 || TIME:5 == 1) && TIME == 1
+		PRINTFORMW ふと窓の外から見える屋根のてっぺんに、%CALLNAME:ARG%がいるのが見えた
+		PRINTFORMW 月を見上げている……
+		;反発感情Lv3
+		IF MARK:ARG:3 == 3
+			PRINTFORMW こちらに気付いて、姿を隠した……
+		;既成事実Lv2以上
+		ELSEIF MARK:ARG:2 >= 2 && RAND:2 == 0
+			PRINTFORMW こちらに気付いて、微笑んでみせた……
+		;それ以外
+		ELSE
+			PRINTFORMW こちらに気付いて、妖しい笑みを浮かべた……
+		ENDIF
+	;動物耳の時
+	ELSEIF TALENT:ARG:124
+		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
+		PRINTFORMW %CALLNAME:ARG%はベッドの上で丸くなって眠っている
+	;その他
+	ELSE
+		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
+		PRINTFORMW %CALLNAME:ARG%はベッドで眠っているようだ
+	ENDIF
+	;(吸血鬼の時 && 昼) || (月光浴 && 夜)
+	IF (TALENT:ARG:114 && TIME == 0) || (TALENT:ARG:116 && TIME == 1)
+		PRINTL 
+	;反発感情Lv3の時
+	ELSEIF MARK:ARG:3 == 3
+		;臆病or悲観的のとき
+		IF TALENT:ARG:10 || TALENT:ARG:26
+			PRINTFORMW その表情は悲しげだ……
+		ELSEIF RAND:2 == 0
+			PRINTFORMW その表情は険しい……
+		ELSE
+			PRINTFORMW その表情は固い……
+		ENDIF
+	;恋慕の時
+	ELSEIF TALENT:ARG:85
+		;生意気or小悪魔の時
+		IF (TALENT:ARG:16 || TALENT:ARG:87) && RAND:7 == 0
+			PRINTFORMW 眠りながらニヤニヤしている……
+;			PRINTFORMW ……何の夢を見ているんだか……
+		;謎の魅力or魅惑の時
+		ELSEIF (TALENT:ARG:91 || TALENT:ARG:91) && RAND:6 == 0
+			PRINTFORMW ふっとその寝顔に魅入られてしまうような気がした……
+		;幼稚の時
+		ELSEIF TALENT:ARG:132 && RAND:5 == 0
+			PRINTFORMW 蹴飛ばしてずれた毛布を直してやりました
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 寝乱れた姿が色っぽい……
+		ELSEIF RAND:3 == 0
+			PRINTFORMW その表情は安らかだ……
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 眠りながら微笑んでいるように見える……
+;			PRINTFORMW 何か夢を見ているのだろうか？
+		ELSE
+			PRINTFORMW かすかに寝言で%CALLNAME:MASTER%を呼んだ……
+		ENDIF
+	;既成事実Lv2以上
+	ELSEIF MARK:ARG:2 >= 2
+		;生意気or小悪魔の時
+		IF (TALENT:ARG:16 || TALENT:ARG:87) && RAND:7 == 0
+			PRINTFORMW 眠りながらニヤニヤしている……
+;			PRINTFORMW ……何の夢を見ているんだか……
+		;謎の魅力or魅惑の時
+		ELSEIF (TALENT:ARG:91 || TALENT:ARG:91) && RAND:6 == 0
+			PRINTFORMW ふっとその寝顔に魅入られてしまうような気がした……
+		;幼稚の時
+		ELSEIF TALENT:ARG:132 && RAND:5 == 0
+			PRINTFORMW 蹴飛ばしてずれた毛布を直してやりました
+		ELSEIF RAND:4 == 0
+			PRINTFORMW 寝乱れた姿が色っぽい……
+		ELSEIF RAND:3 == 0
+			PRINTFORMW 静かに眠っているようだ……
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 寝息に合わせて上下する胸の動きが色っぽい……
+		ELSE
+			PRINTFORMW 泥のように眠っている……
+;			PRINTFORMW よっぽど疲れてしまったらしい
+		ENDIF
+	;既成事実Lv1以下
+	ELSEIF MARK:ARG:2 <= 1
+		IF RAND:3 == 0
+			PRINTFORMW 身を守るように毛布をかぶっている
+;			PRINTFORMW まだここの生活に慣れていない感じがした
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 寝返りをうってこちらに背中を向けた……
+		ELSE
+			PRINTFORMW 泥のように眠っている……
+;			PRINTFORMW よっぽど疲れてしまったらしい
+		ENDIF
+	ENDIF
+;体力 > 1000
+ELSE
+	VARSET LOCALS
+	;禁断の知識の時、妖しい儀式
+	SIF TALENT:ARG:125
+		LOCALS += "0/"
+	;歌唱技能持ちの時、歌の練習
+	SIF ABL:ARG:92 > 0
+		LOCALS += "1/"
+	;狂気の時、ぶつぶつ言う
+	SIF TALENT:ARG:123
+		LOCALS += "2/"
+	;魔法使いの時、魔法の儀式orタロット占い
+	SIF GROUPMATCH(NO:ARG, 2, 8, 14, 51, 59, 60, 66)
+		LOCALS += "3/"
+	;調合知識持ちの時、実験or原料育成
+	SIF TALENT:ARG:55
+		LOCALS += "4/"
+	;大人しいの時本を読む
+	SIF TALENT:ARG:14
+		LOCALS += "5/"
+	;おもらし癖の時、世界地図を広げる
+	SIF TIME == 0 && TALENT:ARG:57
+		LOCALS += "6/"
+	;日光浴の時、日向ぼっこ
+	SIF TIME == 0 && TALENT:ARG:115
+		LOCALS += "7/"
+	;動物耳の時、庭を歩いてみる
+	SIF TALENT:ARG:124
+		LOCALS += "8/"
+	;針さばき持ちのとき、お裁縫
+	SIF TALENT:ARG:53
+		LOCALS += "9/"
+	;献身的のとき、家事
+	SIF TALENT:ARG:63
+		LOCALS += "10/"
+	;治療もちの場合お祈りする
+	SIF TIME == 0 && TALENT:ARG:117
+		LOCALS += "11/"
+	;感情乏しいor無関心の時はぼーっとする
+	SIF (TALENT:ARG:21 || TALENT:ARG:22)
+		LOCALS += "12/"
+	;目立ちたがりのとき、踊る
+	SIF TALENT:ARG:28 && MARK:ARG:3 != 3 && STRCOUNT(LLIST, "/") >= 1
+		LOCALS += "13/"
+	;猫舌の時、木に昇るorマタタビ酒で酔っ払う
+;	SIF TALENT:ARG:54
+;		LOCALS += "14/"
+	;反抗的・素直の時、ちょっとした用事を頼まれる
+	SIF (TALENT:ARG:11 || TALENT:ARG:13)
+		LOCALS += "15/"
+	;妖精の時、花壇で遊ぶ
+	SIF TIME == 0 && GROUPMATCH(NO:ARG, 4, 5, 15, 45, 46, 47, 56, 99)
+		LOCALS += "16/"
+	;恥じらいの時、とったビデオを見る
+	SIF TALENT:ARG:35 && ABL:ARG:1 >= 5
+		LOCALS += "17/"
+	;恥薄いの時…裸でうろつく
+	SIF TALENT:ARG:36
+		LOCALS += "18/"
+	;好奇心の時…珍しいものに心をとらわれる
+	SIF TALENT:ARG:23
+		LOCALS += "19/"
+	;習得遅い、幼稚の時 本を読むけど寝ちゃうorおやつをつまみ食いする
+	SIF (TALENT:ARG:51 || TALENT:ARG:132)
+		LOCALS += "20/"
+	;習得早いが練習しているor習得遅いもちに何か教える…
+	SIF TALENT:ARG:50 && MARK:ARG:3 != 3
+		LOCALS += "21/"
+	;楽観的が、鼻歌を歌うor悲観的を慰めている…
+	SIF TALENT:ARG:25
+		LOCALS += "22/"
+	;悲観的が、悲しげに外を見つめている
+	SIF TALENT:ARG:26
+		LOCALS += "23/"
+	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
+	SIF ABL:ARG:0 >= 7 && MARK:ARG:3 != 3
+		LOCALS += "24/"
+	;季節ネタ
+	SIF DAY:2 == 3 && GROUPMATCH(TIME:5, 5, 6)
+		LOCALS += "25/"
+	;月光浴の時、月見
+	SIF TIME == 1 && TALENT:ARG:116 && (TIME:5 == 0 || TIME:5 == 1)
+		LOCALS += "26/"
+	;臆病・気丈の時、夜間見回り中に遭遇する
+	SIF TIME == 1 && (TALENT:ARG:10 || TALENT:ARG:12)
+		LOCALS += "27/"
+	;サドが、SM調教の練習をしている
+	SIF TIME == 1 && TALENT:ARG:83
+		LOCALS += "28/"
+	;それ以外
+	SIF 1
+		LOCALS += "29/"
+	
+	;ランダマイズ
+	LOCAL = AUTO_SPLIT_INT(LOCALS, "/", RAND:STRCOUNT(LOCALS, "/"))
+	
+	SELECTCASE LOCAL
+	;妖しい儀式
+	CASE 0
+		PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%が儀式のようなものをしているのが見えた……
+		PRINTFORMW 正体不明の液体や動物の足のような得体の知れないものに囲まれて、魔法陣に向かって何か唱えている
+;		IF RAND:5 == 0
+;			PRINTFORMW 「うざ・いえい！　うざ・いえい！　いかあ　はあ　ぶほう－いい　らあん＝てごす……」
+;		ELSEIF RAND:4 == 0
+;			PRINTFORMW 「てぃび　まぐぬむ　いのみなんどぅむ　しぐな　すてらるむ　　にぐらるむ　え　……」
+;		ELSEIF RAND:3 == 0
+;			PRINTFORMW 「いあ！　いあ！　はすたあ！　はすたあ　くふあやく　ぶるぐとむ……」
+;		ELSEIF RAND:2 == 0
+;			PRINTFORMW 「ふんぐるい　むぐるうなふ　くとぅぐあ　ふぉまるはうと……」
+;		ELSE
+;			PRINTFORMW 「いえ　いえ　しゅぶ・にぐらす　千匹の仔を孕みし森の黒山羊よ！　……」
+;		ENDIF
+;		PRINTFORMW 猛烈に嫌な予感がしたのでその場から離れておきました……
+	;歌の練習
+	CASE 1
+		PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中から歌声が漏れてきた……
+;		IF EXP:ARG:60 >= 100 && RAND:2 == 0
+;			IF TALENT:ARG:25
+;				PRINTFORMW リズミカルなテンポにつられて、知らず知らず心が躍っていく…
+;			ELSEIF TALENT:ARG:26
+;				PRINTFORMW しっとりとした歌い方に心が落ち着いていく…
+;			ELSE
+;				PRINTFORMW 透き通るような高音が見事で、聞いていて心地良い
+;			ENDIF
+;			PRINTFORMW %CALLNAME:ARG%が一曲を歌いきるまで 時間を忘れて聞き惚れてしまった……
+;		ELSEIF RAND:2 == 0
+;			PRINTFORMW 苦手なパートを克服しようとしているのだろうか
+;			PRINTFORMW 同じフレーズばかりを何度も繰り返し歌っている……
+;		ELSE
+;			PRINTFORMW どうしたことだろう、今日の%CALLNAME:ARG%の歌声は少しおかしい
+;			PRINTFORMW 音程も不安定だし、テンポも目まぐるしく変わるし……
+;			PRINTFORMW 目眩がしてきたので耳を塞ぎながら足早に立ち去りました……
+;		ENDIF
+	;ぶつぶつ言う
+	CASE 2
+		PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中から話し声が聞こえてきた……
+		PRINTFORMW 覗いてみると、%CALLNAME:ARG%が唯の壁に向かって%RAND_SPLIT("手を振って/談笑して/何かぶつぶつ言って")%いる
+;		PRINTFORMW ……怖い
+;		PRINTFORM ふとこちらに気付いた%CALLNAME:ARG%
+;		IF MARK:ARG:3 == 3
+;			PRINTFORMW が、今度は睨みながら悪口のようなものを壁と話し始めた
+;			PRINTFORMW ……やっぱり怖い
+;		ELSEIF TALENT:ARG:85
+;			PRINTFORMW が微笑んで手招きしてきた
+;			PRINTFORMW ……壁を交えて３人（？）でおしゃべりすることになった……
+;		ELSE
+;			PRINTFORMW はこちらににっこりしてみせてから、また壁としゃべりはじめた
+;			PRINTFORMW ……やっぱり怖い
+;		ENDIF
+	;魔法の儀式orタロット占い
+	CASE 3
+		IF RAND:2 == 0
+			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%が儀式のようなものをしているのが見えた……
+			PRINTFORMW 魔法陣に向かって巻物を読みながら何か唱えている
+;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;				PRINTFORMW と思ったら爆発した……
+;				PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
+;				PRINTFORMW 仕方がないので手当てして別の部屋に寝かせることにした……
+;			ELSE
+;				PRINTFORMW と思った瞬間、魔方陣の中心が光り、青い炎のようなものが点った
+;				PRINTFORMW %CALLNAME:ARG%は続けて別な呪文を唱え始めたようだ
+;				PRINTFORMW 集中しているようなのでひとまずそこを離れた……
+;			ENDIF
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%がタロット占いをしているのが見えた……
+			PRINTFORMW 何事か呟きながら真剣な表情でカードをめくっている……
+;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;				PRINTFORMW 引いたカードの意味をうまく解釈出来ないでいるらしい
+;				PRINTFORMW 難しい表情のまま、目の前のカードを見つめている……
+;			ELSE
+;				PRINTFORMW %CALLNAME:ARG%はしばらく腕を組みながらカードを眺めていたが、やがて力強く頷いた
+;				PRINTFORMW どうやら明るい運勢のカードを引いたようだ……
+;			ENDIF
+		ENDIF
+	;実験or原料育成
+	CASE 4
+		IF RAND:2 == 0
+			PRINTFORMW 台所で、%CALLNAME:ARG%が鍋やフラスコなどを組み合わせて実験をしている……
+;			PRINTFORMW 鍋の中でぐつぐつと煮えたぎる液体の中にコップから青い液体をたらした……
+;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;				IF RAND:2 == 0
+;					PRINTFORMW と思ったら爆発した
+;					PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
+;					PRINTFORMW 呆れながら手当てして別の部屋に寝かせることにした……
+;				ELSE
+;					PRINTFORMW ………
+;					PRINTFORMW ………………
+;					PRINTFORMW ………………………
+;					PRINTFORMW 意図に反して何の変化も示さないフラスコを、不思議そうに見つめる%CALLNAME:ARG%さんでした
+;				ENDIF
+;			ELSE
+;				IF RAND:2 == 0
+;					PRINTFORMW と思った瞬間、鍋から紫色の煙が立ち上り、煮え立っていた液体が静まり返った
+;					PRINTFORMW %CALLNAME:ARG%はきょろきょろとあたりを見回し、こちらを見つけてにやりとした
+;					PRINTFORMW それから、館中を巻き込んだ鬼ごっこが始まった……
+;				ELSE
+;					PRINTFORMW フラスコの中身は虹色に染まり、明るいながらも不気味に輝いている
+;					PRINTFORMW %CALLNAME:ARG%は一瞬ためらった後、覚悟を決めて一気に飲み干した……
+;					IF RAND:2 == 0
+;						PRINTFORMW どうやら実験は成功したらしい…今度は研究ノートにペンを走らせ始めた……
+;					ELSE
+;						PRINTFORMW 次の瞬間、%CALLNAME:ARG%の顔色も虹色に染まった……残念ながら大失敗らしい……
+;					ENDIF
+;				ENDIF
+;			ENDIF
+		ELSE
+			PRINTFORM 何気なく%CALLNAME:ARG%の部屋を覗くと
+			IF TALENT:ARG:125 || ABL:ARG:2 >= RAND:5
+				IF RAND:2 == 0
+					PRINTFORMW 幾つもの箱が並んでいるのが見える
+					PRINTFORMW イモリだかヤモリだか、その様なものを飼っているらしい……
+;					PRINTFORMW 秘薬を調合するための材料を育てているのだろうか……
+;					SIF RAND:3 == 0
+;						PRINTFORMW それとも、ただのペットなのか……
+				ELSE
+					PRINTFORMW 毒々しい色の花、怪しげな形のキノコ……
+					PRINTFORMW 妙ちくりんな植物の鉢植えが数多く置かれていて目を引かれる
+;					PRINTFORMW 秘薬を調合するための材料を育てているのだろうか……
+;					SIF RAND:3 == 0
+;						PRINTFORMW それとも、ただの観葉植物なのか……
+				ENDIF
+			ELSE
+				PRINTFORMW 強い香りが鼻を突いた
+				PRINTFORMW その発生源はベッドの横に並べられたハーブ類の鉢植えのようだ……
+;				IF RAND:3 == 0
+;					PRINTFORMW ハーブティ用の自家栽培だろうか……
+;				ELSE
+;					PRINTFORMW 薬を調合するための材料を育てているのだろうか……
+;				ENDIF
+			ENDIF
+		ENDIF
+	;本を読む
+	CASE 5
+		PRINTFORMW 図書室に来てみると、%CALLNAME:ARG%が本を読んでいた
+		IF MARK:ARG:3 == 3
+			PRINTFORMW %CALLNAME:ARG%は入ってきた%CALLNAME:MASTER%に気付くと、本をそのままに何も言わずどこかに行ってしまった
+			PRINTFORMW 本のタイトルは『%RAND_SPLIT("復讐者/監獄からの脱出/殺さずに苦しませる方法")%』だった……
+		ELSEIF TALENT:ARG:85
+			IF RAND:3 == 0
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと慌てて読んでいた本を戻しにいった
+;				PRINTFORM 不思議に思って何を読んでいたか聞くと、
+;				IF TALENT:ARG:36 && RAND:2 == 0
+;					PRINTFORMW 顔を赤くして何か小声で言いながら図書室を出て行った
+;				ELSEIF TALENT:ARG:12 || TALENT:ARG:15
+;					PRINTFORMW 赤くなった%CALLNAME:ARG%に怒られた
+;					PRINTFORMW そして%CALLNAME:ARG%は逃げるように図書室を出て行った
+;				ELSE
+;					PRINTFORMW しどろもどろに何かいいながら図書室を出て行った
+;				ENDIF
+;				PRINTFORMW なんだったんだろう……
+			ELSEIF RAND:2 == 0
+				PRINTFORMW %CALLNAME:MASTER%に気付いた%CALLNAME:ARG%は嬉しそうに微笑みかけてきた
+;				PRINTFORMW 近くに座って楽しそうな表情の%CALLNAME:ARG%と一緒に好きな本について話して過ごした……
+				PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:ARG%の近くに座り、好きな本について話して過ごした……
+			ELSE
+;				PRINTFORMW %CALLNAME:MASTER%は自分の読む本を取ってきて微笑みかけてきた%CALLNAME:ARG%の近くに座り、幸せそうな表情の%CALLNAME:ARG%と一緒に本を読んで静かに過ごした……
+				PRINTFORMW %CALLNAME:MASTER%は%CALLNAME:ARG%の近くに座り、一緒に本を読んで静かに過ごした……
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW %CALLNAME:ARG%は本に夢中になっていて%CALLNAME:MASTER%に気付かない……
+;				PRINTFORMW 邪魔をしないように自分の読みたい本を探すことにした
+			ELSEIF RAND:2 == 0
+				PRINTFORMW %CALLNAME:ARG%は本に夢中になっていて%CALLNAME:MASTER%に気付かない……
+;				PRINTFORMW 自分の読みたい本を探して一緒に読み始めた
+;				PRINTFORMW 暫くすると驚いて声を上げた
+;				PRINTFORMW ちょっと面白い
+			ELSE
+				PRINTFORMW %CALLNAME:ARG%はこちらに気付いて挨拶し、また本に目を落とした
+;				PRINTFORMW %RAND_SPLIT("小説/化学の論文/歴史の本/『いけないおはなし』")%を読んでいるらしい
+			ENDIF
+		ENDIF
+	;世界地図を広げる
+	CASE 6
+		SPLIT LLIST, "/", LOCALS
+		FOR LCOUNT, 0, RESULT - 1
+			;おもらし癖
+			SIF TALENT:TOINT(TOSTR(LCOUNT)):57
+				LLIST:1 += TOSTR(LCOUNT) + "/"
+		NEXT
+		IF LLIST:1 != "" && RAND:2 == 0
+			LOCAL = AUTO_SPLIT_INT(LLIST:1, "/", RAND:STRCOUNT(LLIST:1, "/"))
+			PRINTFORMW ふと窓から庭を見下ろすと布団が二枚干されている
+			PRINTFORMW 今朝、粗相をしてしまったのは……%CALLNAME:ARG%と……%CALLNAME:LOCAL%、だ
+			PRINTFORMW 奇妙な連帯感が生じたらしく、二人で仲良くお喋りしながら布団干し作業を楽しんでいる……
+		ELSE
+			PRINTFORMW ふと窓から庭を見下ろすと布団が干されている
+			IF TALENT:ARG:35
+				PRINTFORMW 傍らには顔を真っ赤に染めた%CALLNAME:ARG%の姿がある……
+			ELSEIF TALENT:ARG:25
+				PRINTFORMW 傍らにはあっけらかんとした表情の%CALLNAME:ARG%の姿がある……
+			ELSE
+				PRINTFORMW 傍らには浮かない表情の%CALLNAME:ARG%の姿がある……
+			ENDIF
+;			PRINTFORMW どうやらまた粗相をしてしまったようだ……
+;			SIF TALENT:ARG:51 || TALENT:ARG:132
+;				PRINTFORMW それにしても干す前に洗濯した方が良いと思うのだが……
+		ENDIF
+	;日向ぼっこ
+	CASE 7
+		PRINTFORMW 庭で%CALLNAME:ARG%が日向ぼっこをしているところに通りすがりました
+		IF MARK:ARG:3 == 3
+			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%を見つけると、直ぐに固い表情でその場を立ち去った……
+		ELSEIF TALENT:ARG:124
+			PRINTFORMW %CALLNAME:ARG%は日差しの中で気持ち良さそうに目を細めている……
+			PRINTFORMW こちらに気付くと、目を細めて耳を動かした
+;			IF RAND:2 == 0
+;				PRINTFORMW 気持ち良さそうだったので、二人で一緒に暫くぼーっとしました……
+;			ELSE
+;				PRINTFORMW 気持ち良さそうな%CALLNAME:ARG%を眺めていたら、何時の間にか日が暮れていました……
+;			ENDIF
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%は日差しの中で気持ち良さそうに空を見上げている……
+			PRINTFORMW こちらに気付くと、目を細めて頷いてきた
+;			IF RAND:2 == 0
+;				PRINTFORMW 気持ち良さそうだったので、二人で一緒に暫くぼーっとしました……
+;			ELSE
+;				PRINTFORMW 気持ち良さそうな%CALLNAME:ARG%を眺めていたら、何時の間にか日が暮れていた……
+;			ENDIF
+		ENDIF
+	;庭を歩く
+	CASE 8
+		PRINTFORMW 窓から外を見てみると、庭を%CALLNAME:ARG%が歩き回っているのが見えた
+;		PRINTFORMW 鼻を突き出して……？　何かを探しているのだろうか？
+;		IF RAND:5 == 0
+;			PRINTFORMW おや。何か見つけたようだ
+;			PRINTFORMW ……興味がないものらしく、ぽいっと捨ててまた探し始めた
+;			PRINTFORMW 何を探しているんだか……
+;		ELSEIF RAND:4 == 0
+;			PRINTFORMW 急にポーンと跳んでそこから逃げ出した
+;			PRINTFORMW 何かに驚いたらしい
+;			PRINTFORMW また恐々と近づいてみている……
+;			PRINTFORMW 何を探しているんだか……
+;			PRINTFORMW あ。また逃げた
+;		ELSEIF RAND:3 == 0
+;			PRINTFORMW ？　草むらに気になるものがあったらしく、顔を突っ込んでごそごそやっている
+;			PRINTFORMW お尻と尻尾がぴょこぴょこ揺れている……
+;			PRINTFORMW 何を探しているんだか……
+;		ELSEIF RAND:2 == 0
+;			PRINTFORMW 暫くうろうろしていたが見つからず、あきらめてどこかにいってしまったようだ
+;			PRINTFORMW 何を探しているんだか……
+;		ELSE
+;			PRINTFORMW おや。何か見つけたようだ
+;			PRINTFORMW 嬉しそうに見つけたものをもって得意そうにどこかにいってしまった
+;			PRINTFORMW ……なんだったんだ……
+;		ENDIF
+	;お裁縫
+	CASE 9
+		PRINTFORMW 通りすがりに%RAND_SPLIT(@"台所/%CALLNAME:ARG%の部屋")%で%CALLNAME:ARG%が縫い物をしているのが見えた
+;		PRINTFORMW さすが器用に針を操っている
+;		IF MARK:ARG:3 == 3
+;			PRINTFORMW ふと嫌な予感がして身をかわすと、風切る音と共に、カッと何かが刺さる乾いた音
+;			PRINTFORMW 後ろを振り向くと、壁に針が刺さっている……
+;			PRINTFORMW 舌打ちをする%CALLNAME:ARG%を置いて、ひとまずそこを離れた……
+;		ELSEIF TALENT:ARG:85
+;			PRINTFORMW 感心して眺めていると、だんだん%CALLNAME:ARG%の顔が赤くなってきて……
+;			PRINTFORMW 邪魔をするなと怒られた
+;			PRINTFORMW 邪魔をするなと怒られました
+;			PRINTFORMW とりあえず謝っていると、ぷりぷりしながら%CALLNAME:ARG%は%CALLNAME:MASTER%にものさしを当てている……
+;			PRINTFORMW 不思議に思って聞いてみると、また怒られました……
+;		ELSE
+;			PRINTFORMW 感心して眺めていると、口で糸を切っている%CALLNAME:ARG%と目が合った
+;			PRINTFORMW 針を持ったままいやににっこりと挨拶してくる
+;			PRINTFORMW きらりと光る針……家庭的というのか怖いというのか
+;		ENDIF
+	;家事
+	CASE 10
+		;吸血鬼
+		IF RAND:2 == 0 || TALENT:ARG:114
+			PRINTFORM %CALLNAME:ARG%が
+			;昼
+			IF TIME == 0
+				;吸血鬼
+				IF RAND:2 == 0 || TALENT:ARG:114
+					PRINT 廊下の
+				;それ以外
+				ELSE
+					PRINT 庭の
+				ENDIF
+			;夜
+			ELSE
+				IF RAND:2 == 0
+					PRINT 廊下の
+				ELSE
+					PRINT 台所の
+				ENDIF
+			ENDIF
+			PRINTFORMW 掃除をしているところに通りすがった……
+			IF MARK:ARG:3 == 3
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
+				;PRINTFORMW …………おい。
+			ELSEIF TALENT:ARG:85
+				PRINTFORMW こちらに気付いて微笑む%CALLNAME:ARG%と挨拶を交わした
+;				IF RAND:2 == 0
+;					PRINTFORMW 褒めると、顔を赤くして掃除を続ける
+;					PRINTFORMW 照れているようだ
+;					PRINTFORMW 更に礼を言うと、首から上を真っ赤にしてしどろもどろになりました
+;					PRINTFORMW ……さっきから何度も同じところを掃除している
+;				ELSE
+;					PRINTFORMW %CALLNAME:MASTER%は手伝うことにした
+;					PRINTFORMW %CALLNAME:ARG%のハミングを聞きながら一緒に掃除をした……
+;				ENDIF
+;			ELSE
+;				IF RAND:2 == 0
+;					PRINTFORMW %CALLNAME:ARG%は丁寧に掃除していく
+;					PRINTFORMW どんどん綺麗になっていくのを感心しながら眺めた……
+;				ELSE
+;					PRINTFORMW やたらにこやかな%CALLNAME:ARG%に押し切られ、%CALLNAME:MASTER%は手伝うことにした
+;					PRINTFORMW %CALLNAME:ARG%と一緒にというよりは指図されながら掃除をした……
+;				ENDIF
+			ENDIF
+		;それ以外
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%が洗濯をしているところに通りすがった……
+			SELECTCASE STRCOUNT(LLIST, "/")
+			CASE IS >= 2
+				PRINTFORMW %CALLNAME:MASTER%とみんなの分も一緒に洗濯しているようだ
+			CASE 1
+				SPLIT LLIST, "/", LOCALS
+				PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:TOINT(LOCALS)%の分も一緒に洗濯しているようだ
+			CASEELSE
+				PRINTFORMW あなたの分も一緒に洗濯しているようだ
+			ENDSELECT
+			IF MARK:ARG:3 == 3
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
+;				PRINTFORMW …………おい。
+;			ELSEIF TALENT:ARG:85 && (TALENT:ARG:24 || TALENT:ARG:30 || TALENT:ARG:35) && RAND:2 == 0
+;				PRINTFORMW 不意に%CALLNAME:ARG%が固まった
+;				PRINTFORMW %CALLNAME:MASTER%の下着を手に真っ赤になっている
+;				IF TALENT:ARG:76
+;					PRINTFORMW そしてごそごそと下着を懐に隠した……
+;					PRINTFORMW はっと気が付いてあたりを見回した%CALLNAME:ARG%と%CALLNAME:MASTER%の目が合いました
+;					PRINTFORMW %CALLNAME:ARG%は逃げ出した！
+;					PRINTFORMW 下着を持ったまま……
+;				ELSE
+;					PRINTFORMW 深呼吸を繰り返し、暫く何事か考えてから、洗濯を再開しました
+;					;PRINTFORMW ？
+;				ENDIF
+;			ELSEIF TALENT:ARG:85 && TALENT:ARG:76 && TALENT:ARG:24 == 0 && TALENT:ARG:30 == 0 && TALENT:ARG:35 == 0 && RAND:2 == 0
+;				PRINTFORMW と、洗濯物の塊の中から何か引っ張り出した
+;				PRINTFORMW %CALLNAME:MASTER%の下着のようだ
+;				IF RAND:2 == 0
+;					PRINTFORMW ごそごそと自分の懐にしまっている……
+;					PRINTFORMW とりあえずツッコんでおきました
+;				ELSE
+;					PRINTFORMW なにやら匂いを嗅いでいる……
+;					PRINTFORMW そのまま片手をイケナイ感じに動かし始めたので、ツッコんでおきました
+;				ENDIF
+;			ELSEIF TALENT:ARG:85
+;				PRINTFORMW こちらに気付いて微笑む%CALLNAME:ARG%と挨拶を交わした
+;				IF RAND:2 == 0
+;					PRINTFORMW %CALLNAME:ARG%はうきうきした顔で洗濯物を干し始めた
+;					PRINTFORMW 絶好の洗濯日和の空の下に洗濯物が並んでいく……
+;				ELSE
+;					PRINTFORMW %CALLNAME:MASTER%は手伝うことにした
+;					PRINTFORMW からっと晴れた空の下で、嬉しそうな%CALLNAME:ARG%と一緒に洗濯をした……
+;				ENDIF
+;			ELSE
+;				IF RAND:2 == 0
+;					PRINTFORMW 晴れた空の下で%CALLNAME:ARG%がてきぱきと洗濯物を干していくのを眺めた……
+;				ELSE
+;					PRINTFORMW やたらにこやかな%CALLNAME:ARG%に押し切られ、%CALLNAME:MASTER%は手伝うことにした
+;					PRINTFORMW からっと晴れた空の下で、%CALLNAME:ARG%と一緒に洗濯をした……
+;				ENDIF
+			ENDIF
+		ENDIF
+	;お祈り
+	CASE 11
+		PRINTFORMW 庭の陽だまりに来てみると、%CALLNAME:ARG%が祈りを捧げていた
+		IF MARK:ARG:3 == 3
+			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと、少し涙を浮かべ再び祈りに入った。
+			PRINTFORM %CALLNAME:ARG%の祈っていたことはと言うと
+			IF RAND:3 == 0
+				PRINTFORMW 『どうか改心しますように』
+			ELSEIF RAND:2 == 0
+				PRINTFORMW 『神様…助けて』
+			ELSE
+				PRINTFORMW 『真人間になりますように』
+			ENDIF
+		ELSEIF TALENT:ARG:85
+			IF RAND:3 == 0
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと美しい笑顔を浮かべた。
+				PRINTFORM 不思議に思って何を祈っていたか聞くと、
+				IF TALENT:ARG:36 && RAND:2 == 0
+					PRINTFORMW 「ずっとこの生活が続きますように」
+				ELSEIF TALENT:ARG:12 || TALENT:ARG:15
+					PRINTFORMW %CALLNAME:ARG%は静かに笑った
+;					PRINTFORMW そして%CALLNAME:ARG%は軽くキスをして部屋へ戻った。
+				ELSE
+					PRINTFORMW 「いい事がありますように」
+				ENDIF
+;				PRINTFORMW …ちょっとだけお祈りをしてみた。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW %CALLNAME:MASTER%に気付いた%CALLNAME:ARG%は嬉しそうに微笑みかけて自分のそばに誘ってきた
+				PRINTFORMW %CALLNAME:ARG%と一緒に日向ぼっこをした……
+			ELSE
+;				PRINTFORMW %CALLNAME:MASTER%は微笑みかけてきた%CALLNAME:ARG%の近くに座り祈りを捧げる%CALLNAME:ARG%の隣で静かに過ごした……
+				PRINTFORMW %CALLNAME:ARG%の隣で静かに過ごした……
+			ENDIF
+		ELSE
+			IF RAND:3 == 0
+				PRINTFORMW %CALLNAME:ARG%は祈りに夢中になっていて%CALLNAME:MASTER%に気付かない……
+;				PRINTFORMW 邪魔をしないようにその場を去った。
+			ELSEIF RAND:2 == 0
+				PRINTFORMW %CALLNAME:ARG%は祈りに夢中になっていて%CALLNAME:MASTER%に気付かない……
+;				PRINTFORMW 隣に座り込みしばらく一緒に目を瞑ってみる…不思議な気分だ。
+;				PRINTFORMW 暫くすると驚いて声を上げた
+;				PRINTFORMW ちょっと可愛い
+			ELSE
+				PRINTFORMW %CALLNAME:ARG%はこちらに気付いて挨拶し、また静かに祈り始めた
+			ENDIF
+		ENDIF
+	;ぼーっとする
+	CASE 12
+		PRINTFORM ふと
+		IF TALENT:ARG:114 == 0 && RAND:3 == 0
+			PRINTFORM 庭に立って
+		ELSEIF RAND:2 == 0
+			PRINTFORM 食堂の椅子に座って
+		ELSE
+			PRINTFORM 部屋のベッドに腰掛けて
+		ENDIF
+		PRINTFORMW %CALLNAME:ARG%がぼーっとしているところに通りすがった……
+;		IF TALENT:ARG:85
+;			PRINTFORMW …………
+;			PRINTFORMW …………
+;			PRINTFORMW あ。赤くなった
+;		ELSE
+;			PRINTFORMW …………
+;			PRINTFORMW 動かない……
+;		ENDIF
+	;踊る
+	CASE 13
+		IF MARK:ARG:2 >= 2
+			PRINTFORMW 廊下を歩いていると、%CALLNAME:ARG%が寄ってきて、食堂まで引っ張られた
+		ELSE
+			PRINTFORMW ふと食堂に通りかかると、%CALLNAME:ARG%の姿が見える……
+		ENDIF
+		SELECTCASE STRCOUNT(LLIST, "/")
+		CASE IS >= 3
+			PRINTFORMW 他のみんなも集まっているようだ
+		CASE 2
+			SPLIT LLIST, "/", LOCALS
+			PRINTFORMW %CALLNAME:TOINT(LOCALS:0)%と%CALLNAME:TOINT(LOCALS:1)%もきているようだ
+		CASE 1
+			SPLIT LLIST, "/", LOCALS
+			PRINTFORMW %CALLNAME:TOINT(LOCALS)%もきているようだ
+		ENDSELECT
+		PRINTFORMW %CALLNAME:ARG%はテーブルの上にのぼるとポーズをとって、踊り始めた
+		IF TALENT:ARG:76 && RAND:2 == 0
+			PRINTFORMW 身体のラインを強調しながらイヤラシイ動きを繰り返している……
+			SIF TALENT:ARG:85
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に艶っぽい視線を送ってきた
+		ELSEIF RAND:2 == 0
+			PRINTFORMW 演劇調のゆったりとした繊細な舞だ……
+			SIF TALENT:ARG:85
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に儚げな視線を送ってきた
+		ELSE
+			PRINTFORMW リズムの早いアクロバティックなダンスだ
+			SIF TALENT:ARG:85
+				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%にウインクしてみせた
+		ENDIF
+;		IF ABL:ARG:2 * 10 > RAND:100
+;			PRINTFORM 全身を使った見事な踊りとバランス感覚に
+;			;キャラの数と感情乏しいを組み合わせた分岐・ちょっと多くなるなあ…
+;			IF F >= 5
+;				PRINTFORMW みんなが引き込まれていく
+;				PRINTFORMW 注目の中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;				PRINTFORM みんなの拍手と歓声に得意げになって%CALLNAME:ARG%はテーブルから降り
+;			ELSEIF F == 4
+;				IF TALENT:B:22 && TALENT:C:22
+;					PRINTFORMW %CALLNAME:MASTER%は感心して%CALLNAME:ARG%に見入った
+;					PRINTFORMW %CALLNAME:MASTER%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM %CALLNAME:MASTER%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ELSEIF TALENT:B:22 && TALENT:C:22 == 0
+;					PRINTFORMW %CALLNAME:C%も感心して見入っている
+;					PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:C%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM %CALLNAME:MASTER%と%CALLNAME:C%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ELSEIF TALENT:B:22 == 0 && TALENT:C:22
+;					PRINTFORMW %CALLNAME:B%も感心して見入っている
+;					PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:B%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM %CALLNAME:MASTER%と%CALLNAME:B%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ELSE
+;					PRINTFORMW %CALLNAME:B%と%CALLNAME:C%の二人も感心して見入っている
+;					PRINTFORMW %CALLNAME:MASTER%と二人の注目の中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM みんなの拍手と歓声に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ENDIF
+;			ELSEIF F == 3
+;				IF TALENT:B:22
+;					PRINTFORMW %CALLNAME:MASTER%は感心して%CALLNAME:ARG%に見入った
+;					PRINTFORMW %CALLNAME:MASTER%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM %CALLNAME:MASTER%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ELSE
+;					PRINTFORMW %CALLNAME:B%も感心して見入っている
+;					PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:B%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
+;					PRINTFORM %CALLNAME:MASTER%と%CALLNAME:B%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
+;				ENDIF
+;			ENDIF
+;			IF RAND:10 > 8
+;				PRINTFORMW 、
+;				PRINTFORMW るはずがテーブルが前に倒れかけて後ろに盛大な音と共にひっくり返った……
+;				PRINTFORMW 目を回してぶっ倒れている%CALLNAME:ARG%に溜息をついて部屋に運びました……
+;			ELSE
+;				IF TALENT:ARG:85
+;					PRINTFORMW 、%CALLNAME:MASTER%に嬉しそうに抱きついてきた……
+;				ELSE
+;					PRINTFORMW 、鼻を高くしてご満悦の様子だ
+;				ENDIF
+;			ENDIF
+;		ELSE
+;			PRINTFORMW と思ったらテーブルから足を踏み外し盛大な音を立てて落ちた……
+;			PRINTFORMW 目を回してぶっ倒れている%CALLNAME:ARG%に溜息をついて部屋に運びました……
+;		ENDIF
+;	;木に昇るorマタタビ酒で酔っ払う
+;	CASE 14
+;		IF RAND:3 >= 1
+;			PRINTFORMW 窓の外から、庭の木に上って得意げにしている%CALLNAME:ARG%の姿が見える
+;			PRINTFORMW 耳の後ろを掻いたり顔を洗ったりして余裕の表情だ
+;			PRINTFORMW ちょっと感心して事務仕事に戻った……
+;			PRINTFORMW …………
+;			PRINTFORMW 日が暮れかけた頃、%CALLNAME:ARG%の鳴き声が聞こえてきた
+;			PRINTFORMW 悲しそうな鳴き声に不思議に思って窓の外を見ると、木にのぼったままの%CALLNAME:ARG%がしきりに鳴いている
+;			PRINTFORMW 降りられなくなったようだ
+;			PRINTFORMW はしごを持って助けに行きました……
+;		ELSE
+;			PRINTFORMW 館の一角で、廊下の絨毯に爪が立てられ 窓のカーテンもビリビリに裂かれていました
+;			PRINTFORMW 犯人の足取りを追うと、たどり着いたのは%CALLNAME:ARG%の部屋
+;			PRINTFORMW ドアを開けるとそこにはマタタビ酒を抱えたまま酩酊している%CALLNAME:ARG%の姿が……
+;			PRINTFORMW これには%CALLNAME:MASTER%も苦笑い……
+;		ENDIF
+	;ちょっとした用事を頼まれる
+	CASE 15
+		PRINTFORMW 街で買い込んできた生活物資を倉庫に運ぼうとした丁度そのとき、良いタイミングで%CALLNAME:ARG%が通りかかった
+		IF TALENT:ARG:13
+			IF TALENT:ARG:63 || ABL:ARG:0 >= 7
+				PRINTFORMW %CALLNAME:ARG%は山と積まれた荷物を見るとすぐに、自発的に手伝いを申し出てくれた……
+;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
+			ELSE
+				PRINTFORMW %CALLNAME:ARG%に声を掛けると、快く手伝ってくれた……
+;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で 日が暮れるまでに作業が終わりました……
+			ENDIF
+		ELSEIF TALENT:ARG:11
+			IF TALENT:ARG:85
+				PRINTFORMW %CALLNAME:ARG%はそのまま素通りする勢いだったが、%CALLNAME:MASTER%と目が合うと、少し頬を染めながら手伝いを申し出てくれた……
+;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
+			ELSEIF ABL:ARG:0 >= 7
+				PRINTFORMW 素通りする勢いの%CALLNAME:ARG%を慌てて呼び止めて、お手伝いをお願いしました……
+;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で 日が暮れるまでに作業が終わりました……
+			ELSE
+;				PRINTFORMW しかし無情にも%CALLNAME:ARG%はそのまま素通りしていきました……
+				PRINTFORMW しかし%CALLNAME:ARG%はそのまま素通りしていった……
+			ENDIF
+		ENDIF
+	;花壇で遊ぶ
+	CASE 16
+		PRINTFORMW 庭の花壇で%CALLNAME:ARG%が遊んでいた
+;		;動物耳がいればじゃれ付かれる
+;		E = 124
+;		CALL DAILY_LIFE_D
+;		IF B > 0 && RAND:3 == 0
+;			PRINTFORMW と、そこに%CALLNAME:B%もやってきてじゃれ付き始めた
+;			IF ABL:ARG:2 >= ABL:B:2
+;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:B%の飛び掛かりを巧みに回避してケタケタ笑っている……
+;			ELSE
+;				PRINTFORMW %CALLNAME:ARG%はあっという間に%CALLNAME:B%に捕まってしまった…
+;				PRINTFORMW 機嫌よく空中散歩していたのを邪魔されて頬を膨らませている……
+;			ENDIF
+;		ELSEIF RAND:2 == 0
+			IF DAY:2 == 0
+;				PRINTFORMW 追いかけっこか、カクレンボか…
+				PRINTFORMW 蝶々と一緒になって花から花へ飛び移っている…
+			ELSEIF DAY:2 == 1
+				PRINTFORMW %CALLNAME:ARG%はヒマワリの花に降り立つと、そのまま寝そべった
+;				PRINTFORMW 風に吹かれてふわふわ揺れる天然のベッドの上でお昼寝タイムらしい
+			ELSEIF DAY:2 == 2
+				PRINTFORMW コスモスの茂みの中で蝶々の後を追っている…
+			ELSEIF DAY:2 == 3
+				PRINTFORMW 季節は冬
+				PRINTFORMW いつも一緒に遊んでいた蝶々達も今は居ない
+;				PRINTFORMW 枯花壇の上を独りで飛ぶ%CALLNAME:ARG%がどこか寂しそうだ……
+			ENDIF
+;		ELSE
+;			IF RAND:3 == 0
+;				PRINTFORMW 花の周りを歌いながらひらひらと踊るように飛びまわっている
+;			ELSEIF RAND:2 == 0
+;				PRINTFORMW ちょうちょと追いかけっこをしている
+;			ELSE
+;				PRINTFORMW てんとうむしと……にらめっこをしている？
+;			ENDIF
+;			IF MARK:ARG:3 == 3
+;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気がつくと、あっかんべーをしてどこかに飛んで行った……
+;			ELSEIF TALENT:ARG:85
+;				PRINTFORMW %CALLNAME:MASTER%に気がつくと、一緒に遊ぼうと誘ってきました
+;				PRINTFORMW 承諾すると、嬉しそうにはにかんだ……
+;			ELSE
+;				PRINTFORMW %CALLNAME:MASTER%に気付かないくらい夢中のようだ
+;				PRINTFORMW 暫く遊んでいる%CALLNAME:ARG%を眺めて過した……
+;			ENDIF
+;		ENDIF
+	;恥じらいの時、とったビデオを見る
+	CASE 17
+		PRINTFORMW 廊下を歩いているとどこからか物音が聞こえてくる……
+		PRINTFORMW 不思議に思って物音を探してみると、%CALLNAME:ARG%の部屋からだった
+		PRINTFORMW 部屋を覗いてみると、%CALLNAME:ARG%が顔を手で押さえて、撮影した映像を見ていた……
+;		E = 36
+;		CALL DAILY_LIFE_D
+;		IF B > 0 && RAND:3 == 0
+;			PRINTFORMW 更に、そんな%CALLNAME:ARG%のすぐ後ろで%CALLNAME:B%がニヤニヤしながら画面を見つめていた
+;			PRINTFORMW どうやら『覗き魔』には先客が居たようだ……
+;			SIF RAND:2 == 0
+;				PRINTFORMW 程なくして%CALLNAME:ARG%に気づかれた%CALLNAME:B%が部屋から叩き出されてきた……
+;		ELSE
+;			PRINTFORMW 物音の正体はこれだったらしい……
+;			PRINTFORMW %CALLNAME:ARG%は真っ赤な顔で、指の隙間から喰い入るように画面を見ている…
+;			PRINTFORMW どうしたもんかと頭をかきました……
+;		ENDIF
+	;恥薄いの時…裸でうろつく
+	CASE 18
+		PRINTFORMW 部屋で紅茶を飲んで休んでいると、廊下をバスタオルだけを羽織った%CALLNAME:ARG%が通り過ぎた……？
+;		PRINTFORMW 気のせいだろうか……
+;		PRINTFORMW …………
+		SPLIT LLIST, "/", LOCALS
+		FOR LCOUNT, 0, RESULT - 1
+			;恥薄い
+			SIF TALENT:TOINT(TOSTR(LCOUNT)):36
+				LLIST:1 += TOSTR(LCOUNT) + "/"
+		NEXT
+		IF LLIST:1 != "" && RAND:3 == 0
+			LOCAL = AUTO_SPLIT_INT(LLIST:1, "/", RAND:STRCOUNT(LLIST:1, "/"))
+			PRINTFORMW 暫くすると、今度はやはりバスタオルだけの%CALLNAME:LOCAL%が通り過ぎました
+;			PRINTFORMW 紅茶を吹きました
+		ELSE
+			PRINTFORMW 暫くすると、飲み物を手にやはりバスタオルだけの%CALLNAME:ARG%が通り過ぎました
+;			PRINTFORMW 紅茶を吹きました
+;			IF TALENT:ARG:85
+;				PRINTFORMW 不思議そうな顔をした%CALLNAME:ARG%が戻ってきた
+;				PRINTFORMW どうやらお風呂に入った後飲み物を食堂に取りにいったらしい
+;				PRINTFORMW %CALLNAME:ARG%は軽くポーズを取って見せて%CALLNAME:MASTER%にウィンクを送ると、お尻をふりふり戻っていった……
+;			ENDIF
+;			CALL DAILY_LIFE_C
+;			IF B > 0 && RAND:3 != 0
+;				PRINTFORMW 呆気に取られ気味に見送ると、%CALLNAME:B%の怒った声が聞こえてきた
+;				PRINTFORMW どうやら裸でうろうろしていることを説教されているようです……
+;			ENDIF
+		ENDIF
+	;好奇心の時…珍しいものに心をとらわれる
+	CASE 19
+		PRINTFORMW 食堂に来てみると、%CALLNAME:ARG%が何かを熱心に見つめている
+		PRINTFORMW その視線の先にあるのは%RAND_SPLIT("小さな振り子時計/入れ子人形/古びた水差し/木彫りのクマ")%だ……
+;		IF MARK:ARG:3 == 3
+;			PRINTFORMW %CALLNAME:ARG%はしばらく眺めていたが、%CALLNAME:MASTER%の存在に気が付くと足早にその場を立ち去った……
+;		ELSEIF TALENT:ARG:11
+;			PRINTFORMW 頂戴オーラを発していたのでプレゼントしようとしたが、%CALLNAME:ARG%は慌てて拒絶する
+;			IF ABL:ARG:0 >= 7
+;				PRINTFORMW だが%CALLNAME:ARG%の胸元に小物を押し付けるように差し出すと、何とか受け取ってくれた
+;				PRINTFORMW その態度とは裏腹に、とても喜んでもらえたようだ……
+;			ELSE
+;				PRINTFORMW 気になる小物から精一杯目を逸らし、%CALLNAME:ARG%は自分の部屋に帰って行ってしまった……
+;			ENDIF
+;		ELSEIF TALENT:ARG:51 || TALENT:ARG:100
+;			PRINTFORMW %CALLNAME:ARG%が頂戴オーラを発していたのでプレゼントすると、目を輝かせながら抱きかかえて自分の部屋に走り去っていった……
+;		ELSE
+;			PRINTFORMW %CALLNAME:MASTER%が紅茶を淹れ、注ぎ、飲み終えても、%CALLNAME:ARG%は小物を観察し続けていた……
+;		ENDIF
+	;習得遅い、幼稚の時 本を読むけど寝ちゃうorおやつをつまみ食いする
+	CASE 20
+		IF RAND:2 == 0
+			PRINTFORMW 図書室に来てみると、%CALLNAME:ARG%が妙にしゃちほこばって本を読んでいるのを見つけた
+			IF MARK:ARG:3 == 3
+				PRINTFORMW %CALLNAME:MASTER%に気付くと、ぷいっと横を向いて図書室を出て行った……
+;			ELSE
+;				PRINTFORMW %CALLNAME:MASTER%に気付くと得意げににかっとしてみせてからまた本を読み始めた
+;				PRINTFORMW %CALLNAME:MASTER%は自分の読みたい本を探しにいった……
+;				IF RAND:2 == 0
+;					PRINTFORMW 戻ってきてみると、机の上に本を散らかしたまま%CALLNAME:ARG%の姿は既になくなっていた
+;					PRINTFORMW もう飽きてしまったのだろうか？
+;					E = 63
+;					CALL DAILY_LIFE_D
+;					IF B > 0 && MARK:B:3 != 3 && RAND:2 == 0
+;						PRINTFORMW ………………
+;						PRINTFORMW 帰りがけに%CALLNAME:ARG%が散らかした机を片付けていると、いつの間にかそばに居た%CALLNAME:B%が整理を手伝ってくれた……
+;					ENDIF
+;				ELSE
+;					PRINTFORMW 戻ってきてみると、%CALLNAME:ARG%は本の上につっぷして寝息を立てている
+;					IF TALENT:ARG:85
+;						PRINTFORMW 何か寝言を言っている……
+;						PRINTFORMW 勉強して%CALLNAME:MASTER%をメロメロにしてやるそうです
+;						PRINTFORMW 苦笑して部屋まで抱いて連れて行った……
+;					ELSE
+;						PRINTFORMW 仕方ないので部屋に抱いて連れて行くことにした……
+;					ENDIF
+;				ENDIF
+			ENDIF
+		ELSE
+			PRINTFORMW \@ TIME == 0 ? 人気のない # 漆黒の闇が支配する \@台所に忍び寄る黒い人影……
+			PRINTFORMW その正体は――%CALLNAME:ARG%だ！
+			;理性の勝利
+			IF ABL:ARG:0 >= (ABL:ARG:1 + RAND:5)
+				PRINTFORMW 戸棚の中にオヤツを見つけると、すかさず手を伸ばしかけた
+				PRINTFORMW が、急に神妙な顔つきになった後、くるりと反転して部屋に帰っていった……
+;				PRINTFORMW 欲望より理性に軍配が上がったらしい……
+			ELSE
+				PRINTFORMW 戸棚の中にオヤツを見つけると、少しも躊躇せず口に放り込み
+				IF ABL:ARG:2 >= RAND:10
+					PRINTFORMW 包み紙を器用に丸めて つまみ食いの痕跡を消してから立ち去っていった……
+				ELSE
+					PRINTFORMW そのまま満足げに立ち去っていった……
+				ENDIF
+			ENDIF
+		ENDIF
+	;習得早いが練習しているor習得遅いもちに何か教える…
+	CASE 21
+		SPLIT LLIST, "/", LOCALS
+		FOR LCOUNT, 0, RESULT - 1
+			;習得遅い && 反発感情LV3未満
+			SIF TALENT:TOINT(TOSTR(LCOUNT)):51 && MARK:TOINT(TOSTR(LCOUNT)):3 < 3
+				LLIST:1 += TOSTR(LCOUNT) + "/"
+		NEXT
+		IF LLIST:1 != "" && RAND:3 >= 1
+			LOCAL = AUTO_SPLIT_INT(LLIST:1, "/", RAND:STRCOUNT(LLIST:1, "/"))
+			PRINTFORMW %CALLNAME:ARG%の部屋で、%CALLNAME:ARG%と%CALLNAME:LOCAL%が何かしているようだ
+			PRINTFORMW %CALLNAME:ARG%の妖しい手つきを%CALLNAME:LOCAL%が真似している
+;			PRINTFORMW どうやら%CALLNAME:ARG%が%CALLNAME:LOCAL%にイケナイコトを教えているらしい……
+;			PRINTFORMW とはいえ、二人とも真剣で、あまりいやらしくないのだがやっぱり動きがいやらしい
+;			PRINTFORMW ひとまず見なかった振りをすることにした……
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%の部屋に通りかかると、ふと%CALLNAME:ARG%何か手を動かしているのが見えた
+;			PRINTFORMW 手つきがなにやらいやらしい……どうやらイケナイコトの練習をしているようだ
+;			PRINTFORMW なんだか納得してその場を去った……
+		ENDIF
+	;楽観的が、鼻歌を歌うor悲観的を慰めている…
+	CASE 22
+;		E = 26
+;		CALL DAILY_LIFE_D
+;		IF B > 0 && MARK:B:3 != 3 && RAND:3 >= 1
+;			PRINTFORMW %CALLNAME:B%の部屋で、%CALLNAME:ARG%と%CALLNAME:B%が何かしているようだ
+;			PRINTFORMW %CALLNAME:ARG%が、何だか悲しそうな表情の%CALLNAME:B%を慰めているらしい
+;			PRINTFORMW %CALLNAME:B%の表情は冴えない……
+;			PRINTFORMW %CALLNAME:ARG%は諦めずに優しい態度を取っている……
+;			IF TALENT:ARG:85 && TALENT:B:85
+;				PRINTFORMW ……どうやら%CALLNAME:B%は気を取り直したようだ
+;				PRINTFORMW 少し安心して、ひとまずそこを立ち去った
+;			ELSE
+;				PRINTFORMW 邪魔をしても悪いと思い、ひとまずそこを立ち去った……
+;			ENDIF
+;		ELSEIF RAND:2 == 0
+			PRINTFORMW %CALLNAME:MASTER%の部屋の前を、誰かが鼻歌を歌いながら通り過ぎた
+			PRINTFORMW 姿こそ見えないが、声の主はきっと%CALLNAME:ARG%だろう…
+;		ELSE
+;			PRINTFORMW ふと%CALLNAME:ARG%の部屋を通りかかると、水音と%CALLNAME:ARG%の鼻歌が聞こえてきた……
+;			PRINTFORMW 楽しそうな鼻歌だ
+;			PRINTFORMW ひとまずその場を去った……
+;			PRINTFORMW と思ったら同じ鼻歌を何時の間にか口ずさんでいた
+;		ENDIF
+	;悲観的が、悲しげに外を見つめている
+	CASE 23
+		PRINTFORMW %CALLNAME:ARG%の部屋に通りかかると、%CALLNAME:ARG%が窓の外を眺めているのが見えた……
+		PRINTFORMW 小さく溜息をついたようだ
+;		IF TALENT:ARG:85
+;			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付いて振り返り、悲しげな顔を伏せた
+;			PRINTFORMW ……隣に立って肩に手を置いた
+;			PRINTFORMW 暫くそのままでいた……
+;		ELSE
+;			PRINTFORMW その後姿は暗く、儚げだ……
+;			PRINTFORMW 何かいうことも出来ず、そのままその場を立ち去った……
+;		ENDIF
+	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
+	CASE 24
+		PRINTFORMW 今日の昼食の当番は%CALLNAME:ARG%だ
+		IF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25
+			PRINTFORMW %CALLNAME:ARG%はガッツポーズをしてみせるとはりきって料理を始めた……
+		ELSEIF TALENT:ARG:21 || TALENT:ARG:22
+			PRINTFORMW %CALLNAME:ARG%は無表情に頷いてみせると料理を始めた……
+		ELSEIF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+			PRINTFORMW %CALLNAME:ARG%はしぶしぶながら料理を始めた……
+		ELSE
+			PRINTFORMW %CALLNAME:ARG%は頷いて料理を始めた……
+		ENDIF
+;		CALL DAILY_LIFE_E
+;		PRINTFORMW …………
+;		IF B > 0 && (TALENT:ARG:81 || TALENT:ARG:82 || ABL:ARG:12 >= 5) && (ABL:ARG:1 >= 10 || TALENT:ARG:76) && RAND:4 >= 1
+;			PRINTFORMW どうも遅い……
+;			PRINTFORMW 気になって台所に様子を見に行った
+;			PRINTFORMW ……%CALLNAME:ARG%が%CALLNAME:B%を料理しています……
+;			PRINTFORMW ひとまず%CALLNAME:ARG%にツッコミを入れておきました
+;		ELSEIF ABL:ARG:90 == 0 || RAND:50 == 0
+;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
+;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
+;			PRINTFORMW ……！
+;			PRINTFORMW 自分が生きていることが不思議な味です……
+;			PRINTFORMW 不思議そうな%CALLNAME:ARG%の目の前で、顔が真っ青になった%CALLNAME:MASTER%はぶっ倒れました……
+;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%のあんまりな反応に怒って自分で料理を食べてみた
+;				PRINTFORMW そして、二人で仲良くノックダウンすることになった……
+;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;				PRINTFORMW %CALLNAME:ARG%は慌てて心配そうに%CALLNAME:MASTER%に駆け寄り、ふと自分のつくった料理を食べてみた……
+;				PRINTFORMW そして、二人で仲良くノックダウンすることになった……
+;			ELSE
+;				PRINTFORMW %CALLNAME:ARG%は苦笑いしながら頭を掻いて、薬を取りに行った……
+;			ENDIF
+;		ELSEIF ABL:ARG:90 <= 4 || RAND:30 == 0
+;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
+;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
+;			PRINTFORMW ……！
+;			PRINTFORMW ギリギリセー……いやアウトな味です……
+;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;				PRINTFORMW 顔を青くして押し黙った%CALLNAME:MASTER%に不審な目をむけ、%CALLNAME:ARG%は自分の料理を食べてみた……
+;				PRINTFORMW そして、自分も顔を青くすると逃げていきました……
+;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;				PRINTFORMW %CALLNAME:MASTER%はにこにこしている%CALLNAME:ARG%を見て、覚悟を決めて飲み込んだ……
+;				PRINTFORMW 味を尋ねてくる%CALLNAME:ARG%に、正直に言うべきか嘘も方便でいくか悩んだ瞬間答えを直ぐ言わないとという方向へ思考が傾き後に考えたほうのひとまずおいしいと言いました
+;				PRINTFORMW %CALLNAME:ARG%は嬉しそうに笑って料理を勧めてくる……
+;				PRINTFORMW 更なる決断を求められることになった……
+;			ELSE
+;				PRINTFORMW %CALLNAME:ARG%に味の具合を尋ねられた……
+;				$INPUT_LOOP_1
+;				PRINTL [0]おいしいという
+;				PRINTL [1]おいしくないという
+;				INPUT
+;				IF RESULT == 0
+;					PRINTFORMW %CALLNAME:ARG%は感心して中身が半分減った塩の瓶を眺めている……
+;					PRINTFORMW 納得して部屋を出て行く%CALLNAME:ARG%に訂正の言葉を言う気力も起きず、%CALLNAME:MASTER%は机に突っ伏した……
+;				ELSEIF RESULT == 1
+;					PRINTFORMW %CALLNAME:ARG%は感心して中身が半分減った塩の瓶を眺めている……
+;					PRINTFORMW 納得して部屋を出て行く%CALLNAME:ARG%につっこむ気力も起きず、%CALLNAME:MASTER%は机に突っ伏した……
+;				ELSE
+;					GOTO INPUT_LOOP_1
+;				ENDIF
+;			ENDIF
+;		ELSEIF ABL:ARG:90 <= 9 || RAND:20 == 0
+;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
+;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
+;			IF RAND:2 == 0
+;				PRINTFORMW なかなか悪くない味だ……
+;			ELSE
+;				PRINTFORMW お。これは好きな味のようだ……
+;			ENDIF
+;			PRINTFORMW %CALLNAME:ARG%は味を尋ねてきた……
+;			$INPUT_LOOP_2
+;			PRINTL [0]おいしいという
+;			PRINTL [1]おいしくないという
+;			INPUT
+;			IF RESULT == 0
+;				IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;					PRINTFORMW %CALLNAME:ARG%は当然だという顔をしている
+;					SIF TALENT:ARG:85
+;						PRINTFORMW だが、嬉しさは隠せないようだ……
+;				ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;					PRINTFORMW %CALLNAME:ARG%はよかったと胸を撫で下ろした……
+;					SIF TALENT:ARG:85
+;						PRINTFORMW 次はもっと頑張るとはりきっている
+;				ELSE
+;					PRINTFORMW %CALLNAME:ARG%はちょっと得意げに頷いた
+;					SIF TALENT:ARG:85
+;						PRINTFORMW %CALLNAME:ARG%のおでこにキスをして食堂に戻っていった……
+;				ENDIF
+;			ELSEIF RESULT == 1
+;				PRINTFORMW %CALLNAME:ARG%は感心して中身が半分減った塩の瓶を眺めている……
+;				PRINTFORMW 納得して部屋を出て行く%CALLNAME:ARG%につっこむ気力も起きず、%CALLNAME:MASTER%は机に突っ伏した……
+;			ELSE
+;				GOTO INPUT_LOOP_2
+;			ENDIF
+;		ELSE
+;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
+;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
+;			IF RAND:4 >= 1
+;				PRINTFORMW ……とても美味しい……
+;			ELSE
+;				PRINTFORMW ……好物が増えたかもしれない
+;			ENDIF
+;			PRINTFORMW 思わずうまいと口にした
+;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;				PRINTFORMW %CALLNAME:ARG%は当然だという顔で胸を張った
+;				IF TALENT:ARG:85
+;					PRINTFORMW そして、%CALLNAME:MASTER%が食べ終わるまでにやにやするのを我慢している赤い顔で%CALLNAME:MASTER%を見つめた……
+;				ELSE
+;					PRINTFORMW そして、ふんと鼻を鳴らして台所に戻っていった
+;				ENDIF
+;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;				PRINTFORMW %CALLNAME:ARG%は嬉しそうにはにかんだ……
+;				IF TALENT:ARG:85 && (TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:132)
+;					PRINTFORMW そして赤い顔で抱きついてきた
+;					PRINTFORMW ちょっと食べづらいが抱きつかれたまま食べました
+;				ELSEIF TALENT:ARG:85
+;					PRINTFORMW 持っていたお盆で口元を隠したが、顔が赤いのがわかる……
+;					PRINTFORMW そして嬉しそうに小走りでお代わり用の鍋を取ってくると台所に行きました
+;				ELSE
+;					PRINTFORMW そして照れて台所に戻っていった
+;				ENDIF
+;			ELSE
+;				IF TALENT:ARG:85
+;					PRINTFORMW %CALLNAME:ARG%は嬉しそうに微笑んで%CALLNAME:MASTER%の食事を見つめている
+;					PRINTFORMW 食べ終わって、ごちそうさまと言う%CALLNAME:MASTER%にデザートだといってキスをした……
+;				ELSE
+;					PRINTFORMW %CALLNAME:ARG%はちょっと得意そうに軽く礼を言い、台所に戻っていった
+;				ENDIF
+;			ENDIF
+;		ENDIF
+	;季節ネタ
+	CASE 25
+;		;春、花粉症
+;		IF DAY:2 == 0
+;			PRINTFORMW 春…花粉症の季節だ
+;			;薬毒耐性
+;			IF TALENT:ARG:56
+;				IF RAND:2 == 0
+;					PRINTFORMW くしゃみの止まらない%CALLNAME:MASTER%の様子を、%CALLNAME:ARG%が愉快そうに眺めている
+;				ELSE
+;					PRINTFORMW 目をしょぼしょぼさせた%CALLNAME:MASTER%を見て、%CALLNAME:ARG%がニヤニヤしている
+;				ENDIF
+;				PRINTFORMW 花粉症とは無縁の%CALLNAME:ARG%が恨めしい…
+;			;調合知識
+;			ELSEIF TALENT:ARG:55
+;				IF F > 5
+;					PRINTFORMW %CALLNAME:ARG%の部屋の前には人だかりが出来ている
+;					PRINTFORMW 彼女が調合した特製目薬がお目当てなのだろう
+;				ELSE
+;					GOTO REPLAY0
+;				ENDIF
+;			;それ以外はくしゃみ
+;			ELSE
+;				T = 3
+;				CALL GET_EXISTANCE
+;				B = RAND:5 + 3
+;				REPEAT B
+;					IF RAND:10 == 0
+;						PRINTL 『えっくしっ！』
+;					ELSEIF RAND:9 == 0
+;						PRINTL 『ぷしっ！』
+;					ELSEIF RAND:8 == 0
+;						PRINTL 『くしゅんっ！』
+;					ELSEIF RAND:7 == 0
+;						PRINTL 『は…は…はっくしょいっ！』
+;					ELSEIF RAND:6 == 0
+;						PRINTL 『くしゅんっ！くしゅんっ！』
+;					ELSEIF RAND:5 == 0
+;						PRINTL 『ぃッ、クシュン！』
+;					ELSEIF RAND:4 == 0
+;						PRINTL 『ぷえっくしっ！』
+;					ELSEIF RAND:3 == 0
+;						PRINTL 『ハクション！』
+;					ELSEIF RAND:2 == 0
+;						PRINTL 『はぷちっ！』
+;					ELSE
+;						PRINTL 『へーちょ！』
+;					ENDIF
+;				REND
+;				PRINTFORMW 館内のどこに居ようとも、%CALLNAME:ARG%のくしゃみ音が聞こえてくる……
+;					ENDIF
+;		;夏
+;		ELSEIF DAY:2 == 1
+;			GOTO REPLAY0
+;		;秋
+;		ELSEIF DAY:2 == 2
+;			GOTO REPLAY0
+;		;冬の大雪
+;		ELSEIF DAY:2 == 3
+			PRINTFORMW 昨夜から降り続いた大雪により 外は一面の銀世界だ
+			;丸くなって寝る(猫舌)
+			IF TALENT:ARG:54
+				PRINTFORMW %CALLNAME:ARG%の様子を見に行くと、布団を被り、丸くなって寝ていた
+;				PRINTFORMW 何というか、期待していた通りのリアクションだ……
+			;出不精
+			ELSEIF RAND:7 == 0 && STRCOUNT(LLIST, "/") >= 1
+				PRINTFORMW 少女たちは食堂に集って雑談に花を咲かせている
+;				PRINTFORMW 寒い日に出不精になる点では、妖怪も人間もよく似通っているようだ……
+			;雪合戦
+			ELSEIF RAND:6 == 0 && STRCOUNT(LLIST, "/") >= 1
+;				CALL DAILY_LIFE_A
+				PRINTFORMW 外が騒がしいので庭に出てみると、少女たちによる雪合戦が繰り広げられていた
+;				IF (TALENT:ARG:55 || TALENT:ARG:125)
+;					C = 0
+;					PRINTFORM 奇策を弄する%CALLNAME:ARG%チームと、
+;				ELSEIF (TALENT:ARG:51 || TALENT:ARG:54 || TALENT:ARG:132)
+;					C = 1
+;					PRINTFORM 機動力に定評のある%CALLNAME:ARG%チームと、
+;				ELSEIF (TALENT:ARG:16 || TALENT:ARG:15)
+;					C = 2
+;					PRINTFORM 真っ向勝負の%CALLNAME:ARG%チームと、
+;				ELSEIF (TALENT:ARG:50 || TALENT:ARG:53)
+;					C = 3
+;					PRINTFORM 地の利を最大限に活用した%CALLNAME:ARG%チームと、
+;				ELSE
+;					C = 4
+;					PRINTFORM 基本に忠実な%CALLNAME:ARG%チームと、
+;				ENDIF
+;				IF (TALENT:B:55 || TALENT:B:125)
+;					SIF C == 0
+;						PRINTFORM 同じく
+;					PRINTFORMW 奇策を弄する%CALLNAME:B%チームとの激闘は
+;				ELSEIF (TALENT:B:51 || TALENT:B:54 || TALENT:B:132)
+;					SIF C == 1
+;						PRINTFORM 同じく
+;					PRINTFORMW 機動力に定評のある%CALLNAME:B%チームとの激闘は
+;				ELSEIF (TALENT:B:16 || TALENT:B:15)
+;					SIF C == 2
+;						PRINTFORM 同じく
+;					PRINTFORMW 真っ向勝負の%CALLNAME:B%チームとの激闘は
+;				ELSEIF (TALENT:B:50 || TALENT:B:53)
+;					SIF C == 3
+;						PRINTFORM 同じく
+;					PRINTFORMW 地の利を最大限に活用した%CALLNAME:B%チームとの激闘は
+;				ELSE
+;					SIF C == 4
+;						PRINTFORM 同じく
+;					PRINTFORMW 基本に忠実な%CALLNAME:B%チームとの激闘は
+;				ENDIF
+;				IF RAND:3 == 0
+;					PRINTFORMW 終わってみれば%CALLNAME:ARG%チームの圧勝で幕を閉じた
+;				ELSEIF RAND:2 == 0
+;					PRINTFORMW 奇跡的な逆転劇の末に%CALLNAME:B%チームの辛勝で幕を閉じた
+;				ELSE
+;					PRINTFORMW 大混戦の末に%CALLNAME:ARG%と%CALLNAME:B%が同時に被弾して引き分けとなった
+;				ENDIF
+			;かまくら作り
+			ELSEIF RAND:5 == 0
+				PRINTFORMW 庭に出てみるとかまくらが目に付いた
+;				PRINTFORMW 庭に出てみると不自然な雪山が目に付いた
+;				PRINTFORMW あれは何だろう……。あっ、かまくらだ！
+;				IF F >= 4
+;					CALL DAILY_LIFE_B
+;					PRINTFORMW 中を覗き込むと、%CALLNAME:ARG%・%CALLNAME:B%そして%CALLNAME:C%が入っていた
+;					PRINTFORMW すし詰め状態だが、とっても楽しそうだ……
+;				ELSEIF F >= 3
+;					CALL DAILY_LIFE_A
+;					PRINTFORMW 中を覗き込むと、小さなかまくらに%CALLNAME:ARG%と%CALLNAME:B%が身を寄せていた
+;					PRINTFORMW すし詰め状態だが、とっても楽しそうだ……
+;				ELSE
+;					PRINTFORMW 中を覗き込むと、%CALLNAME:ARG%がちょこんと座っていた
+;					IF TALENT:ARG:85
+;						PRINTFORMW すし詰め状態だが、とっても楽しそうだ……
+;					ELSE
+;						PRINTFORMW %CALLNAME:MASTER%も入れてもらおうとしたが、断られてしまった
+;						PRINTFORMW どうやら定員オーバーのようだ……
+;					ENDIF
+;				ENDIF
+			;雪に見とれる
+			ELSEIF RAND:4 == 0
+				PRINTFORMW 食堂を通りかかると、%CALLNAME:ARG%が窓際に立ち、外の雪景色を眺めていた
+;				PRINTFORMW %CALLNAME:ARG%は際限なく舞い落ちてくる粉雪を飽きもせず一心に見上げている……
+			;雪かき
+			ELSEIF RAND:3 == 0
+				PRINTFORMW 館は四方を雪の壁に覆われてしまい、さながら陸の孤島と化している
+;				PRINTFORMW せめて玄関から門に至る通路くらいは雪掻きしておいた方が良いだろう
+;				PRINTFORMW %CALLNAME:MASTER%が準備をしていると、スコップを持った%CALLNAME:ARG%が声を掛けてきてくれた
+				PRINTFORMW %CALLNAME:MASTER%が雪かきの準備をしていると、スコップを持った%CALLNAME:ARG%が声を掛けてきてくれた
+			;雪下ろし
+			ELSEIF RAND:2 == 0
+				PRINTFORMW うず高く積もった雪が館の屋根を圧迫している……
+;				PRINTFORMW 軋む天井に怯えながら過ごすよりも雪下ろしをした方が良いだろう
+;				PRINTFORMW %CALLNAME:MASTER%が準備をしていると、スコップを持った%CALLNAME:ARG%が声を掛けてきてくれた
+				PRINTFORMW %CALLNAME:MASTER%が雪下ろしの準備をしていると、スコップを持った%CALLNAME:ARG%が声を掛けてきてくれた
+			;雪だるま
+			ELSE
+				PRINTFORMW 庭に出てみると至る所に雪だるまが作られていた
+;				PRINTFORMW それぞれの雪だるまには角や翼があったりして、色々な妖怪がモチーフになっているらしい
+;				PRINTFORMW 感心しながら一連の作品群を見歩いていると、%CALLNAME:ARG%が雪だるまを作っているところに出くわした
+;				IF TALENT:ARG:85
+;					PRINTFORMW が、%CALLNAME:ARG%は%CALLNAME:MASTER%の姿に気づくと顔を真っ赤にして作りかけの雪だるまを慌てて崩してしまった
+;					PRINTFORMW 誰の雪だるまを作っていたんだろう？
+;				ELSE
+;					PRINTFORMW これは%CALLNAME:ARG%自身をモチーフにした雪だるまなのだろうか
+;					PRINTFORMW 他のどの作品よりも力が込められている気がした……
+;				ENDIF
+			ENDIF
+;		ENDIF
+	;月光浴の時、月見
+	CASE 26
+		PRINTFORMW ふと窓の外から見える屋根のてっぺんに、%CALLNAME:ARG%がいるのが見えた
+		PRINTFORMW 月を見上げて、全身に青白いを浴び、この世のものではないように見える……
+		IF MARK:ARG:3 == 3
+			PRINTFORMW こちらに気付いて、姿を隠した……
+		ELSEIF MARK:ARG:2 >= 2 && RAND:2 == 0
+			PRINTFORMW こちらに気付いて、妖しく神秘的な微笑み浮かべ、また月を見上げた……
+		ELSE
+			PRINTFORMW こちらに気付いて、妖しい笑みを浮かべ、また月を見上げた……
+		ENDIF
+	;臆病・気丈の時、夜間見回り中に遭遇する
+	CASE 27
+		PRINTFORMW ランプ片手に薄暗い館内を見回りしていると、ちょうどトイレから出てきた%CALLNAME:ARG%と鉢合わせになった
+		IF TALENT:ARG:10
+;			IF ABL:ARG:0 >= 7
+;				PRINTFORMW 暗闇に震えてしがみつく%CALLNAME:ARG%を、部屋までエスコートしました……
+;			ELSE
+;				PRINTFORM お化けにでも見えたのだろうか、%CALLNAME:ARG%は声にならない悲鳴を上げると自室の方へ
+				PRINTFORM %CALLNAME:ARG%は声にならない悲鳴を上げると自室の方へ
+				IF GROUPMATCH(NO:ARG, 4, 5, 15, 45, 46, 47, 56, 99)
+					PRINTFORMW 飛び去ってしまった……
+				ELSE
+					PRINTFORMW 走り去ってしまった……
+				ENDIF
+;			ENDIF
+		ELSEIF TALENT:ARG:12
+;			IF TALENT:ARG:85
+;				PRINTFORMW そのまま%CALLNAME:ARG%にも巡回に付き合ってもらいました……
+;			ELSEIF ABL:ARG:0 >= 7
+				PRINTFORMW 暗闇にも全く動じることのない%CALLNAME:ARG%であったが、念のため部屋までエスコートしました……
+;			ELSE
+;				PRINTFORMW %CALLNAME:MASTER%を不審者と勘違いした%CALLNAME:ARG%によって乱暴に取り押さえられ、酷い目に遭いました……
+;			ENDIF
+		ENDIF
+	;サドが、SM調教の練習をしている
+	CASE 28
+		PRINTFORMW %CALLNAME:ARG%の部屋から物音が聞こえる……
+		;縄練習(縄必要)
+		IF RAND:3 == 0 && ITEM:14
+			PRINTFORMW 縄を勝手に持ち出して縛り方の研究をしているらしい
+;			PRINTFORMW 丸めた布団を人間に見立てて 手際よく縛り上げていく……
+;			;異常経験
+;			IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;				PRINTFORMW 亀甲縛りにした布団に馬乗りになり、スパンキングしながら、恍惚の表情を浮かべている……
+;			ELSE
+;				PRINTFORMW あっという間に雁字搦めにされた布団を見下ろしながら、%CALLNAME:ARG%は満足げだ……
+;			ENDIF
+		;アナル責め練習(オナホール必要)
+		ELSEIF RAND:2 == 0 && ITEM:12
+			;アナルバイブを購入済み
+			IF ITEM:3 && RAND:2 == 0
+				PRINTFORMW オナホールを勝手に持ち出してアナル責めの練習をしているらしい
+				PRINTFORMW アナルバイブをペロリと舐めると オナホールに挿しこんだ……
+;				;異常経験
+;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;					PRINTFORMW 緩急をつけながらアナルバイブを抜き差しする%CALLNAME:ARG%の表情は幸せそのものだ……
+;				ELSE
+;					PRINTFORMW 部屋中にいやらしい音を響かせながら 執拗な責めを叩き込んでいる……
+;				ENDIF
+			ELSE
+				PRINTFORMW オナホールを勝手に持ち出してアナル責めの練習をしているらしい
+				PRINTFORMW 中指をペロリと舐めると オナホールに挿しこんだ……
+;				;異常経験
+;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;					PRINTFORMW %CALLNAME:ARG%は、指に吸い付くヒダの感触を楽しんでいるようだ……
+;				ELSE
+;					PRINTFORMW 部屋中にいやらしい音を響かせながら 執拗な責めを叩き込んでいる……
+;				ENDIF
+			ENDIF
+		;鞭練習
+		ELSE
+			;鞭を購入済み
+			IF ITEM:10 && RAND:2 == 0
+				PRINTFORMW 鞭を勝手に持ち出して素振りしているらしい
+;				;異常経験
+;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;					PRINTFORMW 風を切る鞭の音に陶酔した表情を浮かべている……
+;				ELSE
+;					PRINTFORMW 鞭捌きに納得がいかないのか、手首の捻り方を変えつつ何度も鞭を振るっている……
+;				ENDIF
+			ELSE
+				PRINTFORMW 部屋を覗くと %CALLNAME:ARG%が握った拳を何度も何度も振り下ろしている
+				PRINTFORMW どうやら鞭振りのイメージトレーニングをしているらしい……
+;				;異常経験
+;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;					PRINTFORMW 渾身の一振りが出来たようで、陶酔した表情を浮かべている……
+;				ELSE
+;					PRINTFORMW まだまだ研究の余地があるのか、手首の捻り方を変えつつ何度も鞭を振るっている……
+;				ENDIF
+			ENDIF
+		ENDIF
+;		IF MARK:ARG:3 == 3
+;			PRINTFORMW ふと目が合うと、残忍な笑顔を浮かべて手招きしてきた……
+;		ELSEIF TALENT:ARG:85
+;			PRINTFORMW ふと目が合うと、悪戯っ子のように無邪気な笑顔を浮かべて手招きしてきた……
+;		ELSE
+;			PRINTFORMW ふと目が合うと、妖しい笑顔を浮かべて手招きしてきた……
+;		ENDIF
+;		PRINTFORMW 身の危険を感じたので、慌ててその場を立ち去った……
+	;それ以外
+	CASE 29
+		PRINTFORMW %CALLNAME:ARG%はどうしているかと様子を見に行ってみた……
+		PRINTFORMW %CALLNAME:ARG%の部屋の扉が軽く開いている
+		PRINTFORMW ちょっと覗いてみると、%CALLNAME:ARG%が鏡の前で色々ポーズを取っていた
+		SIF TALENT:ARG:114
+			PRINTFORMW といっても映っていないのだが……癖のようなものだろうか？
+;		IF TALENT:ARG:110
+;			PRINTFORMW %CALLNAME:ARG%は自分の豊かな胸を確認するように触り始めた
+;			IF TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:26
+;				PRINTFORMW どうやら自分の胸があまり好きでないらしく、浮かぬ顔をしている
+;			ELSE
+;				PRINTFORMW そして、自分の胸を持ち上げてみている……重そうだ
+;			ENDIF
+;		ELSEIF TALENT:ARG:109
+;			PRINTFORMW %CALLNAME:ARG%は自分の控えめな胸にぺたぺたと手を当てた
+;			SIF TALENT:ARG:100
+;				PRINTFORMW それから、自分のくびれの辺りも確かめるように触る……
+;			PRINTFORMW 色々と考えるところがあるようだ……
+;		ELSE
+;			IF RAND:3 == 0
+;				PRINTFORMW 色々と向きを変えて、確かめているようだ
+;			ELSEIF RAND:2 == 0
+;				PRINTFORMW 二の腕の辺りを気にしているようだ
+;			ELSE
+;				PRINTFORMW 腰の周りを入念にチェックしているようだ
+;			ENDIF
+;		ENDIF
+;		IF MARK:ARG:3 == 3
+;			PRINTFORMW と、%CALLNAME:MASTER%に気がついた%CALLNAME:ARG%が振り返り、つかつかと冷たい表情で歩いてきて、扉を強く閉めた……
+;			PRINTFORMW 肩をすくめてそこを立ち去った……
+;		ELSEIF TALENT:ARG:24 || TALENT:ARG:35
+;			PRINTFORMW と、%CALLNAME:MASTER%に気がついて真っ赤になった%CALLNAME:ARG%が慌てて跳んで来て、扉を閉めた……
+;			PRINTFORMW %CALLNAME:MASTER%は頭を掻いてそこを離れることにした
+;		ELSEIF TALENT:ARG:21 || TALENT:ARG:22
+;			PRINTFORMW %CALLNAME:ARG%が、ふと鏡越しに%CALLNAME:MASTER%をちらりと見た
+;			PRINTFORMW だが気にしないで続けている……
+;		ELSEIF TALENT:ARG:31 || TALENT:ARG:36 || TALENT:ARG:16 || TALENT:ARG:87
+;			PRINTFORMW と、%CALLNAME:MASTER%に気がつくと、%CALLNAME:ARG%は挑発的にポーズを取ってみせた……
+;		ELSEIF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:34
+;			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと、少し怒った様子で扉を閉めた
+;			PRINTFORMW %CALLNAME:MASTER%は頭を掻いてそこを離れることにした
+;		ELSE
+;			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気がつくと、首を傾げて見せた……
+;			PRINTFORMW 適当なことを言って戻りました
+;		ENDIF
+	ENDSELECT
+	RETURN 1
+ENDIF
+
+;複数の登録されたキャラからランダムに1人呼び出す関数
+;この関数は、あらかじめキャラ登録数が3人以上（F >= 3）であることを条件に使う必要がある
+;でなければこの部分を永遠に繰り返す・内部にその条件つけてもよい
+@DAILY_LIFE_A
+$REPLAY1
+;Bに他の一人のキャラ登録番号を入れる
+B = 0
+B = RAND:CHARANUM
+
+;Bが0もしくはBがAと同じならばもう一度選びなおす・別れフラグが立っている時はやり直し
+SIF B == 0 || B == A || CFLAG:B:21 == 1
+	GOTO REPLAY1
+RETURN 1
+
+;複数の登録されたキャラからランダムに2人呼び出す関数
+;この関数は、あらかじめキャラ登録数が4人以上（F >= 4）であることを条件に使う必要がある
+;でなければこの部分を永遠に繰り返す
+@DAILY_LIFE_B
+$REPLAY2
+;Bに他の一人のキャラ登録番号を入れる
+B = 0
+B = RAND:CHARANUM
+
+;Bが0もしくはBがAと同じならばもう一度選びなおす・別れフラグが立っている時はやり直し
+SIF B == 0 || B == A || CFLAG:B:21 == 1
+	GOTO REPLAY2
+$REPLAY3
+C = 0
+C = RAND:CHARANUM
+;Cが0、A、Bと同じならもう一度選びなおす・別れフラグが立っている時はやり直し
+SIF C == 0 || C == A || C == B || CFLAG:C:21 == 1
+	GOTO REPLAY3
+RETURN 1
+
+;キャラの中から特定の素質（今回は貞操観念or保守的）を持ったキャラ1人をピックアップする関数
+;Bにピックアップしたキャラの登録番号を入れる
+;別に変数を用意してTALENT指定に使えば、使いまわしも可能
+;不在であればB == 0を返す
+@DAILY_LIFE_C
+B = 0
+C = 0
+D = 0
+
+;C群の変数をクリアする
+REPEAT 100
+	C:COUNT = 0
+REND
+
+;キャラ登録数が2以下であれば0を返す
+IF CHARANUM <= 2
+	RETURN 1
+ELSE
+	REPEAT CHARANUM
+		;COUNT == 0 はMASTERの分
+		IF COUNT == 0
+			CONTINUE
+		ELSE
+			;別れてるキャラはピックアップしない
+			SIF CFLAG:COUNT:21
+				CONTINUE
+			;登録番号がCOUNTのキャラが保守的もしくは貞操観念を持っていた時 
+			IF TALENT:COUNT:24 || TALENT:COUNT:30
+				;C:Dにキャラ登録番号を保存する
+				C:D = COUNT
+				;Dを1増やす
+				D += 1
+			ENDIF
+		ENDIF
+	REND
+ENDIF
+
+;この時点で変数C群に素質持ちキャラの登録番号が保存されている
+;Dには登録番号を保存した回数が保存されている
+;D == 0であればB == 0を返す・別れフラグが立っている時はやり直し
+$REPLAY4
+IF D == 0
+	RETURN 1
+;その他の時BにC群からランダムで選んだキャラ登録番号を入れる
+ELSE
+	R = RAND:D
+	B = C:R
+ENDIF
+
+;A == B で　D == 1の時、B == 0 を返す
+IF A == B && D == 1
+	B = 0
+	RETURN 1
+;D >= 2でA == B の時、やり直す
+ELSEIF A == B
+	GOTO REPLAY4
+ENDIF
+RETURN 1
+
+;キャラの中から特定の素質（Eに保存されている）を持ったキャラ1人をピックアップする関数
+;E はCALLされた場所で定義されている
+;Bにピックアップしたキャラの登録番号を入れる
+;不在であればB == 0を返す
+@DAILY_LIFE_D
+B = 0
+C = 0
+D = 0
+
+;C群の変数をクリアする
+REPEAT 100
+	C:COUNT = 0
+REND
+
+;キャラ登録数が2以下であれば0を返す
+IF CHARANUM <= 2
+	RETURN 1
+ELSE
+	REPEAT CHARANUM
+		;COUNT == 0 はMASTERの分
+		IF COUNT == 0
+			CONTINUE
+		ELSE
+			;別れてるキャラはピックアップしない
+			SIF CFLAG:COUNT:21
+				CONTINUE
+			;登録番号がCOUNTのキャラが習得遅いを持っていた時 
+			IF TALENT:COUNT:E
+				;C:Dにキャラ登録番号を保存する
+				C:D = COUNT
+				;Dを1増やす
+				D += 1
+			ENDIF
+		ENDIF
+	REND
+ENDIF
+
+;この時点で変数C群に素質持ちキャラの登録番号が保存されている
+;Dには登録番号を保存した回数が保存されている
+;D == 0であればB == 0を返す・別れフラグが立っている時はやり直し
+$REPLAY5
+IF D == 0
+	RETURN 1
+;その他の時BにC群からランダムで選んだキャラ登録番号を入れる
+ELSE
+	R = RAND:D
+	B = C:R
+ENDIF
+
+;A == B で　D == 1の時、B == 0 を返す
+IF A == B && D == 1
+	B = 0
+	RETURN 1
+;D >= 2でA == B の時、やり直す
+ELSEIF A == B
+	GOTO REPLAY5
+ENDIF
+RETURN 1
+
+;キャラの中から特定の素質（今回は臆病or大人しいor幼稚）を持ったキャラ1人をピックアップする関数
+;Bにピックアップしたキャラの登録番号を入れる
+;別に変数を用意してTALENT指定に使えば、使いまわしも可能
+;不在であればB == 0を返す
+@DAILY_LIFE_E
+B = 0
+C = 0
+D = 0
+
+;C群の変数をクリアする
+REPEAT 100
+	C:COUNT = 0
+REND
+
+;キャラ登録数が2以下であれば0を返す
+IF CHARANUM <= 2
+	RETURN 1
+ELSE
+	REPEAT CHARANUM
+		;COUNT == 0 はMASTERの分
+		IF COUNT == 0
+			CONTINUE
+		ELSE
+			;別れてるキャラはピックアップしない
+			SIF CFLAG:COUNT:21
+				CONTINUE
+			;登録番号がCOUNTのキャラが臆病もしくは大人しいもしくは幼稚を持っていた時 
+			IF TALENT:COUNT:10 || TALENT:COUNT:14 || TALENT:COUNT:132
+				;C:Dにキャラ登録番号を保存する
+				C:D = COUNT
+				;Dを1増やす
+				D += 1
+			ENDIF
+		ENDIF
+	REND
+ENDIF
+
+;この時点で変数C群に素質持ちキャラの登録番号が保存されている
+;Dには登録番号を保存した回数が保存されている
+;D == 0であればB == 0を返す・別れフラグが立っている時はやり直し
+$REPLAY6
+IF D == 0
+	RETURN 1
+;その他の時BにC群からランダムで選んだキャラ登録番号を入れる
+ELSE
+	R = RAND:D
+	B = C:R
+ENDIF
+
+;A == B で　D == 1の時、B == 0 を返す
+IF A == B && D == 1
+	B = 0
+	RETURN 1
+;D >= 2でA == B の時、やり直す
+ELSEIF A == B
+	GOTO REPLAY6
+ENDIF
+RETURN 1

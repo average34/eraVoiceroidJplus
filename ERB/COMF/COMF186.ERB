@@ -1,0 +1,322 @@
+﻿@COM_ABLE186
+;排卵誘発剤実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;妊娠機能オンじゃないとダメ
+SIF (FLAG:62 & 1) == 0
+	RETURN 0
+;アイテムを持っていないとダメ
+SIF ITEM:33 == 0
+	RETURN 0
+;触手調教中はダメ
+SIF TEQUIP:90
+	RETURN 0
+;オトコかふたなりが居ないとダメ
+IF ASSI < 1
+	SIF (TALENT:MASTER:121 || TALENT:MASTER:122 || TALENT:121 || TALENT:122 ) == 0
+		RETURN 0
+ELSE
+	SIF (TALENT:MASTER:121 || TALENT:MASTER:122 || TALENT:121 || TALENT:122 || TALENT:ASSI:121 || TALENT:ASSI:122) == 0
+		RETURN 0
+ENDIF
+;キャラ毎の実行判定フラグ初期化(1ビット目からマスター、助手、パートナー)
+J = 0
+
+;パートナーの実行判定
+;すでに使用中なら使えない
+SIF TEQUIP:86
+	J |= 1
+;緊急避妊薬を使っていたら使えない
+SIF TEQUIP:87
+	J |= 1
+;妊娠中なら不可
+SIF TALENT:134
+	J |= 1
+;薬毒耐性だとダメ
+SIF TALENT:56
+	J |= 1
+;オトコだとダメ
+SIF TALENT:122
+	J |= 1
+
+;助手の実行判定
+;助手が居るかチェック
+IF ASSI < 1
+	J |= 2
+ELSE
+	;すでに使用中なら使えない
+	SIF TEQUIP:ASSI:86
+		J |= 2
+	;緊急避妊薬を使っていたら使えない
+	SIF TEQUIP:ASSI:87
+		J |= 2
+	;妊娠中なら不可
+	SIF TALENT:ASSI:134
+		J |= 2
+	;薬毒耐性だとダメ
+	SIF TALENT:ASSI:56
+		J |= 2
+	;オトコだとダメ
+	SIF TALENT:ASSI:122
+		J |= 2
+ENDIF
+;マスターの実行判定
+;すでに使用中なら使えない
+SIF TEQUIP:MASTER:86
+	J |= 4
+;緊急避妊薬を使っていたら使えない
+SIF TEQUIP:MASTER:87
+	J |= 4
+;妊娠中なら不可
+SIF TALENT:MASTER:134
+	J |= 4
+;薬毒耐性だとダメ
+SIF TALENT:MASTER:56
+	J |= 4
+;オトコだとダメ
+SIF TALENT:MASTER:122
+	J |= 4
+
+IF J == 7
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+@COM186
+;排卵誘発剤
+
+PRINTL 排卵誘発剤
+STR:0 = 排卵誘発剤
+
+;実行判定再取得。COMABLE.ERBの判定文をそのまま起用
+;キャラ毎の実行判定フラグ初期化(1ビット目からマスター、助手、パートナー)
+J = 0
+
+;マスターの実行判定
+;すでに使用中なら使えない
+SIF TEQUIP:MASTER:86
+	J |= 1
+;緊急避妊薬を使っていたら使えない
+SIF TEQUIP:MASTER:87
+	J |= 1
+;妊娠中なら不可
+SIF TALENT:MASTER:134
+	J |= 1
+;薬毒耐性だとダメ
+SIF TALENT:MASTER:56
+	J |= 1
+;オトコだとダメ
+SIF TALENT:MASTER:122
+	J |= 1
+
+;助手の実行判定
+;助手が居るかチェック
+IF ASSI < 1
+	J |= 2
+ELSE
+	;すでに使用中なら使えない
+	SIF TEQUIP:ASSI:86
+		J |= 2
+	;緊急避妊薬を使っていたら使えない
+	SIF TEQUIP:ASSI:87
+		J |= 2
+	;妊娠中なら不可
+	SIF TALENT:ASSI:134
+		J |= 2
+	;薬毒耐性だとダメ
+	SIF TALENT:ASSI:56
+		J |= 2
+	;オトコだとダメ
+	SIF TALENT:ASSI:122
+		J |= 2
+ENDIF
+
+;パートナーの実行判定
+;すでに使用中なら使えない
+SIF TEQUIP:86
+	J |= 4
+;緊急避妊薬を使っていたら使えない
+SIF TEQUIP:87
+	J |= 4
+;妊娠中なら不可
+SIF TALENT:134
+	J |= 4
+;薬毒耐性だとダメ
+SIF TALENT:56
+	J |= 4
+;オトコだとダメ
+SIF TALENT:122
+	J |= 4
+
+PRINTFORML 誰に排卵誘発剤を使いますか？(残:{ITEM:33})
+SIF (J & 1) == 0
+	PRINTFORML [0] %CALLNAME:MASTER%
+SIF (J & 2) == 0
+	PRINTFORML [1] %CALLNAME:ASSI%
+SIF (J & 4) == 0
+	PRINTFORML [2] %CALLNAME:TARGET%
+PRINTL [3] やめる
+
+$INPUT_LOOP
+INPUT
+
+IF RESULT == 0 && ((J & 1) == 0)
+	TFLAG:17 = MASTER
+ELSEIF RESULT == 1 && ((J & 2) == 0)
+	TFLAG:17 = ASSI
+ELSEIF RESULT == 2  && ((J & 4) == 0)
+	TFLAG:17 = TARGET
+ELSEIF RESULT == 3
+	RETURN 0
+ELSE
+	GOTO INPUT_LOOP
+ENDIF
+
+CALL TRAIN_MESSAGE_B
+
+ITEM:33 -= 1
+
+IF TFLAG:17 == MASTER
+	TEQUIP:MASTER:86 = 1
+ELSEIF TFLAG:17 == ASSI
+	TEQUIP:ASSI:86 = 1
+ELSEIF TFLAG:17 == TARGET
+	TEQUIP:86 = 1
+	;調合知識があれば消費を抑える
+	D = 0
+	IF TALENT:MASTER:55
+		D = 1
+	ELSEIF ASSI >= 0
+		SIF TALENT:ASSI:55
+			D = 1
+	ENDIF
+
+	IF D
+		LOSEBASE:0 += 45
+		LOSEBASE:1 += 45
+	ELSE
+		LOSEBASE:0 += 100
+		LOSEBASE:1 += 100
+	ENDIF
+
+	A = 0
+	;恋慕、恋人だと情愛追加
+	IF TALENT:85 || TALENT:153
+		SOURCE:3 = 300
+		A = 1
+	ENDIF
+
+	;親愛だと情愛追加
+	IF TALENT:88
+		SOURCE:3 += 700
+		A = 1
+	ENDIF
+
+	;相愛だと情愛追加
+	IF TALENT:89
+		SOURCE:3 += 800
+		A = 1
+	ENDIF
+
+;	IF TALENT:180 || TALENT:181
+;		SOURCE:16 = 2000
+;		A = 1
+;	ENDIF
+
+	;淫乱さんだと欲情
+	IF TALENT:76
+		SOURCE:11 = 1800
+		A = 1
+	ENDIF
+
+	;親密Lv5以上(JはLv99まであるので以上に変更)、既成事実Lv3、反発刻印なし
+	IF A == 0 && ABL:0 >= 5 && MARK:2 == 3 && MARK:3 == 0
+		SOURCE:13 = 1000
+		UP:10 += 100
+		A = 1
+	ENDIF
+
+	IF A == 0
+		SOURCE:15 = 1000
+		B = 400
+		SIF ABL:0 == 0
+			TIMES B , 6.0
+		SIF ABL:0 == 1
+			TIMES B , 5.0
+		SIF ABL:0 == 2
+			TIMES B , 4.0
+		SIF ABL:0 == 3
+			TIMES B , 3.0
+		SIF ABL:0 == 4
+			TIMES B , 2.0
+		SOURCE:15 += B
+		C = 500
+		SIF MARK:3 == 0
+			TIMES C , 4.0
+		SIF MARK:3 == 1
+			TIMES D , 3.0
+		SIF MARK:3 == 2
+			TIMES E , 2.0
+		SOURCE:15 += C
+		UP:10 += 1000
+	ELSE
+		SOURCE:10 = 1500
+	ENDIF
+
+	SIF CFLAG:109 == 0
+		CFLAG:109 = 1
+
+;IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+;	PRINTS EXPNAME:40
+;	PRINTL +1
+;	EXP:40 += 1
+;ENDIF
+ENDIF
+
+RETURN 1
+
+;排卵誘発剤
+@TRAIN_MESSAGE_COM186
+IF TFLAG:17 == MASTER
+	IF ASSIPLAY
+		PRINTFORM %CALLNAME:ASSI%は
+		PRINTFORM %CALLNAME:MASTER%に
+		PRINT 排卵誘発剤を
+		SIF TALENT:ASSI:85
+			PRINT 口移しで
+		PRINTFORMW 飲ませた
+	ELSE
+		PRINTFORMW %CALLNAME:MASTER%は排卵誘発剤を飲んだ
+	ENDIF
+ELSEIF TFLAG:17 == ASSI
+	PRINTFORML %CALLNAME:MASTER%は%CALLNAME:ASSI%に排卵誘発剤を口移しで飲ませた
+	IF TALENT:ASSI:85 || TALENT:ASSI:88 || TALENT:ASSI:89
+		PRINTFORMW %CALLNAME:ASSI%は嬉しそうにしている……
+	ELSE
+		PRINTFORMW %CALLNAME:ASSI%は困惑しているようだ……
+	ENDIF
+ELSE
+	PRINTFORM %CALLNAME:TARGET%に
+	PRINTFORML 排卵誘発剤を飲ませた
+	PRINTFORM 飲ませた薬の中身を告げると、%CALLNAME:TARGET%は
+	PRINT 
+	IF (TALENT:85 || TALENT:88 || TALENT:89) && ASSIPLAY == 0 && (TALENT:MASTER:121 || TALENT:MASTER:122)
+		;【恋慕】、【親愛】、【相愛】の最低でも1つを持ち、ふたなりかオトコのマスターが実行
+		PRINTFORMW %CALLNAME:MASTER%の子供を授かることへの期待からか、甘えるようにすり寄ってきている……
+	ELSEIF TALENT:76
+		;【淫乱】
+		PRINTFORMW 今すぐにでも中出ししてほしいかのようにあそこを指で開いてこちらに見せつけている……
+	ELSEIF  TALENT:152 && MARK:3 == 0
+		;合意かつ反発刻印Lv0
+		PRINTFORMW 苦笑しつつも股を開き、%CALLNAME:PLAYER%の次の行為を待っている……
+	ELSE
+		PRINTFORMW %CALLNAME:PLAYER%を厳しい表情で睨みつけている……
+	ENDIF
+ENDIF
+

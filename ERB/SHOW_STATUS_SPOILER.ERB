@@ -1,0 +1,96 @@
+﻿;============================================================================
+;ネタバレっぽい要素をステータス画面に表示する
+;============================================================================
+
+;============================================================================
+;表示用の汎用関数
+;条件に合致している場合とそうでない場合で色を変える
+;そもそも表示するかどうかのチェックも含めて統合
+;ARGS:0 表示文字列, ARG:0 達成条件, ARG:1 0=通常 1=経験等一度超えると取り返しが付かない物
+;
+;返り値 達成条件を満たしていれば1, それ以外の場合は0
+;表示の時に
+;============================================================================
+@SPOILER_PRINT_FLAG( ARGS:0, ARG:0, ARG:1=0)
+#FUNCTION
+;#LOCALSIZE 10
+
+LOCAL:0 = GETCOLOR()
+LOCAL:1 = 0xFFFFFF
+LOCAL:2 = 0x444444
+LOCAL:3 = 0xFFFF00
+LOCAL:4 = 0x440000
+
+;達成条件によって色を変える
+IF ARG:0
+	;達成
+	SETCOLOR LOCAL:(ARG:1 * 2 + 1)
+	LOCAL:9 = 1
+ELSE
+	;未達成
+	SETCOLOR LOCAL:(ARG:1 * 2 + 2)
+	LOCAL:9 = 0
+ENDIF
+PRINTFORM %ARGS:0% 
+SETCOLOR LOCAL:0
+RETURNF LOCAL:9
+
+;============================================================================
+;陥落条件の達成状況表示
+;TARGETに対象キャラクターが設定されている前提
+;異常経験を少なく保つなど、一度超えると元に戻せない高難度条件は色を変えて表示。赤字があると達成不可
+;============================================================================
+@SPOILER_PRINT
+#LOCALSIZE 1
+
+;親愛条件
+IF TALENT:88 == 0
+	LOCAL = 0
+	PRINT 親愛条件： 
+	LOCAL += SPOILER_PRINT_FLAG("反発感情0 ", MARK:3 == 0)
+	LOCAL += SPOILER_PRINT_FLAG("親密15以上 ", ABL:0 >= 15)
+	LOCAL += SPOILER_PRINT_FLAG("奉仕精神15以上 ", ABL:6 >= 15)
+	LOCAL += SPOILER_PRINT_FLAG("恋人 ", TALENT:153)
+	LOCAL += SPOILER_PRINT_FLAG("恋慕 ", TALENT:85)
+	PRINTL
+	PRINT 　　　　　 
+	LOCAL += SPOILER_PRINT_FLAG("好感度10000以上 ", CFLAG:2 >= 10000)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より増やしてない ", (EXP:50 - CFLAG:22) <= 0, 1)
+	IF LOCAL >= 7
+		CALLF SPOILER_PRINT_FLAG("(OK)",1)
+	ELSE
+		CALLF SPOILER_PRINT_FLAG(@"({LOCAL}/7)",0)
+	ENDIF
+	PRINTL
+ENDIF
+
+;恋慕条件
+IF TALENT:85 == 0
+	LOCAL = 0
+	PRINT 恋慕条件： 
+	LOCAL += SPOILER_PRINT_FLAG("親密10以上 ", ABL:0 >= 10)
+	LOCAL += SPOILER_PRINT_FLAG("好感度3000以上 ", CFLAG:2 >= 3000)
+	IF LOCAL >= 2
+		CALLF SPOILER_PRINT_FLAG("(OK)",1)
+	ELSE
+		CALLF SPOILER_PRINT_FLAG(@"({LOCAL}/2)",0)
+	ENDIF
+	PRINTL
+ENDIF
+
+;淫乱条件
+IF TALENT:76 == 0
+	LOCAL = 0
+	PRINT 淫乱条件： 
+	LOCAL += SPOILER_PRINT_FLAG("欲望10以上 ", ABL:1 >= 10)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験100以上 ", EXP:50 >= 100)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より10以上増加 ", (EXP:50 - CFLAG:22) >= 10)
+	IF LOCAL >= 3
+		CALLF SPOILER_PRINT_FLAG("(OK)",1)
+	ELSE
+		CALLF SPOILER_PRINT_FLAG(@"({LOCAL}/3)",0)
+	ENDIF
+	PRINTL
+ENDIF
+DRAWLINE
+RETURN

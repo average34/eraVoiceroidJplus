@@ -1,0 +1,157 @@
+﻿;吸血鬼化チェック
+@EVENTCHECK_V
+IF FLAG:62 & 2
+	CALL TURN_TO_VAMPIRE
+ENDIF
+
+;吸血鬼化処理
+;妊娠みたいにCFLAG使った方が楽だったかも
+@TURN_TO_VAMPIRE
+SIF TARGET < 0
+	RETURN 0
+
+IF TALENT:114 == 0
+	;マスターが吸血
+	IF TFLAG:65 & 1
+		T = TARGET
+		V = MASTER
+		CALL EXP57_CHECK
+	;助手が吸血
+	ELSEIF TFLAG:65 & 2
+		T = TARGET
+		V = ASSI
+		CALL EXP57_CHECK
+	ENDIF
+ENDIF
+
+;マスターが吸血させる
+IF TFLAG:65 & 4
+	IF TALENT:MASTER:114 == 0
+		T = MASTER
+		V = TARGET
+		CALL EXP57_CHECK
+	ENDIF
+ENDIF
+
+;助手が吸血させる
+IF TFLAG:65 & 8
+	IF TALENT:ASSI:114 == 0
+		T = ASSI
+		V = TARGET
+		CALL EXP57_CHECK
+	ENDIF
+ENDIF
+
+@EXP57_CHECK
+;被吸血経験で基準値決定
+;吸血者が[眷属]かどうか
+IF TALENT:V:218
+	IF EXP:57 < EXPLV:3
+		A = EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:4
+		A = 20 + EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:5
+		A = 50 + EXP:T:57
+	ELSE
+		A = 300
+	ENDIF
+ELSE
+	IF EXP:57 < EXPLV:1
+		A = EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:2
+		A = 20 + EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:3
+		A = 50 + EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:4
+		A = 100 + EXP:T:57
+	ELSEIF EXP:T:57 < EXPLV:5
+		A = 200 + EXP:T:57
+	ELSE
+		A = 500 + EXP:T:57
+	ENDIF
+ENDIF
+
+;A/10%で吸血鬼化
+IF RAND:998 < A
+	;主人が吸血鬼化
+	IF T == MASTER
+		PRINTFORMW なんだか体に違和感がある…
+		PRINTFORML どうやら%CALLNAME:V%に血を吸われたせいで吸血鬼になってしまったようだ…
+		PRINTFORMW %NAME:T%は[%TALENTNAME:114%]を得た
+		TALENT:T:114 = 1
+		TALENT:T:218 = 1
+		;種族変更
+		CFLAG:T:14 = 11
+		
+		PRINTFORMW %CALLNAME:V%に吸血鬼になった事を伝えた
+		IF TALENT:V:85
+			PRINTFORMW %CALLNAME:V%は申し訳なさそうな顔をしながらも、どこか嬉しそうだ
+		ELSEIF MARK:V:3 >= 2
+			PRINTFORMW しかし、%CALLNAME:V%は興味なさそうだ…
+		ELSE
+			PRINTFORMW %CALLNAME:V%は申し訳なさそうにしている
+		ENDIF
+		
+		;口上はT(吸血鬼化した人)とV(させた人)で頑張ってもらう
+		TFLAG:13 = 81
+		CALL SELF_KOJO
+	;ターゲットか助手が吸血鬼化
+	ELSE
+		PRINTFORMW %CALLNAME:T%の様子ががおかしい…
+		PRINTFORML どうやら%CALLNAME:V%に血を吸われたせいで吸血鬼になってしまったようだ…
+		PRINTFORMW %NAME:T%は[%TALENTNAME:114%]を得た
+		TALENT:T:114 = 1
+		TALENT:T:218 = 1
+		;種族変更
+		CFLAG:T:14 = 11
+		
+		;恋慕付きで主人が吸血鬼
+		;もっと詳しく分けようかと思ったけど、収集付かなくなってきたので(ry
+		IF TALENT:T:85 && TALENT:MASTER:114
+			PRINTFORMW %CALLNAME:T%は困惑しながらも、%CALLNAME:MASTER%と同じ
+			
+			;ぱんくしょんの関数を利用して人間かどうかを取得
+			;作者の方ありがとうございます
+			;ぱんくしょん更新で@LOSTNAMEが無くなったため分岐の条件を変更
+			;相愛
+			IF TALENT:T:89 && TALENT:T:128 == 0
+				PRINTFORMW 時間を生きられる事に深い喜びを感じているようだ
+			ELSE
+				PRINTFORMW 吸血鬼になれたことを喜んでいるようだ
+			ENDIF
+		;反発感情Lv2以上なら壊れる
+		ELSEIF MARK:T:3 >= 2
+			PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
+			PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
+			CALL N_TALENT_K
+		;恋慕が無ければ反発感情LV3
+		ELSE
+			PRINTFORMW %CALLNAME:T%は吸血鬼にされた事に憤りを感じているようだ…
+			IF MARK:T:4 <= 2
+				MARK:T:3 = 3
+				MARK:T:4 = 3
+				TFLAG:21 = 3
+				PRINTL 反発感情LV3を取得
+				;感情乏しいの場合は反発感情による従順ダウンはなし
+				IF ABL:T:0 > 0 && ABL:T:0 <= 6 && TALENT:T:22 == 0
+					ABL:T:0 -= 4
+					SIF ABL:T:0 < 0
+						ABL:T:0 = 0
+					PRINTFORML そして親密がLV{ABL:T:0}に下がった
+				ELSEIF ABL:T:0 > 0 && ABL:T:0 <= 9 && TALENT:T:22 == 0
+					ABL:T:0 -= 2
+					SIF ABL:T:0 < 0
+						ABL:T:0 = 0
+					PRINTFORML そして親密がLV{ABL:T:0}に下がった
+				ENDIF
+			ENDIF
+		ENDIF
+		;口上はT(吸血鬼化した人)とV(させた人)で頑張ってもらう
+		TFLAG:13 = 81
+		CALL SELF_KOJO
+		
+		;反発感情を得ていれば口上呼び出し
+		SIF TFLAG:21 == 3
+			CALL KOJO_MESSAGE_MARKCNG
+	ENDIF
+ENDIF

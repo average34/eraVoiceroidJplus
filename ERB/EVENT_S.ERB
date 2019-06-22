@@ -1,0 +1,1006 @@
+﻿;追加処理及びサブイベント
+
+;-------------------------------------------------
+;絶頂時の追加処理
+;-------------------------------------------------
+@ECST_CHECK
+TFLAG:29 = C + V + A + B + M
+
+;-------------------------------------------------
+;主人による調教の経験値
+;-------------------------------------------------
+@MASTER_FLAG_CHECK
+;絶頂
+TFLAG:29 += TFLAG:10 + TFLAG:11
+Q = 0
+SIF NOWEX:0 > 0
+	Q += 1
+SIF NOWEX:1 > 0
+	Q += 1
+SIF NOWEX:2 > 0
+	Q += 1
+SIF NOWEX:3 > 0
+	Q += 1
+SIF NOWEX:6 > 0
+	Q += 1
+SIF TFLAG:10 > 0
+	Q += 1
+SIF TFLAG:11 > 0
+	Q += 1
+TFLAG:30 += TFLAG:29 * Q
+
+;射精
+REPEAT 5
+	SIF TFLAG:COUNT > 0 && EXP:20 >= EXPLV:3
+		TFLAG:30 += TFLAG:COUNT
+REND
+SIF TFLAG:9 > 0 && EXP:20 >= EXPLV:3
+	TFLAG:30 += TFLAG:9
+
+;主人と対象の能力を計算
+IF ASSIPLAY == 0 && TEQUIP:90 == 0
+	;ABL:従順をみる
+	IF ABL:0 == 0
+		R = 0
+	ELSEIF ABL:0 <= 3
+		R = 1
+	ELSEIF ABL:0 <= 7
+		R = 2
+	ELSEIF ABL:0 <= 10
+		R = 3
+	ELSEIF ABL:0 <= 15
+		R = 4
+	ELSE
+		R = 5
+	ENDIF
+
+	;素質による増減
+	;反抗的
+	SIF TALENT:11
+		R -= 1
+	;素直
+	SIF TALENT:13
+		R += 1
+	;自制心
+	SIF TALENT:20
+		R -= 1
+	;無関心
+	SIF TALENT:21
+		R -= 1
+	;感情乏しい
+	SIF TALENT:22
+		R -= 1
+	;抵抗
+	SIF TALENT:34
+		R -= 1
+	;献身的
+	SIF TALENT:63
+		R += 1
+	;快感に素直
+	SIF TALENT:70
+		R += 1
+	;快感の否定
+	SIF TALENT:71
+		R -= 1
+	;男嫌い
+	SIF TALENT:82 && TALENT:MASTER:122
+		R -= 1
+	;恋慕
+	SIF TALENT:85
+		R += 2
+	;親愛
+	SIF TALENT:88
+		R += 3
+	;恋人
+	SIF TALENT:153
+		R += 2
+	;服従
+	SIF TALENT:180
+		R += 2
+	;烙印
+	SIF TALENT:181
+		R += 1
+	;隷属
+	SIF TALENT:182
+		R += 3
+	;妄信
+	SIF TALENT:86
+		R += 2
+	;主人の魅惑
+	SIF TALENT:MASTER:91
+		R += 1
+	;主人の謎の魅力
+	SIF TALENT:MASTER:92
+		R += 1
+	;主人の魅力
+	SIF TALENT:MASTER:113
+		R += 1
+	;主人の人気
+	SIF TALENT:MASTER:126
+		R += 1
+	;幼稚
+	;SIF TALENT:132
+		;R += 1
+
+	;結果が0以下の場合
+	SIF R <= 0
+		R = 1
+	;結果が10以上の場合
+	SIF R >= 10
+		R = 10
+
+	IF TFLAG:18 < 0
+		;コマンドに失敗している場合、TFLAG:30をそのまま使う
+		R = TFLAG:30
+	ELSE
+		R += TFLAG:30
+	ENDIF
+
+	;好感度補正
+	IF CFLAG:2 <= 50
+		R += 0
+	ELSEIF CFLAG:2 <= 250
+		R += 1
+	ELSEIF CFLAG:2 <= 800
+		R += 2
+	ELSEIF CFLAG:2 <= 3000
+		R += 3
+	ELSE
+		R += 5
+	ENDIF
+
+
+	;相性による修正
+	IF RELATION:(NO:MASTER) != 0
+		R *= RELATION:(NO:MASTER)
+		R /= 100
+	ENDIF
+
+	;パートナー補正
+	SIF TALENT:150
+		TIMES R , 1.20
+
+	;霊夢様補正
+	SIF TALENT:201
+		TIMES R , 0.20
+
+	;特殊能力(好感度ボーナス)補正
+	IF R > 0
+		R += ABL:MASTER:81
+	ENDIF
+
+	;「何もしない」は好感度上昇量が一律で+0～3 (見つめあう　はこれの影響を受けない）
+	IF SELECTCOM == 7
+		R = RAND:4
+	ENDIF
+
+	CFLAG:2 += R
+PRINTFORML 好感度上昇:{R}
+SIF ((FLAG:23 & 1p26) == 0) && FLAG:2 != 1
+	PRINTFORMW 好感度合計:{CFLAG:2}
+ENDIF
+R = 0
+TFLAG:30 = 0
+
+;-------------------------------------------------
+;主人による調教のボーナス
+;-------------------------------------------------
+@MASTER_SKILL_CHECK
+;主人による調教経験
+IF ASSIPLAY == 0
+	IF CFLAG:2 >= 500
+		TIMES SOURCE:8 , 0.70
+		TIMES SOURCE:14 , 0.70
+
+		TIMES SOURCE:0 , 1.20
+		TIMES SOURCE:1 , 1.20
+		TIMES SOURCE:2 , 1.20
+		TIMES SOURCE:3 , 1.30
+		TIMES SOURCE:17 , 1.20
+		TIMES SOURCE:18 , 1.40
+		TIMES SOURCE:24 , 1.20
+	ELSEIF CFLAG:2 >= 300
+		TIMES SOURCE:8 , 0.80
+		TIMES SOURCE:14 , 0.80
+
+		TIMES SOURCE:0 , 1.10
+		TIMES SOURCE:1 , 1.10
+		TIMES SOURCE:2 , 1.10
+		TIMES SOURCE:3 , 1.20
+		TIMES SOURCE:17 , 1.10
+		TIMES SOURCE:18 , 1.20
+		TIMES SOURCE:24 , 1.10
+	ELSEIF CFLAG:2 >= 100
+		TIMES SOURCE:8 , 0.90
+		TIMES SOURCE:14 , 0.90
+
+		TIMES SOURCE:3 , 1.10
+	ENDIF
+ENDIF
+
+;淫乱
+;主人経験との重複前提で計算
+IF TALENT:76 && ASSIPLAY == 0
+	TIMES SOURCE:0 , 1.80
+	TIMES SOURCE:1 , 1.80
+	TIMES SOURCE:2 , 1.80
+	TIMES SOURCE:17 , 1.80
+	TIMES SOURCE:24 , 1.80
+ENDIF
+
+;恋慕
+;主人経験との重複前提で計算
+IF TALENT:85 && ASSIPLAY == 0
+	TIMES SOURCE:0 , 1.30
+	TIMES SOURCE:1 , 1.30
+	TIMES SOURCE:2 , 1.30
+	TIMES SOURCE:3 , 1.80
+	TIMES SOURCE:17 , 1.30
+	TIMES SOURCE:18 , 1.50
+	TIMES SOURCE:24 , 1.30
+	IF TALENT:0 && TFLAG:20
+		L = 0
+		R = NO:PLAYER
+		SIF (RELATION:R == 0 || RELATION:R >= 100) && SOURCE:6 < 2000 && SOURCE:15 <= 3000
+			L += 1
+		SIF TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0
+			L += 1
+		SIF TEQUIP:43 == 0 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:46 == 0 && TEQUIP:53 == 0 && TEQUIP:54 == 0 && TEQUIP:90 == 0
+			L += 1
+		;親愛時と同じ条件チェックなので表示するのは親愛の方のみ
+		IF L == 3 && FLAG:6 && TALENT:88 == 0
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に処女を捧げられた事に幸福を感じているようだ…
+			TFLAG:150 = 1
+		ENDIF
+		TIMES SOURCE:3 , 2.00
+		;TIMES SOURCE:6 , 0.50
+		TIMES SOURCE:15 , 0.30
+	ENDIF
+ENDIF
+
+;親愛
+;主人経験との重複前提で計算
+IF TALENT:88 && ASSIPLAY == 0
+	TIMES SOURCE:0 , 1.50
+	TIMES SOURCE:1 , 1.50
+	TIMES SOURCE:2 , 1.50
+	TIMES SOURCE:3 , 2.00
+	TIMES SOURCE:4 , 1.50
+	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:7 , 1.20
+	TIMES SOURCE:17 , 1.50
+	TIMES SOURCE:18 , 2.00
+	TIMES SOURCE:24 , 1.50
+	IF TALENT:0 && TFLAG:20
+		L = 0
+		R = NO:PLAYER
+		SIF (RELATION:R == 0 || RELATION:R >= 100) && SOURCE:6 < 2000 && SOURCE:15 <= 3000
+			L += 1
+		SIF TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0
+			L += 1
+		SIF TEQUIP:43 == 0 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:46 == 0 && TEQUIP:53 == 0 && TEQUIP:54 == 0 && TEQUIP:90 == 0
+			L += 1
+		IF L == 3 && FLAG:6
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%が初めての相手である事にこの上ない幸せを感じているようだ…
+			TFLAG:150 = 1
+		ENDIF
+		TIMES SOURCE:3 , 2.00
+		;TIMES SOURCE:6 , 0.50
+		TIMES SOURCE:15 , 0.10
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;恋慕等取得
+;-------------------------------------------------
+@EVENTCHECK_M
+;純愛モードチェック
+CALL EVENTCHECK_J_MODE
+
+;ベタ惚れモードチェック
+CALL EVENTCHECK_TALENT_CHANGE
+
+;反発感情がない場合
+;従順15以上、奉仕15以上、恋人、恋慕、好感度が10000以上、異常経験0（最初からの経験は無視）で親愛
+;従順10以上、好感度が3000以上で恋慕
+;欲望10以上、異常経験100以上で淫乱、ただし、初期状態から最低でも10以上増えていないとダメ(好感度は必要なし)
+IF TARGET >= 0
+	IF MARK:3 == 0
+		IF  ABL:0 >= 15 && ABL:6 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && (EXP:50 - CFLAG:22) <= 0 && TALENT:TARGET:88 == 0
+				PRINTFORMW %CALLNAME:TARGET%のこちらを見る目が変わった…
+				PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に心からの愛情を感じているようだ…
+				TFLAG:13 = 35
+				CALL SELF_KOJO
+				PRINTFORMW %NAME:TARGET%は【親愛】を得た
+				TALENT:88 = 1
+				IF TALENT:76
+					PRINTFORMW 親愛＋淫乱を達成したので、特殊能力を１つ得る事ができます
+					CALL GET_FEAT
+				ENDIF
+		ENDIF
+		IF ABL:0 >= 10 && CFLAG:2 >= 3000 && TALENT:85 == 0
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			IF TALENT:153
+				PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%への恋心をついに自覚したようだ…
+			ELSE
+				PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%へと恋焦がれるようになった…
+			ENDIF
+			TFLAG:13 = 33
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【恋慕】を得た
+			TALENT:85 = 1
+			;堕とした人数＋１
+			FLAG:30 += 1
+		ENDIF
+		IF ABL:1 >= 10 && EXP:50 >= 100 && (EXP:50 - CFLAG:22) >= 10 && TALENT:76 == 0
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に与えられる快楽に溺れているようだ…
+			TFLAG:13 = 34
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【淫乱】を得た
+			TALENT:76 = 1
+			IF TALENT:88
+				PRINTFORMW 親愛＋淫乱を達成したので、特殊能力を１つ得る事ができます
+				CALL GET_FEAT
+			ENDIF
+			;堕とした人数は増やさない
+		ENDIF
+	ENDIF
+ENDIF
+;堕とした人数が5人以上で、謎の魅力が付く
+IF FLAG:30 >= 5 && TALENT:MASTER:92 == 0
+	PRINTFORMW %NAME:MASTER%は【謎の魅力】を身につけた
+	TALENT:MASTER:92 = 1
+ENDIF
+
+IF TARGET >= 0
+	;被写経験が20以上で、人気が付く
+	IF EXP:92 >= 20 && TALENT:TARGET:126 == 0
+		PRINTFORMW %CALLNAME:TARGET%のビデオが人気を博しているようだ…
+		TFLAG:13 = 39
+		CALL SELF_KOJO
+		PRINTFORMW %CALLNAME:TARGET%は【人気】を得た
+		TALENT:126 = 1
+	ENDIF
+
+	;ほろ酔い値（TFLAG:47）が180以上で、酒豪が付く
+	IF TALENT:217 == 0 && TFLAG:47 >= 180
+		PRINTFORMW %CALLNAME:TARGET%は近所でもトップクラスのお酒飲みとして評判になったようだ…
+		TFLAG:13 = 78
+		CALL SELF_KOJO
+		PRINTFORMW %CALLNAME:TARGET%は【酒豪】を得た
+		TALENT:217 = 1
+	ENDIF
+ENDIF
+
+IF (FLAG:62 & 1)
+	;全体の妊娠判定
+	CALL IN_VAGINA_ALL
+
+	;全体の妊娠時の処理
+	CALL GET_CHILD_ALL
+ENDIF
+
+;吸血鬼化チェック
+IF FLAG:62 & 2
+	CALL TURN_TO_VAMPIRE
+ENDIF
+
+;-------------------------------------------------
+;純愛モード
+;異常経験や反発感情を一度も取得したことがないと恋慕や親愛取得と同時に素質変化
+;浮気したことがない（他に恋人または合意があるキャラがいない）と変化する素質多数。浮気してると一線超えないと快感の否定のみ
+;-------------------------------------------------
+@EVENTCHECK_J_MODE
+;パートナーがいなかったらRETURN
+SIF TARGET < 0
+	RETURN 0
+;コンフィグがOFFならRETURN
+SIF (FLAG:62 & 2048) == 0
+	RETURN 0
+
+;浮気してないかチェック。浮気してなかったらLOCAL:1 = 1
+LOCAL:1 = 1
+FOR LOCAL, 0, CHARANUM
+	SIF LOCAL == MASTER
+		CONTINUE
+	SIF LOCAL == TARGET
+		CONTINUE
+	;恋人or合意
+	SIF TALENT:LOCAL:153 || TALENT:LOCAL:152
+		LOCAL:1 = 0
+NEXT
+IF (MARK:4 == 0 && (EXP:50 - CFLAG:22) <= 0)
+	IF (ABL:0 >= 7 || CFLAG:2 >= 2000) && LOCAL:1
+		IF TALENT:32 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に少しずつ心を開き始めたようだ…
+			TFLAG:13 = 41
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【抑圧】を失った
+			TALENT:32 = 0
+		ENDIF
+		IF TALENT:34 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%のことを少しずつ認め始めたようだ…
+			TFLAG:13 = 40
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【抵抗】を失った
+			TALENT:34 = 0
+		ENDIF
+	ENDIF
+	IF ABL:0 >= 10 && CFLAG:2 >= 3000 && LOCAL:1
+		IF TALENT:11 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%との行為を受け入れ始めたようだ…
+			TFLAG:13 = 43
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【反抗的】を失った
+			TALENT:11 = 0
+		ENDIF
+;		IF TALENT:16 == 1
+;			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+;			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の言葉に大人しく頷いている…
+;			TFLAG:13 = 44
+;			CALL SELF_KOJO
+;			PRINTFORMW %NAME:TARGET%は【生意気】を失った
+;			TALENT:16 = 0
+;		ENDIF
+		IF TALENT:21 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%へ微かに微笑んでいる…
+			TFLAG:13 = 42
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【無関心】を失った
+			TALENT:21 = 0
+		ENDIF
+	ENDIF
+	IF ABL:0 >= 15 && ABL:6 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000
+		IF TALENT:82 == 1 && TALENT:MASTER:122 && LOCAL:1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に対する苦手意識が薄れたようだ…
+			TFLAG:13 = 18
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【男嫌い】を失った
+			TALENT:82 = 0
+		ENDIF
+		IF TALENT:27 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の気持ちを受け入れたようだ…
+			TFLAG:13 = 46
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【一線越えない】を失った
+			TALENT:27 = 0
+		ENDIF
+		IF TALENT:71 == 1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に与えられる快楽を受け入れたようだ…
+			TFLAG:13 = 45
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【快感の否定】を失った
+			TALENT:71 = 0
+		ENDIF
+		IF TALENT:13 == 0 && LOCAL:1
+			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の去り際に唇を重ねてきた…
+			TFLAG:13 = 47
+			CALL SELF_KOJO
+			PRINTFORMW %NAME:TARGET%は【素直】を得た
+			TALENT:13 = 1
+		ENDIF
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;ベタ惚れモード
+;恋慕や親愛取得条件の他にパートナーとイチャつく経験を重ねていると素質変化
+;-------------------------------------------------
+@EVENTCHECK_TALENT_CHANGE
+;パートナーがいなかったらRETURN
+SIF TARGET < 0
+	RETURN 0
+;コンフィグがOFFならRETURN
+SIF (FLAG:62 & 8388608) == 0
+	RETURN 0
+;反発感情あったらRETURN
+SIF MARK:3
+	RETURN 0
+
+;親密7以上または好感度2000以上
+IF (ABL:0 >= 7 || CFLAG:2 >= 2000)
+	IF TALENT:32 == 1
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に少しずつ心を開き始めたようだ…
+		TFLAG:13 = 41
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【抑圧】を失った
+		TALENT:32 = 0
+	ENDIF
+	IF TALENT:34 == 1
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%のことを少しずつ認め始めたようだ…
+		TFLAG:13 = 40
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【抵抗】を失った
+		TALENT:34 = 0
+	ENDIF
+ENDIF
+;親密10以上、奉仕精神6以上、好感度3000以上または恋慕あり、かつ愛情経験50以上
+IF ((ABL:0 >= 10 && ABL:6 >= 6 && CFLAG:2 >= 3000) || TALENT:85) && EXP:23 >= 50
+	IF TALENT:11 == 1
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%との行為を受け入れ始めたようだ…
+		TFLAG:13 = 43
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【反抗的】を失った
+		TALENT:11 = 0
+	ENDIF
+;	IF TALENT:16 == 1
+;		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+;		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の言葉に大人しく頷いている…
+;		TFLAG:13 = 44
+;		CALL SELF_KOJO
+;		PRINTFORMW %NAME:TARGET%は【生意気】を失った
+;		TALENT:16 = 0
+;	ENDIF
+	IF TALENT:21 == 1
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%へ微かに微笑んでいる…
+		TFLAG:13 = 42
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【無関心】を失った
+		TALENT:21 = 0
+	ENDIF
+ENDIF
+;親密15以上かつ奉仕精神15以上かつ恋人&恋慕かつ好感度10000以上かつ愛情経験500以上
+IF ABL:0 >= 15 && ABL:6 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && EXP:23 >= 500
+	IF TALENT:82 == 1 && TALENT:MASTER:122
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に対する苦手意識が薄れたようだ…
+		TFLAG:13 = 18
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【男嫌い】を失った
+		TALENT:82 = 0
+	ENDIF
+	IF TALENT:13 == 0
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の去り際に唇を重ねてきた…
+		TFLAG:13 = 47
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【素直】を得た
+		TALENT:13 = 1
+	ENDIF
+ENDIF
+
+;Ｍ感覚関係
+;Ｍ感覚8以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
+IF TALENT:597 == 0 && ABL:17 >= 8 && EXP:96 >= 300 && EX:6 >= 50
+	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+	IF TALENT:85 == 1 || TALENT:76 == 1
+		PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にキスして欲しいとねだってきた…
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%の唇は%CALLNAME:MASTER%によって開発され、敏感になってしまったようだ…
+	ENDIF
+	TFLAG:13 = 66
+	CALL SELF_KOJO
+	PRINTFORMW %NAME:TARGET%は【Ｍ敏感】を得た
+	;念のためＭ鈍感消去
+	TALENT:596 = 0
+	TALENT:597 = 1
+;親密10以上、奉仕精神10以上、Ｍ感覚8以上、奉仕快楽経験250以上、愛情経験100以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
+ELSEIF TALENT:589 == 0 && ABL:0 >= 10 && ABL:6 >= 10 && ABL:17 >= 8 && EXP:21 >= 250 && EXP:23 >= 100 && EXP:96 >= 300 && EX:6 >= 50
+	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+	IF TALENT:85 == 1 || TALENT:76 == 1
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%を抱き寄せて熱いキスを交わし始めた…
+	ELSE
+		PRINTFORML %CALLNAME:TARGET%は一瞬ためらう様な仕草をした後、突如%CALLNAME:MASTER%を押し倒し、これまでに無いような濃密なキスを始めた…
+	ENDIF
+	TFLAG:13 = 67
+	CALL SELF_KOJO
+	PRINTFORMW %NAME:TARGET%は【蕩唇】を得た
+	TALENT:589 = 1
+ENDIF
+
+;-------------------------------------------------
+;[キス魔]等部位特化素質、[サド][マゾ]取得
+;-------------------------------------------------
+@AFTER_TALENT_CHECK
+;地の文の整合性を取るために@EVENTCHECK_Mから@SELF_CHECKに移動
+;[キス魔]等部位特化素質は条件を満たせば複数習得可能
+;必要欲望レベル：10,11,14,19,26,35,46,59,74,91
+A = 1
+SIF TALENT:74
+	A += 1
+SIF TALENT:75
+	A += 1
+SIF TALENT:77
+	A += 1
+SIF TALENT:78
+	A += 1
+SIF TALENT:79
+	A += 1
+SIF TALENT:155
+	A += 1
+A = A * A - 2 * A + 11
+;地の文の整合性のために[サド]と[キス魔]～は同時に起こさない
+;[サド]：欲望10以上技巧10以上サドっ気6以上、優越が20万以上、主導権を相手に渡してスパンキング/鞭/針を主人に対して三回以上実行
+IF ABL:1 >= 10 && ABL:2 >= 10 && ABL:15 >= 6 && TFLAG:61 >= 3 && PALAM:17 >= 200000 && TALENT:83 == 0 && FLAG:62 & 8
+	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+	PRINTFORML %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を押し倒し、嗜虐的な笑みを浮かべ%CALLNAME:MASTER%を見下ろしている…
+	PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に痛めつけることに快感を得るようになったようだ…
+	TFLAG:13 = 90
+	CALL SELF_KOJO
+	PRINTFORMW %CALLNAME:TARGET%は【サド】を得た
+	TALENT:83 = 1
+	;[サド]にした回数を増やす
+	CFLAG:MASTER:26 += 1
+	;5人堕とすと何かに目覚める
+	IF CFLAG:MASTER:26 >= 5 && TALENT:MASTER:79 == 0
+		PRINTFORMW %CALLNAME:MASTER%は何かに目覚めた
+		;主人の素質取得だけど、口上を呼んでみる
+		;全力で罵倒してやってくれ
+		TFLAG:13 = 91
+		CALL SELF_KOJO
+		PRINTFORMW %CALLNAME:MASTER%は【マゾ】を得た
+		TALENT:MASTER:79 = 1
+	ENDIF
+ELSEIF ABL:1 >= A
+	;親密15以上技巧10以上キス経験500以上ならばキス魔
+	IF TALENT:155 == 0 && ABL:0 >= 15 && ABL:2 >= 10 && EXP:96 >= 500
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		PRINTFORMW %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を抱き寄せ、幾度も口付けを繰り返している…
+		TFLAG:13 = 69
+		CALL SELF_KOJO
+		PRINTFORMW %CALLNAME:TARGET%は【キス魔】を得た
+		TALENT:155 = 1
+	;Ａ感覚4以上、Ａ経験150以上、Ａ快楽経験300以上、今回調教中にA絶頂30回以上で尻穴狂い
+	ELSEIF TALENT:77 == 0 && ABL:5 >= 4 && EXP:1 >= 150 && EXP:32 >= 300 && EX:2 >= 30
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		IF TALENT:85 == 1 || TALENT:76 == 1
+			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にお尻をいじめて欲しいと懇願してきた…
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%は自らのお尻を慰めながら%CALLNAME:MASTER%に物欲しげな視線を送っている…
+		ENDIF
+		TFLAG:13 = 37
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【尻穴狂い】を得た
+		TALENT:77 = 1
+	;Ｂ感覚8以上、自慰中毒・露出癖4以上、今回調教中にＢ絶頂50回以上で淫乳
+	ELSEIF TALENT:78 == 0 && ABL:14 >= 8 && ABL:7 >= 4 && ABL:10 >= 4 && EX:3 >= 50
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		IF TALENT:85 == 1 || TALENT:76 == 1
+			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に胸を弄って欲しいとねだってきた…
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%の胸は%CALLNAME:MASTER%によって開発され、敏感になってしまったようだ…
+		ENDIF
+		TFLAG:13 = 38
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【淫乳】を得た
+		TALENT:78 = 1
+	;Ｃ感覚8以上、自慰中毒・露出癖4以上、今回調教中にＣ絶頂50回以上で淫核
+	ELSEIF TALENT:75 == 0 && ABL:3 >= 8 && ABL:7 >= 4 && ABL:10 >= 4 && EX:0 >= 50
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		IF TALENT:85 == 1 || TALENT:76 == 1
+			PRINTFORM %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に
+			IF TALENT:121
+				PRINT ペニス
+			ELSE
+				PRINT クリトリス
+			ENDIF
+			PRINTL の疼きを鎮めて欲しいとせがんできた…
+		ELSE
+			PRINTFORM %CALLNAME:TARGET%は%CALLNAME:MASTER%のほうをじっと見ながら、手で自分の
+			IF TALENT:121
+				PRINT 陰茎
+			ELSE
+				PRINT 陰豆
+			ENDIF
+			PRINTL をこねくり回している…
+		ENDIF
+		TFLAG:13 = 27
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【淫核】を得た
+		TALENT:75 = 1
+	;Ｖ感覚8以上、Ｖ経験300以上、主人がオトコかふたなり、今回調教中にＶ絶頂50回以上で淫壷
+	ELSEIF TALENT:74 == 0 && ABL:4 >= 8 && EXP:0 >= 300 && TALENT:122 == 0 && (TALENT:MASTER:121 || TALENT:MASTER:122) && EX:1 >= 50
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		IF TALENT:85 == 1 || TALENT:76 == 1
+			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に子宮の渇きを癒してほしいと縋りついてきた…
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%の蜜壷は開発し尽くされ、すっかり%CALLNAME:MASTER%のモノに順応してしまったようだ…
+		ENDIF
+		TFLAG:13 = 26
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【淫壷】を得た
+		TALENT:74 = 1
+	;マゾっ気と露出癖が共に6以上、苦痛依存3、緊縛経験と苦痛快楽経験が両方とも150以上、異常経験が100以上、今回調教中にPALAM:苦痛が30000以上でマゾ
+	ELSEIF TALENT:79 == 0 && ABL:7 >= 6 && ABL:8 >= 6 && EXP:30 >= 150 && EXP:50 >= 100 && EXP:51 >= 150 && MARK:0 == 3 && PALAM:9 >= 30000
+		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
+		IF TALENT:85 == 1 || TALENT:76 == 1
+			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にもっと激しく責め立てて欲しいとおねだりしてきた…
+		ELSE
+			PRINTFORML %CALLNAME:TARGET%の身体は%CALLNAME:MASTER%に痛めつけられることに快感を得るようになったようだ…
+		ENDIF
+		TFLAG:13 = 68
+		CALL SELF_KOJO
+		PRINTFORMW %NAME:TARGET%は【マゾ】を得た
+		TALENT:79 = 1
+	ENDIF
+ENDIF
+
+;-------------------------------------------------
+;派生コマンド実行判定
+;-------------------------------------------------
+@COMABLE_3P
+;派生コマンドなので実際には意味はないが、念のため
+;処女で、従順4以下・レズっ気4以下のASSIの場合3Pはできない（サドならＯＫ）
+IF EXP:0 == 0
+	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+		RETURN 0
+;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合3Pはできない（サドならＯＫ）
+ELSEIF PALAM:3 < PALAMLV:2
+	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+		RETURN 0
+ENDIF
+A = 0
+;MASTERがオトコ、半人半妖、ふたなり
+SIF TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122
+	A += 1
+;ASSIがオトコ、半人半妖、ふたなり
+SIF TALENT:ASSI:119 || TALENT:ASSI:121 || TALENT:ASSI:122
+	A += 1
+;ペニスバンドとあわせて二本ないとだめ
+SIF A + ITEM:PBAND < 2
+	RETURN 0
+RETURN 1
+
+@COMABLE_66
+;主人が【魅惑】か【謎の魅力】じゃないとダメ
+SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
+	RETURN 0
+RETURN 1
+
+@COMABLE_69
+;欲望3以下・レズっ気3以下のASSIの場合シックスナインはできない（小悪魔、相性良好ならＯＫ）
+R = NO:PLAYER
+IF ASSIPLAY
+	SIF (ABL:ASSI:1 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:87 == 0 && RELATION:R < 150
+		RETURN 0
+ELSE
+;調教者が助手でないなら従順3以上、奉仕精神3以上必要
+	SIF ABL:0 < 3 || ABL:6 < 3
+		RETURN 0
+ENDIF
+RETURN 1
+
+;-------------------------------------------------
+;PCを選択式にしてみる
+;-------------------------------------------------
+@START_CHARA_SELECT
+;頁数に使用。0で１ページ目
+TFLAG:100 = 0
+
+CALL START_CHARA_SHOW
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 1
+	;前のページ　0ページ以下にはならないようにする
+	TFLAG:100 -= 1
+	SIF TFLAG:100 <= 0
+		TFLAG:100 = 0
+	CALL START_CHARA_SHOW
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 9
+	;後のページ 最終ページ以上にはならないようにする
+	TFLAG:100 += 1
+	SIF TFLAG:100 >= 5
+		TFLAG:100 = 4
+
+	CALL START_CHARA_SHOW
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 0
+	MASTER = 0
+ELSE
+	C = RESULT - 99
+	D = RESULT + 1000 - 100
+	;キャラがいない＝フラグ値が0なら再入力
+	SIF C < 0 || D > 20000 || FLAG:D == 0
+		GOTO INPUT_LOOP
+	ADDCHARA C
+	DELCHARA 0
+	MASTER = 0
+	FLAG:D = 0
+ENDIF
+
+;汎用キャラだった場合の素質決定
+SIF NO:MASTER == 99
+	CALL CHARA_RANDOM_STATE_M
+
+;最低技巧Lv2　レズっ気Lv3にまで引き上げておく
+IF ABL:MASTER:2 < 2
+	ABL:MASTER:2 = 2
+	PRINTFORML ※EXモード特別仕様※　%NAME:MASTER%の%ABLNAME:2%のレベルが{ABL:MASTER:2}になりました
+ENDIF
+IF ABL:MASTER:9 < 3 && TALENT:MASTER:122 == 0
+	ABL:MASTER:9 = 3
+	PRINTFORML ※EXモード特別仕様※　%NAME:MASTER%の%ABLNAME:9%のレベルが{ABL:MASTER:9}になりました
+ENDIF
+PRINTFORMW プレイヤーを「%NAME:MASTER%」に設定します
+
+RETURN 1
+
+@START_CHARA_SHOW
+DRAWLINE
+PRINTL ★★プレイヤーを変更できます★★
+PRINTL ★★キャラを選択してください★★  ( )内表記は　(戦闘素質/浪費癖 性格)
+
+CALL PRINT_CHARA_LIST
+
+DRAWLINE
+PRINT 　page
+PRINTV TFLAG:100
+;0ページ目は表示しない
+IF TFLAG:100
+	PRINT 　[1]前のページ
+ELSE
+	PRINT                
+ENDIF
+PRINTC [0]変更しない
+;1ページまでしかない
+SIF TFLAG:100 < 1
+	PRINTC [9]後のページ
+PRINTL 
+
+;-------------------------------------------------
+;パートナー選択
+;-------------------------------------------------
+@START_PARTNER_SELECT
+TFLAG:100 = 0
+
+CALL START_PARTNER_SHOW
+
+$INPUT_LOOP
+INPUT
+IF RESULT == 1
+	;前のページ　0ページ以下にはならないようにする
+	TFLAG:100 -= 1
+	SIF TFLAG:100 <= 0
+		TFLAG:100 = 0
+	CALL START_PARTNER_SHOW
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 9
+	;後のページ 最終ページ以上にはならないようにする
+	TFLAG:100 += 1
+	SIF TFLAG:100 >= 2
+		TFLAG:100 = 1
+
+	CALL START_PARTNER_SHOW
+	GOTO INPUT_LOOP
+ELSEIF RESULT == 0
+	GOTO INPUT_LOOP
+ELSE
+	C = RESULT - 99
+	D = RESULT + 1000 - 100
+	;キャラがいない＝フラグ値が0なら再入力
+	SIF C < 0 || D > 20000 || FLAG:D == 0
+		GOTO INPUT_LOOP
+	ADDCHARA C
+	TARGET = 1
+	FLAG:D = 0
+	;[パートナー]付加 
+	TALENT:150 = 1
+	
+	A = CHARANUM - 1
+	;キャラ加入時の共通設定
+	CALL NEWCHARA_INIT
+	
+	;初期好感度
+	CFLAG:2 = 30
+
+	PRINTFORMW パートナーを「%NAME:TARGET%」に設定します
+
+	;反抗的なキャラはツンデレにすることが可能
+	IF TALENT:11 && TALENT:13 == 0 && TALENT:18 == 0
+		CALL PLUS_TALENT18
+		RETURN 1
+	ENDIF
+
+	RETURN 1
+ENDIF
+
+@START_PARTNER_SHOW
+DRAWLINE
+PRINTL ★★パートナーを選択してください★★  ( )内表記は　(戦闘素質/浪費癖 性格)
+
+CALL PRINT_CHARA_LIST
+
+DRAWLINE
+PRINT 　page
+PRINTV TFLAG:100
+;0ページ目は表示しない
+IF TFLAG:100
+	PRINT 　[1]前のページ
+ELSE
+	PRINT                
+ENDIF
+PRINTC                
+;1ページまでしかない
+SIF TFLAG:100 < 1
+	PRINTC [9]後のページ
+PRINTL 
+
+
+
+@PRINT_CHARA_LIST
+VARSET LOCAL, 0
+N = 1
+FOR LOCAL, 0, 200
+	IF FLAG:(999+LOCAL) && LOCAL > 120 && TFLAG:100 == 3
+		;番号が飛んでいる特殊なキャラ用の処理
+	ELSE
+		;49キャラずつ表示
+		SIF LOCAL > (49 + (49 * TFLAG:100)) || LOCAL <= (0 + (49 * TFLAG:100))
+			CONTINUE
+	ENDIF
+
+	IF FLAG:(999 + LOCAL)
+		T = LOCAL
+		;口上があるキャラは強調表示
+		TRYCALLFORM KOJO_EXIST, T
+		SIF RESULT == 1
+			SETCOLOR 0xFFFFF
+		T = LOCAL
+		CALL GET_STUFF
+		CALL GET_CHARA_NAME
+		RESULT = 0
+		PRINTFORM [{T+99}] %STR:N,10,LEFT% ({S,2}/{S:1,2} 
+
+		IF S:2 <= -40
+			PRINTFORM 超弱気)
+		ELSEIF S:2 < -10
+			PRINTFORM  弱気 )
+		ELSEIF S:2 <= 10
+			PRINTFORM  普通 )
+		ELSEIF S:2 < 40
+			PRINTFORM  強気 )
+		ELSE
+			PRINTFORM 超強気)
+		ENDIF
+		LOCAL:1 += 1
+		IF LOCAL:1 % 2 == 0
+			PRINTL 
+		ELSE
+			PRINT 　
+		ENDIF
+		RESETCOLOR
+	ENDIF
+NEXT
+SIF LOCAL:1 % 2 != 0
+	PRINTL 
+RETURN 1
+
+;-------------------------------------------------
+;ツンデレ選択
+;-------------------------------------------------
+@PLUS_TALENT18
+PRINTL 
+PRINTFORML %CALLNAME:TARGET%をツンデレにすることが出来ます
+PRINTFORML (親密が高くなると【反抗的】が【素直】に反転します)
+PRINTFORML どうしますか？
+PRINTL 
+PRINTFORML [0] %CALLNAME:TARGET%をツンデレにする
+PRINTFORML [1] %CALLNAME:TARGET%がツンデレなはずが無い／ツンデレとか嫌いですから
+
+$INPUT_LOOP2
+INPUT
+
+IF RESULT != 0 && RESULT != 1
+	PRINTFORML 正しい値を入力してください
+	GOTO INPUT_LOOP2
+ENDIF
+IF RESULT == 0
+	PRINTFORMW %CALLNAME:TARGET%をツンデレにしました
+	TALENT:18 = 1
+ENDIF
+

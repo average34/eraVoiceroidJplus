@@ -1,0 +1,590 @@
+﻿;名前は伝統に従いましたが、中身は全く汎用性がありません。俺用
+;@KOJO_JUN_NAME						TFLAG:600を渡すとイベント名を返す
+;@KOJO_JUN_EARN_MONEY_SELF_NAME		TFLAG:17を渡すと仕事名を返す
+;@KOJO_JUN_EARN_MONEY_TOGETHER_NAME	TFLAG:17を渡すと仕事名を返す
+;@SELF_KOJO_NAME					TFLAG:13を渡すとイベント名を返す
+;@KOJO_EJACULATION_NAME				0～16を渡すとイベント名を返す
+;@KOJO_LUNCH_EXERCISE_NAME			TFLAG:13を渡すとシチュエーションを返す
+;@KOJO_TAIKI_NAME					TFLAG:17を渡すと行動名を返す
+;@KOJO_COM_PRESENT_NAME				TFLAG:17を渡すとプレゼント名を返す
+;@KOJO_COM_DATE_PLACE_NAME			TFLAG:17を渡すと願掛けのシチュエーションを返す
+;@KOJO_COM_LOVINGLY_NAME			TFLAG:17を渡すとアクション名を返す
+;@KOJO_COM_DATE_PLACE_NAME			TEQUIP:デート中を渡すとデート場所名を返す
+;@KOJO_DAY_NAME						DAY:5を渡すと曜日名を返す
+;@KOJO_SEASON_NAME					DAY:2を渡すと季節名を返す
+;@KOJO_WEATHER_NAME					TIME:5を渡すと天候名を返す
+;@FIRSTTIMES						キー文字列、対象キャラ、挙動を指定して既読フラグを操作・判定
+
+
+@KOJO_JUN_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "エキストラモード"
+CASE 28
+	RETURNF "オープニング"
+CASE 38
+	RETURNF "朝になったとき"
+CASE 1
+	RETURNF "ファーストキス"
+CASE 2
+	RETURNF "告白成功"
+CASE 3
+	RETURNF "告白失敗"
+CASE 4
+	RETURNF "服を無理矢理脱がせる"
+CASE 5
+	RETURNF "服を脱がせる"
+CASE 6
+	RETURNF "服脱がせ失敗"
+CASE 7
+	RETURNF "合意で服脱がせる"
+CASE 34
+	RETURNF "ステージ攻略開始"
+CASE 35
+	RETURNF "ステージ攻略中断"
+CASE 8
+	RETURNF "道中攻略成功"
+CASE 9
+	RETURNF "道中攻略失敗"
+CASE 40
+	RETURNF "特殊ボス戦開始"
+CASE 10
+	RETURNF "ボス戦開始"
+CASE 41
+	RETURNF "特殊ボス戦勝利"
+CASE 11
+	RETURNF "ボス戦勝利"
+CASE 12
+	RETURNF "ボス戦敗北"
+CASE 30
+	RETURNF "３ボス後"
+CASE 31
+	RETURNF "６ボス前"
+CASE 32
+	RETURNF "ボスとして出現"
+CASE 33
+	RETURNF "ボスとして倒される"
+CASE 13
+	RETURNF "耐力ゼロ"
+CASE 14
+	RETURNF "全滅"
+CASE 15
+	RETURNF "主人公だけやられる"
+CASE 39
+	RETURNF "パートナーを庇う"
+CASE 16
+	RETURNF "主人公がお金稼ぎ"
+CASE 17
+	RETURNF "２人でお金稼ぎ"
+CASE 18
+	RETURNF "弁当販売"
+CASE 19
+	RETURNF "弁当食べる"
+CASE 20
+	RETURNF "戦闘訓練"
+CASE 21
+	RETURNF "休憩"
+CASE 22
+	RETURNF "パートナー交代"
+CASE 23
+	RETURNF "助手交代"
+CASE 24
+	RETURNF "別れる"
+CASE 36
+	RETURNF "再加入"
+CASE 25
+	RETURNF "デート中に向こうからファーストキス"
+CASE 26
+	RETURNF "デート中に向こうから告白"
+CASE 37
+	RETURNF "デート中に向こうからプレゼント"
+CASE 27
+	RETURNF "我慢できず押し倒される"
+CASE 42
+	RETURNF "アイテムを使用した時"
+CASE 50
+	RETURNF "元気になる薬使用"
+CASE 51
+	RETURNF "薬の材料双使用"
+CASE 52
+	RETURNF "薬の材料消使用"
+CASE 53
+	RETURNF "青いキャンディ使用"
+CASE 54
+	RETURNF "赤いキャンディ使用"
+CASE 55
+	RETURNF "豊胸剤使用"
+CASE 56
+	RETURNF "縮胸剤使用"
+CASE 57
+	RETURNF "抑プロラクチン薬使用"
+CASE 58
+	RETURNF "３環系抗鬱薬使用"
+CASE 59
+	RETURNF "記憶消去薬使用"
+CASE 29
+	RETURNF "エンディング"
+ENDSELECT
+
+@KOJO_JUN_EARN_MONEY_SELF_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 1
+	RETURNF "内職"
+CASE 2
+	RETURNF "街でアルバイト"
+CASE 3
+	RETURNF "畑仕事"
+CASE 4
+	RETURNF "モンスター退治"
+CASE 5
+	RETURNF "ギャンブル"
+ENDSELECT
+
+@KOJO_JUN_EARN_MONEY_TOGETHER_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 1
+	RETURNF "雑貨屋でアルバイト"
+CASE 2
+	RETURNF "内職"
+CASE 3
+	RETURNF "街でアルバイト"
+CASE 4
+	RETURNF "畑仕事"
+CASE 5
+	RETURNF "埋蔵金"
+ENDSELECT
+
+@SELF_KOJO_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 1
+	RETURNF "調教後自慰"
+CASE 2
+	RETURNF "レズプレイ"
+CASE 3
+	RETURNF "朝フェラ"
+CASE 4
+	RETURNF "調教後セックス"
+CASE 5
+	RETURNF "調教後夜這い"
+CASE 76
+	RETURNF "夜這いキス"
+CASE 80
+	RETURNF "夜添い寝"
+CASE 82
+	RETURNF "晩酌"
+CASE 8
+	RETURNF "朝パイズリ"
+CASE 9
+	RETURNF "朝騎乗位"
+CASE 88
+	RETURNF "朝貝合わせ"
+CASE 10
+	RETURNF "朝新妻プレイ"
+CASE 86
+	RETURNF "朝新妻プレイ非セックス"
+CASE 19
+	RETURNF "朝キス"
+CASE 87
+	RETURNF "朝クンニ"
+CASE 88
+	RETURNF "朝正常位させる"
+CASE 89
+	RETURNF "朝パイズリする"
+CASE 83
+	RETURNF "朝添い寝"
+CASE 84
+	RETURNF "起きるまで見てるだけ"
+CASE 85
+	RETURNF "フライパンとお玉で"
+CASE 17
+	RETURNF "野外ライブを開く"
+CASE 99
+	RETURNF "実行判定失敗"
+CASE 100
+	IF TFLAG:17 == 0
+		RETURNF "炬燵使用中に船を漕ぐ"
+	ELSE
+		RETURNF "炬燵使用中に熟睡"
+	ENDIF
+CASE 20
+	RETURNF "妊娠発覚"
+CASE 94
+	RETURNF "妊娠発覚２"
+CASE 21
+	RETURNF "出産"
+CASE 22
+	RETURNF "親離れ"
+CASE 25
+	RETURNF "臨月"
+CASE 23
+	RETURNF "育児室"
+CASE 33
+	RETURNF "【恋慕】取得"
+CASE 34
+	RETURNF "【淫乱】取得"
+CASE 35
+	RETURNF "【親愛】取得"
+CASE 36
+	RETURNF "欲望による【抑圧】【抵抗】喪失"
+CASE 77
+	RETURNF "【ツンデレ】による【反抗的】喪失および【素直】取得"
+CASE 37
+	RETURNF "【尻穴狂い】取得"
+CASE 38
+	RETURNF "【淫乳】取得"
+CASE 26
+	RETURNF "【淫壷】取得"
+CASE 27
+	RETURNF "【淫核】取得"
+CASE 68
+	RETURNF "【マゾ】取得"
+CASE 69
+	RETURNF "【キス魔】取得"
+CASE 90
+	RETURNF "【サド】取得"
+CASE 91
+	RETURNF "主人が【マゾ】取得"
+CASE 39
+	RETURNF "【人気】取得"
+CASE 48
+	RETURNF "【ふたなり】取得"
+CASE 40
+	RETURNF "【抵抗】喪失"
+CASE 41
+	RETURNF "【抑圧】喪失"
+CASE 42
+	RETURNF "【無関心】喪失"
+CASE 43
+	RETURNF "【反抗的】喪失"
+CASE 44
+	RETURNF "【生意気】喪失"
+CASE 18
+	RETURNF "【男嫌い】喪失"
+CASE 45
+	RETURNF "【快感の否定】喪失"
+CASE 46
+	RETURNF "【一線越えない】喪失"
+CASE 47
+	RETURNF "【素直】取得"
+CASE 81
+	RETURNF "【吸血鬼】取得"
+CASE 7
+	RETURNF "エンゲージリング"
+CASE 14
+	RETURNF "赤い首輪"
+CASE 15
+	RETURNF "烙印"
+ENDSELECT
+
+@KOJO_EJACULATION_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "口で射精させた"
+CASE 1
+	RETURNF "手で射精させた"
+CASE 2
+	RETURNF "セックスで射精させた"
+CASE 4
+	RETURNF "キスで射精させた"
+CASE 9
+	RETURNF "素股で射精させた"
+CASE 10
+	RETURNF "射精した"
+CASE 11
+	RETURNF "噴乳した"
+CASE 12
+	RETURNF "逆レイプで射精した"
+CASE 16
+	RETURNF "足コキで射精させた"
+ENDSELECT
+
+@KOJO_LUNCH_EXERCISE_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 1, 4
+	RETURNF "押し倒す"
+CASE 2
+	RETURNF "堪えて立ち去る"
+CASE 3
+	RETURNF "押し倒される"
+ENDSELECT
+
+@KOJO_TAIKI_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "何もさせない"
+CASE 1
+	RETURNF "修行"
+CASE 2
+	RETURNF "リフレッシュ"
+CASE 3
+	RETURNF "自給自足"
+CASE 4
+	RETURNF "連携を確認する"
+CASE 5
+	RETURNF "家事"
+CASE 6
+	RETURNF "モンスター退治"
+CASE 7
+	RETURNF "イチャイチャする"
+CASE 8
+	RETURNF "朝フェラ"
+CASE 9
+	RETURNF "自慰"
+CASE 10
+	RETURNF "レズ行為"
+CASE 11
+	RETURNF "性行為"
+CASE 12
+	RETURNF "宝探し"
+ENDSELECT
+
+@KOJO_COM_PRESENT_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "笑顔"
+CASE 1
+	RETURNF "酒"
+CASE 2
+	RETURNF "日用品"
+CASE 3
+	RETURNF "アクセサリ"
+CASE 4
+	RETURNF "服"
+CASE 5
+	RETURNF "貴重なお酒"
+CASE 6
+	RETURNF "エンゲージリング"
+CASE 7
+	RETURNF "酒樽"
+ENDSELECT
+
+@KOJO_COM_PRAYER_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "初詣"
+CASE 1
+	RETURNF "参拝"
+CASE 2
+	RETURNF "七夕"
+CASE 3
+	RETURNF "流星雨"
+CASE 4
+	RETURNF "流星"
+ENDSELECT
+
+@KOJO_COM_LOVINGLY_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "頭をなでる"
+CASE 1
+	RETURNF "部屋の掃除"
+CASE 2
+	RETURNF "羞恥プレイ中に目を覆う"
+CASE 3
+	RETURNF "鏡の中のパートナーを見つめる"
+CASE 4
+	RETURNF "羞恥プレイ中に後ろから抱き締める"
+CASE 5
+	RETURNF "目を舐める"
+CASE 6
+	RETURNF "へそを舐める"
+CASE 7
+	RETURNF "背筋を舐める"
+CASE 8
+	RETURNF "脇を舐める"
+CASE 9
+	RETURNF "膝枕をしてあげる"
+CASE 10
+	RETURNF "首筋やうなじを舐める"
+CASE 11
+	RETURNF "後ろから抱き締める"
+CASE 12
+	RETURNF "耳元で愛を囁く"
+CASE 13
+	RETURNF "耳攻め"
+CASE 14
+	RETURNF "全身を撫でる"
+CASE 15
+	RETURNF "体を擦り付ける"
+CASE 16
+	RETURNF "くすぐる"
+ENDSELECT
+
+@KOJO_COM_DATE_PLACE_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 1
+	RETURNF "街"
+CASE 2
+	RETURNF "神社"
+CASE 3
+	RETURNF "湖"
+CASE 4
+	RETURNF "花畑"
+CASE 5
+	RETURNF "肝試し"
+CASE 6
+	RETURNF "カラオケ"
+CASE 7
+	RETURNF "温泉"
+CASE 8
+	RETURNF "図書館"
+;CASE 9
+;	RETURNF "白玉楼"
+CASE 10
+	RETURNF "遊園地"
+CASE 11
+	RETURNF "水族館"
+CASE 12
+	RETURNF "動物園"
+CASE 13
+	RETURNF "繁華街"
+CASE 14
+	RETURNF "海"
+CASE 15
+	RETURNF "ゲームセンター"
+CASE 16
+	RETURNF "カジノ"
+CASE 17
+	RETURNF "博物館"
+CASE 18
+	RETURNF "コメディ映画"
+CASE 19
+	RETURNF "アクション映画"
+CASE 20
+	RETURNF "ホラー映画"
+CASE 21
+	RETURNF "恋愛映画"
+CASE 22
+	RETURNF "ポルノ映画"
+CASE 23
+	RETURNF "遊覧船"
+;CASE 24
+;	RETURNF "彼岸"
+;CASE 25
+;	RETURNF "月の都"
+;CASE 26
+;	RETURNF "妖怪の山"
+;CASE 27
+;	RETURNF "有頂天"
+;CASE 28
+;	RETURNF "地霊殿"
+;CASE 29
+;	RETURNF "間欠泉地下施設"
+;CASE 30
+;	RETURNF "魔法の森"
+;CASE 31
+;	RETURNF "命蓮寺"
+;CASE 32
+;	RETURNF "魔界"
+CASE 33
+	RETURNF "牧場"
+CASE 34
+	RETURNF "教会"
+CASE 35
+	RETURNF "スポーツ観戦"
+;キャラ固有デート先(2)
+CASE 36
+	RETURNF SAVESTR:6
+;キャラ固有デート先(1)
+CASE 37
+	RETURNF SAVESTR:7
+CASE 50
+	RETURNF "聖輦船"
+ENDSELECT
+
+@KOJO_DAY_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "月"
+CASE 1
+	RETURNF "火"
+CASE 2
+	RETURNF "水"
+CASE 3
+	RETURNF "木"
+CASE 4
+	RETURNF "金"
+CASE 5
+	RETURNF "土"
+CASE 6
+	RETURNF "日"
+ENDSELECT
+
+@KOJO_SEASON_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "春"
+CASE 1
+	RETURNF "夏"
+CASE 2
+	RETURNF "秋"
+CASE 3
+	RETURNF "冬"
+ENDSELECT
+
+@KOJO_WEATHER_NAME, ARG
+#FUNCTIONS
+SELECTCASE ARG
+CASE 0
+	RETURNF "晴れ"
+CASE 1
+	RETURNF "快晴"
+CASE 2
+	RETURNF "曇り"
+CASE 3
+	RETURNF "雨"
+CASE 4
+	RETURNF "大雨"
+CASE 5
+	RETURNF "雪"
+CASE 6
+	RETURNF "吹雪"
+CASE 7
+	RETURNF "狐の嫁入り"
+CASE 8
+	RETURNF "細氷"
+ENDSELECT
+
+;-------------------------------------------------
+;未読判定関数@FIRSTTIMES
+;式中で使用する関数です。
+;ARGSはイベント・コマンド名、ARGはキャラ登録番号（省略するとTARGET,-1ならMASTER）
+;ARGS:1は既読判定変数に対する挙動。初期値のSETなら未読の場合既読フラグを立ててTRUEを返す
+;GETなら未読でも既読フラグを立てずにTRUEを返す。CLEARなら既読の時既読フラグを折ってFALSEを返す
+;%イベント・コマンド名%/　という文字列をCSTR:既読にぶっこんでいきます
+;純粋に文字列の有無を判定するだけなので、/さえ入らなければどんな文字列でもフラグとして活用できる
+;-------------------------------------------------
+@FIRSTTIMES(ARGS, ARG, ARGS:1="SET")
+#FUNCTION
+;ARG:1の変換
+ARG = ARG ? ARG # TARGET
+ARG = ARG == -1 ? MASTER # ARG
+SIF CSTR:ARG:既読 == ""
+	CSTR:ARG:既読 = /
+
+;既読の場合。ARGS:1が何であれFALSEが返る
+IF STRCOUNT(CSTR:ARG:既読, "/"+ARGS+"/")
+	IF ARGS:1 == "CLEAR"
+		REPLACE CSTR:ARG:既読, "/"+ARGS+"/", "/"
+	ENDIF
+	RETURNF 0
+;上のIFを抜けてきた＝以下未読
+ELSEIF ARGS:1 == "GET"
+	RETURNF 1
+ENDIF
+;初回判定更新
+CSTR:ARG:既読 += ARGS+"/"
+RETURNF 1

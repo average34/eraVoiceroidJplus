@@ -1,0 +1,53 @@
+﻿;/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;
+;自給自足にしてる人たちの金銭感覚が勝手に上がったら便利かなと思った
+;
+;/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;メイン関数
+;-------------------------------------------------
+@EVENTTURNEND
+#LATER
+;コンフィグでオフならリターン
+SIF ((FLAG:62 & 32768) == 0) 
+	RETURN 0
+
+;ターゲットを待避
+Y = TARGET
+
+
+REPEAT CHARANUM
+	;別れ中はスキップ
+	SIF CFLAG:COUNT:21
+		CONTINUE
+	
+	$WHILE_LOOP
+	;金銭感覚を上げられるかチェック
+	TARGET = COUNT
+	CALL ISABLUP89
+	;生活の珠で上げられない
+	SIF I
+		CONTINUE
+	;生活の珠で上げる
+	ABL:89 += 1
+	JUEL:16 -= A
+
+	IF FLAG:62 & 65536
+		PRINTFORM %CALLNAME:TARGET%は
+		PRINTS ABLNAME:89
+		PRINT のレベルが
+		PRINTV ABL:89
+		PRINTL になりました。
+	ENDIF
+
+	;再チェック
+	GOTO WHILE_LOOP
+	I = 0
+REND
+
+;待避したターゲットを戻す
+TARGET = Y
+
+
+

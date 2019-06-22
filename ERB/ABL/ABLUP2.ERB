@@ -1,0 +1,286 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/技巧upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;技巧up本体
+;-------------------------------------------------
+@ABLUP2MAIN
+DRAWLINE
+IF ABL:2 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP2
+
+PRINTFORM [0] - %PALAMNAME:7%の珠×{A}……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+IF B > 0
+	PRINTFORM [1] - %PALAMNAME:15%の珠×{B}……
+
+	IF J == 0
+		PRINT ＯＫ
+	ELSE
+		SIF J & 1
+			PRINT 珠不足 
+		SIF J & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+IF C > 0
+	PRINTFORM [2] - %PALAMNAME:17%の珠×{C}……
+
+	IF K == 0
+		PRINT ＯＫ
+	ELSE
+		SIF K & 1
+			PRINT 珠不足 
+		SIF K & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+PRINTFORM [20] - %PALAMNAME:7%の珠で限界まであげる……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+IF B > 0
+	PRINTFORM [21] - %PALAMNAME:15%の珠で限界まであげる……
+
+	IF J == 0
+		PRINT ＯＫ
+	ELSE
+		SIF J & 1
+			PRINT 珠不足 
+		SIF J & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+IF C > 0
+	PRINTFORM [22] - %PALAMNAME:17%の珠で限界まであげる……
+
+	IF K == 0
+		PRINT ＯＫ
+	ELSE
+		SIF K & 1
+			PRINT 珠不足 
+		SIF K & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+PRINTL [100] - やめる
+
+
+INPUT
+IF (RESULT < 0 || RESULT > 2) && RESULT != 100 && (RESULT < 20 || RESULT > 22)
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF B <= 0 && RESULT == 1
+	RESTART
+ELSEIF J != 0 && RESULT == 1
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF C <= 0 && RESULT == 2
+	RESTART
+ELSEIF K != 0 && RESULT == 2
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF B <= 0 && RESULT == 21
+	RESTART
+ELSEIF J != 0 && RESULT == 21
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF C <= 0 && RESULT == 22
+	RESTART
+ELSEIF K != 0 && RESULT == 22
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:2 += 1
+
+IF RESULT == 0
+	JUEL:7 -= A
+ELSEIF RESULT == 1
+	JUEL:15 -= B
+ELSEIF RESULT == 2
+	JUEL:17 -= C
+ELSEIF RESULT == 20
+	CALL AUT_GIKOU_0
+ELSEIF RESULT == 21
+	CALL AUT_GIKOU_1
+ELSEIF RESULT == 22
+	CALL AUT_GIKOU_2
+ENDIF
+
+PRINTS ABLNAME:2
+PRINT のレベルが
+PRINTV ABL:2
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;技巧が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP2
+IF ABL:2 >= 9999
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+;能力アップに必要なコストを計算
+CALL COSTABLUP2
+
+;条件別にＯＫかダメかを記録する
+I = 0
+J = 0
+K = 0
+;能力アップ可能なら1にする
+Z = 0
+
+
+;習得の珠で上げる
+SIF JUEL:7 < A
+	I |= 1
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF B > 0
+	;好意の珠で上げる
+	SIF JUEL:15 < B
+		J |= 1
+
+	IF J == 0
+		Z = 1
+	ENDIF
+ENDIF
+
+IF C > 0
+	;優越の珠で上げる
+	SIF JUEL:17 < C
+		K |= 1
+
+	IF K == 0
+		Z = 1
+	ENDIF
+ENDIF
+
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;技巧を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP2
+IF ABL:2 == 0
+	A = 1
+	B = 1
+	C = 1
+ELSEIF ABL:2 == 1
+	A = 10
+	B = 10
+	C = 10
+ELSEIF ABL:2 <= 3
+	A = 25
+	B = 50
+	C = 50
+	A = A * (ABL:2 - 1)
+	B = B * (ABL:2 - 1)
+	C = C * (ABL:2 - 1)
+ELSEIF ABL:2 <= 5
+	A = 200
+	B = 500
+	C = 800
+	A = A * (ABL:2 - 3)
+	B = B * (ABL:2 - 3)
+	C = C * (ABL:2 - 3)
+ELSEIF ABL:2 <= 8
+	A = 3000
+	B = 0
+	C = 0
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.10
+	ENDIF
+	A = A * (ABL:2 - 5)
+ELSEIF ABL:2 <= 11
+	A = 20000
+	B = 0
+	C = 0
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+	ENDIF
+	A = A + 7000 * (ABL:2 - 9)
+ELSE
+	A = 20000
+	B = 0
+	C = 0
+	
+	A = A * (ABL:2 - 9)
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+	ENDIF
+ENDIF
+
+;自尊心
+IF TALENT:15
+	TIMES A , 1.50
+	TIMES B , 1.50
+	TIMES C , 1.50
+ENDIF
+
+;キス魔
+IF TALENT:155
+	TIMES A , 0.80
+	TIMES B , 0.80
+	TIMES C , 0.80
+ENDIF
+
+
+

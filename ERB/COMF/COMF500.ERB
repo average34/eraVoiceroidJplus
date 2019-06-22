@@ -1,0 +1,227 @@
+﻿;-------------------------------------------------
+;ACTIVEPHASE(パートナーと過ごす用)
+;-------------------------------------------------
+@REVMODE_ACTIVEPHASE_TRAIN
+;ウフフ中
+IF TFLAG:44
+	;REVMODE
+	CALL REVMODE_ACTIVEPHASE_R
+;非ウフフ中
+ELSE
+	;PASSIVEMODE
+	CALL PASSIVEMODE_ACTIVEPHASE
+ENDIF
+
+;ウフフ中
+IF TFLAG:44 && BASE:0 < 500
+	PRINTFORMW （体力が限界に来ています。%CALLNAME:MASTER%は%CALLNAME:TARGET%にゆっくり休むよう伝えてから、一旦別れました）
+	BEGIN AFTERTRAIN
+;非ウフフ中
+ELSEIF TFLAG:44 == 0 && BASE:1 <= 0
+	IF TIME == 0
+		PRINTFORMW （そろそろ夜になります。%CALLNAME:MASTER%は%CALLNAME:TARGET%と一旦別れました）
+	ELSE
+		PRINTFORMW （そろそろ眠る時間です。%CALLNAME:MASTER%は%CALLNAME:TARGET%と一旦別れました）
+	ENDIF
+	BEGIN AFTERTRAIN
+ENDIF
+
+;-------------------------------------------------
+;ACTIVEPHASE(ウフフ時、REVMODE流用)
+;-------------------------------------------------
+@REVMODE_ACTIVEPHASE_R
+#DIM LINE, 1
+#DIM DYNAMIC REACTION, 1
+REACTION = RESULT
+SELECTCOM = REVMODE_CONVERT_ACTIVECOM(SELECTCOM, REACTION)
+;COM
+CALL REVMODE_ACTIVECOM(SELECTCOM, REACTION)
+
+DRAWLINE
+LINE = LINECOUNT
+;ACTIVEPHASEの地の文
+IF FLAG:6 && !(CFLAG:99 & 2)
+	;個別の地の文
+	TRYCCALLFORM TRAIN_MESSAGE_REVMODE_ACTIVEPHASE_K{NO:TARGET}(SELECTCOM, REACTION)
+	;共通の地の文
+	CATCH
+		CALL TRAIN_MESSAGE_REVMODE_ACTIVEPHASE(SELECTCOM, REACTION)
+	ENDCATCH
+ENDIF
+;ACTIVEPHASEの口上
+SIF FLAG:7
+	TRYCALLFORM KOJO_MESSAGE_REVMODE_ACTIVEPHASE_K{NO:TARGET}(SELECTCOM, REACTION)
+SIF LINECOUNT != LINE
+	DRAWLINE
+
+TFLAG:36 = 0
+
+;REVMODEに固有のSOURCE_CHECK
+CALL REVMODE_SOURCE_CHECK
+
+;-------------------------------------------------
+;REVMODE用コマンド
+;-------------------------------------------------
+;500,キス
+;501,クンニ
+;502,フェラする
+;503,胸愛撫
+;504,消極的にやる
+;505,積極的にやる
+;506,快感に耐える
+;507,快感を受け入れる
+;508,おねだり
+
+;-------------------------------------------------
+;キス(REVMODE)
+;-------------------------------------------------
+@COM_ABLE500
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM500
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 0
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;クンニ(REVMODE)
+;-------------------------------------------------
+@COM_ABLE501
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM501
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 1
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;フェラする(REVMODE)
+;-------------------------------------------------
+@COM_ABLE502
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM502
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 2
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;胸愛撫(REVMODE)
+;-------------------------------------------------
+@COM_ABLE503
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM503
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 3
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;消極的にやる(REVMODE)
+;-------------------------------------------------
+@COM_ABLE504
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM504
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 4
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;積極的にやる(REVMODE)
+;-------------------------------------------------
+@COM_ABLE505
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM505
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 5
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;快感に耐える(REVMODE)
+;-------------------------------------------------
+@COM_ABLE506
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM506
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 6
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;快感を受け入れる(REVMODE)
+;-------------------------------------------------
+@COM_ABLE507
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM507
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 7
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+
+;-------------------------------------------------
+;おねだり(REVMODE)
+;-------------------------------------------------
+@COM_ABLE508
+;実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+RETURN 1
+
+@COM508
+SELECTCOM = REVMODE_CONVERT_PASSIVECOM(PREVCOM, TFLAG:36)
+RESULT = 8
+CALL REVMODE_ACTIVEPHASE_TRAIN
+RETURN 0
+

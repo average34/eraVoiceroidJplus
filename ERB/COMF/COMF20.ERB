@@ -1,0 +1,822 @@
+﻿@COM20
+;正常位
+
+;前回の調教が3Pのとき3Pへ
+TFLAG:42 = 0
+IF PREVCOM == 64
+	CALL COMABLE_3P
+	IF RESULT == 1
+		TFLAG:42 = 1
+		JUMP COM64
+	ENDIF
+;調教者が前回:助手で今回:主人か、前回:主人で今回:助手のとき
+ELSEIF (ASSIPLAY && TFLAG:50 == 0) || (ASSIPLAY == 0 && TFLAG:50)
+	;前回の調教がアナルセックスかフェラチオかイラマチオのとき3Pへ
+	IF PREVCOM == 22 || PREVCOM == 31 || PREVCOM == 80
+		CALL COMABLE_3P
+		SIF RESULT == 1
+			JUMP COM64
+	ENDIF
+ENDIF
+
+PRINTL 正常位
+
+
+;-------------------------------------------------
+;実行できるかの判定
+;-------------------------------------------------
+CALL COM_ORDER_COMMON
+SIF RESULT == 0
+	RETURN 0
+
+;前のプレイが正常位かつ調教者の技巧3以上の場合、挿入Ｇスポ責めまたは挿入子宮口責めへ派生
+;Ｖ感覚が高く欲情しているほど子宮口へ行きやすい
+IF FLAG:61 & 1p2
+	IF PREVCOM == 20 && ABL:PLAYER:2 > 2 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
+		;欲情
+		IF PALAM:5 < PALAMLV:1
+			A = 1
+		ELSEIF PALAM:5 < PALAMLV:2
+			A = 2
+		ELSEIF PALAM:5 < PALAMLV:3
+			A = 3
+		ELSEIF PALAM:5 < PALAMLV:4
+			A = 4
+		ELSEIF PALAM:5 >= PALAMLV:4
+			A = 5
+		ENDIF
+		B = RAND:11
+		A *= B
+		B = RAND:11
+		A += B*ABL:4
+		;正常位だと40以上で子宮口
+		IF A >= 40
+			JUMP COM256
+		ELSE
+			JUMP COM255
+		ENDIF
+	ENDIF
+ENDIF
+
+STR:0 = 正常位
+CALL TRAIN_MESSAGE_B
+
+;V経験を伴うコマンドのフラグ(処女膜再生対応)
+TFLAG:19 = 1
+SIF TALENT:85 && ASSIPLAY == 0 && EXP:0 == 0
+	TFLAG:20 = 1
+
+;-------------------------------------------------
+;射精ゲージチェック
+;-------------------------------------------------
+SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+
+;-------------------------------------------------
+;ソースの計算
+;-------------------------------------------------
+LOSEBASE:0 += 50
+LOSEBASE:1 += 100
+
+SOURCE:12 = 400
+
+;ABL:Ｖ感覚をみる
+IF ABL:4 == 0
+	SOURCE:1 = 40
+	SOURCE:3 = 150
+ELSEIF ABL:4 == 1
+	SOURCE:1 = 150
+	SOURCE:3 = 250
+ELSEIF ABL:4 == 2
+	SOURCE:1 = 400
+	SOURCE:3 = 350
+ELSEIF ABL:4 == 3
+	SOURCE:1 = 1000
+	SOURCE:3 = 500
+ELSEIF ABL:4 == 4
+	SOURCE:1 = 1700
+	SOURCE:3 = 700
+ELSE
+	SOURCE:1 = 950 + (ABL:4 * 250)
+	SOURCE:3 = 250 + (ABL:4 * 150)
+ENDIF
+
+;EXP:Ｖ経験をみる
+IF EXP:0 < EXPLV:1
+	TIMES SOURCE:1 , 0.20
+	SOURCE:6 = 5500
+
+	IF ASSIPLAY && TALENT:PLAYER:122 == 0
+		EXP:50 += 3
+		PRINTFORML %EXPNAME:50%＋３
+	ENDIF
+ELSEIF EXP:0 < EXPLV:2
+	TIMES SOURCE:1 , 0.60
+	SOURCE:6 = 300
+ELSEIF EXP:0 < EXPLV:3
+	TIMES SOURCE:1 , 1.00
+	SOURCE:6 = 50
+ELSEIF EXP:0 < EXPLV:4
+	TIMES SOURCE:1 , 1.20
+	SOURCE:6 = 10
+ELSEIF EXP:0 < EXPLV:5
+	TIMES SOURCE:1 , 1.30
+	SOURCE:6 = 0
+ELSE
+	TIMES SOURCE:1 , 1.80
+	SOURCE:6 = 0
+ENDIF
+
+;PALAM:潤滑をみる
+IF PALAM:3 < PALAMLV:1
+	TIMES SOURCE:1 , 0.10
+	SOURCE:6 += 1000
+	TIMES SOURCE:6 , 3.00
+ELSEIF PALAM:3 < PALAMLV:2
+	TIMES SOURCE:1 , 0.40
+	SOURCE:6 += 300
+	TIMES SOURCE:6 , 1.00
+ELSEIF PALAM:3 < PALAMLV:3
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:6 , 0.50
+ELSEIF PALAM:3 < PALAMLV:4
+	TIMES SOURCE:1 , 1.40
+	TIMES SOURCE:6 , 0.20
+ELSEIF PALAM:3 >= PALAMLV:4
+	TIMES SOURCE:1 , 1.80
+	TIMES SOURCE:6 , 0.10
+ENDIF
+
+;調教者がふたなり
+SIF TALENT:PLAYER:121
+	TIMES SOURCE:1 , 2.50
+
+
+;小柄体形
+SIF TALENT:100
+	TIMES SOURCE:6 , 2.00
+
+;貞操観念
+IF TALENT:30 && TALENT:85 == 0
+	IF EXP:0 == 0
+		TIMES SOURCE:3 , 0.60
+		SOURCE:15 = 10000
+	ELSE
+		TIMES SOURCE:3 , 0.60
+		SOURCE:15 = 1000
+	ENDIF
+;貞操無頓着
+ELSEIF TALENT:31 || TALENT:88 && ASSIPLAY == 0
+	IF EXP:0 == 0
+		TIMES SOURCE:3 , 0.60
+		SOURCE:15 = 300
+	ENDIF
+ELSE
+	IF EXP:0 == 0
+		SOURCE:15 = 3000
+	ENDIF
+ENDIF
+
+;PALAM:欲情をみる
+IF PALAM:5 < PALAMLV:1
+	TIMES SOURCE:1 , 0.60
+	TIMES SOURCE:3 , 0.30
+ELSEIF PALAM:5 < PALAMLV:2
+	TIMES SOURCE:1 , 0.80
+	TIMES SOURCE:3 , 0.60
+ELSEIF PALAM:5 < PALAMLV:3
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:3 , 1.00
+ELSEIF PALAM:5 < PALAMLV:4
+	TIMES SOURCE:1 , 1.20
+	TIMES SOURCE:3 , 1.50
+ELSEIF PALAM:5 >= PALAMLV:4
+	TIMES SOURCE:1 , 1.50
+	TIMES SOURCE:3 , 1.80
+ENDIF
+
+;ABL:従順をみる
+IF ABL:0 == 0
+	TIMES SOURCE:1 , 0.50
+	TIMES SOURCE:3 , 0.60
+	TIMES SOURCE:15 , 2.00
+ELSEIF ABL:0 == 1
+	TIMES SOURCE:1 , 0.80
+	TIMES SOURCE:3 , 0.80
+	TIMES SOURCE:15 , 1.50
+ELSEIF ABL:0 == 2
+	TIMES SOURCE:1 , 1.00
+	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:15 , 1.00
+ELSEIF ABL:0 == 3
+	TIMES SOURCE:1 , 1.30
+	TIMES SOURCE:3 , 1.20
+	TIMES SOURCE:15 , 0.80
+ELSEIF ABL:0 == 4
+	TIMES SOURCE:1 , 1.60
+	TIMES SOURCE:3 , 1.40
+	TIMES SOURCE:15 , 0.60
+ELSE
+	SOURCE:1 = SOURCE:1 * (ABL:0 * 20 + 100) / 100
+	SOURCE:3 = SOURCE:3 * (ABL:0 * 10 + 110) / 100
+	;ちゃんと(？)正常位で処女喪失した時のみ、反感追加を軽減
+	;これ以外の体位だと、従順5以上は全て0.3倍止まり
+	IF ABL:0 <= 10
+		SOURCE:15 = SOURCE:15 * (55 - ABL:0 * 5) / 100
+	ELSE
+		TIMES SOURCE:15 , 0.01
+	ENDIF
+ENDIF
+
+
+;主導権をチェック
+IF TFLAG:45 == 0
+	;主導権が主人公側
+	;ABL:従順をみる
+	IF ABL:0 <= 1
+		SOURCE:21 += 300 + (ABL:0 * 50)
+	ELSEIF ABL:0 <= 3
+		SOURCE:21 += 600 + (ABL:0 * 100)
+	ELSEIF ABL:0 <= 5
+		SOURCE:21 += 800 + (ABL:0 * 120)
+	ELSEIF ABL:0 <= 8
+		SOURCE:21 += 1000 + (ABL:0 * 140)
+	ELSEIF ABL:0 <= 11
+		SOURCE:21 += 1200 + (ABL:0 * 160)
+	ELSE
+		SOURCE:21 += 1500 + (ABL:0 * 180)
+	ENDIF
+ELSE
+	;主導権が相手側
+	;ABL:サドっ気をみる
+	IF ABL:15 == 0
+		SOURCE:20 = 600
+	ELSEIF ABL:15 == 1
+		SOURCE:20 = 900
+	ELSEIF ABL:15 == 2
+		SOURCE:20 = 1200
+	ELSEIF ABL:15 == 3
+		SOURCE:20 = 1600
+	ELSEIF ABL:15 == 4
+		SOURCE:20 = 2000
+	ELSE
+		SOURCE:20 = 1000 + (ABL:15 * 300)
+	ENDIF
+ENDIF
+
+;好感度ランダム変化
+A = RAND:10 + 5
+SIF TALENT:85 || TALENT:153
+	A += 5
+SIF TALENT:88
+	A += 5
+;合意がないと好感度が下がる
+IF TALENT:152 == 0 && TFLAG:48 == 0
+	A -= 9
+	SOURCE:15 += 400
+ENDIF
+TFLAG:30 += A
+TFLAG:37 += A / 2
+
+EXP:0 += 1
+PRINTL Ｖ経験＋１
+
+;既成事実3に相当
+TFLAG:200 = 3
+
+;-------------------------------------------------
+;射精チェック
+;-------------------------------------------------
+
+CALL SAMEN_CHECK
+;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
+;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
+;	BASE:PLAYER:2 = 100000000
+;ENDIF
+;S = BASE:PLAYER:2
+;EJAC = MAXBASE:PLAYER:2
+;
+;IF  S > EJAC * 2
+;	E = 2
+;ELSEIF S > EJAC
+;	E = 1
+;ELSE
+;	E = 0
+;ENDIF
+
+IF E >= 1
+	SIF ABL:0 >= 3 && ABL:1 >= 3 && FLAG:6
+		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に足を絡め腰を押し付けてきた…
+
+	;射精先タイプの設定
+	TFLAG:703 = 1
+	;射精先選択の可・不可
+	TFLAG:704 = 0
+	;汎用的な処理はこの関数で行う
+	;（射精ゲージの再計算や射精経験の上昇と共通部分の表示）
+	CALL SAMEN_SHOOT
+ENDIF
+
+;大量射精
+;IF E == 2
+;	EXP:PLAYER:3 += 2
+;	EXP:20 += 20
+;	PRINTL 大量射精
+;	PRINTL 精液経験＋20
+;	;Ｐに精液汚れ
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC*2
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 2
+;;通常の射精
+;ELSEIF E == 1
+;	EXP:PLAYER:3 += 1
+;	;Ｐに精液汚れ
+;	EXP:20 += 10
+;	PRINTL 射精
+;	PRINTL 精液経験＋10
+;	STAIN:PLAYER:2 |= 4
+;
+;	BASE:PLAYER:2 -= EJAC
+;	SIF BASE:PLAYER:2 >= EJAC
+;		BASE:PLAYER:2 = EJAC-1
+;
+;	;セックスで射精フラグ
+;	TFLAG:2 = 1
+;ENDIF
+
+;奴隷のＶ⇔調教者のＰの汚れが移動
+STAIN:3 |= STAIN:PLAYER:2
+STAIN:PLAYER:2 |= STAIN:3
+
+IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	PRINTS EXPNAME:40
+	PRINTL +4
+	EXP:40 += 4
+	EXP:PLAYER:40 += 4
+ENDIF
+
+;IF ASSIPLAY == 0
+;	IF ABL:4 >= 3
+;		TFLAG:30 += 2
+;	ELSE
+;		TFLAG:30 += 1
+;	ENDIF
+;ENDIF
+
+RETURN 1
+
+;-------------------------------------------------
+;固有の実行判定
+;-------------------------------------------------
+@COM_ORDER_20
+A = 0
+S = 0
+V = 100
+
+;すべての命令に共通の要素を考慮
+;(従順が高いと命令に従いやすいなど)
+CALL COM_ORDER
+
+;ABL:欲望
+IF ABL:1
+	A += ABL:1 * 3
+ENDIF
+;ABL:Ｖ感覚
+IF ABL:4
+	A += ABL:4 * 2
+ENDIF
+;ABL:奉仕精神
+IF ABL:6
+	A += ABL:6 * 4
+ENDIF
+;ABL:精液中毒
+IF ABL:11
+	A += ABL:11 * 1
+ENDIF
+
+IF MARK:1
+	A += MARK:1 * 3
+ENDIF
+
+;PALAM:潤滑（の不足）
+IF PALAM:3 < PALAMLV:3
+	A -= 5
+ENDIF
+;PALAM:欲情
+IF PALAM:5 < PALAMLV:1
+	L = 0
+ELSEIF PALAM:5 < PALAMLV:2
+	L = 1
+ELSEIF PALAM:5 < PALAMLV:3
+	L = 2
+ELSEIF PALAM:5 < PALAMLV:4
+	L = 3
+ELSEIF PALAM:5 < PALAMLV:5
+	L = 4
+ELSE
+	L = 5
+ENDIF
+IF L
+	A += L * 3
+ENDIF
+
+;恥じらい
+IF TALENT:35
+	A -= 2
+ENDIF
+;快感の否定
+IF TALENT:71
+	A -= 5
+ENDIF
+;男嫌い
+IF TALENT:82 && TALENT:PLAYER:122
+	A -= 12
+ENDIF
+;恋慕
+IF TALENT:85 && ASSIPLAY == 0
+	A += 5
+	S = 5
+ENDIF
+
+;処女
+IF TALENT:0
+	A -= 20
+ELSEIF EXP:0 < EXPLV:2
+	A -= 5
+ENDIF
+
+;一線越えない（処女のみ）
+IF TALENT:27 && TALENT:0
+	A -= 20
+ENDIF
+
+;調教者がふたなり
+IF TALENT:PLAYER:121
+	A += 4
+ENDIF
+
+;媚薬
+IF TEQUIP:21
+	A += 6
+ENDIF
+
+;童貞
+IF TALENT:PLAYER:154
+	A += 2
+ENDIF
+
+;ムードボーナス
+B = 0
+IF TFLAG:37 < 10
+	B -= 10
+ELSEIF TFLAG:37 < 30
+	B -= 1
+ELSEIF TFLAG:37 < 50
+	B += 1
+ELSEIF TFLAG:37 < 100
+	B += TFLAG:37 / 10
+ELSEIF TFLAG:37 < 300
+	B += TFLAG:37 / 5
+ELSE
+	B += TFLAG:37 / 4
+ENDIF
+A += B
+IF B < 0
+	B = B * -1
+ELSE
+ENDIF
+
+
+;好感度
+IF CFLAG:2 < 2000
+	B = 0
+	IF CFLAG:2 < 1000
+		B = 50
+	ELSEIF CFLAG:2 < 1300
+		B = 20
+	ELSEIF CFLAG:2 < 1700
+		B = 10
+	ELSE
+		B = 5
+	ENDIF
+	A -= B
+ENDIF
+;好感度
+IF CFLAG:2 >= 2500
+	B = 0
+	IF CFLAG:2 < 3000
+		B = 5
+	ELSE
+		B = CFLAG:2 / 250
+	ENDIF
+	A += B
+ENDIF
+
+Y = 0
+;愛液の汚れ
+SIF STAIN:PLAYER:2 & 1
+	Y += 1
+;精液の汚れ
+SIF STAIN:PLAYER:2 & 4
+	Y += 3
+;アナルの汚れ
+SIF STAIN:PLAYER:2 & 8
+	Y += 7
+SIF STAIN:PLAYER:2 & 16
+	Y += 15
+
+SIF TALENT:61
+	Y /= 3
+SIF TALENT:62
+	Y *= 2
+
+;汚れあり
+IF Y
+	A -= Y
+	;汚臭鈍感
+	IF TALENT:61
+	ELSEIF TALENT:62
+	ELSE
+	ENDIF
+ENDIF
+
+;合意
+IF TALENT:152 == 0
+	A -= 30
+ENDIF
+
+IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
+	;ABL:欲望
+	IF ABL:1
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:1
+		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		S = 1
+	ENDIF
+	;ABL:Ｖ感覚
+	IF ABL:4
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:4
+		PRINTV 'LV,ABL:4,'(,ABL:4 * 2,')
+		S = 1
+	ENDIF
+	;ABL:奉仕精神
+	IF ABL:6
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:6
+		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		S = 1
+	ENDIF
+	;ABL:精液中毒
+	IF ABL:11
+		SIF S
+			PRINT  + 
+		PRINTS ABLNAME:11
+		PRINTV 'LV,ABL:11,'(,ABL:11 * 1,')
+		S = 1
+	ENDIF
+
+	IF MARK:1
+		SIF S
+			PRINT  + 
+		PRINTS MARKNAME:1
+		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		S = 1
+	ENDIF
+
+	;PALAM:潤滑（の不足）
+	IF PALAM:3 < PALAMLV:3
+		PRINT  - 
+		PRINT 潤滑不足
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+	;PALAM:欲情
+	IF PALAM:5 < PALAMLV:1
+		L = 0
+	ELSEIF PALAM:5 < PALAMLV:2
+		L = 1
+	ELSEIF PALAM:5 < PALAMLV:3
+		L = 2
+	ELSEIF PALAM:5 < PALAMLV:4
+		L = 3
+	ELSEIF PALAM:5 < PALAMLV:5
+		L = 4
+	ELSE
+		L = 5
+	ENDIF
+	IF L
+		SIF S
+			PRINT  + 
+		PRINTS PALAMNAME:5
+		PRINTV 'LV,L,'(,L * 3,')
+		S = 1
+	ENDIF
+
+	;恥じらい
+	IF TALENT:35
+		PRINT  - 
+		PRINTS TALENTNAME:35
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+	;快感の否定
+	IF TALENT:71
+		PRINT  - 
+		PRINTS TALENTNAME:71
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+	;男嫌い
+	IF TALENT:82 && TALENT:PLAYER:122
+		PRINT  - 
+		PRINTS TALENTNAME:82
+		PRINTV '(,12,')
+		S = 1
+	ENDIF
+	;恋慕
+	IF TALENT:85 && ASSIPLAY == 0
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:85
+		PRINTV '(,5,')
+		S = 5
+	ENDIF
+
+	;処女
+	IF TALENT:0
+		PRINT  - 
+		PRINTS TALENTNAME:0
+		PRINTV '(,20,')
+		S = 1
+	ELSEIF EXP:0 < EXPLV:2
+		PRINT  - 
+		PRINTS EXPNAME:0
+		PRINT 不足
+		PRINTV '(,5,')
+		S = 1
+	ENDIF
+
+	;一線越えない（処女のみ）
+	IF TALENT:27 && TALENT:0
+		PRINT  - 
+		PRINTS TALENTNAME:27
+		PRINTV '(,20,')
+		S = 1
+	ENDIF
+
+	;調教者がふたなり
+	IF TALENT:PLAYER:121
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:121
+		PRINTV '(,4,')
+		S = 1
+	ENDIF
+
+	;媚薬
+	IF TEQUIP:21
+		SIF S
+			PRINT  + 
+		PRINTS ITEMNAME:26
+		PRINTV '(,6,')
+		S = 1
+	ENDIF
+
+	;童貞
+	IF TALENT:PLAYER:154
+		SIF S
+			PRINT  + 
+		PRINTS TALENTNAME:154
+		PRINTV '(,2,')
+		S = 1
+	ENDIF
+
+	;ムードボーナス
+	B = 0
+	IF TFLAG:37 < 10
+		B -= 10
+	ELSEIF TFLAG:37 < 30
+		B -= 1
+	ELSEIF TFLAG:37 < 50
+		B += 1
+	ELSEIF TFLAG:37 < 100
+		B += TFLAG:37 / 10
+	ELSEIF TFLAG:37 < 300
+		B += TFLAG:37 / 5
+	ELSE
+		B += TFLAG:37 / 4
+	ENDIF
+	IF B < 0
+		B = B * -1
+		PRINT  - 
+		PRINT ムード悪い
+		PRINTV '(,B,')
+		S = 1
+	ELSE
+		PRINT  + 
+		PRINT ムード良い
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+
+
+	;好感度
+	IF CFLAG:2 < 2000
+		B = 0
+		PRINT  - 
+		IF CFLAG:2 < 1000
+			B = 50
+		ELSEIF CFLAG:2 < 1300
+			B = 20
+		ELSEIF CFLAG:2 < 1700
+			B = 10
+		ELSE
+			B = 5
+		ENDIF
+		PRINT 好感度不足
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+	;好感度
+	IF CFLAG:2 >= 2500
+		B = 0
+		SIF S
+			PRINT  + 
+		IF CFLAG:2 < 3000
+			B = 5
+		ELSE
+			B = CFLAG:2 / 250
+		ENDIF
+		PRINT 好感度
+		PRINTV '(,B,')
+		S = 1
+	ENDIF
+
+	Y = 0
+	;愛液の汚れ
+	SIF STAIN:PLAYER:2 & 1
+		Y += 1
+	;精液の汚れ
+	SIF STAIN:PLAYER:2 & 4
+		Y += 3
+	;アナルの汚れ
+	SIF STAIN:PLAYER:2 & 8
+		Y += 7
+	SIF STAIN:PLAYER:2 & 16
+		Y += 15
+
+	SIF TALENT:61
+		Y /= 3
+	SIF TALENT:62
+		Y *= 2
+
+	;汚れあり
+	IF Y
+		PRINT  - 
+		;汚臭鈍感
+		IF TALENT:61
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:61
+		ELSEIF TALENT:62
+			PRINT 汚れあり、
+			PRINTS TALENTNAME:62
+		ELSE
+			PRINT 汚れあり
+		ENDIF
+		PRINTV '(,Y,')
+		S = 1
+	ENDIF
+
+	;合意
+	IF TALENT:152 == 0
+		PRINT  - 
+		PRINTFORM %TALENTNAME:152%無し
+		PRINTV '(,30,')
+		S = 1
+	ENDIF
+
+	;合計を表示(100以上で実行)
+	PRINT  = 
+	PRINTV A
+
+
+	SIF A < V
+		PRINT  < 
+	SIF A == V
+		PRINT  = 
+	SIF A > V
+		PRINT  > 
+	PRINT 実行値
+	PRINTV V
+	WAIT
+ENDIF
+

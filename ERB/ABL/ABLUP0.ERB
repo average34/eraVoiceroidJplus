@@ -1,0 +1,503 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/親密upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;親密up本体
+;-------------------------------------------------
+@ABLUP0MAIN
+DRAWLINE
+IF ABL:0 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;自分への親密は上げられない
+IF TARGET == MASTER
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP0
+
+IF F
+	PRINTS EXPNAME:50
+	PRINTL あり、かつ
+ENDIF
+
+PRINTFORM [0] - %PALAMNAME:15%の珠×{E}……
+IF M == 0
+	PRINT ＯＫ
+ELSE
+	SIF M & 1
+		PRINT 珠不足 
+	SIF M & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [1] - %PALAMNAME:10%の珠×{A}……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [2] - %PALAMNAME:4%の珠×{B}……
+
+IF J == 0
+	PRINT ＯＫ
+ELSE
+	SIF J & 1
+		PRINT 珠不足 
+	SIF J & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+IF C > 0
+	;欲情の珠で上げる
+	PRINTFORM [3] - %PALAMNAME:5%の珠×{C}……
+
+	IF K == 0
+		PRINT ＯＫ
+	ELSE
+		SIF K & 1
+			PRINT 珠不足 
+		SIF K & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+IF D > 0
+	PRINTFORM [4] - %PALAMNAME:6%の珠×{D}……
+
+	IF L == 0
+		PRINT ＯＫ
+	ELSE
+		SIF L & 1
+			PRINT 珠不足 
+		SIF L & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+;////////////追加分/////////////////////////////////////////
+
+PRINTFORM [20] - %PALAMNAME:15%の珠で限界まであげる……
+IF M == 0
+	PRINT ＯＫ
+ELSE
+	SIF M & 1
+		PRINT 珠不足 
+	SIF M & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [21] - %PALAMNAME:10%の珠で限界まであげる……
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [22] - %PALAMNAME:4%の珠で限界まであげる……
+
+IF J == 0
+	PRINT ＯＫ
+ELSE
+	SIF J & 1
+		PRINT 珠不足 
+	SIF J & 2
+		PRINT 経験不足 
+ENDIF
+PRINTL 
+
+IF C > 0
+	;欲情の珠で上げる
+	PRINTFORM [23] - %PALAMNAME:5%の珠で限界まであげる……
+
+	IF K == 0
+		PRINT ＯＫ
+	ELSE
+		SIF K & 1
+			PRINT 珠不足 
+		SIF K & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+IF D > 0
+	PRINTFORM [24] - %PALAMNAME:6%の珠で限界まであげる……
+
+	IF L == 0
+		PRINT ＯＫ
+	ELSE
+		SIF L & 1
+			PRINT 珠不足 
+		SIF L & 2
+			PRINT 経験不足 
+	ENDIF
+	PRINTL 
+ENDIF
+
+;///////////////////////////////////////////////////////////
+
+PRINTL [100] - やめる
+
+INPUT
+IF (RESULT < 0 || RESULT > 4) && RESULT != 100 && (RESULT < 20 || RESULT > 24)
+	RESTART
+ELSEIF M != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 1
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF J != 0 && RESULT == 2
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF C <= 0 && RESULT == 3
+	RESTART
+ELSEIF K != 0 && RESULT == 3
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF D <= 0 && RESULT == 4
+	RESTART
+ELSEIF L != 0 && RESULT == 4
+	PRINTL 条件を満たしていません。
+	RESTART
+;///////追加分/////////////////////////////////
+ELSEIF M != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 21
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF J != 0 && RESULT == 22
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF C <= 0 && RESULT == 23
+	RESTART
+ELSEIF K != 0 && RESULT == 23
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF D <= 0 && RESULT == 24
+	RESTART
+ELSEIF L != 0 && RESULT == 24
+	PRINTL 条件を満たしていません。
+	RESTART
+;/////////////////////////////////////////////
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:0 += 1
+
+IF RESULT == 0
+	JUEL:15 -= E
+ELSEIF RESULT == 1
+	JUEL:10 -= A
+ELSEIF RESULT == 2
+	JUEL:4 -= B
+ELSEIF RESULT == 3
+	JUEL:5 -= C
+ELSEIF RESULT == 4
+	JUEL:6 -= D
+;//////////////////////////
+ELSEIF RESULT == 20
+	CALL AUT_SHINMITU_0
+ELSEIF RESULT == 21
+	CALL AUT_SHINMITU_1
+ELSEIF RESULT == 22
+	CALL AUT_SHINMITU_2
+ELSEIF RESULT == 23
+	CALL AUT_SHINMITU_3
+ELSEIF RESULT == 24
+	CALL AUT_SHINMITU_4
+;/////////////////////////
+ENDIF
+
+
+
+PRINTS ABLNAME:0
+PRINT のレベルが
+PRINTV ABL:0
+PRINTW になりました。
+
+CALL JUJUN_UP_CHECK
+
+
+
+;-------------------------------------------------
+;親密が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP0
+IF ABL:0 >= 9999
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+
+;自分への親密は上げられない
+IF TARGET == MASTER
+	RETURN 0
+ENDIF
+
+;能力アップに必要なコストを計算
+CALL COSTABLUP0
+
+;能力アップ可能なら1にする
+Z = 0
+
+;条件別にＯＫかダメかを記録する
+I = 0
+J = 0
+K = 0
+L = 0
+M = 0
+
+IF F && EXP:50 == 0
+	;異常経験がない
+	I |= 2
+	J |= 2
+	K |= 2
+	L |= 2
+	M |= 2
+ENDIF
+
+;好意の珠で上げる
+SIF JUEL:15 < E
+	M |= 1
+
+IF M == 0
+	Z = 1
+ENDIF
+
+;恐怖の珠で上げる
+SIF JUEL:10 < A
+	I |= 1
+
+IF I == 0
+	Z = 1
+ENDIF
+
+;恭順の珠で上げる
+SIF JUEL:4 < B
+	J |= 1
+
+IF J == 0
+	Z = 1
+ENDIF
+
+IF C > 0
+	;欲情の珠で上げる
+	SIF JUEL:5 < C
+		K |= 1
+
+	IF K == 0
+		Z = 1
+	ENDIF
+ENDIF
+
+IF D > 0
+	;屈服の珠で上げる
+	SIF JUEL:6 < D
+		L |= 1
+
+	IF L == 0
+		Z = 1
+	ENDIF
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;親密を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP0
+IF ABL:0 <= 1
+	IF TALENT:10 == 0
+		A = 10
+	ELSE
+		A = 1
+	ENDIF
+	B = 10
+	C = 300
+	D = 200
+	E = 5
+
+	A = A * (ABL:0 + 1)
+	B = B * (ABL:0 + 1)
+	C = C * (ABL:0 + 1)
+	D = D * (ABL:0 + 1)
+	E = E * (ABL:0 + 1)
+ELSEIF ABL:0 <= 3
+	IF TALENT:10 == 0
+		A = 150
+	ELSE
+		A = 10
+	ENDIF
+	B = 100
+	C = 1000
+	D = 1200
+	E = 100
+
+	A = A * (ABL:0 - 1)
+	B = B * (ABL:0 - 1)
+	C = C * (ABL:0 - 1)
+	D = D * (ABL:0 - 1)
+	E = E * (ABL:0 - 1)
+ELSEIF ABL:0 <= 5
+	IF TALENT:10 == 0
+		A = 1000
+	ELSE
+		A = 50
+	ENDIF
+	B = 800
+	C = 2000
+	D = 3000
+	E = 1000
+
+	A = A * (ABL:0 - 3)
+	B = B * (ABL:0 - 3)
+	C = C * (ABL:0 - 3)
+	D = D * (ABL:0 - 3)
+	E = E * (ABL:0 - 3)
+ELSEIF ABL:0 <= 8
+	IF TALENT:10 == 0
+		A = 3000
+	ELSE
+		A = 600
+	ENDIF
+	B = 3000
+	C = 0
+	D = 0
+	E = 5000
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.10
+		TIMES B , 1.10
+		TIMES E , 1.10
+	ENDIF
+	A = A * (ABL:0 - 5)
+	B = B * (ABL:0 - 5)
+	E = E * (ABL:0 - 5)
+ELSEIF ABL:0 <= 11
+	IF TALENT:10 == 0
+		A = 8000
+	ELSE
+		A = 3000
+	ENDIF
+	B = 15000
+	C = 0
+	D = 0
+	E = 25000
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES E , 1.30
+	ENDIF
+	IF TALENT:10 == 0
+		A = A + 2000 * (ABL:0 - 9)
+	ELSE
+		A = A + 1000 * (ABL:0 - 9)
+	ENDIF
+	B = B + 5000 * (ABL:0 - 9)
+	E = E + 8000 * (ABL:0 - 9)
+ELSE
+	IF TALENT:10 == 0
+		A = 8000
+	ELSE
+		A = 3000
+	ENDIF
+	B = 15000
+	C = 0
+	D = 0
+	E = 25000
+	
+	A = A * (ABL:0 - 9)
+	B = B * (ABL:0 - 9)
+	E = E * (ABL:0 - 9)
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES E , 1.30
+	ENDIF
+ENDIF
+
+;気丈
+IF TALENT:12
+	TIMES A , 3.00
+	TIMES B , 2.00
+	TIMES C , 1.50
+	TIMES D , 1.50
+	TIMES E , 2.00
+ENDIF
+
+;生意気
+IF TALENT:16
+	TIMES A , 1.50
+	TIMES B , 2.00
+	TIMES D , 1.50
+	TIMES E , 2.00
+ENDIF
+;素直
+IF TALENT:13
+	TIMES A , 0.50
+	TIMES B , 0.50
+	TIMES D , 0.50
+	TIMES E , 0.50
+ENDIF
+;恋慕
+IF TALENT:85
+	TIMES B , 0.50
+	TIMES E , 0.50
+ENDIF
+
+;親愛
+IF TALENT:88
+	TIMES B , 0.50
+	TIMES E , 0.50
+ENDIF
+
+;淫乱化
+IF TALENT:76
+	TIMES A , 0.80
+	TIMES B , 0.80
+	TIMES C , 0.80
+	TIMES D , 0.80
+	TIMES E , 0.80
+ENDIF
+
+
+;ＬＶ１２から１３に上げるときは異常経験必要（素質：[臆病][素直][妄信][淫乱化][恋慕]なら無視できる）
+IF ABL:0 == 12 && TALENT:10 == 0 && TALENT:13 == 0 && TALENT:86 == 0 && TALENT:76 == 0 && TALENT:85 == 0
+	F = 1
+ELSE
+	F = 0
+ENDIF
+

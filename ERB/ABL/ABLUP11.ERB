@@ -1,0 +1,229 @@
+﻿;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+;_/
+;_/精液中毒upの処理
+;_/
+;_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+;-------------------------------------------------
+;精液中毒up本体
+;-------------------------------------------------
+@ABLUP11MAIN
+DRAWLINE
+IF ABL:11 >= 9999
+	PRINTW 既にMAXです。
+	RETURN 0
+ENDIF
+
+;能力アップ可能かを取得
+;その際に能力アップに必要なコストを計算
+CALL ISABLUP11
+
+;ＬＶ２以降に上げるときは異常経験必要（素質：[汚臭鈍感][中毒しやすい]なら無視できる）
+IF F
+	PRINTFORML %EXPNAME:50%{F}以上、かつ
+ENDIF
+
+;奉仕精神が必要
+PRINTFORML %ABLNAME:6%{ABL:11 + 1}LV以上、かつ
+
+PRINTFORM [0] - %PALAMNAME:5%の珠×{A}、%PALAMNAME:6%の珠×{B}、%EXPNAME:20%{C}以上……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+PRINTFORM [20] - %PALAMNAME:5%、%PALAMNAME:6%の珠で限界まであげる……
+
+IF I == 0
+	PRINT ＯＫ
+ELSE
+	SIF I & 1
+		PRINT 珠不足 
+	SIF I & 2
+		PRINT 経験不足 
+	SIF I & 4
+		PRINT 能力不足 
+ENDIF
+PRINTL 
+
+PRINTL [100] - やめる
+
+
+INPUT
+IF (RESULT < 0 || RESULT > 0) && RESULT != 100 && RESULT != 20
+	RESTART
+ELSEIF I != 0 && RESULT == 0
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF I != 0 && RESULT == 20
+	PRINTL 条件を満たしていません。
+	RESTART
+ELSEIF RESULT == 100
+	RETURN 0
+ENDIF
+
+SIF RESULT < 20
+	ABL:11 += 1
+
+IF RESULT == 0
+	JUEL:5 -= A
+	JUEL:6 -= B
+ELSEIF RESULT == 20
+	CALL AUT_SEIEKI_0
+ENDIF
+
+PRINTS ABLNAME:11
+PRINT のレベルが
+PRINTV ABL:11
+PRINTW になりました。
+
+
+
+;-------------------------------------------------
+;精液中毒が上げられるかチェック
+;-------------------------------------------------
+@ISABLUP11
+IF ABL:11 >= 9999
+	CALL ISABLUP_LIMIT
+	RETURN 0
+ENDIF
+;能力アップに必要なコストを計算
+CALL COSTABLUP11
+
+;条件別にＯＫかダメかを記録する
+I = 0
+;能力アップ可能なら1にする
+Z = 0
+
+IF EXP:50 < F
+	;異常経験が不足
+	I |= 2
+ENDIF
+
+;奉仕精神が必要
+IF ABL:6 < ABL:11 + 1
+	I |= 4
+ENDIF
+
+;欲情の珠で上げる
+SIF JUEL:5 < A
+	I |= 1
+;充実の珠で上げる
+SIF JUEL:6 < B
+	I |= 1
+;精液経験が必要
+SIF EXP:20 < C
+	I |= 2
+
+IF I == 0
+	Z = 1
+ENDIF
+
+IF Z == 0
+	RETURN 0
+ELSE
+	RETURN 1
+ENDIF
+
+
+
+;-------------------------------------------------
+;精液中毒を上げるのに必要なコストを計算
+;-------------------------------------------------
+@COSTABLUP11
+IF ABL:11 == 0
+	A = 9000
+	B = 30000
+	C = 5
+ELSEIF ABL:11 == 1
+	A = 24000
+	B = 75000
+	C = 12
+ELSEIF ABL:11 == 2
+	A = 45000
+	B = 150000
+	C = 20
+ELSEIF ABL:11 == 3
+	A = 90000
+	B = 300000
+	C = 40
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.10
+		TIMES B , 1.10
+		TIMES C , 1.10
+	ENDIF
+ELSEIF ABL:11 == 4
+	A = 165000
+	B = 900000
+	C = 100
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES C , 1.30
+	ENDIF
+ELSE
+	A = 165000
+	B = 900000
+	C = 100
+	
+	A = A * (ABL:11 - 3)
+	B = B * (ABL:11 - 3)
+	C = C * (ABL:11 - 2) / 2
+	;一線越えない
+	IF TALENT:27
+		TIMES A , 1.30
+		TIMES B , 1.30
+		TIMES C , 1.30
+	ENDIF
+ENDIF
+
+;倍の経験を持っているなら必要数軽減
+IF EXP:20 >= C * 2
+	A = A / 3
+	B = B / 3
+ENDIF
+
+;汚臭鈍感
+IF TALENT:61
+	TIMES A , 0.25
+	TIMES B , 0.25
+	TIMES C , 0.25
+ENDIF
+
+;汚臭敏感
+IF TALENT:62
+	TIMES A , 2.50
+	TIMES B , 2.50
+	TIMES C , 2.50
+ENDIF
+
+;中毒しやすい
+IF TALENT:72
+	TIMES A , 0.50
+	TIMES B , 0.50
+	TIMES C , 0.50
+ENDIF
+
+;倒錯的
+IF TALENT:80
+	TIMES A , 0.75
+	TIMES B , 0.75
+	TIMES C , 0.75
+ENDIF
+
+;ＬＶ２以降に上げるときは異常経験必要（素質：[汚臭鈍感][中毒しやすい]なら無視できる）
+IF ABL:11 >= 2 && TALENT:61 == 0 && TALENT:72 == 0
+	F = ABL:11 * 5
+ELSE
+	F = 0
+ENDIF
