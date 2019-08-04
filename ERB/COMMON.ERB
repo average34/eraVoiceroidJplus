@@ -1213,14 +1213,14 @@ IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81, 82, 83)
 	MAXBASE:ARG:8 = 0
 	TALENT:ARG:65 = 1
 ;陰毛通常
-;コウ、セイカ、そら、タカハシ、ギャラ子
-ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 13, 52, 80)
+;コウ、セイカ、イタコ、そら、タカハシ、ギャラ子
+ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 12, 13, 52, 80)
 	BASE:ARG:8 = 1000
 	MAXBASE:ARG:8 = 1000
 	TALENT:ARG:65 = 0
 ;陰毛少なめ
-;マキ、ゆかり、ずん子、茜、葵、あかり、イタコ、ついな、ささら、つづみ、ＯＮＥ、ＩＡ
-ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 12, 14, 50, 51, 53, 54)
+;マキ、ゆかり、ずん子、茜、葵、あかり、ついな、ささら、つづみ、ＯＮＥ、ＩＡ、flower
+ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 14, 50, 51, 53, 54, 84)
 	BASE:ARG:8 = 300
 	MAXBASE:ARG:8 = 300
 	TALENT:ARG:65 = 0

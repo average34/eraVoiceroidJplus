@@ -1866,10 +1866,10 @@ ELSEIF NO:TARGET == 8
 ELSEIF NO:TARGET == 9
 	;セイカ
 	IF RAND:2 == 0
-		;キャラ固有デート先(1)
+		;キャラ固有デート先(1)、精華町
 		TEQUIP:2 = 37
 	ELSE
-		;キャラ固有デート先(2)
+		;キャラ固有デート先(2)、セイカの家
 		TEQUIP:2 = 36
 	ENDIF
 ELSEIF NO:TARGET == 11
@@ -1908,15 +1908,27 @@ ELSEIF NO:TARGET == 54
 	;カラオケ
 	TEQUIP:2 = 6
 
-ELSEIF NO:TARGET == 81
+ELSEIF NO:TARGET == 80
 	;ギャラ子
 	;中の人女優さんだし
 	;コメディ映画
 	TEQUIP:2 = 18
-ELSEIF NO:TARGET == 82
+ELSEIF NO:TARGET == 81
 	;ウナ
 	;水族館
 	TEQUIP:2 = 11
+ELSEIF NO:TARGET == 82
+	;ヒメ
+	;花畑
+	TEQUIP:2 = 4
+ELSEIF NO:TARGET == 83
+	;ミコト
+	;花畑
+	TEQUIP:2 = 4
+ELSEIF NO:TARGET == 84
+	;flower
+	;花畑
+	TEQUIP:2 = 4
 ELSE
 	;一応例外設定
 	;街
