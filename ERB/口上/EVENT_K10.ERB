@@ -1,5 +1,5 @@
 ﻿;
-;  eraVoiceroidJ+用 きりたん口上  Ver 0.4
+;  eraVoiceroidJ+用 きりたん口上  Ver 0.5
 ;  作者名：average
 ;---------------------------------------------------------------------------------------------
 ;---------------------------------------------------------------------------------------------
@@ -7,7 +7,7 @@
 ;  基本コンセプト
 ;  口上サンプルを書こうと思ったら意外と本格的なものになってしまった物です。
 ;  ご自由にお使い下さい。
-;  みんなも口上書きましょう。テキストエディタは「サクラエティタ」がいいですよ。
+;  みんなも口上書きましょう。テキストエディタは「Visual Studio Code」がいいですよ。
 ;
 ;---------------------------------------------------------------------------------------------
 ; -SpecialThanks-
@@ -20,7 +20,6 @@
 ;  てゐ口上
 ;  赤蛮奇口上
 ;eraim@sJ 口上テンプレート
-;eraBEMANI
 ;
 ;img鯖のきりたんと%CSTR:1%たち
 ;era板+のデバッグしてくださった皆様
@@ -219,24 +218,24 @@ IF TFLAG:600 == 28
 	PRINTFORMW 警官の姿はあれど、彼らもまた婦警や通行人と性行為に勤しんでいた
 	PRINTFORMW これは逃げるしかない――そう思った矢先、
 	PRINTFORML
-	PRINTFORML 「……すけて……たすけて……ください……」
+	CALL PRINTFORMW2T , @"「……すけて……たすけて……ください……」"
 	PRINTFORMW
 	PRINTFORMW 掠れた女の子の声がする。頭で考えるよりも先に、身体が一目散に声のするほうに向かう
-	PRINTFORMW 「たすけて、ずんねえさまが、ずんねえさまが…！」
+	CALL PRINTFORMW2T , @"「たすけて、ずんねえさまが、ずんねえさまが…！」"
 	PRINTFORML 倒れていたのはおかっぱ頭の着物の少女であった
 	PRINTFORMW ここは危ない。咄嗟に少女を背に担ぎ、自宅に走って向かう
-	PRINTFORMW 「あぁ、ずんねえさま、ずんねえさま――」
+	CALL PRINTFORMW2T , @"「あぁ、ずんねえさま、ずんねえさま――」"
 
 	PRINTFORML 
 	PRINTFORML 
 	PRINTFORML 家に着いてどれくらい経っただろう。少女を横たえてからも彼女はしばらく声なき声ですすり泣いていたが、
 	PRINTFORMW ようやく落ち着きを取り戻し、私の出したコーンスープを飲んでいる
 	PRINTFORML 
-	PRINTFORMW 「……ありがとうございます。あのままではずんねえさまどころか私の身すら助からないところでした」
+	CALL PRINTFORMW2T , @"「……ありがとうございます。あのままではずんねえさまどころか私の身すら助からないところでした」"
 	PRINTFORML 東北きりたん、と名乗った少女はぽつりとお礼の言葉をつぶやく
 	PRINTFORML この子はどうやらこの桃色の霧の中、『東北ずん子』という姉
 	PRINTFORMW ――彼女の云う『ずんねえさま』――とはぐれてしまったらしい
-	PRINTFORMW 「お願いします……私と一緒に、ずんねえさまを探していただけませんでしょうか？」
+	CALL PRINTFORMW2T , @"「お願いします……私と一緒に、ずんねえさまを探していただけませんでしょうか？」"
 
 	PRINTFORML 　[0]急にそう言われても……
 	PRINTFORML 　[1]分かった。協力しよう
@@ -245,14 +244,14 @@ IF TFLAG:600 == 28
 	INPUT
 	IF RESULT == 0
 
-		PRINTFORMW 「そうですよね……突然押しつけがましいこと言ってすみません」
-		PRINTFORMW 「外はこのとおり危険な霧で覆われていますし……」
+		CALL PRINTFORMW2T , @"「そうですよね……突然押しつけがましいこと言ってすみません」"
+		CALL PRINTFORMW2T , @"「外はこのとおり危険な霧で覆われていますし……」"
 	ELSEIF RESULT == 1
 		;ちょっと頼もしさアップ
 		ABL:0 += 1
-		PRINTFORMW 「あ、ありがとうございます！」
+		CALL PRINTFORMW2T , @"「あ、ありがとうございます！」"
 		PRINTFORMW きりたんは眼を輝かせてお礼を言う
-		PRINTFORMW 「でも、どうやったらこの桃色の霧の中を探せば……」
+		CALL PRINTFORMW2T , @"「でも、どうやったらこの桃色の霧の中を探せば……」"
 	ELSE
 		GOTO INPUT_LOOP
 	ENDIF
@@ -263,17 +262,17 @@ IF TFLAG:600 == 28
 	PRINTFORMW 霧の影響を受けた人は性欲がむき出しになってしまうらしい
 	PRINTFORMW しかし今の所不思議と自分には影響がないようだ
 	PRINTFORML 
-	PRINTFORMW 「この様子だと、しばらくの間は動けそうにありませんね」
+	CALL PRINTFORMW2T , @"「この様子だと、しばらくの間は動けそうにありませんね」"
 	PRINTFORML とりあえず、外は危険だからきりたんはうちで預かろう
 	PRINTFORMW 幸いなことに食料のストックは十分にある
-	PRINTFORMW 「……このうちに泊まっていってもいいんですか？」
-	PRINTFORMW 「ありがとうございます。」
+	CALL PRINTFORMW2T , @"「……このうちに泊まっていってもいいんですか？」"
+	CALL PRINTFORMW2T , @"「ありがとうございます。」"
 	PRINTFORMW きりたんはペコリと頭を下げる。まだ小さいが、礼儀正しい子だ
 ;よそいきのきりたんは礼儀正しそうよね
 ;なお身内に対しては
 	PRINTFORML 
-	PRINTFORMW 「あの、そういえば……名前の呼び方なんですが、」
-	PRINTFORMW 「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」
+	CALL PRINTFORMW2T , @"「あの、そういえば……名前の呼び方なんですが、」"
+	CALL PRINTFORMW2T , @"「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」"
 IF CSTR:1 == CALLNAME:MASTER
 	PRINTFORMW 改めてそう呼ばれるとすこし気恥かしいが、構わない、と伝えた
 ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
@@ -281,8 +280,8 @@ ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
 ELSE
 	PRINTFORMW 構わない、と伝えた
 ENDIF
-	PRINTFORMW 「ありがとうございますっ」
-	PRINTFORMW 「これからよろしくおねがいしますね、%CSTR:1%っ！」
+	CALL PRINTFORMW2T , @"「ありがとうございますっ」"
+	CALL PRINTFORMW2T , @"「これからよろしくおねがいしますね、%CSTR:1%っ！」"
 	PRINTFORML
 	PRINTFORML
 	PRINTFORMW ・・・・・・・・・・
@@ -298,9 +297,9 @@ ENDIF
 	PRINTFORMW 以上のことが分かってきた　
 	PRINTFORMW この能力があれば、霧の影響をかいくぐって東北ずん子を捜索することが可能だろう
 	PRINTFORML
-	PRINTFORMW 「ずんねえさまを探せることが可能って本当ですか！？」
+	CALL PRINTFORMW2T , @"「ずんねえさまを探せることが可能って本当ですか！？」"
 	PRINTFORMW きりたんは興奮のあまり声を荒げる。姉のことがよほど心配なのだろう
-	PRINTFORMW 「今からでも出かけましょう！早くしないとずんねえさまの命が危ないですから！」
+	CALL PRINTFORMW2T , @"「今からでも出かけましょう！早くしないとずんねえさまの命が危ないですから！」"
 	PRINTFORML きりたんは腕を引っ張る。彼女のためにも、早く東北ずん子を探し出さなければ――
 
 	FORCEWAIT
@@ -315,27 +314,27 @@ ENDIF
 IF TFLAG:600 == 38
 	;デート後一回目
 	IF EXP:94 > 0 && CFLAG:221 < 1
-		PRINTFORMW 「ふぁー、おはようございます、%CSTR:1%」
+		CALL PRINTFORMW2T , @"「ふぁー、おはようございます、%CSTR:1%」"
 		PRINTFORMW おはよう、と後から起きてきたきりたんに返事する
-		PRINTFORMW 「この前のおでかけは楽しかったですね、また次も連れてってください」
+		CALL PRINTFORMW2T , @"「この前のおでかけは楽しかったですね、また次も連れてってください」"
 		CFLAG:221 = 1
 	;キス後一回目
 	ELSEIF EXP:96 > 0 && CFLAG:221 < 2
-		PRINTFORMW 「お、おはようございます……」
+		CALL PRINTFORMW2T , @"「お、おはようございます……」"
 		CFLAG:221 = 2
 	;恋慕後一回目
 	ELSEIF TALENT:恋慕 == 1 && CFLAG:221 < 3
-		PRINTFORMW 「お、おはようございます」
+		CALL PRINTFORMW2T , @"「お、おはようございます」"
 		PRINTFORMW きりたんが珍しく朝から起きている
-		PRINTFORMW 「朝起きるのが遅いですよ、%CSTR:1%」
+		CALL PRINTFORMW2T , @"「朝起きるのが遅いですよ、%CSTR:1%」"
 		PRINTFORMW ……いつも遅く起きているのはきりたんなのだが……
 		PRINTFORMW もしかしてあまり深く眠れていないのでは？
-		PRINTFORMW 「……なんでもありません、しっかり寝ましたよ」
+		CALL PRINTFORMW2T , @"「……なんでもありません、しっかり寝ましたよ」"
 		CFLAG:221 = 3
 	;エンディング後一回目
 	ELSEIF FLAG:28 > 0 && CFLAG:221 < 4
-		PRINTFORMW 「おはようございます、%CSTR:1%」
-		PRINTFORMW 「ずんねえさまも戻ってきたことですし、次は街の平和を取り戻しに行きましょう！」
+		CALL PRINTFORMW2T , @"「おはようございます、%CSTR:1%」"
+		CALL PRINTFORMW2T , @"「ずんねえさまも戻ってきたことですし、次は街の平和を取り戻しに行きましょう！」"
 		CFLAG:221 = 4
 	ENDIF
 ENDIF
@@ -435,22 +434,22 @@ ENDIF
 IF TFLAG:600 == 6
 	;初めて
 	IF CFLAG:225 == 0
-		PRINTFORMW 「え？服を脱いで裸になってほしいんですか？」
-		PRINTFORMW 「嫌ですよ、なんでそんなことしなきゃいけないんですか」
+		CALL PRINTFORMW2T , @"「え？服を脱いで裸になってほしいんですか？」"
+		CALL PRINTFORMW2T , @"「嫌ですよ、なんでそんなことしなきゃいけないんですか」"
 		PRINTFORMW あっさりと断られてしまった
 		CFLAG:225 = 1
 	;二回目以降
 	ELSE
 		;恋慕または恋人
 		IF (TALENT:恋慕 == 1 || TALENT:恋人 == 1) && (CFLAG:225 < 3 || FLAG:7 == 2)
-			PRINTFORMW 「私は○学五年生なんですから、いくら頼まれたってえっちなことはしませんよ」
+			CALL PRINTFORMW2T , @"「私は○学五年生なんですから、いくら頼まれたってえっちなことはしませんよ」"
 			PRINTFORMW そこをなんとか！
-			PRINTFORMW 「ダメです。この変態」
+			CALL PRINTFORMW2T , @"「ダメです。この変態」"
 			CFLAG:225 = 3
 		;それ以外
 		ELSEIF CFLAG:225 < 2 || FLAG:7 == 2
-			PRINTFORMW 「だーかーらー、嫌って言ってるじゃないですか」
-			PRINTFORMW 「この変態、ロリコン、クズ」
+			CALL PRINTFORMW2T , @"「だーかーらー、嫌って言ってるじゃないですか」"
+			CALL PRINTFORMW2T , @"「この変態、ロリコン、クズ」"
 			CFLAG:225 = 2
 		ENDIF
 	ENDIF
@@ -492,7 +491,7 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 34
 ;	IF CFLAG:24 == 4 || CFLAG:459 == 5 || CFLAG:459 == 6
-		PRINTFORMW 「今日もはりきって、ずんねえさまを探しましょう！」
+		CALL PRINTFORMW2T , @"「今日もはりきって、ずんねえさまを探しましょう！」"
 ;		CALL CONFLICT2
 ;	ENDIF
 ENDIF
@@ -502,15 +501,15 @@ ENDIF
 IF TFLAG:600 == 8
 	;恋慕
 	IF TALENT:恋慕 == 1 && (CFLAG:227 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「やりましたね！%CSTR:1%！」
+		CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 		CFLAG:227 = 3
 	;恋人
 	ELSEIF TALENT:恋人 == 1 && (CFLAG:227 < 2 || FLAG:7 == 2)
-		PRINTFORMW 「やりましたね！これが愛の力ってやつです！」
+		CALL PRINTFORMW2T , @"「やりましたね！これが愛の力ってやつです！」"
 		CFLAG:227 = 2
 	;それ以外
 	ELSEIF CFLAG:227 < 1 || FLAG:7 == 2
-		PRINTFORMW 「やりましたね！」
+		CALL PRINTFORMW2T , @"「やりましたね！」"
 		CFLAG:227 = 1
 		ENDIF
 	ENDIF
@@ -531,8 +530,8 @@ IF TFLAG:600 == 9
 		CFLAG:228 = 2
 	;それ以外
 	ELSEIF CFLAG:228 < 1 || FLAG:7 == 2
-		PRINTFORMW 「うげ……やられちゃいました」
-		PRINTFORMW 「無理させないでくださいよ、まったく」
+		CALL PRINTFORMW2T , @"「うげ……やられちゃいました」"
+		CALL PRINTFORMW2T , @"「無理させないでくださいよ、まったく」"
 		ENDIF
 	ENDIF
 
@@ -546,23 +545,23 @@ IF TFLAG:600 == 40
 	;キャラの指定
 	;イタコ
 	IF FLAG:25 == 12
-		PRINTFORMW 「イタコねえさま！生きてたんですね」
+		CALL PRINTFORMW2T , @"「イタコねえさま！生きてたんですね」"
 		PRINTFORMW 『あら……きりちゃん。きりちゃんも一緒に男どもを食いに行きませんこと？』
-		PRINTFORMW 「なにいってんだこいつ」
+		CALL PRINTFORMW2T , @"「なにいってんだこいつ」"
 		;扱いが雑である
 		TFLAG:120 = 1
 	;ウナ
 	ELSEIF FLAG:25 == 81
-		PRINTFORMW 「音街！？ぶじだったの！？」
+		CALL PRINTFORMW2T , @"「音街！？ぶじだったの！？」"
 		PRINTFORMW 『とーほくー！セックスしようぜ！』
-		PRINTFORMW 「なにいってんだこいつ」
+		CALL PRINTFORMW2T , @"「なにいってんだこいつ」"
 		;扱いが雑である
 		TFLAG:120 = 1
 	;ラスボスじゃないずん子
 	ELSEIF FLAG:25 == 5
-		PRINTFORMW 「ずんねえさま！生きていたんですね」
+		CALL PRINTFORMW2T , @"「ずんねえさま！生きていたんですね」"
 		PRINTFORMW 『あらきりたん。きりたんも一緒にちんぽを食い漁りましょう？』
-		PRINTFORMW 「なにいってんだこいつ」
+		CALL PRINTFORMW2T , @"「なにいってんだこいつ」"
 		TFLAG:120 = 1
 	ENDIF
 ENDIF
@@ -615,7 +614,7 @@ IF TFLAG:600 == 41
 	;キャラの指定
 	;イタコ
 	IF FLAG:25 == 12
-		PRINTFORMW 「これでどうだ！」
+		CALL PRINTFORMW2T , @"「これでどうだ！」"
 		PRINTFORMW 『痛い痛い、参りましたわ～』
 		;表現が昭和
 		TFLAG:120 = 1
@@ -623,7 +622,7 @@ IF TFLAG:600 == 41
 	ELSEIF FLAG:25 == 81
 		PRINTFORMW よし、ウナを倒したぞ
 		PRINTFORMW 『うう……ここ、どこ……』
-		PRINTFORMW 「音街、無事で良かった……」
+		CALL PRINTFORMW2T , @"「音街、無事で良かった……」"
 		;扱いが雑である
 	;ラスボスじゃないずん子
 	ELSEIF FLAG:25 == 5
@@ -643,45 +642,45 @@ IF TFLAG:600 == 11
 	IF FLAG:24 <= 3
 		;恋人
 		IF TALENT:恋人 == 1 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 3
 		;キス経験有り
 		ELSEIF EXP:96 > 0 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 2
 		;それ以外
 		ELSEIF CFLAG:230 < 5 || FLAG:7 == 2
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 1
 		ENDIF
 	;三面以降（六面ラスボス除く）
 	ELSEIF FLAG:24 > 3 && (FLAG:24 != 6 || FLAG:27 == 10)
 		;恋慕
 		IF TALENT:恋慕 == 1 && (CFLAG:230 < 6 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 6
 		;恋人
 		ELSEIF TALENT:恋人 == 1 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 5
 		;それ以外
 		ELSEIF CFLAG:230 < 5 || FLAG:7 == 2
-			PRINTFORMW 「やりましたね！%CSTR:1%！」
+			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 2
 		ENDIF
 	;ラストバトル
 	ELSEIF FLAG:24 == 6 && FLAG:27 >= 20
 		;恋慕
 		IF TALENT:恋慕 == 1 && (CFLAG:230 < 6 || FLAG:7 == 2)
-			PRINTFORMW 「か、勝った……」
+			CALL PRINTFORMW2T , @"「か、勝った……」"
 			CFLAG:230 = 6
 		;恋人
 		ELSEIF TALENT:恋人 == 1 && (CFLAG:230 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「か、勝った……」
+			CALL PRINTFORMW2T , @"「か、勝った……」"
 			CFLAG:230 = 5
 		;それ以外
 		ELSEIF CFLAG:230 < 5 || FLAG:7 == 2
-			PRINTFORMW 「か、勝った……」
+			CALL PRINTFORMW2T , @"「か、勝った……」"
 			
 			CFLAG:230 = 2
 		ENDIF
@@ -698,18 +697,18 @@ IF TFLAG:600 == 12
 	IF FLAG:24 <= 3
 		;恋人
 		IF TALENT:恋人 == 1 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
-			PRINTFORMW 「ぐっ……やられちゃいましたね」
-			PRINTFORMW 「鍛えて出直してきましょう」
+			CALL PRINTFORMW2T , @"「ぐっ……やられちゃいましたね」"
+			CALL PRINTFORMW2T , @"「鍛えて出直してきましょう」"
 			CFLAG:231 = 3
 		;キス経験有り
 		ELSEIF EXP:96 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
-			PRINTFORMW 「ぐっ……やられちゃいましたね」
-			PRINTFORMW 「鍛えて出直してきましょう」
+			CALL PRINTFORMW2T , @"「ぐっ……やられちゃいましたね」"
+			CALL PRINTFORMW2T , @"「鍛えて出直してきましょう」"
 			CFLAG:231 = 2
 		;それ以外
 		ELSEIF CFLAG:231 < 5 || FLAG:7 == 2
-			PRINTFORMW 「ぐっ……やられちゃいましたね」
-			PRINTFORMW 「鍛えて出直してきましょう」
+			CALL PRINTFORMW2T , @"「ぐっ……やられちゃいましたね」"
+			CALL PRINTFORMW2T , @"「鍛えて出直してきましょう」"
 			CFLAG:231 = 1
 		ENDIF
 	;三面以降（六面ラスボス除く）
@@ -756,78 +755,78 @@ ENDIF
 IF TFLAG:600 == 30
 	IF CFLAG:232 < 1 || FLAG:7 == 2
 		IF FLAG:5 == 0
-			PRINTFORMW 「あっ……あの姿は……！」
+			CALL PRINTFORMW2T , @"「あっ……あの姿は……！」"
 FORCEWAIT
 			PRINTFORMW きりたんが声を上げる。その視線の先には、緑髪長髪で丈の短い和服の女性が佇んでいた
 			PRINTFORML
-			PRINTFORMW 「ずんねえさま！ずんねえさまーー！」
-			PRINTFORMW 「あら？」
+			CALL PRINTFORMW2T , @"「ずんねえさま！ずんねえさまーー！」"
+			PRINTFORMW 『あら？』
 			PRINTFORMW 緑髪の女性――東北ずん子がこちらに振り返る
 			PRINTFORMW 整った顔立ちの、おしとやかそうな女性だ
 ;黙ってれば美人なんだけどなあ
 			PRINTFORML
-			PRINTFORMW 「ずんねえさま！生きてたんですね！」
-			PRINTFORMW 「きりたんこそ、大丈夫だったの？」
-			PRINTFORMW 「はい！ずんねえさまこそ元気そうで良かったですっ……」
+			CALL PRINTFORMW2T , @"「ずんねえさま！生きてたんですね！」"
+			PRINTFORMW 『きりたんこそ、大丈夫だったの？』
+			CALL PRINTFORMW2T , @"「はい！ずんねえさまこそ元気そうで良かったですっ……」"
 			PRINTFORMW きりたんから鼻水をすする音が聞こえる。おそらく泣いているのだろう
 			PRINTFORML
-			PRINTFORMW 「ええ……きりたんが元気そうで本当に良かったわ」
-			PRINTFORMW 「本当に……」
+			PRINTFORMW 『ええ……きりたんが元気そうで本当に良かったわ』
+			PRINTFORMW 『本当に……』
 			PRINTFORML
 			PRINTFORMW ずん子の周囲から桃色の霧が立ち込める。これは……まずい
 			PRINTFORMW きりたんに、ずん子から離れろ！、と叫ぶ
 			PRINTFORML
-			PRINTFORMW 「……ふぇ？」
+			CALL PRINTFORMW2T , @"「……ふぇ？」"
 			PRINTFORMW 振り返ったきりたんの身体は涙と汗と愛液とでぐしょぐしょになっている
 			PRINTFORML その爛れた姿が、なんとも情欲をそそられる……ではなく、
 			PRINTFORMW 早くきりたんをずん子から引き離さなければ
-			PRINTFORMW 「うふふふふっ、どうしたんですか？」
-			PRINTFORMW 「さあきりたん、私と一緒に、イイコトしましょう？」
+			PRINTFORMW 『うふふふふっ、どうしたんですか？』
+			PRINTFORMW 『さあきりたん、私と一緒に、イイコトしましょう？』
 			PRINTFORML
 			PRINTFORMW ずん子がきりたんの秘所に下着の上から手を当てる
 			PRINTFORMW と、その後にきりたんの秘所を強くまさぐり出した
 			PRINTFORML
 			IF EXP:絶頂経験 > 0
-				PRINTFORMW 「ふあああっ……あっ、なにこれ、すごい、あっ」
-				PRINTFORMW 「あついっ、からだすごいっ、おかしくなるっ、ああああぁ」
+				CALL PRINTFORMW2T , @"「ふあああっ……あっ、なにこれ、すごい、あっ」"
+				CALL PRINTFORMW2T , @"「あついっ、からだすごいっ、おかしくなるっ、ああああぁ」"
 				PRINTFORMW きりたんはがくがくと震え、激しく股間から潮を噴き出す
 				EXP:絶頂経験 += 1
 			ELSE
-				PRINTFORMW 「ふあああっ、そこっ、だめっ、ずんねえさまっ、」
+				CALL PRINTFORMW2T , @"「ふあああっ、そこっ、だめっ、ずんねえさまっ、」"
 				PRINTFORMW きりたんは嬌声を上げ、つま先立ちになり、がくがくと震える
 			ENDIF
 			PRINTFORML
 			PRINTFORMW 急いでずん子からきりたんをひっぺがす
-			PRINTFORMW 「はぇ……？%CSTR:1%……？」
+			CALL PRINTFORMW2T , @"「はぇ……？%CSTR:1%……？」"
 			PRINTFORML きりたんはトロンとした目つきで力なく腕にしなだれる
 			PRINTFORMW どうやらあまりの快感に朦朧としているようだ
 			PRINTFORML
-			PRINTFORML 「あら……残念ですね」
-			PRINTFORMW 「これからが楽しいところでしたのに」
+			PRINTFORMW 『あら……残念ですね』
+			PRINTFORMW 『これからが楽しいところでしたのに』
 			PRINTFORMW ずん子は手についた粘液を舐め取っている
 			PRINTFORML
 			PRINTFORMW きりたんに何をする、とずん子に叫ぶ
-			PRINTFORMW 「いえ？ただ単にきりたんにもこの霧を楽しんでもらいたいだけですよ？」
-			PRINTFORMW 「人々の性欲を解放させる桃色の霧……ああなんて素晴らしいんでしょう」
-			PRINTFORMW 「もう、えっちなことを『こっそり』する必要もなくなりますからね」
+			PRINTFORMW 『いえ？ただ単にきりたんにもこの霧を楽しんでもらいたいだけですよ？』
+			PRINTFORMW 『人々の性欲を解放させる桃色の霧……ああなんて素晴らしいんでしょう』
+			PRINTFORMW 『もう、えっちなことを『こっそり』する必要もなくなりますからね』
 			PRINTFORMW ずん子は恍惚とした表情で話を進める
 			PRINTFORMW 彼女もまたこれまでの敵と同様、霧にあてられてもはや正気ではないのだろう
 ;ずんだに関しては元から正気ではないと思う
 			PRINTFORML
-			PRINTFORMW 「この様子だと、きりたんにはまだ性行為の経験が薄いようですね」
-			PRINTFORMW 「私の家の近くには、もっと強い子たちがいますから」
-			PRINTFORMW 「性技もしっかり、鍛えないといけませんよ？」
-			PRINTFORMW 「それでは、私の家でお待ちしています。うふふふっ」
+			PRINTFORMW 『この様子だと、きりたんにはまだ性行為の経験が薄いようですね』
+			PRINTFORMW 『私の家の近くには、もっと強い子たちがいますから』
+			PRINTFORMW 『性技もしっかり、鍛えないといけませんよ？』
+			PRINTFORMW 『それでは、私の家でお待ちしています。うふふふっ』
 			PRINTFORMW ずん子は去っていく。追いかけたいところだが、まずはきりたんの安全を確保しなければ
 			PRINTFORML
 			PRINTFORML
-			PRINTFORMW 「……そうですか、ずんねえさまも霧にあてられてたんですね」
+			CALL PRINTFORMW2T , @"「……そうですか、ずんねえさまも霧にあてられてたんですね」"
 			PRINTFORMW 家に帰ってから、回復したきりたんと話をしている
 			PRINTFORMW どうやら東北ずん子も霧にあてられて正気を失っているらしいということ、
 			PRINTFORMW そしてずん子東北邸にいるらしいが、その周囲には強敵がいるため性技も鍛えないといけないらしい、
 			PRINTFORMW ということをきりたんに話した
-			PRINTFORMW 「ずんねえさまを正気に戻すためなら、私、なんでも協力します！」
-			PRINTFORMW 「ですから……その……えっちなことの訓練したければ、いつでも言ってください」
+			CALL PRINTFORMW2T , @"「ずんねえさまを正気に戻すためなら、私、なんでも協力します！」"
+			CALL PRINTFORMW2T , @"「ですから……その……えっちなことの訓練したければ、いつでも言ってください」"
 			PRINTFORMW きりたんは目を少しそらしながら控えめに言う
 			PRINTFORMW 自分も腹をくくらなければならないようだ
 		ELSE
@@ -843,21 +842,21 @@ ENDIF
 IF TFLAG:600 == 31
 	;ずん子
 	IF FLAG:25 == 5
-		PRINTFORMW 「ずんねえさま！目を覚ましてください！」
+		CALL PRINTFORMW2T , @"「ずんねえさま！目を覚ましてください！」"
 		PRINTFORML
-		PRINTFORMW 「あら♪もう来てしまったんですね」
+		PRINTFORMW 『あら♪もう来てしまったんですね』
 		PRINTFORMW 東北ずん子の持つ小瓶からは、桃色の霧が次々と湧き出しているように見える
 		PRINTFORMW 近くに居るきりたんの頬がどんどん赤く染まっていく。これはもしや……
-		PRINTFORMW 「そう、ここが霧の発生源です」
-		PRINTFORMW 「どうですか？外の人の様子は素晴らしかったでしょう？」
-		PRINTFORMW 「人々は快楽を貪り、本能のままに腰を振り続け」
-		PRINTFORMW 「己が性欲を満たし、その欲望は止まるところを知らず」
-		PRINTFORMW 「互いが互いを欲し続け、みんなが幸福に満たされる」
-		PRINTFORMW 「ああ、なんて素晴らしい世界なのでしょう♪」
+		PRINTFORMW 『そう、ここが霧の発生源です』
+		PRINTFORMW 『どうですか？外の人の様子は素晴らしかったでしょう？』
+		PRINTFORMW 『人々は快楽を貪り、本能のままに腰を振り続け』
+		PRINTFORMW 『己が性欲を満たし、その欲望は止まるところを知らず』
+		PRINTFORMW 『互いが互いを欲し続け、みんなが幸福に満たされる』
+		PRINTFORMW 『ああ、なんて素晴らしい世界なのでしょう♪』
 		PRINTFORMW ずん子は小瓶を高らかに掲げ、恍惚とした表情で語り続ける
 		PRINTFORML
-		PRINTFORMW 「あなたもきりたんも、えっちなことして、お互いに気持ちよくなんでしょう？」
-		PRINTFORMW 「みんなが気持ちよくなれるなら、それで良いじゃないですか」
+		PRINTFORMW 『あなたもきりたんも、えっちなことして、お互いに気持ちよくなんでしょう？』
+		PRINTFORMW 『みんなが気持ちよくなれるなら、それで良いじゃないですか』
 		PRINTFORML
 		PRINTFORML 　[0]それは……
 		PRINTFORML 　[1]それとこれとは話が別だ！
@@ -868,7 +867,7 @@ IF TFLAG:600 == 31
 		IF RESULT == 0
 			PRINTFORMW 思わずその言葉に言い淀む。確かにきりたんとの性行為は気持ち良いものだった
 			PRINTFORMW きりたんも絶頂するたびに恍惚とした表情を見せていたし……
-			PRINTFORMW 「ちょっと%CSTR:1%！ずんねえさまのたわごとに惑わされないでください！」
+			CALL PRINTFORMW2T , @"「ちょっと%CSTR:1%！ずんねえさまのたわごとに惑わされないでください！」"
 			PRINTFORMW はっ、と我に帰る。性行為の是非どうこうではなく、今は東北ずん子を正気に戻さねば
 			PRINTFORMW 平和な街を、そしてきりたんを守るためにも
 		ELSEIF RESULT == 1
@@ -878,8 +877,8 @@ IF TFLAG:600 == 31
 			GOTO INPUT_LOOP_2
 		ENDIF
 		PRINTFORML
-		PRINTFORMW 「あら？あくまでも逆らうつもりなんですね？」
-		PRINTFORMW 「いいでしょう。この霧の力、とくと見せてあげましょう」
+		PRINTFORMW 『あら？あくまでも逆らうつもりなんですね？』
+		PRINTFORMW 『いいでしょう。この霧の力、とくと見せてあげましょう』
 		;CALL COMMON_PLANE_TEXT
 	;共通の文章表示
 	ELSE
@@ -997,17 +996,17 @@ ENDIF
 IF TFLAG:600 == 17
 	;恋慕かつ恋人かつ合意
 	IF (TALENT:恋慕 == 1 && TALENT:合意 == 1 && TALENT:恋人 == 1) && (CFLAG:240 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「一緒に暮らす者として、働かないとですね」
+		CALL PRINTFORMW2T , @"「一緒に暮らす者として、働かないとですね」"
 		CFLAG:240 = 3
 	;恋慕または恋人
 	ELSEIF (TALENT:恋慕 == 1 || TALENT:恋人 == 1) && (CFLAG:240 < 2 || FLAG:7 == 2)
-		PRINTFORMW 「えーまたバイトするんですか」
-		PRINTFORMW 「これ、稼いだお金ゲームに使いたいんですけど……」
+		CALL PRINTFORMW2T , @"「えーまたバイトするんですか」"
+		CALL PRINTFORMW2T , @"「これ、稼いだお金ゲームに使いたいんですけど……」"
 		CFLAG:240 = 2
 	;それ以外
 	ELSEIF CFLAG:240 < 1 || FLAG:7 == 2
-		PRINTFORMW 「えー、働くんですかー」
-		PRINTFORMW 「子供に労役させちゃいけないって授業で習いましたよ」
+		CALL PRINTFORMW2T , @"「えー、働くんですかー」"
+		CALL PRINTFORMW2T , @"「子供に労役させちゃいけないって授業で習いましたよ」"
 		PRINTFORMW そうはいっても緊急事態だ、働かないわけにはいかないだろう
 		CFLAG:240 = 1
 	ENDIF
@@ -1022,16 +1021,16 @@ IF TFLAG:600 == 18
 	;恋慕
 	IF TALENT:恋慕 == 1 && (CFLAG:241 < 3 || FLAG:7 == 2)
 		PRINTFORMW きりたんもすっかり料理上手だね
-		PRINTFORMW 「えへへ、ありがとうございます」
+		CALL PRINTFORMW2T , @"「えへへ、ありがとうございます」"
 		CFLAG:241 = 3
 	;恋人
 	ELSEIF TALENT:恋人 == 1 && (CFLAG:241 < 2 || FLAG:7 == 2)
 		PRINTFORMW きりたんもだいぶ料理の腕が上達してきたね
-		PRINTFORMW 「まあ私ならこのくらい当然ですよ」
+		CALL PRINTFORMW2T , @"「まあ私ならこのくらい当然ですよ」"
 		CFLAG:241 = 2
 	;それ以外
 	ELSEIF CFLAG:241 < 1 || FLAG:7 == 2
-		PRINTFORMW 「ちゃんと売れてよかったです」
+		CALL PRINTFORMW2T , @"「ちゃんと売れてよかったです」"
 		CFLAG:241 = 1
 	ENDIF
 ENDIF
@@ -1093,21 +1092,21 @@ IF TFLAG:600 == 20
 	ELSE
 		IF ABL:88 > 9
 			IF RAND:2 == 1
-				PRINTFORMW 「ずんねえさまのためにも、早く強くならなきゃ」
+				CALL PRINTFORMW2T , @"「ずんねえさまのためにも、早く強くならなきゃ」"
 			ELSE
-				PRINTFORMW 「すっかり、体力もついてきましたね」
-				PRINTFORMW 「でもまだまだです。もっと強くならないと」
+				CALL PRINTFORMW2T , @"「すっかり、体力もついてきましたね」"
+				CALL PRINTFORMW2T , @"「でもまだまだです。もっと強くならないと」"
 			ENDIF
 		ELSEIF ABL:88 > 3 && ABL:88 < 10
 			IF RAND:2 == 1
-				PRINTFORMW 「ずんねえさまのためにも、早く強くならなきゃ」
+				CALL PRINTFORMW2T , @"「ずんねえさまのためにも、早く強くならなきゃ」"
 			ELSE
-				PRINTFORMW 「前よりも足が早くなったのを感じます」
-				PRINTFORMW 「服も普段から動きやすいものを着たほうがいいでしょうか？」
+				CALL PRINTFORMW2T , @"「前よりも足が早くなったのを感じます」"
+				CALL PRINTFORMW2T , @"「服も普段から動きやすいものを着たほうがいいでしょうか？」"
 			ENDIF
 		ELSE
-			PRINTFORMW 「実践式の訓練ですね」
-			PRINTFORMW 「私も、強くなれるでしょうか」
+			CALL PRINTFORMW2T , @"「実践式の訓練ですね」"
+			CALL PRINTFORMW2T , @"「私も、強くなれるでしょうか」"
 		ENDIF
 	ENDIF
 ENDIF
@@ -1118,15 +1117,15 @@ ENDIF
 IF TFLAG:600 == 21
 	;親愛または相愛
 	IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:244 < 3 || FLAG:キャラ口上の表示頻度 == 2)
-		PRINTFORMW 「今日は疲れてるし、休憩しましょう」
+		CALL PRINTFORMW2T , @"「今日は疲れてるし、休憩しましょう」"
 		CFLAG:244 = 3
 	;恋慕または恋人
 	ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:244 < 2 || FLAG:キャラ口上の表示頻度 == 2)
-		PRINTFORMW 「今日は疲れましたし、お休みしましょう」
+		CALL PRINTFORMW2T , @"「今日は疲れましたし、お休みしましょう」"
 		CFLAG:244 = 2
 	;それ以外
 	ELSEIF (CFLAG:244 < 1 || FLAG:キャラ口上の表示頻度 == 2)
-		PRINTFORMW 「うーん、疲れました……寝ますね……」
+		CALL PRINTFORMW2T , @"「うーん、疲れました……寝ますね……」"
 		CFLAG:244 = 1
 	ENDIF
 ENDIF
@@ -1202,14 +1201,14 @@ ENDIF
 IF TFLAG:600 == 25
 	
 	IF 1
-		PRINTFORMW 「あ、まってください」
-		PRINTFORMW 「もしよかったら、ちょっとしゃがんでこちらに向いてくれませんか」
+		CALL PRINTFORMW2T , @"「あ、まってください」"
+		CALL PRINTFORMW2T , @"「もしよかったら、ちょっとしゃがんでこちらに向いてくれませんか」"
 		PRINTFORMW ？一体なんなのだろう
-		PRINTFORMW 「では……いきますね」
+		CALL PRINTFORMW2T , @"「では……いきますね」"
 		PRINTFORMW きりたんがこちらに顔を近づける
 		PRINTFORMW これは……
-		PRINTFORMW 「……ちゅっ」
-		PRINTFORMW 「……日頃の感謝の証です」
+		CALL PRINTFORMW2T , @"「……ちゅっ」"
+		CALL PRINTFORMW2T , @"「……日頃の感謝の証です」"
 		PRINTFORMW きりたんからほっぺにキスを貰いました
 	ENDIF
 ENDIF
@@ -1220,27 +1219,27 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 26
 		PRINTFORMW 別れ際、きりたんが袖を掴む
-		PRINTFORMW 「待って……ください」
-		PRINTFORMW 「私から、お願いがあります」
-		PRINTFORMW 「あの、ですね、その」
-		PRINTFORMW 「えっと……」
+		CALL PRINTFORMW2T , @"「待って……ください」"
+		CALL PRINTFORMW2T , @"「私から、お願いがあります」"
+		CALL PRINTFORMW2T , @"「あの、ですね、その」"
+		CALL PRINTFORMW2T , @"「えっと……」"
 		PRINTFORMW きりたんは言葉に詰まっているようだ。落ち着いて、ときりたんと同じ高さの目線までしゃがんで諭す
-		PRINTFORMW 「は、はい、あのですね……」
-		PRINTFORMW 「わ、わたしと……その……」
-		PRINTFORMW 「一緒に、暮らしていただけますでしょうか」
+		CALL PRINTFORMW2T , @"「は、はい、あのですね……」"
+		CALL PRINTFORMW2T , @"「わ、わたしと……その……」"
+		CALL PRINTFORMW2T , @"「一緒に、暮らしていただけますでしょうか」"
 		PRINTFORMW それは、いつも通りということではないだろうか？
-		PRINTFORMW 「あ、あの、違うんです！」
-		PRINTFORMW 「その、わたしを一人の女性として……結婚を前提にお付き合いねがいないでしょうか！」
+		CALL PRINTFORMW2T , @"「あ、あの、違うんです！」"
+		CALL PRINTFORMW2T , @"「その、わたしを一人の女性として……結婚を前提にお付き合いねがいないでしょうか！」"
 		PRINTFORMW 突然の告白に胸が高鳴る。きりたんと……結婚……
 		PRINTFORMW 考えたこともなかった、いや、考えないようにしていた選択肢。
 		PRINTFORMW そのことをきりたんにつきつけられ、心が揺さぶられる
-		PRINTFORMW 「……」
+		CALL PRINTFORMW2T , @"「……」"
 		PRINTFORMW きりたんは頭を深く下げている
 		PRINTFORMW この子と、いやこの人と一緒に人生を添い遂げられるか、自分にはその覚悟があるか──
 		PRINTFORMW いや、いきなり結婚しようというわけではないのか？きりたんにそう尋ねる
-		PRINTFORMW 「は、はい、ふつつかものですが……」
+		CALL PRINTFORMW2T , @"「は、はい、ふつつかものですが……」"
 		PRINTFORMW じゃあまず、恋人から始めよう、きりたんにそう伝える
-		PRINTFORMW 「あ、ありがとうございます！」
+		CALL PRINTFORMW2T , @"「あ、ありがとうございます！」"
 		PRINTFORMW きりたんは目を輝かせてお礼の言葉を述べる
 
 ENDIF
@@ -1255,20 +1254,20 @@ IF TFLAG:600 == 27
 		PRINTFORMW 
 	;酔った勢い
 	ELSEIF TFLAG:48 == 1
-		PRINTFORMW 「えへへー」
+		CALL PRINTFORMW2T , @"「えへへー」"
 		PRINTFORMW きりたんはこちらにもたれかかって頬をすりすりしている
 		PRINTFORML ……？
 		PRINTFORML きりたんがいつの間にかこちらのズボンのベルトを外している
 		PRINTFORMW それどころかきりたんも着物をほとんど脱いでいる状態だ
 		PRINTFORMW  「わたし、なんだか身体が熱いんです」
 		PRINTFORMW そう言いながらきりたんはこちらの下着を完全に脱がした
-		PRINTFORMW 「ほら、上も脱いで」
+		CALL PRINTFORMW2T , @"「ほら、上も脱いで」"
 		PRINTFORMW 言われるがままにとりあえず服を脱いでしまう
-		PRINTFORMW 「えへへ、%CSTR:1%の身体、がっちりしてておっきい」
+		CALL PRINTFORMW2T , @"「えへへ、%CSTR:1%の身体、がっちりしてておっきい」"
 		PRINTFORMW このままでは、間違いを起こしてしまうかもしれない
 		PRINTFORMW きりたんにそう言い、離れるよう要求する
 		PRINTFORML 
-		PRINTFORMW 「間違い、起こしちゃってもいいんですよ」
+		CALL PRINTFORMW2T , @"「間違い、起こしちゃってもいいんですよ」"
 		PRINTFORML
 		PRINTFORMW 彼女は耳元でそう囁いた
 		PRINTFORMW 固唾を飲む。これは心を決めるしかなさそうだ……
@@ -1298,25 +1297,25 @@ IF TFLAG:600 == 29
 	PRINTFORML 
 	PRINTFORMW 「はうぁっ！」
 	PRINTFORMW 東北ずん子に核心の一撃を与えると、彼女は地面にうずくまる
-	PRINTFORMW 「%CSTR:1%今です！早くあの小瓶を！」
+	CALL PRINTFORMW2T , @"「%CSTR:1%今です！早くあの小瓶を！」"
 	PRINTFORMW 近くにあったコルクを小瓶の口にはめる──
 	PRINTFORML 
 	PRINTFORMW すると、たちまち桃色の霧は晴れ、紅潮していたきりたんの顔色ももとに戻る
-	PRINTFORMW 「……やりましたね！%CSTR:1%！」
+	CALL PRINTFORMW2T , @"「……やりましたね！%CSTR:1%！」"
 	PRINTFORMW きりたんは嬉々とした表情でガッツポーズする
 	PRINTFORMW これでようやく街にも平和が戻るだろう……
 	PRINTFORML 
-	PRINTFORMW 「……！そういえば、ずんねえさまは、ずんねえさまは無事ですか！？」
-	PRINTFORMW 「ううう……」
+	CALL PRINTFORMW2T , @"「……！そういえば、ずんねえさまは、ずんねえさまは無事ですか！？」"
+	PRINTFORMW 『ううう……』
 	PRINTFORMW そばで倒れていた東北ずん子の近くに、きりたんが急いで駆け寄る
 	PRINTFORML 
-	PRINTFORMW 「ずんねえさま！」
-	PRINTFORMW 「きりたん……」
+	CALL PRINTFORMW2T , @"「ずんねえさま！」"
+	PRINTFORMW 『きりたん……』
 	PRINTFORMW ボロボロの東北ずん子は、きりたんを見ると混じり気の無い笑顔を見せる
 	PRINTFORMW きりたんはそんなずん子を抱き寄せる
-	PRINTFORMW 「きりたん……私……どうかしてた……ごめんなさい……危ない目に遭わせて……」
-	PRINTFORMW 「いいんですよ、もう全部終わりましたから」
-	PRINTFORMW 「ごめんね……きりたん……ごめんね……」
+	PRINTFORMW 『きりたん……私……どうかしてた……ごめんなさい……危ない目に遭わせて……』
+	CALL PRINTFORMW2T , @"「いいんですよ、もう全部終わりましたから」"
+	PRINTFORMW 『ごめんね……きりたん……ごめんね……』
 	PRINTFORML
 	PRINTFORMW 正気を取り戻した東北ずん子は、まだ霧の影響を受けていた人々を元に戻すのに協力してくれた
 	PRINTFORMW 小瓶を閉じても霧の影響はところどころ残存しているらしく、
@@ -1329,8 +1328,8 @@ IF TFLAG:600 == 29
 		PRINTFORMW 一つ、悩んでいることがあった
 		PRINTFORMW きりたんと自分は恋仲どころか結婚まで誓おうとした仲なわけだが……
 		PRINTFORMW このことをきりたんの家族である、ずん子たちに話したほうがいいのだろうか？
-		PRINTFORMW 「とりあえず、いきなり結婚のことまで言うとずんねえさまも卒倒しそうですから」
-		PRINTFORMW 「まずは恋人として認めてもらうところから始めてはいかがでしょう」
+		CALL PRINTFORMW2T , @"「とりあえず、いきなり結婚のことまで言うとずんねえさまも卒倒しそうですから」"
+		CALL PRINTFORMW2T , @"「まずは恋人として認めてもらうところから始めてはいかがでしょう」"
 		PRINTFORMW ……そうだな。とりあえず、ずん子さんにはきりたんの恋人として、お願い申し上げよう
 		PRINTFORML 
 		PRINTFORML 
@@ -1338,26 +1337,26 @@ IF TFLAG:600 == 29
 		PRINTFORMW ・・・・・・
 		PRINTFORMW ・・・・
 		PRINTFORMW ということで、ずん子さん、きりたんとお付き合いさせてください！
-		PRINTFORMW 「私からもお願いします、ずんねえさま！」
+		CALL PRINTFORMW2T , @"「私からもお願いします、ずんねえさま！」"
 		PRINTFORMW ……
 		PRINTFORMW 東北邸に静寂が訪れる。やはりこの年齢での付き合いは厳しいか……
-		PRINTFORMW 「……そうですよね、やっぱりまだ私の年齢ではダメですよね」
-		PRINTFORMW 「あら？私は別に、きりたんとあなたが付き合ってもいいと思いますよ？」
+		CALL PRINTFORMW2T , @"「……そうですよね、やっぱりまだ私の年齢ではダメですよね」"
+		PRINTFORMW 『あら？私は別に、きりたんとあなたが付き合ってもいいと思いますよ？』
 		PRINTFORMW えっ、ときりたんと自分は顔をずん子に向ける
 		PRINTFORML 
-		PRINTFORMW 「ちょっときりたんは年齢が低すぎますけど……」
-		PRINTFORMW 「でも、お互いのことを守ってあげたい、この人と一緒の時間を過ごしたい、っていう相手を見つけるのはそう簡単なことではないですから」
-		PRINTFORMW 「私は、きりたんにそういうパートナーが見つかったことを嬉しく思います」
+		PRINTFORMW 『ちょっときりたんは年齢が低すぎますけど……』
+		PRINTFORMW 『でも、お互いのことを守ってあげたい、この人と一緒の時間を過ごしたい、っていう相手を見つけるのはそう簡単なことではないですから』
+		PRINTFORMW 『私は、きりたんにそういうパートナーが見つかったことを嬉しく思います』
 ;ここずんちゃんほんとに16歳？ｗ
 		PRINTFORML 
-		PRINTFORMW 「てことは……」
+		CALL PRINTFORMW2T , @"「てことは……」"
 		PRINTFORMW きりたんは目を輝かせて言う
-		PRINTFORMW 「はい、お二人がお付き合いすることを認めますよ」
-		PRINTFORMW 「やったー！ありがとうございます、ずんねえさま！」
+		PRINTFORMW 『はい、お二人がお付き合いすることを認めますよ』
+		CALL PRINTFORMW2T , @"「やったー！ありがとうございます、ずんねえさま！」"
 		PRINTFORMW きりたんは飛び上がって喜ぶ
 		PRINTFORMW 自分もまた、きりたんの家族に認められたことを、内心嬉しく思っていた
-		PRINTFORMW 「た・だ・し」
-		PRINTFORMW 「きりたんもまだ若いんですから、えっちなことは『こっそり』、でお願いしますね」
+		PRINTFORMW 『た・だ・し』
+		PRINTFORMW 『きりたんもまだ若いんですから、えっちなことは『コッショリ』、でお願いしますね』
 		PRINTFORMW 　　　　　　　　　　── Extra Ending 『東北家の新しい家族』
 	;恋人
 	;ELSEIF TALENT:恋人 == 1
@@ -1366,18 +1365,18 @@ IF TFLAG:600 == 29
 	ELSE
 		PRINTFORMW 東北邸にももちろん平和は戻ったのだが、
 		PRINTFORMW それはそうときりたんはまだ自分の家に居る
-		PRINTFORMW 「だって、この家居心地いいんですもん」
-		PRINTFORMW 「ここならゲームしててもタコねえさまは文句言ってきませんし」
+		CALL PRINTFORMW2T , @"「だって、この家居心地いいんですもん」"
+		CALL PRINTFORMW2T , @"「ここならゲームしててもタコねえさまは文句言ってきませんし」"
 		PRINTFORMW いや、そういう問題ではないのだが……
 		PRINTFORML
-		PRINTFORMW 「……%CSTR:1%も、なんだかんだ言って私のこと気に入ってるじゃないですか」
+		CALL PRINTFORMW2T , @"「……%CSTR:1%も、なんだかんだ言って私のこと気に入ってるじゃないですか」"
 		PRINTFORMW まあ、実のところそうなのだ
 		PRINTFORMW きりたんがこの家に来てからというもの、日々が楽しくなったように感じる
 		PRINTFORMW このゲームを買ったらきりたんが喜ぶだろう、とか、次はどこに遊びに行こうか、とか、楽しいことばかり考えるようになった
 		PRINTFORMW 霧の事件で大変だったというのもあるが、真面目にお金を稼ごう、とか、きりたんのためにも食生活をきちんとしよう、とか、
 		PRINTFORMW そういった生活の基礎的なところも改善しつつある
-		PRINTFORMW 「でしょ？やっぱりいいことづくめじゃないですか、私」
-		PRINTFORMW 「だからこれからも、よろしくおねがいします、%CSTR:1%！」
+		CALL PRINTFORMW2T , @"「でしょ？やっぱりいいことづくめじゃないですか、私」"
+		CALL PRINTFORMW2T , @"「だからこれからも、よろしくおねがいします、%CSTR:1%！」"
 		PRINTFORMW 　　　　　　　　　　── Good Ending 『そしてこれからも』
 
 	ENDIF
@@ -1454,24 +1453,24 @@ IF TFLAG:13 == 3
 	;恋慕
 	;IF TALENT:恋慕 ==1 && (CFLAG:303 < 3 || FLAG:7 == 2)
 	IF (CFLAG:303 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「おはようございま……うぉっ」
+		CALL PRINTFORMW2T , @"「おはようございま……うぉっ」"
 		PRINTFORMW きりたんの眼前には%CSTR:1%のもっこりと膨らんだ股間がある
-		PRINTFORMW 「………」
-		PRINTFORMW 「……%CSTR:1%が悪いんですからね……」
+		CALL PRINTFORMW2T , @"「………」"
+		CALL PRINTFORMW2T , @"「……%CSTR:1%が悪いんですからね……」"
 		PRINTFORML きりたんは%CSTR:1%の股間からいきり立ったモノを露出させ、
 		PRINTFORMW ペロペロと丁寧に舐め始めた
 		PRINTFORML 
 		PRINTFORMW ……気持ちいい……
 		PRINTFORMW ふわふわとしたいい気持ちで目覚めると、視界の下には──
-		PRINTFORMW 「あ、ほはようほはいはふ、%CSTR:1%」
+		CALL PRINTFORMW2T , @"「あ、ほはようほはいはふ、%CSTR:1%」"
 		PRINTFORMW ……？きりたんがいる
-		PRINTFORMW 「ほら、もう目も覚めたことだしイッちゃいましょう」
+		CALL PRINTFORMW2T , @"「ほら、もう目も覚めたことだしイッちゃいましょう」"
 		PRINTFORMW そういうときりたんは何かを激しく動かし──！？
 		PRINTFORMW 股間の違和感に気づいたときには、いや気づいたからこそ快感の波が全身を激しく伝わる
 		PRINTFORMW きりたんがその小さな手でイチモツを上下に強く擦り続けている
 		PRINTFORMW ああ、身体の奥からのこみ上げる感覚を止められない──
-		PRINTFORMW 「あははっ、情けなく射精しちゃいましたね」
-		PRINTFORMW 「こっちのほうもおはようございます、%CSTR:1%」
+		CALL PRINTFORMW2T , @"「あははっ、情けなく射精しちゃいましたね」"
+		CALL PRINTFORMW2T , @"「こっちのほうもおはようございます、%CSTR:1%」"
 		PRINTFORMW どくどくと精液を排出するイチモツに、きりたんは軽くキスをする
 		CFLAG:303 = 3
 ;	;奉仕精神Lv5以上
@@ -1547,14 +1546,14 @@ IF TFLAG:13 == 80
 	;親愛または相愛
 	IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:311 < 2 || FLAG:7 == 2)
 		PRINTFORMW 寝ようと思ったら、なぜか自分の布団の中にきりたんが入っている
-		PRINTFORMW 「えへへ……きちゃいました」
-		PRINTFORMW 「%CSTR:1%の布団の中、入ってもいいですか？」
+		CALL PRINTFORMW2T , @"「えへへ……きちゃいました」"
+		CALL PRINTFORMW2T , @"「%CSTR:1%の布団の中、入ってもいいですか？」"
 		PRINTFORMW もう入っているじゃないか……
 		CFLAG:311 = 2
 	;それ以外
 	ELSEIF CFLAG:311 < 1 || FLAG:7 == 2
-		PRINTFORMW 「……眠れなくなっちゃいました」
-		PRINTFORMW 「少し、お側にいてもいいですか？」
+		CALL PRINTFORMW2T , @"「……眠れなくなっちゃいました」"
+		CALL PRINTFORMW2T , @"「少し、お側にいてもいいですか？」"
 		CFLAG:311 = 1
 	ENDIF
 ENDIF
@@ -1671,11 +1670,11 @@ IF TFLAG:13 == 19
 	PRINTFORML 
 	;親愛
 	IF TALENT:親愛 && (CFLAG:318 < 2 || FLAG:7 == 2)
-		PRINTFORMW 「はい、おはようのキスです」
+		CALL PRINTFORMW2T , @"「はい、おはようのキスです」"
 		CFLAG:318 = 2
 	;それ以外
 	ELSEIF CFLAG:318 < 1 || FLAG:7 == 2
-		PRINTFORMW 「にひひ、おはようございます、%CSTR:1%」
+		CALL PRINTFORMW2T , @"「にひひ、おはようございます、%CSTR:1%」"
 		CFLAG:318 = 1
 	ENDIF
 ENDIF
@@ -2249,54 +2248,54 @@ ENDIF
 ;エンゲージリング プレゼント時
 ;-------------------------------------------------
 IF TFLAG:13 == 7
-	PRINTFORMW 「プレゼント、ですか？」
+	CALL PRINTFORMW2T , @"「プレゼント、ですか？」"
 	PRINTFORMW きりたんに、大切な贈り物がある、と告げる
-	PRINTFORMW 「うわぁ、綺麗な指輪……」
-	PRINTFORMW 「えっ、これ本物なんですか？」
+	CALL PRINTFORMW2T , @"「うわぁ、綺麗な指輪……」"
+	CALL PRINTFORMW2T , @"「えっ、これ本物なんですか？」"
 	PRINTFORMW ああ、間違いなく本物だ、きりたんにそう伝える
-	PRINTFORMW 「……え？本物の、結婚指輪を？私に？」
-	PRINTFORMW 「え、え、ええ〜〜〜〜〜〜〜〜〜〜！！」
+	CALL PRINTFORMW2T , @"「……え？本物の、結婚指輪を？私に？」"
+	CALL PRINTFORMW2T , @"「え、え、ええ〜〜〜〜〜〜〜〜〜〜！！」"
 	PRINTFORMW きりたんは目をチカチカとさせる
 	PRINTFORML
 	PRINTFORML 
-	PRINTFORMW 「へへっ、へへへへ……」
+	CALL PRINTFORMW2T , @"「へへっ、へへへへ……」"
 	PRINTFORMW きりたんは不意に笑い出す
-	PRINTFORMW 「おかしいでずよ、グズッ、%CSTR:1%、」
-	PRINTFORMW 「わたしなんか、まだ未成年で、ｸﾞｽｯ結婚なんかしぢゃいげないのに」
-	PRINTFORMW 「なんで、なんでこんなに、なみだ、とまらな、」
-	PRINTFORMW 「おかじいじゃないですか、いけないごどなのに、わだし、へんなの」
+	CALL PRINTFORMW2T , @"「おかしいでずよ、グズッ、%CSTR:1%、」"
+	CALL PRINTFORMW2T , @"「わたしなんか、まだ未成年で、ｸﾞｽｯ結婚なんかしぢゃいげないのに」"
+	CALL PRINTFORMW2T , @"「なんで、なんでこんなに、なみだ、とまらな、」"
+	CALL PRINTFORMW2T , @"「おかじいじゃないですか、いけないごどなのに、わだし、へんなの」"
 	PRINTFORMW きりたんは錯乱している。無理もない、この指輪は渡すのを辞めよう──箱の蓋を閉める
 	PRINTFORML 
-	PRINTFORMW 「まって！」
+	CALL PRINTFORMW2T , @"「まって！」"
 	PRINTFORMW きりたんは涙をこぼしながら叫ぶ
-	PRINTFORMW 「一度だけ、一度でいいから、」
-	PRINTFORMW 「その指輪、わたしの指にはめてください」
+	CALL PRINTFORMW2T , @"「一度だけ、一度でいいから、」"
+	CALL PRINTFORMW2T , @"「その指輪、わたしの指にはめてください」"
 	PRINTFORMW 本当にいいのか。きりたんに問いかける
-	PRINTFORMW 「……はい。これはいいんです」
-	PRINTFORMW 「一晩だけ、ほんとに一晩だけなら、これはお嫁さんごっこです」
-	PRINTFORMW 「だから、%CSTR:1%のきもち、一晩だけ受け取らせてください」
+	CALL PRINTFORMW2T , @"「……はい。これはいいんです」"
+	CALL PRINTFORMW2T , @"「一晩だけ、ほんとに一晩だけなら、これはお嫁さんごっこです」"
+	CALL PRINTFORMW2T , @"「だから、%CSTR:1%のきもち、一晩だけ受け取らせてください」"
 	PRINTFORML 
 	PRINTFORML 
 	PRINTFORMW 箱から指輪を出し、きりたんの薬指にゆっくりと指輪をはめる
 	PRINTFORMW きりたんが寝ていた間に測量しただけあって、指輪はぴったりと薬指にはまった
 	PRINTFORML
-	PRINTFORMW 「へへ、うへへへ……」
-	PRINTFORMW 「わたし、なんか、かお、にやついてますね」
+	CALL PRINTFORMW2T , @"「へへ、うへへへ……」"
+	CALL PRINTFORMW2T , @"「わたし、なんか、かお、にやついてますね」"
 	PRINTFORMW きりたんは緩んだ口で話す
-	PRINTFORMW 「えへへへ……なんか、なんかなんかなんかなんか、」
-	PRINTFORMW 「すごい、なんかわかんないけど、うれしい」
+	CALL PRINTFORMW2T , @"「えへへへ……なんか、なんかなんかなんかなんか、」"
+	CALL PRINTFORMW2T , @"「すごい、なんかわかんないけど、うれしい」"
 	PRINTFORMW きりたんに喜んでもらって良かった、今まで頑張った甲斐があったものだ
 	PRINTFORML
-	PRINTFORMW 「どうせこれ、給料何ヶ月分、ってやつですよね」
-	PRINTFORMW 「それだけあればいっぱいゲーム買えるのに、ほんとばかな%CSTR:1%」
+	CALL PRINTFORMW2T , @"「どうせこれ、給料何ヶ月分、ってやつですよね」"
+	CALL PRINTFORMW2T , @"「それだけあればいっぱいゲーム買えるのに、ほんとばかな%CSTR:1%」"
 	PRINTFORMW そうは言うが、嬉しさ満面の笑顔で言われてもきりたんの言葉に刺々しさは無い
-	PRINTFORMW 「もう、ばかばっかりです、本当に」
-	PRINTFORMW 「こんな指輪ひとつで、嬉しくなっちゃうんですもん……」
+	CALL PRINTFORMW2T , @"「もう、ばかばっかりです、本当に」"
+	CALL PRINTFORMW2T , @"「こんな指輪ひとつで、嬉しくなっちゃうんですもん……」"
 	PRINTFORML
 	PRINTFORML 
-	PRINTFORMW 「……まだ、お礼言ってませんでしたね」
-	PRINTFORMW 「ありがとうございます、%CSTR:1%」
-	PRINTFORMW 「この指輪、大切にしますね」
+	CALL PRINTFORMW2T , @"「……まだ、お礼言ってませんでしたね」"
+	CALL PRINTFORMW2T , @"「ありがとうございます、%CSTR:1%」"
+	CALL PRINTFORMW2T , @"「この指輪、大切にしますね」"
 
 	;相愛取得
 	IF TALENT:相愛 == 0
@@ -2345,8 +2344,8 @@ IF CFLAG:201 == 0
 	DRAWLINE
 	;素質:パートナーの場合
 	IF TALENT:150 == 1
-		PRINTFORMW 「ここが食卓、あそこの部屋がこれから泊まる私の部屋ですね」
-		PRINTFORMW 「本日からよろしくお願いいたします。」
+		CALL PRINTFORMW2T , @"「ここが食卓、あそこの部屋がこれから泊まる私の部屋ですね」"
+		CALL PRINTFORMW2T , @"「本日からよろしくお願いいたします。」"
 	ENDIF
 		CFLAG:201 = 1
 	RETURN 1
@@ -2387,23 +2386,23 @@ ELSEIF TALENT:TARGET:恋慕 == 1 && CFLAG:201 < 5
 ;親愛
 ELSEIF TALENT:TARGET:親愛 == 1 && CFLAG:201 < 6
 	DRAWLINE
-	PRINTFORMW 「私の親についてですが」
+	CALL PRINTFORMW2T , @"「私の親についてですが」"
 	PRINTFORMW きりたんは唐突に話を切り出す
-	PRINTFORMW 「ぶっちゃけて言うと、私もよく知らないんです」
-	PRINTFORMW 「物心ついた時には、もう居ませんでしたから」
+	CALL PRINTFORMW2T , @"「ぶっちゃけて言うと、私もよく知らないんです」"
+	CALL PRINTFORMW2T , @"「物心ついた時には、もう居ませんでしたから」"
 	PRINTFORMW そうだったのか……
-	PRINTFORMW 「ずんねえさまもイタコねえさまも、親については話してくれないんです」
-	PRINTFORMW 「でも、隠してるってことはたぶん、私にとってつらいことなんだろうな、と思います」
-	PRINTFORMW 「だから、今まで私も姉には親のことを訊かなかったんです」
-	PRINTFORMW 「……すみません、今まで隠してて」
+	CALL PRINTFORMW2T , @"「ずんねえさまもイタコねえさまも、親については話してくれないんです」"
+	CALL PRINTFORMW2T , @"「でも、隠してるってことはたぶん、私にとってつらいことなんだろうな、と思います」"
+	CALL PRINTFORMW2T , @"「だから、今まで私も姉には親のことを訊かなかったんです」"
+	CALL PRINTFORMW2T , @"「……すみません、今まで隠してて」"
 	PRINTFORMW いや、いいんだ　ありがとう、きちんと話してくれて
 	PRINTFORMW それに、きりたんがそれだけの覚悟を持っているとずん子さん達が知ったら、
 	PRINTFORMW いずれ遠からぬうちに親のことを話してくれるだろう
-	PRINTFORMW 「そう……ですかね」
+	CALL PRINTFORMW2T , @"「そう……ですかね」"
 	PRINTFORMW きっとそうさ　きりたんももう十分に大人みたいな心持ちだし、歳相応になれば、その時期がくるさ
-	PRINTFORMW 「……ありがとうございます。私、このことでずっとひとりで不安で……誰にもいえなくて……」
+	CALL PRINTFORMW2T , @"「……ありがとうございます。私、このことでずっとひとりで不安で……誰にもいえなくて……」"
 	PRINTFORMW きりたんは涙をぽろぽろと流す。それを見て、自分はその小さな身体をそっと抱き寄せる
-	PRINTFORMW 「ありがとう……ありがとう……%CSTR:1%……」
+	CALL PRINTFORMW2T , @"「ありがとう……ありがとう……%CSTR:1%……」"
 	PRINTFORMW 
 	CFLAG:201 = 6
 	RETURN 1
@@ -2481,40 +2480,40 @@ IF MARK:3 >= 1 && FLAG:7 == 2
 	DRAWLINE
 	;午後
 	IF TIME
-		PRINTFORMW 「……こんにちは」
+		CALL PRINTFORMW2T , @"「……こんにちは」"
 	;午前
 	ELSE
-		PRINTFORMW 「……おはようございます」
+		CALL PRINTFORMW2T , @"「……おはようございます」"
 	ENDIF
 	PRINTFORMW きりたんと距離感を感じる……
 	RETURN 1
 
 ;相愛
 ELSEIF RAND:4 == 0 && TALENT:相愛
-	PRINTFORMW 「今日は何して過ごしましょう？」
+	CALL PRINTFORMW2T , @"「今日は何して過ごしましょう？」"
 	RETURN 1
 ;親愛
 ELSEIF TALENT:親愛
-	PRINTFORMW 「今日は何して過ごしましょう？」
+	CALL PRINTFORMW2T , @"「今日は何して過ごしましょう？」"
 	RETURN 1
 ;恋人かつ恋慕
 ELSEIF TALENT:恋慕 && TALENT:恋人
-	PRINTFORMW 「今日は何して過ごしましょう？」
+	CALL PRINTFORMW2T , @"「今日は何して過ごしましょう？」"
 	RETURN 1
 ;恋慕または恋人
 ELSEIF TALENT:恋慕 || TALENT:恋人
-	PRINTFORMW 「今日は何をしましょうか？」
+	CALL PRINTFORMW2T , @"「今日は何をしましょうか？」"
 	RETURN 1
 ;関係なし
 ELSE
 	;攻略済みまたはEX
 	IF FLAG:5 == 9 || FLAG:5 == 10 || FLAG:24 > 6
-		PRINTFORML 「早く街の安全を取り戻したいところですが……」
+		CALL PRINTFORMW2T , @"「早く街の安全を取り戻したいところですが……」"
 	
 	ELSE
-		PRINTFORML 「早くずんねえさまを救い出したいところですが……」
+		CALL PRINTFORMW2T , @"「早くずんねえさまを救い出したいところですが……」"
 	ENDIF
-	PRINTFORMW 「%CSTR:1%がそういうなら今日はゆったりしましょう」
+	CALL PRINTFORMW2T , @"「%CSTR:1%がそういうなら今日はゆったりしましょう」"
 	RETURN 1
 ENDIF
 RETURN 0
@@ -2540,36 +2539,36 @@ ENDIF
 ;反発感情Lv1以上
 IF MARK:3 >= 1
 	DRAWLINE
-	PRINTFORMW 「……そろそろゲームに戻りますね」
-	PRINTFORMW 「それでは」
+	CALL PRINTFORMW2T , @"「……そろそろゲームに戻りますね」"
+	CALL PRINTFORMW2T , @"「それでは」"
 	RETURN 1
 
 ;進展なし
 ELSEIF EXP:94 == 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
-	PRINTFORMW 「そろそろゲームに戻りますね」
-	PRINTFORMW 「それでは、また」
+	CALL PRINTFORMW2T , @"「そろそろゲームに戻りますね」"
+	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 ;デート経験済み
 ELSEIF EXP:94 > 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
-	PRINTFORMW 「そろそろお部屋に戻りますね」
-	PRINTFORMW 「それでは、また」
+	CALL PRINTFORMW2T , @"「そろそろお部屋に戻りますね」"
+	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 ;キス経験済み
 ELSEIF EXP:96 > 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
-	PRINTFORMW 「そろそろお部屋に戻りますね」
-	PRINTFORMW 「それでは、また」
+	CALL PRINTFORMW2T , @"「そろそろお部屋に戻りますね」"
+	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 ;恋人
 ELSEIF TALENT:TARGET:恋人 == 1 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
-	PRINTFORMW 「あ、そろそろ時間ですね……」
-	PRINTFORMW 「それでは、また」
+	CALL PRINTFORMW2T , @"「あ、そろそろ時間ですね……」"
+	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 
@@ -2578,12 +2577,12 @@ ELSEIF TALENT:TARGET:恋慕 == 1
 	DRAWLINE
 	;午前(終了時はお昼)
 	IF TIME == 0
-		PRINTFORMW 「あ、そろそろ夕飯の時間ですね……」
-		PRINTFORMW 「それでは、また」
+		CALL PRINTFORMW2T , @"「あ、そろそろ夕飯の時間ですね……」"
+		CALL PRINTFORMW2T , @"「それでは、また」"
 	;午後(終了時は夜)
 	ELSE
-		PRINTFORMW 「あ、そろそろ寝る時間ですね……」
-		PRINTFORMW 「それでは、おやすみなさい」
+		CALL PRINTFORMW2T , @"「あ、そろそろ寝る時間ですね……」"
+		CALL PRINTFORMW2T , @"「それでは、おやすみなさい」"
 	ENDIF
 	RETURN 1
 ENDIF
@@ -2717,9 +2716,9 @@ IF SELECTCOM == 300
 	PRINTFORML
 	;初めて
 	IF CFLAG:401 == 0
-		PRINTFORMW 「運動するんですか、めんどくさい……」
+		CALL PRINTFORMW2T , @"「運動するんですか、めんどくさい……」"
 		PRINTFORMW そうは言っても、姉を助けないといけないのだろう？
-		PRINTFORMW 「……そうですね、ずんねえさまのためにも、頑張らないと」
+		CALL PRINTFORMW2T , @"「……そうですね、ずんねえさまのためにも、頑張らないと」"
 		CFLAG:401 = 1
 	;二回目以降
 	ELSE
@@ -2732,31 +2731,31 @@ IF SELECTCOM == 300
 
 			IF RAND:4 == 0
 				PRINTFORMW きりたんと護身術の練習をしている
-				PRINTFORMW 「『左手の手のひらを上にする』」
-				PRINTFORMW 「『右手の小指を左手の手首にかける』」
-				PRINTFORMW 「『右手の親指は左手の薬指の後ろにかける』」
-				PRINTFORMW 「『そのまま下ろす』」
-				PRINTFORMW 「いでででで」
+				CALL PRINTFORMW2T , @"「『左手の手のひらを上にする』」"
+				CALL PRINTFORMW2T , @"「『右手の小指を左手の手首にかける』」"
+				CALL PRINTFORMW2T , @"「『右手の親指は左手の薬指の後ろにかける』」"
+				CALL PRINTFORMW2T , @"「『そのまま下ろす』」"
+				CALL PRINTFORMW2T , @"「いでででで」"
 				PRINTFORMW これが『小手降ろし』というやつらしい
 				
 			ELSEIF RAND:3 == 0
 				PRINTFORMW きりたんと護身術の練習をしている
-				PRINTFORMW 「後ろ受け身の練習ですね」
-				PRINTFORMW 「倒れる際に、片足の甲を地面につけて……」
-				PRINTFORMW 「なだらかに衝撃をやわらげ……あいたっ」
+				CALL PRINTFORMW2T , @"「後ろ受け身の練習ですね」"
+				CALL PRINTFORMW2T , @"「倒れる際に、片足の甲を地面につけて……」"
+				CALL PRINTFORMW2T , @"「なだらかに衝撃をやわらげ……あいたっ」"
 				PRINTFORMW きりたんは後頭部をぶつけてしまったようだ
-				PRINTFORMW 「うぇーくらくらする」
+				CALL PRINTFORMW2T , @"「うぇーくらくらする」"
 				PRINTFORMW 受け身の際はきちんと頭を上げたままにしないといけないらしい
 			ELSEIF RAND:2 == 0
 				PRINTFORMW きりたんと50m走を計測しあっている
-				PRINTFORMW 「はぁ、はぁ、タイムは？」
+				CALL PRINTFORMW2T , @"「はぁ、はぁ、タイムは？」"
 				PRINTFORMW 9秒03。自分の勝ちだ
-				PRINTFORMW 「むー、惜しい……」
+				CALL PRINTFORMW2T , @"「むー、惜しい……」"
 				PRINTFORMW このままだと記録を抜かされてしまいそうだ
 				PRINTFORMW というか年齢の割にきりたんは足が早くないだろうか？
 			ELSE
 				PRINTFORMW きりたんとバランスボールに乗っている
-				PRINTFORMW 「このボール楽しいですね！！！」
+				CALL PRINTFORMW2T , @"「このボール楽しいですね！！！」"
 				PRINTFORMW きりたんは満面の笑みで飛び跳ねている
 				PRINTFORMW 元気でなによりだ
 			ENDIF
@@ -2769,22 +2768,22 @@ IF SELECTCOM == 300
 		ELSEIF EXP:94 > 0 && (CFLAG:401 < 3 || FLAG:7 == 2)
 			IF RAND:4 == 0
 				PRINTFORMW きりたんと護身術の練習をしている
-				PRINTFORMW 「左手の手の甲を右手で掴んで、手首だけ上に上げる」
-				PRINTFORMW 「上げたあと、左手を握ると……」
-				PRINTFORMW 「いでででで」
-				PRINTFORMW 「これすっごい手首伸びますね」
+				CALL PRINTFORMW2T , @"「左手の手の甲を右手で掴んで、手首だけ上に上げる」"
+				CALL PRINTFORMW2T , @"「上げたあと、左手を握ると……」"
+				CALL PRINTFORMW2T , @"「いでででで」"
+				CALL PRINTFORMW2T , @"「これすっごい手首伸びますね」"
 				PRINTFORMW これが『二教』という技らしい
 			ELSEIF RAND:3 == 0
 				PRINTFORMW きりたんとジョギングをしている
-				PRINTFORMW 「あんまり外に出かけなかったから、景色を眺めることもあんまりありませんでしたが……」
-				PRINTFORMW 「結構、心地いいですね」
+				CALL PRINTFORMW2T , @"「あんまり外に出かけなかったから、景色を眺めることもあんまりありませんでしたが……」"
+				CALL PRINTFORMW2T , @"「結構、心地いいですね」"
 			ELSEIF RAND:2 == 0
 				PRINTFORMW きりたんと腹筋体操をしている
 				PRINTFORMW かわいい顔がこっちにきたり離れたりを繰り返す
-				PRINTFORMW 「……そんなに見られると、恥ずかしいですよ」
+				CALL PRINTFORMW2T , @"「……そんなに見られると、恥ずかしいですよ」"
 			ELSE
 				PRINTFORMW きりたんとバランスボールに乗っている
-				PRINTFORMW 「このボール楽しいですね！！！」
+				CALL PRINTFORMW2T , @"「このボール楽しいですね！！！」"
 				PRINTFORMW きりたんは満面の笑みで飛び跳ねている
 				PRINTFORMW 元気でなによりだ
 			ENDIF
@@ -2793,22 +2792,22 @@ IF SELECTCOM == 300
 		ELSEIF CFLAG:401 < 2 || FLAG:7 == 2
 			IF RAND:4 == 0
 				PRINTFORMW きりたんと一緒に準備体操をしている
-				PRINTFORMW 「あーーーーだるーーーーー」
+				CALL PRINTFORMW2T , @"「あーーーーだるーーーーー」"
 				PRINTFORMW ケガしないためにも、運動前にはしっかり柔軟しないといけないぞ、と伝える
-				PRINTFORMW 「分かってますけどー……」
+				CALL PRINTFORMW2T , @"「分かってますけどー……」"
 			ELSEIF RAND:3 == 0
 				PRINTFORMW きりたんと一緒にシャトルランのトレーニングをしている
 				PRINTFORMW ……きりたんは20回でバテてしまった
-				PRINTFORMW 「ぜえ……ぜえ……はあ……はあ……」
+				CALL PRINTFORMW2T , @"「ぜえ……ぜえ……はあ……はあ……」"
 				PRINTFORMW きりたんのあごから汗がぽとりぽとりと垂れている
 				PRINTFORMW 基礎体力づくりからしっかりやらないといけないようだ
 			ELSEIF RAND:2 == 0
 				PRINTFORMW きりたんと護身術の動画を眺めている
-				PRINTFORMW 「へぇー、合気道なら力がない女性や子供でもできるんですね」
-				PRINTFORMW 「やってみようかな……」
+				CALL PRINTFORMW2T , @"「へぇー、合気道なら力がない女性や子供でもできるんですね」"
+				CALL PRINTFORMW2T , @"「やってみようかな……」"
 			ELSE
 				PRINTFORMW きりたんとダンベル上げの訓練をしている
-				PRINTFORMW 「私、ゲーム機より重いもの持ったこと無いんで嫌です」
+				CALL PRINTFORMW2T , @"「私、ゲーム機より重いもの持ったこと無いんで嫌です」"
 				PRINTFORMW PS4のほうがこのダンベルより重いと思うのだが……
 			ENDIF
 			CFLAG:401 = 2
@@ -2829,8 +2828,8 @@ IF SELECTCOM == 301
 		PRINTFORMW それでも、仲直りへの道だと信じて、あなたは一人で喋り続けた
 	;初めて
 	ELSEIF CFLAG:402 == 0
-		PRINTFORMW 「改めまして、東北きりたんと申します」
-		PRINTFORMW 「好きなものは、テレビゲーム、漫画、それと……ずんねえさまですね」
+		CALL PRINTFORMW2T , @"「改めまして、東北きりたんと申します」"
+		CALL PRINTFORMW2T , @"「好きなものは、テレビゲーム、漫画、それと……ずんねえさまですね」"
 		PRINTFORMW 典型的な今どきの子の趣味だと思う。姉想いなのもいいことだ
 		CFLAG:402 = 100
 	;二回目以降
@@ -2839,31 +2838,31 @@ IF SELECTCOM == 301
 		IF TFLAG:18 == -1
 			IF RAND:3 == 0
 				PRINTFORMW そういえば、きりたんの親御さんはどうしてるのだろう
-				PRINTFORMW 「親ですか、親は……その……」
+				CALL PRINTFORMW2T , @"「親ですか、親は……その……」"
 				PRINTFORMW ああ、無理に話さなくてもいいんだ
-				PRINTFORMW 「……すみません」
+				CALL PRINTFORMW2T , @"「……すみません」"
 			ELSEIF RAND:2 == 1
 				PRINTFORMW きりたんって学校に通ってるんだよね
-				PRINTFORMW 「はい」
+				CALL PRINTFORMW2T , @"「はい」"
 				PRINTFORMW 友達とはどんな遊びしてるの？
-				PRINTFORMW 「………」
+				CALL PRINTFORMW2T , @"「………」"
 				PRINTFORMW ………
 				PRINTFORMW ……なるほどなぁ
 			ELSE
 				PRINTFORMW きりたんって学校に通ってるんだよね
-				PRINTFORMW 「はい」
+				CALL PRINTFORMW2T , @"「はい」"
 				PRINTFORMW 勉強はしなくていいの？
-				PRINTFORMW 「………」
+				CALL PRINTFORMW2T , @"「………」"
 				PRINTFORMW ………
 				PRINTFORMW なんでそこで黙るんだ……
 			ENDIF
 		;親愛または相愛
 		ELSEIF TALENT:親愛 || TALENT:相愛
 			IF RAND:3 == 0
-				PRINTFORML 「%CSTR:1%～、ゲーム買ってください～」
+				CALL PRINTFORMW2T , @"「%CSTR:1%～、ゲーム買ってください～」"
 				PRINTFORMW きりたんが媚び媚びの声色で、しかも身体を押し付けながらお願いをしてくる
 				PRINTFORMW ぐ、こんな色仕掛けに負けるわけには……
-				PRINTFORML 「買ってくださいよぉ～」
+				CALL PRINTFORMW2T , @"「買ってくださいよぉ～」"
 			ELSEIF RAND:2 == 0
 				PRINTFORMW 
 				PRINTFORMW 
@@ -2875,124 +2874,124 @@ IF SELECTCOM == 301
 		;恋人かつ恋慕
 		ELSEIF TALENT:恋慕 && TALENT:恋人
 			IF CFLAG:402 == 300 || CFLAG:402 < 300 
-				PRINTFORML 「%CSTR:1%～、お願いがあるんですけど～」
+				CALL PRINTFORMW2T , @"「%CSTR:1%～、お願いがあるんですけど～」"
 				PRINTFORMW きりたんが媚び媚びの声色でおねだりをしてくる
-				PRINTFORML 「新しいゲーム、買ってくれませんかぁ？」
+				CALL PRINTFORMW2T , @"「新しいゲーム、買ってくれませんかぁ？」"
 				PRINTFORMW 駄目だ
-				PRINTFORMW 「えーっ、けちー」
+				CALL PRINTFORMW2T , @"「えーっ、けちー」"
 				CFLAG:402 == 301
 			ELSEIF CFLAG:402 == 301
-				PRINTFORMW 「そういえば最近、あのゲームの大型アップデートが来たみたいですね」
-				PRINTFORMW 「仕様が変わって、ほとんど別のゲームになってるみたいですよ」
+				CALL PRINTFORMW2T , @"「そういえば最近、あのゲームの大型アップデートが来たみたいですね」"
+				CALL PRINTFORMW2T , @"「仕様が変わって、ほとんど別のゲームになってるみたいですよ」"
 				PRINTFORMW そうか、後で一緒に遊んでみよう
-				PRINTFORMW 「はい！」
+				CALL PRINTFORMW2T , @"「はい！」"
 				CFLAG:402 == 302
 			ELSEIF CFLAG:402 == 302
 				PRINTFORMW 
 				PRINTFORMW 
 				CFLAG:402 == 303
 			ELSE
-				PRINTFORMW 「%CSTR:1%と話していると、時間を忘れますね」
-				PRINTFORMW 「ゲームする時間よりも楽しいです」
+				CALL PRINTFORMW2T , @"「%CSTR:1%と話していると、時間を忘れますね」"
+				CALL PRINTFORMW2T , @"「ゲームする時間よりも楽しいです」"
 				CFLAG:402 == 300
 			ENDIF
 		;恋人か恋慕のどちらか一方のみ
 		ELSEIF TALENT:恋慕 || TALENT:恋人
 			IF CFLAG:402 == 200 || CFLAG:402 < 200
-				PRINTFORMW 「最近でもないですけど、ポテトガンっていうじゃがいもの砲がネットで流行りみたいですね」
-				PRINTFORMW 「きりたん砲も流行らないかなー」
+				CALL PRINTFORMW2T , @"「最近でもないですけど、ポテトガンっていうじゃがいもの砲がネットで流行りみたいですね」"
+				CALL PRINTFORMW2T , @"「きりたん砲も流行らないかなー」"
 				PRINTFORMW ……まず、どうやって作るのだろう
 				CFLAG:402 == 201
 			ELSEIF CFLAG:402 == 201
-				PRINTFORMW 「きりたん砲は攻撃するだけでなく、飛んで移動することもできるんですよ」
+				CALL PRINTFORMW2T , @"「きりたん砲は攻撃するだけでなく、飛んで移動することもできるんですよ」"
 				PRINTFORMW ほう、それはすごいな
-				PRINTFORMW 「……この前それで家の壁に穴できちゃいましたけど」
+				CALL PRINTFORMW2T , @"「……この前それで家の壁に穴できちゃいましたけど」"
 				PRINTFORMW 何をやっているのやら……姉には怒られなかったのか？
-				PRINTFORMW 「あ、この家の話です」
+				CALL PRINTFORMW2T , @"「あ、この家の話です」"
 				PRINTFORMW この家かい！うわほんとだここ凹んでる……
 				PRINTFORML
 				PRINTFORMW きりたんをしっかりと叱りました
 				CFLAG:402 == 202
 			ELSEIF CFLAG:402 == 202
-				PRINTFORMW 「ずんねえさまの話ですか？」
-				PRINTFORMW 「ずんねえさまのいいところはですね……ふとももでしょうか」
+				CALL PRINTFORMW2T , @"「ずんねえさまの話ですか？」"
+				CALL PRINTFORMW2T , @"「ずんねえさまのいいところはですね……ふとももでしょうか」"
 				PRINTFORMW ふ、ふともも？
-				PRINTFORMW 「あのもちもちとした触り心地、すべすべのお肌……」
-				PRINTFORMW 「うぇっへっへ」
+				CALL PRINTFORMW2T , @"「あのもちもちとした触り心地、すべすべのお肌……」"
+				CALL PRINTFORMW2T , @"「うぇっへっへ」"
 				PRINTFORMW きりたんはその後もずん子についてえらくオヤジ臭いことを語り続けた……
 				CFLAG:402 == 203
 			ELSEIF CFLAG:402 == 203
-				PRINTFORMW 「ずんねえさまは今でこそずんだ好きとして有名ですけど」
-				PRINTFORMW 「数年前まではそんなことなかったんですよ」
+				CALL PRINTFORMW2T , @"「ずんねえさまは今でこそずんだ好きとして有名ですけど」"
+				CALL PRINTFORMW2T , @"「数年前まではそんなことなかったんですよ」"
 				PRINTFORMW そうなのか？てっきり一生ずんだ餅を食べてるのかと思っていた
-				PRINTFORMW 「まぁ、たしかに今でこそそうなんですけど……」
+				CALL PRINTFORMW2T , @"「まぁ、たしかに今でこそそうなんですけど……」"
 				CFLAG:402 == 204
 			ELSEIF CFLAG:402 == 204
-				PRINTFORMW 「ずんねえさまは昔に落雷に直撃しました」
-				PRINTFORMW 「それで入院したと聞いたときはもう頭が真っ白になって」
-				PRINTFORMW 「学校を抜け出して急いでイタコねえさまと病院に向かいました」
-				PRINTFORMW 「そしたらずんねえさまどうなってたと思います？」
-				PRINTFORMW 「怪我一つせず元気に山盛りのずんだ餅を食べまくってたんですよ」
-				PRINTFORMW 「私あ然としちゃって」
-				PRINTFORMW 「でも、無事だったことに安心して二人で泣いちゃいましたね」
+				CALL PRINTFORMW2T , @"「ずんねえさまは昔に落雷に直撃しました」"
+				CALL PRINTFORMW2T , @"「それで入院したと聞いたときはもう頭が真っ白になって」"
+				CALL PRINTFORMW2T , @"「学校を抜け出して急いでイタコねえさまと病院に向かいました」"
+				CALL PRINTFORMW2T , @"「そしたらずんねえさまどうなってたと思います？」"
+				CALL PRINTFORMW2T , @"「怪我一つせず元気に山盛りのずんだ餅を食べまくってたんですよ」"
+				CALL PRINTFORMW2T , @"「私あ然としちゃって」"
+				CALL PRINTFORMW2T , @"「でも、無事だったことに安心して二人で泣いちゃいましたね」"
 				PRINTFORMW なんというか、無事で良かった
-				PRINTFORMW 「それからと言うもの、ずんねえさまはいつもずんだ餅を食べています」
+				CALL PRINTFORMW2T , @"「それからと言うもの、ずんねえさまはいつもずんだ餅を食べています」"
 				CFLAG:402 == 205
 			ELSEIF CFLAG:402 == 205
-				PRINTFORMW 「昔のずんねえさまについてですか？」
-				PRINTFORMW 「まあ、普通の女子高生ですよ」
-				PRINTFORMW 「成績優秀、弓道部の期待のエース、男女問わず美人という噂でクラスは持ち切りに」
+				CALL PRINTFORMW2T , @"「昔のずんねえさまについてですか？」"
+				CALL PRINTFORMW2T , @"「まあ、普通の女子高生ですよ」"
+				CALL PRINTFORMW2T , @"「成績優秀、弓道部の期待のエース、男女問わず美人という噂でクラスは持ち切りに」"
 				PRINTFORMW ……きりたんそれちょっと話盛ってない？
-				PRINTFORMW 「ホントですよ！」
+				CALL PRINTFORMW2T , @"「ホントですよ！」"
 				PRINTFORMW 普通の女子高生というにはいささかハイスペックな気もするが……
 					CFLAG:402 == 206
 			ELSE
-				PRINTFORMW 「%CSTR:1%、新しいゲーム買ってください」
+				CALL PRINTFORMW2T , @"「%CSTR:1%、新しいゲーム買ってください」"
 				PRINTFORMW この前買ったばかりじゃないか……
-				PRINTFORMW 「買ってー買ってー」
+				CALL PRINTFORMW2T , @"「買ってー買ってー」"
 				PRINTFORMW ……きりたんもこういうところは歳相応なんだな
 				CFLAG:402 == 200
 			ENDIF
 		;どちらでもない
 		ELSE
 			IF CFLAG:402 == 100
-				PRINTFORMW 「ずんねえさまの特徴ですか？」
-				PRINTFORMW 「そうですね、濃い緑の長髪で、枝豆型のカチューシャをつけてて」
-				PRINTFORMW 「なんといっても、丈の短い和服を着ているのが特徴ですね」
+				CALL PRINTFORMW2T , @"「ずんねえさまの特徴ですか？」"
+				CALL PRINTFORMW2T , @"「そうですね、濃い緑の長髪で、枝豆型のカチューシャをつけてて」"
+				CALL PRINTFORMW2T , @"「なんといっても、丈の短い和服を着ているのが特徴ですね」"
 				PRINTFORMW なるほど、それはいい目印になりそうだ
-				PRINTFORMW 「その和服は私がデザインして、業者に作ってもらった特注品なんですよね」
+				CALL PRINTFORMW2T , @"「その和服は私がデザインして、業者に作ってもらった特注品なんですよね」"
 				PRINTFORMW そうなのか、きりたんは多才だな
-				PRINTFORMW 「えへへ……そんなことないですよ」
+				CALL PRINTFORMW2T , @"「えへへ……そんなことないですよ」"
 				CFLAG:402 == 101
 			ELSEIF CFLAG:402 == 101
-				PRINTFORMW 「好きな漫画は……（まともなやつだと何があったかな）」
-				PRINTFORMW 「あっ、カイジとかの福本作品は読みますね」
+				CALL PRINTFORMW2T , @"「好きな漫画は……（まともなやつだと何があったかな）」"
+				CALL PRINTFORMW2T , @"「あっ、カイジとかの福本作品は読みますね」"
 				PRINTFORMW カイジ？だいぶ濃いのを読むなあ
-				PRINTFORMW 「ああいうヤクザのいる裏の世界で賭け事するの、怖いですけど面白いですね」
-				PRINTFORMW 「福本さんはそういう登場人物の焦り、緊張感、憤りといった心理描写をコミカルに描かれててほんと面白いです」
-				PRINTFORMW 「ざわ……ざわ……」
+				CALL PRINTFORMW2T , @"「ああいうヤクザのいる裏の世界で賭け事するの、怖いですけど面白いですね」"
+				CALL PRINTFORMW2T , @"「福本さんはそういう登場人物の焦り、緊張感、憤りといった心理描写をコミカルに描かれててほんと面白いです」"
+				CALL PRINTFORMW2T , @"「ざわ……ざわ……」"
 				CFLAG:402 == 102
 			ELSEIF CFLAG:402 == 102
-				PRINTFORMW 「北斗の拳とかも昔読んでましたね」
+				CALL PRINTFORMW2T , @"「北斗の拳とかも昔読んでましたね」"
 				PRINTFORMW これまた濃いのを読んでるなあ
-				PRINTFORMW 「きりたん砲で南斗人間砲弾ごっことかよくやってました」
+				CALL PRINTFORMW2T , @"「きりたん砲で南斗人間砲弾ごっことかよくやってました」"
 				PRINTFORMW ……近頃の子供はなんて危険な遊びをやっているんだ
 				CFLAG:402 == 103
 			ELSEIF CFLAG:402 == 103
-				PRINTFORMW 「%CSTR:1%の好きなゲームって何ですか？」
+				CALL PRINTFORMW2T , @"「%CSTR:1%の好きなゲームって何ですか？」"
 				PRINTFORMW 好きなゲームか……ゲームはあまりやらないのだが
 				PRINTFORMW 強いて言えばポケモンは昔やっていただろうか
-				PRINTFORMW 「ポケモンですか、ポケモンは……ネット対戦のガルーラが強すぎてやめちゃいましたね」
+				CALL PRINTFORMW2T , @"「ポケモンですか、ポケモンは……ネット対戦のガルーラが強すぎてやめちゃいましたね」"
 				PRINTFORMW ガルーラ？そんな強いポケモンだったかな
-				PRINTFORMW 「ひどいんですよ、メガシンカして2回攻撃してくるし、しかも追加効果が攻撃ごと判定だからだいたい成功する」
+				CALL PRINTFORMW2T , @"「ひどいんですよ、メガシンカして2回攻撃してくるし、しかも追加効果が攻撃ごと判定だからだいたい成功する」"
 				PRINTFORMW め、めがしんか？
-				PRINTFORMW 「ほかにもファイアローが……」
+				CALL PRINTFORMW2T , @"「ほかにもファイアローが……」"
 				PRINTFORMW ……話についていけそうにない
 				CFLAG:402 == 104
 			ELSE
-				PRINTFORMW 「%CSTR:1%が安全そうな人で良かった」
-				PRINTFORMW 「だって、もしこれが不審者に捕まってたら、いまごろ私は……私は……」
-				PRINTFORMW 「……あまり考えないことにしましょう」
+				CALL PRINTFORMW2T , @"「%CSTR:1%が安全そうな人で良かった」"
+				CALL PRINTFORMW2T , @"「だって、もしこれが不審者に捕まってたら、いまごろ私は……私は……」"
+				CALL PRINTFORMW2T , @"「……あまり考えないことにしましょう」"
 				CFLAG:402 == 100
 			ENDIF
 		ENDIF
@@ -3011,80 +3010,80 @@ IF SELECTCOM == 302
 		IF (TALENT:恋慕 == 1 && TALENT:恋人 == 1) && (CFLAG:403 < 4 || FLAG:7 == 2)
 			;スマイル
 			IF TFLAG:17 == 0
-				PRINTFORMW 「えへへ、私まで嬉しくなっちゃいます」
+				CALL PRINTFORMW2T , @"「えへへ、私まで嬉しくなっちゃいます」"
 			;お酒
 			ELSEIF TFLAG:17 == 1
-				PRINTFORMW 「うわ、%CSTR:1%もしかして私を酔わせて襲おうとしてません？」
-				PRINTFORMW 「このスケベ」
+				CALL PRINTFORMW2T , @"「うわ、%CSTR:1%もしかして私を酔わせて襲おうとしてません？」"
+				CALL PRINTFORMW2T , @"「このスケベ」"
 			;ゲーム
 			ELSEIF TFLAG:17 == 2
-				PRINTFORMW 「あっ、最新作のゲームじゃないですか！ありがとうございます！」
-				PRINTFORMW 「%CSTR:1%、一緒に遊びましょう！」
+				CALL PRINTFORMW2T , @"「あっ、最新作のゲームじゃないですか！ありがとうございます！」"
+				CALL PRINTFORMW2T , @"「%CSTR:1%、一緒に遊びましょう！」"
 			;アクセサリ
 			ELSEIF TFLAG:17 == 3
 				SELECTCASE RAND:2
 					CASE 0
-						PRINTFORMW 「お、ずんねえさまのイラスト入りスマホケースですね」
-						PRINTFORMW 「ありがとうございます」
+						CALL PRINTFORMW2T , @"「お、ずんねえさまのイラスト入りスマホケースですね」"
+						CALL PRINTFORMW2T , @"「ありがとうございます」"
 					CASEELSE
-						PRINTFORMW 「お、ずんねえさまのイラスト入りパスケースですね」
-						PRINTFORMW 「ありがとうございます」
+						CALL PRINTFORMW2T , @"「お、ずんねえさまのイラスト入りパスケースですね」"
+						CALL PRINTFORMW2T , @"「ありがとうございます」"
 				ENDSELECT
 			;服
 			ELSEIF TFLAG:17 == 4
-				PRINTFORMW 「おや、素敵な着物ですね」
-				PRINTFORMW 「きれい……これを私に？ありがとうございます」
+				CALL PRINTFORMW2T , @"「おや、素敵な着物ですね」"
+				CALL PRINTFORMW2T , @"「きれい……これを私に？ありがとうございます」"
 			;綺麗なアクセサリ
 			ELSEIF TFLAG:17 == 5
-				PRINTFORMW 「おぉ……これはべっ甲のかんざしですか。高級品ですね」
-				PRINTFORMW 「今すぐつけてほしいんですか？ちょっと待っててくださいね」
+				CALL PRINTFORMW2T , @"「おぉ……これはべっ甲のかんざしですか。高級品ですね」"
+				CALL PRINTFORMW2T , @"「今すぐつけてほしいんですか？ちょっと待っててくださいね」"
 				PRINTFORMW きりたんが洗面台に入ってしばらくすると、再びきりたんが現れた
-				PRINTFORMW 「ど、どうですか？」
+				CALL PRINTFORMW2T , @"「ど、どうですか？」"
 				PRINTFORMW かわいい……とても似合っている
-				PRINTFORMW 「そ、そうですか。良かったぁ……」
+				CALL PRINTFORMW2T , @"「そ、そうですか。良かったぁ……」"
 			ENDIF
 			CFLAG:403 = 4
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 == 1 || TALENT:恋人 == 1) && (CFLAG:403 < 3 || FLAG:7 == 2)
 			IF TFLAG:17 == 0
-				PRINTFORMW 「プレゼントって言ったら、フツーゲーム機とか想像するじゃないですか！」
-				PRINTFORMW 「……こんど買ってくださいね」
+				CALL PRINTFORMW2T , @"「プレゼントって言ったら、フツーゲーム機とか想像するじゃないですか！」"
+				CALL PRINTFORMW2T , @"「……こんど買ってくださいね」"
 			ELSEIF TFLAG:17 == 1
-				PRINTFORMW 「お、お酒かぁ……セイカさんなら喜ぶでしょうけど」
-				PRINTFORMW 「じゃあ、一口だけこっそりいただきます」
+				CALL PRINTFORMW2T , @"「お、お酒かぁ……セイカさんなら喜ぶでしょうけど」"
+				CALL PRINTFORMW2T , @"「じゃあ、一口だけこっそりいただきます」"
 			ELSEIF TFLAG:17 == 2
-				PRINTFORMW 「わーーーいゲームだ！」
-				PRINTFORMW 「%CSTR:1%、一緒に遊びましょう！」
+				CALL PRINTFORMW2T , @"「わーーーいゲームだ！」"
+				CALL PRINTFORMW2T , @"「%CSTR:1%、一緒に遊びましょう！」"
 			ELSEIF TFLAG:17 == 3
-				PRINTFORMW 「お、このずんねえさまストラップ、欲しかったやつなんですよ」
-				PRINTFORMW 「ありがとうございます」
+				CALL PRINTFORMW2T , @"「お、このずんねえさまストラップ、欲しかったやつなんですよ」"
+				CALL PRINTFORMW2T , @"「ありがとうございます」"
 			ELSEIF TFLAG:17 == 4
-				PRINTFORMW 「わぁ、サイズぴったりですね！」
-				PRINTFORMW 「いつの間に計ったんですか……」
+				CALL PRINTFORMW2T , @"「わぁ、サイズぴったりですね！」"
+				CALL PRINTFORMW2T , @"「いつの間に計ったんですか……」"
 			ELSEIF TFLAG:17 == 5
-				PRINTFORMW 「おおぉ……すごく綺麗なアクセサリですね」
-				PRINTFORMW 「これを私に？似合うかなあ……ありがとうございます」
+				CALL PRINTFORMW2T , @"「おおぉ……すごく綺麗なアクセサリですね」"
+				CALL PRINTFORMW2T , @"「これを私に？似合うかなあ……ありがとうございます」"
 			ENDIF
 			CFLAG:403 = 3
 		;それ以外
 		ELSEIF CFLAG:403 < 2 || FLAG:7 == 2
 			IF TFLAG:17 == 0
-				PRINTFORMW 「いわゆる、『気持ちだけ』ってやつですか」
-				PRINTFORMW 「まあ、気持ちだけもらっておきます」
+				CALL PRINTFORMW2T , @"「いわゆる、『気持ちだけ』ってやつですか」"
+				CALL PRINTFORMW2T , @"「まあ、気持ちだけもらっておきます」"
 			ELSEIF TFLAG:17 == 1
-				PRINTFORMW 「お酒ですか？あんまり飲まないほうがいいと思うんですけど……」
-				PRINTFORMW 「ありがとうございます。」
+				CALL PRINTFORMW2T , @"「お酒ですか？あんまり飲まないほうがいいと思うんですけど……」"
+				CALL PRINTFORMW2T , @"「ありがとうございます。」"
 			ELSEIF TFLAG:17 == 2
-				PRINTFORMW 「あっ、最新作のゲームじゃないですか！ありがとうございます！」
-				PRINTFORMW 「私、このゲーム欲しかったんですよねー」
+				CALL PRINTFORMW2T , @"「あっ、最新作のゲームじゃないですか！ありがとうございます！」"
+				CALL PRINTFORMW2T , @"「私、このゲーム欲しかったんですよねー」"
 			ELSEIF TFLAG:17 == 3
-				PRINTFORMW 「ネックレスですか？私にはあんまり似合わないと思いますけど……」
+				CALL PRINTFORMW2T , @"「ネックレスですか？私にはあんまり似合わないと思いますけど……」"
 			ELSEIF TFLAG:17 == 4
-				PRINTFORMW 「ああ、そういえばこの家に来てから男物のシャツとかばっかり着てましたね」
-				PRINTFORMW 「ありがとうございます、助かります」
+				CALL PRINTFORMW2T , @"「ああ、そういえばこの家に来てから男物のシャツとかばっかり着てましたね」"
+				CALL PRINTFORMW2T , @"「ありがとうございます、助かります」"
 			ELSEIF TFLAG:17 == 5
-				PRINTFORMW 「おおぉ……すごく綺麗なアクセサリですね」
-				PRINTFORMW 「これを私に？似合うかなあ……ありがとうございます」
+				CALL PRINTFORMW2T , @"「おおぉ……すごく綺麗なアクセサリですね」"
+				CALL PRINTFORMW2T , @"「これを私に？似合うかなあ……ありがとうございます」"
 			ENDIF
 			CFLAG:403 = 2
 		ENDIF
@@ -3099,18 +3098,18 @@ IF SELECTCOM == 303
 	IF CFLAG:405 == 0
 		;恋慕または恋人
 		IF TALENT:恋慕 || TALENT:恋人
-				PRINTFORMW 「ひゃっ！？」
-				PRINTFORMW 「いきなりなんですか……」
+				CALL PRINTFORMW2T , @"「ひゃっ！？」"
+				CALL PRINTFORMW2T , @"「いきなりなんですか……」"
 		;好感度が低い
 		ELSEIF CFLAG:2 < 100
-			PRINTFORMW 「うわっ！？」
+			CALL PRINTFORMW2T , @"「うわっ！？」"
 			PRINTFORMW きりたんを触ったらいきなり突き飛ばされてしまった
-			PRINTFORMW 「ご、ごめんなさい、びっくりしてしまって……」
+			CALL PRINTFORMW2T , @"「ご、ごめんなさい、びっくりしてしまって……」"
 			PRINTFORMW ……我ながらもうちょっと距離感を考えよう
 		;その他
 		ELSE
-			PRINTFORMW 「ひゃっ！？」
-			PRINTFORMW 「いきなりなんですか、べたべた触って気色悪い……」
+			CALL PRINTFORMW2T , @"「ひゃっ！？」"
+			CALL PRINTFORMW2T , @"「いきなりなんですか、べたべた触って気色悪い……」"
 		ENDIF
 		CFLAG:405 = 1
 	;二回目以降
@@ -3119,79 +3118,79 @@ IF SELECTCOM == 303
 		;だいぶレア
 		IF TALENT:相愛 == 1 && RAND:15 == 0
 			PRINTFORMW きりたんのお腹をぽんぽんと触っている
-			PRINTFORMW 「えへへ……」
-			PRINTFORMW 「%CSTR:1%は何人くらい、子供欲しいですか？」
+			CALL PRINTFORMW2T , @"「えへへ……」"
+			CALL PRINTFORMW2T , @"「%CSTR:1%は何人くらい、子供欲しいですか？」"
 		;恋慕または恋人
 		ELSEIF TALENT:恋慕 || TALENT:恋人
 			LOCAL = RAND:9
 			IF LOCAL == 0
 				PRINTFORMW きりたんのほっぺをむにむにと触ってみた
 				PRINTFORMW もちもちとした若い肌の触り心地が、心を癒やしてくれる……
-				PRINTFORMW 「むにゅー」
+				CALL PRINTFORMW2T , @"「むにゅー」"
 				PRINTFORMW 黙って触られているきりたんも満更ではなさそうだ
 			ELSEIF LOCAL == 1
 				PRINTFORML きりたんはこちらに対して安心しきっているようだ
 				PRINTFORMW あまりにも無防備な背中をこちらに向けている
 				PRINTFORMW 試しにくすぐってみたい……
-				PRINTFORMW 「～♪」
+				CALL PRINTFORMW2T , @"「～♪」"
 				PRINTFORMW ちょんっ、と指先で脇腹をつつく
-				PRINTFORMW 「ひゃっ！」
+				CALL PRINTFORMW2T , @"「ひゃっ！」"
 				PRINTFORMW そのままこちょこちょする
-				PRINTFORMW 「ふへへ、ちょ、やめ、あはは、ひゃははははは」
+				CALL PRINTFORMW2T , @"「ふへへ、ちょ、やめ、あはは、ひゃははははは」"
 				PRINTFORMW げらげらと笑い声を上げるきりたん。そろそろ止めどきだろう
-				PRINTFORMW 「ぜえ……ぜえ……。はあ……はあ……」
-				PRINTFORMW 「突然なんですか、まったく……」
+				CALL PRINTFORMW2T , @"「ぜえ……ぜえ……。はあ……はあ……」"
+				CALL PRINTFORMW2T , @"「突然なんですか、まったく……」"
 			ELSEIF LOCAL == 2
 				PRINTFORMW きりたんの背中をマッサージしている
-				PRINTFORMW 「あぁ～～～～～～～～そこ～～～～～～～～～～」
+				CALL PRINTFORMW2T , @"「あぁ～～～～～～～～そこ～～～～～～～～～～」"
 				PRINTFORMW まだまだ若いのに肩や腰、背中がこり過ぎである
 				PRINTFORMW ゲームのやりすぎじゃないだろうか？
 			ELSEIF LOCAL == 3
 				PRINTFORMW きりたんのこった肩を揉んでいる
-				PRINTFORMW 「あぁ～～～～～～いいですね～～～～～～～」
+				CALL PRINTFORMW2T , @"「あぁ～～～～～～いいですね～～～～～～～」"
 				PRINTFORMW ゲームのやりすぎからか、きりたんの肩は非常に硬い
-				PRINTFORMW 「もっとストレッチしたほうがいいですねこりゃ」
+				CALL PRINTFORMW2T , @"「もっとストレッチしたほうがいいですねこりゃ」"
 			ELSEIF LOCAL == 4
 				PRINTFORMW きりたんの肩から背中にかけて軽く叩いている
 				PRINTFORMW ゲームの疲れが背中のコリにあらわれている
-				PRINTFORMW 「あぁぁあぁぁあぁぁあぁぁ」
-				PRINTFORMW 「いぃぃいぃぃいぃぃいぃぃ」
+				CALL PRINTFORMW2T , @"「あぁぁあぁぁあぁぁあぁぁ」"
+				CALL PRINTFORMW2T , @"「いぃぃいぃぃいぃぃいぃぃ」"
 				PRINTFORMW きりたんが気持ちよさそうでなによりだ
 			ELSEIF LOCAL == 5
 				PRINTFORMW きりたんのストレッチの手伝いをしている
-				PRINTFORMW 「あぁ～～～～～～～のびる～～～～～～～～」
+				CALL PRINTFORMW2T , @"「あぁ～～～～～～～のびる～～～～～～～～」"
 				PRINTFORMW きりたんは女の子なのにずいぶんと身体がかたい
 				PRINTFORMW もっと運動したほうが良いだろう
 			ELSEIF LOCAL == 6
 				PRINTFORMW きりたんのお腹をぷよぷよと触っている
-				PRINTFORMW 「ふへっ」
+				CALL PRINTFORMW2T , @"「ふへっ」"
 				PRINTFORMW どうやら脇腹をつつくとくすぐったいらしい
 			ELSEIF LOCAL == 7
 				PRINTFORMW きりたんに背中を触らせている
 				IF TALENT:MASTER:オトコ
-					PRINTFORMW 「%CSTR:1%の背中、おっきくてごつごつしてますね」
+					CALL PRINTFORMW2T , @"「%CSTR:1%の背中、おっきくてごつごつしてますね」"
 				ELSE
-					PRINTFORMW 「%CSTR:1%の背中、おっきいですね」
+					CALL PRINTFORMW2T , @"「%CSTR:1%の背中、おっきいですね」"
 				ENDIF
-				PRINTFORMW 「わたしの手、いくつぶんくらいでしょう」
+				CALL PRINTFORMW2T , @"「わたしの手、いくつぶんくらいでしょう」"
 				PRINTFORMW きりたんの手が小さいだけの気もするが……
 				PRINTFORMW きりたんは興味深々に背中をさわり続けている
 			ELSE
 				PRINTFORMW きりたんに断りを入れてふとももを触らせてもらっている
 				PRINTFORMW 若い肌のすべすべ感がたまらない……
-				PRINTFORMW 「私のふともももすべすべな自信があります」
-				PRINTFORMW 「なんってったって、あのずんねえさまの妹ですからね！」
+				CALL PRINTFORMW2T , @"「私のふともももすべすべな自信があります」"
+				CALL PRINTFORMW2T , @"「なんってったって、あのずんねえさまの妹ですからね！」"
 				PRINTFORMW にしては筋肉が足りなくてぷよぷよだ。もっと運動するべきではなかろうか
-				PRINTFORMW 「触らせてあげてるのに、何様ですか%CSTR:1%は……」
+				CALL PRINTFORMW2T , @"「触らせてあげてるのに、何様ですか%CSTR:1%は……」"
 			ENDIF
 		;それ以外
 		ELSE
 			IF RAND:2 == 0
-				PRINTFORMW 「う～ん」
+				CALL PRINTFORMW2T , @"「う～ん」"
 				PRINTFORMW きりたんは難しい顔をして、自分への接触を許している
-				PRINTFORMW 「う～～～～～～～～ん」
+				CALL PRINTFORMW2T , @"「う～～～～～～～～ん」"
 			ELSE
-				PRINTFORMW 「まぁ、%CSTR:1%がそういうなら触ってもいいですよ……」
+				CALL PRINTFORMW2T , @"「まぁ、%CSTR:1%がそういうなら触ってもいいですよ……」"
 			ENDIF
 		ENDIF
 	ENDIF
@@ -3203,7 +3202,7 @@ ENDIF
 IF SELECTCOM == 304
 	;初めて
 	IF CFLAG:408 == 0
-		PRINTFORMW 「%CSTR:1%、よろしければ一緒にゲームやりませんか？」
+		CALL PRINTFORMW2T , @"「%CSTR:1%、よろしければ一緒にゲームやりませんか？」"
 		CFLAG:408 = 1
 	;二回目以降
 	ELSE
@@ -3216,49 +3215,49 @@ IF SELECTCOM == 304
 				;フォートナイト
 				PRINTFORMW きりたんと一緒に対人シューティングゲームをやっている
 				PRINTFORMW ……が、自分はあっさりやられてしまった
-				PRINTFORMW 「なっさけないですねー、%CSTR:1%」
-				PRINTFORMW 「崖の上にあがるときは、ちゃんとふもとをクリアリングしましょう」
+				CALL PRINTFORMW2T , @"「なっさけないですねー、%CSTR:1%」"
+				CALL PRINTFORMW2T , @"「崖の上にあがるときは、ちゃんとふもとをクリアリングしましょう」"
 			ELSEIF LOCAL == 1
 				PRINTFORMW きりたんと一緒に対人シューティングゲームをやっている
-				PRINTFORMW 「お、アイテムが落ちてますね、ということは敵が……」
+				CALL PRINTFORMW2T , @"「お、アイテムが落ちてますね、ということは敵が……」"
 				PRINTFORMW きりたんはアイテムの横方向に振り向き、そこに居た敵をしっかりとエイムする
-				PRINTFORMW 「やりぃ」
+				CALL PRINTFORMW2T , @"「やりぃ」"
 			ELSEIF LOCAL == 2
 				;ぷよテト
 				PRINTFORMW きりたんと一緒に落ちものパズルゲームをやっている
 				PRINTFORMW 片方はテトリスを、もう片方はぷよぷよをやるという、異種格闘技のようなゲームだ
-				PRINTFORMW 「%CSTR:1%は、テトリスはうまいですね」
+				CALL PRINTFORMW2T , @"「%CSTR:1%は、テトリスはうまいですね」"
 				PRINTFORMW まあ、Tスピンが好きで子供のころは沢山やってたからな
-				PRINTFORMW 「DT砲とか覚えればもっと強くなりそうな気がします」
+				CALL PRINTFORMW2T , @"「DT砲とか覚えればもっと強くなりそうな気がします」"
 			ELSEIF LOCAL == 3
 				PRINTFORMW きりたんと一緒に落ちものパズルゲームをやっている
 				PRINTFORMW きりたんに8連鎖を打たれまくって負けてしまった……
-				PRINTFORMW 「うーん、でもこのゲームはぷよ側がきついですね」
-				PRINTFORMW 「テトリスがうらやましい」
+				CALL PRINTFORMW2T , @"「うーん、でもこのゲームはぷよ側がきついですね」"
+				CALL PRINTFORMW2T , @"「テトリスがうらやましい」"
 			ELSEIF LOCAL == 4
 				PRINTFORMW きりたんと一緒に落ちものパズルゲームをやっている
 				PRINTFORMW 自分が２連続で全消しを決めたのできりたんに勝てた
-				PRINTFORMW 「連続パフェクリはチートですよ！！ずるい！！」
+				CALL PRINTFORMW2T , @"「連続パフェクリはチートですよ！！ずるい！！」"
 			ELSEIF LOCAL == 5
 				PRINTFORMW きりたんが落ちものパズルゲームをやっている
 				PRINTFORMW ツモが悪いらしく、きりたんがパニクっている
-				PRINTFORMW 「置けない置けない置けない！」
-				PRINTFORMW 「なんでこのゲーム赤色こないんですか！SEG○のばかやろー！」
+				CALL PRINTFORMW2T , @"「置けない置けない置けない！」"
+				CALL PRINTFORMW2T , @"「なんでこのゲーム赤色こないんですか！SEG○のばかやろー！」"
 			ELSEIF LOCAL == 6
 			;スプーン
 				PRINTFORMW きりたんと一緒にイカのゲームをやっている
-				PRINTFORMW 「うーんやっぱバイトは楽しいですね」
+				CALL PRINTFORMW2T , @"「うーんやっぱバイトは楽しいですね」"
 				PRINTFORMW ……現実の労働もこれくらい楽しいといいんだけどなぁ
 			ELSEIF LOCAL == 7
 				PRINTFORMW きりたんと一緒にイカのゲームをやっている
 				PRINTFORMW 今は『フェス』といって、陣営に分かれてゲームをする期間だ
-				PRINTFORMW 「たけのこ派めー！今日という今日は駆逐してやるー！」
+				CALL PRINTFORMW2T , @"「たけのこ派めー！今日という今日は駆逐してやるー！」"
 				PRINTFORMW ……ホントは自分もきのこよりはたけのこ派なのだが黙っておこう
 			ELSEIF LOCAL == 8
 			;弐寺
 				PRINTFORMW きりたんと音楽ゲームをやっている
-				PRINTFORMW 「この曲好きなんですよね～　スクラッチ音がたまらない」
-				PRINTFORMW 「わっちゃーわっちゃー」
+				CALL PRINTFORMW2T , @"「この曲好きなんですよね～　スクラッチ音がたまらない」"
+				CALL PRINTFORMW2T , @"「わっちゃーわっちゃー」"
 				PRINTFORMW そう言いながらきりたんは素早くスクラッチする
 				PRINTFORMW 一方の自分は、ボタンとスクラッチの交互に慣れず、
 				PRINTFORMW ゲージが貯まらないまま終了してしまった……
@@ -3270,11 +3269,11 @@ IF SELECTCOM == 304
 			ELSEIF LOCAL == 10
 				PRINTFORMW きりたんが音楽ゲームをやっている
 				PRINTFORMW 同じ曲を何回もやっている。この曲はベートーヴェンの「悲愴」のアレンジだろうか
-				PRINTFORMW 「チッ！あぁーーっもう！またフルコン逃した！」
-				PRINTFORMW 「左に鍵盤置きながら皿降ってくるのおかしいよ！」
+				CALL PRINTFORMW2T , @"「チッ！あぁーーっもう！またフルコン逃した！」"
+				CALL PRINTFORMW2T , @"「左に鍵盤置きながら皿降ってくるのおかしいよ！」"
 				PRINTFORMW きりたんの嘆きが聴こえる。そっとしておこう……
 			ELSE
-				PRINTFORMW 「やっぱりゲームは最高ですね」
+				CALL PRINTFORMW2T , @"「やっぱりゲームは最高ですね」"
 			ENDIF
 		ENDIF
 	ENDIF
@@ -3286,8 +3285,8 @@ ENDIF
 IF SELECTCOM == 305
 	;初めて
 	IF CFLAG:409 == 0
-		PRINTFORMW 「この家の掃除ですか？」
-		PRINTFORMW 「いいですよ、一緒にやりましょう」
+		CALL PRINTFORMW2T , @"「この家の掃除ですか？」"
+		CALL PRINTFORMW2T , @"「いいですよ、一緒にやりましょう」"
 
 
 		CFLAG:409 = 1
@@ -3300,23 +3299,23 @@ IF SELECTCOM == 305
 			LOCAL = RAND:3
 			IF LOCAL == 0
 				PRINTFORML きりたんはまだ若いが、料理はとても美味しい
-				PRINTFORMW 「えへへっ、ありがとうございますっ」
+				CALL PRINTFORMW2T , @"「えへへっ、ありがとうございますっ」"
 				PRINTFORML どこでそんな料理技能を身に着けたのだろう？
-				PRINTFORMW 「私達東北家では、三姉妹でかわりばんこで料理当番してるんです」
-				PRINTFORMW 「で、一番上のイタコねえさまが料理上手なので」
-				PRINTFORMW 「いつも教えてもらっているんです」
+				CALL PRINTFORMW2T , @"「私達東北家では、三姉妹でかわりばんこで料理当番してるんです」"
+				CALL PRINTFORMW2T , @"「で、一番上のイタコねえさまが料理上手なので」"
+				CALL PRINTFORMW2T , @"「いつも教えてもらっているんです」"
 				PRINTFORMW なるほど……
-				PRINTFORMW 「ずんねえさまからははずんだもちの作り方しか教わったことないんですけどね」
+				CALL PRINTFORMW2T , @"「ずんねえさまからははずんだもちの作り方しか教わったことないんですけどね」"
 			ELSEIF LOCAL == 2
 				PRINTFORMW きりたんといっしょにエアコンの掃除をした
 				PRINTFORMW 長い間付けっぱなしだったので、フィルターにホコリが溜まっていた
-				PRINTFORMW 「げっほ！」
-				PRINTFORMW 「ホコリってどうしてこんなに溜まるんでしょうね」
+				CALL PRINTFORMW2T , @"「げっほ！」"
+				CALL PRINTFORMW2T , @"「ホコリってどうしてこんなに溜まるんでしょうね」"
 			ELSE
 				PRINTFORMW きりたんと一緒に部屋の片付けをした
 				PRINTFORMW そこらじゅうにゲームのディスクや本が散乱している
 				PRINTFORMW ……きりたんはぶっちゃけものを散らかし過ぎだと思う
-				PRINTFORMW 「……すみません……」
+				CALL PRINTFORMW2T , @"「……すみません……」"
 			ENDIF
 		ENDIF
 	ENDIF
@@ -3329,11 +3328,11 @@ ENDIF
 IF SELECTCOM == 306
 	;初めて
 	IF CFLAG:495 == 0
-		PRINTFORMW 「～♪」
+		CALL PRINTFORMW2T , @"「～♪」"
 		CFLAG:495 = 1
 	;二回目以降
 	ELSE
-		PRINTFORMW 「～♪」
+		CALL PRINTFORMW2T , @"「～♪」"
 	ENDIF
 ENDIF
 
@@ -3344,12 +3343,12 @@ IF SELECTCOM == 307
 	;初めて
 	IF CFLAG:496 == 0
 
-		PRINTFORMW 「えっ髪を梳きたい？まぁ……いいですよ」
-		PRINTFORMW 「……本当はただ髪に触りたいだけなんじゃないですか？」
+		CALL PRINTFORMW2T , @"「えっ髪を梳きたい？まぁ……いいですよ」"
+		CALL PRINTFORMW2T , @"「……本当はただ髪に触りたいだけなんじゃないですか？」"
 		CFLAG:496 = 1
 	;二回目
 	ELSEIF CFLAG:496 == 1
-		PRINTFORMW 「～♪」
+		CALL PRINTFORMW2T , @"「～♪」"
 		PRINTFORMW ！、きりたんの髪型、よく見るとおかっぱじゃない……？
 		PRINTFORMW ツインテールだ……！
 		CFLAG:496 = 2
@@ -3357,12 +3356,12 @@ IF SELECTCOM == 307
 	ELSE
 		;恋慕かつ恋人
 		IF (TALENT:恋慕 == 1 && TALENT:恋人 == 1) && (CFLAG:496 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「～♪」
+			CALL PRINTFORMW2T , @"「～♪」"
 			PRINTFORMW きりたんはご機嫌そうにしている
 			CFLAG:496 = 5
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 == 1 || TALENT:恋人 == 1) && (CFLAG:496 < 4 || FLAG:7 == 2)
-			PRINTFORMW 「～♪」
+			CALL PRINTFORMW2T , @"「～♪」"
 			PRINTFORMW きりたんはご機嫌そうにしている
 			CFLAG:496 = 4
 		;それ以外
@@ -3384,22 +3383,22 @@ IF SELECTCOM == 311
 	IF TFLAG:18 <= -1
 		;恋慕or恋人
 		IF TALENT:恋慕 == 1 || TALENT:恋人 == 1
-			PRINTFORML 「うーん……」
-			PRINTFORML 「なんていうか、こう言い方というか、ムードというか……」
+			CALL PRINTFORMW2T , @"「うーん……」"
+			CALL PRINTFORMW2T , @"「なんていうか、こう言い方というか、ムードというか……」"
 			PRINTFORMW きりたんにダメ出しされてしまった
 		ELSE
-			PRINTFORML 「うわ……」
-			PRINTFORMW 「すみません、キモいんでそれ以上しゃべらないでください」
+			CALL PRINTFORMW2T , @"「うわ……」"
+			CALL PRINTFORMW2T , @"「すみません、キモいんでそれ以上しゃべらないでください」"
 		ENDIF
 	;成功
 	ELSE
 		;恋慕or恋人
 		IF TALENT:恋慕 == 1 || TALENT:恋人 == 1
-			PRINTFORML 「えへへ…」
+			CALL PRINTFORMW2T , @"「えへへ…」"
 			PRINTFORMW きりたんはデレデレとした表情を浮かべている
 		ELSE
-			PRINTFORML 「あは、あはは……」
-			PRINTFORMW 「%CSTR:1%は、冗談がお得意のようですね」
+			CALL PRINTFORMW2T , @"「あは、あはは……」"
+			CALL PRINTFORMW2T , @"「%CSTR:1%は、冗談がお得意のようですね」"
 			PRINTFORMW そうは言いつつも、きりたんは照れているようだ
 		ENDIF
 	ENDIF
@@ -3419,14 +3418,14 @@ IF SELECTCOM == 312
 
 		;初めて
 		IF FLAG:538 == 0
-			PRINTFORMW 「私の頭を撫でたいんですか？」
+			CALL PRINTFORMW2T , @"「私の頭を撫でたいんですか？」"
 			;失敗
 			IF TFLAG:18 == -1
-				PRINTFORMW 「う～～～ん……まぁいいですけど」
-				PRINTFORMW 「私は小動物ではないですよ」
+				CALL PRINTFORMW2T , @"「う～～～ん……まぁいいですけど」"
+				CALL PRINTFORMW2T , @"「私は小動物ではないですよ」"
 			;成功
 			ELSE
-				PRINTFORMW 「まぁいいですけど、私は小動物ではないですよ」
+				CALL PRINTFORMW2T , @"「まぁいいですけど、私は小動物ではないですよ」"
 				PRINTFORMW そういうときりたんはしぶしぶ頭を撫でさせてくれた
 				PRINTFORML 
 				PRINTFORMW ！
@@ -3442,31 +3441,31 @@ IF SELECTCOM == 312
 			IF TALENT:恋慕 == 1
 				;失敗
 				IF TFLAG:18 == -1
-					PRINTFORMW 「うーん……」
+					CALL PRINTFORMW2T , @"「うーん……」"
 					PRINTFORMW きりたんは難しい表情をしている。なでなでされる気分ではなかったようだ
 				;成功
 				ELSEIF TFLAG:18 == 0
-					PRINTFORMW 「うーん」
-					PRINTFORMW 「まあ、いくらでも触らせてあげますよ、私はかわいいので」
+					CALL PRINTFORMW2T , @"「うーん」"
+					CALL PRINTFORMW2T , @"「まあ、いくらでも触らせてあげますよ、私はかわいいので」"
 					PRINTFORMW きりたんが少し調子に乗っている
 				;大成功
 				ELSE
-					PRINTFORMW 「えへへ……」
+					CALL PRINTFORMW2T , @"「えへへ……」"
 					PRINTFORMW きりたんの頭の包丁がぴこぴこと動いている
 				ENDIF
 			;恋慕ではない
 			ELSE
 				;失敗
 				IF TFLAG:18 == -1
-					PRINTFORMW 「うーん……」
+					CALL PRINTFORMW2T , @"「うーん……」"
 					PRINTFORMW きりたんは難しい表情をしている。なでなでされる気分ではなかったようだ
 				;成功
 				ELSEIF TFLAG:18 == 0
-					PRINTFORMW 「うーん」
-					PRINTFORMW 「私は小動物ではないんですが……」
+					CALL PRINTFORMW2T , @"「うーん」"
+					CALL PRINTFORMW2T , @"「私は小動物ではないんですが……」"
 				;大成功
 				ELSE
-					PRINTFORMW 「う、うーーーん……」
+					CALL PRINTFORMW2T , @"「う、うーーーん……」"
 					PRINTFORMW きりたんの頭の包丁がぴこぴこと動いている
 					PRINTFORMW 複雑そうな言葉とは裏腹に、なんだか嬉しそうだ
 				ENDIF
@@ -3481,17 +3480,17 @@ IF SELECTCOM == 312
 		;初めて
 		IF CFLAG:591 == 0
 		
-			PRINTFORMW 「頭を撫でて欲しいんですか？」
-			PRINTFORMW 「まあ、確かにお世話にはなってますが……」
+			CALL PRINTFORMW2T , @"「頭を撫でて欲しいんですか？」"
+			CALL PRINTFORMW2T , @"「まあ、確かにお世話にはなってますが……」"
 			PRINTFORMW しつこくお願いすると、きりたんはしぶしぶ撫でてくれた
 			;失敗
 			IF TFLAG:18 == -1
-				PRINTFORMW 「う～～～～～～～～～～ん……」
-				PRINTFORMW 「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」
+				CALL PRINTFORMW2T , @"「う～～～～～～～～～～ん……」"
+				CALL PRINTFORMW2T , @"「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」"
 			;成功
 			ELSE
-				PRINTFORMW 「うーん」
-				PRINTFORMW 「まあ、%CSTR:1%もいろいろお疲れだったんですね、よしよし」
+				CALL PRINTFORMW2T , @"「うーん」"
+				CALL PRINTFORMW2T , @"「まあ、%CSTR:1%もいろいろお疲れだったんですね、よしよし」"
 			ENDIF
 			
 		
@@ -3503,36 +3502,36 @@ IF SELECTCOM == 312
 			IF TALENT:恋慕 == 1
 				;失敗
 				IF TFLAG:18 == -1
-					PRINTFORMW 「う～～～～～～～～～～ん……」
-					PRINTFORMW 「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」
+					CALL PRINTFORMW2T , @"「う～～～～～～～～～～ん……」"
+					CALL PRINTFORMW2T , @"「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」"
 				;成功
 				ELSEIF TFLAG:18 == 0
-					PRINTFORMW 「よしよし、いつもお疲れ様でした」
+					CALL PRINTFORMW2T , @"「よしよし、いつもお疲れ様でした」"
 					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
 					PRINTFORMW 気持ちがいい……
 					;ママ……
 				;大成功
 				ELSE
-					PRINTFORMW 「おーよしよし、いつもお疲れ様でした」
+					CALL PRINTFORMW2T , @"「おーよしよし、いつもお疲れ様でした」"
 					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
 					PRINTFORMW 気持ちがいい……
-					PRINTFORMW 「元気になりましたか？」
+					CALL PRINTFORMW2T , @"「元気になりましたか？」"
 					PRINTFORMW もちろん。きりたんのおかげで癒やされた
-					PRINTFORMW 「そうですか。それはよかったです」
+					CALL PRINTFORMW2T , @"「そうですか。それはよかったです」"
 				ENDIF
 			;恋慕ではない
 			ELSE
 				;失敗
 				IF TFLAG:18 == -1
-					PRINTFORMW 「う～～～～～～～～～～ん……」
-					PRINTFORMW 「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」
+					CALL PRINTFORMW2T , @"「う～～～～～～～～～～ん……」"
+					CALL PRINTFORMW2T , @"「やっぱり、年上の人の頭を撫でるというのも奇妙なものですね」"
 				;成功
 				ELSEIF TFLAG:18 == 0
-					PRINTFORMW 「はいはい、いつもお疲れ様でした」
+					CALL PRINTFORMW2T , @"「はいはい、いつもお疲れ様でした」"
 					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
 				;大成功
 				ELSE
-					PRINTFORMW 「よしよし、いつもお疲れ様でした」
+					CALL PRINTFORMW2T , @"「よしよし、いつもお疲れ様でした」"
 					PRINTFORMW きりたんに膝枕してもらってなでなでしてもらった
 					PRINTFORMW 気持ちがいい……
 				ENDIF
@@ -3555,11 +3554,11 @@ ENDIF
 IF SELECTCOM == 313
 	;初めて
 	IF CFLAG:539 == 0
-		PRINTFORML 「うわぁ、きれいな星空……」
+		CALL PRINTFORMW2T , @"「うわぁ、きれいな星空……」"
 		PRINTFORMW 頭上には壮麗な星空が輝いていた。どの方角を見てもきらきらと小さな光が灯っている
-		PRINTFORML 「あまり外に出たことなかったから、こういうの見るの初めてですね」
+		CALL PRINTFORMW2T , @"「あまり外に出たことなかったから、こういうの見るの初めてですね」"
 		PRINTFORMW 外もたまにはいいだろう？ときりたんに問いかける
-		PRINTFORML 「うーん、でもやっぱり楽しさでいえばゲームのほうが上ですね」
+		CALL PRINTFORMW2T , @"「うーん、でもやっぱり楽しさでいえばゲームのほうが上ですね」"
 		PRINTFORMW そうか……
 	ELSE
 		SELECTCASE TFLAG:17
@@ -3567,11 +3566,11 @@ IF SELECTCOM == 313
 		CASE 2
 			;失敗
 			IF TFLAG:18 == -1
-				PRINTFORMW 「短冊に字書くの難しくないですか？」
+				CALL PRINTFORMW2T , @"「短冊に字書くの難しくないですか？」"
 				PRINTFORMW いくらなんでも、その歳で字が書けないことはないだろう
-				PRINTFORMW 「だってほら、吊るした状態で書こうとすると紙が安定しないじゃないですか」
+				CALL PRINTFORMW2T , @"「だってほら、吊るした状態で書こうとすると紙が安定しないじゃないですか」"
 				PRINTFORMW なんであらかじめ書いてから吊るさないんだ？
-				PRINTFORMW 「……ああ、そういう手もあるんですね」
+				CALL PRINTFORMW2T , @"「……ああ、そういう手もあるんですね」"
 				PRINTFORMW その手しか知りません
 			ELSE
 				PRINTFORML きりたんが何を祈願したのか気になったので
@@ -3583,24 +3582,24 @@ IF SELECTCOM == 313
 		CASE 3
 			;失敗
 			IF TFLAG:18 == -1
-				PRINTFORMW 「流れ星いっぱいですね」
+				CALL PRINTFORMW2T , @"「流れ星いっぱいですね」"
 				PRINTFORMW 願い事は言わなくてもいいのか？
-				PRINTFORMW 「あぁ……」
+				CALL PRINTFORMW2T , @"「あぁ……」"
 				PRINTFORMW 今の今までそんなこと忘れてた、という表情をしている
 			ELSE
 				PRINTFORMW 空に流れ星がとめどなく輝いている
-				PRINTFORMW 「ずんねえさまずんねえさまずんねえさま」
+				CALL PRINTFORMW2T , @"「ずんねえさまずんねえさまずんねえさま」"
 				PRINTFORMW ……それは何が叶う願い事なんだ？
 			ENDIF
 		;流星
 		CASE 4
 			;失敗
 			IF TFLAG:18 == -1
-				PRINTFORMW 「流れ星が落ちるまでに3回願い事を言うって、無理ゲーじゃないですか！？」
+				CALL PRINTFORMW2T , @"「流れ星が落ちるまでに3回願い事を言うって、無理ゲーじゃないですか！？」"
 				PRINTFORMW そう言われましても……
 			ELSE
 				PRINTFORMW 空に流れ星がとめどなく輝いている
-				PRINTFORMW 「ずんねえさまずんねえさまずんねえさま」
+				CALL PRINTFORMW2T , @"「ずんねえさまずんねえさまずんねえさま」"
 				PRINTFORMW ……それは何が叶う願い事なんだ？
 			ENDIF
 		ENDSELECT
@@ -3680,7 +3679,7 @@ ENDIF
 IF SELECTCOM == 315
 	;初めて
 	IF CFLAG:544 == 0
-		PRINTFORMW 「お散歩ですか？ええまあ、いいですけど……」
+		CALL PRINTFORMW2T , @"「お散歩ですか？ええまあ、いいですけど……」"
 		PRINTFORMW きりたんは歯切れの悪い返事をする。あまり外に出たがらない気分のようだ
 		CFLAG:544 = 1
 	;二回目以降
@@ -3690,10 +3689,10 @@ IF SELECTCOM == 315
 			
 			;天気が雨or雪
 			IF TIME:5 == 3 || TIME:5 == 5
-				PRINTFORMW 「雨……」
-				PRINTFORMW 「手、にぎってもいいですか？」
+				CALL PRINTFORMW2T , @"「雨……」"
+				CALL PRINTFORMW2T , @"「手、にぎってもいいですか？」"
 			ELSE
-				PRINTFORMW 「まあ、%CSTR:1%と一緒なら、外もそんなに退屈でもないですね」
+				CALL PRINTFORMW2T , @"「まあ、%CSTR:1%と一緒なら、外もそんなに退屈でもないですね」"
 				PRINTFORMW きりたんはまんざらでもなさそうにしている
 			ENDIF
 			
@@ -3701,10 +3700,10 @@ IF SELECTCOM == 315
 		ELSEIF CFLAG:544 < 2 || FLAG:7 == 2
 			;天気が雨or雪
 			IF TIME:5 == 3 || TIME:5 == 5
-				PRINTFORMW 「うえ、雨降ってますね」
-				PRINTFORMW 「なんでこんな日に出かけようと思ったんですか？」
+				CALL PRINTFORMW2T , @"「うえ、雨降ってますね」"
+				CALL PRINTFORMW2T , @"「なんでこんな日に出かけようと思ったんですか？」"
 			ELSE
-				PRINTFORMW 「うーん、おうち帰りたい……」
+				CALL PRINTFORMW2T , @"「うーん、おうち帰りたい……」"
 				PRINTFORMW きりたんはあまり楽しくなさそうだ
 			ENDIF
 			CFLAG:544 = 2
@@ -3761,33 +3760,33 @@ ENDIF
 IF SELECTCOM == 320
 	;初めて
 	IF CFLAG:404 == 0
-		PRINTFORMW 「居酒屋ですか、○学生なのであまり来ないですけど……」
-		PRINTFORMW 「お子様用のメニューありますかね」
+		CALL PRINTFORMW2T , @"「居酒屋ですか、○学生なのであまり来ないですけど……」"
+		CALL PRINTFORMW2T , @"「お子様用のメニューありますかね」"
 		CFLAG:404 = 1
 	;二回目以降
 	ELSE
 		;恋慕
 		IF TALENT:恋慕 == 1 && (CFLAG:404 < 6 || FLAG:7 == 2)
-			PRINTFORMW 「うわ！この店ずんだサイダーありますよ！」
+			CALL PRINTFORMW2T , @"「うわ！この店ずんだサイダーありますよ！」"
 			PRINTFORMW 本当だ。なんでこんなものが……
 			CFLAG:404 = 6
 		;恋人
 		ELSEIF TALENT:恋人 == 1 && (CFLAG:404 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「%CSTR:1%が飲んでるそのミルク、美味しそうですね」
-			PRINTFORMW 「え、これお酒なんですか！」
+			CALL PRINTFORMW2T , @"「%CSTR:1%が飲んでるそのミルク、美味しそうですね」"
+			CALL PRINTFORMW2T , @"「え、これお酒なんですか！」"
 			CFLAG:404 = 5
 		;キス経験有り
 		ELSEIF EXP:96 > 0 && (CFLAG:404 < 4 || FLAG:7 == 2)
-			PRINTFORMW 「このたこわさおいしいですね」
+			CALL PRINTFORMW2T , @"「このたこわさおいしいですね」"
 			CFLAG:404 = 4
 		;デート経験有り
 		ELSEIF EXP:94 > 0 && (CFLAG:404 < 3 || FLAG:7 == 2)
-			PRINTFORMW 「うーん、やっぱり居酒屋はあまり居心地がよくありませんね」
+			CALL PRINTFORMW2T , @"「うーん、やっぱり居酒屋はあまり居心地がよくありませんね」"
 			CFLAG:404 = 3
 		;それ以外
 		ELSEIF CFLAG:404 < 2 || FLAG:7 == 2
-			PRINTFORMW 「お酒は飲めないのでジュース飲みますか」
-			PRINTFORMW 「あ、サイダーお願いします」
+			CALL PRINTFORMW2T , @"「お酒は飲めないのでジュース飲みますか」"
+			CALL PRINTFORMW2T , @"「あ、サイダーお願いします」"
 			CFLAG:404 = 2
 		ENDIF
 	ENDIF
@@ -3800,9 +3799,9 @@ ENDIF
 IF SELECTCOM == 321
 	;初めて
 	IF CFLAG:406 == 0
-		PRINTFORMW 「えー外ですか、めんどくさい……」
+		CALL PRINTFORMW2T , @"「えー外ですか、めんどくさい……」"
 		PRINTFORMW そうはいっても、たまには歩かないと健康を損なう
-		PRINTFORMW 「家でゲームしてるほうが楽しいのに」
+		CALL PRINTFORMW2T , @"「家でゲームしてるほうが楽しいのに」"
 		CFLAG:406 = 1
 	;二回目以降
 	ELSE
@@ -3812,12 +3811,12 @@ IF SELECTCOM == 321
 		CASE 0
 			;恋慕または恋人
 			IF (TALENT:恋慕 == 1 || TALENT:恋人 == 1 ) && (CFLAG:406 < 6 || FLAG:7 == 2)
-				PRINTFORML 「つくづく、外って解像度高いですよね」
+				CALL PRINTFORMW2T , @"「つくづく、外って解像度高いですよね」"
 				PRINTFORMW ここはゲームの世界じゃないぞ、ときりたんに言う
 				CFLAG:406 = 6
 			;それ以外
 			ELSEIF CFLAG:406 < 2 || FLAG:7 == 2
-				PRINTFORML 「あ、足がいたい……」
+				CALL PRINTFORMW2T , @"「あ、足がいたい……」"
 				PRINTFORMW きりたんはちょっと歩いただけでバテてしまった
 				CFLAG:406 = 2
 			ENDIF
@@ -3825,25 +3824,25 @@ IF SELECTCOM == 321
 		CASE 1
 			;恋慕または恋人
 			IF (TALENT:恋慕 == 1 || TALENT:恋人 == 1 ) && (CFLAG:406 < 6 || FLAG:7 == 2)
-				PRINTFORML 「はぁ、はぁ、ぜぇ、ぜぇ……」
+				CALL PRINTFORMW2T , @"「はぁ、はぁ、ぜぇ、ぜぇ……」"
 				PRINTFORMW 少しジョギングをしたらきりたんは息が上がってしまった
 				CFLAG:406 = 6
 			;それ以外
 			ELSEIF CFLAG:406 < 2 || FLAG:7 == 2
-				PRINTFORML 「あ、足がいたい……」
+				CALL PRINTFORMW2T , @"「あ、足がいたい……」"
 				PRINTFORMW きりたんはちょっと歩いただけでバテてしまった
 				CFLAG:406 = 2
 			ENDIF
 		CASE 2
 			;恋慕または恋人
 			IF (TALENT:恋慕 == 1 || TALENT:恋人 == 1 ) && (CFLAG:406 < 6 || FLAG:7 == 2)
-				PRINTFORML 「%CSTR:1%、そ、その、手離さないでくださいね」
+				CALL PRINTFORMW2T , @"「%CSTR:1%、そ、その、手離さないでくださいね」"
 				PRINTFORMW はいはい、と震えるきりたんに言葉をかける
 				CFLAG:406 = 6
 			;それ以外
 			ELSEIF CFLAG:406 < 2 || FLAG:7 == 2
-				PRINTFORML 「お化け屋敷……」
-				PRINTFORMW 「まぁこの歳になったらお化けなんてもう信じてませんよ」
+				CALL PRINTFORMW2T , @"「お化け屋敷……」"
+				CALL PRINTFORMW2T , @"「まぁこの歳になったらお化けなんてもう信じてませんよ」"
 				PRINTFORMW きりたんはそう言いつつも少し尻込みしている
 				CFLAG:406 = 2
 			ENDIF
@@ -3880,14 +3879,14 @@ ENDIF
 IF SELECTCOM == 323 && TEQUIP:2 > 0 && 0
 	;初めて
 	IF CFLAG:407 == 0
-		PRINTFORMW 「えー外ですか、めんどくさい……」
-		PRINTFORMW 「行くにしてもゲーセン行きましょうよ」
+		CALL PRINTFORMW2T , @"「えー外ですか、めんどくさい……」"
+		CALL PRINTFORMW2T , @"「行くにしてもゲーセン行きましょうよ」"
 		CFLAG:407 = 1
 	;二回目以降
 	ELSE
 		;親愛または相愛
 		IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:407 < 4 || FLAG:キャラ口上の表示頻度 == 2)
-			PRINTFORMW 「こうして、一緒に遊びに行くのも、なんだか慣れちゃいましたね」
+			CALL PRINTFORMW2T , @"「こうして、一緒に遊びに行くのも、なんだか慣れちゃいましたね」"
 			CFLAG:407 = 4
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:407 < 3 || FLAG:キャラ口上の表示頻度 == 2)
@@ -4021,8 +4020,8 @@ ENDIF
 IF SELECTCOM == 361
 	;初めて
 	IF CFLAG:414 == 0
-		PRINTFORMW 「えっ、服の上からするんですか！？」
-		PRINTFORMW 「んっ……まあいいですけど……うぅ……服が汚れちゃう」
+		CALL PRINTFORMW2T , @"「えっ、服の上からするんですか！？」"
+		CALL PRINTFORMW2T , @"「んっ……まあいいですけど……うぅ……服が汚れちゃう」"
 		CFLAG:414 = 1
 	;二回目以降
 	ELSE
@@ -4256,37 +4255,37 @@ IF SELECTCOM == 399
 	IF TALENT:恋人 && (CFLAG:415 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW きりたんに、これからも一緒につきあって欲しい、とお願いした
 		PRINTFORML 
-		PRINTFORMW 「はぁ……」
+		CALL PRINTFORMW2T , @"「はぁ……」"
 		PRINTFORMW きりたんは大きくため息をついた
-		PRINTFORMW 「……私、小学五年生ですよ？」
-		PRINTFORMW 「こんな私で、いいんですか？」
+		CALL PRINTFORMW2T , @"「……私、小学五年生ですよ？」"
+		CALL PRINTFORMW2T , @"「こんな私で、いいんですか？」"
 		PRINTFORML 
-		PRINTFORMW 「こんなに歳も違うし」
-		PRINTFORMW 「家事洗濯も姉さまたちには到底かなわないし」
-		PRINTFORMW 「その……身体も小さいですし」
-		PRINTFORMW 「だいいち、未成年ですからね？」
+		CALL PRINTFORMW2T , @"「こんなに歳も違うし」"
+		CALL PRINTFORMW2T , @"「家事洗濯も姉さまたちには到底かなわないし」"
+		CALL PRINTFORMW2T , @"「その……身体も小さいですし」"
+		CALL PRINTFORMW2T , @"「だいいち、未成年ですからね？」"
 		PRINTFORML 
 		PRINTFORMW それでも構わない、きりたんが好きだ、と答える
-		PRINTFORMW 「、っ……！」
-		PRINTFORMW 「面と向かって言われると、恥ずかしいですね……」
-		PRINTFORMW 「まったく、しょうがない%CSTR:1%」
-		PRINTFORMW 「ほんと、呆れちゃいますね」
+		CALL PRINTFORMW2T , @"「、っ……！」"
+		CALL PRINTFORMW2T , @"「面と向かって言われると、恥ずかしいですね……」"
+		CALL PRINTFORMW2T , @"「まったく、しょうがない%CSTR:1%」"
+		CALL PRINTFORMW2T , @"「ほんと、呆れちゃいますね」"
 		PRINTFORML 
-		PRINTFORMW 「……いいですよ、つきあってあげます」
+		CALL PRINTFORMW2T , @"「……いいですよ、つきあってあげます」"
 		PRINTFORMW ！ 本当か……？
-		PRINTFORMW 「はい。ふつつかものですが、よろしくおねがいします」
+		CALL PRINTFORMW2T , @"「はい。ふつつかものですが、よろしくおねがいします」"
 		PRINTFORMW 心臓が高鳴る。やった、きりたんと付き合えるんだ
 		PRINTFORMW ありがとう、ときりたんにお礼を言う
-		PRINTFORMW 「ど、どういたしまして……」
+		CALL PRINTFORMW2T , @"「ど、どういたしまして……」"
 		PRINTFORML 
 		CFLAG:415 = 3
 	;失敗
 	ELSEIF CFLAG:415 < 2 || FLAG:キャラ口上の表示頻度 == 2
 		PRINTFORMW きりたんに、これからも一緒につきあって欲しい、とお願いした
-		PRINTFORMW 「はぁ……」
+		CALL PRINTFORMW2T , @"「はぁ……」"
 		PRINTFORMW きりたんは大きくため息をついた
-		PRINTFORMW 「私、小学五年生ですよ？%CSTR:1%は情けなくないんですか？」
-		PRINTFORMW 「ほんと、呆れますね」
+		CALL PRINTFORMW2T , @"「私、小学五年生ですよ？%CSTR:1%は情けなくないんですか？」"
+		CALL PRINTFORMW2T , @"「ほんと、呆れますね」"
 		PRINTFORMW あっさり断られてしまった
 		CFLAG:415 = 2
 	ENDIF
@@ -4307,10 +4306,10 @@ IF SELECTCOM == 0
 	IF CFLAG:416 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「ぁ……」
+			CALL PRINTFORMW2T , @"「ぁ……」"
 			PRINTFORMW （%CSTR:1%の手って、こんなに大きかったんだ……）
 		ELSE
-			PRINTFORMW 「ぁ……」
+			CALL PRINTFORMW2T , @"「ぁ……」"
 			PRINTFORMW （%CSTR:1%の手って、こんなに大きかったんだ……）
 		ENDIF
 			CFLAG:416 = 1
@@ -4326,32 +4325,32 @@ IF SELECTCOM == 0
 				PRINTFORMW  きりたんはもじもじと身体をくねらせている
 			ELSE
 				PRINTFORMW きりたんは愛撫に対応してもぞもぞと体を動かしている
-				PRINTFORMW 「んぅ……んうっ」
+				CALL PRINTFORMW2T , @"「んぅ……んうっ」"
 			ENDIF
 			CFLAG:416 = 4
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:416 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			A = RAND:3
 			IF A == 0
-				PRINTFORMW 「んあっ…ひゃっ」
+				CALL PRINTFORMW2T , @"「んあっ…ひゃっ」"
 				PRINTFORMW きりたんの身体はびくびくと官能的に跳ねている
 			ELSEIF A == 1
-				PRINTFORMW 「そう、そこっ、コリコリって……あ、んんっ」
+				CALL PRINTFORMW2T , @"「そう、そこっ、コリコリって……あ、んんっ」"
 			ELSE
 				PRINTFORMW きりたんは愛撫に対応してもぞもぞと体を動かしている
-				PRINTFORMW 「んぅ……んんっ」
+				CALL PRINTFORMW2T , @"「んぅ……んんっ」"
 			ENDIF
 			CFLAG:417 = 3
 		ELSEIF (CFLAG:416 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 			B = RAND:3
 			IF B == 0
-				PRINTFORMW 「ちょっと、くすぐったいですよっ」
+				CALL PRINTFORMW2T , @"「ちょっと、くすぐったいですよっ」"
 			ELSEIF B == 1
-				PRINTFORMW 「いっ、いたっ」
-				PRINTFORMW 「もうちょっと優しくお願いできますか？」
+				CALL PRINTFORMW2T , @"「いっ、いたっ」"
+				CALL PRINTFORMW2T , @"「もうちょっと優しくお願いできますか？」"
 			ELSE
 				PRINTFORMW きりたんはまだ触られる感覚に慣れていないようだ
-				PRINTFORMW 「ん……んぅ……」
+				CALL PRINTFORMW2T , @"「ん……んぅ……」"
 			ENDIF
 			
 			CFLAG:416 = 2
@@ -4368,9 +4367,9 @@ IF SELECTCOM == 1 && TEQUIP:57 == 0
 	IF CFLAG:417 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「そ、そんなところ汚いですよ…」
+			CALL PRINTFORMW2T , @"「そ、そんなところ汚いですよ…」"
 		ELSE
-			PRINTFORMW 「ひっ……そんな所、舐めないでください……」
+			CALL PRINTFORMW2T , @"「ひっ……そんな所、舐めないでください……」"
 		ENDIF
 			CFLAG:417 = 1
 	;二回目以降
@@ -4379,12 +4378,12 @@ IF SELECTCOM == 1 && TEQUIP:57 == 0
 		IF TALENT:恋慕 && ABL:Ｃ感覚 > 4 && (CFLAG:417 < 4 || FLAG:キャラ口上の表示頻度 == 2)
 			LOCAL = RAND:3
 			IF LOCAL == 0
-				PRINTFORMW 「ああっ、ひゃあああああっ」
+				CALL PRINTFORMW2T , @"「ああっ、ひゃあああああっ」"
 				PRINTFORMW きりたんの股間から透明な汁がとめどなく流れてくる
 			ELSEIF LOCAL == 1
-				PRINTFORMW 「ふわああっ、そこ、だめっ」
+				CALL PRINTFORMW2T , @"「ふわああっ、そこ、だめっ」"
 			ELSE
-				PRINTFORMW 「んんんっ！〜〜〜〜〜〜〜っ！」
+				CALL PRINTFORMW2T , @"「んんんっ！〜〜〜〜〜〜〜っ！」"
 PRINTFORMW きりたんは股間からくる快感の波を受け止めきれていないようだ
 			ENDIF
 			CFLAG:417 = 4
@@ -4392,18 +4391,18 @@ PRINTFORMW きりたんは股間からくる快感の波を受け止めきれて
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:417 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			LOCAL = RAND:4
 			IF LOCAL == 0
-				PRINTFORMW 「ぁ……」
+				CALL PRINTFORMW2T , @"「ぁ……」"
 				PRINTFORMW %CALLNAME:MASTER%はきりたんの秘所に顔を近づける
 				PRINTFORMW きりたんのそこからはこれから始まる行為への期待で蜜が零れていた
 				PRINTFORMW %CALLNAME:MASTER%はきりたんの膣口を舐めまわす
-				PRINTFORMW 「くひゃぁあんっ！」
+				CALL PRINTFORMW2T , @"「くひゃぁあんっ！」"
 				PRINTFORMW きりたんはあまりの快感にのけぞった
 			ELSEIF LOCAL == 1
-				PRINTFORMW 「んあっ、はっ…んくううぅっ！」
+				CALL PRINTFORMW2T , @"「んあっ、はっ…んくううぅっ！」"
 			ELSEIF LOCAL == 2
-				PRINTFORMW 「んあぁ！びりびりってする…そんないじらないでください…」
+				CALL PRINTFORMW2T , @"「んあぁ！びりびりってする…そんないじらないでください…」"
 			ELSE
-				PRINTFORMW 「んあっ、はっ…んくううぅっ！」
+				CALL PRINTFORMW2T , @"「んあっ、はっ…んくううぅっ！」"
 			ENDIF
 			CFLAG:417 = 3
 		ELSE
@@ -4466,31 +4465,31 @@ IF SELECTCOM == 3 && TEQUIP:18 == 0 && TEQUIP:53 == 0
 	IF CFLAG:419 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「自分で……ですか？わかりました、やってみます……」
+			CALL PRINTFORMW2T , @"「自分で……ですか？わかりました、やってみます……」"
 		ELSE
-			PRINTFORMW 「自分で……ですか？」
-			PRINTFORMW 「れ、練習のためなら仕方ないですね……」
+			CALL PRINTFORMW2T , @"「自分で……ですか？」"
+			CALL PRINTFORMW2T , @"「れ、練習のためなら仕方ないですね……」"
 		ENDIF
 		CFLAG:419 = 1
 	;二回目以降
 	ELSE
 		;恋慕+自慰中毒Lv5以上
 		IF TALENT:恋慕 == 1 && ABL:10 >= 5 && (CFLAG:419 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「%CSTR:1%、私のえっちな姿、いーっぱい見てくださいね」
+			CALL PRINTFORMW2T , @"「%CSTR:1%、私のえっちな姿、いーっぱい見てくださいね」"
 			PRINTFORMW きりたん自慰を見られて興奮しているようだ。激しく自分の手で体をまさぐっている
 			CFLAG:419 = 5
 		;恋慕
 		ELSEIF TALENT:恋慕 == 1 && (CFLAG:419 < 4 || FLAG:7 == 2)
 			B = RAND:3
 			IF B == 0
-				PRINTFORMW 「えへへっ、%CSTR:1%のために、いーっぱい自分で練習してきたんですよ」
-				PRINTFORMW 「んっ……んふっ……きもちぃ、んあっ」
+				CALL PRINTFORMW2T , @"「えへへっ、%CSTR:1%のために、いーっぱい自分で練習してきたんですよ」"
+				CALL PRINTFORMW2T , @"「んっ……んふっ……きもちぃ、んあっ」"
 			ELSEIF B == 1
-				PRINTFORMW 「%CSTR:1%にいろいろ教えてもらって、ひとりでも気持ちよくなれるようになってきました」
-				PRINTFORMW 「あはははっ、こうやって、びりびりってして、ふわーってなるんです」
-				PRINTFORMW 「これっ、んんっ、やみつきになりますね」
+				CALL PRINTFORMW2T , @"「%CSTR:1%にいろいろ教えてもらって、ひとりでも気持ちよくなれるようになってきました」"
+				CALL PRINTFORMW2T , @"「あはははっ、こうやって、びりびりってして、ふわーってなるんです」"
+				CALL PRINTFORMW2T , @"「これっ、んんっ、やみつきになりますね」"
 			ELSE
-				PRINTFORMW 「こうやって、机のかどに……んんっ……押し付けてもいい感じになれますね」
+				CALL PRINTFORMW2T , @"「こうやって、机のかどに……んんっ……押し付けてもいい感じになれますね」"
 			ENDIF
 			CFLAG:419 = 4
 		;合意or恋人
@@ -4500,8 +4499,8 @@ IF SELECTCOM == 3 && TEQUIP:18 == 0 && TEQUIP:53 == 0
 			CFLAG:419 = 3
 		;それ以外
 		ELSEIF CFLAG:419 < 2 || FLAG:7 == 2
-			PRINTFORMW 「ぁん…うぅ…くぅ…うぅ…」
-			PRINTFORMW 「練習、ですからね、練習……」
+			CALL PRINTFORMW2T , @"「ぁん…うぅ…くぅ…うぅ…」"
+			CALL PRINTFORMW2T , @"「練習、ですからね、練習……」"
 			CFLAG:419 = 2
 		ENDIF
 	ENDIF
@@ -4547,25 +4546,25 @@ IF SELECTCOM == 5
 	IF CFLAG:421 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「……私の胸、触っても何もないと思うんですけど」
+			CALL PRINTFORMW2T , @"「……私の胸、触っても何もないと思うんですけど」"
 		ELSE
-			PRINTFORMW 「……私の胸、触っても何もないと思うんですけど」
+			CALL PRINTFORMW2T , @"「……私の胸、触っても何もないと思うんですけど」"
 		ENDIF
 			CFLAG:421 = 1
 	;二回目以降
 	ELSE
 		;恋慕+B感覚Lv5以上
 		IF TALENT:恋慕 == 1 && ABL:14 >= 5 && (CFLAG:421 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「これっ、おかしっ、ちくび、すごっ」
+			CALL PRINTFORMW2T , @"「これっ、おかしっ、ちくび、すごっ」"
 			CFLAG:421 = 5
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:421 < 3 || FLAG:キャラ口上の表示頻度 == 2)
-			PRINTFORMW 「うーん、たしかにじわじわ感じるようにはなってきましたが…」
+			CALL PRINTFORMW2T , @"「うーん、たしかにじわじわ感じるようにはなってきましたが…」"
 			CFLAG:421 = 3
 		;それ以外
 		ELSEIF CFLAG:421 < 2 || FLAG:7 == 2
-			PRINTFORMW 「……ほんとに乳首触って感じるようになるんですかね？」
-			PRINTFORMW 「幻想じゃないですか？」
+			CALL PRINTFORMW2T , @"「……ほんとに乳首触って感じるようになるんですかね？」"
+			CALL PRINTFORMW2T , @"「幻想じゃないですか？」"
 			CFLAG:421 = 2
 		ENDIF
 	ENDIF
@@ -4590,19 +4589,19 @@ IF SELECTCOM == 6
 	ELSE
 		;親愛
 		IF TALENT:親愛 == 1 && (CFLAG:422 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「ちゅうぅぅ…ちゅうぅ…っぷはぁ…」
+			CALL PRINTFORMW2T , @"「ちゅうぅぅ…ちゅうぅ…っぷはぁ…」"
 			CFLAG:422 = 5
 		;恋慕
 		ELSEIF TALENT:恋慕 == 1 && (CFLAG:422 < 4 || FLAG:7 == 2)
-			PRINTFORMW 「じゅっるる…ちゅうぅ…っぷはぁ…」
+			CALL PRINTFORMW2T , @"「じゅっるる…ちゅうぅ…っぷはぁ…」"
 			CFLAG:422 = 4
 		;合意or恋人
 		ELSEIF (TALENT:合意 == 1 || TALENT:恋人 == 1) && (CFLAG:422 < 3 || FLAG:7 == 2)
-			PRINTFORMW 「んっ……れろ……んくっ」
+			CALL PRINTFORMW2T , @"「んっ……れろ……んくっ」"
 			CFLAG:422 = 3
 		;それ以外
 		ELSEIF CFLAG:422 < 2 || FLAG:7 == 2
-			PRINTFORMW 「んっ……れろ……んくっ」
+			CALL PRINTFORMW2T , @"「んっ……れろ……んくっ」"
 			CFLAG:422 = 2
 		ENDIF
 	ENDIF
@@ -4614,25 +4613,25 @@ ENDIF
 IF SELECTCOM == 7 && 0
 	;初めて
 	IF CFLAG:423 == 0
-		PRINTFORMW 「ぜぇ……ぜぇ……」
+		CALL PRINTFORMW2T , @"「ぜぇ……ぜぇ……」"
 		CFLAG:423 = 1
 	;二回目以降
 	ELSE
 		;親愛または相愛
 		IF (TALENT:親愛 || TALENT:相愛) && (CFLAG:419 < 4 || FLAG:キャラ口上の表示頻度 == 2)
-			PRINTFORMW 「えっ……もう終わりなんですか？」
+			CALL PRINTFORMW2T , @"「えっ……もう終わりなんですか？」"
 
-			PRINTFORMW 「もっといっぱいしましょうよー」
+			CALL PRINTFORMW2T , @"「もっといっぱいしましょうよー」"
 			PRINTFORMW きりたんはこちらにしなだれ、露骨に誘ってくる
 			CFLAG:419 = 4
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:419 < 3 || FLAG:キャラ口上の表示頻度 == 2)
-			PRINTFORMW 「ふぅ……休憩しましょう」
+			CALL PRINTFORMW2T , @"「ふぅ……休憩しましょう」"
 			CFLAG:419 = 3
 			CFLAG:423 = 3
 		;それ以外
 		ELSEIF CFLAG:423 < 2 || FLAG:7 == 2
-			PRINTFORMW 「はぁ……はぁ……」
+			CALL PRINTFORMW2T , @"「はぁ……はぁ……」"
 			CFLAG:423 = 2
 		ENDIF
 	ENDIF
@@ -5083,9 +5082,9 @@ IF SELECTCOM == 24
 		ELSEIF ABL:4 >= 5 && (CFLAG:438 < 3 || FLAG:7 == 2)
 			A = RAND:2
 			IF A == 0
-				PRINTFORMW 「%CSTR:1%、わたし、これ、おかしく、なっちゃう」
+				CALL PRINTFORMW2T , @"「%CSTR:1%、わたし、これ、おかしく、なっちゃう」"
 				PRINTFORMW いいんだ、思いっきりおかしくなってもいい
-				PRINTFORMW 「あっ、あっ、んっ、はうっ」
+				CALL PRINTFORMW2T , @"「あっ、あっ、んっ、はうっ」"
 			ELSE
 				PRINTFORMW 
 			ENDIF
@@ -5304,21 +5303,21 @@ IF SELECTCOM == 30 && TEQUIP:17 == 0
 	IF CFLAG:441 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「わ、おっきくなってる……」
+			CALL PRINTFORMW2T , @"「わ、おっきくなってる……」"
 			PRINTFORMW きりたんは自分の一物をまじまじと眺めている
-			PRINTFORMW 「これを手で握るんですね？」
-			PRINTFORMW 「うわぁ、おちんちんってこんなに固くなるんですね」
+			CALL PRINTFORMW2T , @"「これを手で握るんですね？」"
+			CALL PRINTFORMW2T , @"「うわぁ、おちんちんってこんなに固くなるんですね」"
 		ELSE
-			PRINTFORMW 「手で触るんですか？うぅ……」
+			CALL PRINTFORMW2T , @"「手で触るんですか？うぅ……」"
 		ENDIF
 			CFLAG:441 = 1
 	;二回目以降
 	ELSE
 		;恋慕+奉仕精神Lv5以上
 		IF TALENT:恋慕 == 1 && ABL:6 >= 5 && (CFLAG:441 < 5 || FLAG:7 == 2)
-			PRINTFORMW 「%CSTR:1%ってば、おちんちん握られるとしおらしくなっちゃって」
-			PRINTFORMW 「なんだか、かわいいですね」
-			PRINTFORMW 「○学五年生にこのザマなんて、恥ずかしくないんですか」
+			CALL PRINTFORMW2T , @"「%CSTR:1%ってば、おちんちん握られるとしおらしくなっちゃって」"
+			CALL PRINTFORMW2T , @"「なんだか、かわいいですね」"
+			CALL PRINTFORMW2T , @"「○学五年生にこのザマなんて、恥ずかしくないんですか」"
 			CFLAG:441 = 5
 		;恋慕+恋人
 		ELSEIF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:441 < 4 || FLAG:7 == 2)
@@ -5396,17 +5395,17 @@ IF SELECTCOM == 31
 		;レア口上
 		IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && TFLAG:2 > 0 && RAND:4 == 0
 			PRINTFORMW そろそろイきそうだ、そうきりたんに伝えると、きりたんは悪い顔をして、
-			PRINTFORMW 「そうですかー。じゃあこの先は一人で頑張ってください」
+			CALL PRINTFORMW2T , @"「そうですかー。じゃあこの先は一人で頑張ってください」"
 			PRINTFORMW きりたんはイチモツからパッと口を離してそう告げる
 			PRINTFORMW そんな、もう少しで出そうなのに、と我ながら情けなく抗議する
-			PRINTFORMW 「じゃあ、『きりたんの口の中に精液出させてください』、ってお願いしてみてください」
+			CALL PRINTFORMW2T , @"「じゃあ、『きりたんの口の中に精液出させてください』、ってお願いしてみてください」"
 			PRINTFORMW 少しためらったが──『きりたんのお口の中に精液を出させてください、お願いします』と告げた
-			PRINTFORMW 「しょうがない%CSTR:1%ですねー」
-			PRINTFORMW 「ほら、私のお口でイッちゃいましょう」
+			CALL PRINTFORMW2T , @"「しょうがない%CSTR:1%ですねー」"
+			CALL PRINTFORMW2T , @"「ほら、私のお口でイッちゃいましょう」"
 			PRINTFORMW 股間にぬるりとした感覚が再び広がる
 			PRINTFORMW 望んでいた快感が一気に放出され──
-			PRINTFORMW 「んっ、んんーーー」
-			PRINTFORMW 「ぷはっ、いっはいでまひはへ」
+			CALL PRINTFORMW2T , @"「んっ、んんーーー」"
+			CALL PRINTFORMW2T , @"「ぷはっ、いっはいでまひはへ」"
 			PRINTFORMW きりたんは口の中に精液を溜め込み、唾液と絡ませる
 		;恋慕+奉仕精神Lv5以上
 		ELSEIF TALENT:恋慕 == 1 && ABL:6 >= 5 && (CFLAG:442 < 5 || FLAG:7 == 2)
@@ -5415,7 +5414,7 @@ IF SELECTCOM == 31
 			CFLAG:442 = 5
 		;恋慕
 		ELSEIF TALENT:恋慕 == 1 && (CFLAG:442 < 4 || FLAG:7 == 2)
-			PRINTFORMW 「ぺろぺろ……」
+			CALL PRINTFORMW2T , @"「ぺろぺろ……」"
 			PRINTFORMW （びゅくって動いた……気持ちいいのかな）
 			CFLAG:442 = 4
 		;恋慕+恋人
@@ -5493,12 +5492,12 @@ IF SELECTCOM == 33
 			CFLAG:444 = 4
 		;恋慕+恋人
 		ELSEIF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:444 < 3 || FLAG:7 == 2)
-			PRINTFORMW 「私のふともも、気持ちいいですか？」
-			PRINTFORMW 「私も……んっ……股間にこすれていい感じですね」
+			CALL PRINTFORMW2T , @"「私のふともも、気持ちいいですか？」"
+			CALL PRINTFORMW2T , @"「私も……んっ……股間にこすれていい感じですね」"
 			CFLAG:444 = 3
 		;それ以外
 		ELSEIF CFLAG:444 < 2 || FLAG:7 == 2
-			PRINTFORMW 「そんなに私のふともも、気持ちいいんですか」
+			CALL PRINTFORMW2T , @"「そんなに私のふともも、気持ちいいんですか」"
 			CFLAG:444 = 2
 		ENDIF
 	ENDIF
@@ -5524,26 +5523,26 @@ IF SELECTCOM == 34
 		;射精時＋恋慕＋恋人＋この口上をまだ出したことがない
 		;レア口上
 	 	IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && TFLAG:2 > 0 && CFLAG:445 < 5
-			PRINTFORMW 「ほら、もうイきそうになってますね」
-			PRINTFORMW 「じゃあ、スピードアップしますね」
+			CALL PRINTFORMW2T , @"「ほら、もうイきそうになってますね」"
+			CALL PRINTFORMW2T , @"「じゃあ、スピードアップしますね」"
 			PRINTFORMW そういうときりたんは腰を激しくグラインドさせ……
-			PRINTFORMW 「ほーら、イッちゃえ、イッちゃえ」
-			PRINTFORMW 「小学五年生の、出しちゃいけないはずの中に搾り取られて、情けなくイッちゃえ」
+			CALL PRINTFORMW2T , @"「ほーら、イッちゃえ、イッちゃえ」"
+			CALL PRINTFORMW2T , @"「小学五年生の、出しちゃいけないはずの中に搾り取られて、情けなくイッちゃえ」"
 			PRINTFORMW びゅるびゅると股間から精液が排出され、きりたんの膣内に精液が送り出される
-			PRINTFORMW 「あははははっ、出した、出しちゃいましたね%CSTR:1%」
-			PRINTFORMW 「きりたん、子供できちゃいますよ？いいんですか？」
+			CALL PRINTFORMW2T , @"「あははははっ、出した、出しちゃいましたね%CSTR:1%」"
+			CALL PRINTFORMW2T , @"「きりたん、子供できちゃいますよ？いいんですか？」"
 			PRINTFORMW じわじわと背徳感がこみ上げてくる。きりたんが淫靡に腰を振り続けたのが悪いとはいえ、自分はまだこんな小さい子供になんてことを──
-			PRINTFORMW 「冗談ですよ、%CSTR:1%」
-			PRINTFORMW 「私、%CSTR:1%との子供なら喜んで産みます。だから──」
+			CALL PRINTFORMW2T , @"「冗談ですよ、%CSTR:1%」"
+			CALL PRINTFORMW2T , @"「私、%CSTR:1%との子供なら喜んで産みます。だから──」"
 			PRINTFORMW きりたんは耳元でこう囁く
-			PRINTFORMW 「──これからも、いっぱいえっちしましょうね」
+			CALL PRINTFORMW2T , @"「──これからも、いっぱいえっちしましょうね」"
 		CFLAG:445 = 10
 		;射精時＋恋慕＋恋人＋上の口上を出したことがある
 	 	ELSEIF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && TFLAG:2 > 0 && (CFLAG:445 < 11 || FLAG:7 == 2)
-			PRINTFORMW 「ほーら、だしちゃえ、小５ロリまんこに中出ししちゃえ」
+			CALL PRINTFORMW2T , @"「ほーら、だしちゃえ、小５ロリまんこに中出ししちゃえ」"
 			PRINTFORMW どこで覚えたのか、きりたんは淫猥な言葉を並べながら腰の抽送を続けている
-			PRINTFORMW 「あははっ、いっぱい出ましたね」
-			PRINTFORMW 「%CSTR:1%の精液、暖かくて、大好きです」
+			CALL PRINTFORMW2T , @"「あははっ、いっぱい出ましたね」"
+			CALL PRINTFORMW2T , @"「%CSTR:1%の精液、暖かくて、大好きです」"
 		CFLAG:445 = 11
 	 	
 		;恋慕+V感覚Lv5以上+奉仕精神Lv5以上
@@ -5923,7 +5922,7 @@ IF SELECTCOM == 50
 		CFLAG:450 = 3
 	;それ以外
 	ELSEIF CFLAG:450 < 2 || FLAG:7 == 2
-		PRINTFORMW 「ひっ……つめたい」
+		CALL PRINTFORMW2T , @"「ひっ……つめたい」"
 		CFLAG:450 = 2
 	ENDIF
 ENDIF
@@ -5934,18 +5933,18 @@ ENDIF
 IF SELECTCOM == 57 && TEQUIP:57
 	;恋慕+露出癖Lv5以上
 	IF TALENT:恋慕 == 1 && ABL:7 >= 5 && (CFLAG:451 < 5 || FLAG:7 == 2)
-		PRINTFORMW 「えへへ……私の恥ずかしいところ、まるみえですね」
-		PRINTFORMW 「%CSTR:1%もじっくり鑑賞してくださいね」
+		CALL PRINTFORMW2T , @"「えへへ……私の恥ずかしいところ、まるみえですね」"
+		CALL PRINTFORMW2T , @"「%CSTR:1%もじっくり鑑賞してくださいね」"
 		CFLAG:451 = 5
 	;恋慕
 	ELSEIF TALENT:恋慕 == 1 && (CFLAG:451 < 4 || FLAG:7 == 2)
-		PRINTFORMW 「わ、わぁ……」
+		CALL PRINTFORMW2T , @"「わ、わぁ……」"
 		PRINTFORMW （私、%CSTR:1%とするときこんなにとろけた表情してるんだ……）
 		CFLAG:451 = 4
 	;合意or恋人
 	ELSEIF (TALENT:合意 == 1 || TALENT:恋人 == 1) && (CFLAG:451 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「あんまり、自分の裸を鏡で見ることはありませんから」
-		PRINTFORMW 「こうして眺めると、新鮮ですね」
+		CALL PRINTFORMW2T , @"「あんまり、自分の裸を鏡で見ることはありませんから」"
+		CALL PRINTFORMW2T , @"「こうして眺めると、新鮮ですね」"
 		CFLAG:451 = 3
 	;それ以外
 	ELSEIF CFLAG:451 < 2 || FLAG:7 == 2
@@ -5983,23 +5982,23 @@ ENDIF
 IF SELECTCOM == 58 && TEQUIP:58
 	;親愛
 	IF TALENT:親愛 == 1 && (CFLAG:453 < 5 || FLAG:7 == 2)
-		PRINTFORMW 「%CSTR:1%、お背中洗いますね」
+		CALL PRINTFORMW2T , @"「%CSTR:1%、お背中洗いますね」"
 		PRINTFORMW きりたんが小さな手で一生懸命自分の背中を洗ってくれている
 		CFLAG:453 = 5
 	;恋慕
 	ELSEIF TALENT:恋慕 == 1 && (CFLAG:453 < 4 || FLAG:7 == 2)
-		PRINTFORMW 「お風呂ですか、いいですよ」
-		PRINTFORMW 「わっ。%CSTR:1%のそれ、おおきくなってる……」
+		CALL PRINTFORMW2T , @"「お風呂ですか、いいですよ」"
+		CALL PRINTFORMW2T , @"「わっ。%CSTR:1%のそれ、おおきくなってる……」"
 		CFLAG:453 = 4
 	;合意or恋人
 	ELSEIF (TALENT:合意 == 1 || TALENT:恋人 == 1) && (CFLAG:453 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「お風呂でやるんですか？」
-		PRINTFORMW 「のぼせないか心配……」
+		CALL PRINTFORMW2T , @"「お風呂でやるんですか？」"
+		CALL PRINTFORMW2T , @"「のぼせないか心配……」"
 		CFLAG:453 = 3
 	;それ以外
 	ELSEIF CFLAG:453 < 2 || FLAG:7 == 2
-		PRINTFORMW 「お風呂でやるんですか？」
-		PRINTFORMW 「のぼせないか心配……」
+		CALL PRINTFORMW2T , @"「お風呂でやるんですか？」"
+		CALL PRINTFORMW2T , @"「のぼせないか心配……」"
 		CFLAG:453 = 2
 	ENDIF
 ENDIF
@@ -6010,19 +6009,19 @@ ENDIF
 IF SELECTCOM == 58 && TEQUIP:58 == 0
 	;親愛
 	IF TALENT:親愛 == 1 && (CFLAG:454 < 5 || FLAG:7 == 2)
-		PRINTFORMW 「ふぅーさっぱり」
+		CALL PRINTFORMW2T , @"「ふぅーさっぱり」"
 		CFLAG:454 = 5
 	;恋慕
 	ELSEIF TALENT:恋慕 == 1 && (CFLAG:454 < 4 || FLAG:7 == 2)
-		PRINTFORMW 「ふぅーさっぱり」
+		CALL PRINTFORMW2T , @"「ふぅーさっぱり」"
 		CFLAG:454 = 4
 	;合意or恋人
 	ELSEIF (TALENT:合意 == 1 || TALENT:恋人 == 1) && (CFLAG:454 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「ふぅーさっぱり」
+		CALL PRINTFORMW2T , @"「ふぅーさっぱり」"
 		CFLAG:454 = 3
 	;それ以外
 	ELSEIF CFLAG:454 < 2 || FLAG:7 == 2
-		PRINTFORMW 「ふぅーさっぱり」
+		CALL PRINTFORMW2T , @"「ふぅーさっぱり」"
 		CFLAG:454 = 2
 	ENDIF
 ENDIF
@@ -6033,13 +6032,13 @@ ENDIF
 IF SELECTCOM == 59 && TEQUIP:59
 	;恋慕+恋人
 	IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:455 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「はい、旦那様。あなたの妻のきりたんです♪」
-		PRINTFORMW 「ぞんぶんに味わってくださいね♪」
+		CALL PRINTFORMW2T , @"「はい、旦那様。あなたの妻のきりたんです♪」"
+		CALL PRINTFORMW2T , @"「ぞんぶんに味わってくださいね♪」"
 		CFLAG:455 = 3
 	;それ以外
 	ELSEIF CFLAG:455 < 2 || FLAG:7 == 2
-		PRINTFORMW 「はい、旦那様。あなたの妻のきりたんです」
-		PRINTFORMW 「……これ、本当にやらなきゃいけないんですか？」
+		CALL PRINTFORMW2T , @"「はい、旦那様。あなたの妻のきりたんです」"
+		CALL PRINTFORMW2T , @"「……これ、本当にやらなきゃいけないんですか？」"
 		CFLAG:455 = 2
 	ENDIF
 	;呼び方を保存
@@ -6057,13 +6056,13 @@ IF SELECTCOM == 59 && TEQUIP:59 == 0
 	CSTR:2 = ""
 	;恋慕+恋人
 	IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:456 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「あれ、もうエプロンは終わりですか？」
-		PRINTFORMW 「せっかく旦那様……いえ%CSTR:1%ともっといちゃいちゃできると思ったのに」
+		CALL PRINTFORMW2T , @"「あれ、もうエプロンは終わりですか？」"
+		CALL PRINTFORMW2T , @"「せっかく旦那様……いえ%CSTR:1%ともっといちゃいちゃできると思ったのに」"
 		CFLAG:456 = 3
 	;それ以外
 	ELSEIF CFLAG:456 < 2 || FLAG:7 == 2
-		PRINTFORMW 「あぁ、終わった……」
-		PRINTFORMW 「これ、もう%CSTR:1%以外にお嫁に行けないですよ……」
+		CALL PRINTFORMW2T , @"「あぁ、終わった……」"
+		CALL PRINTFORMW2T , @"「これ、もう%CSTR:1%以外にお嫁に行けないですよ……」"
 		CFLAG:456 = 2
 	ENDIF
 	
@@ -6078,8 +6077,8 @@ ENDIF
 IF SELECTCOM == 69
 	;初めて
 	IF CFLAG:457 == 0
-		PRINTFORMW 「えーっと、私が%CSTR:1%の顔にまたがって、おちんちんを舐めるんですか？」
-		PRINTFORMW 「わかりました、やってみましょう」
+		CALL PRINTFORMW2T , @"「えーっと、私が%CSTR:1%の顔にまたがって、おちんちんを舐めるんですか？」"
+		CALL PRINTFORMW2T , @"「わかりました、やってみましょう」"
 		CFLAG:457 = 1
 	;二回目以降
 	ELSE
@@ -6103,20 +6102,20 @@ ENDIF
 IF SELECTCOM == 80
 	;初めて
 	IF CFLAG:458 == 0
-		PRINTFORMW 「むぐっ！、～～～～～～～～！！！」
+		CALL PRINTFORMW2T , @"「むぐっ！、～～～～～～～～！！！」"
 		PRINTFORMW 喉の奥までイチモツを挿れると、きりたんは苦しそうにもがいている
 		CFLAG:458 = 1
 	;二回目以降
 	ELSE
 		;恋慕+恋人
 		IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:458 < 3 || FLAG:7 == 2)
-		PRINTFORMW 「んっ！んん～～～～～～～～！！！」
+		CALL PRINTFORMW2T , @"「んっ！んん～～～～～～～～！！！」"
 		PRINTFORMW 喉の奥までイチモツを挿れると、きりたんは苦しそうな声を上げたが、
 		PRINTFORMW だんだんと慣れてきたのか、なめらかに前後運動し始めた
 		CFLAG:458 = 3
 		;それ以外
 		ELSEIF CFLAG:458 < 2 || FLAG:7 == 2
-		PRINTFORMW 「んっ！んん～～～～～～～～！！！」
+		CALL PRINTFORMW2T , @"「んっ！んん～～～～～～～～！！！」"
 		PRINTFORMW 喉の奥までイチモツを挿れると、きりたんは苦しそうにもがいている
 		CFLAG:458 = 2
 		ENDIF
@@ -6139,9 +6138,9 @@ IF SELECTCOM == 2
 	IF CFLAG:459 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「……おしりもいじるんですか？」
+			CALL PRINTFORMW2T , @"「……おしりもいじるんですか？」"
 		ELSE
-			PRINTFORMW 「ちょっと！そこは性技の練習と関係ないと思うんですけど！」
+			CALL PRINTFORMW2T , @"「ちょっと！そこは性技の練習と関係ないと思うんですけど！」"
 		ENDIF
 		CFLAG:459 = 1
 	;二回目以降
@@ -6403,8 +6402,8 @@ IF SELECTCOM == 17 && TEQUIP:17
 	IF CFLAG:467 == 0
 		;合意
 		IF TALENT:合意 == 1
-			PRINTFORMW 「おぉー、これが噂のTENGAってやつですか」
-			PRINTFORMW 「言われなければ性処理用の道具って思えないデザインですね」
+			CALL PRINTFORMW2T , @"「おぉー、これが噂のTENGAってやつですか」"
+			CALL PRINTFORMW2T , @"「言われなければ性処理用の道具って思えないデザインですね」"
 		ELSE
 			PRINTFORMW 
 		ENDIF
@@ -8336,8 +8335,8 @@ IF TFLAG:3 > 0 && CFLAG:351 == 0
 			PRINTFORMW 
 		;恋慕かつ反発感情取得
 		ELSE
-			PRINTFORMW 「いっ────たぁ……」
-			PRINTFORMW 「もうちょっと優しくしてくださいよ……」
+			CALL PRINTFORMW2T , @"「いっ────たぁ……」"
+			CALL PRINTFORMW2T , @"「もうちょっと優しくしてくださいよ……」"
 		ENDIF
 	;指挿入れで処女喪失（反感がかなり少ない）
 	ELSEIF SELECTCOM == 8
@@ -8388,7 +8387,7 @@ CALL KOJO_MESSAGE_ORGASM_K10
 ;アナルに入れさせる CFLAG:391
 ;-------------------------------------------------
 IF TFLAG:10 > 0
-	PRINTFORML 「……っ！ %RAND_SPLIT("ん、ぁ/ぁ、はぁ/はぁ、ぁ")%……」
+	CALL PRINTFORMW2T , @"「……っ！ %RAND_SPLIT("ん、ぁ/ぁ、はぁ/はぁ、ぁ")%……」"
 	SELECTCASE SELECTCOM
 	;手淫する
 	CASE 191
@@ -8669,7 +8668,7 @@ SIF D == 0
 ;-------------------------------------------------
 ;フェラ、シックスナイン、イラマチオが該当
 IF SELECTCOM == 31 || SELECTCOM == 69 || SELECTCOM == 80 || SELECTCOM == 373
-	PRINTFORML 「ん、むっ……んっ、んんっ……んんんっ──！」
+	CALL PRINTFORMW2T , @"「ん、むっ……んっ、んんっ……んんんっ──！」"
 	PRINTFORMDW あなたのモノを咥えたまま、きりたんは絶頂に達した。
 	PRINTFORML 
 	RETURN 0
@@ -8681,7 +8680,7 @@ ENDIF
 IF C && D == 1
 	;ウフフ中ではない＝着衣で絶頂
 	IF TFLAG:44 == 0
-		PRINTFORML 「んっ……はぁ、はぁ……」
+		CALL PRINTFORMW2T , @"「んっ……はぁ、はぁ……」"
 		PRINT 「もう……
 		SELECTCASE RAND:3
 			CASE 0
@@ -8695,16 +8694,16 @@ IF C && D == 1
 	ELSEIF TALENT:恋慕
 		;C強絶頂以上
 		IF NOWEX:0 > 1
-			PRINTFORML 「はぁっ、あっ、いいっ、くるっ、」
-			PRINTFORMW 「きちゃう、すごいっ、%CSTR:1%っ、ああっ──！」」
+			CALL PRINTFORMW2T , @"「はぁっ、あっ、いいっ、くるっ、」"
+			CALL PRINTFORMW2T , @"「きちゃう、すごいっ、%CSTR:1%っ、ああっ──！」」"
 		ELSE
-			PRINTFORML 「あ、あ……これ、すご……」
-			PRINTFORMW 「だめ、きちゃいます……ああっ──！」
+			CALL PRINTFORMW2T , @"「あ、あ……これ、すご……」"
+			CALL PRINTFORMW2T , @"「だめ、きちゃいます……ああっ──！」"
 		ENDIF
 	;それ以外
 	ELSE
-		PRINTFORML 「あ、あ……これ、すご……」
-		PRINTFORMW 「だめ、きちゃいます……ああっ──！」
+		CALL PRINTFORMW2T , @"「あ、あ……これ、すご……」"
+		CALL PRINTFORMW2T , @"「だめ、きちゃいます……ああっ──！」"
 	ENDIF
 	PRINTFORML 
 
@@ -8714,31 +8713,31 @@ IF C && D == 1
 ELSEIF V && D == 1
 	;ウフフ中ではない＝着衣で絶頂
 	IF TFLAG:44 == 0
-		PRINTFORML 「……はぁ、はぁ……」
+		CALL PRINTFORMW2T , @"「……はぁ、はぁ……」"
 		SELECTCASE RAND:3
 			CASE 0
 				PRINTDW きりたんは乱れた息を整えている。
 			CASE 1
-				PRINTFORMW 「……気持ち良かったぁ……」
+				CALL PRINTFORMW2T , @"「……気持ち良かったぁ……」"
 			CASEELSE
-				PRINTFORMW 「ああ、もう。下着がビショビショ」
+				CALL PRINTFORMW2T , @"「ああ、もう。下着がビショビショ」"
 		ENDSELECT
 	;恋慕
 	ELSEIF TALENT:恋慕
 		;V強絶頂以上
 		IF NOWEX:1 > 1
-			PRINTFORML 「あっ、あっ、あっ、あっ……%CSTR:1%っ、好きです、」
-			PRINTFORMW 「んっ、んん──！」
+			CALL PRINTFORMW2T , @"「あっ、あっ、あっ、あっ……%CSTR:1%っ、好きです、」"
+			CALL PRINTFORMW2T , @"「んっ、んん──！」"
 			PRINTFORML きりたんは腰をブリッジさせ、Ｇスポットを強く押し付け絶頂した
 			PRINTFORMW 秘所からはとめどなく愛液が溢れ出て来る
 		ELSE
-			PRINTFORML 「く、ぅ……なかっ、擦れて……」
-			PRINTFORMW 「ダメ、もう……んっ、ああっ──！」
+			CALL PRINTFORMW2T , @"「く、ぅ……なかっ、擦れて……」"
+			CALL PRINTFORMW2T , @"「ダメ、もう……んっ、ああっ──！」"
 		ENDIF
 	;それ以外
 	ELSE
-			PRINTFORML 「く、ぅ……なかっ、擦れて……」
-			PRINTFORMW 「ダメ、もう……んっ、ああっ──！」
+			CALL PRINTFORMW2T , @"「く、ぅ……なかっ、擦れて……」"
+			CALL PRINTFORMW2T , @"「ダメ、もう……んっ、ああっ──！」"
 	ENDIF
 	PRINTFORML 
 
@@ -8748,23 +8747,23 @@ ELSEIF V && D == 1
 ELSEIF A && D == 1
 	;ウフフ中ではない＝着衣で絶頂
 	IF TFLAG:44 == 0
-		PRINTFORML 「……はぁ、はぁ……」
+		CALL PRINTFORMW2T , @"「……はぁ、はぁ……」"
 		SELECTCASE RAND:3
 			CASE 0
-				PRINTFORMW 「や……もう、服が……」
+				CALL PRINTFORMW2T , @"「や……もう、服が……」"
 			CASE 1
-				PRINTFORMW 「うう……いじわる……」
+				CALL PRINTFORMW2T , @"「うう……いじわる……」"
 			CASEELSE
-				PRINTFORMW 「ふぁ……まだ、体、ふわふわしてる……」
+				CALL PRINTFORMW2T , @"「ふぁ……まだ、体、ふわふわしてる……」"
 		ENDSELECT
 	;恋慕
 	ELSEIF TALENT:恋慕
-		PRINTFORML 「ああ……ダメ、おしり、ぞわぞわしてっ……」
-		PRINTFORMW 「くぅ……んっ……んんっ──！」
+		CALL PRINTFORMW2T , @"「ああ……ダメ、おしり、ぞわぞわしてっ……」"
+		CALL PRINTFORMW2T , @"「くぅ……んっ……んんっ──！」"
 	;それ以外
 	ELSE
-		PRINTFORML 「ああ……ダメ、おしり、ぞわぞわしてっ……」
-		PRINTFORMW 「くぅ……んっ……んんっ──！」
+		CALL PRINTFORMW2T , @"「ああ……ダメ、おしり、ぞわぞわしてっ……」"
+		CALL PRINTFORMW2T , @"「くぅ……んっ……んんっ──！」"
 	ENDIF
 	PRINTFORML 
 
@@ -8774,27 +8773,27 @@ ELSEIF A && D == 1
 ELSEIF B && D == 1
 	;ウフフ中ではない＝着衣で絶頂
 	IF TFLAG:44 == 0
-		PRINTFORML 「んっ……はぁ、はぁ……」
+		CALL PRINTFORMW2T , @"「んっ……はぁ、はぁ……」"
 		SELECTCASE RAND:3
 			CASE 0
-				PRINTFORMW 「もう、何考えてるんですか……」
+				CALL PRINTFORMW2T , @"「もう、何考えてるんですか……」"
 			CASE 1
-				PRINTFORMW 「服を着たまま、こんな……」
+				CALL PRINTFORMW2T , @"「服を着たまま、こんな……」"
 			CASEELSE
-				PRINTFORMW 「ああ、もう……服に皺が……」
+				CALL PRINTFORMW2T , @"「ああ、もう……服に皺が……」"
 		ENDSELECT
 	;恋慕
 	ELSEIF TALENT:恋慕
 		SELECTCASE RAND:2
 			CASE 0
-				PRINTFORML 「う、ぁ……また、胸が……ぴりって……」
+				CALL PRINTFORMW2T , @"「う、ぁ……また、胸が……ぴりって……」"
 			CASEELSE
-				PRINTFORML 「やっ……胸が、\@ !RAND:2 ? もう # また \@……」
+				CALL PRINTFORMW2T , @"「やっ……胸が、\@ !RAND:2 ? もう # また \@……」"
 		ENDSELECT
-		PRINTFORMW 「んっ……あっ、ああっ──！」
+		CALL PRINTFORMW2T , @"「んっ……あっ、ああっ──！」"
 	;それ以外
 	ELSE
-		PRINTFORMW 「んっ……あっ、ああっ──！」
+		CALL PRINTFORMW2T , @"「んっ……あっ、ああっ──！」"
 	ENDIF
 	PRINTFORML 
 
@@ -8803,35 +8802,35 @@ ELSEIF B && D == 1
 ;-------------------------------------------------
 ;四重絶頂
 ELSEIF D == 4
-	PRINTFORML 「これっ……おかし……はああっ」
-	PRINTFORMW 「あぁ……ぉお゛っ、……いっ──」
+	CALL PRINTFORMW2T , @"「これっ……おかし……はああっ」"
+	CALL PRINTFORMW2T , @"「あぁ……ぉお゛っ、……いっ──」"
 	PRINTFORMW きりたんは大きく身体をビクつかせ、……口をパクパクとさせながら固まった
-	PRINTFORMW 「…………！はあっ、はあっ、はぁーーっ、ふーーー」
+	CALL PRINTFORMW2T , @"「…………！はあっ、はあっ、はぁーーっ、ふーーー」"
 	PRINTFORML 
 ;ＶＡ込みの三重絶頂
 ELSEIF V && A && D == 3
-	PRINTFORML 「くぅ……あっ、ダメです、これ……前も、後ろもっ……」
-	PRINTFORMW 「ひっ……あ、んぅ……うぁ、あっ、ああっ──！」
+	CALL PRINTFORMW2T , @"「くぅ……あっ、ダメです、これ……前も、後ろもっ……」"
+	CALL PRINTFORMW2T , @"「ひっ……あ、んぅ……うぁ、あっ、ああっ──！」"
 ;それ以外の三重絶頂
 ELSEIF D == 3
-	PRINTFORML 「ひ、ぁ……こんな……も、ダメですっ……」
-	PRINTFORML 「あっ、ああっ、あああっ──！」
-	PRINTFORMW 「はぁ、はぁ……これ、すご……」
+	CALL PRINTFORMW2T , @"「ひ、ぁ……こんな……も、ダメですっ……」"
+	CALL PRINTFORMW2T , @"「あっ、ああっ、あああっ──！」"
+	CALL PRINTFORMW2T , @"「はぁ、はぁ……これ、すご……」"
 ;二重絶頂：Ｃ＆Ｂ
 ELSEIF C && B
-	PRINTFORML 「く、ふぁっ……胸と、アソコが、いっぺんに……」
-	PRINTFORML 「ダメ、も、我慢、がっ……んっ、ああっ──！」
-	PRINTFORMW 「はぁ、はぁ……気持ち、良かったぁ……」
+	CALL PRINTFORMW2T , @"「く、ふぁっ……胸と、アソコが、いっぺんに……」"
+	CALL PRINTFORMW2T , @"「ダメ、も、我慢、がっ……んっ、ああっ──！」"
+	CALL PRINTFORMW2T , @"「はぁ、はぁ……気持ち、良かったぁ……」"
 ;二重絶頂：Ｖ＆Ａ
 ELSEIF V && A
-	PRINTFORML 「はぅ……こんな、前も、後ろも……！」
-	PRINTFORML 「や、ダメです……そんな……く、うぁ……ああっ──！」
-	PRINTFORMW 「はぁ、はぁ……こんなの、凄すぎる……」
+	CALL PRINTFORMW2T , @"「はぅ……こんな、前も、後ろも……！」"
+	CALL PRINTFORMW2T , @"「や、ダメです……そんな……く、うぁ……ああっ──！」"
+	CALL PRINTFORMW2T , @"「はぁ、はぁ……こんなの、凄すぎる……」"
 ;それ以外の二重絶頂
 ELSEIF D == 2
-	PRINTFORML 「くぅ……ダメですっ、こんなの……」
-	PRINTFORML 「や、あっ……も、我慢できない……んっ、ああっ──！」
-	PRINTFORMW 「はぁ、はぁ……す、凄かったぁ……」
+	CALL PRINTFORMW2T , @"「くぅ……ダメですっ、こんなの……」"
+	CALL PRINTFORMW2T , @"「や、あっ……も、我慢できない……んっ、ああっ──！」"
+	CALL PRINTFORMW2T , @"「はぁ、はぁ……す、凄かったぁ……」"
 ENDIF
 RETURN 0
 
