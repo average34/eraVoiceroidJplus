@@ -5,3 +5,4 @@ git-diff.bat
 *.lnk
 debug.config
 sav
+/debug

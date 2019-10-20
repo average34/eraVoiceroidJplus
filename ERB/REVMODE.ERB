@@ -173,6 +173,7 @@ LOCAL:302 += 2 * (LOCAL:202 + LOCAL:203)
 ;誘導
 LOCAL:303 += 2 * (LOCAL:201 - LOCAL:200)
 
+
 ;キス
 LOCAL:0 = 10 + 2 * (TALENT:ARG:Ｍ敏感 - TALENT:ARG:Ｍ鈍感) + 2 * TALENT:ARG:蕩唇 + 2 * TALENT:ARG:キス魔 + ABL:ARG:技巧
 ;手淫
@@ -190,10 +191,15 @@ LOCAL:6 = 10 + 2 * (TALENT:ARG:濡れやすい - TALENT:ARG:濡れにくい) + A
 ;足扱き
 LOCAL:7 = 10 + 2 * TALENT:ARG:サド + ABL:ARG:サドっ気 + ABL:ARG:技巧
 
+
+PRINTW デバッグテスト2
+
 ;確率調整
 FOR LCOUNT, 0, 8
-	LOCAL:LCOUNT = LOCAL:LCOUNT * LOCAL:300 * (90 + RAND:21) / 100
+	LOCAL:LCOUNT = LOCAL:LCOUNT * (LOCAL:300 + 1) * (90 + RAND:21) / 100
 NEXT
+
+PRINTW デバッグテスト3
 
 ;正常位させる
 LOCAL:8 = 10 + 2 * (TALENT:ARG:Ｖ敏感 - TALENT:ARG:Ｖ敏感) + 2 * TALENT:ARG:淫壷 + ABL:ARG:Ｖ感覚 + ABL:ARG:技巧
@@ -208,7 +214,7 @@ LOCAL:12 = 10 + 2 * (TALENT:ARG:Ｖ敏感 - TALENT:ARG:Ｖ敏感) + 2 * TALENT:A
 
 ;確率調整
 FOR LCOUNT, 8, 13
-	LOCAL:LCOUNT = LOCAL:LCOUNT * LOCAL:302 * (90 + RAND:21) / 100
+	LOCAL:LCOUNT = LOCAL:LCOUNT * (LOCAL:302 + 1) * (90 + RAND:21) / 100
 NEXT
 
 ;顔面騎乗クンニ
@@ -224,7 +230,7 @@ LOCAL:17 = 10 + 2 * (TALENT:ARG:Ｃ敏感 - TALENT:ARG:Ｃ敏感) + ABL:ARG:Ｃ�
 
 ;確率調整
 FOR LCOUNT, 13, 18
-	LOCAL:LCOUNT = LOCAL:LCOUNT * LOCAL:301 * (90 + RAND:21) / 100
+	LOCAL:LCOUNT = LOCAL:LCOUNT * (LOCAL:301 + 1) * (90 + RAND:21) / 100
 NEXT
 
 ;正常位する
@@ -236,25 +242,27 @@ LOCAL:20 = 10 + 2 * (TALENT:ARG:Ｃ敏感 - TALENT:ARG:Ｃ敏感) + ABL:ARG:Ｃ�
 
 ;確率調整
 FOR LCOUNT, 18, 21
-	LOCAL:LCOUNT = LOCAL:LCOUNT * LOCAL:302 * (90 + RAND:21) / 100
+	LOCAL:LCOUNT = LOCAL:LCOUNT * (LOCAL:302 + 1) * (90 + RAND:21) / 100
 NEXT
 
 ;自慰見せつけ
 LOCAL:21 = 10 + 2 * TALENT:ARG:自慰しやすい
 
 ;確率調整
-LOCAL:21 = LOCAL:21 * LOCAL:303 * (90 + RAND:21) / 100
+LOCAL:21 = LOCAL:21 * (LOCAL:303 + 1) * (90 + RAND:21) / 100
 
 ;自慰強制
 LOCAL:22 = 10 + 2 * TALENT:ARG:サド + ABL:ARG:サドっ気
 
 ;確率調整
-LOCAL:22 = LOCAL:22 * LOCAL:301 * (90 + RAND:21) / 100
+LOCAL:22 = LOCAL:22 * (LOCAL:301 + 1) * (90 + RAND:21) / 100
 
 ;ランダマイズ
 FOR LCOUNT, 0, 23
 	LOCAL:LCOUNT = RAND:(MAX(LOCAL:LCOUNT, 1))
 NEXT
+
+
 
 ;特殊な処理
 ;プレイヤーに男性器がある
@@ -340,6 +348,7 @@ IF LOCAL:100
 		DRAWLINE
 	ENDIF
 ENDIF
+PRINTW デバッグテスト
 
 ;----------------------------------------------------------------
 ;PASSIVE_COMABLE
