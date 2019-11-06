@@ -192,14 +192,12 @@ LOCAL:6 = 10 + 2 * (TALENT:ARG:濡れやすい - TALENT:ARG:濡れにくい) + A
 LOCAL:7 = 10 + 2 * TALENT:ARG:サド + ABL:ARG:サドっ気 + ABL:ARG:技巧
 
 
-PRINTW デバッグテスト2
 
 ;確率調整
 FOR LCOUNT, 0, 8
 	LOCAL:LCOUNT = LOCAL:LCOUNT * (LOCAL:300 + 1) * (90 + RAND:21) / 100
 NEXT
 
-PRINTW デバッグテスト3
 
 ;正常位させる
 LOCAL:8 = 10 + 2 * (TALENT:ARG:Ｖ敏感 - TALENT:ARG:Ｖ敏感) + 2 * TALENT:ARG:淫壷 + ABL:ARG:Ｖ感覚 + ABL:ARG:技巧
@@ -348,7 +346,6 @@ IF LOCAL:100
 		DRAWLINE
 	ENDIF
 ENDIF
-PRINTW デバッグテスト
 
 ;----------------------------------------------------------------
 ;PASSIVE_COMABLE
