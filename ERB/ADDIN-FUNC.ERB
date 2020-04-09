@@ -43,6 +43,7 @@
 ;20110525 v1.22  更新 （・△・）     酒気ゲージ、空気ゲージをカラーバーで表記できるよう変更
 ;20111127 v1.23  更新 Jパッチまとめ  @GET_STRAINNAMEに神霊廟キャラ他追加
 ;20120520 V1.24  更新 スレ135-480    CFLAG:559をCFLAG:34に差し替え
+;20200409 v1.30  更新 average		@GET_STRAINNAMEとその関連を削除。
 ;--------------------------------------------------
 
 ;--------------------------------------------------
@@ -67,93 +68,19 @@ RETURN 0
 
 ;--------------------------------------------------
 ;不在キャラ種族名獲得関数@GET_STRAINNAME
-;対象のキャラ番号を変数Lに入力してからCALL
-;この場にいないキャラの番号から名前と、そのキャラの種族を獲得します。
-;獲得した呼び名は201、大雑把な種族名が202、詳細な種族名を203に格納します。
-;誰にも当てはまらなかった場合はRESULTに99が返ります。
-;それ以外の場合、RESULTは種族を表します。
-;PANCTIONのLOSTNAME関数を改変して種族管理パッチ用に作成。
-;数値 1：人間 20：VOICEROID 21：CeVIO 22：AITalk 
+;使われていないし、使うべきではない設計をしていたので消しました。 
+;もし使いたいのであれば直接CSVを参照すべき。 by average
 ;--------------------------------------------------
-;（この関数を考えた人は引数という概念を知らなかったのか？）
 @GET_STRAINNAME
+THROW 関数"@GET_STRAINNAME"は現在使われるべきではありません。
+
+
 ;呼び名
-IF L == 0
-	STR:201 = あなた
-ELSEIF L == 1
-	STR:201 = ショウタ
-ELSEIF L == 2
-	STR:201 = アイ
-ELSEIF L == 3
-	STR:201 = マキ
-ELSEIF L == 4
-	STR:201 = ゆかり
-ELSEIF L == 5
-	STR:201 = ずん子
-ELSEIF L == 6
-	STR:201 = 茜
-ELSEIF L == 7
-	STR:201 = 葵
-ELSEIF L == 8
-	STR:201 = コウ
-ELSEIF L == 9
-	STR:201 = セイカ
-ELSEIF L == 10
-	STR:201 = きりたん
-ELSEIF L == 11
-	STR:201 = あかり
-ELSEIF L == 12
-	STR:201 = イタコ
-ELSEIF L == 13
-	STR:201 = そら
-ELSEIF L == 14
-	STR:201 = ついな
-	
-ELSEIF L == 50
-	STR:201 = ささら
-ELSEIF L == 51
-	STR:201 = つづみ
-ELSEIF L == 52
-	STR:201 = タカハシ
-ELSEIF L == 53
-	STR:201 = ＯＮＥ
-ELSEIF L == 54
-	STR:201 = ＩＡ
-	
-ELSEIF L == 80
-	STR:201 = ギャラ子
-ELSEIF L == 81
-	STR:201 = ウナ
-ELSEIF L == 82
-	STR:201 = ヒメ
-ELSEIF L == 83
-	STR:201 = ミコト
-ELSEIF L == 84
-	STR:201 = flower
-ENDIF
 
 ;種族
-IF L == 0
-	STR:202 = 人間
-	STR:203 = 人間
-	RETURN 1
-ELSEIF L >= 1 && L <= 13
-	STR:202 = VOICEROID
-	STR:203 = VOICEROID
-	RETURN 20
-ELSEIF L >= 50 && L <= 54
-	STR:202 = CeVIO
-	STR:203 = CeVIO
-	RETURN 21
-ELSEIF L >= 80 && L <= 81
-	STR:202 = AITalk
-	STR:203 = AITalk
-	RETURN 22
-ENDIF
 
 ;ここまで来たらヒットなし
-STR:201 = 誰か
-RETURN 99
+RETURN 0
 
 ;--------------------------------------------------
 ;キャラ種族補正関数@GET_STRAINCORRECT
@@ -187,20 +114,8 @@ RETURN 0
 ;eramakerだと整数の直接指定しか出来ない為、Lを取得してください
 ;--------------------------------------------------
 @GET_STRAINCORR_VALUE
-;素質「蓬莱人」持ちなら種族を蓬莱人にする
-IF TALENT:L:128 != 0
-	L = 8
-;素質「吸血鬼持ち」なら種族を吸血鬼に変更
-ELSEIF TALENT:L:114 != 0
-	L = 11
-;ハクタク化している場合は6
-ELSEIF TEQUIP:L:1 != 0
-	L = 6
-ELSE
-	L = NO:L
-	CALL GET_STRAINNAME
-	L = RESULT
-ENDIF
+
+THROW 関数"@GET_STRAINCORR_VALUE"は現在使われるべきではありません。
 RETURN 0
 
 ;--------------------------------------------------

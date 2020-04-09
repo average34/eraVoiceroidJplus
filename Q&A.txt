@@ -94,7 +94,6 @@ A.CharaXX.csvを作成するだけでもOKです。
 その他には以下の関数でキャラクター参照がなされていますが、別に設定しなくても動作すると思います。
 COMMON.ERB - @GET_BASE8 (陰毛設定)
 LUNCH_EAT.ERB - @LUNCH_MENU (得意料理)
-ADDIN-FUNC.ERB - @GET_STRAINNAME (名前)
 COMF > COMF323.ERB - @PARTNER_DATE_PLACE (好みのデート先)
 
 まだ自分が仕様を把握しきれていないので、ここに書いた方法だと不十分の可能性があります。
