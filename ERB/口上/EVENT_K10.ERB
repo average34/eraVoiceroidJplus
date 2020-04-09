@@ -59,7 +59,7 @@
 #PRI
 FLAG:110 = 1
 SIF FLAG:7 == 0
-FLAG:7 = 2
+	FLAG:7 = 2
 
 ;きりたんとの会話開始時に名前が設定されていなければ設定
 SIF CSTR:1 == "" && NO:TARGET == 10
@@ -2879,21 +2879,21 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「新しいゲーム、買ってくれませんかぁ？」"
 				PRINTFORMW 駄目だ
 				CALL PRINTFORMW2T , @"「えーっ、けちー」"
-				CFLAG:402 == 301
+				CFLAG:402 = 301
 			ELSEIF CFLAG:402 == 301
 				CALL PRINTFORMW2T , @"「そういえば最近、あのゲームの大型アップデートが来たみたいですね」"
 				CALL PRINTFORMW2T , @"「仕様が変わって、ほとんど別のゲームになってるみたいですよ」"
 				PRINTFORMW そうか、後で一緒に遊んでみよう
 				CALL PRINTFORMW2T , @"「はい！」"
-				CFLAG:402 == 302
+				CFLAG:402 = 302
 			ELSEIF CFLAG:402 == 302
 				PRINTFORMW 
 				PRINTFORMW 
-				CFLAG:402 == 303
+				CFLAG:402 = 303
 			ELSE
 				CALL PRINTFORMW2T , @"「%CSTR:1%と話していると、時間を忘れますね」"
 				CALL PRINTFORMW2T , @"「ゲームする時間よりも楽しいです」"
-				CFLAG:402 == 300
+				CFLAG:402 = 300
 			ENDIF
 		;恋人か恋慕のどちらか一方のみ
 		ELSEIF TALENT:恋慕 || TALENT:恋人
@@ -2901,7 +2901,7 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「最近でもないですけど、ポテトガンっていうじゃがいもの砲がネットで流行りみたいですね」"
 				CALL PRINTFORMW2T , @"「きりたん砲も流行らないかなー」"
 				PRINTFORMW ……まず、どうやって作るのだろう
-				CFLAG:402 == 201
+				CFLAG:402 = 201
 			ELSEIF CFLAG:402 == 201
 				CALL PRINTFORMW2T , @"「きりたん砲は攻撃するだけでなく、飛んで移動することもできるんですよ」"
 				PRINTFORMW ほう、それはすごいな
@@ -2911,7 +2911,7 @@ IF SELECTCOM == 301
 				PRINTFORMW この家かい！うわほんとだここ凹んでる……
 				PRINTFORML
 				PRINTFORMW きりたんをしっかりと叱りました
-				CFLAG:402 == 202
+				CFLAG:402 = 202
 			ELSEIF CFLAG:402 == 202
 				CALL PRINTFORMW2T , @"「ずんねえさまの話ですか？」"
 				CALL PRINTFORMW2T , @"「ずんねえさまのいいところはですね……ふとももでしょうか」"
@@ -2919,13 +2919,13 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「あのもちもちとした触り心地、すべすべのお肌……」"
 				CALL PRINTFORMW2T , @"「うぇっへっへ」"
 				PRINTFORMW きりたんはその後もずん子についてえらくオヤジ臭いことを語り続けた……
-				CFLAG:402 == 203
+				CFLAG:402 = 203
 			ELSEIF CFLAG:402 == 203
 				CALL PRINTFORMW2T , @"「ずんねえさまは今でこそずんだ好きとして有名ですけど」"
 				CALL PRINTFORMW2T , @"「数年前まではそんなことなかったんですよ」"
 				PRINTFORMW そうなのか？てっきり一生ずんだ餅を食べてるのかと思っていた
 				CALL PRINTFORMW2T , @"「まぁ、たしかに今でこそそうなんですけど……」"
-				CFLAG:402 == 204
+				CFLAG:402 = 204
 			ELSEIF CFLAG:402 == 204
 				CALL PRINTFORMW2T , @"「ずんねえさまは昔に落雷に直撃しました」"
 				CALL PRINTFORMW2T , @"「それで入院したと聞いたときはもう頭が真っ白になって」"
@@ -2936,7 +2936,7 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「でも、無事だったことに安心して二人で泣いちゃいましたね」"
 				PRINTFORMW なんというか、無事で良かった
 				CALL PRINTFORMW2T , @"「それからと言うもの、ずんねえさまはいつもずんだ餅を食べています」"
-				CFLAG:402 == 205
+				CFLAG:402 = 205
 			ELSEIF CFLAG:402 == 205
 				CALL PRINTFORMW2T , @"「昔のずんねえさまについてですか？」"
 				CALL PRINTFORMW2T , @"「まあ、普通の女子高生ですよ」"
@@ -2944,13 +2944,13 @@ IF SELECTCOM == 301
 				PRINTFORMW ……きりたんそれちょっと話盛ってない？
 				CALL PRINTFORMW2T , @"「ホントですよ！」"
 				PRINTFORMW 普通の女子高生というにはいささかハイスペックな気もするが……
-					CFLAG:402 == 206
+					CFLAG:402 = 206
 			ELSE
 				CALL PRINTFORMW2T , @"「%CSTR:1%、新しいゲーム買ってください」"
 				PRINTFORMW この前買ったばかりじゃないか……
 				CALL PRINTFORMW2T , @"「買ってー買ってー」"
 				PRINTFORMW ……きりたんもこういうところは歳相応なんだな
-				CFLAG:402 == 200
+				CFLAG:402 = 200
 			ENDIF
 		;どちらでもない
 		ELSE
@@ -2962,7 +2962,7 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「その和服は私がデザインして、業者に作ってもらった特注品なんですよね」"
 				PRINTFORMW そうなのか、きりたんは多才だな
 				CALL PRINTFORMW2T , @"「えへへ……そんなことないですよ」"
-				CFLAG:402 == 101
+				CFLAG:402 = 101
 			ELSEIF CFLAG:402 == 101
 				CALL PRINTFORMW2T , @"「好きな漫画は……（まともなやつだと何があったかな）」"
 				CALL PRINTFORMW2T , @"「あっ、カイジとかの福本作品は読みますね」"
@@ -2970,13 +2970,13 @@ IF SELECTCOM == 301
 				CALL PRINTFORMW2T , @"「ああいうヤクザのいる裏の世界で賭け事するの、怖いですけど面白いですね」"
 				CALL PRINTFORMW2T , @"「福本さんはそういう登場人物の焦り、緊張感、憤りといった心理描写をコミカルに描かれててほんと面白いです」"
 				CALL PRINTFORMW2T , @"「ざわ……ざわ……」"
-				CFLAG:402 == 102
+				CFLAG:402 = 102
 			ELSEIF CFLAG:402 == 102
 				CALL PRINTFORMW2T , @"「北斗の拳とかも昔読んでましたね」"
 				PRINTFORMW これまた濃いのを読んでるなあ
 				CALL PRINTFORMW2T , @"「きりたん砲で南斗人間砲弾ごっことかよくやってました」"
 				PRINTFORMW ……近頃の子供はなんて危険な遊びをやっているんだ
-				CFLAG:402 == 103
+				CFLAG:402 = 103
 			ELSEIF CFLAG:402 == 103
 				CALL PRINTFORMW2T , @"「%CSTR:1%の好きなゲームって何ですか？」"
 				PRINTFORMW 好きなゲームか……ゲームはあまりやらないのだが
@@ -2987,12 +2987,12 @@ IF SELECTCOM == 301
 				PRINTFORMW め、めがしんか？
 				CALL PRINTFORMW2T , @"「ほかにもファイアローが……」"
 				PRINTFORMW ……話についていけそうにない
-				CFLAG:402 == 104
+				CFLAG:402 = 104
 			ELSE
 				CALL PRINTFORMW2T , @"「%CSTR:1%が安全そうな人で良かった」"
 				CALL PRINTFORMW2T , @"「だって、もしこれが不審者に捕まってたら、いまごろ私は……私は……」"
 				CALL PRINTFORMW2T , @"「……あまり考えないことにしましょう」"
-				CFLAG:402 == 100
+				CFLAG:402 = 100
 			ENDIF
 		ENDIF
 	ENDIF
