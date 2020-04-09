@@ -31,14 +31,10 @@ REPEAT 26
 		ENDIF
 	ELSEIF O == 5
 		;好奇心・楽観的
-		P = RAND:2
-		SIF P == 0
+		SIF RAND:2 == 0
 			TALENT:23 = 1
-			TALENT:25 = 0
-		P = RAND:3
-		SIF P == 0
+		SIF RAND:3 == 0
 			TALENT:25 = 1
-			TALENT:23 = 0
 	ELSEIF O == 6
 		;恥じらい・恥薄い
 		P = RAND:4
