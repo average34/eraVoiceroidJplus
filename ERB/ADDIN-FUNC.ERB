@@ -44,6 +44,7 @@
 ;20111127 v1.23  更新 Jパッチまとめ  @GET_STRAINNAMEに神霊廟キャラ他追加
 ;20120520 V1.24  更新 スレ135-480    CFLAG:559をCFLAG:34に差し替え
 ;20200409 v1.30  更新 average		@GET_STRAINNAMEとその関連を削除。
+;20200410 v1.31  更新 average		@GET_STRAINNAME消したらアカンかったので復活。CSVからCALLNAMEを読み込むように
 ;--------------------------------------------------
 
 ;--------------------------------------------------
@@ -68,19 +69,43 @@ RETURN 0
 
 ;--------------------------------------------------
 ;不在キャラ種族名獲得関数@GET_STRAINNAME
-;使われていないし、使うべきではない設計をしていたので消しました。 
-;もし使いたいのであれば直接CSVを参照すべき。 by average
 ;--------------------------------------------------
 @GET_STRAINNAME
-THROW 関数"@GET_STRAINNAME"は現在使われるべきではありません。
+;THROW 関数"@GET_STRAINNAME"は現在使われるべきではありません。
+#DIM CHARAID
+CHARAID = L
 
+EXISTCSV CHARAID
+IF RESULT == 0
+	RESULTS = ""
+	RETURN 0
+ENDIF
 
-;呼び名
+STR:201 = %CSVCALLNAME(CHARAID)%
 
 ;種族
+IF L == 0
+	STR:202 = あなた
+	STR:203 = あなた
+	RETURN 1
+ELSEIF L >= 1 && L <= 49
+	STR:202 = VOICEROID
+	STR:203 = VOICEROID
+	RETURN 20
+ELSEIF L >= 50 && L <= 59
+	STR:202 = CeVIO
+	STR:203 = CeVIO
+	RETURN 21
+ELSEIF L >= 80 && L <= 89
+	STR:202 = AITalk
+	STR:203 = AITalk
+	RETURN 22
+ENDIF
 
 ;ここまで来たらヒットなし
-RETURN 0
+STR:201 = 誰か
+RETURN 99
+
 
 ;--------------------------------------------------
 ;キャラ種族補正関数@GET_STRAINCORRECT
@@ -114,8 +139,21 @@ RETURN 0
 ;eramakerだと整数の直接指定しか出来ない為、Lを取得してください
 ;--------------------------------------------------
 @GET_STRAINCORR_VALUE
-
-THROW 関数"@GET_STRAINCORR_VALUE"は現在使われるべきではありません。
+;THROW 関数"@GET_STRAINCORR_VALUE"は現在使われるべきではありません。
+;素質「蓬莱人」持ちなら種族を蓬莱人にする
+IF TALENT:L:128 != 0
+	L = 8
+;素質「吸血鬼持ち」なら種族を吸血鬼に変更
+ELSEIF TALENT:L:114 != 0
+	L = 11
+;ハクタク化している場合は6
+ELSEIF TEQUIP:L:1 != 0
+	L = 6
+ELSE
+	L = NO:L
+	CALL GET_STRAINNAME
+	L = RESULT
+ENDIF
 RETURN 0
 
 ;--------------------------------------------------
