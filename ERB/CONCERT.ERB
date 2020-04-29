@@ -267,6 +267,10 @@ N = 0
 P = 0
 
 ;ABL:歌唱技能
+SIF ABL:92 < 5
+	K = RAND:21
+
+;ABL:歌唱技能
 IF ABL:92 <= 10
 	L += ABL:92
 ELSEIF ABL:92 <= 20
@@ -332,7 +336,7 @@ SIF TALENT:85
 ;クリア後なら技能補正で安定させる
 IF (FLAG:28 & 1) != 0
 	;K = 歌の種類
-	IF K == 0 && ABL:92 >= 5
+	IF K == 0 || ABL:92 >= 5
 		;キャラの持ち歌
 		N += 100
 	ELSEIF K == 1 || K == 2
