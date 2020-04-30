@@ -10,7 +10,7 @@ SIF TFLAG:CALLTRAIN
 ;パートナーが[親愛]を持っている場合、異常経験が付くコマンドを表示するコンフィグがONの場合
 ;パートナーが[親愛]を持っていたら異常経験フィルタを一時的にOFFにする
 LOCAL:2 = 0
-IF TALENT:88 && (FLAG:61 & 2)
+IF TALENT:親愛 && (FLAG:61 & 2)
 	;異常経験フィルタが元々OFFかLOCAL:2に記憶。コマンド表示後戻す
 	SIF (FLAG:61 & 1) == 0
 		LOCAL:2 = 1
@@ -137,9 +137,9 @@ IF CFLAG:TARGET:独自コマンド使用判定
 	NEXT
 ENDIF
 IF ASSI > 0
-	IF ASSIPLAY && TEQUIP:90 == 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:152)
+	IF ASSIPLAY && TEQUIP:90 == 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:合意)
 		PRINTC マスターと交代[900]
-	ELSEIF TEQUIP:90 == 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:152)
+	ELSEIF TEQUIP:90 == 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:合意)
 		PRINTC 助手と交代[900]
 	ENDIF
 	CALL NEWLINE
@@ -155,7 +155,7 @@ PRINTC トロフィー[910]
 CALL NEWLINE
 PRINTC リセット[950]
 CALL NEWLINE
-IF TALENT:MASTER:998
+IF TALENT:MASTER:Debug
 	PRINTC デバッグメニュー[998]
 	CALL NEWLINE
 ENDIF
@@ -292,7 +292,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 	ENDIF
 
 	;[合意]持ちなら判定全スルー
-	IF TALENT:152
+	IF TALENT:合意
 		TFLAG:44 = 1
 		TFLAG:600 = 7
 		CALL KOJO_JUN
@@ -310,7 +310,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 		V = 70
 		W = 100
 		;Stage3クリア後は実行値スルー
-		SIF  FLAG:24 > 3 || TALENT:MASTER:202
+		SIF  FLAG:24 > 3 || TALENT:MASTER:脱衣制限解除
 			V = -9999
 
 		;すべての命令に共通の要素を考慮
@@ -326,13 +326,13 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 			A += ABL:奉仕精神 * 3
 		ENDIF
 		;男嫌い
-		IF TALENT:82 && TALENT:PLAYER:122
+		IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 			A -= 7
 		ENDIF
 
 
 		;恋慕
-		IF TALENT:85 && ASSIPLAY == 0
+		IF TALENT:恋慕 && ASSIPLAY == 0
 			A += 10
 		ENDIF
 
@@ -384,12 +384,12 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 			A += B
 		ENDIF
 		;キス未経験
-		IF TALENT:151
+		IF TALENT:キス未経験
 			A -= 20
 		ENDIF
 
 		;一線越えない
-		IF TALENT:27
+		IF TALENT:一線越えない
 			A -= 15
 		ENDIF
 
@@ -416,7 +416,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 				S = 1
 			ENDIF
 			;男嫌い
-			IF TALENT:82 && TALENT:PLAYER:122
+			IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 				PRINT  - 
 				PRINTS TALENTNAME:82
 				PRINTV '(,7,')
@@ -425,7 +425,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 
 
 			;恋慕
-			IF TALENT:85 && ASSIPLAY == 0
+			IF TALENT:恋慕 && ASSIPLAY == 0
 				SIF S
 					PRINT  + 
 				PRINTS TALENTNAME:85
@@ -495,7 +495,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 				S = 1
 			ENDIF
 			;キス未経験
-			IF TALENT:151
+			IF TALENT:キス未経験
 				PRINT  - 
 				PRINTS TALENTNAME:151
 				PRINTV '(,20,')
@@ -503,7 +503,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 			ENDIF
 
 			;一線越えない
-			IF TALENT:27
+			IF TALENT:一線越えない
 				PRINT  - 
 				PRINTS TALENTNAME:27
 				PRINTV '(,15,')
@@ -550,7 +550,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 		IF A < V
 			TFLAG:600 = 6
 			CALL KOJO_JUN
-			IF TALENT:85 == 0
+			IF TALENT:恋慕 == 0
 				PRINTFORMW %CALLNAME:TARGET%の好感度が50下がりました
 				CFLAG:2 -= 50
 			ENDIF
@@ -579,7 +579,7 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 			IF TFLAG:44 == 1
 				IF ASSIPLAY == 0 && TFLAG:48 == 0
 					PRINTFORMW %CALLNAME:TARGET%の【合意】を得た
-					TALENT:152 = 1
+					TALENT:合意 = 1
 				ENDIF
 				;映画館から追い出される
 				CALL GET_OUT_MOVIE
@@ -606,9 +606,9 @@ ELSEIF RESULT == 851 && (FLAG:23 & 8) && TFLAG:34 == 0
 		PRINTFORML %CALLNAME:TARGET%に握らせています
 	ENDIF
 	PRINTL [0] - 成り行きに任せる
-	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:素直 || TALENT:大人しい || TALENT:プライド低い || TALENT:恋人
 		PRINTL [1] - 自分で握る
-	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:サド || TALENT:恋人
 		PRINTFORML [2] - %CALLNAME:TARGET%に握らせる
 	SIF TALENT:恋慕 && TALENT:恋人
 		PRINTFORML [3] - 完全に%CALLNAME:TARGET%に握らせる
@@ -616,10 +616,10 @@ ELSEIF RESULT == 851 && (FLAG:23 & 8) && TFLAG:34 == 0
 	INPUT
 	IF RESULT == 0
 		CFLAG:15 = 0
-	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
+	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:素直 || TALENT:大人しい || TALENT:プライド低い || TALENT:恋人)
 		CFLAG:15 = 1
 		TFLAG:45 = 0
-	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
+	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:サド || TALENT:恋人)
 		CFLAG:15 = 2
 		TFLAG:45 = 1
 	ELSEIF RESULT == 3 && (TALENT:恋慕 && TALENT:恋人)
@@ -637,7 +637,7 @@ ELSEIF RESULT == 860
 	CALL START_CONFIGURE
 ELSEIF (RESULT >= 870 && RESULT < 880) && GETBIT(CFLAG:TARGET:独自コマンド使用判定, (RESULT-860))
 	TRYCALLFORM KOJO_USERCOM_{NO:TARGET}_{RESULT}
-ELSEIF RESULT == 900 && TEQUIP:90 == 0 && ASSI > 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:152)
+ELSEIF RESULT == 900 && TEQUIP:90 == 0 && ASSI > 0 && TEQUIP:2 == 0 && (TFLAG:44 == 0 || TALENT:合意)
 	CALL KOJO_MESSAGE_PLAYERCHANGE
 	IF ASSIPLAY
 		ASSIPLAY = 0
@@ -670,7 +670,7 @@ ELSEIF RESULT == 902
 ELSEIF RESULT == 910
 	;実績表示
 	CALL TROPHY
-ELSEIF RESULT == 998 && TALENT:MASTER:998
+ELSEIF RESULT == 998 && TALENT:MASTER:Debug
 	;デバッグモード用メニュー
 	PRINTL デバッグメニューを呼び出します
 	CALL DEBUG_MENU_TRAIN

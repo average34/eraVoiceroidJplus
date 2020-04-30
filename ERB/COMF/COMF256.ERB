@@ -18,23 +18,23 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -77,13 +77,13 @@ CALL TRAIN_MESSAGE_B
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
+SIF TALENT:恋慕 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -197,16 +197,16 @@ ENDIF
 
 ;調教者がふたなり
 IF ASSIPLAY
-	SIF TALENT:ASSI:121
+	SIF TALENT:ASSI:ふたなり
 		TIMES SOURCE:1 , 2.50
 ENDIF
 
 ;小柄体形
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES SOURCE:6 , 2.00
 
 ;貞操観念
-IF TALENT:30
+IF TALENT:貞操観念
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		TIMES SOURCE:14, 5.00
@@ -216,7 +216,7 @@ IF TALENT:30
 		SOURCE:15 = 1000
 	ENDIF
 ;貞操無頓着
-ELSEIF TALENT:31
+ELSEIF TALENT:貞操無頓着
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 300
@@ -334,12 +334,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:12 + 8
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 15
 	SOURCE:15 += 1200
 ENDIF
@@ -376,7 +376,7 @@ ENDIF
 STAIN:3 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:3
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTFORML %EXPNAME:40%＋4
 	EXP:レズ経験 += 4
 ENDIF
@@ -397,7 +397,7 @@ IF PREVCOM == 34
 	PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の胸に手を衝き、ペニスを根元まで飲み込んだ…
 	IF EXP:Ｖ経験 <= 30
 		PRINTFORMW %CALLNAME:TARGET%はそのまま腰を前後に揺すっている…
-	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && TALENT:121
+	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && TALENT:ふたなり
 		PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の腹にペニスを押し付けている…
 	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50
 		PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の陰毛でクリトリスを刺激しているようだ…
@@ -425,7 +425,7 @@ ELSE
 		PRINTFORMW 腰を前に押すようにして、%CALLNAME:TARGET%の深奥まで突き上げた…
 	IF EXP:Ｖ経験 <= 30 || (EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && (PREVCOM == 21 || PREVCOM == 25 || PREVCOM == 88))
 		PRINTFORMW %CALLNAME:TARGET%は異物感が強いのか、苦しそうにしている…
-	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && TALENT:121
+	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && TALENT:ふたなり
 		PRINTFORMW %CALLNAME:TARGET%は陰毛と臍の窪みにペニスを嬲られ、鼻声を漏らしている…
 	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50
 		PRINTFORMW %CALLNAME:TARGET%は陰毛にクリトリスを擦られ、鼻声を漏らしている…

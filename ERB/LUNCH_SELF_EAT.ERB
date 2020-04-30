@@ -33,7 +33,7 @@ ELSE
 ENDIF
 
 ;献身的
-SIF TALENT:MASTER:63
+SIF TALENT:MASTER:献身的
 	TIMES L , 1.20
 
 ;料理の種類決定
@@ -55,7 +55,7 @@ ENDIF
 
 ;♂の主人公より下手な事にコンプレックスを感じて効果アップ
 ;オトコ
-SIF TALENT:MASTER:122 && ABL:MASTER:料理技能 >= ABL:料理技能
+SIF TALENT:MASTER:オトコ && ABL:MASTER:料理技能 >= ABL:料理技能
 	TIMES L , 1.10
 
 ;R = 料理の出来栄え
@@ -151,13 +151,13 @@ $LUNCH_EVALUATE
 ;親密でL(恭順・好意の珠取得数)を補正
 L = L * ABL:親密 / 15
 ;EXキャラ補正(恋慕有りだと効果UP、恋慕無しだと珠なし)
-IF CFLAG:0 && TALENT:85
+IF CFLAG:0 && TALENT:恋慕
 	TIMES L , 1.20
-ELSEIF CFLAG:0 && TALENT:85 == 0
+ELSEIF CFLAG:0 && TALENT:恋慕 == 0
 	L = 0
 ENDIF
 IF L > 0
-	IF ABL:MASTER:料理技能 >= 10 && TALENT:153
+	IF ABL:MASTER:料理技能 >= 10 && TALENT:恋人
 		JUEL:4 += L * 22
 		JUEL:15 += L * 33
 		PRINTFORML %PALAMNAME:4%の珠＋{L*22}
@@ -218,7 +218,7 @@ ENDIF
 WAIT
 
 ;食後の運動イベント
-IF TFLAG:14 == 1 && (TALENT:152 || TALENT:153) && TALENT:処女 == 0 && TALENT:MASTER:154 == 0
+IF TFLAG:14 == 1 && (TALENT:合意 || TALENT:恋人) && TALENT:処女 == 0 && TALENT:MASTER:童貞 == 0
 	CALL LUNCH_EXERCISE
 ELSE
 	TFLAG:14 = 0

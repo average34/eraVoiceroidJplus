@@ -27,7 +27,7 @@ I = 4000 + EXP:戦闘経験 / 2 + EXP:愛情経験 / 3
 ;愛情経験でも底上げ追加
 J = 3000 + EXP:デート経験 + EXP:愛情経験 / 2
 ;性別による補正
-IF TALENT:122
+IF TALENT:オトコ
 	TIMES I , 1.50
 ELSE
 	TIMES J , 1.20
@@ -97,7 +97,7 @@ IF C <= 1 && A != 0 && BASE:体力 >= 300 && MAXBASE:体力 < I
 	SIF E > 20
 		E = 20
 	;[恋慕]かつ[恋人]じゃないと半減
-	SIF TALENT:85 == 0 || TALENT:153 == 0
+	SIF TALENT:恋慕 == 0 || TALENT:恋人 == 0
 		E /= 2
 	IF (E+G:0) > 0
 		DRAWLINE
@@ -150,7 +150,7 @@ IF C >= 1 && B != 0 && BASE:気力 >= 100 && MAXBASE:気力 < J
 	SIF F > 20
 		F = 20
 	;[恋慕]かつ[恋人]じゃないと半減
-	SIF TALENT:85 == 0 || TALENT:153 == 0
+	SIF TALENT:恋慕 == 0 || TALENT:恋人 == 0
 		F /= 2
 	IF (F+G:1) > 0
 		DRAWLINE

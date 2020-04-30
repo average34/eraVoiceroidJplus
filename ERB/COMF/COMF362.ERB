@@ -20,7 +20,7 @@ SIF TEQUIP:2
 SIF TEQUIP:20
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;潤滑10000以上かつ、欲情10000以上が必要
 SIF PALAM:3 < 10000 || PALAM:5 < 10000
@@ -29,10 +29,10 @@ SIF PALAM:3 < 10000 || PALAM:5 < 10000
 SIF ABL:欲望 < 6
 	RETURN 0
 ;親密10以上or好感度2000以上or恋人が必要
-SIF ABL:親密 < 10 && CFLAG:2 < 2000 && TALENT:153 == 0
+SIF ABL:親密 < 10 && CFLAG:2 < 2000 && TALENT:恋人 == 0
 	RETURN 0
 ;合意が必要
-SIF TALENT:152 == 0
+SIF TALENT:合意 == 0
 	RETURN 0
 ;ムードか酒の勢いが必要
 SIF TFLAG:37 < 30 && TFLAG:47 < 20
@@ -188,18 +188,18 @@ ENDIF
 
 ;Ｖ敏感、鈍感をみる
 ;快Ｖ自体のチェックは後でまとめてやる
-IF TALENT:103
+IF TALENT:Ｖ鈍感
 	TIMES SOURCE:6 , 1.50
 	TIMES SOURCE:13 , 1.50
 	TIMES SOURCE:14 , 1.50
-ELSEIF TALENT:104
+ELSEIF TALENT:Ｖ敏感
 	TIMES SOURCE:6 , 0.60
 	TIMES SOURCE:13 , 0.60
 	TIMES SOURCE:14 , 0.60
 ENDIF
 
 ;処女で貞操観念
-IF EXP:Ｖ経験 == 0 && TALENT:30 && TALENT:85 == 0
+IF EXP:Ｖ経験 == 0 && TALENT:貞操観念 && TALENT:恋慕 == 0
 	TIMES SOURCE:13 , 2.00
 ENDIF
 
@@ -207,12 +207,12 @@ ENDIF
 STAIN:3 |= STAIN:PLAYER:1
 STAIN:PLAYER:1 |= STAIN:3
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
 	EXP:PLAYER:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1
@@ -261,7 +261,7 @@ A = RAND:13 + 5
 IF ABL:欲望 < 9 && CFLAG:2 < 5000
 	A -= 12
 	;恋慕で少し反感
-	IF TALENT:85
+	IF TALENT:恋慕
 		SOURCE:15 += 200
 	ELSE
 	;恋慕なしだと反感増加
@@ -293,7 +293,7 @@ ELSE
 ENDIF
 SIF EXP:Ｖ経験 > 0 && EXP:Ｖ経験 <= 10
 	PRINTFORM 、まだあまり開発されていない
-IF TALENT:100
+IF TALENT:小柄体型
 	PRINT 幼いワレメ
 ELSE
 	PRINT 秘裂
@@ -369,22 +369,22 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 	S = 1
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 	S = 1
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 12
 	S = 1
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 8
 	S = 5
 ENDIF
@@ -396,7 +396,7 @@ IF TALENT:処女
 ENDIF
 
 ;一線越えない（処女のみ）
-IF TALENT:27 && TALENT:処女
+IF TALENT:一線越えない && TALENT:処女
 	A -= 10
 	S = 1
 ENDIF
@@ -515,28 +515,28 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,12,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -553,7 +553,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（処女のみ）
-	IF TALENT:27 && TALENT:処女
+	IF TALENT:一線越えない && TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,10,')

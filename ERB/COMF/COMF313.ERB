@@ -136,7 +136,7 @@ ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 		L -= 1
 		E -= 1
 		;奇跡を持っていると確率が更に下がる
-		SIF TALENT:E:216 != 0
+		SIF TALENT:E:淫魔 != 0
 			L -= 1
 	ENDIF
 	T = 43
@@ -288,7 +288,7 @@ ELSEIF TFLAG:17 == 1
 	IF TFLAG:18 == -1
 		PRINTFORML 小銭を切らしており、大きな出費となった…
 	ELSE
-		IF TALENT:134 == 1
+		IF TALENT:妊娠 == 1
 			PRINTFORML 賽銭を入れ、安産を祈願した…
 		ELSE
 			PRINTFORML 賽銭を入れ、願いごとを念じた…

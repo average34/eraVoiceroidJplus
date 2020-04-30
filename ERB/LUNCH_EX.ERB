@@ -5,10 +5,10 @@
 TFLAG:15 = 0
 
 ;ターゲットに挿入
-SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:処女 == 0 && EXP:Ｖ経験 > 0
+SIF (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:処女 == 0 && EXP:Ｖ経験 > 0
 	TFLAG:15 |= 1
 ;マスターに挿入
-SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:処女 == 0 && EXP:MASTER:Ｖ経験 > 0
+SIF (TALENT:ふたなり || TALENT:オトコ) && TALENT:MASTER:処女 == 0 && EXP:MASTER:Ｖ経験 > 0
 	TFLAG:15 |= 2
 ;両方出来るならランダムで決定
 SIF TFLAG:15 == 3
@@ -50,13 +50,13 @@ IF ABL:欲望 == 3 && ABL:Ｖ感覚 >= 3 && ABL:奉仕精神 >= 5
 ENDIF
 
 ;快感に素直、快感の否定、淫乱化
-IF TALENT:70 && S
+IF TALENT:快感に素直 && S
 	S += 1
-ELSEIF TALENT:71 && S
+ELSEIF TALENT:快感の否定 && S
 	S -= 2
 ENDIF
 
-IF TALENT:76 && S
+IF TALENT:淫乱 && S
 	S += 1
 ENDIF
 
@@ -68,7 +68,7 @@ ENDIF
 
 ;反発感情があると実行しにくくなる。また、恋慕なし反発3では発生せず
 IF MARK:3 && S
-	IF MARK:3 >= 3 && TALENT:85 == 0
+	IF MARK:3 >= 3 && TALENT:恋慕 == 0
 		S = 0
 	ELSE
 		S /= 1+MARK:3
@@ -108,81 +108,81 @@ WAIT
 ;押し倒されチェック
 A = 0
 ;反抗的
-SIF TALENT:11
+SIF TALENT:反抗的
 	A += 1
 ;生意気
-SIF TALENT:16
+SIF TALENT:生意気
 	A += 1
 ;好奇心
-SIF TALENT:23
+SIF TALENT:好奇心
 	A += 1
 ;楽観的
-SIF TALENT:25
+SIF TALENT:楽観的
 	A += 1
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A += 1
 ;貞操無頓着
-SIF TALENT:31
+SIF TALENT:貞操無頓着
 	A += 1
 ;解放
-SIF TALENT:32
+SIF TALENT:抑圧
 	A += 1
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	A += 1
 ;快感に素直
-SIF TALENT:70
+SIF TALENT:快感に素直
 	A += 1
 ;淫乱
-SIF TALENT:76
+SIF TALENT:淫乱
 	A += 1
 ;サド
-SIF TALENT:83
+SIF TALENT:サド
 	A += 1
 ;小悪魔
-SIF TALENT:87
+SIF TALENT:小悪魔
 	A += 1
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	A -= 1
 ;気丈
-SIF TALENT:12
+SIF TALENT:気丈
 	A -= 1
 ;素直
-SIF TALENT:13
+SIF TALENT:素直
 	A -= 1
 ;自制心
-SIF TALENT:20
+SIF TALENT:自制心
 	A -= 1
 ;無関心
-SIF TALENT:21
+SIF TALENT:無関心
 	A -= 1
 ;保守的
-SIF TALENT:24
+SIF TALENT:保守的
 	A -= 1
 ;悲観的
-SIF TALENT:26
+SIF TALENT:悲観的
 	A -= 1
 ;一線越えない
-SIF TALENT:27
+SIF TALENT:一線越えない
 	A -= 1
 ;貞操観念
-SIF TALENT:30
+SIF TALENT:貞操観念
 	A -= 1
 ;抑圧
-SIF TALENT:32
+SIF TALENT:抑圧
 	A -= 1
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	A -= 1
 ;快感の否定
-SIF TALENT:71
+SIF TALENT:快感の否定
 	A -= 1
 
 ;中毒系：男主人なら精液、女主人ならレズを見る
-IF TALENT:MASTER:122
+IF TALENT:MASTER:オトコ
 	SIF ABL:精液中毒 >= 5
 		A += 1
 ELSE
@@ -260,13 +260,13 @@ ELSE
 	SIF ABL:自慰中毒
 		S += ABL:自慰中毒
 	;淫乱
-	SIF TALENT:76
+	SIF TALENT:淫乱
 		S += 1
 	;自制心
-	SIF TALENT:20
+	SIF TALENT:自制心
 		S -= 2
 	;快楽の否定
-	SIF TALENT:71
+	SIF TALENT:快感の否定
 		S -= 2
 	;反発感情
 	SIF MARK:3
@@ -348,7 +348,7 @@ ELSE
 ENDIF
 PRINTFORML %PALAMNAME:4%の珠+{S*100}
 PRINTFORML %PALAMNAME:5%の珠+{S*300}
-IF TALENT:122 || TALENT:121
+IF TALENT:オトコ || TALENT:ふたなり
 	T = TARGET
 	PLAYER = MASTER
 	CALL GET_INITIATIVE_RATE
@@ -382,7 +382,7 @@ IF TFLAG:15 & 1
 	EXP:Ｖ経験 += S
 ENDIF
 ;主人がオトコかふたなり
-IF TALENT:MASTER:121 || TALENT:MASTER:122
+IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 	;精液経験
 	PRINTFORML %EXPNAME:20%+{S*5}
 	EXP:精液経験 += S * 5
@@ -391,7 +391,7 @@ IF TALENT:MASTER:121 || TALENT:MASTER:122
 	EXP:MASTER:射精経験 += S
 ENDIF
 ;パートナーがオトコかふたなり
-IF TALENT:122 || TALENT:121
+IF TALENT:オトコ || TALENT:ふたなり
 	;精液経験
 	PRINTFORML %EXPNAME:20%+{S*5}(%CALLNAME:MASTER%)
 	EXP:MASTER:精液経験 += S * 5
@@ -404,12 +404,12 @@ PRINTFORML %EXPNAME:2%+{S}
 EXP:絶頂経験 += S
 
 ;レズ経験
-IF TALENT:MASTER:122 == 0 && TALENT:122 == 0
+IF TALENT:MASTER:オトコ == 0 && TALENT:オトコ == 0
 	EXP:レズ経験 += S * 20
 	EXP:MASTER:レズ経験 += S * 20
 	PRINTFORML %EXPNAME:40%+{S*20}
 ;BL経験
-ELSEIF TALENT:MASTER:122 && TALENT:122
+ELSEIF TALENT:MASTER:オトコ && TALENT:オトコ
 	EXP:ＢＬ経験 += S * 20
 	EXP:MASTER:ＢＬ経験 += S * 20
 	PRINTFORML %EXPNAME:41%+{S*20}

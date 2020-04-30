@@ -289,7 +289,7 @@ ELSEIF TFLAG:17 == 3
 		PRINTL 
 		;改行多いわ…クリックも多いわ…三点リーダーも多いわ…
 		;両者蓬莱人
-		IF TALENT:128 && TALENT:MASTER:128
+		IF TALENT:蓬莱人 && TALENT:MASTER:蓬莱人
 			PRINTW 見た目に反して何とも無かったようだ……？
 			PRINTL 
 			PRINTW 何かがおかしい……急に身体が重くなり、悪寒が止まらない…
@@ -298,14 +298,14 @@ ELSEIF TFLAG:17 == 3
 			PRINTFORMW 酷い倦怠感に%CALLNAME:MASTER%と%CALLNAME:TARGET%は徐々に動けなくなり、遂に意識を失った…
 			PRINTL 
 		;パートナーが蓬莱人
-		ELSEIF TALENT:MASTER:128 == 0 && TALENT:128
+		ELSEIF TALENT:MASTER:蓬莱人 == 0 && TALENT:蓬莱人
 			PRINTL 飲んで暫くすると全身を稲妻が駆け抜けたような衝撃に襲われ
 			PRINTFORMW %CALLNAME:MASTER%は意識を手放した
 			PRINTL 
 			PRINTFORMW %CALLNAME:TARGET%が小刻みに震えていた事が気になる……
 			PRINTL 
 		;主人公が蓬莱人
-		ELSEIF TALENT:128 == 0 && TALENT:MASTER:128
+		ELSEIF TALENT:蓬莱人 == 0 && TALENT:MASTER:蓬莱人
 			PRINTW 見た目に反して何とも無かったようだ……？
 			PRINTL 
 			PRINTFORML 暫くすると%CALLNAME:TARGET%が短い悲鳴と共にぱたりと倒れ込んだ
@@ -376,7 +376,7 @@ PRINTL
 PRINTW ………
 PRINTL 
 ;霊夢様が挿入可能部位を持っている場合、ｱｯｰｰｰｰｰ!!(肉棒、角、ペニスバンド)…角持つ可能性ありませんが一応判定
-IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
+IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:4 == 1
 	IF ITEM:14
 		PRINTFORML %EXPNAME:51%＋5 (%CALLNAME:MASTER%)
 		PRINTW 
@@ -387,12 +387,12 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 	PRINTFORML %EXPNAME:31%＋10 (%CALLNAME:MASTER%)
 
 	;霊夢様がふたなり、オトコだと射精
-	IF TALENT:ASSI:121 || TALENT:ASSI:122
+	IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
 		PRINTFORML %EXPNAME:3%＋20 (%CALLNAME:ASSI%)
 		PRINTFORML %EXPNAME:20%＋20 (%CALLNAME:MASTER%)
 	ENDIF
 	;主人公がふたなり、オトコだと射精
-	IF TALENT:MASTER:121 || TALENT:MASTER:122
+	IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 		PRINTFORML %EXPNAME:3%＋20 (%CALLNAME:MASTER%)
 		PRINTFORML %EXPNAME:20%＋20 (%CALLNAME:ASSI%)
 	ENDIF
@@ -468,22 +468,22 @@ SIF B > 99
 A = RAND:100
 ;霊夢、霊夢様がパートナーかつ恋慕で、反発なし
 IF TFLAG:17 < 2
-	SIF TALENT:153
+	SIF TALENT:恋人
 		A -= 2
-	SIF TALENT:88
+	SIF TALENT:親愛
 		A -= 2
-	SIF TALENT:89
+	SIF TALENT:相愛
 		A -= 3
 ;霊夢、霊夢様が実行者かつ恋慕
 ELSEIF TFLAG:17 < 4
 	;誰かのメリットは別の誰かにはデメリットって感じで
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		A += 1
-	SIF TALENT:153
+	SIF TALENT:恋人
 		A += 2
-	SIF TALENT:88
+	SIF TALENT:親愛
 		A += 1
-	SIF TALENT:89
+	SIF TALENT:相愛
 		A += 3
 	SIF TFLAG:37 >= 30
 		A += 1
@@ -513,27 +513,27 @@ RETURN 0
 ;蓬莱人消去有無を記録
 G = 0
 ;主人、パートナーが蓬莱人の場合は素質変動
-;IF TALENT:128 || TALENT:MASTER:128
+;IF TALENT:蓬莱人 || TALENT:MASTER:蓬莱人
 ;	;直後に戻ったりもするけど、そこのフラグ弄るのはやりすぎなので自重
-;	IF TALENT:MASTER:128
+;	IF TALENT:MASTER:蓬莱人
 ;		PRINTFORM %CALLNAME:MASTER%
-;		SIF TALENT:128
+;		SIF TALENT:蓬莱人
 ;			PRINTFORM と
 ;	ENDIF
-;	SIF TALENT:128
+;	SIF TALENT:蓬莱人
 ;		PRINTFORM %CALLNAME:TARGET%
 ;	PRINTFORM は【%TALENTNAME:128%】ではなくなった…
 ;ENDIF
 
 ;主人公が蓬莱人の場合、謎の魅力と、回復早いも消去
-IF TALENT:MASTER:128
-;	TALENT:MASTER:128 = 0
-;	IF TALENT:MASTER:92
-;		TALENT:MASTER:92 = 0
+IF TALENT:MASTER:蓬莱人
+;	TALENT:MASTER:蓬莱人 = 0
+;	IF TALENT:MASTER:謎の魅力
+;		TALENT:MASTER:謎の魅力 = 0
 ;		PRINTFORMW %CALLNAME:MASTER%は【%TALENTNAME:92%】を失った…
 ;	ENDIF
-;	IF TALENT:MASTER:111
-;		TALENT:MASTER:111 = 0
+;	IF TALENT:MASTER:回復早い
+;		TALENT:MASTER:回復早い = 0
 ;		PRINTFORMW %CALLNAME:MASTER%は【%TALENTNAME:111%】を失った…
 ;	ENDIF
 	G = 1
@@ -542,8 +542,8 @@ ENDIF
 
 ;パートナーが蓬莱人の場合は素質変動(主人はソース取得に関係なし)
 ;固定で獲得するソース
-IF TALENT:128
-;	TALENT:128 = 0
+IF TALENT:蓬莱人
+;	TALENT:蓬莱人 = 0
 	SOURCE:14 = 3000
 	SOURCE:23 += 50000
 ELSE
@@ -557,7 +557,7 @@ SIF ITEM:6
 
 ;しかしそれは巧妙な罠だった
 ;霊夢様が挿入可能部位を持っている場合、ｱｯｰｰｰｰｰ!!(肉棒、角、ペニスバンド)…角持つ可能性ありませんが一応判定
-IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
+IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:4 == 1
 	;縄があれば緊縛経験、異常経験を＋
 	IF ITEM:14
 		A += 1
@@ -571,14 +571,14 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 	EXP:MASTER:放尿経験 += 10
 
 	;霊夢様がふたなり、オトコだと射精
-	IF TALENT:ASSI:121 || TALENT:ASSI:122
+	IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
 		EXP:ASSI:射精経験 += 20
 		EXP:MASTER:精液経験 += 20
 	ELSE
 		EXP:ASSI:絶頂経験 += 10
 	ENDIF
 	;主人公がふたなり、オトコだと射精
-	IF TALENT:MASTER:121 || TALENT:MASTER:122
+	IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 		EXP:MASTER:射精経験 += 20
 		EXP:ASSI:精液経験 += 20
 	ELSE
@@ -597,8 +597,8 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 		EXP:MASTER:被写経験 += K
 
 		;弱味ゲット(相手は身に覚えがない事なので弱味にはならない)
-;		IF TALENT:37 == 0
-;			TALENT:37 = 1
+;		IF TALENT:弱味 == 0
+;			TALENT:弱味 = 1
 ;		PRINTFORML %CALLNAME:ASSI%は%CALLNAME:TARGET%の【%TALENTNAME:37%】を得た
 ;		ENDIF
 	ENDIF
@@ -615,8 +615,8 @@ IF A > 0
 	EXP:MASTER:異常経験 += A
 ENDIF
 ;;パートナーの蓬莱人を消去
-;IF TALENT:128
-;	TALENT:128 = 0
+;IF TALENT:蓬莱人
+;	TALENT:蓬莱人 = 0
 ;	PRINTL 
 ;	EXP:MASTER:異常経験 += 1
 ;	PRINTFORML %EXPNAME:50%+1 (%CALLNAME:TARGET%)
@@ -642,19 +642,19 @@ V = 50
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:MASTER:122
+IF TALENT:男嫌い && TALENT:MASTER:オトコ
 	A -= 7
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 ;恋慕
-IF TALENT:85
+IF TALENT:恋慕
 	A += 5
 ENDIF
 
@@ -678,21 +678,21 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:MASTER:122
+	IF TALENT:男嫌い && TALENT:MASTER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -700,7 +700,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85
+	IF TALENT:恋慕
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85

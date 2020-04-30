@@ -17,7 +17,7 @@ SIF TFLAG:67 >= 4
 SIF ABL:Ｃ感覚 == 0 && ABL:Ｖ感覚 == 0 && ABL:Ａ感覚 == 0 && ABL:Ｂ感覚 == 0
 	RETURN 0
 ;対象がふたなりかオトコならダメ(そのうち解除するかも)
-SIF TALENT:121 && TALENT:122
+SIF TALENT:ふたなり && TALENT:オトコ
 	RETURN 0
 ;調教者の技巧が3無いとできない
 SIF ABL:PLAYER:技巧 <= 2
@@ -192,27 +192,27 @@ ENDIF
 
 ;Ｃ敏感、鈍感をみる
 ;快Ｃ自体のチェックは後でまとめてやる
-SIF TALENT:101
+SIF TALENT:Ｃ鈍感
 	TIMES SOURCE:0 , 0.60
-SIF TALENT:102
+SIF TALENT:Ｃ敏感
 	TIMES SOURCE:0 , 1.50
 ;Ｖ敏感、鈍感をみる
 ;快Ｖ自体のチェックは後でまとめてやる
-SIF TALENT:103
+SIF TALENT:Ｖ鈍感
 	TIMES SOURCE:1 , 0.60
-SIF TALENT:104
+SIF TALENT:Ｖ敏感
 	TIMES SOURCE:1 , 1.50
 ;Ａ敏感、鈍感をみる
 ;快Ａ自体のチェックは後でまとめてやる
-SIF TALENT:105
+SIF TALENT:Ａ鈍感
 	TIMES SOURCE:2 , 0.60
-SIF TALENT:106
+SIF TALENT:Ａ敏感
 	TIMES SOURCE:2 , 1.50
 ;Ｂ敏感、鈍感をみる
 ;快Ｂ自体のチェックは後でまとめてやる
-SIF TALENT:107
+SIF TALENT:Ｂ鈍感
 	TIMES SOURCE:17 , 0.60
-SIF TALENT:108
+SIF TALENT:Ｂ敏感
 	TIMES SOURCE:17 , 1.50
 
 
@@ -260,13 +260,13 @@ ENDIF
 
 
 ;自尊心
-SIF TALENT:15
+SIF TALENT:プライド高い
 	SOURCE:13 /= 2
 ;恋慕
-SIF TALENT:85 && ASSIPLAY == 0
+SIF TALENT:恋慕 && ASSIPLAY == 0
 	SOURCE:3 *= 2
 ;保守的
-SIF TALENT:24
+SIF TALENT:保守的
 	SOURCE:13 /= 3
 
 ;縄で緊縛中のときは効果大
@@ -290,11 +290,11 @@ SOURCE:13 /= U
 SOURCE:14 /= U
 SOURCE:17 /= U
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +5
 	EXP:レズ経験 += 5
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +5
 	EXP:ＢＬ経験 += 5

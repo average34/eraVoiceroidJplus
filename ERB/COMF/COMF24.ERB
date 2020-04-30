@@ -45,13 +45,13 @@ CALL TRAIN_MESSAGE_B
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
+SIF TALENT:恋慕 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -90,7 +90,7 @@ IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 3500
 
-	IF ASSIPLAY && TALENT:PLAYER:122 == 0
+	IF ASSIPLAY && TALENT:PLAYER:オトコ == 0
 		EXP:異常経験 += 3
 		PRINTFORML %EXPNAME:50%＋３
 	ENDIF
@@ -165,16 +165,16 @@ ELSEIF PALAM:3 >= PALAMLV:4
 ENDIF
 
 ;調教者がふたなり
-SIF TALENT:PLAYER:121
+SIF TALENT:PLAYER:ふたなり
 	TIMES SOURCE:1 , 2.50
 
 
 ;小柄体形
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES SOURCE:6 , 2.00
 
 ;貞操観念
-IF TALENT:30 && TALENT:85 == 0
+IF TALENT:貞操観念 && TALENT:恋慕 == 0
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 10000
@@ -183,7 +183,7 @@ IF TALENT:30 && TALENT:85 == 0
 		SOURCE:15 = 1000
 	ENDIF
 ;貞操無頓着
-ELSEIF TALENT:31 || TALENT:88 && ASSIPLAY == 0
+ELSEIF TALENT:貞操無頓着 || TALENT:親愛 && ASSIPLAY == 0
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 300
@@ -272,7 +272,7 @@ SIF EXP:Ｖ経験 >= EXPLV:3
 	SOURCE:1 += A
 
 ;TALENT:恋慕をみる
-IF TALENT:85
+IF TALENT:恋慕
 	TIMES SOURCE:3 , 3.00
 	TIMES SOURCE:7 , 2.00
 	TIMES SOURCE:16 , 2.00
@@ -316,12 +316,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 	SOURCE:15 += 400
 ENDIF
@@ -402,7 +402,7 @@ ENDIF
 STAIN:3 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:3
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4
@@ -475,19 +475,19 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 2
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 12
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
@@ -500,12 +500,12 @@ ELSEIF EXP:Ｖ経験 < EXPLV:2
 ENDIF
 
 ;一線越えない（処女のみ）
-IF TALENT:27 && TALENT:処女
+IF TALENT:一線越えない && TALENT:処女
 	A -= 20
 ENDIF
 
 ;調教者がふたなり
-IF TALENT:PLAYER:121
+IF TALENT:PLAYER:ふたなり
 	A += 4
 ENDIF
 
@@ -515,7 +515,7 @@ IF TEQUIP:21
 ENDIF
 
 ;童貞
-IF TALENT:PLAYER:154
+IF TALENT:PLAYER:童貞
 	A += 2
 ENDIF
 
@@ -580,23 +580,23 @@ SIF STAIN:PLAYER:2 & 8
 SIF STAIN:PLAYER:2 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;汚れあり
 IF Y
 	A -= Y
 	;汚臭鈍感
-	IF TALENT:61
-	ELSEIF TALENT:62
+	IF TALENT:汚臭鈍感
+	ELSEIF TALENT:汚臭敏感
 	ELSE
 	ENDIF
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 30
 ENDIF
 
@@ -672,28 +672,28 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,12,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -716,7 +716,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（処女のみ）
-	IF TALENT:27 && TALENT:処女
+	IF TALENT:一線越えない && TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,20,')
@@ -724,7 +724,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者がふたなり
-	IF TALENT:PLAYER:121
+	IF TALENT:PLAYER:ふたなり
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:121
@@ -742,7 +742,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;童貞
-	IF TALENT:PLAYER:154
+	IF TALENT:PLAYER:童貞
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:154
@@ -825,19 +825,19 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:PLAYER:2 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;汚れあり
 	IF Y
 		PRINT  - 
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE
@@ -848,7 +848,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,30,')

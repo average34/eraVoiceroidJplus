@@ -34,22 +34,22 @@ SIF TIME:5 == 6
 ;露出癖が1以下だとダメ。ただし持っている素質によって値が変動
 A = 2
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	A += 2
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A -= 1
 ;抑圧
-SIF TALENT:32
+SIF TALENT:抑圧
 	A += 1
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	A -= 1
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	A += 2
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	A -= 1
 ;求められる露出癖が0～5以上となるように
 SIF A < 0
@@ -131,16 +131,16 @@ SIF L
 	A += L * 2
 
 ;自制心
-SIF TALENT:20
+SIF TALENT:自制心
 	A -= 5
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A += 5
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	A -= 5
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	A += 2
 
 ;目標難易度を設定（成功：11～51　大成功：更に+40）
@@ -247,45 +247,45 @@ ELSE
 ENDIF
 
 ;目立ちたがり
-IF TALENT:28
+IF TALENT:目立ちたがり
 	TIMES A , 1.50
 	C += 10
 ENDIF
 ;解放
-IF TALENT:33
+IF TALENT:解放
 	TIMES A , 1.50
 	C += 5
 ENDIF
 ;臆病
-IF TALENT:10
+IF TALENT:臆病
 	TIMES B , 2.00
 	C -= 10
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	TIMES B , 2.00
 	C -= 7
 ENDIF
 ;恥じ薄い
-IF TALENT:36
+IF TALENT:恥薄い
 	TIMES B , 0.80
 	C += 7
 ENDIF
 
 ;魅惑
-SIF TALENT:91
+SIF TALENT:魅惑
 	C += 10
 ;謎の魅力
-SIF TALENT:92
+SIF TALENT:謎の魅力
 	C += 25
 ;魅力
-SIF TALENT:113
+SIF TALENT:魅力
 	C += 20
 ;鼓舞
-SIF TALENT:118
+SIF TALENT:鼓舞
 	C += 50
 ;人気
-SIF TALENT:126
+SIF TALENT:人気
 	C += 30
 
 ;大成功補正
@@ -413,22 +413,22 @@ ELSE
 ENDIF
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES A , 1.50
 
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	TIMES A , 1.50
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES B , 2.00
 
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES B , 2.00
 ;恥じ薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	TIMES B , 0.80
 
 SOURCE:12 += A/12

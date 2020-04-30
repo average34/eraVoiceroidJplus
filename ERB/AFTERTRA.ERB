@@ -347,24 +347,24 @@ NEXT
 
 ;胸の復帰
 IF TEQUIP:40 & 7
-	TALENT:109 = 0
-	TALENT:110 = 0
+	TALENT:貧乳 = 0
+	TALENT:巨乳 = 0
 	IF TEQUIP:40 & 1
-		TALENT:109 = 1
+		TALENT:貧乳 = 1
 	ELSEIF TEQUIP:40 & 4
-		TALENT:110 = 1
+		TALENT:巨乳 = 1
 	ENDIF
 ENDIF
 ;体型を正常に
 SIF TEQUIP:40 & 8
-	TALENT:100 = 0
+	TALENT:小柄体型 = 0
 
 SIF TEQUIP:40 & 16
-	TALENT:100 = 1
+	TALENT:小柄体型 = 1
 
 ;獣耳喪失
 SIF TEQUIP:40 & 32
-	TALENT:124 = 0
+	TALENT:動物耳 = 0
 
 ;魔性のテクニック喪失
 SIF TEQUIP:40 & 4096
@@ -373,24 +373,24 @@ SIF TEQUIP:40 & 4096
 ;超敏感体質喪失
 IF TEQUIP:40 & 64
 	;有利素質は手抜き
-	TALENT:42 -= 1
-	TALENT:102 -= 1
-	TALENT:104 -= 1
-	TALENT:106 -= 1
-	TALENT:108 -= 1
-	TALENT:597 -= 1
+	TALENT:濡れやすい -= 1
+	TALENT:Ｃ敏感 -= 1
+	TALENT:Ｖ敏感 -= 1
+	TALENT:Ａ敏感 -= 1
+	TALENT:Ｂ敏感 -= 1
+	TALENT:Ｍ敏感 -= 1
 	SIF (TEQUIP:40 & 128) > 0
-		TALENT:43 = 1
+		TALENT:濡れにくい = 1
 	SIF (TEQUIP:40 & 256) > 0
-		TALENT:101 = 1
+		TALENT:Ｃ鈍感 = 1
 	SIF (TEQUIP:40 & 512) > 0
-		TALENT:103 = 1
+		TALENT:Ｖ鈍感 = 1
 	SIF (TEQUIP:40 & 1024) > 0
-		TALENT:105 = 1
+		TALENT:Ａ鈍感 = 1
 	SIF (TEQUIP:40 & 2048) > 0
-		TALENT:107 = 1
+		TALENT:Ｂ鈍感 = 1
 	SIF (TEQUIP:40 & 1p17) > 0
-		TALENT:596 = 1
+		TALENT:Ｍ鈍感 = 1
 ENDIF
 
 ;性別を元に戻す
@@ -401,13 +401,13 @@ ENDIF
 
 ;猫舌喪失
 SIF TEQUIP:40 & 1p14
-	TALENT:54 = 0
+	TALENT:猫舌 = 0
 
 ;羽喪失
 SIF TEQUIP:40 & 1p15
-	TALENT:213 = 0
+	TALENT:羽 = 0
 
 ;しっぽ喪失
 SIF TEQUIP:40 & 1p16
-	TALENT:215 = 0
+	TALENT:しっぽ = 0
 

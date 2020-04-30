@@ -29,7 +29,7 @@ SIF TEQUIP:58
 SIF TEQUIP:59
 	RETURN 0
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 RETURN 1
 
@@ -232,7 +232,7 @@ IF Y == 0
 	ENDIF
 
 	;処女で貞操観念
-	IF EXP:Ｖ経験 == 0 && TALENT:30
+	IF EXP:Ｖ経験 == 0 && TALENT:貞操観念
 		SOURCE:13 /= 3
 	ENDIF
 
@@ -368,7 +368,7 @@ ELSE
 	IF EXP:Ｖ経験 < EXPLV:1
 		TIMES SOURCE:1 , 0.20
 		SOURCE:6 = 5000
-		IF ASSIPLAY && TALENT:PLAYER:122 == 0
+		IF ASSIPLAY && TALENT:PLAYER:オトコ == 0
 			EXP:異常経験 += 1
 			PRINTFORML %EXPNAME:50%＋１
 		ENDIF
@@ -502,23 +502,23 @@ ELSE
 	ENDIF
 
 	;小柄体形
-	SIF TALENT:100
+	SIF TALENT:小柄体型
 		TIMES SOURCE:6 , 2.00
 
 	;Ａ敏感、鈍感をみる
 	;快Ａ自体のチェックは後でまとめてやる
-	IF TALENT:105
+	IF TALENT:Ａ鈍感
 		TIMES SOURCE:6 , 1.50
 		TIMES SOURCE:13 , 1.50
 		TIMES SOURCE:14 , 1.50
-	ELSEIF TALENT:106
+	ELSEIF TALENT:Ａ敏感
 		TIMES SOURCE:6 , 0.60
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 0.60
 	ENDIF
 
 	;貞操観念
-	IF TALENT:30
+	IF TALENT:貞操観念
 		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:3 , 0.60
 			SOURCE:15 = 10000
@@ -528,7 +528,7 @@ ELSE
 			SOURCE:15 = 1000
 		ENDIF
 	;貞操無頓着
-	ELSEIF TALENT:31
+	ELSEIF TALENT:貞操無頓着
 		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:3 , 0.60
 			SOURCE:15 = 300
@@ -541,7 +541,7 @@ ELSE
 
 	;V経験を伴うコマンドのフラグ(処女膜再生対応)
 	TFLAG:19 = 1
-	SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
+	SIF TALENT:恋慕 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 		TFLAG:20 = 1
 
 	CALL TRAIN_MESSAGE_B
@@ -565,11 +565,11 @@ ELSE
 	PRINTL Ａ経験＋５
 ENDIF
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +2
 	EXP:レズ経験 += 2
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +2
 	EXP:ＢＬ経験 += 2
@@ -591,17 +591,17 @@ IF STR:0 == "蜘蛛脚六点責め"
 	PRINTL ありとあらゆる穴の中へと潜り込んだ…
 
 	PRINTFORM %CALLNAME:TARGET%は
-	IF TALENT:処女 && TALENT:76 && ABL:TARGET:レズ中毒 > 0 && ASSIPLAY == 0
+	IF TALENT:処女 && TALENT:淫乱 && ABL:TARGET:レズ中毒 > 0 && ASSIPLAY == 0
 		PRINTFORML 自分が処女であることを気にした様子もなく、%CALLNAME:PLAYER%の脚が膣に入っていく感触に幸福感を感じているようだ…
-	ELSEIF TALENT:処女 && TALENT:76
+	ELSEIF TALENT:処女 && TALENT:淫乱
 		PRINTL 自分が処女であった事も忘れ、前後の穴と口を同時に責められている感触を楽しんでいる…
 	ELSEIF TALENT:処女
 		PRINTL 破瓜の痛みに絶叫をあげていたがすぐさま口も塞がれ、なすすべもなく蹂躙されている……
-	ELSEIF TALENT:85 && TALENT:76 && ASSIPLAY
+	ELSEIF TALENT:恋慕 && TALENT:淫乱 && ASSIPLAY
 		PRINTL 初めやや困惑したような様子だったが、両の乳首に快感を与えられた瞬間から何もかも忘れたかの様に嬌声をあげ続けている…
-	ELSEIF TALENT:85 && ASSIPLAY == 0
+	ELSEIF TALENT:恋慕 && ASSIPLAY == 0
 		PRINTFORML なにか訴えるかのように口を開けたが%CALLNAME:PLAYER%の脚が容赦なくそこに襲いかかった
-	ELSEIF TALENT:76
+	ELSEIF TALENT:淫乱
 		PRINTFORML 体全体で%CALLNAME:PLAYER%の脚から与えられる快感を貪るかのように何度も体を震わせた
 	ELSE
 		PRINTL 不浄の穴に深々と入っていく脚の感触に悲鳴を上げようとしたが絶妙なタイミングで陰核を弾かれ、声をあげることなく口を大きく開いた
@@ -609,7 +609,7 @@ IF STR:0 == "蜘蛛脚六点責め"
 ELSE
 	;蜘蛛脚愛撫
 	PRINTFORM %CALLNAME:PLAYER%は
-	SIF TALENT:PLAYER:83
+	SIF TALENT:PLAYER:サド
 		PRINT 嗜虐的な笑みを浮かべ、
 	PRINTFORML 無数の脚で%CALLNAME:TARGET%の体を撫でまわした
 	IF ABL:PLAYER:レズ中毒 > 0

@@ -243,7 +243,7 @@ ELSEIF ABL:技巧 <= 8
 	B = 0
 	C = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 	ENDIF
 	A = A * (ABL:技巧 - 5)
@@ -252,7 +252,7 @@ ELSEIF ABL:技巧 <= 11
 	B = 0
 	C = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 	A = A + 7000 * (ABL:技巧 - 9)
@@ -263,20 +263,20 @@ ELSE
 	
 	A = A * (ABL:技巧 - 9)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ENDIF
 
 ;自尊心
-IF TALENT:15
+IF TALENT:プライド高い
 	TIMES A , 1.50
 	TIMES B , 1.50
 	TIMES C , 1.50
 ENDIF
 
 ;キス魔
-IF TALENT:155
+IF TALENT:キス魔
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES C , 0.80

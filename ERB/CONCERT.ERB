@@ -42,32 +42,32 @@ ELSE
 ENDIF
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	L -= 2
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	L -= 1
 
 ;自制心
-SIF TALENT:20
+SIF TALENT:自制心
 	L += 1
 ;好奇心
-SIF TALENT:23
+SIF TALENT:好奇心
 	L += 1
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	L += 2
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	L += 1
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	L += 2
 
 SIF L <= 0
 	L = 0
 ;鼓舞
-IF TALENT:118
+IF TALENT:鼓舞
 	L += 1 + RAND:15
 ELSE
 	L += 1 + RAND:10
@@ -75,10 +75,10 @@ ENDIF
 
 P = 20
 ;親愛
-IF TALENT:88
+IF TALENT:親愛
 	P += RAND:16
 ;恋人or恋慕
-ELSEIF TALENT:153 || TALENT:85
+ELSEIF TALENT:恋人 || TALENT:恋慕
 	P += RAND:21
 ELSE
 	P += RAND:26
@@ -92,7 +92,7 @@ IF ASSI > 0
 	IF ABL:歌唱素質 >= 3
 		P -= 3
 	;助手が鼓舞持ちまたは歌唱技能Lv20以上だと難易度低下
-	ELSEIF TALENT:ASSI:118 || ABL:ASSI:歌唱技能 >= 20
+	ELSEIF TALENT:ASSI:鼓舞 || ABL:ASSI:歌唱技能 >= 20
 		P -= 2
 	ENDIF
 ENDIF
@@ -173,19 +173,19 @@ ELSE
 ENDIF
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES L , 0.80
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES L , 1.20
 
 ;献身的
-SIF TALENT:63
+SIF TALENT:献身的
 	TIMES L , 1.20
 
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	TIMES L , 2.00
 
 ;歌の上手そうな人ボーナス
@@ -318,19 +318,19 @@ ELSE
 ENDIF
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES L , 0.80
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES L , 1.20
 
 ;献身的
-SIF TALENT:63
+SIF TALENT:献身的
 	TIMES L , 1.20
 
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	TIMES L , 2.00
 
 ;クリア後なら技能補正で安定させる
@@ -373,16 +373,16 @@ CALL SINGER_BONUS
 
 ;アイドル補正
 ;謎の魅力
-SIF TALENT:92
+SIF TALENT:謎の魅力
 	TIMES N , 1.10
 ;魅力
-SIF TALENT:113
+SIF TALENT:魅力
 	TIMES N , 1.10
 ;鼓舞
-SIF TALENT:113
+SIF TALENT:魅力
 	TIMES N , 1.30
 ;人気
-SIF TALENT:126
+SIF TALENT:人気
 	TIMES N , 1.25
 
 ;カットフラグを退避

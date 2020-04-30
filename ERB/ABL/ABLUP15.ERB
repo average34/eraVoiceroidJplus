@@ -249,7 +249,7 @@ ELSEIF ABL:サドっ気 == 3
 	D = 15000
 	E = 20000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES C , 1.10
@@ -263,7 +263,7 @@ ELSEIF ABL:サドっ気 == 4
 	D = 30000
 	E = 50000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -283,7 +283,7 @@ ELSE
 	D = D * (ABL:サドっ気 - 3)
 	E = E * (ABL:サドっ気 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -293,7 +293,7 @@ ELSE
 ENDIF
 
 ;サド
-IF TALENT:83
+IF TALENT:サド
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
@@ -302,7 +302,7 @@ IF TALENT:83
 ENDIF
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 1.50
 	TIMES B , 1.50
 	TIMES C , 1.50
@@ -311,7 +311,7 @@ IF TALENT:79
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
@@ -320,7 +320,7 @@ IF TALENT:80
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES C , 0.80
@@ -374,7 +374,7 @@ ENDIF
 ;ENDIF
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[解放][サド]なら無視できる）
-IF ABL:サドっ気 >= 3 && TALENT:33 == 0 && TALENT:83 == 0
+IF ABL:サドっ気 >= 3 && TALENT:解放 == 0 && TALENT:サド == 0
 	F = ABL:サドっ気 * 3
 ELSE
 	F = 0

@@ -68,7 +68,7 @@ ELSEIF E == 0
 	;変更できない
 	FLAG:28 |= 2
 ;普通のゆかりが居る
-ELSEIF TALENT:E:201 == 0
+ELSEIF TALENT:E:eraVoiceroidJも支配する程度の能力 == 0
 	PRINTFORMW 特典としてゆかり様(ドＳ版ゆかり)を仲間に加える事ができます
 	PRINTFORMW 今居る普通のゆかりは居なくなりますが、仲間に加えますか？
 	PRINTL [0] はい
@@ -92,7 +92,7 @@ ELSEIF TALENT:E:201 == 0
 			LOCAL:2 = -1
 		ENDIF
 		;パートナーフラグを記憶
-		LOCAL:3 = TALENT:E:150
+		LOCAL:3 = TALENT:E:パートナー
 		DELCHARA E
 		CALL ADDSPCHARA_4
 		PRINTFORMW ＜ゆかりの様子が変わった＞
@@ -106,7 +106,7 @@ ELSEIF TALENT:E:201 == 0
 			ASSI = -1
 		
 		;パートナーフラグ復元
-		TALENT:A:150 = LOCAL:3
+		TALENT:A:パートナー = LOCAL:3
 	ELSEIF RESULT == 1
 		PRINTFORMW それでは今回の加入は見送ります
 	ELSEIF RESULT == 2
@@ -137,30 +137,30 @@ FOR LOCAL, 0, 300
 NEXT
 
 TALENT:A:処女 = 1
-TALENT:A:11 = 1
-TALENT:A:12 = 1
-TALENT:A:15 = 1
-TALENT:A:16 = 1
-TALENT:A:32 = 1
-TALENT:A:34 = 1
-TALENT:A:36 = 1
-TALENT:A:43 = 1
-TALENT:A:53 = 1
-TALENT:A:56 = 1
-TALENT:A:64 = 1
-TALENT:A:71 = 1
-TALENT:A:76 = 1
-TALENT:A:80 = 1
-TALENT:A:83 = 1
-TALENT:A:92 = 1
-TALENT:A:101 = 1
-TALENT:A:103 = 1
-TALENT:A:105 = 1
-TALENT:A:107 = 1
-TALENT:A:109 = 1
-TALENT:A:123 = 1
-TALENT:A:126 = 1
-TALENT:A:201 = 1
+TALENT:A:反抗的 = 1
+TALENT:A:気丈 = 1
+TALENT:A:プライド高い = 1
+TALENT:A:生意気 = 1
+TALENT:A:抑圧 = 1
+TALENT:A:抵抗 = 1
+TALENT:A:恥薄い = 1
+TALENT:A:濡れにくい = 1
+TALENT:A:針さばき = 1
+TALENT:A:薬毒耐性 = 1
+TALENT:A:汚れ無視 = 1
+TALENT:A:快感の否定 = 1
+TALENT:A:淫乱 = 1
+TALENT:A:倒錯的 = 1
+TALENT:A:サド = 1
+TALENT:A:謎の魅力 = 1
+TALENT:A:Ｃ鈍感 = 1
+TALENT:A:Ｖ鈍感 = 1
+TALENT:A:Ａ鈍感 = 1
+TALENT:A:Ｂ鈍感 = 1
+TALENT:A:貧乳 = 1
+TALENT:A:狂気 = 1
+TALENT:A:人気 = 1
+TALENT:A:eraVoiceroidJも支配する程度の能力 = 1
 
 ABL:A:技巧 = 1
 ABL:A:料理素質 = 1

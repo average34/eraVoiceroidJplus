@@ -41,7 +41,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:5 + 5
 ;合意がないと好感度が下がる、おまけ程度の反感
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 5
 	SOURCE:15 += 50
 ENDIF

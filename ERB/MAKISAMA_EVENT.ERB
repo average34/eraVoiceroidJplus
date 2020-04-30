@@ -39,7 +39,7 @@ ELSEIF E == 0
 	;変更できない
 	FLAG:28 |= 4
 ;普通のマキが居る
-ELSEIF TALENT:E:216 == 0
+ELSEIF TALENT:E:淫魔 == 0
 	PRINTFORMW 特典としてマキ様(ドエロ版マキ)を仲間に加える事ができます
 	PRINTFORMW 今居る普通のマキは居なくなりますが、仲間に加えますか？
 	PRINTL [0] はい
@@ -62,7 +62,7 @@ ELSEIF TALENT:E:216 == 0
 			LOCAL:2 = -1
 		ENDIF
 		;パートナーフラグを記憶
-		LOCAL:3 = TALENT:E:150
+		LOCAL:3 = TALENT:E:パートナー
 		DELCHARA E
 		CALL ADDSPCHARA_3
 		PRINTFORMW ＜マキの様子が変わった＞
@@ -76,7 +76,7 @@ ELSEIF TALENT:E:216 == 0
 			ASSI = -1
 		
 		;パートナーフラグ復元
-		TALENT:A:150 = LOCAL:3
+		TALENT:A:パートナー = LOCAL:3
 	ELSEIF RESULT == 1
 		PRINTFORMW それでは今回の加入は見送ります
 	ELSEIF RESULT == 2
@@ -108,19 +108,19 @@ FOR LOCAL, 0, 600
 	TALENT:A:LOCAL = 0
 NEXT
 
-TALENT:A:10 = 1
-TALENT:A:11 = 1
-TALENT:A:15 = 1
-TALENT:A:16 = 1
-TALENT:A:18 = 1
-TALENT:A:24 = 1
-TALENT:A:26 = 1
-TALENT:A:30 = 1
-TALENT:A:32 = 1
-TALENT:A:35 = 1
-TALENT:A:51 = 1
-TALENT:A:72 = 1
-TALENT:A:110 = 1
+TALENT:A:臆病 = 1
+TALENT:A:反抗的 = 1
+TALENT:A:プライド高い = 1
+TALENT:A:生意気 = 1
+TALENT:A:ツンデレ = 1
+TALENT:A:保守的 = 1
+TALENT:A:悲観的 = 1
+TALENT:A:貞操観念 = 1
+TALENT:A:抑圧 = 1
+TALENT:A:恥じらい = 1
+TALENT:A:習得遅い = 1
+TALENT:A:中毒しやすい = 1
+TALENT:A:巨乳 = 1
 ABL:A:技巧 = 1
 ABL:A:レズっ気 = 0
 ABL:A:自慰中毒 = 1
@@ -145,89 +145,89 @@ SIF TARGET < 0 || NO:TARGET != 3
 	RETURN 1
 ;恋慕の時覚醒する（難素質を消して有利素質を大量追加）
 IF TARGET >= 0
-	IF CFLAG:0 == 1 && TALENT:85 == 1 && TALENT:216 == 0
+	IF CFLAG:0 == 1 && TALENT:恋慕 == 1 && TALENT:淫魔 == 0
 		PRINTFORML 
 		PRINTFORMW マキ様の【淫魔】の力が目覚めました
 		PRINTFORMW 素質が変動します
 		;ここから不利属性消去
-		TALENT:11 = 0
-		TALENT:12 = 0
-		TALENT:15 = 0
-		TALENT:16 = 0
-		TALENT:17 = 0
-		TALENT:20 = 0
-		TALENT:21 = 0
-		TALENT:22 = 0
-		TALENT:24 = 0
-		TALENT:26 = 0
-		TALENT:27 = 0
-		TALENT:30 = 0
-		TALENT:32 = 0
-		TALENT:34 = 0
-		TALENT:35 = 0
-		TALENT:40 = 0
-		TALENT:43 = 0
-		TALENT:51 = 0
-		TALENT:54 = 0
-		TALENT:62 = 0
-		TALENT:71 = 0
-		TALENT:82 = 0
-		TALENT:112 = 0
-		TALENT:113 = 0
+		TALENT:反抗的 = 0
+		TALENT:気丈 = 0
+		TALENT:プライド高い = 0
+		TALENT:生意気 = 0
+		TALENT:プライド低い = 0
+		TALENT:自制心 = 0
+		TALENT:無関心 = 0
+		TALENT:感情乏しい = 0
+		TALENT:保守的 = 0
+		TALENT:悲観的 = 0
+		TALENT:一線越えない = 0
+		TALENT:貞操観念 = 0
+		TALENT:抑圧 = 0
+		TALENT:抵抗 = 0
+		TALENT:恥じらい = 0
+		TALENT:痛みに弱い = 0
+		TALENT:濡れにくい = 0
+		TALENT:習得遅い = 0
+		TALENT:猫舌 = 0
+		TALENT:汚臭敏感 = 0
+		TALENT:快感の否定 = 0
+		TALENT:男嫌い = 0
+		TALENT:回復遅い = 0
+		TALENT:魅力 = 0
 		;ここから有利属性付加
-		TALENT:10 = 1
-		TALENT:13 = 1
-		TALENT:17 = 1
-		TALENT:18 = 1
-		TALENT:23 = 1
-		TALENT:25 = 1
-		TALENT:28 = 1
-		TALENT:31 = 1
-		TALENT:33 = 1
-		TALENT:36 = 1
-		TALENT:41 = 1
-		TALENT:42 = 1
-		TALENT:50 = 1
-		TALENT:52 = 1
-		TALENT:53 = 1
-		TALENT:55 = 1
-		TALENT:57 = 1
-		TALENT:58 = 1
-		TALENT:60 = 1
-		TALENT:61 = 1
-		TALENT:63 = 1
-		TALENT:64 = 1
-		TALENT:70 = 1
-		TALENT:72 = 1
-		TALENT:73 = 1
-		TALENT:79 = 1
-		TALENT:80 = 1
-		TALENT:81 = 1
-		TALENT:83 = 1
-		TALENT:84 = 1
-		TALENT:86 = 1
-		TALENT:87 = 1
-		TALENT:91 = 1
-		TALENT:92 = 1
-		TALENT:102 = 1
-		TALENT:104 = 1
-		TALENT:106 = 1
-		TALENT:108 = 1
-		TALENT:110 = 1
-		TALENT:111 = 1
-		TALENT:113 = 1
-		TALENT:115 = 1
-		TALENT:116 = 1
-		TALENT:117 = 1
-		TALENT:118 = 1
-		TALENT:120 = 1
-		TALENT:125 = 1
-		TALENT:126 = 1
-		TALENT:133 = 1
-		TALENT:150 = 1
-		TALENT:216 = 1
-		TALENT:217 = 1
-		TALENT:597 = 1
+		TALENT:臆病 = 1
+		TALENT:素直 = 1
+		TALENT:プライド低い = 1
+		TALENT:ツンデレ = 1
+		TALENT:好奇心 = 1
+		TALENT:楽観的 = 1
+		TALENT:目立ちたがり = 1
+		TALENT:貞操無頓着 = 1
+		TALENT:解放 = 1
+		TALENT:恥薄い = 1
+		TALENT:痛みに強い = 1
+		TALENT:濡れやすい = 1
+		TALENT:習得早い = 1
+		TALENT:舌使い = 1
+		TALENT:針さばき = 1
+		TALENT:調合知識 = 1
+		TALENT:おもらし癖 = 1
+		TALENT:淫具知識 = 1
+		TALENT:自慰しやすい = 1
+		TALENT:汚臭鈍感 = 1
+		TALENT:献身的 = 1
+		TALENT:汚れ無視 = 1
+		TALENT:快感に素直 = 1
+		TALENT:中毒しやすい = 1
+		TALENT:即落ち = 1
+		TALENT:マゾ = 1
+		TALENT:倒錯的 = 1
+		TALENT:両刀 = 1
+		TALENT:サド = 1
+		TALENT:嫉妬 = 1
+		TALENT:妄信 = 1
+		TALENT:小悪魔 = 1
+		TALENT:魅惑 = 1
+		TALENT:謎の魅力 = 1
+		TALENT:Ｃ敏感 = 1
+		TALENT:Ｖ敏感 = 1
+		TALENT:Ａ敏感 = 1
+		TALENT:Ｂ敏感 = 1
+		TALENT:巨乳 = 1
+		TALENT:回復早い = 1
+		TALENT:魅力 = 1
+		TALENT:日光浴 = 1
+		TALENT:月光浴 = 1
+		TALENT:治療 = 1
+		TALENT:鼓舞 = 1
+		TALENT:不思議な根 = 1
+		TALENT:禁断の知識 = 1
+		TALENT:人気 = 1
+		TALENT:早漏 = 1
+		TALENT:パートナー = 1
+		TALENT:淫魔 = 1
+		TALENT:酒豪 = 1
+		TALENT:Ｍ敏感 = 1
 		RELATION:0 = 300
 		ABL:浪費癖 = 600
 	ENDIF
@@ -235,10 +235,10 @@ ENDIF
 
 ;EVENT_S.ERBの素質取得のところを改変
 ;Ａ経験1以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:Ａ経験 >= 1 
-	IF TALENT:77 == 0
+IF CFLAG:0 == 1 && TALENT:淫魔 == 1 && EXP:Ａ経験 >= 1 
+	IF TALENT:尻穴狂い == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
-		IF TALENT:85 == 1 || TALENT:76 == 1
+		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にお尻をいじめて欲しいと懇願してきた…
 			ELSE
 			PRINTFORML %CALLNAME:TARGET%は自らのお尻を慰めながら%CALLNAME:MASTER%に物欲しげな視線を送っている…
@@ -246,16 +246,16 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:Ａ経験 >= 1
 		TFLAG:13 = 37
 		CALL SELF_KOJO
 		PRINTFORMW %NAME:TARGET%は【尻穴狂い】を得た
-		TALENT:77 = 1
+		TALENT:尻穴狂い = 1
 	ENDIF
 ENDIF
 
 ;尻穴狂いに習う形で、淫乳もここに記載。
 ;Ｂ感覚1以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｂ感覚 >= 1 
-	IF TALENT:78 ==0
+IF CFLAG:0 == 1 && TALENT:淫魔 == 1 && ABL:Ｂ感覚 >= 1 
+	IF TALENT:淫乳 ==0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
-		IF TALENT:85 == 1 || TALENT:76 == 1
+		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に胸を弄って欲しいとねだってきた…
 			ELSE
 			PRINTFORML %CALLNAME:TARGET%の胸は%CALLNAME:MASTER%によって開発され、敏感になってしまったようだ…
@@ -263,18 +263,18 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｂ感覚 >= 1
 		TFLAG:13 = 38
 		CALL SELF_KOJO
 		PRINTFORMW %NAME:TARGET%は【淫乳】を得た
-		TALENT:78 = 1
+		TALENT:淫乳 = 1
 	ENDIF
 ENDIF
 
 ;尻穴狂い、淫乳にならい、淫壷と淫核をここに記載。
 ;Ｃ感覚1以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｃ感覚 >= 1
-	IF TALENT:75 == 0
+IF CFLAG:0 == 1 && TALENT:淫魔 == 1 && ABL:Ｃ感覚 >= 1
+	IF TALENT:淫核 == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
-		IF TALENT:85 == 1 || TALENT:76 == 1
+		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORM %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に
-			IF TALENT:121
+			IF TALENT:ふたなり
 				PRINT ペニス
 			ELSE
 				PRINT クリトリス
@@ -282,7 +282,7 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｃ感覚 >= 1
 			PRINTL の疼きを鎮めて欲しいとせがんできた…
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%は%CALLNAME:MASTER%のほうをじっと見ながら、手で自分の
-			IF TALENT:121
+			IF TALENT:ふたなり
 				PRINT 陰茎
 			ELSE
 				PRINT 陰豆
@@ -292,15 +292,15 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｃ感覚 >= 1
 		TFLAG:13 = 27
 		CALL SELF_KOJO
 		PRINTFORMW %NAME:TARGET%は【淫核】を得た
-		TALENT:75 = 1
+		TALENT:淫核 = 1
 	ENDIF
 ENDIF
 
 ;Ｖ感覚1以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｖ感覚 >= 1 
-	IF TALENT:74 == 0
+IF CFLAG:0 == 1 && TALENT:淫魔 == 1 && ABL:Ｖ感覚 >= 1 
+	IF TALENT:淫壷 == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
-		IF TALENT:85 == 1 || TALENT:76 == 1
+		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に子宮の渇きを癒してほしいと縋りついてきた…
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%の蜜壷は開発し尽くされ、すっかり%CALLNAME:MASTER%のモノに順応してしまったようだ…
@@ -308,18 +308,18 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｖ感覚 >= 1
 		TFLAG:13 = 26
 		CALL SELF_KOJO
 		PRINTFORMW %NAME:TARGET%は【淫壷】を得た
-		TALENT:74 = 1
+		TALENT:淫壷 = 1
 	ENDIF
 ENDIF
 ;キス経験１以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:キス経験 >= 1
-	IF TALENT:155 == 0
+IF CFLAG:0 == 1 && TALENT:淫魔 == 1 && EXP:キス経験 >= 1
+	IF TALENT:キス魔 == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		PRINTFORMW %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を抱き寄せ、幾度も口付けを繰り返している…
 		TFLAG:13 = 69
 		CALL SELF_KOJO
 		PRINTFORMW %CALLNAME:TARGET%は【キス魔】を得た
-		TALENT:155 = 1
+		TALENT:キス魔 = 1
 	ENDIF
 ENDIF
 RETURN 1

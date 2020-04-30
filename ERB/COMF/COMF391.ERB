@@ -8,7 +8,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;恋慕か合意＋恋人じゃないとダメ
-SIF TALENT:85 == 0 && (TALENT:152 == 0 || TALENT:153 == 0)
+SIF TALENT:恋慕 == 0 && (TALENT:合意 == 0 || TALENT:恋人 == 0)
 	RETURN 0
 ;解除はいつでも可能
 SIF TEQUIP:65
@@ -204,7 +204,7 @@ LOSEBASE:気力 += 20
 CALL CLOTH_NAME
 
 ;リボンは相愛必要
-SIF TALENT:89 == 0
+SIF TALENT:相愛 == 0
 	TSTR:17 = ""
 
 ;普段着、%CALLNAME:MASTER%の服は常に所持
@@ -278,7 +278,7 @@ ELSE
 		ENDIF
 	ENDIF
 	IF RESULT != 100
-		IF RESULT == 17 && (FLAG:70 & 65536) && TALENT:89 && TEQUIP:65 != 17
+		IF RESULT == 17 && (FLAG:70 & 65536) && TALENT:相愛 && TEQUIP:65 != 17
 			TEQUIP:65 = 17
 			PRINTFORMW %CALLNAME:TARGET%は自らの裸体にリボンを巻きつけている……
 		ELSE
@@ -346,25 +346,25 @@ ELSE
 ENDIF
 
 ;素直
-SIF TALENT:13
+SIF TALENT:素直
 	TIMES C , 1.20
 
 ;好奇心
-SIF TALENT:23
+SIF TALENT:好奇心
 	TIMES C , 1.20
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES A , 0.80
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	TIMES A , 0.80
 
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES A , 2.00
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	TIMES A , 0.50
 
 ;どんな服でも濡れると恥かしい
@@ -434,7 +434,7 @@ ELSEIF TEQUIP:65 == 4
 	TIMES A , 1.50
 	TIMES C , 1.50
 	;貧乳だと恥かしい
-	SIF TALENT:109
+	SIF TALENT:貧乳
 		TIMES A , 1.50
 ELSEIF TEQUIP:65 == 5
 	;PRINTL ＜コスプレ中[スク水（紺）]＞
@@ -442,10 +442,10 @@ ELSEIF TEQUIP:65 == 5
 	TIMES A , 2.00
 	TIMES C , 0.80
 	;貧乳だと恥かしい
-	SIF TALENT:109
+	SIF TALENT:貧乳
 		UP:8 += A/8
 	;巨乳だと痛い
-	SIF TALENT:110
+	SIF TALENT:巨乳
 		SOURCE:6 = 100
 ELSEIF TEQUIP:65 == 6
 	;PRINTL ＜コスプレ中[スク水（白）]＞
@@ -465,10 +465,10 @@ ELSEIF TEQUIP:65 == 6
 		TIMES C , 0.80
 	ENDIF
 	;貧乳だと恥かしい
-	SIF TALENT:109
+	SIF TALENT:貧乳
 		UP:8 += A/8
 	;巨乳だと痛い
-	SIF TALENT:110
+	SIF TALENT:巨乳
 		SOURCE:6 = 100
 ELSEIF TEQUIP:65 == 7
 	;PRINTL ＜コスプレ中[白衣]＞
@@ -489,7 +489,7 @@ ELSEIF TEQUIP:65 == 10
 	;PRINTL ＜コスプレ中[ボンテージスーツ]＞
 	;露出度高
 	TIMES A , 1.50
-	IF TALENT:83
+	IF TALENT:サド
 		TIMES C , 2.50
 	ELSE
 		TIMES C , 1.50
@@ -497,7 +497,7 @@ ELSEIF TEQUIP:65 == 10
 	;征服
 	SOURCE:20 += A/2
 	;貧乳だと恥かしい
-	SIF TALENT:109
+	SIF TALENT:貧乳
 		UP:8 += A/8
 ELSEIF TEQUIP:65 == 11
 	;PRINTL ＜コスプレ中[浴衣]＞
@@ -578,7 +578,7 @@ ELSEIF TEQUIP:65 == 18
 	;PRINTL ＜コスプレ中[小悪魔風衣装]＞
 	;露出度低
 	TIMES A , 0.50
-	IF TALENT:87
+	IF TALENT:小悪魔
 		TIMES C , 2.50
 	ELSE
 		TIMES C , 1.50
@@ -599,10 +599,10 @@ ELSEIF TEQUIP:65 == 21
 	TIMES A , 1.50
 	TIMES C , 0.80
 	;巨乳だと露出度うｐ
-	SIF TALENT:110
+	SIF TALENT:巨乳
 		TIMES A , 1.20
 	;貧乳だと恥かしい
-	SIF TALENT:109
+	SIF TALENT:貧乳
 		UP:8 += A/8
 ELSEIF TEQUIP:65 == 22
 	;PRINTL ＜コスプレ中[裸Yシャツ]＞

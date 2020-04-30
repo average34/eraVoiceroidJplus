@@ -11,7 +11,7 @@ SIF ITEM:0 == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;欲望6以上かつ、従順9以上or好感度900以上or恋人が必要
-SIF ABL:欲望 < 5 || (ABL:親密 < 9 && CFLAG:2 < 900 && TALENT:153 == 0)
+SIF ABL:欲望 < 5 || (ABL:親密 < 9 && CFLAG:2 < 900 && TALENT:恋人 == 0)
 	RETURN 0
 
 RETURN 1
@@ -130,17 +130,17 @@ ELSE
 ENDIF
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES A , 1.50
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	TIMES A , 1.50
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES B , 2.00
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES B , 2.00
 
 SOURCE:12 += A
@@ -215,12 +215,12 @@ TFLAG:30 += A
 TFLAG:37 += A / 2
 
 ;レズ経験とBL経験
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
 	EXP:PLAYER:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1
@@ -260,7 +260,7 @@ RETURN 1
 @TRAIN_MESSAGE_COM367
 PRINTFORM %CALLNAME:TARGET%の
 ;パートナーがオトコ
-IF TALENT:122
+IF TALENT:オトコ
 	PRINTFORM ペニスにローターを固定したまま
 	
 ELSE
@@ -294,7 +294,7 @@ V = 85
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 
@@ -325,36 +325,36 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 3
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
 
 ;キス未経験
-IF TALENT:151
+IF TALENT:キス未経験
 	A -= 30
 ENDIF
 
 ;合意
-IF TALENT:152
+IF TALENT:合意
 	A += 20
 	S = 5
 ENDIF
 
 ;一線越えない（合意が無い時のみ）
-IF TALENT:152 == 0 && TALENT:27
+IF TALENT:合意 == 0 && TALENT:一線越えない
 	A -= 15
 ENDIF
 
@@ -402,7 +402,7 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
@@ -448,14 +448,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -463,14 +463,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -479,7 +479,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;キス未経験
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINT  - 
 		PRINTS TALENTNAME:151
 		PRINTV '(,20,')
@@ -487,7 +487,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152
+	IF TALENT:合意
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:152
@@ -496,7 +496,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（合意が無い時のみ）
-	IF TALENT:152 == 0 && TALENT:27
+	IF TALENT:合意 == 0 && TALENT:一線越えない
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,15,')
@@ -593,7 +593,7 @@ PRINTFORML %CALLNAME:TARGET%はローターの振動に息を荒げている…�
 ;デート中
 IF TEQUIP:2
 	;淫乱
-	IF TALENT:76
+	IF TALENT:淫乱
 		PRINTFORML %CALLNAME:TARGET%はこの状況に興奮しているようだ……
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%はこの状況に気が気でないようだ……

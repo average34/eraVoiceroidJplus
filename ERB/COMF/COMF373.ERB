@@ -11,25 +11,25 @@ SIF TFLAG:44 == 1
 SIF ASSIPLAY
 	RETURN 0
 ;マスターがふたなりかオトコじゃないと無理
-SIF TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+SIF TALENT:MASTER:ふたなり == 0 && TALENT:MASTER:オトコ == 0
 	RETURN 0
 ;[猫舌]だと技巧8以上じゃないと無理
-SIF ABL:技巧 < 8 && TALENT:54
+SIF ABL:技巧 < 8 && TALENT:猫舌
 	RETURN 0
 ;デート中は淫乱じゃないと無理
-SIF TEQUIP:2 && TALENT:76 == 0
+SIF TEQUIP:2 && TALENT:淫乱 == 0
 	RETURN 0
 ;欲望6以上かつ、奉仕精神6以上かつ、親密8以上or好感度800以上or恋人が必要
-SIF ABL:欲望 < 6 || ABL:奉仕精神 < 6 || (ABL:親密 < 8 && CFLAG:2 < 800 && TALENT:153 == 0)
+SIF ABL:欲望 < 6 || ABL:奉仕精神 < 6 || (ABL:親密 < 8 && CFLAG:2 < 800 && TALENT:恋人 == 0)
 	RETURN 0
 RETURN 1
 
 @COM373
 ;フェラチオ
 ;対象が恋慕さとりか、猫舌だと変化
-IF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+IF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 	PRINTL 読心フェラ
-ELSEIF TALENT:54
+ELSEIF TALENT:猫舌
 	PRINTL 猫舌フェラ
 ELSE
 	PRINTL フェラチオ
@@ -49,7 +49,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:MASTER:122  || TALENT:MASTER:121
+SIF TALENT:MASTER:オトコ  || TALENT:MASTER:ふたなり
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, MASTER)
 
 ;-------------------------------------------------
@@ -178,12 +178,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 2
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 3
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 8
 	SOURCE:22 += 300
 ENDIF
@@ -198,7 +198,7 @@ TFLAG:200 = 2
 ;-------------------------------------------------
 
 ;対象が恋慕さとりだと変化
-IF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+IF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 	TIMES SOURCE:4 , 2.00
 	TIMES SOURCE:5 , 2.00
 ENDIF
@@ -273,12 +273,12 @@ IF ABL:精液中毒 >= 2 && ABL:技巧 >= 10 && (STAIN:MASTER:2 & 29)
 ENDIF
 
 ;レズ経験
-IF TALENT:122 == 0 && TALENT:MASTER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:MASTER:オトコ == 0
 	PRINTFORML %EXPNAME:40%+7
 	EXP:レズ経験 += 7
 	EXP:MASTER:レズ経験 += 7
 ;BL経験
-ELSEIF TALENT:122 && TALENT:MASTER:122
+ELSEIF TALENT:オトコ && TALENT:MASTER:オトコ
 	PRINTFORML %EXPNAME:41%+7
 	EXP:ＢＬ経験 += 7
 	EXP:MASTER:ＢＬ経験 += 7
@@ -291,7 +291,7 @@ SIF EXP:フェラ経験 >= EXPLV:3
 	TFLAG:30 += 1
 
 ;調教者がふたなり
-IF TALENT:MASTER:121
+IF TALENT:MASTER:ふたなり
 	SOURCE:13 /= 2
 ENDIF
 
@@ -308,10 +308,10 @@ IF TFLAG:45
 		;精液中毒7以上
 		IF ABL:精液中毒 >= 7
 			;保守的又は貞操観念又は恥じらい
-			IF TALENT:24 || TALENT:30 || TALENT:35
+			IF TALENT:保守的 || TALENT:貞操観念 || TALENT:恥じらい
 				PRINT 辺りを入念に確認してから
 			;目立ちたがり又は解放又は恥薄い又は中毒しやすい又は倒錯的
-			ELSEIF TALENT:28 || TALENT:33 || TALENT:36 || TALENT:72 || TALENT:80
+			ELSEIF TALENT:目立ちたがり || TALENT:解放 || TALENT:恥薄い || TALENT:中毒しやすい || TALENT:倒錯的
 				PRINT 周囲を気にする事なく
 			ENDIF
 		ELSE
@@ -319,7 +319,7 @@ IF TFLAG:45
 		ENDIF
 	ENDIF
 	;淫乱かつ精液中毒9以上かつ欲情3000万以上or欲情30000000以上)
-	IF TALENT:76 && (ABL:精液中毒 >= 9) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && (ABL:精液中毒 >= 9) && (PALAM:5 >= 30000000)
 		PRINTFORML %CALLNAME:MASTER%のペニスを乱暴に引っぱり出すと
 	ELSE
 		;技巧10以上
@@ -328,26 +328,26 @@ IF TFLAG:45
 		PRINTFORML %CALLNAME:MASTER%のペニスを露出させると
 	ENDIF
 	;キス魔かつ欲情500万以下
-	SIF TALENT:155 && PALAM:5 < 5000000
+	SIF TALENT:キス魔 && PALAM:5 < 5000000
 		PRINT 先端に一度キスをしてから、
 	;淫乱又は精液中毒7以上かつ欲情3000万以上
-	IF (TALENT:76 || ABL:精液中毒 >= 7) && PALAM:5 >= 30000000
+	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:5 >= 30000000
 		PRINT 呼吸も荒く、余裕の無い表情で
 	;淫乱又は精液中毒5以上かつ欲情100万以上
-	ELSEIF (TALENT:76 || ABL:精液中毒 >= 5) && PALAM:5 >= 1000000
+	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && PALAM:5 >= 1000000
 		PRINT 上気した表情で、
 	;サド又は小悪魔又はサドっ気5以上
-	ELSEIF TALENT:83 || TALENT:87 || ABL:サドっ気 >= 5
+	ELSEIF TALENT:サド || TALENT:小悪魔 || ABL:サドっ気 >= 5
 		PRINT 意地悪な笑みを浮かべながら、
 	;マゾ又は、臆病かつマゾっ気3以上、又はマゾっ気5以上
-	ELSEIF TALENT:79 || (TALENT:10 && ABL:マゾっ気 >= 3) || ABL:マゾっ気 >= 5
+	ELSEIF TALENT:マゾ || (TALENT:臆病 && ABL:マゾっ気 >= 3) || ABL:マゾっ気 >= 5
 		PRINTFORML 媚びる様な上目遣いで%CALLNAME:MASTER%を見つめながら、
 	;恥じらい
-	ELSEIF TALENT:35
+	ELSEIF TALENT:恥じらい
 		PRINT 頬を紅潮させながらも、
 	ENDIF
 	;猫舌
-	IF TALENT:54
+	IF TALENT:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 	;精液中毒5以上かつ欲情500万以上
 	ELSEIF ABL:精液中毒 >= 5 && PALAM:5 >= 5000000
@@ -357,46 +357,46 @@ IF TFLAG:45
 		PRINTL 時折鈴口に舌先をねじ込むような仕草をしつつ
 		PRINTL 丹念に刺激した…
 	;幼児退行or幼稚
-	ELSEIF TALENT:131 || TALENT:132
+	ELSEIF TALENT:幼児 || TALENT:幼稚
 		PRINT 飴玉を転がすように舐め回した…
 	ELSE
 		PRINT じっくりと舌を這わせた…
 	ENDIF
 ELSE
 	;淫乱かつ精液中毒9以上かつ欲情3000万以上
-	IF TALENT:76 && ABL:精液中毒 >= 9 && PALAM:5 >= 30000000
+	IF TALENT:淫乱 && ABL:精液中毒 >= 9 && PALAM:5 >= 30000000
 		PRINT 甘えておねだりする
 	;淫乱又は精液中毒5以上
-	ELSEIF TALENT:76 || ABL:精液中毒 >= 5
+	ELSEIF TALENT:淫乱 || ABL:精液中毒 >= 5
 		PRINT 待ち切れない様子の
 	ELSE
 		PRINTFORM %CALLNAME:MASTER%が
 	ENDIF
 	PRINTFORML %CALLNAME:TARGET%の前にペニスを露出させると
 	;淫乱又は精液中毒7以上かつ欲情3000万以上…現状オトコ無しだから大丈夫…だよね←あなたが居ます
-	IF (TALENT:76 || ABL:精液中毒 >= 7) && PALAM:5 > 30000000
-		IF TALENT:122
+	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:5 > 30000000
+		IF TALENT:オトコ
 			PRINT 熱に浮かされる様に、
 		ELSE
 			PRINT 発情した雌の顔で、
 		ENDIF
 	;淫乱又は精液中毒5以上かつ欲情100万以上
-	ELSEIF (TALENT:76 || ABL:精液中毒 >= 5) && (PALAM:5 >= 1000000)
+	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && (PALAM:5 >= 1000000)
 		PRINT うっとりとした表情で、
-	ELSEIF TALENT:79 || (TALENT:10 && ABL:マゾっ気 >= 3) || ABL:マゾっ気 >= 5
+	ELSEIF TALENT:マゾ || (TALENT:臆病 && ABL:マゾっ気 >= 3) || ABL:マゾっ気 >= 5
 		PRINTFORML 媚びるような上目遣いで%CALLNAME:MASTER%を見つめながら
 	;サド又は小悪魔又はサドっ気5以上
-	ELSEIF TALENT:83 || TALENT:87 || ABL:サドっ気 >= 5
+	ELSEIF TALENT:サド || TALENT:小悪魔 || ABL:サドっ気 >= 5
 		PRINTFORML 妖しげな瞳で%CALLNAME:MASTER%を見つめながら
 	;恥じらい
-	ELSEIF TALENT:35
+	ELSEIF TALENT:恥じらい
 		PRINT 一瞬躊躇うような仕草を見せがらも、
 	ENDIF
 	;キス魔かつ欲情500万以下
-	SIF TALENT:155 && (PALAM:5 < 5000000)
+	SIF TALENT:キス魔 && (PALAM:5 < 5000000)
 		PRINT 先端に一度キスをしてから、
 	;猫舌
-	IF TALENT:54
+	IF TALENT:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 	;精液中毒5以上かつ欲情500万以上
 	ELSEIF ABL:精液中毒 >= 5 && (PALAM:5 >= 5000000)
@@ -405,7 +405,7 @@ ELSE
 	ELSEIF ABL:技巧 >= 12
 		PRINT カリの裏側をなぞるように舌を這わせた…
 	;幼児退行、幼稚
-	ELSEIF TALENT:131 || TALENT:132
+	ELSEIF TALENT:幼児 || TALENT:幼稚
 		PRINT 氷菓のように舐め回した…
 	ELSE
 		PRINT ゆっくりと舌を這わせた…
@@ -461,28 +461,28 @@ IF L
 ENDIF
 
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	A -= 3
 ;汚臭鈍感
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	A += 1
 ;汚臭敏感
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	A -= 3
 ;献身的
-SIF TALENT:63
+SIF TALENT:献身的
 	A += 6
 ;快感の否定
-SIF TALENT:71
+SIF TALENT:快感の否定
 	A -= 1
 ;男嫌い
-SIF TALENT:82 && TALENT:MASTER:122
+SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 	A -= 12
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	A += 5
 ;調教者がふたなり
-SIF TALENT:MASTER:121
+SIF TALENT:MASTER:ふたなり
 	A += 8
 
 Y = 0
@@ -498,9 +498,9 @@ SIF STAIN:MASTER:2 & 8
 SIF STAIN:MASTER:2 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;汚れあり
@@ -532,7 +532,7 @@ ELSEIF CFLAG:2 >= 1500
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 10
 ENDIF
 
@@ -594,14 +594,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい'
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;汚臭鈍感
-	IF TALENT:61
+	IF TALENT:汚臭鈍感
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:61
@@ -609,14 +609,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;汚臭敏感
-	IF TALENT:62
+	IF TALENT:汚臭敏感
 		PRINT  - 
 		PRINTS TALENTNAME:62
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -624,21 +624,21 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:MASTER:122
+	IF TALENT:男嫌い && TALENT:MASTER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,12,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85
+	IF TALENT:恋慕
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -647,7 +647,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者がふたなり
-	IF TALENT:MASTER:121
+	IF TALENT:MASTER:ふたなり
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:121
@@ -668,19 +668,19 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:MASTER:2 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;汚れあり
 	IF Y
 		PRINT  - 
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE
@@ -721,7 +721,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,10,')

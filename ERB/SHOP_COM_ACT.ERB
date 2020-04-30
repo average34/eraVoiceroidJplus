@@ -231,32 +231,32 @@ B:1 = 1
 B:2 = 1
 ;[3] 自給自足
 ;ゆかり様には親密30以上ないと自給自足を指示できない
-SIF TALENT:A:201 == 0 || ABL:A:親密 >= 30 || A == MASTER
+SIF TALENT:A:eraVoiceroidJも支配する程度の能力 == 0 || ABL:A:親密 >= 30 || A == MASTER
 	B:3 = 1
 ;[4] 連携を確認する
-SIF A != MASTER && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
+SIF A != MASTER && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:恋人)
 	B:4 = 1
 ;[5] 家事
 ;ゆかり様には親密20以上ないと指示できない
-SIF A != MASTER && (TALENT:A:201 == 0 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153) || ABL:A:親密 >= 20)
+SIF A != MASTER && (TALENT:A:eraVoiceroidJも支配する程度の能力 == 0 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:恋人) || ABL:A:親密 >= 20)
 	B:5 = 1
 ;[6] モンスター退治
-SIF A != MASTER && A != TARGET && A != ASSI && BASE:A:耐力 >= 500 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
+SIF A != MASTER && A != TARGET && A != ASSI && BASE:A:耐力 >= 500 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:恋人)
 	B:6 = 1
 ;[7] イチャイチャする
-SIF A != MASTER && TALENT:A:153
+SIF A != MASTER && TALENT:A:恋人
 	B:7 = 1
 ;[8] 朝フェラ
-SIF TALENT:A:54 == 0 && A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:奉仕精神 >= 10 || ABL:A:精液中毒 >= 1) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
+SIF TALENT:A:猫舌 == 0 && A != MASTER && (TALENT:A:合意 || TALENT:A:恋人) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:奉仕精神 >= 10 || ABL:A:精液中毒 >= 1) && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ)
 	B:8 = 1
 ;[9] 自慰
-SIF A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:自慰中毒 >= 1)
+SIF A != MASTER && (TALENT:A:合意 || TALENT:A:恋人) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:自慰中毒 >= 1)
 	B:9 = 1
 ;[10] レズ行為
-SIF A != MASTER && ABL:A:欲望 >= 5 && ABL:A:レズっ気 >= 3 && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:レズっ気 >= 10 || ABL:A:レズ中毒 >= 1) && TALENT:MASTER:122 == 0 && TALENT:A:122 == 0
+SIF A != MASTER && ABL:A:欲望 >= 5 && ABL:A:レズっ気 >= 3 && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:レズっ気 >= 10 || ABL:A:レズ中毒 >= 1) && TALENT:MASTER:オトコ == 0 && TALENT:A:オトコ == 0
 	B:10 = 1
 ;[11] 性行為
-SIF A != MASTER && TALENT:MASTER:154 == 0 && TALENT:A:88 && TALENT:A:処女 == 0 && (ABL:A:親密 + ABL:A:欲望 + ABL:A:Ｖ感覚 + ABL:A:奉仕精神 >= 55) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
+SIF A != MASTER && TALENT:MASTER:童貞 == 0 && TALENT:A:親愛 && TALENT:A:処女 == 0 && (ABL:A:親密 + ABL:A:欲望 + ABL:A:Ｖ感覚 + ABL:A:奉仕精神 >= 55) && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ)
 	B:11 = 1
 ;[12] 宝探し
 B:12 = 1
@@ -455,25 +455,25 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		ENDIF
 
 		;汚臭鈍感
-		SIF TALENT:COUNT:61
+		SIF TALENT:COUNT:汚臭鈍感
 			G += 1
 		;汚臭敏感
-		SIF TALENT:COUNT:62
+		SIF TALENT:COUNT:汚臭敏感
 			G -= 1
 		;献身的
-		SIF TALENT:COUNT:63
+		SIF TALENT:COUNT:献身的
 			G += 1
 		;恋慕
-		SIF TALENT:COUNT:76
+		SIF TALENT:COUNT:淫乱
 			G += 1
 		;淫乱
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			G += 1
 		;親愛
-		SIF TALENT:COUNT:88
+		SIF TALENT:COUNT:親愛
 			G += 3
 		;恋人
-		SIF TALENT:COUNT:153
+		SIF TALENT:COUNT:恋人
 			G += 1
 
 		;言われてやってるので普段より多い
@@ -530,7 +530,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		ENDIF
 		
 		;自慰しやすい
-		IF TALENT:COUNT:60
+		IF TALENT:COUNT:自慰しやすい
 			G *= 2
 			;欲望ＬＶ３でもGに+1する
 			SIF ABL:COUNT:欲望 >= 3 && ABL:COUNT:Ｃ感覚 >= 3
@@ -538,12 +538,12 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		ENDIF
 		
 		;快感に素直、快感の否定、淫乱化
-		IF TALENT:COUNT:70
+		IF TALENT:COUNT:快感に素直
 			G *= 3/2
-		ELSEIF TALENT:COUNT:71
+		ELSEIF TALENT:COUNT:快感の否定
 			G /= 2
 		ENDIF
-		IF TALENT:COUNT:76
+		IF TALENT:COUNT:淫乱
 			G *= 2
 		ENDIF
 		
@@ -613,7 +613,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		CALL TURNEND_COM_PRINT, "JUEL", 6, N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
 		JUEL:COUNT:7 += N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
 		CALL TURNEND_COM_PRINT, "JUEL", 7, N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
-		IF TALENT:COUNT:121
+		IF TALENT:COUNT:ふたなり
 			EXP:COUNT:射精経験 += N
 			CALL TURNEND_COM_PRINT, "EXP", 3, N
 			JUEL:COUNT:8 += N*100
@@ -658,13 +658,13 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		ENDIF
 		
 		;快感に素直、快感の否定、淫乱化
-		IF TALENT:COUNT:70
+		IF TALENT:COUNT:快感に素直
 			S *= 3/2
-		ELSEIF TALENT:COUNT:71
+		ELSEIF TALENT:COUNT:快感の否定
 			S /= 2
 		ENDIF
 		
-		IF TALENT:COUNT:76
+		IF TALENT:COUNT:淫乱
 			S *= 2
 		ENDIF
 	
@@ -677,7 +677,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		CFLAG:MASTER:2 += S
 		CFLAG:COUNT:2 += S*5
 		CALL TURNEND_COM_PRINT, "CFLAG", 2, LOCAL+S*5
-		IF TALENT:MASTER:121 || TALENT:MASTER:122
+		IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 			EXP:COUNT:精液経験 += S * 10
 			CALL TURNEND_COM_PRINT, "EXP", 20, S*10
 		ENDIF

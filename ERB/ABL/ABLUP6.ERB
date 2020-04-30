@@ -401,7 +401,7 @@ ELSEIF ABL:奉仕精神 <= 8
 	E = 20
 	F = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES D , 1.10
@@ -419,7 +419,7 @@ ELSEIF ABL:奉仕精神 <= 11
 	E = 80
 	F = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES D , 1.30
@@ -442,7 +442,7 @@ ELSE
 	D = D * (ABL:奉仕精神 - 8) / 2
 	E = E * (ABL:奉仕精神 - 8) / 2
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES D , 1.30
@@ -450,7 +450,7 @@ ELSE
 ENDIF
 
 ;反抗的
-IF TALENT:11
+IF TALENT:反抗的
 	TIMES A , 1.20
 	TIMES B , 1.40
 	TIMES D , 1.20
@@ -458,14 +458,14 @@ IF TALENT:11
 ENDIF
 
 ;気丈
-IF TALENT:12
+IF TALENT:気丈
 	TIMES A , 1.20
 	TIMES D , 1.20
 	TIMES F , 1.20
 ENDIF
 
 ;素直
-IF TALENT:13
+IF TALENT:素直
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES D , 0.70
@@ -473,7 +473,7 @@ IF TALENT:13
 ENDIF
 
 ;プライド高い
-IF TALENT:15
+IF TALENT:プライド高い
 	TIMES A , 1.40
 	TIMES B , 1.30
 	TIMES D , 1.20
@@ -481,14 +481,14 @@ IF TALENT:15
 ENDIF
 
 ;生意気
-IF TALENT:16
+IF TALENT:生意気
 	TIMES A , 1.10
 	TIMES B , 1.10
 	TIMES F , 1.10
 ENDIF
 
 ;プライド低い
-IF TALENT:17
+IF TALENT:プライド低い
 	TIMES A , 0.90
 	TIMES B , 0.80
 	TIMES D , 0.80
@@ -496,7 +496,7 @@ IF TALENT:17
 ENDIF
 
 ;自制心
-IF TALENT:20
+IF TALENT:自制心
 	TIMES A , 1.20
 	TIMES B , 1.20
 	TIMES D , 1.20
@@ -505,7 +505,7 @@ IF TALENT:20
 ENDIF
 
 ;無関心
-IF TALENT:21
+IF TALENT:無関心
 	TIMES A , 1.10
 	TIMES B , 1.10
 	TIMES D , 1.10
@@ -513,7 +513,7 @@ IF TALENT:21
 ENDIF
 
 ;感情乏しい
-IF TALENT:22
+IF TALENT:感情乏しい
 	TIMES A , 1.20
 	TIMES B , 1.20
 	TIMES D , 1.40
@@ -521,7 +521,7 @@ IF TALENT:22
 ENDIF
 
 ;保守的
-IF TALENT:24
+IF TALENT:保守的
 	TIMES A , 1.30
 	TIMES B , 1.30
 	TIMES C , 1.30
@@ -531,7 +531,7 @@ IF TALENT:24
 ENDIF
 
 ;楽観的
-IF TALENT:25
+IF TALENT:楽観的
 	TIMES A , 0.90
 	TIMES B , 0.80
 	TIMES D , 0.70
@@ -540,7 +540,7 @@ IF TALENT:25
 ENDIF
 
 ;悲観的
-IF TALENT:26
+IF TALENT:悲観的
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES D , 0.80
@@ -549,7 +549,7 @@ IF TALENT:26
 ENDIF
 
 ;目立ちたがり
-IF TALENT:28
+IF TALENT:目立ちたがり
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES C , 0.80
@@ -558,22 +558,22 @@ IF TALENT:28
 ENDIF
 
 ;習得早い
-IF TALENT:50
+IF TALENT:習得早い
 	TIMES C , 0.80
 ENDIF
 
 ;習得遅い
-IF TALENT:51
+IF TALENT:習得遅い
 	TIMES C , 1.60
 ENDIF
 
 ;舌使い
-IF TALENT:52
+IF TALENT:舌使い
 	TIMES C , 0.80
 ENDIF
 
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES D , 0.60
@@ -581,12 +581,12 @@ IF TALENT:63
 ENDIF
 
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	TIMES E , 0.70
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
@@ -595,7 +595,7 @@ IF TALENT:80
 ENDIF
 
 ;サド
-IF TALENT:83
+IF TALENT:サド
 	TIMES A , 1.30
 	TIMES B , 1.30
 	TIMES D , 1.30
@@ -603,7 +603,7 @@ IF TALENT:83
 ENDIF
 
 ;小悪魔
-IF TALENT:87
+IF TALENT:小悪魔
 	TIMES A , 1.20
 	TIMES B , 1.20
 	TIMES C , 1.20
@@ -612,9 +612,9 @@ IF TALENT:87
 ENDIF
 
 ;ＬＶ９から１０、１２から１３に上げるときは異常経験必要（素質：[恋慕]なら無視できる）
-IF ABL:奉仕精神 == 9 && !TALENT:85
+IF ABL:奉仕精神 == 9 && !TALENT:恋慕
 	G = 1
-ELSEIF ABL:奉仕精神 == 12 && !TALENT:85
+ELSEIF ABL:奉仕精神 == 12 && !TALENT:恋慕
 	G = 2
 ELSE
 	G = 0

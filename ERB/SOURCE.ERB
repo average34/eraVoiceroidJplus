@@ -17,7 +17,7 @@ CALL KOJO_MESSAGE_COM
 CALL EQUIP_CHECK
 
 ;生理中
-SIF TALENT:138 && (FLAG:62 & 1)
+SIF TALENT:生理 && (FLAG:62 & 1)
 	TRYCALL EVENT_MENSTRUAL_PAIN
 
 ;-------------------------------------------------
@@ -51,9 +51,9 @@ SIF EXP:Ｖ経験 && TFLAG:19
 ;-------------------------------------------------
 ;フラグ追加とか面倒なので力技
 ;喪失の可能性のあるコマンドを実行すれば喪失
-IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 34 || SELECTCOM == 88 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366) && TALENT:PLAYER:154
+IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 34 || SELECTCOM == 88 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366) && TALENT:PLAYER:童貞
 	PRINTFORMW %CALLNAME:PLAYER%は童貞を失った
-	TALENT:PLAYER:154 = 2
+	TALENT:PLAYER:童貞 = 2
 	;一部の反感に関係するソースを半減
 	SOURCE:14 /= 2
 	SOURCE:15 /= 2
@@ -332,15 +332,15 @@ SIF D >= 1000
 	D = 1000 + (D - 1000) / 2
 
 ;痛みに弱い
-SIF TALENT:40
+SIF TALENT:痛みに弱い
 	TIMES D , 1.20
 ;痛みに強い
-SIF TALENT:41
+SIF TALENT:痛みに強い
 	TIMES D , 0.80
 
 E = D
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES D , 0.50
 	TIMES E , 0.20
 ENDIF
@@ -561,8 +561,8 @@ TFLAG:302 = 0
 ;童貞喪失（各種計算に童貞の有無が関係するので、喪失処理は最後）
 ;-------------------------------------------------
 ;TALENTが2になってる場合喪失フラグがONとみなす
-IF TALENT:PLAYER:154 == 2
-	TALENT:PLAYER:154 = 0
+IF TALENT:PLAYER:童貞 == 2
+	TALENT:PLAYER:童貞 = 0
 ENDIF
 
 ;今回のコマンドを「前回のコマンド」とする
@@ -781,12 +781,12 @@ SIF UP:24 > 1000
 	A += UP:24 / 1000
 ;快Ｃ＋快Ｖ＋快Ａ＋快Ｂが合わせて100以上上昇ならその20%の液体のソースが加わる（オトコはダメ）
 ;快Ｍは他の感覚より液体ソースへの影響が少ない
-IF A > 100 && TALENT:122 == 0
+IF A > 100 && TALENT:オトコ == 0
 	A /= 5
 	;濡れやすいと濡れにくいはここで処理
-	SIF TALENT:42
+	SIF TALENT:濡れやすい
 		TIMES A , 3.00
-	SIF TALENT:43
+	SIF TALENT:濡れにくい
 		TIMES A , 0.40
 	SOURCE:10 += A
 ENDIF
@@ -1224,7 +1224,7 @@ SIF V >= 4 && A >= 4 && L < 9
 SIF (C >= 8 || B >= 8) && V >= 8 && A >= 8
 	L = 10
 ;自制心があると１下がる
-SIF TALENT:20
+SIF TALENT:自制心
 	L = L-1
 ;四重絶頂
 SIF LOCAL:5 == 4
@@ -1347,9 +1347,9 @@ PRINTL 　
 ;-------------------------------------------------
 @CALC_SOURCE0
 ;Ｃ敏感とＣ鈍感はここで処理
-SIF TALENT:101
+SIF TALENT:Ｃ鈍感
 	TIMES SOURCE:0 , 0.50
-SIF TALENT:102
+SIF TALENT:Ｃ敏感
 	TIMES SOURCE:0 , 2.00
 
 A = SOURCE:0
@@ -1389,7 +1389,7 @@ IF ABL:欲望 >= 5
 ENDIF
 
 ;快感の否定、抑圧、抵抗
-IF TALENT:32 || TALENT:34 || TALENT:71
+IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
 	C = SOURCE:0 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
@@ -1411,7 +1411,7 @@ ENDIF
 D = 0
 
 ;淫核
-IF TALENT:75
+IF TALENT:淫核
 	TIMES A , 1.50
 	TIMES B , 1.20
 	TIMES C , 0.50
@@ -1432,9 +1432,9 @@ ENDIF
 ;-------------------------------------------------
 @CALC_SOURCE1
 ;Ｖ敏感とＶ鈍感はここで処理
-SIF TALENT:103
+SIF TALENT:Ｖ鈍感
 	TIMES SOURCE:1 , 0.50
-SIF TALENT:104
+SIF TALENT:Ｖ敏感
 	TIMES SOURCE:1 , 2.00
 
 A = SOURCE:1
@@ -1474,7 +1474,7 @@ IF ABL:欲望 >= 5
 ENDIF
 
 ;快感の否定、抑圧、抵抗
-IF TALENT:32 || TALENT:34 || TALENT:71
+IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
 	C = SOURCE:1 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
@@ -1496,7 +1496,7 @@ ENDIF
 D = 0
 
 ;淫壷
-IF TALENT:74
+IF TALENT:淫壷
 	IF PLAYER == MASTER
 		TIMES A , 2.50
 		TIMES B , 1.50
@@ -1521,9 +1521,9 @@ SIF D
 ;-------------------------------------------------
 @CALC_SOURCE2
 ;Ａ敏感とＡ鈍感はここで処理
-SIF TALENT:105
+SIF TALENT:Ａ鈍感
 	TIMES SOURCE:2 , 0.50
-SIF TALENT:106
+SIF TALENT:Ａ敏感
 	TIMES SOURCE:2 , 2.00
 
 A = SOURCE:2
@@ -1566,7 +1566,7 @@ IF ABL:欲望 >= 5
 ENDIF
 
 ;快感の否定、抑圧、抵抗
-IF TALENT:32 || TALENT:34 || TALENT:71
+IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
 	C = SOURCE:2 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
@@ -1586,7 +1586,7 @@ ELSE
 ENDIF
 
 ;尻穴狂い
-IF TALENT:77
+IF TALENT:尻穴狂い
 	TIMES A , 1.50
 	TIMES B , 1.20
 	TIMES C , 0.50
@@ -1603,9 +1603,9 @@ UP:13 += C
 ;-------------------------------------------------
 @CALC_SOURCE17
 ;Ｂ敏感とＢ鈍感はここで処理
-SIF TALENT:107
+SIF TALENT:Ｂ鈍感
 	TIMES SOURCE:17 , 0.50
-SIF TALENT:108
+SIF TALENT:Ｂ敏感
 	TIMES SOURCE:17 , 2.00
 
 A = SOURCE:17
@@ -1645,7 +1645,7 @@ IF ABL:欲望 >= 5
 ENDIF
 
 ;快感の否定、抑圧、抵抗
-IF TALENT:32 || TALENT:34 || TALENT:71
+IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
 	C = SOURCE:17 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
@@ -1665,7 +1665,7 @@ ELSE
 ENDIF
 
 ;淫乳
-IF TALENT:78
+IF TALENT:淫乳
 	TIMES A , 1.50
 	TIMES B , 1.20
 	TIMES C , 0.50
@@ -1686,9 +1686,9 @@ IF (FLAG:62 & 4194304) == 0
 ENDIF
 
 ;Ｍ敏感とＭ鈍感はここで処理
-SIF TALENT:596
+SIF TALENT:Ｍ鈍感
 	TIMES SOURCE:24 , 0.50
-SIF TALENT:597
+SIF TALENT:Ｍ敏感
 	TIMES SOURCE:24 , 2.00
 
 A = SOURCE:24
@@ -1727,7 +1727,7 @@ IF ABL:欲望 >= 5
 ENDIF
 
 ;快感の否定、抑圧、抵抗
-IF TALENT:32 || TALENT:34 || TALENT:71
+IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
 	C = SOURCE:24 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
@@ -1747,14 +1747,14 @@ ELSE
 ENDIF
 
 ;蕩唇
-IF TALENT:589
+IF TALENT:蕩唇
 	TIMES A , 1.50
 	TIMES B , 1.20
 	TIMES C , 0.50
 ENDIF
 
 ;キス魔
-IF TALENT:155
+IF TALENT:キス魔
 	TIMES A , 1.50
 	TIMES B , 1.20
 	TIMES C , 0.50
@@ -1842,7 +1842,7 @@ ELSE
 ENDIF
 
 ;抑圧か抵抗がある場合はPALAM:抑鬱が上がる
-IF TALENT:32 || TALENT:34
+IF TALENT:抑圧 || TALENT:抵抗
 	B = SOURCE:4 / 5
 	;ABL:奉仕精神をみる
 	IF ABL:奉仕精神 <= 1
@@ -1998,12 +1998,12 @@ IF ABL:マゾっ気 >= 5
 ENDIF
 
 ;痛みに弱い
-IF TALENT:40
+IF TALENT:痛みに弱い
 	TIMES D , 4.00
 ENDIF
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 1.50
 	TIMES C , 0.50
 	TIMES D , 2.50
@@ -2015,7 +2015,7 @@ IF ASSIPLAY
 ENDIF
 
 ;調教者が【サド】
-IF TALENT:PLAYER:83
+IF TALENT:PLAYER:サド
 	TIMES D , 2.50
 ENDIF
 IF ABL:PLAYER:サドっ気 > 0
@@ -2074,7 +2074,7 @@ ELSE
 ENDIF
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 1.20
 	TIMES B , 1.50
 ENDIF
@@ -2117,9 +2117,9 @@ UP:12 += B
 ;-------------------------------------------------
 @CALC_SOURCE9
 ;恥じらいと恥薄いはここで処理
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES SOURCE:9 , 2.00
-SIF TALENT:36
+SIF TALENT:恥薄い
 	TIMES SOURCE:9 , 0.50
 
 A = SOURCE:9
@@ -2199,24 +2199,24 @@ ELSEIF CFLAG:2 > 5000
 ENDIF
 
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	TIMES A , 1.50
 
 ;親愛
-SIF TALENT:88
+SIF TALENT:親愛
 	TIMES A , 2.00
 
 ;恋人
-SIF TALENT:153
+SIF TALENT:恋人
 	TIMES A , 1.50
 
 ;恋慕かつ恋人
-SIF TALENT:85 && TALENT:153
+SIF TALENT:恋慕 && TALENT:恋人
 	TIMES C , 0.00
 
 ;キス魔
 ;ボールギャグ装着中・縄拘束中・触手召喚中は無効
-IF TALENT:155 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
+IF TALENT:キス魔 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
 	TIMES A , 1.20
 ENDIF
 
@@ -2252,9 +2252,9 @@ UP:5 += A
 ;-------------------------------------------------
 @CALC_SOURCE12
 ;恥じらいと恥薄いはここで処理
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES SOURCE:12 , 2.00
-SIF TALENT:36
+SIF TALENT:恥薄い
 	TIMES SOURCE:12 , 0.50
 
 ;潤滑アップの50％を露出のソースに加える
@@ -2345,7 +2345,7 @@ SIF ABL:露出癖 >= 5
 	TIMES C , 0.10
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 1.50
 	TIMES B , 1.50
 	TIMES C , 0.50
@@ -2396,9 +2396,9 @@ UP:6 += B
 ;-------------------------------------------------
 @CALC_SOURCE14
 ;好奇心と保守的はここで処理
-SIF TALENT:23
+SIF TALENT:好奇心
 	TIMES SOURCE:14 , 0.30
-SIF TALENT:24
+SIF TALENT:保守的
 	TIMES SOURCE:14 , 3.00
 
 A = SOURCE:14
@@ -2434,7 +2434,7 @@ ELSE
 ENDIF
 
 ;マゾ
-SIF TALENT:79
+SIF TALENT:マゾ
 	TIMES A , 0.50
 
 UP:11 += A
@@ -2462,20 +2462,20 @@ UP:4 += A
 A = SOURCE:18
 
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	TIMES A , 1.20
 
 ;親愛
-SIF TALENT:88
+SIF TALENT:親愛
 	TIMES A , 1.50
 
 ;恋人
-SIF TALENT:153
+SIF TALENT:恋人
 	TIMES A , 1.20
 
 ;キス魔
 ;ボールギャグ装着中・縄拘束中・触手召喚中は無効
-IF TALENT:155 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
+IF TALENT:キス魔 && TEQUIP:44 == 0 && TEQUIP:45 == 0 && TEQUIP:90 == 0
 	TIMES A , 1.20
 ENDIF
 
@@ -2805,18 +2805,18 @@ A = SOURCE:23
 B = SOURCE:23 / 5
 
 ;臆病(重複前提)
-IF TALENT:10
+IF TALENT:臆病
 	TIMES A , 1.50
 	TIMES B , 2.00
 ENDIF
 
 ;大人しい
-IF TALENT:14
+IF TALENT:大人しい
 	TIMES A , 1.20
 ENDIF
 
 ;無関心・感情乏しい
-IF TALENT:21 || TALENT:22
+IF TALENT:無関心 || TALENT:感情乏しい
 	TIMES A , 0.70
 ENDIF
 

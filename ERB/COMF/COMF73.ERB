@@ -86,30 +86,30 @@ ELSE
 ENDIF
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES A , 1.50
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	TIMES A , 1.50
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES B , 2.00
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES B , 2.00
 ;小柄体型
-IF TALENT:100
+IF TALENT:小柄体型
 	TIMES A , 1.50
 	TIMES B , 1.50
 ENDIF
 
 ;巨乳
-SIF TALENT:110
+SIF TALENT:巨乳
 	SOURCE:6 = 500
 
 ;幼児／幼児退行、幼稚
-SIF TALENT:131 || TALENT:132
+SIF TALENT:幼児 || TALENT:幼稚
 	TIMES A , 2.00
 
 SOURCE:12 += A
@@ -119,10 +119,10 @@ SOURCE:14 += B
 UP:8 += A/3
 UP:10 += SOURCE:14/2
 ;貧乳
-SIF TALENT:109
+SIF TALENT:貧乳
 	UP:8 += A/6
 ;幼児／幼児退行、幼稚
-SIF TALENT:131 || TALENT:132
+SIF TALENT:幼児 || TALENT:幼稚
 	UP:10 += SOURCE:14/2
 
 ;スク水の着用
@@ -137,17 +137,17 @@ IF TEQUIP:60
 ELSE
 	PRINTFORML %CALLNAME:TARGET%にスクール水着を着けるよう頼んだ
 	PRINTFORM %CALLNAME:TARGET%は
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINTFORML 顔を真っ赤にしつつ%CALLNAME:PLAYER%の要望を実行している……
-	ELSEIF TALENT:109
+	ELSEIF TALENT:貧乳
 		PRINTL 水着を着けたまではよかったものの、
 		PRINTL 自分の胸の貧相さを意識しているのかしきりに胸を隠す動作を繰り返している……
-	ELSEIF TALENT:110
+	ELSEIF TALENT:巨乳
 		PRINTL 水着を着けたまではよかったものの、
 		PRINTL 胸回りが窮屈に感じるのか胸元に手を伸ばしては布地を引っ張る動作を頻繁に繰り返している……
-	ELSEIF TALENT:131 || TALENT:132
+	ELSEIF TALENT:幼児 || TALENT:幼稚
 		PRINTL 水着を着けると子供のようにはしゃぎ始めた
-	ELSEIF TALENT:76 || TALENT:80
+	ELSEIF TALENT:淫乱 || TALENT:倒錯的
 		PRINTL 一瞬躊躇するそぶりを見せたものの、
 		PRINTL 早くも新たな快感に目覚めたのかいそいそと着替え始めた……
 	ELSE
@@ -220,30 +220,30 @@ ELSE
 ENDIF
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	TIMES A , 1.50
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	TIMES A , 1.50
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES B , 2.00
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES B , 2.00
 ;小柄体型
-IF TALENT:100
+IF TALENT:小柄体型
 	TIMES A , 1.50
 	TIMES B , 1.50
 ENDIF
 
 ;巨乳
-SIF TALENT:110
+SIF TALENT:巨乳
 	SOURCE:6 += 250
 
 ;幼児／幼児退行、幼稚
-SIF TALENT:131 || TALENT:132
+SIF TALENT:幼児 || TALENT:幼稚
 	TIMES A , 2.00
 
 SOURCE:12 += A
@@ -253,18 +253,18 @@ SOURCE:14 += B
 UP:8 += A/3
 UP:10 += SOURCE:14/2
 ;貧乳
-SIF TALENT:109
+SIF TALENT:貧乳
 	UP:8 += A/6
 ;幼児／幼児退行、幼稚
-SIF TALENT:131 || TALENT:132
+SIF TALENT:幼児 || TALENT:幼稚
 	UP:10 += SOURCE:14/2
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
 	EXP:PLAYER:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1
@@ -341,27 +341,27 @@ IF L
 ENDIF
 
 ;自制心
-IF TALENT:20
+IF TALENT:自制心
 	A -= 5
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;恥薄い
-IF TALENT:36
+IF TALENT:恥薄い
 	A += 2
 ENDIF
 ;自慰しやすい
-IF TALENT:60
+IF TALENT:自慰しやすい
 	A += 5
 ENDIF
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 5
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 ENDIF
 
@@ -428,21 +428,21 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;自制心
-	IF TALENT:20
+	IF TALENT:自制心
 		PRINT  - 
 		PRINTS TALENTNAME:20
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恥薄い
-	IF TALENT:36
+	IF TALENT:恥薄い
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:36
@@ -450,7 +450,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;自慰しやすい
-	IF TALENT:60
+	IF TALENT:自慰しやすい
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:60
@@ -458,7 +458,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -466,7 +466,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')

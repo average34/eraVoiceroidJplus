@@ -56,7 +56,7 @@ A -= ABL:T:マゾっ気 * 5
 A += ABL:T:サドっ気 * 5
 
 ;臆病　主人公側に片寄りやすい
-IF TALENT:T:10
+IF TALENT:T:臆病
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -65,7 +65,7 @@ IF TALENT:T:10
 ENDIF
 
 ;反抗的　相手側に片寄りやすい
-IF TALENT:T:11
+IF TALENT:T:反抗的
 	IF A < 0
 		TIMES A , 0.80
 	ELSE
@@ -74,7 +74,7 @@ IF TALENT:T:11
 ENDIF
 
 ;素直　どちらの影響も強くなる
-IF TALENT:T:13
+IF TALENT:T:素直
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -83,7 +83,7 @@ IF TALENT:T:13
 ENDIF
 
 ;大人しい　主人公側に片寄りやすい
-IF TALENT:T:14
+IF TALENT:T:大人しい
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -92,7 +92,7 @@ IF TALENT:T:14
 ENDIF
 
 ;プライド高い　相手側に片寄りやすい
-IF TALENT:T:15
+IF TALENT:T:プライド高い
 	IF A < 0
 		TIMES A , 0.70
 	ELSE
@@ -101,7 +101,7 @@ IF TALENT:T:15
 ENDIF
 
 ;生意気　相手側に片寄りやすい
-IF TALENT:T:16
+IF TALENT:T:生意気
 	IF A < 0
 		TIMES A , 0.90
 	ELSE
@@ -110,7 +110,7 @@ IF TALENT:T:16
 ENDIF
 
 ;プライド低い　主人公側に片寄りやすい
-IF TALENT:T:17
+IF TALENT:T:プライド低い
 	IF A < 0
 		TIMES A , 1.30
 	ELSE
@@ -119,7 +119,7 @@ IF TALENT:T:17
 ENDIF
 
 ;自制心　主人公側に片寄りやすい
-IF TALENT:T:20
+IF TALENT:T:自制心
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -128,7 +128,7 @@ IF TALENT:T:20
 ENDIF
 
 ;無関心　どちらの影響も弱くなる
-IF TALENT:T:21
+IF TALENT:T:無関心
 	IF A < 0
 		TIMES A , 0.80
 	ELSE
@@ -137,7 +137,7 @@ IF TALENT:T:21
 ENDIF
 
 ;感情乏しい　どちらの影響も弱くなる
-IF TALENT:T:22
+IF TALENT:T:感情乏しい
 	IF A < 0
 		TIMES A , 0.80
 	ELSE
@@ -146,7 +146,7 @@ IF TALENT:T:22
 ENDIF
 
 ;好奇心　相手側に片寄りやすい
-IF TALENT:T:23
+IF TALENT:T:好奇心
 	IF A < 0
 		TIMES A , 0.70
 	ELSE
@@ -155,7 +155,7 @@ IF TALENT:T:23
 ENDIF
 
 ;保守的　主人公側に片寄りやすい
-IF TALENT:T:24
+IF TALENT:T:保守的
 	IF A < 0
 		TIMES A , 1.30
 	ELSE
@@ -164,7 +164,7 @@ IF TALENT:T:24
 ENDIF
 
 ;目立ちたがり　相手側に非常に片寄りやすい
-IF TALENT:T:28
+IF TALENT:T:目立ちたがり
 	IF A < 0
 		TIMES A , 0.60
 	ELSE
@@ -173,7 +173,7 @@ IF TALENT:T:28
 ENDIF
 
 ;恥じらい　主人公側に片寄りやすい
-IF TALENT:T:35
+IF TALENT:T:恥じらい
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -182,7 +182,7 @@ IF TALENT:T:35
 ENDIF
 
 ;サド　相手側に非常に片寄りやすい
-IF TALENT:T:83
+IF TALENT:T:サド
 	IF A < 0
 		TIMES A , 0.50
 	ELSE
@@ -191,7 +191,7 @@ IF TALENT:T:83
 ENDIF
 
 ;マゾ　主人公側に非常に片寄りやすい
-IF TALENT:T:79
+IF TALENT:T:マゾ
 	IF A < 0
 		TIMES A , 2.00
 	ELSE
@@ -200,7 +200,7 @@ IF TALENT:T:79
 ENDIF
 
 ;小悪魔　相手側に片寄りやすい
-IF TALENT:T:87
+IF TALENT:T:小悪魔
 	IF A < 0
 		TIMES A , 0.80
 	ELSE
@@ -209,7 +209,7 @@ IF TALENT:T:87
 ENDIF
 
 ;妖狐　相手側に片寄りやすい
-IF TALENT:T:90
+IF TALENT:T:妖狐
 	IF A < 0
 		TIMES A , 0.80
 	ELSE
@@ -218,7 +218,7 @@ IF TALENT:T:90
 ENDIF
 
 ;魅惑　どちらの影響も強くなる
-IF TALENT:T:91
+IF TALENT:T:魅惑
 	IF A < 0
 		TIMES A , 1.10
 	ELSE
@@ -227,7 +227,7 @@ IF TALENT:T:91
 ENDIF
 
 ;謎の魅力　どちらの影響も強くなる
-IF TALENT:T:92
+IF TALENT:T:謎の魅力
 	IF A < 0
 		TIMES A , 1.20
 	ELSE
@@ -236,7 +236,7 @@ IF TALENT:T:92
 ENDIF
 
 ;魅力　どちらの影響も強くなる
-IF TALENT:T:113
+IF TALENT:T:魅力
 	IF A < 0
 		TIMES A , 1.10
 	ELSE
@@ -245,7 +245,7 @@ IF TALENT:T:113
 ENDIF
 
 ;鼓舞　特に主人公側に片寄りやすい
-IF TALENT:T:118
+IF TALENT:T:鼓舞
 	IF A < 0
 		TIMES A , 1.50
 	ELSE
@@ -254,7 +254,7 @@ IF TALENT:T:118
 ENDIF
 
 ;服従　ほぼ主人公側になる
-IF TALENT:T:180
+IF TALENT:T:服従
 	IF A < 0
 		TIMES A , 2.00
 	ELSE
@@ -388,15 +388,15 @@ ENDIF
 CALL GET_BATTLE_POWER_LIMIT
 
 ;サドい人は戦闘力1.2倍
-SIF TALENT:T:83
+SIF TALENT:T:サド
 	TIMES P , 1.20
 
 ;生理中はイラだって戦闘力1.2倍
-SIF TALENT:T:138 && (FLAG:62 & 1)
+SIF TALENT:T:生理 && (FLAG:62 & 1)
 	TIMES P , 1.20
 
 ;母は強し
-SIF TALENT:T:136
+SIF TALENT:T:母性
 	TIMES P , 1.20
 
 CALL GET_BATTLE_POWER_LIMIT
@@ -437,10 +437,10 @@ CALL GET_BATTLE_POWER_LIMIT
 IF FLAG:5 == 10 || TALENT:MASTER:恋人ボーナス || TALENT:MASTER:恋人ボーナス強化
 	A = 0
 	FOR LOCAL, 0, CHARANUM
-		SIF TALENT:LOCAL:153
+		SIF TALENT:LOCAL:恋人
 			A += 1
 	NEXT
-	SIF TALENT:MASTER:203
+	SIF TALENT:MASTER:恋人ボーナス強化
 		TIMES A , 1.50
 	P = P / 10 * (10 + A)
 ENDIF
@@ -451,10 +451,10 @@ CALL GET_BATTLE_POWER_LIMIT
 IF FLAG:5 == 10 || TALENT:MASTER:親愛ボーナス || TALENT:MASTER:親愛ボーナス強化
 	A = 0
 	FOR LOCAL, 0, CHARANUM
-		SIF TALENT:LOCAL:88
+		SIF TALENT:LOCAL:親愛
 			A += 1
 	NEXT
-	SIF TALENT:MASTER:205
+	SIF TALENT:MASTER:親愛ボーナス強化
 		TIMES A , 3.00
 	P = P / 5 * (5 + A)
 ENDIF
@@ -513,7 +513,7 @@ ENDIF
 SIF P >= 999999999999999999
 	P = 999999999999999999
 
-SIF TALENT:T:134
+SIF TALENT:T:妊娠
 	P = P / 20 * (CFLAG:T:110 - DAY:7)
 
 SIF P < 1
@@ -890,51 +890,51 @@ SIF L
 	A += L * 3
 
 ;反抗的
-SIF TALENT:11
+SIF TALENT:反抗的
 	A -= 5
 
 ;気丈
-SIF TALENT:12
+SIF TALENT:気丈
 	A -= 5
 
 ;素直
-SIF TALENT:13
+SIF TALENT:素直
 	A += 5
 
 ;プライド高い
-SIF TALENT:15
+SIF TALENT:プライド高い
 	A -= 15
 
 ;プライド低い
-SIF TALENT:17
+SIF TALENT:プライド低い
 	A += 5
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A += 2
 
 ;抑圧
-SIF TALENT:32
+SIF TALENT:抑圧
 	A -= 10
 
 ;抵抗
-SIF TALENT:34
+SIF TALENT:抵抗
 	A -= 10
 
 ;即落ち
-SIF TALENT:73
+SIF TALENT:即落ち
 	A += 10
 
 ;男嫌い
-SIF TALENT:82 && TALENT:PLAYER:122
+SIF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 
 ;調教者の素質
 ;魅惑
-SIF TALENT:PLAYER:91
+SIF TALENT:PLAYER:魅惑
 	A += 6
 ;謎の魅力
-SIF TALENT:PLAYER:92
+SIF TALENT:PLAYER:謎の魅力
 	A += 6
 
 ;相性チェック
@@ -987,51 +987,51 @@ SIF L
 	A += L * 3
 
 ;反抗的
-SIF TALENT:11
+SIF TALENT:反抗的
 	A -= 5
 
 ;気丈
-SIF TALENT:12
+SIF TALENT:気丈
 	A -= 5
 
 ;素直
-SIF TALENT:13
+SIF TALENT:素直
 	A += 5
 
 ;プライド高い
-SIF TALENT:15
+SIF TALENT:プライド高い
 	A -= 15
 
 ;プライド低い
-SIF TALENT:17
+SIF TALENT:プライド低い
 	A += 5
 
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A += 2
 
 ;抑圧
-SIF TALENT:32
+SIF TALENT:抑圧
 	A -= 10
 
 ;抵抗
-SIF TALENT:34
+SIF TALENT:抵抗
 	A -= 10
 
 ;即落ち
-SIF TALENT:73
+SIF TALENT:即落ち
 	A += 10
 
 ;男嫌い
-SIF TALENT:82 && TALENT:PLAYER:122
+SIF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 
 ;調教者の素質
 ;魅惑
-SIF TALENT:PLAYER:91
+SIF TALENT:PLAYER:魅惑
 	A += 6
 ;謎の魅力
-SIF TALENT:PLAYER:92
+SIF TALENT:PLAYER:謎の魅力
 	A += 6
 
 ;相性チェック
@@ -1054,15 +1054,15 @@ ENDIF
 A += CFLAG:2 / 50
 
 ;恋慕
-SIF TALENT:85
+SIF TALENT:恋慕
 	A += 20
 
 ;恋人
-SIF TALENT:153
+SIF TALENT:恋人
 	A += 20
 
 ;親愛
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 40
 
 SIF A < 0
@@ -1137,7 +1137,7 @@ IF E == 0
 	E = 0
 	;「あなた」はサポート対象外
 	SIF FLAG:25 == 0
-		TALENT:A:210 = 1
+		TALENT:A:バグだらけな程度の能力 = 1
 ENDIF
 
 RETURN 1
@@ -1152,11 +1152,11 @@ SIF NO:A == 99
 	CALL CHARA_RANDOM_STATE
 
 ;キス未経験付加
-TALENT:A:151 = 1
+TALENT:A:キス未経験 = 1
 ;初期異常経験を記憶
 CFLAG:A:22 = EXP:A:異常経験
 ;初期噴乳経験を記録
-SIF TALENT:A:130 == 0
+SIF TALENT:A:母乳体質 == 0
 	CFLAG:A:25 = EXP:A:噴乳経験
 ;初期好感度を決定
 CFLAG:A:2 = RAND:50 - 40
@@ -1212,41 +1212,41 @@ ENDIF
 IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81, 82, 83)
 	BASE:ARG:陰毛 = 0
 	MAXBASE:ARG:陰毛 = 0
-	TALENT:ARG:65 = 1
+	TALENT:ARG:パイパン = 1
 ;陰毛通常
 ;コウ、セイカ、イタコ、そら、タカハシ、ギャラ子
 ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 12, 13, 52, 80)
 	BASE:ARG:陰毛 = 1000
 	MAXBASE:ARG:陰毛 = 1000
-	TALENT:ARG:65 = 0
+	TALENT:ARG:パイパン = 0
 ;陰毛少なめ
 ;マキ、ゆかり、ずん子、茜、葵、あかり、ついな、ささら、つづみ、ＯＮＥ、ＩＡ、flower
 ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 14, 50, 51, 53, 54, 84)
 	BASE:ARG:陰毛 = 300
 	MAXBASE:ARG:陰毛 = 300
-	TALENT:ARG:65 = 0
+	TALENT:ARG:パイパン = 0
 ;マキ様, ゆかり様
 ELSEIF CFLAG:ARG:0 && GROUPMATCH(NO:ARG, 3, 4)
 	BASE:ARG:陰毛 = 300
 	MAXBASE:ARG:陰毛 = 300
-	TALENT:ARG:65 = 0
+	TALENT:ARG:パイパン = 0
 ;その他のキャラ
 ELSE
 	;小人体型は陰毛上限0、[パイパン]
-	IF TALENT:ARG:149
+	IF TALENT:ARG:小人体型
 		BASE:ARG:陰毛 = 0
 		MAXBASE:ARG:陰毛 = 0
-		TALENT:ARG:65 = 1
+		TALENT:ARG:パイパン = 1
 	;小柄体型は陰毛上限300
-	ELSEIF TALENT:ARG:100
+	ELSEIF TALENT:ARG:小柄体型
 		BASE:ARG:陰毛 = 300
 		MAXBASE:ARG:陰毛 = 300
-		TALENT:ARG:65 = 0
+		TALENT:ARG:パイパン = 0
 	;それ以外は陰毛上限1000
 	ELSE
 		BASE:ARG:陰毛 = 1000
 		MAXBASE:ARG:陰毛 = 1000
-		TALENT:ARG:65 = 0
+		TALENT:ARG:パイパン = 0
 	ENDIF
 ENDIF
 
@@ -1273,7 +1273,7 @@ SIF TFLAG:44
 CALL PUSH_OVER_RATE
 
 ;合意有
-IF TALENT:TARGET:152
+IF TALENT:TARGET:合意
 	;ムード300突破で襲われる
 	IF TFLAG:37 >= 300
 		;個別の口上があれば口上表示
@@ -1341,9 +1341,9 @@ ELSE
 		CALL KOJO_JUN
 		PRINTL  
 
-		IF ASSIPLAY == 0 && TALENT:152 == 0
+		IF ASSIPLAY == 0 && TALENT:合意 == 0
 			PRINTFORMW %CALLNAME:TARGET%の【合意】を得た
-			TALENT:152 = 1
+			TALENT:合意 = 1
 		ENDIF
 		;気力全快
 		BASE:気力 = MAXBASE:気力
@@ -1411,32 +1411,32 @@ IF ABL:奉仕精神
 	A += ABL:奉仕精神 * 3
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 ;貞操観念
-IF TALENT:TARGET:30
+IF TALENT:TARGET:貞操観念
 	A -= 10
 ENDIF
 ;恥じらい
-IF TALENT:TARGET:35
+IF TALENT:TARGET:恥じらい
 	A -= 10
 ENDIF
 ;献身的
-IF TALENT:TARGET:63
+IF TALENT:TARGET:献身的
 	A += 10
 ENDIF
 
 ;合意と恋慕がある場合
-IF TALENT:TARGET:152 && TALENT:TARGET:85
+IF TALENT:TARGET:合意 && TALENT:TARGET:恋慕
 	;相手にサド
-	IF TALENT:TARGET:83
+	IF TALENT:TARGET:サド
 		A += 1
 	ENDIF
 	;親愛&淫乱　取得順序を間違えると最初からやり直さないといけないので達成時に補正多め
-	IF TALENT:TARGET:88 && TALENT:TARGET:76
+	IF TALENT:TARGET:親愛 && TALENT:TARGET:淫乱
 		;相愛がある場合
-		IF TALENT:TARGET:89
+		IF TALENT:TARGET:相愛
 			A += 22
 		;相愛がない場合
 		ELSE
@@ -1444,41 +1444,41 @@ IF TALENT:TARGET:152 && TALENT:TARGET:85
 		ENDIF
 	ENDIF
 	;親愛と淫乱がなく、相愛のみある場合
-	IF TALENT:TARGET:88 == 0 && TALENT:TARGET:76 == 0 && TALENT:TARGET:89
+	IF TALENT:TARGET:親愛 == 0 && TALENT:TARGET:淫乱 == 0 && TALENT:TARGET:相愛
 		A += 9
 	ENDIF
 ;合意がある
-ELSEIF TALENT:TARGET:152
+ELSEIF TALENT:TARGET:合意
 	;恋慕と恋人を両方持つ
-	IF TALENT:85 && TALENT:TARGET:152
+	IF TALENT:恋慕 && TALENT:TARGET:合意
 		A += 22
 	;恋慕か恋人がある
-	ELSEIF TALENT:85 || TALENT:TARGET:152
+	ELSEIF TALENT:恋慕 || TALENT:TARGET:合意
 		A += 10
 	;どちらもない
 	ELSE
 		A += 1
 	ENDIF
 	;素直
-	IF TALENT:TARGET:13
+	IF TALENT:TARGET:素直
 		;ツンデレがあると更に補正あり
-		IF TALENT:TARGET:18
+		IF TALENT:TARGET:ツンデレ
 			A += 2
 		ELSE
 			A += 1
 		ENDIF
 	ENDIF
 ;合意がない
-ELSEIF TALENT:TARGET:152 == 0
+ELSEIF TALENT:TARGET:合意 == 0
 	;恋慕と恋人を両方持つ
-	IF TALENT:85 && TALENT:TARGET:152
+	IF TALENT:恋慕 && TALENT:TARGET:合意
 		A += 2
 	;恋慕か恋人がある
-	ELSEIF TALENT:85 || TALENT:TARGET:152
+	ELSEIF TALENT:恋慕 || TALENT:TARGET:合意
 		A += 1
 	ENDIF
 	;素直
-	IF TALENT:TARGET:13
+	IF TALENT:TARGET:素直
 		A += 1
 	ENDIF
 ENDIF
@@ -1506,12 +1506,12 @@ IF CFLAG:2 >= 3000
 	A += B
 ENDIF
 ;キス未経験
-IF TALENT:151
+IF TALENT:キス未経験
 	A -= 20
 ENDIF
 
 ;一線越えない
-IF TALENT:27
+IF TALENT:一線越えない
 	A -= 20
 ENDIF
 
@@ -1521,7 +1521,7 @@ IF TFLAG:45
 ENDIF
 
 ;相手が非処女で、こちらが童貞
-IF TALENT:処女 == 0 && TALENT:MASTER:154
+IF TALENT:処女 == 0 && TALENT:MASTER:童貞
 	A += 5
 ENDIF
 
@@ -1553,11 +1553,11 @@ IF ABL:MASTER:好感度ボーナス < 99
 	PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス + 1}
 	A:0 = 1
 ENDIF
-IF TALENT:MASTER:113 == 0
+IF TALENT:MASTER:魅力 == 0
 	PRINTFORML [  1] 【魅力】追加
 	A:1 = 1
 ENDIF
-IF TALENT:MASTER:202 == 0
+IF TALENT:MASTER:脱衣制限解除 == 0
 	PRINTFORML [  2] 脱衣制限解除
 	A:2 = 1
 ENDIF
@@ -1577,19 +1577,19 @@ IF ABL:MASTER:霧浄化能力強化 < 99 && FLAG:5 == 10
 	PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化 + 1}
 	A:6 = 1
 ENDIF
-IF TALENT:MASTER:203 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:恋人ボーナス強化 == 0 && FLAG:5 == 10
 	PRINTFORML [  7] 恋人ボーナス強化
 	A:7 = 1
 ENDIF
-IF TALENT:MASTER:204 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:恋慕ボーナス強化 == 0 && FLAG:5 == 10
 	PRINTFORML [  8] 恋慕ボーナス強化
 	A:8 = 1
 ENDIF
-IF TALENT:MASTER:205 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:親愛ボーナス強化 == 0 && FLAG:5 == 10
 	PRINTFORML [  9] 親愛ボーナス強化
 	A:9 = 1
 ENDIF
-IF TALENT:MASTER:206 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:淫乱ボーナス強化 == 0 && FLAG:5 == 10
 	PRINTFORML [ 10] 淫乱ボーナス強化
 	A:10 = 1
 ENDIF
@@ -1601,15 +1601,15 @@ IF ABL:MASTER:戦闘能力強化 < 99
 	PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化 + 1}
 	A:12 = 1
 ENDIF
-IF TALENT:MASTER:207 == 0
+IF TALENT:MASTER:逃走能力強化 == 0
 	PRINTFORML [ 13] 逃走能力強化
 	A:13 = 1
 ENDIF
-IF TALENT:MASTER:208 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:後戻りできる程度の能力 == 0 && FLAG:5 == 10
 	PRINTFORML [ 14] 後戻りできる程度の能力
 	A:14 = 1
 ENDIF
-IF TALENT:MASTER:209 == 0 && NO:MASTER == 0 && FLAG:5 == 10
+IF TALENT:MASTER:野菜を育てる程度の能力 == 0 && NO:MASTER == 0 && FLAG:5 == 10
 	PRINTFORML [ 15] 野菜を育てる程度の能力
 	A:15 = 1
 ENDIF
@@ -1699,10 +1699,10 @@ ELSEIF B == 0
 	ABL:MASTER:好感度ボーナス += 1
 	PRINTFORMW 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス} を取得しました
 ELSEIF B == 1
-	TALENT:MASTER:113 = 1
+	TALENT:MASTER:魅力 = 1
 	PRINTFORMW 【魅力】を取得しました
 ELSEIF B == 2
-	TALENT:MASTER:202 = 1
+	TALENT:MASTER:脱衣制限解除 = 1
 	PRINTFORMW 脱衣制限解除 を取得しました
 ELSEIF B == 3
 	ABL:MASTER:生活費軽減 += 1
@@ -1717,16 +1717,16 @@ ELSEIF B == 6
 	ABL:MASTER:霧浄化能力強化 += 1
 	PRINTFORMW 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化} を取得しました
 ELSEIF B == 7
-	TALENT:MASTER:203 = 1
+	TALENT:MASTER:恋人ボーナス強化 = 1
 	PRINTFORMW 恋人ボーナス強化 を取得しました
 ELSEIF B == 8
-	TALENT:MASTER:204 = 1
+	TALENT:MASTER:恋慕ボーナス強化 = 1
 	PRINTFORMW 恋慕ボーナス強化 を取得しました
 ELSEIF B == 9
-	TALENT:MASTER:205 = 1
+	TALENT:MASTER:親愛ボーナス強化 = 1
 	PRINTFORMW 親愛ボーナス強化 を取得しました
 ELSEIF B == 10
-	TALENT:MASTER:206 = 1
+	TALENT:MASTER:淫乱ボーナス強化 = 1
 	PRINTFORMW 淫乱ボーナス強化 を取得しました
 ELSEIF B == 11
 	ABL:MASTER:獲得資金増加 += 1
@@ -1735,13 +1735,13 @@ ELSEIF B == 12
 	ABL:MASTER:戦闘能力強化 += 1
 	PRINTFORMW 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化} を取得しました
 ELSEIF B == 13
-	TALENT:MASTER:207 = 1
+	TALENT:MASTER:逃走能力強化 = 1
 	PRINTFORMW 逃走能力強化 を取得しました
 ELSEIF B == 14
-	TALENT:MASTER:208 = 1
+	TALENT:MASTER:後戻りできる程度の能力 = 1
 	PRINTFORMW 後戻りできる程度の能力 を取得しました
 ELSEIF B == 15
-	TALENT:MASTER:209 = 1
+	TALENT:MASTER:野菜を育てる程度の能力 = 1
 	PRINTFORMW 野菜を育てる程度の能力 を取得しました
 ELSEIF B == 16
 	MAXBASE:MASTER:体力 += 500
@@ -1766,11 +1766,11 @@ IF ABL:MASTER:好感度ボーナス < 99
 	;PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス + 1}
 	A:0 = 1
 ENDIF
-IF TALENT:MASTER:113 == 0
+IF TALENT:MASTER:魅力 == 0
 	;PRINTFORML [  1] 【魅力】追加
 	A:1 = 1
 ENDIF
-IF TALENT:MASTER:202 == 0
+IF TALENT:MASTER:脱衣制限解除 == 0
 	;PRINTFORML [  2] 脱衣制限解除
 	A:2 = 1
 ENDIF
@@ -1790,19 +1790,19 @@ IF ABL:MASTER:霧浄化能力強化 < 99 && FLAG:5 == 10
 	;PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化 + 1}
 	A:6 = 1
 ENDIF
-IF TALENT:MASTER:203 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:恋人ボーナス強化 == 0 && FLAG:5 == 10
 	;PRINTFORML [  7] 恋人ボーナス強化
 	A:7 = 1
 ENDIF
-IF TALENT:MASTER:204 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:恋慕ボーナス強化 == 0 && FLAG:5 == 10
 	;PRINTFORML [  8] 恋慕ボーナス強化
 	A:8 = 1
 ENDIF
-IF TALENT:MASTER:205 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:親愛ボーナス強化 == 0 && FLAG:5 == 10
 	;PRINTFORML [  9] 親愛ボーナス強化
 	A:9 = 1
 ENDIF
-IF TALENT:MASTER:206 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:淫乱ボーナス強化 == 0 && FLAG:5 == 10
 	;PRINTFORML [ 10] 淫乱ボーナス強化
 	A:10 = 1
 ENDIF
@@ -1814,15 +1814,15 @@ IF ABL:MASTER:戦闘能力強化 < 99
 	;PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化 + 1}
 	A:12 = 1
 ENDIF
-IF TALENT:MASTER:207 == 0
+IF TALENT:MASTER:逃走能力強化 == 0
 	;PRINTFORML [ 13] 逃走能力強化
 	A:13 = 1
 ENDIF
-IF TALENT:MASTER:208 == 0 && FLAG:5 == 10
+IF TALENT:MASTER:後戻りできる程度の能力 == 0 && FLAG:5 == 10
 	;PRINTFORML [ 14] 後戻りできる程度の能力
 	A:14 = 1
 ENDIF
-IF TALENT:MASTER:209 == 0 && NO:MASTER == 0 && FLAG:5 == 10
+IF TALENT:MASTER:野菜を育てる程度の能力 == 0 && NO:MASTER == 0 && FLAG:5 == 10
 	;PRINTFORML [ 15] 野菜を育てる程度の能力
 	A:15 = 1
 ENDIF

@@ -8,16 +8,16 @@ SIF RESULT == 0
 SIF ASSIPLAY
 	RETURN 0
 ;パートナーが半人半妖かふたなりかオトコじゃないと無理
-SIF TALENT:119 == 0 && TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:半人半妖 == 0 && TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 ;実行者が[猫舌]だと技巧8以上じゃないと無理
-SIF ABL:PLAYER:技巧 < 8 && TALENT:PLAYER:54
+SIF ABL:PLAYER:技巧 < 8 && TALENT:PLAYER:猫舌
 	RETURN 0
 ;ウフフ中は無理
 SIF TFLAG:44 == 1
 	RETURN 0
 ;デート中は淫乱じゃないと無理(ポルノ映画を除く)
-SIF (TEQUIP:2 && (TEQUIP:2 == 22) == 0) && TALENT:76 == 0
+SIF (TEQUIP:2 && (TEQUIP:2 == 22) == 0) && TALENT:淫乱 == 0
 	RETURN 0
 ;オムツ着用中は無理
 SIF TEQUIP:20
@@ -32,7 +32,7 @@ SIF ABL:欲望 < 10 && ABL:露出癖 < 2
 SIF ABL:親密 < 12 && CFLAG:2 < 10000
 	RETURN 0
 ;貞操無頓着か快感に素直か倒錯的かつ恋慕か、淫乱か親愛か相愛が必要
-SIF ((TALENT:31 == 0 && TALENT:70 == 0 && TALENT:80 == 0) || TALENT:85== 0) && TALENT:76 == 0 && TALENT:88 == 0 && TALENT:89 == 0
+SIF ((TALENT:貞操無頓着 == 0 && TALENT:快感に素直 == 0 && TALENT:倒錯的 == 0) || TALENT:恋慕== 0) && TALENT:淫乱 == 0 && TALENT:親愛 == 0 && TALENT:相愛 == 0
 	RETURN 0
 ;ムードか酒の勢いが必要
 SIF TFLAG:37 < 35 && TFLAG:47 < 27
@@ -101,12 +101,12 @@ IF TEQUIP:2 > 0
 	ENDIF
 ENDIF
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
 	EXP:PLAYER:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1
@@ -193,7 +193,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 	SOURCE:15 += 400
 ENDIF
@@ -212,12 +212,12 @@ IF TFLAG:45
 	;デート中
 	IF TEQUIP:2 > 0 && (TEQUIP:2 != 6)
 		;淫乱かつC感覚8以上
-		IF TALENT:76 && (ABL:Ｃ感覚 >= 8)
+		IF TALENT:淫乱 && (ABL:Ｃ感覚 >= 8)
 			;保守的又は貞操観念又は恥じらい
-			IF TALENT:24 || TALENT:30 || TALENT:35
+			IF TALENT:保守的 || TALENT:貞操観念 || TALENT:恥じらい
 				PRINT 辺りを入念に確認してから
 			;目立ちたがり又は解放又は恥薄い又は中毒しやすい又は倒錯的
-			ELSEIF TALENT:28 || TALENT:33 || TALENT:36 || TALENT:72 || TALENT:80
+			ELSEIF TALENT:目立ちたがり || TALENT:解放 || TALENT:恥薄い || TALENT:中毒しやすい || TALENT:倒錯的
 				PRINT 周囲を気にする事なく
 			ENDIF
 		ELSE
@@ -225,7 +225,7 @@ IF TFLAG:45
 		ENDIF
 	ENDIF
 	;淫乱かつC感覚10以上かつ欲情3000万以上
-	IF TALENT:76 && (ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && (ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
 		PRINTFORML 待ちきれない様子で%CALLNAME:PLAYER%の前にペニスを露出させると
 	ELSE
 		PRINTFORML %CALLNAME:PLAYER%の前にペニスを露出させると
@@ -235,27 +235,27 @@ IF TFLAG:45
 	
 	
 	;淫乱又は精液中毒7以上
-	IF (TALENT:PLAYER:76 || ABL:PLAYER:精液中毒 >= 7)
+	IF (TALENT:PLAYER:淫乱 || ABL:PLAYER:精液中毒 >= 7)
 		PRINT 発情した雌の顔で、
 	;淫乱又は精液中毒5以上
-	ELSEIF (TALENT:PLAYER:76 || ABL:PLAYER:精液中毒 >= 5)
+	ELSEIF (TALENT:PLAYER:淫乱 || ABL:PLAYER:精液中毒 >= 5)
 		PRINT うっとりとした表情で、
 	;サド又は小悪魔又はサドっ気5以上
-	ELSEIF TALENT:PLAYER:83 || TALENT:PLAYER:87 || ABL:PLAYER:サドっ気 >= 5
+	ELSEIF TALENT:PLAYER:サド || TALENT:PLAYER:小悪魔 || ABL:PLAYER:サドっ気 >= 5
 		PRINTFORML 妖しげな瞳で%CALLNAME:TARGET%を見つめながら
 	;マゾ又は、臆病かつマゾっ気3以上、又はマゾっ気5以上
-	ELSEIF TALENT:PLAYER:79 || (TALENT:PLAYER:10 && ABL:PLAYER:マゾっ気 >= 3) || ABL:PLAYER:マゾっ気 >= 5
+	ELSEIF TALENT:PLAYER:マゾ || (TALENT:PLAYER:臆病 && ABL:PLAYER:マゾっ気 >= 3) || ABL:PLAYER:マゾっ気 >= 5
 		PRINTFORML 媚びるような上目遣いで%CALLNAME:TARGET%を見つめながら
 	;恥じらい
-	ELSEIF TALENT:PLAYER:35
+	ELSEIF TALENT:PLAYER:恥じらい
 		PRINT 一瞬躊躇うような仕草を見せがらも、
 	ELSE
 	ENDIF
 	;キス魔
-	SIF TALENT:PLAYER:155
+	SIF TALENT:PLAYER:キス魔
 		PRINT 先端に一度キスをしてから、
 	;猫舌
-	IF TALENT:PLAYER:54
+	IF TALENT:PLAYER:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 	;精液中毒5以上
 	ELSEIF ABL:PLAYER:精液中毒 >= 5
@@ -263,7 +263,7 @@ IF TFLAG:45
 	;技巧12以上
 	ELSEIF ABL:PLAYER:技巧 >= 12
 		PRINT カリの裏側をなぞるように舌を這わせた…
-	ELSEIF TALENT:PLAYER:131
+	ELSEIF TALENT:PLAYER:幼児
 		PRINT 氷菓のように舐め回した…
 	ELSE
 		PRINT ゆっくりと舌を這わせた…
@@ -271,10 +271,10 @@ IF TFLAG:45
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は
 	;淫乱かつC感覚10以上かつ欲情3000万以上
-	IF TALENT:76 && ( ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && ( ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
 		PRINT 甘えておねだりする
 	;淫乱又はC感覚6以上
-	ELSEIF TALENT:76 || ABL:Ｃ感覚 >= 6
+	ELSEIF TALENT:淫乱 || ABL:Ｃ感覚 >= 6
 		PRINT 待ち切れない様子の
 	ELSE
 	ENDIF
@@ -285,27 +285,27 @@ ELSE
 	PRINTL 露出させると
 
 	;キス魔
-	SIF TALENT:PLAYER:155
+	SIF TALENT:PLAYER:キス魔
 		PRINT 先端に一度キスをしてから、
 	;淫乱又は精液中毒7以上
-	IF (TALENT:PLAYER:76 || ABL:PLAYER:精液中毒 >= 7)
+	IF (TALENT:PLAYER:淫乱 || ABL:PLAYER:精液中毒 >= 7)
 		PRINT 呼吸も荒く、余裕の無い表情で
 	;淫乱又は精液中毒5以上
-	ELSEIF (TALENT:PLAYER:76 || ABL:PLAYER:精液中毒 >= 5)
+	ELSEIF (TALENT:PLAYER:淫乱 || ABL:PLAYER:精液中毒 >= 5)
 		PRINT 上気した表情で、
 	;サド又は小悪魔又はサドっ気5以上
-	ELSEIF TALENT:PLAYER:83 || TALENT:PLAYER:87 || ABL:PLAYER:サドっ気 >= 5
+	ELSEIF TALENT:PLAYER:サド || TALENT:PLAYER:小悪魔 || ABL:PLAYER:サドっ気 >= 5
 		PRINT 意地悪な笑みを浮かべながら
 	;マゾ又は、臆病かつマゾっ気3以上、又はマゾっ気5以上
-	ELSEIF TALENT:PLAYER:79 || (TALENT:PLAYER:10 && ABL:PLAYER:マゾっ気 >= 3) || ABL:PLAYER:マゾっ気 >= 5
+	ELSEIF TALENT:PLAYER:マゾ || (TALENT:PLAYER:臆病 && ABL:PLAYER:マゾっ気 >= 3) || ABL:PLAYER:マゾっ気 >= 5
 		PRINTFORML 媚びるような上目遣いで%CALLNAME:TARGET%を見つめながら
 	;恥じらい
-	ELSEIF TALENT:PLAYER:35
+	ELSEIF TALENT:PLAYER:恥じらい
 		PRINT 頬を紅潮させながらも、
 	ELSE
 	ENDIF
 	;猫舌
-	IF TALENT:PLAYER:54
+	IF TALENT:PLAYER:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 ;		;精液中毒5以上
 	ELSEIF ABL:PLAYER:精液中毒 >= 5
@@ -314,7 +314,7 @@ ELSE
 	ELSEIF ABL:PLAYER:技巧 >= 12
 		PRINTL 時折鈴口に舌先をねじ込むような仕草をしつつ
 		PRINT 丹念に刺激した…
-	ELSEIF TALENT:PLAYER:131
+	ELSEIF TALENT:PLAYER:幼児
 		PRINT 飴玉を転がすように舐め回した…
 	ELSE
 		PRINT じっくりと舌を這わせた…

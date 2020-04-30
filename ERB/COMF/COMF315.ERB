@@ -84,21 +84,21 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 	; パートナー素質による実行値補正
 	;----------------------------------
 	;臆病
-	IF TALENT:10 != 0
+	IF TALENT:臆病 != 0
 		PRINT  - 
 		A:1 -= 6
 		PRINTFORM %TALENTNAME:10%(6)
 		A:3 = 1
 	ENDIF
 	;反抗的
-	IF TALENT:11 != 0
+	IF TALENT:反抗的 != 0
 		PRINT  - 
 		A:1 -= 7
 		PRINTFORM %TALENTNAME:11%(7)
 		A:3 = 1
 	ENDIF
 	;素直
-	IF TALENT:13 != 0
+	IF TALENT:素直 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -106,7 +106,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;大人しい
-	IF TALENT:14 != 0
+	IF TALENT:大人しい != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 7
@@ -114,21 +114,21 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;プライド高い
-	IF TALENT:15 != 0
+	IF TALENT:プライド高い != 0
 		PRINT  - 
 		A:1 -= 10
 		PRINTFORM %TALENTNAME:15%(10)
 		A:3 = 1
 	ENDIF
 	;生意気
-	IF TALENT:16 != 0
+	IF TALENT:生意気 != 0
 		PRINT  - 
 		A:1 -= 8
 		PRINTFORM %TALENTNAME:16%(8)
 		A:3 = 1
 	ENDIF
 	;無関心
-	IF TALENT:21 != 0
+	IF TALENT:無関心 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 12
@@ -136,14 +136,14 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;感情乏しい
-	IF TALENT:22 != 0
+	IF TALENT:感情乏しい != 0
 		PRINT  - 
 		A:1 -= 8
 		PRINTFORM %TALENTNAME:22%(8)
 		A:3 = 1
 	ENDIF
 	;好奇心
-	IF TALENT:23 != 0
+	IF TALENT:好奇心 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 5
@@ -151,7 +151,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;解放
-	IF TALENT:33 != 0
+	IF TALENT:解放 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 7
@@ -159,21 +159,21 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;抵抗
-	IF TALENT:34 != 0
+	IF TALENT:抵抗 != 0
 		PRINT  - 
 		A:1 -= 8
 		PRINTFORM %TALENTNAME:34%(8)
 		A:3 = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35 != 0
+	IF TALENT:恥じらい != 0
 		PRINT  - 
 		A:1 -= 5
 		PRINTFORM %TALENTNAME:35%(5)
 		A:3 = 1
 	ENDIF
 	;恥薄い
-	IF TALENT:36 != 0
+	IF TALENT:恥薄い != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -181,14 +181,14 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;弱味 強化版判定の為、マイナスとして扱う
-	IF TALENT:37 != 0
+	IF TALENT:弱味 != 0
 		PRINT  - 
 		A:1 -= 5
 		PRINTFORM %TALENTNAME:37%(5)
 		A:3 = 1
 	ENDIF
 	;献身的
-	IF TALENT:63 != 0
+	IF TALENT:献身的 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 9
@@ -196,7 +196,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;即落ち
-	IF TALENT:73 != 0
+	IF TALENT:即落ち != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 20
@@ -204,7 +204,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;マゾ
-	IF TALENT:79 != 0
+	IF TALENT:マゾ != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 8
@@ -212,14 +212,14 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 != 0 && TALENT:PLAYER:122 != 0
+	IF TALENT:男嫌い != 0 && TALENT:PLAYER:オトコ != 0
 		PRINT  - 
 		A:1 -= 7
 		PRINTFORM %TALENTNAME:82%(7)
 		A:3 = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 != 0
+	IF TALENT:恋慕 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -227,7 +227,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;妄信
-	IF TALENT:86 != 0
+	IF TALENT:妄信 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 15
@@ -235,7 +235,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;親愛
-	IF TALENT:88 != 0
+	IF TALENT:親愛 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 15
@@ -243,7 +243,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;相愛
-	IF TALENT:89 != 0
+	IF TALENT:相愛 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 20
@@ -251,7 +251,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;合意
-	IF TALENT:152 != 0
+	IF TALENT:合意 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -259,7 +259,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;恋人
-	IF TALENT:153 != 0
+	IF TALENT:恋人 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -267,7 +267,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;服従
-	IF TALENT:180 != 0
+	IF TALENT:服従 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 12
@@ -275,7 +275,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;烙印
-	IF TALENT:181 != 0
+	IF TALENT:烙印 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 15
@@ -283,7 +283,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;隷属
-	IF TALENT:182 != 0
+	IF TALENT:隷属 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 20
@@ -303,7 +303,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;サド
-	IF TALENT:PLAYER:83 != 0
+	IF TALENT:PLAYER:サド != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 5
@@ -311,7 +311,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;魅力
-	IF TALENT:PLAYER:91 != 0
+	IF TALENT:PLAYER:魅惑 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 8
@@ -319,7 +319,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;謎の魅力
-	IF TALENT:PLAYER:92 != 0
+	IF TALENT:PLAYER:謎の魅力 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 10
@@ -327,7 +327,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;鼓舞
-	IF TALENT:PLAYER:118 != 0
+	IF TALENT:PLAYER:鼓舞 != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 5
@@ -407,7 +407,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;クリスマスイヴ且つ恋人(厳密には日没前はイヴではないらしい)
-	IF TIME:1 == 47 && TALENT:153 && TIME != 0
+	IF TIME:1 == 47 && TALENT:恋人 && TIME != 0
 		SIF A:3 != 0
 			PRINT  + 
 		A:1 += 8
@@ -415,7 +415,7 @@ IF ABL:親密 >= 6 || CFLAG:2 >= 600
 		A:3 = 1
 	ENDIF
 	;クリスマス且つ恋人
-	IF TIME:1 == 48 && TALENT:153
+	IF TIME:1 == 48 && TALENT:恋人
 		;雪までついてきた
 		IF TIME:5 == 5
 			SIF A:3 != 0
@@ -609,7 +609,7 @@ IF TFLAG:17 != 0
 	SOURCE:11 += 200 * ABL:欲望 * TFLAG:17
 	
 	;淫乱の場合、くっつくだけで発情する
-	IF TALENT:76 != 0
+	IF TALENT:淫乱 != 0
 		SOURCE:3  = 50 * ABL:奉仕精神 * TFLAG:17
 		SOURCE:10 = 300 * ABL:PLAYER:技巧 * TFLAG:17
 		TIMES SOURCE:11 , 1.20
@@ -688,9 +688,9 @@ RETURN 1
 ;季節毎の描写等は敢えて避けています。
 @TRAIN_MESSAGE_COM315
 ;傘が必要になる程度の天候、もしくは吸血鬼が居る
-IF (TIME:5 >= 3 || TALENT:114 || TALENT:PLAYER:114) && TIME:5 != 2
+IF (TIME:5 >= 3 || TALENT:吸血鬼 || TALENT:PLAYER:吸血鬼) && TIME:5 != 2
 	IF TFLAG:17 >= 2
-		IF TALENT:88
+		IF TALENT:親愛
 			;最近はドラマでも見掛けないシチュ(純愛だし、良いよね)
 			PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%が濡れないように、%CALLNAME:TARGET%の肩に腕を回し
 			PRINTFORMW より密着した状態で相合傘で散歩を楽しんだ…
@@ -705,7 +705,7 @@ IF (TIME:5 >= 3 || TALENT:114 || TALENT:PLAYER:114) && TIME:5 != 2
 	ENDIF
 ELSE
 	IF TFLAG:17 >= 2
-		IF TALENT:88
+		IF TALENT:親愛
 			;全身で寄りかかるようにして抱きつきます
 			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の腕に抱きつく様にして散歩を楽しんだ…
 		ELSE
@@ -715,7 +715,7 @@ ELSE
 		;指を組んで、手を繋ぐアレです
 		PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と恋人結びで散歩を楽しんだ…
 	ELSE
-		IF TALENT:85 || TALENT:153
+		IF TALENT:恋慕 || TALENT:恋人
 			PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と手を軽く繋いで散歩を楽しんだ…
 		ELSE
 			PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と散歩を楽しんだ…

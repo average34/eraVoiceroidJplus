@@ -2,7 +2,7 @@
 ;調教対象の射精チェック
 ;-------------------------------------------------
 @TARGET_EJAC_CHECK
-SIF TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 
 ;オーバーフローチェック。
@@ -20,19 +20,19 @@ ELSE
 ENDIF
 
 ;自制心
-SIF TALENT:20
+SIF TALENT:自制心
 	A /= 2
 
 ;快感に素直
-SIF TALENT:70
+SIF TALENT:快感に素直
 	TIMES A , 1.20
 
 ;淫乱化
-SIF TALENT:76
+SIF TALENT:淫乱
 	TIMES A , 1.10
 
 ;快感の否定
-SIF TALENT:71
+SIF TALENT:快感の否定
 	TIMES A , 0.80
 
 ;媚薬
@@ -163,7 +163,7 @@ ELSEIF E == 1
 ENDIF
 
 ;射精経験0かつオトコ、不思議な根、具現を持ってない場合は射精すると異常経験+5
-IF EXP:射精経験 == 0 && TALENT:122 == 0 && TALENT:120 == 0 && TALENT:127 == 0
+IF EXP:射精経験 == 0 && TALENT:オトコ == 0 && TALENT:不思議な根 == 0 && TALENT:具現 == 0
 	EXP:異常経験 += 5
 	PRINTL 異常経験＋5
 ENDIF
@@ -187,7 +187,7 @@ EX:5 += 1
 ;調教対象の噴乳チェック
 ;-------------------------------------------------
 @TARGET_MILK_CHECK
-SIF TALENT:130 == 0
+SIF TALENT:母乳体質 == 0
 	RETURN 0
 
 ;オーバーフローチェック。
@@ -205,23 +205,23 @@ ELSE
 ENDIF
 
 ;自制心
-SIF TALENT:20
+SIF TALENT:自制心
 	A /= 2
 
 ;快感に素直
-SIF TALENT:70
+SIF TALENT:快感に素直
 	TIMES A , 1.20
 
 ;淫乱化
-SIF TALENT:76
+SIF TALENT:淫乱
 	TIMES A , 1.10
 
 ;快感の否定
-SIF TALENT:71
+SIF TALENT:快感の否定
 	TIMES A , 0.80
 
 ;B敏感
-SIF TALENT:108
+SIF TALENT:Ｂ敏感
 	TIMES A , 1.50
 
 ;媚薬
@@ -233,15 +233,15 @@ SIF TEQUIP:22
 	A /= 2
 
 ;調教者が幼児退行
-SIF TALENT:PLAYER:131
+SIF TALENT:PLAYER:幼児
 	A *= 2
 
 ;調教者が幼稚
-SIF TALENT:PLAYER:132
+SIF TALENT:PLAYER:幼稚
 	A *= 2
 
 ;貧乳
-SIF TALENT:109
+SIF TALENT:貧乳
 	TIMES A , 0.50
 
 ;淫蟲
@@ -295,7 +295,7 @@ IF E == 2
 	PRINTL 噴乳経験＋2
 
 	;マスターとの子供であり、恋慕あり、又は恋慕が無くても恋人で反発２未満なら妊娠中・育児中は異常経験がつかない
-	IF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
+	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
 	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
@@ -316,7 +316,7 @@ IF E == 2
 			PRINTFORML そして母乳が漏れ出ないようにしっかりと蓋をした後、それを%CALLNAME:MASTER%に手渡した
 		ENDIF
 	ENDIF
-	SIF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
+	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		CFLAG:25 += 2
 	EXP:噴乳経験 += 2
 	;Ｂに母乳汚れ
@@ -362,7 +362,7 @@ ELSEIF E == 1
 	PRINTL 噴乳経験＋1
 
 	;マスターとの子供であり、恋慕あり、又は恋慕が無くても恋人で反発２未満なら妊娠中・育児中は異常経験がつかない
-	IF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
+	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
 	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
@@ -383,7 +383,7 @@ ELSEIF E == 1
 			PRINTFORML そして母乳が漏れ出ないようにしっかりと蓋をした後、それを%CALLNAME:MASTER%に手渡した
 		ENDIF
 	ENDIF
-	SIF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
+	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		CFLAG:25 += 1
 	EXP:噴乳経験 += 1
 	;Ｂに母乳汚れ
@@ -407,9 +407,9 @@ ENDIF
 ;同性の場合のチェック
 ;-------------------------------------------------
 @SOURCE_SEX_CHECK
-SIF TALENT:122 == 0 && TALENT:PLAYER:122
+SIF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ
 	RETURN 0
-SIF TALENT:122 && TALENT:PLAYER:122 == 0
+SIF TALENT:オトコ && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 
 ;感覚関係のSOURCEは分けてREPEAT処理
@@ -420,7 +420,7 @@ LOCAL:3 = 17
 LOCAL:4 = 24
 REPEAT 5
 	;レズ
-	IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		;ABL:レズっ気をみる
 		IF ABL:レズっ気
 			IF SOURCE:(LOCAL:COUNT) < 100000
@@ -477,7 +477,7 @@ REPEAT 5
 			ENDIF
 		ENDIF
 	;ＢＬ
-	ELSEIF TALENT:122 && TALENT:PLAYER:122
+	ELSEIF TALENT:オトコ && TALENT:PLAYER:オトコ
 		;ABL:ＢＬっ気をみる
 		IF ABL:ＢＬっ気 && ABL:ＢＬっ気 < 5
 			SOURCE:(LOCAL:COUNT) = SOURCE:(LOCAL:COUNT) * (ABL:ＢＬっ気 * 10 + 100) / 100
@@ -492,9 +492,9 @@ REPEAT 5
 REND
 
 ;レズ
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	;調教者の自制心
-	IF TALENT:PLAYER:20
+	IF TALENT:PLAYER:自制心
 		TIMES SOURCE:4 , 0.50
 		TIMES SOURCE:5 , 0.50
 	ENDIF
@@ -661,7 +661,7 @@ IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 			SOURCE:5 = SOURCE:5 / 100 * (ABL:PLAYER:レズ中毒 * 50 + 150)
 		ENDIF
 	ENDIF
-ELSEIF TALENT:122 && TALENT:PLAYER:122
+ELSEIF TALENT:オトコ && TALENT:PLAYER:オトコ
 	IF ABL:ＢＬっ気 == 0
 		TIMES SOURCE:8 , 4.00
 		TIMES SOURCE:14 , 4.00
@@ -705,7 +705,7 @@ ELSEIF TALENT:122 && TALENT:PLAYER:122
 	ENDIF
 
 	;調教者の自制心
-	IF TALENT:PLAYER:20
+	IF TALENT:PLAYER:自制心
 		TIMES SOURCE:4 , 0.50
 		TIMES SOURCE:5 , 0.50
 	ENDIF
@@ -722,16 +722,16 @@ LOCAL:3 = 17
 LOCAL:4 = 24
 REPEAT 5
 	;調教者のTALENT:解放をみる
-	SIF TALENT:PLAYER:33
+	SIF TALENT:PLAYER:解放
 		TIMES SOURCE:(LOCAL:COUNT) , 1.20
 	;調教者のTALENT:魅惑をみる
-	SIF TALENT:PLAYER:91
+	SIF TALENT:PLAYER:魅惑
 		TIMES SOURCE:(LOCAL:COUNT) , 1.20
 	;調教者のTALENT:謎の魅力をみる
-	SIF TALENT:PLAYER:92
+	SIF TALENT:PLAYER:謎の魅力
 		TIMES SOURCE:(LOCAL:COUNT) , 1.20
 	;調教者のTALENT:eratohoを支配する程度の能力をみる
-	SIF TALENT:PLAYER:201
+	SIF TALENT:PLAYER:eraVoiceroidJも支配する程度の能力
 		TIMES SOURCE:(LOCAL:COUNT) , 2.00
 
 	;調教者のABL:技巧
@@ -755,33 +755,33 @@ REPEAT 5
 REND
 
 ;調教者のTALENT:解放をみる
-IF TALENT:PLAYER:33
+IF TALENT:PLAYER:解放
 	TIMES SOURCE:3 , 1.20
 ENDIF
 ;調教者のTALENT:小悪魔をみる
-IF TALENT:PLAYER:87
+IF TALENT:PLAYER:小悪魔
 	TIMES SOURCE:12 , 1.60
 ENDIF
 ;調教者のTALENT:魅惑をみる
-IF TALENT:PLAYER:91
+IF TALENT:PLAYER:魅惑
 	TIMES SOURCE:8 , 0.50
 	TIMES SOURCE:14 , 0.50
 
 	TIMES SOURCE:5 , 1.20
 ENDIF
 ;調教者のTALENT:謎の魅力をみる
-IF TALENT:PLAYER:92
+IF TALENT:PLAYER:謎の魅力
 	TIMES SOURCE:8 , 0.50
 	TIMES SOURCE:14 , 0.50
 
 	TIMES SOURCE:5 , 1.20
 ENDIF
 ;調教者のTALENT:魅力をみる
-IF TALENT:PLAYER:113
+IF TALENT:PLAYER:魅力
 	TFLAG:37 += 1
 ENDIF
 ;調教者のTALENT:eratohoを支配する程度の能力をみる
-IF TALENT:PLAYER:201
+IF TALENT:PLAYER:eraVoiceroidJも支配する程度の能力
 	TIMES SOURCE:5 , 2.00
 ENDIF
 
@@ -857,7 +857,7 @@ IF TEQUIP:22 && TFLAG:201 != 1
 ENDIF
 
 ;自制心
-IF TALENT:20 && TFLAG:201 != 1
+IF TALENT:自制心 && TFLAG:201 != 1
 	TIMES UP:0 , 0.30
 	TIMES UP:1 , 0.50
 	TIMES UP:2 , 0.70
@@ -866,7 +866,7 @@ IF TALENT:20 && TFLAG:201 != 1
 ENDIF
 
 ;オトコ
-IF TALENT:122 && TFLAG:201 != 1
+IF TALENT:オトコ && TFLAG:201 != 1
 	TIMES UP:2 , 1.30
 ENDIF
 
@@ -941,13 +941,13 @@ IF TEQUIP:22
 ENDIF
 
 ;臆病
-IF TALENT:10
+IF TALENT:臆病
 	TIMES UP:10 , 2.00
 	TIMES UP:11 , 0.50
 	TIMES UP:13 , 0.25
 ENDIF
 ;反抗的
-IF TALENT:11
+IF TALENT:反抗的
 	TIMES UP:4 , 0.25
 	TIMES UP:5 , 0.50
 	TIMES UP:11 , 1.50
@@ -955,7 +955,7 @@ IF TALENT:11
 	TIMES UP:17 , 1.10
 ENDIF
 ;気丈
-IF TALENT:12
+IF TALENT:気丈
 	TIMES UP:4 , 0.30
 	TIMES UP:5 , 0.75
 	TIMES UP:10 , 0.80
@@ -964,7 +964,7 @@ IF TALENT:12
 	TIMES UP:15 , 0.80
 ENDIF
 ;素直
-IF TALENT:13
+IF TALENT:素直
 	SIF UP:4 < 999999999
 		TIMES UP:4 , 2.00
 	TIMES UP:11 , 0.60
@@ -972,18 +972,18 @@ IF TALENT:13
 		TIMES UP:15 , 1.50
 ENDIF
 ;大人しい
-IF TALENT:14
+IF TALENT:大人しい
 	TIMES UP:11 , 0.30
 ENDIF
 ;プライド高い
-IF TALENT:15
+IF TALENT:プライド高い
 	TIMES UP:6 , 0.50
 	TIMES UP:10 , 0.60
 	TIMES UP:11 , 1.20
 	TIMES UP:17 , 1.50
 ENDIF
 ;プライド低い
-IF TALENT:17
+IF TALENT:プライド低い
 	TIMES UP:6 , 2.00
 	TIMES UP:10 , 1.50
 	TIMES UP:11 , 0.80
@@ -991,7 +991,7 @@ IF TALENT:17
 ENDIF
 
 ;無関心
-IF TALENT:21
+IF TALENT:無関心
 	TIMES UP:4 , 0.50
 	TIMES UP:5 , 0.50
 	TIMES UP:6 , 0.50
@@ -1001,7 +1001,7 @@ IF TALENT:21
 	TIMES UP:16 , 0.70
 ENDIF
 ;感情乏しい
-IF TALENT:22
+IF TALENT:感情乏しい
 	TIMES UP:4 , 0.60
 	TIMES UP:5 , 0.60
 	TIMES UP:6 , 0.60
@@ -1014,86 +1014,86 @@ IF TALENT:22
 	TIMES UP:16 , 0.80
 ENDIF
 ;好奇心
-IF TALENT:23
+IF TALENT:好奇心
 	TIMES UP:7 , 1.20
 ENDIF
 ;保守的
-IF TALENT:24
+IF TALENT:保守的
 	TIMES UP:7 , 0.80
 ENDIF
 ;楽観的
-IF TALENT:25
+IF TALENT:楽観的
 	TIMES UP:13 , 0.30
 ENDIF
 ;悲観的
-IF TALENT:26
+IF TALENT:悲観的
 	TIMES UP:13 , 2.50
 ENDIF
 
 ;抑圧
-IF TALENT:32
+IF TALENT:抑圧
 	TIMES UP:5 , 0.50
 	TIMES UP:11 , 2.00
 	TIMES UP:13 , 1.50
 ENDIF
 ;解放
-IF TALENT:33
+IF TALENT:解放
 	TIMES UP:5 , 2.00
 	TIMES UP:6 , 2.00
 ENDIF
 ;抵抗
-IF TALENT:34
+IF TALENT:抵抗
 	TIMES UP:5 , 0.50
 	TIMES UP:11 , 2.00
 ENDIF
 
 ;痛みに弱い
-IF TALENT:40
+IF TALENT:痛みに弱い
 	TIMES UP:10 , 2.00
 	TIMES UP:11 , 1.50
 ENDIF
 ;痛みに強い
-IF TALENT:41
+IF TALENT:痛みに強い
 	TIMES UP:10 , 0.50
 	TIMES UP:11 , 0.75
 ENDIF
 
 ;習得早い
-IF TALENT:50
+IF TALENT:習得早い
 	TIMES UP:7 , 2.00
 	TIMES UP:16 , 1.50
 ENDIF
 ;習得遅い
-IF TALENT:51
+IF TALENT:習得遅い
 	TIMES UP:7 , 0.50
 	TIMES UP:16 , 0.50
 ENDIF
 
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	TIMES UP:6 , 2.00
 	TIMES UP:16 , 1.20
 ENDIF
 
 ;快感に素直
-SIF TALENT:70
+SIF TALENT:快感に素直
 	TIMES UP:5 , 2.00
 ;快感の否定
-SIF TALENT:71
+SIF TALENT:快感の否定
 	TIMES UP:5 , 0.50
 
 ;サド
-IF TALENT:83
+IF TALENT:サド
 	TIMES UP:17 , 2.00
 ENDIF
 
 ;小悪魔
-IF TALENT:87
+IF TALENT:小悪魔
 	TIMES UP:17 , 1.50
 ENDIF
 
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	TIMES UP:6 , 1.50
 	TIMES UP:11 , 0.75
 	TIMES UP:12 , 0.75
@@ -1103,7 +1103,7 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;親愛
-IF TALENT:88 && ASSIPLAY == 0
+IF TALENT:親愛 && ASSIPLAY == 0
 	SIF UP:4 < 999999999
 		TIMES UP:4 , 2.00
 	TIMES UP:6 , 3.00
@@ -1116,7 +1116,7 @@ IF TALENT:88 && ASSIPLAY == 0
 ENDIF
 
 ;恋人
-IF TALENT:153 && ASSIPLAY == 0
+IF TALENT:恋人 && ASSIPLAY == 0
 	TIMES UP:6 , 1.50
 	TIMES UP:11 , 0.75
 	TIMES UP:12 , 0.75
@@ -1127,13 +1127,13 @@ ENDIF
 
 
 ;妄信
-IF TALENT:86
+IF TALENT:妄信
 	TIMES UP:6 , 1.20
 	TIMES UP:11 , 0.95
 ENDIF
 
 ;相愛
-IF TALENT:89
+IF TALENT:相愛
 	TIMES UP:11 , 0.50
 	TIMES UP:12 , 0.50
 	TIMES UP:13 , 0.50
@@ -1141,19 +1141,19 @@ ENDIF
 
 
 ;服従
-IF TALENT:180
+IF TALENT:服従
 	TIMES UP:6 , 2.00
 	TIMES UP:11 , 0.50
 ENDIF
 ;烙印
-IF TALENT:181
+IF TALENT:烙印
 	TIMES UP:6 , 2.00
 	TIMES UP:8 , 2.00
 	TIMES UP:11 , 0.30
 	TIMES UP:12 , 0.30
 ENDIF
 ;隷属
-IF TALENT:182
+IF TALENT:隷属
 	SIF UP:4 < 999999999
 		TIMES UP:4 , 1.80
 	TIMES UP:6 , 2.50
@@ -1164,7 +1164,7 @@ ENDIF
 
 
 ;妖狐
-SIF TALENT:PLAYER:90
+SIF TALENT:PLAYER:妖狐
 	TIMES UP:8 , 2.50
 
 ;成功判定
@@ -1220,19 +1220,19 @@ ENDIF
 ;でもゆかり様だけはなかなか軽減しない
 IF EXP:異常経験 <= 0
 	TIMES UP:13 , 1.30
-ELSEIF EXP:異常経験 < (10 + TALENT:201 * 255)
+ELSEIF EXP:異常経験 < (10 + TALENT:eraVoiceroidJも支配する程度の能力 * 255)
 	TIMES UP:13 , 1.10
-ELSEIF EXP:異常経験 < (50 + TALENT:201 * 500)
+ELSEIF EXP:異常経験 < (50 + TALENT:eraVoiceroidJも支配する程度の能力 * 500)
 	TIMES UP:13 , 0.90
-ELSEIF EXP:異常経験 < (100 + TALENT:201 * 1000)
+ELSEIF EXP:異常経験 < (100 + TALENT:eraVoiceroidJも支配する程度の能力 * 1000)
 	TIMES UP:13 , 0.70
-ELSEIF EXP:異常経験 < (200 + TALENT:201 * 2000)
+ELSEIF EXP:異常経験 < (200 + TALENT:eraVoiceroidJも支配する程度の能力 * 2000)
 	TIMES UP:13 , 0.40
-ELSEIF EXP:異常経験 < (400 + TALENT:201 * 4000)
+ELSEIF EXP:異常経験 < (400 + TALENT:eraVoiceroidJも支配する程度の能力 * 4000)
 	TIMES UP:13 , 0.10
-ELSEIF EXP:異常経験 < (700 + TALENT:201 * 7000)
+ELSEIF EXP:異常経験 < (700 + TALENT:eraVoiceroidJも支配する程度の能力 * 7000)
 	TIMES UP:13 , 0.01
-ELSEIF EXP:異常経験 < (1500 + TALENT:201 * 15000)
+ELSEIF EXP:異常経験 < (1500 + TALENT:eraVoiceroidJも支配する程度の能力 * 15000)
 	TIMES UP:13 , 0.001
 ELSE
 	TIMES UP:13 , 0.0001
@@ -1267,17 +1267,17 @@ IF A >= 500 && A < 1200 && MARK:4 <= 0 && TFLAG:150 == 0
 ELSEIF A >= 1200 && A < 3000 && MARK:4 <= 1 && TFLAG:150 == 0
 	LOCAL = 2
 	;感情乏しいの場合は反発感情による親密ダウンはなし
-	IF ABL:親密 > 0 && ABL:親密 <= 3 && TALENT:22 == 0
+	IF ABL:親密 > 0 && ABL:親密 <= 3 && TALENT:感情乏しい == 0
 		LOCAL:1 = -2
-	ELSEIF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:22 == 0
+	ELSEIF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:感情乏しい == 0
 		LOCAL:1 = -1
 	ENDIF
 ELSEIF A >= 3000 && MARK:4 <= 2 && TFLAG:150 == 0
 	LOCAL = 3
 	;感情乏しいの場合は反発感情による親密ダウンはなし
-	IF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:22 == 0
+	IF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:感情乏しい == 0
 		LOCAL:1 = -4
-	ELSEIF ABL:親密 > 0 && ABL:親密 <= 9 && TALENT:22 == 0
+	ELSEIF ABL:親密 > 0 && ABL:親密 <= 9 && TALENT:感情乏しい == 0
 		LOCAL:1 = -2
 	ENDIF
 ENDIF
@@ -1328,7 +1328,7 @@ IF LOCAL > 0
 ENDIF
 
 ;マゾっ気LVが取得する苦痛依存LV以上かつ、気丈・感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && ABL:マゾっ気 >= LOCAL && TALENT:12 == 0 && TALENT:22 == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && ABL:マゾっ気 >= LOCAL && TALENT:気丈 == 0 && TALENT:感情乏しい == 0 && MARK:3 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF
@@ -1336,11 +1336,11 @@ ENDIF
 ;苦痛依存LV3取得時に条件を満たすと異常経験増加
 IF TFLAG:22 == 3
 	;実行者が【サド】持ち サドっ気が非常に高い場合正常位等でも苦痛依存LV3取得、異常経験増加してしまうためコメントアウト
-	;IF TALENT:PLAYER:83
+	;IF TALENT:PLAYER:サド
 	;	PRINTFORML %EXPNAME:50%＋３
 	;	EXP:異常経験 += 3
 	;針の実行者が【針さばき】持ち
-	IF TALENT:PLAYER:53 && SELECTCOM == 42
+	IF TALENT:PLAYER:針さばき && SELECTCOM == 42
 		PRINTFORML %EXPNAME:50%＋３
 		EXP:異常経験 += 3
 	ENDIF
@@ -1374,7 +1374,7 @@ IF LOCAL > 0
 ENDIF
 
 ;自制心・感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && TALENT:20 == 0 && TALENT:22 == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && TALENT:自制心 == 0 && TALENT:感情乏しい == 0 && MARK:3 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF
@@ -1405,7 +1405,7 @@ IF LOCAL > 0
 ENDIF
 
 ;感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && TALENT:22 == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && TALENT:感情乏しい == 0 && MARK:3 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF
@@ -1428,17 +1428,17 @@ ENDIF
 ;欲望の上昇による[抑圧][抵抗]の消滅をチェック
 ;-------------------------------------------------
 @YOKUBO_UP_CHECK
-IF ABL:欲望 >= 6 && (TALENT:32 || TALENT:34)
+IF ABL:欲望 >= 6 && (TALENT:抑圧 || TALENT:抵抗)
 	TFLAG:13 = 36
 	CALL SELF_KOJO
 	PRINTFORM %NAME:TARGET%は
-	IF TALENT:32
+	IF TALENT:抑圧
 		PRINTFORM [%TALENTNAME:32%]
-		TALENT:32 = 0
+		TALENT:抑圧 = 0
 	ENDIF
-	IF TALENT:34
+	IF TALENT:抵抗
 		PRINTFORM [%TALENTNAME:34%]
-		TALENT:34 = 0
+		TALENT:抵抗 = 0
 	ENDIF
 	PRINTL を失った
 	
@@ -1452,12 +1452,12 @@ ENDIF
 ;ツンデレ持ちの親密上昇による[反抗的]の反転をチェック
 ;-------------------------------------------------
 @JUJUN_UP_CHECK
-IF ABL:親密 >= 10 && TALENT:11 && TALENT:18
+IF ABL:親密 >= 10 && TALENT:反抗的 && TALENT:ツンデレ
 	TFLAG:13 = 77
 	CALL SELF_KOJO
 	PRINTFORMW %NAME:TARGET%は[%TALENTNAME:11%]を失い、[%TALENTNAME:13%]を得た
-	TALENT:11 = 0
-	TALENT:13 = 1
+	TALENT:反抗的 = 0
+	TALENT:素直 = 1
 ENDIF
 
 ;-------------------------------------------------
@@ -1621,7 +1621,7 @@ ENDIF
 ;-------------------------------------------------
 @SOKUOCHI_CHECK
 
-SIF TALENT:73 == 0
+SIF TALENT:即落ち == 0
 	RETURN 0
 
 ;UP代入

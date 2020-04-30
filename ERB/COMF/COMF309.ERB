@@ -53,12 +53,12 @@ LOSEBASE:体力 += 50
 LOSEBASE:気力 += 100
 
 ;恋慕・恋人による気力消費軽減
-SIF TALENT:85
+SIF TALENT:恋慕
 	LOSEBASE:気力 -= 15
-SIF TALENT:153
+SIF TALENT:恋人
 	LOSEBASE:気力 -= 15
 ;親愛による体力・気力消費軽減
-IF TALENT:88
+IF TALENT:親愛
 	LOSEBASE:体力 -= 20
 	LOSEBASE:気力 -= 20
 ENDIF
@@ -108,7 +108,7 @@ SOURCE:18 += ABL:料理技能 * 10
 SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 15 + 100) / 100
 
 ;調合知識を持っていると効果上昇
-IF TALENT:TARGET:55
+IF TALENT:TARGET:調合知識
 	TIMES SOURCE:19 , 2.00
 ENDIF
 
@@ -226,11 +226,11 @@ ENDIF
 $SOZAI_SEARCH
 
 ;実行者の技巧が1以下かつ相手の技巧が1以下かつ調合知識・禁断の知識をどちらも持っていないかつペンデュラムを持っていないと必ず失敗
-IF ABL:TARGET:技巧 <= 1 && ABL:PLAYER:技巧 <= 1 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+IF ABL:TARGET:技巧 <= 1 && ABL:PLAYER:技巧 <= 1 && TALENT:PLAYER:調合知識 == 0 && TALENT:TARGET:調合知識 == 0 && TALENT:PLAYER:禁断の知識 == 0 && TALENT:TARGET:禁断の知識 == 0 && TEQUIP:5 != 2
 	PRINTFORMW しかし何も見つけることはできなかった
 	TFLAG:18 = -1
 ;実行者と相手の技巧の合計が6以下で双方が調合・禁断の知識を持っていないかつペンデュラムを持っていないと雑草しか手に入らない
-ELSEIF (ABL:TARGET:技巧 + ABL:PLAYER:技巧) <= 6 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+ELSEIF (ABL:TARGET:技巧 + ABL:PLAYER:技巧) <= 6 && TALENT:PLAYER:調合知識 == 0 && TALENT:TARGET:調合知識 == 0 && TALENT:PLAYER:禁断の知識 == 0 && TALENT:TARGET:禁断の知識 == 0 && TEQUIP:5 != 2
 	IF T >= 50
 		PRINTFORMW しかし何も見つけることはできなかった
 		TFLAG:18 = -1
@@ -262,9 +262,9 @@ VARSET LOCAL, 0
 ;実行者と相手の技巧の合計でアイテム入手数設定。また、相手と自分の調合知識でそれぞれランダム追加
 D = 1 + RAND:2 + RAND:(ABL:TARGET:技巧 + ABL:PLAYER:技巧)/6
 
-SIF TALENT:PLAYER:55 == 1
+SIF TALENT:PLAYER:調合知識 == 1
 	D += 1
-SIF TALENT:TARGET:55 == 1
+SIF TALENT:TARGET:調合知識 == 1
 	D += 1
 
 SIF D >= 9
@@ -333,7 +333,7 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 		;各デート場所固有の最高ランク条件。こちらまで満たせば最高ランクまで解禁
 		
 		;遊園地　相手が親愛or相愛or恋慕＋親愛15以上
-		IF TEQUIP:2 == 10 && (TALENT:TARGET:88 || TALENT:TARGET:89 || (TALENT:TARGET:85 && ABL:親密 >= 15))
+		IF TEQUIP:2 == 10 && (TALENT:TARGET:親愛 || TALENT:TARGET:相愛 || (TALENT:TARGET:恋慕 && ABL:親密 >= 15))
 		
 		;水族館 日付が3の倍数
 		ELSEIF TEQUIP:2 == 11 && (DAY:1 % 3 == 0)
@@ -430,7 +430,7 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 ;素材ランク数４つのデート先
 ELSE
 	;実行者の技巧5以上かつ相手の技巧8以上かつ調合知識か禁断の知識を実行者と相手のいずれかが持っている
-	IF ABL:TARGET:技巧 >= 8 && ABL:PLAYER:技巧 >= 5 && (TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1)
+	IF ABL:TARGET:技巧 >= 8 && ABL:PLAYER:技巧 >= 5 && (TALENT:PLAYER:調合知識 == 1 || TALENT:TARGET:調合知識 == 1 || TALENT:PLAYER:禁断の知識 == 1 || TALENT:TARGET:禁断の知識 == 1)
 		;まずLOCAL = 1し、最高ランク条件を満たしていなかった場合　LOCAL = 0にして手に入る素材を変える
 		LOCAL = 1
 		
@@ -464,13 +464,13 @@ ELSE
 		ELSEIF TEQUIP:2 == 9 && ABL:TARGET:欲望 >= 11
 		
 		;月の都 実行者か相手が蓬莱人・月光浴・処女・淫乱のいずれかを持っている
-		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:処女 == 1 || TALENT:TARGET:処女 == 1 || TALENT:PLAYER:76 == 1 || TALENT:TARGET:76 == 1 || TALENT:PLAYER:116 == 1 || TALENT:TARGET:116 == 1 || TALENT:PLAYER:128 == 1 || TALENT:TARGET:128 == 1)
+		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:処女 == 1 || TALENT:TARGET:処女 == 1 || TALENT:PLAYER:淫乱 == 1 || TALENT:TARGET:淫乱 == 1 || TALENT:PLAYER:月光浴 == 1 || TALENT:TARGET:月光浴 == 1 || TALENT:PLAYER:蓬莱人 == 1 || TALENT:TARGET:蓬莱人 == 1)
 		
 		;妖怪の山 季節が秋か、実行者か相手のどちらかが妄信か解放を持っているか、露出癖5以上(ゆがんだ信仰or常識に囚われない)
-		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:86 == 1 || TALENT:TARGET:86 == 1 || TALENT:PLAYER:33 == 1 || TALENT:TARGET:33 == 1 || ABL:TARGET:露出癖 >= 5)
+		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:妄信 == 1 || TALENT:TARGET:妄信 == 1 || TALENT:PLAYER:解放 == 1 || TALENT:TARGET:解放 == 1 || ABL:TARGET:露出癖 >= 5)
 		
 		;有頂天 実行者か相手がサド・マゾのいずれかを持っている(実行者がサドの場合、相手がマゾっ気3以上が必要)
-		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:79 == 1 || TALENT:TARGET:79 == 1 || TALENT:TARGET:83 == 1 || (TALENT:PLAYER:83 == 1 && ABL:TARGET:マゾっ気 >= 3))
+		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:マゾ == 1 || TALENT:TARGET:マゾ == 1 || TALENT:TARGET:サド == 1 || (TALENT:PLAYER:サド == 1 && ABL:TARGET:マゾっ気 >= 3))
 		
 		;地霊殿 実行者か相手が異常経験3以上
 		ELSEIF TEQUIP:2 == 28 && (EXP:PLAYER:異常経験 >= 3 || EXP:TARGET:異常経験 >= 3)
@@ -2357,7 +2357,7 @@ V = 18
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 
@@ -2383,7 +2383,7 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')

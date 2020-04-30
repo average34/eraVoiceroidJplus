@@ -49,7 +49,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック（ふたなり・オトコの場合）
 ;-------------------------------------------------
-SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -98,15 +98,15 @@ ENDIF
 PRINTFORML %EXPNAME:96%＋１
 EXP:キス経験 += 1
 EXP:PLAYER:キス経験 += 1
-IF TALENT:PLAYER:151
+IF TALENT:PLAYER:キス未経験
 	PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
-	TALENT:PLAYER:151 = 0
+	TALENT:PLAYER:キス未経験 = 0
 ENDIF
 
-IF TALENT:151
+IF TALENT:キス未経験
 	TFLAG:600 = 1
 	CALL KOJO_JUN
-	TALENT:151 = 0
+	TALENT:キス未経験 = 0
 	PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
 	TFLAG:38 = 1
 ENDIF
@@ -149,7 +149,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 3
 	SOURCE:15 += 100
 ENDIF
@@ -250,12 +250,12 @@ S = STAIN:PLAYER:0
 STAIN:PLAYER:0 |= STAIN:0
 STAIN:0 |= S
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +3
 	EXP:レズ経験 += 3
 	EXP:PLAYER:レズ経験 += 3
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +3
 	EXP:ＢＬ経験 += 3
@@ -312,7 +312,7 @@ ENDIF
 PRINTFORMW %CALLNAME:PLAYER%は口に含んだ精液を唾液と混ぜ、キスで口移しした……
 
 ;恋慕で精液中毒LV3以上でマスターの精液をマスターが飲ませる
-IF TALENT:85 && (CFLAG:PLAYER:108 == 1) && (ABL:TARGET:精液中毒 >= 3 ) && (PLAYER == MASTER)
+IF TALENT:恋慕 && (CFLAG:PLAYER:108 == 1) && (ABL:TARGET:精液中毒 >= 3 ) && (PLAYER == MASTER)
 	PRINTFORMW %CALLNAME:TARGET%は嬉しそうに%CALLNAME:MASTER%の精液を味わっている…
 	PRINTFORMW そして、名残惜しそうに、%CALLNAME:TARGET%と舌を絡め、口内を舐め回している…
 ;精液中毒5以上
@@ -341,7 +341,7 @@ ELSEIF ABL:TARGET:精液中毒 >= 1
 		PRINT 自分
 	ENDIF
 	PRINTFORM の精液を飲まされ、
-	IF TALENT:85 && (CFLAG:108 == 1)
+	IF TALENT:恋慕 && (CFLAG:108 == 1)
 		PRINTFORMW 少し顔を赤らめている…
 	ELSE
 		PRINTFORMW 屈辱に満ちた表情をしている…
@@ -351,7 +351,7 @@ ELSE
 	PRINTFORMW %CALLNAME:TARGET%は涙目で逃れようとする…
 	PRINTFORMW しかし%CALLNAME:PLAYER%に追い詰められ、諦めたような表情で口内に精液を流し込まれている…
 	PRINTFORM %CALLNAME:TARGET%は口内に溜まった精液を咽せながら
-	SIF TALENT:85 && (CFLAG:108 == 1) && (PLAYER == MASTER)
+	SIF TALENT:恋慕 && (CFLAG:108 == 1) && (PLAYER == MASTER)
 		PRINT も懸命に
 	PRINTFORMW 嚥下していく…
 ENDIF
@@ -371,7 +371,7 @@ V = 85
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 
@@ -412,29 +412,29 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;汚臭鈍感
-IF TALENT:61
+IF TALENT:汚臭鈍感
 	SIF S
 	A += 1
 ENDIF
 ;汚臭敏感
-IF TALENT:62
+IF TALENT:汚臭敏感
 	A -= 3
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	SIF S
 	A += 6
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 1
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	SIF S
 	A += 5
 	S = 5
@@ -453,9 +453,9 @@ SIF STAIN:PLAYER:0 & 8
 SIF STAIN:PLAYER:0 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;キスでは汚れがそれほど影響しない
@@ -465,8 +465,8 @@ Y /= 2
 IF Y
 	A -= Y
 	;汚臭鈍感
-	IF TALENT:61
-	ELSEIF TALENT:62
+	IF TALENT:汚臭鈍感
+	ELSEIF TALENT:汚臭敏感
 	ELSE
 	ENDIF
 ENDIF
@@ -474,18 +474,18 @@ ENDIF
 
 
 ;キス未経験
-IF TALENT:151
+IF TALENT:キス未経験
 	A -= 30
 ENDIF
 
 ;一線越えない（キス未経験時のみ）
-IF TALENT:151 && TALENT:27
+IF TALENT:キス未経験 && TALENT:一線越えない
 	A -= 15
 ENDIF
 
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 10
 ENDIF
 
@@ -513,7 +513,7 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
@@ -569,14 +569,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;汚臭鈍感
-	IF TALENT:61
+	IF TALENT:汚臭鈍感
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:61
@@ -584,14 +584,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;汚臭敏感
-	IF TALENT:62
+	IF TALENT:汚臭敏感
 		PRINT  - 
 		PRINTS TALENTNAME:62
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -599,14 +599,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -627,9 +627,9 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:PLAYER:0 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;キスでは汚れがそれほど影響しない
@@ -639,10 +639,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	IF Y
 		PRINT  - 
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE
@@ -655,7 +655,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;キス未経験
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINT  - 
 		PRINTS TALENTNAME:151
 		PRINTV '(,30,')
@@ -663,7 +663,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（キス未経験時のみ）
-	IF TALENT:151 && TALENT:27
+	IF TALENT:キス未経験 && TALENT:一線越えない
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,15,')
@@ -672,7 +672,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,10,')

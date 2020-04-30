@@ -8,7 +8,7 @@
 ;レズっ気up本体
 ;-------------------------------------------------
 @ABLUP9MAIN
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 
 DRAWLINE
@@ -146,7 +146,7 @@ PRINTW になりました。
 ;レズっ気が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP9
-IF ABL:レズっ気 >= 9999 || TALENT:122
+IF ABL:レズっ気 >= 9999 || TALENT:オトコ
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -160,7 +160,7 @@ J = 0
 Z = 0
 
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
-IF ABL:レズっ気 >= 3 && TALENT:81 == 0
+IF ABL:レズっ気 >= 3 && TALENT:両刀 == 0
 	F = ABL:レズっ気 * 3
 	IF EXP:異常経験 < F
 		;異常経験が不足
@@ -228,7 +228,7 @@ ELSEIF ABL:レズっ気 == 3
 	C = 2000
 	D = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES C , 1.10
@@ -239,7 +239,7 @@ ELSEIF ABL:レズっ気 == 4
 	C = 5000
 	D = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -254,7 +254,7 @@ ELSE
 	B = B * (ABL:レズっ気 - 2) / 2
 	C = C * (ABL:レズっ気 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -262,7 +262,7 @@ ELSE
 ENDIF
 
 ;レズ素質
-IF TALENT:81
+IF TALENT:両刀
 	TIMES A , 0.25
 	TIMES B , 0.25
 	TIMES C , 0.25
@@ -270,7 +270,7 @@ IF TALENT:81
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
@@ -278,7 +278,7 @@ IF TALENT:80
 ENDIF
 
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
-IF ABL:レズっ気 >= 3 && TALENT:81 == 0
+IF ABL:レズっ気 >= 3 && TALENT:両刀 == 0
 	F = ABL:レズっ気 * 3
 ELSE
 	F = 0

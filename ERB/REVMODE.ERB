@@ -388,23 +388,23 @@ CASE 7
 ;正常位させる
 CASE 8
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:122 && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
 ;後背位させる
 CASE 9
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:122 && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
 ;対面座位させる
 CASE 10
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:122 && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
 ;背面座位させる
 CASE 11
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:122 && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
 ;騎乗位する
 CASE 12
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:122 && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
 ;顔面騎乗クンニ
 CASE 13
 	;パートナーに男性器がない
@@ -412,15 +412,15 @@ CASE 13
 ;指挿入れ強制
 CASE 14
 	;パートナーが処女でない AND パートナーがオトコでない
-	RETURNF (!TALENT:TARGET:処女 && !TALENT:TARGET:122)
+	RETURNF (!TALENT:TARGET:処女 && !TALENT:TARGET:オトコ)
 ;顔面騎乗アナル
 CASE 15
 	;アナル経験100以上 AND 汚れ無視あり
-	RETURNF (EXP:Ａ経験 >= 100 && TALENT:PLAYER:64)
+	RETURNF (EXP:Ａ経験 >= 100 && TALENT:PLAYER:汚れ無視)
 ;胸を揉ませる
 CASE 16
 	;パートナーがオトコでない
-	RETURNF !TALENT:TARGET:122
+	RETURNF !TALENT:TARGET:オトコ
 ;フェラさせる
 CASE 17
 	;パートナーに男性器がある
@@ -428,15 +428,15 @@ CASE 17
 ;正常位する
 CASE 18
 	;パートナーが童貞でない AND パートナーに男性器がある AND プレイヤーが処女でない AND プレイヤーがオトコでない
-	RETURNF (!TALENT:TARGET:154 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:122)
+	RETURNF (!TALENT:TARGET:童貞 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:オトコ)
 ;後背位する
 CASE 19
 	;パートナーが童貞でない AND パートナーに男性器がある AND プレイヤーが処女でない AND プレイヤーがオトコでない
-	RETURNF (!TALENT:TARGET:154 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:122)
+	RETURNF (!TALENT:TARGET:童貞 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:オトコ)
 ;騎乗位させる
 CASE 20
 	;パートナーが童貞でない AND パートナーに男性器がある AND プレイヤーが処女でない AND プレイヤーがオトコでない
-	RETURNF (!TALENT:TARGET:154 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:122)
+	RETURNF (!TALENT:TARGET:童貞 && PENIS(TARGET) && !TALENT:PLAYER:処女 && !TALENT:PLAYER:オトコ)
 ;自慰見せつけ
 CASE 21
 	;強制自慰経験あり
@@ -622,7 +622,7 @@ CASE 1
 	CASE 30
 		PRINTFORM %CALLNAME:TARGET%は
 		;プレイヤーがオトコ
-		IF !RAND:2 && TALENT:PLAYER:122
+		IF !RAND:2 && TALENT:PLAYER:オトコ
 			PRINTFORM %CALLNAME:PLAYER%の陰嚢を優しく揉みながら
 		;それ以外
 		ELSE
@@ -1748,7 +1748,7 @@ TRYCALL TOUCH_SUCCESSION(TARGET)
 CALL EQUIP_CHECK
 
 ;生理中
-SIF TALENT:138 && (FLAG:62 & 1)
+SIF TALENT:生理 && (FLAG:62 & 1)
 	TRYCALL EVENT_MENSTRUAL_PAIN
 
 ;同性のチェック、調教者の能力のチェック
@@ -1775,9 +1775,9 @@ SIF EXP:Ｖ経験 && TFLAG:19
 ;童貞喪失（各種計算に童貞の有無が関係するので、実際の喪失処理は最後）
 ;フラグ追加とか面倒なので力技
 ;喪失の可能性のあるコマンドを実行すれば喪失
-IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 34 || SELECTCOM == 88 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366) && TALENT:PLAYER:154
+IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 34 || SELECTCOM == 88 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366) && TALENT:PLAYER:童貞
 	PRINTFORMW %CALLNAME:PLAYER%は童貞を失った
-	TALENT:PLAYER:154 = 2
+	TALENT:PLAYER:童貞 = 2
 	;一部の反感に関係するソースを半減
 	SOURCE:14 /= 2
 	SOURCE:15 /= 2
@@ -1897,8 +1897,8 @@ TFLAG:302 = 0
 
 ;童貞喪失（各種計算に童貞の有無が関係するので、喪失処理は最後）
 ;TALENTが2になってる場合喪失フラグがONとみなす
-SIF TALENT:PLAYER:154 == 2
-	TALENT:PLAYER:154 = 0
+SIF TALENT:PLAYER:童貞 == 2
+	TALENT:PLAYER:童貞 = 0
 
 ;今回のコマンドを「前回のコマンド」とする（但し「何もしない」は除外）
 SIF SELECTCOM != 7

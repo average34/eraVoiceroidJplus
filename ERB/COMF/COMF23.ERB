@@ -19,7 +19,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -151,12 +151,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 10
 	SOURCE:15 += 500
 ENDIF
@@ -212,13 +212,13 @@ IF E >= 1
 	CALL SAMEN_SHOOT
 ENDIF
 
-IF TALENT:119 || TALENT:121 || TALENT:122
+IF TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ
 	;奴隷のＰ⇔調教者のＶの汚れが移動
 	STAIN:2 |= STAIN:PLAYER:3
 	STAIN:PLAYER:3 |= STAIN:2
 ENDIF
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4
@@ -274,15 +274,15 @@ IF L
 ENDIF
 
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 2
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 2
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -292,12 +292,12 @@ IF EXP:PLAYER:Ｖ経験 == 0
 ENDIF
 
 ;調教者が貞操観念
-IF TALENT:PLAYER:30
+IF TALENT:PLAYER:貞操観念
 	A -= 10
 ENDIF
 
 ;調教者が貞操無頓着
-IF TALENT:PLAYER:30
+IF TALENT:PLAYER:貞操観念
 	A += 5
 ENDIF
 
@@ -356,7 +356,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -364,14 +364,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -388,7 +388,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者が貞操観念
-	IF TALENT:PLAYER:30
+	IF TALENT:PLAYER:貞操観念
 		PRINT  - 
 		PRINTFORM %NAME:PLAYER%が貞操観念
 		PRINTV '(,10,')
@@ -396,7 +396,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者が貞操無頓着
-	IF TALENT:PLAYER:30
+	IF TALENT:PLAYER:貞操観念
 		PRINT  + 
 		PRINTFORM %NAME:PLAYER%が貞操無頓着
 		PRINTV '(,5,')

@@ -26,11 +26,11 @@ IF MONEY >= 150000
 	PRINTFORML [5] 綺麗なアクセサリ($150000)
 	LOCAL:5 = 1
 ENDIF
-IF MONEY >= 1000000 && TALENT:153 && TALENT:85 && TALENT:89 == 0 && TALENT:180 == 0 && CFLAG:2 >= 8000 && MARK:3 == 0 && ABL:親密+ABL:欲望+ABL:技巧+ABL:奉仕精神 >= 40 && FLAG:29 == 0 && ASSIPLAY == 0
+IF MONEY >= 1000000 && TALENT:恋人 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && CFLAG:2 >= 8000 && MARK:3 == 0 && ABL:親密+ABL:欲望+ABL:技巧+ABL:奉仕精神 >= 40 && FLAG:29 == 0 && ASSIPLAY == 0
 	PRINTFORML [6] エンゲージリング($1000000)
 	LOCAL:6 = 1
 ENDIF
-IF MONEY >= 300000 && (TALENT:TARGET:217 || TALENT:MASTER:217)
+IF MONEY >= 300000 && (TALENT:TARGET:酒豪 || TALENT:MASTER:酒豪)
 	PRINTFORML [7] 酒樽($300000)
 	LOCAL:7 = 1
 ENDIF
@@ -345,7 +345,7 @@ ELSEIF TFLAG:17 == 4
 ELSEIF TFLAG:17 == 5
 	;凄いアクセサリ　絶対に喜ばれる。
 	;好感度が一定値以上なら効果増加
-	IF CFLAG:2 > 5000 || (TALENT:38 && TALENT:85)
+	IF CFLAG:2 > 5000 || (TALENT:38 && TALENT:恋慕)
 		TIMES SOURCE:18 , 25.00
 		TIMES SOURCE:20 , 25.00
 		TIMES SOURCE:21 , 25.00
@@ -399,10 +399,10 @@ ELSEIF TFLAG:17 == 6
 	IF CFLAG:99 & 1
 ;		TFLAG:13 = 7
 		CALL SELF_KOJO
-		SIF TALENT:27
-			TALENT:27 = 0
-		SIF TALENT:89 == 0
-			TALENT:89 = 1
+		SIF TALENT:一線越えない
+			TALENT:一線越えない = 0
+		SIF TALENT:相愛 == 0
+			TALENT:相愛 = 1
 ;		CALL SINGLE_ENDING
 		CFLAG:7 = 1
 		FLAG:29 = NO:TARGET
@@ -414,25 +414,25 @@ ELSEIF TFLAG:17 == 6
 		PRINTFORMW %NAME:TARGET%は頬を染めて%NAME:MASTER%の気持ちを受け入れる旨を伝えた
 
 		;一線越えない消滅
-		IF TALENT:27
+		IF TALENT:一線越えない
 			PRINTFORMW その顔は今までに無く幸福に満ち、すべてを吹っ切ったように見えた
 			PRINTFORMS NAME:TARGET
 			PRINT は
 			PRINT [
 			PRINTS TALENTNAME:27
 			PRINT ]
-			TALENT:27 = 0
+			TALENT:一線越えない = 0
 			PRINTW を失った
 		ENDIF
 		PRINTFORMW %NAME:TARGET%と寄り添い、長い間抱擁を交し合っていた……
 		;相愛取得
-		IF TALENT:89 == 0
+		IF TALENT:相愛 == 0
 			PRINTFORMS NAME:TARGET
 			PRINT は
 			PRINT [
 			PRINTS TALENTNAME:89
 			PRINT ]
-			TALENT:89 = 1
+			TALENT:相愛 = 1
 			PRINTW を得た
 		ENDIF
 		;売却不可フラグ

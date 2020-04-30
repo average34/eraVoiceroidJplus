@@ -98,16 +98,16 @@ ENDIF
 ;触手変身中かつ好感度30000以上なら臆病の影響無し
 IF TEQUIP:89 && CFLAG:2 >= 30000
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		TIMES A , 2.00
 ELSE
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		TIMES A , 2.00
 ENDIF
 
 ;感情乏しい
-SIF TALENT:22
+SIF TALENT:感情乏しい
 	TIMES A , 0.60
 
 LOSEBASE:体力 += A
@@ -630,7 +630,7 @@ ELSE
 ENDIF
 
 ;TALENT:舌使いをみる
-SIF TALENT:52
+SIF TALENT:舌使い
 	TIMES M , 2.00
 
 @COM109
@@ -640,11 +640,11 @@ RETURN 1
 
 @SYOKUSYU_MILK
 ;［Ｂ感度］３以上、［母乳体質］無しかつ［小柄体系］で［貧乳］無しかつ［オトコ］無し
-IF ABL:TARGET:Ｂ感覚 >= 3 && TALENT:130 == 0 && (TALENT:100 == 0 || TALENT:109 == 0 ) && TALENT:122 == 0 
+IF ABL:TARGET:Ｂ感覚 >= 3 && TALENT:母乳体質 == 0 && (TALENT:小柄体型 == 0 || TALENT:貧乳 == 0 ) && TALENT:オトコ == 0 
 	PRINT 触手に乳を吸われるうちに
 	PRINTS NAME:TARGET
 	PRINTW は母乳が出るようになった。
-	TALENT:130 = 1
+	TALENT:母乳体質 = 1
 ENDIF
 
 ;---------------------------------------------------------
@@ -664,7 +664,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:90 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;触手浣腸中は不可
 SIF TEQUIP:46
@@ -781,20 +781,20 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 2
 	S = 1
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 12
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -823,9 +823,9 @@ SIF STAIN:PLAYER:2 & 8
 SIF STAIN:PLAYER:2 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;汚れあり
@@ -902,28 +902,28 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,12,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -967,9 +967,9 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:PLAYER:2 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;汚れあり
@@ -977,10 +977,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		PRINT  - 
 		A -= Y
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE

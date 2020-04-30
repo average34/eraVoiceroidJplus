@@ -8,14 +8,14 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;処女だとダメ
 SIF TALENT:処女
 	RETURN 0
 ;従順3以下・レズっ気3以下のASSIの場合はできない（酒豪ならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:217 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:酒豪 == 0
 		RETURN 0
 ENDIF
 ;バイブ装着中はダメ
@@ -133,18 +133,18 @@ ENDIF
 
 ;Ｖ敏感、鈍感をみる
 ;快Ｖ自体のチェックは後でまとめてやる
-IF TALENT:103
+IF TALENT:Ｖ鈍感
 	TIMES SOURCE:6 , 1.50
 	TIMES SOURCE:13 , 1.50
 	TIMES SOURCE:14 , 1.50
-ELSEIF TALENT:104
+ELSEIF TALENT:Ｖ敏感
 	TIMES SOURCE:6 , 0.60
 	TIMES SOURCE:13 , 0.60
 	TIMES SOURCE:14 , 0.60
 ENDIF
 
 ;処女で貞操観念
-;IF EXP:Ｖ経験 == 0 && TALENT:30 && TALENT:85 == 0
+;IF EXP:Ｖ経験 == 0 && TALENT:貞操観念 && TALENT:恋慕 == 0
 ;	TIMES SOURCE:13 , 2.00
 ;ENDIF
 
@@ -165,12 +165,12 @@ ELSE
 	STAIN:PLAYER:1 |= STAIN:3
 ENDIF
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
 	EXP:PLAYER:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1
@@ -216,12 +216,12 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 15
 	SOURCE:15 += 400
 ENDIF
 ;酒豪もちの場合変化
-IF TALENT:TARGET:217
+IF TALENT:TARGET:酒豪
 	A += RAND:12 + 8
 ELSE
 	A = RAND:7 - 7
@@ -232,7 +232,7 @@ TFLAG:37 += A / 2
 
 ;ほろ酔い値＋
 ;酒豪もちの場合効果上昇
-IF TALENT:TARGET:217
+IF TALENT:TARGET:酒豪
 	TFLAG:47 += 20
 ELSE
 	TFLAG:47 += 15

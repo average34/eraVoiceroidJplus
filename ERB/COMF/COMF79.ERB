@@ -8,7 +8,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がサド＋禁断の知識をもっていないとダメ
-SIF TALENT:PLAYER:83 == 0 && TALENT:PLAYER:125 == 0
+SIF TALENT:PLAYER:サド == 0 && TALENT:PLAYER:禁断の知識 == 0
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -71,11 +71,11 @@ ELSE
 	ENDIF
 
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		TIMES A , 2.00
 
 	;感情乏しい
-	SIF TALENT:22
+	SIF TALENT:感情乏しい
 		TIMES A , 0.60
 	
 	;虫キャラ、いまのところいない
@@ -135,11 +135,11 @@ ELSE
 ENDIF
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES A , 2.00
 
 ;感情乏しい
-SIF TALENT:22
+SIF TALENT:感情乏しい
 	TIMES A , 0.60
 
 ;虫キャラ
@@ -176,13 +176,13 @@ TIMES SOURCE:13 , 1.80
 
 ;何が出るかな？(ランダムでイベントが発生するのもありかな？と思って作ってみた)
 ;基本虫好きキャラ以外で[感情乏しい]、[狂気]を持っていないキャラの恐怖が一定以上溜まった場合低確率で発動
-IF TALENT:22 == 0 && TALENT:123 == 0 && PALAM:10 > PALAMLV:4
+IF TALENT:感情乏しい == 0 && TALENT:狂気 == 0 && PALAM:10 > PALAMLV:4
 	IF RAND:25 == 0
 		L = RAND:10
 		IF L == 0
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に理性のタガが外れてしまった……
 			PRINTFORMW %CALLNAME:TARGET%は発狂した
-			TALENT:TARGET:123 = 1
+			TALENT:TARGET:狂気 = 1
 		ELSEIF (L == 1 || L == 2) && MARK:3 > 2
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に反抗する気力を失ったようだ……
 			PRINTW 反発刻印がLV2に下がった
@@ -190,18 +190,18 @@ IF TALENT:22 == 0 && TALENT:123 == 0 && PALAM:10 > PALAMLV:4
 		ELSEIF (L > 2 && L < 6) && BASE:体力 >= 500
 			PRINTFORM %CALLNAME:TARGET%はあまりの恐怖に気力が一気に消耗したようだ……
 			BASE:気力 = 0
-		ELSEIF L >= 6 && TALENT:10 == 0 && BASE:体力 >= 500
+		ELSEIF L >= 6 && TALENT:臆病 == 0 && BASE:体力 >= 500
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に蟲風呂がトラウマとなったようだ……
-			IF TALENT:131 == 0 && L == 9
+			IF TALENT:幼児 == 0 && L == 9
 				PRINTFORML %CALLNAME:TARGET%は[幼児退行]してしまった
-				TALENT:TARGET:131 = 1
+				TALENT:TARGET:幼児 = 1
 			ENDIF
 			PRINTFORMW %CALLNAME:TARGET%は[臆病]になった
-			TALENT:TARGET:10 = 1
-		ELSEIF L >= 8 && TALENT:10 && TALENT:131 == 0 && BASE:体力 >= 500
+			TALENT:TARGET:臆病 = 1
+		ELSEIF L >= 8 && TALENT:臆病 && TALENT:幼児 == 0 && BASE:体力 >= 500
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に蟲風呂がトラウマとなったようだ……
 			PRINTFORML %CALLNAME:TARGET%は[幼児退行]してしまった
-			TALENT:TARGET:131 = 1
+			TALENT:TARGET:幼児 = 1
 		ENDIF
 	ENDIF
 ENDIF

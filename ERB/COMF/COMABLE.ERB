@@ -100,18 +100,18 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:3 & 14 && ASSIPLAY
-	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
-SIF TALENT:PLAYER:54
+SIF TALENT:PLAYER:猫舌
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -135,7 +135,7 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナル愛撫はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -154,7 +154,7 @@ SIF ((FLAG:61 & 1) == 0) && TEQUIP:53
 	RETURN 0
 ;従順3以下・レズっ気3以下のASSIの場合自慰はできない（小悪魔ならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:87 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:小悪魔 == 0
 		RETURN 0
 ENDIF
 ;縄使用中は不可
@@ -175,18 +175,18 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合フェラするはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
-SIF STAIN:2 & 12 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+SIF STAIN:2 & 12 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合フェラはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
 IF STAIN:2 & 12 && ASSIPLAY
-	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
-SIF TALENT:PLAYER:54
+SIF TALENT:PLAYER:猫舌
 	RETURN 0
 ;オトコかふたなりじゃないとダメ
-SIF TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -209,7 +209,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 RETURN 1
 
@@ -223,10 +223,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;口が汚れているとダメ（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:0 & 14 && TALENT:PLAYER:64 == 0
+SIF STAIN:0 & 14 && TALENT:PLAYER:汚れ無視 == 0
 	RETURN 0
 ;対象か調教者が猫舌だとできない
-SIF  TALENT:54 || TALENT:PLAYER:54
+SIF  TALENT:猫舌 || TALENT:PLAYER:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -260,11 +260,11 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -283,11 +283,11 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;アナルが汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:4 & 14 && ASSIPLAY
-	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
-SIF TALENT:PLAYER:54
+SIF TALENT:PLAYER:猫舌
 	RETURN 0
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -363,22 +363,22 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:1 == 0 && NOITEM == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合バイブはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合バイブはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -397,7 +397,7 @@ SIF ITEM:2 == 0 && NOITEM == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上かサドじゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:技巧 < 3 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:技巧 < 3 && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -428,14 +428,14 @@ SIF TEQUIP:13
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:3 == 0 && NOITEM == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナルバイブはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;浣腸＋アナルプラグ使用中はダメ
@@ -475,13 +475,13 @@ SIF TEQUIP:14
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:7 == 0 && NOITEM == 0
 	RETURN 0
 ;オトコやふたなりはダメ
-SIF TALENT:121 == 1 || TALENT:122 == 1
+SIF TALENT:ふたなり == 1 || TALENT:オトコ == 1
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
@@ -544,13 +544,13 @@ SIF TEQUIP:16
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:17 == 0 && NOITEM == 0
 	RETURN 0
 ;母乳体質でないと使えない
-SIF TALENT:130 == 0
+SIF TALENT:母乳体質 == 0
 	RETURN 0
 ;クリップローター使用中は不可
 SIF TEQUIP:15
@@ -562,7 +562,7 @@ SIF TEQUIP:76
 SIF ABL:TARGET:Ｂ感覚 <= 2 
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
@@ -594,13 +594,13 @@ SIF TEQUIP:17
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:12 == 0 && NOITEM == 0
 	RETURN 0
 ;オトコやふたなりじゃないとダメ
-SIF TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
@@ -637,8 +637,8 @@ SIF TEQUIP:15
 SIF TEQUIP:16
 	RETURN 0
 ;吸血鬼や動物耳には従順10がないと使用不可（サドならＯＫ）
-IF TALENT:114 || TALENT:124
-SIF ABL:親密 < 10 && TALENT:PLAYER:83 == 0
+IF TALENT:吸血鬼 || TALENT:動物耳
+SIF ABL:親密 < 10 && TALENT:PLAYER:サド == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -663,7 +663,7 @@ SIF TEQUIP:19
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:20 == 0 && NOITEM == 0
@@ -710,26 +710,26 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -761,26 +761,26 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位はできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -825,14 +825,14 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;潤滑不足で、従順4以下・レズっ気4以下のASSIの場合アナルセックスはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
@@ -864,13 +864,13 @@ SIF TFLAG:44 == 0
 SIF ((FLAG:61 & 1) == 0) && (TALENT:PLAYER:処女 == 1)
 	RETURN 0
 ;調教者がオトコだとダメ
-SIF TALENT:PLAYER:122
+SIF TALENT:PLAYER:オトコ
 	RETURN 0
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;オトコ、半人半妖、ふたなりでないとダメ
-SIF TALENT:119 == 0 && TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:半人半妖 == 0 && TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -904,10 +904,10 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
@@ -919,19 +919,19 @@ SIF TEQUIP:90
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位はできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -955,10 +955,10 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
@@ -970,19 +970,19 @@ SIF TEQUIP:90
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位はできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1028,19 +1028,19 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位アナルはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1094,19 +1094,19 @@ SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位アナルはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1168,19 +1168,19 @@ SIF TEQUIP:90
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1234,19 +1234,19 @@ SIF TEQUIP:90
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1261,7 +1261,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -1281,10 +1281,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;[猫舌]だとダメ
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -1307,13 +1307,13 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;[巨乳]でなければ技巧7以上、[貧乳]だと技巧10以上必要
-SIF (TALENT:110 == 0 && ABL:技巧 < 7) || (TALENT:109 && ABL:技巧 < 10)
+SIF (TALENT:巨乳 == 0 && ABL:技巧 < 7) || (TALENT:貧乳 && ABL:技巧 < 10)
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -1339,7 +1339,7 @@ SIF TFLAG:44 == 0
 SIF PALAM:3 < 2000
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;バイブ挿入中はダメ
 SIF TEQUIP:11
@@ -1382,14 +1382,14 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -1520,10 +1520,10 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -1549,7 +1549,7 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合スパンキングはできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1574,7 +1574,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合鞭はできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1605,7 +1605,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;従順5・レズっ気5・サドでないとダメ（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4 || TALENT:ASSI:83 == 0) && TALENT:ASSI:53 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4 || TALENT:ASSI:サド == 0) && TALENT:ASSI:針さばき == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1733,7 +1733,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:15 == 0 && NOITEM == 0
@@ -1787,7 +1787,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:21 == 0 && NOITEM == 0
@@ -1841,7 +1841,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:22 == 0 && NOITEM == 0
@@ -1886,7 +1886,7 @@ SIF TEQUIP:49
 	RETURN 1
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:23 == 0 && NOITEM == 0
@@ -1953,7 +1953,7 @@ SIF (FLAG:61 & 1) == 0
 SIF ITEM:26 == 0 && NOITEM == 0 && TEQUIP:90 == 0
 	RETURN 0
 ;薬毒耐性だとダメ
-SIF TALENT:56
+SIF TALENT:薬毒耐性
 	RETURN 0
 RETURN 1
 
@@ -1970,7 +1970,7 @@ SIF TFLAG:44 == 0
 SIF ITEM:27 == 0 && NOITEM == 0 && TEQUIP:90 == 0
 	RETURN 0
 ;薬毒耐性の場合、直接注入以外ダメ
-SIF TALENT:56 && TEQUIP:90 == 0
+SIF TALENT:薬毒耐性 && TEQUIP:90 == 0
 	RETURN 0
 ;新妻プレイ中はダメ
 SIF TEQUIP:59
@@ -2019,10 +2019,10 @@ SIF ITEM:18 == 0 && NOITEM == 0
 SIF ABL:親密 < 10 && ABL:マゾっ気 <= 2
 	RETURN 0
 ;対象か助手か主人が吸血鬼で、時間が昼かつ曇りでないだとダメ
-SIF (TALENT:114 || TALENT:MASTER:114) && TIME == 0 && TIME:5 != 2
+SIF (TALENT:吸血鬼 || TALENT:MASTER:吸血鬼) && TIME == 0 && TIME:5 != 2
 	RETURN 0
 IF ASSI > 0
-	SIF TALENT:ASSI:114 && TIME == 0 && TIME:5 != 2
+	SIF TALENT:ASSI:吸血鬼 && TIME == 0 && TIME:5 != 2
 		RETURN 0
 ENDIF
 ;大雨、吹雪だとダメ
@@ -2058,17 +2058,17 @@ SIF ASSI < 1
 SIF ASSIPLAY
 	RETURN 0
 ;助手がオトコだとダメ
-SIF TALENT:ASSI:122
+SIF TALENT:ASSI:オトコ
 	RETURN 0
 ;異常経験フィルタ
 SIF ((FLAG:61 & 1) == 0) && (TALENT:ASSI:処女 == 1)
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;主人がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:MASTER:半人半妖 == 0 && TALENT:MASTER:ふたなり == 0 && TALENT:MASTER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;縄使用中か従順が10以上ないとダメ
 SIF TEQUIP:44 == 0 && ABL:親密 < 10
@@ -2146,10 +2146,10 @@ SIF TEQUIP:58
 SIF ABL:親密 < 5
 	RETURN 0
 ;対象か助手が動物耳で、従順が9以下だとダメ
-SIF TALENT:124 && ABL:親密 < 10
+SIF TALENT:動物耳 && ABL:親密 < 10
 	RETURN 0
 IF ASSI >= 0
-	SIF TALENT:ASSI:124 && ABL:親密 < 10
+	SIF TALENT:ASSI:動物耳 && ABL:親密 < 10
 		RETURN 0
 ENDIF
 ;野外プレイ中はダメ
@@ -2217,7 +2217,7 @@ SIF TFLAG:44 == 0
 SIF PLAYER != ASSI
 	RETURN 0
 ;対象か調教者が猫舌だとできない
-SIF TALENT:54 || TALENT:PLAYER:54
+SIF TALENT:猫舌 || TALENT:PLAYER:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -2240,10 +2240,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコだとダメ
-SIF TALENT:PLAYER:122
+SIF TALENT:PLAYER:オトコ
 	RETURN 0
 ;[猫舌]だとダメ
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -2266,7 +2266,7 @@ SIF TFLAG:44 == 0
 SIF ASSI < 1
 	RETURN 0
 ;主人がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+SIF TALENT:MASTER:半人半妖 == 0 && TALENT:MASTER:ふたなり == 0 && TALENT:MASTER:オトコ == 0
 	RETURN 0
 ;バイブ挿入中はダメ
 SIF TEQUIP:11
@@ -2300,20 +2300,20 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコかふたなりだとダメ
-SIF TALENT:121 || TALENT:122
+SIF TALENT:ふたなり || TALENT:オトコ
 	RETURN 0
 ;調教者がオトコかふたなりだとダメ
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	RETURN 0
 ;欲望3以下の場合貝あわせはできない（小悪魔、相性良好ならＯＫ）
 R = NO:PLAYER
 IF ASSIPLAY
-	SIF ABL:ASSI:欲望 <= 3 && TALENT:ASSI:87 == 0 && RELATION:R < 150
+	SIF ABL:ASSI:欲望 <= 3 && TALENT:ASSI:小悪魔 == 0 && RELATION:R < 150
 		RETURN 0
 ENDIF
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -2347,7 +2347,7 @@ SIF ASSI < 1
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;バイブ装着中はダメ
 SIF TEQUIP:11
@@ -2387,25 +2387,25 @@ SIF TEQUIP:59
 	RETURN 0
 A = 0
 ;MASTERがオトコ、半人半妖、ふたなり
-SIF TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122
+SIF TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 	A += 1
 ;ASSIがオトコ、半人半妖、ふたなり
-SIF TALENT:ASSI:119 || TALENT:ASSI:121 || TALENT:ASSI:122
+SIF TALENT:ASSI:半人半妖 || TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
 	A += 1
 ;ペニスバンドとあわせて二本ないとだめ
 SIF A + ITEM:PBAND < 2
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合二本刺しはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;主人、対象、助手のいずれかに小人体型持ちがいる場合、主人が禁断の知識を持っていないとダメ
-SIF (TALENT:MASTER:149 || TALENT:TARGET:149 || TALENT:ASSI:149) && TALENT:MASTER:125 == 0
+SIF (TALENT:MASTER:小人体型 || TALENT:TARGET:小人体型 || TALENT:ASSI:小人体型) && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合二本刺しはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
@@ -2432,17 +2432,17 @@ SIF ASSI < 1
 SIF ((FLAG:61 & 1) == 0)
 	RETURN 0
 ;助手がオトコだとダメ
-SIF TALENT:ASSI:122
+SIF TALENT:ASSI:オトコ
 	RETURN 0
 ;助手が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:ASSI:149 && TALENT:MASTER:125 == 0
+SIF TALENT:ASSI:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:ASSI:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:ASSI:小人体型 == 0)
 	RETURN 0
 ;オトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:119 == 0 && TALENT:121 == 0 && TALENT:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:半人半妖 == 0 && TALENT:ふたなり == 0 && TALENT:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2468,16 +2468,16 @@ SIF TFLAG:44 == 0
 SIF ASSI < 1
 	RETURN 0
 ;主人がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+SIF TALENT:MASTER:半人半妖 == 0 && TALENT:MASTER:ふたなり == 0 && TALENT:MASTER:オトコ == 0
 	RETURN 0
 ;助手がオトコかふたなりじゃないとダメ
-SIF TALENT:ASSI:119 == 0 && TALENT:ASSI:121 == 0 && TALENT:ASSI:122 == 0
+SIF TALENT:ASSI:半人半妖 == 0 && TALENT:ASSI:ふたなり == 0 && TALENT:ASSI:オトコ == 0
 	RETURN 0
 ;主人が【魅惑】か【謎の魅力】じゃないとダメ
-SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
+SIF TALENT:MASTER:魅惑 == 0 && TALENT:MASTER:謎の魅力 == 0
 	RETURN 0
 ;[猫舌]だとダメ
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -2500,7 +2500,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコかふたなりじゃないとダメ
-SIF TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2521,16 +2521,16 @@ SIF TFLAG:44 == 0
 SIF ASSI < 1
 	RETURN 0
 ;主人がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
+SIF TALENT:MASTER:半人半妖 == 0 && TALENT:MASTER:ふたなり == 0 && TALENT:MASTER:オトコ == 0
 	RETURN 0
 ;主人が【魅惑】か【謎の魅力】じゃないとダメ
-SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
+SIF TALENT:MASTER:魅惑 == 0 && TALENT:MASTER:謎の魅力 == 0
 	RETURN 0
 ;助手が奉仕精神ＬＶ３以上、技巧ＬＶ３以上じゃないとダメ
 SIF ABL:ASSI:技巧 < 3 || ABL:ASSI:奉仕精神 < 3
 	RETURN 0
 ;対象か助手が猫舌だとできない
-SIF  TALENT:54 || TALENT:ASSI:54
+SIF  TALENT:猫舌 || TALENT:ASSI:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -2555,12 +2555,12 @@ SIF TFLAG:44 == 0
 ;欲望3以下・レズっ気3以下のASSIの場合シックスナインはできない（小悪魔、相性良好ならＯＫ）
 R = NO:PLAYER
 IF ASSIPLAY
-	SIF (ABL:ASSI:欲望 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:87 == 0 && RELATION:R < 150
+	SIF (ABL:ASSI:欲望 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:小悪魔 == 0 && RELATION:R < 150
 		RETURN 0
 ENDIF
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -2596,14 +2596,14 @@ SIF TFLAG:44 == 0
 ;NORMALモードでは主人公か助手のどちらかがサド持ちじゃないとダメ
 ;EXTRAモードでは調教者がサド持ちじゃないとダメ
 IF FLAG:5 == 9
-	SIF TALENT:PLAYER:83 == 0
+	SIF TALENT:PLAYER:サド == 0
 		RETURN 0
 ELSE
 	IF ASSI > 0
-		SIF TALENT:MASTER:83 == 0 && TALENT:ASSI:83 == 0
+		SIF TALENT:MASTER:サド == 0 && TALENT:ASSI:サド == 0
 			RETURN 0
 	ELSE
-		SIF TALENT:MASTER:83 == 0
+		SIF TALENT:MASTER:サド == 0
 			RETURN 0
 	ENDIF
 ENDIF
@@ -2625,7 +2625,7 @@ SIF TFLAG:44 == 0
 SIF ABL:親密 < 6
 	RETURN 0
 ;処女の場合、従順10以上または露出癖3以上または淫乱がないとダメ
-SIF TALENT:処女 && ABL:親密 < 10 && ABL:露出癖 < 3 && TALENT:76 == 0
+SIF TALENT:処女 && ABL:親密 < 10 && ABL:露出癖 < 3 && TALENT:淫乱 == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -2640,7 +2640,7 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
@@ -2705,7 +2705,7 @@ SIF TEQUIP:60 && TEQUIP:69 == 0
 SIF ITEM:44 == 0 && NOITEM == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;従順が10以上ないとダメ
 SIF ABL:親密 < 10
@@ -2767,22 +2767,22 @@ ENDIF
 ;露出癖が2以下だとダメ。ただし持っている素質によって値が変動
 A = 3
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	A += 1
 ;目立ちたがり
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	A -= 1
 ;抑圧
-SIF TALENT:32
+SIF TALENT:抑圧
 	A += 1
 ;解放
-SIF TALENT:33
+SIF TALENT:解放
 	A -= 1
 ;恥じらい
-SIF TALENT:35
+SIF TALENT:恥じらい
 	A += 1
 ;恥薄い
-SIF TALENT:36
+SIF TALENT:恥薄い
 	A -= 1
 ;求められる露出癖が0～5となるように
 SIF A < 0
@@ -2792,7 +2792,7 @@ SIF A > 5
 SIF ABL:露出癖 < A
 	RETURN 0
 ;恋慕を持っていないまたは従順が5未満だとダメ
-SIF ABL:露出癖 < 5 && TALENT:85 == 0
+SIF ABL:露出癖 < 5 && TALENT:恋慕 == 0
 	RETURN 0
 ;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
 SIF ITEM:45 == 0 && NOITEM == 0
@@ -2836,13 +2836,13 @@ SIF BASE:気力 <= 0
 ;相手を責める場合
 IF CFLAG:15 == 0 || CFLAG:15 == 1
 	;こっちがサド持ちかサドっ気3以上、もしくは相手がマゾっ気3以上が必要
-	SIF TALENT:PLAYER:83 || ABL:PLAYER:サドっ気 >= 3 || ABL:マゾっ気 >= 3
+	SIF TALENT:PLAYER:サド || ABL:PLAYER:サドっ気 >= 3 || ABL:マゾっ気 >= 3
 		RETURN 1
 ENDIF
 ;こっちを責める場合
 IF CFLAG:15 == 0 || CFLAG:15 == 2
 	;相手側がサド持ちかサドっ気3以上、もしくはこっちがマゾっ気3以上が必要
-	SIF TALENT:83 || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
+	SIF TALENT:サド || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
 		RETURN 1
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -2880,13 +2880,13 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコかふたなりじゃないとダメ
-SIF TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
 	RETURN 0
 ;[猫舌]だとダメ
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;従順、欲望の合計が18以上ないとダメ
 SIF ABL:親密 + ABL:欲望 < 18
@@ -2924,20 +2924,20 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
 	RETURN 0
 	ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
-IF TALENT:100
+IF TALENT:小柄体型
 	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2981,16 +2981,16 @@ SIF TEQUIP:46
 	RETURN 0
 ;ASSIの場合、従順3以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
 	RETURN 0
 	ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
-IF TALENT:100
+IF TALENT:小柄体型
 	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -3072,7 +3072,7 @@ SIF TEQUIP:71
 SIF TEQUIP:79
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0	
 ;一定のＶ・Ａ経験が必要
 IF EXP:Ｖ経験 < 300 || EXP:Ａ経験 < 300
@@ -3080,16 +3080,16 @@ IF EXP:Ｖ経験 < 300 || EXP:Ａ経験 < 300
 	ENDIF
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上かつ拡張経験10以上じゃないと実行できない
-IF TALENT:100
+IF TALENT:小柄体型
 	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3 || EXP:Ａ拡張経験 < 10
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -3117,11 +3117,11 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;主人の技巧が3以下はだめ
@@ -3145,7 +3145,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;利尿剤使用中かおもらし癖ありでないとダメ
-SIF TEQUIP:22 == 0 && TALENT:57 == 0
+SIF TEQUIP:22 == 0 && TALENT:おもらし癖 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
@@ -3164,7 +3164,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;利尿剤使用中かおもらし癖ありでないとダメ
-SIF TEQUIP:22 == 0 && TALENT:57 == 0
+SIF TEQUIP:22 == 0 && TALENT:おもらし癖 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
@@ -3172,7 +3172,7 @@ SIF ABL:親密 < 10
 	RETURN 0
 ENDIF
 ;おもらし癖ありで利尿剤が無いまたはおもらし癖なしかつ従順４以上欲望３以上マゾっ気３以上でないとダメ
-SIF (TALENT:57 == 0 && (ABL:親密 <= 3 || ABL:欲望 <= 2 || ABL:マゾっ気 <= 2)) || (TALENT:57 && TEQUIP:22 == 1)
+SIF (TALENT:おもらし癖 == 0 && (ABL:親密 <= 3 || ABL:欲望 <= 2 || ABL:マゾっ気 <= 2)) || (TALENT:おもらし癖 && TEQUIP:22 == 1)
 	RETURN 0
 RETURN 1
 
@@ -3189,18 +3189,18 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:57 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
+SIF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY
-	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
-SIF TALENT:PLAYER:54
+SIF TALENT:PLAYER:猫舌
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;乗馬中はダメ
 SIF TEQUIP:41
@@ -3232,14 +3232,14 @@ SIF TEQUIP:57 == 0
 SIF EXP:Ｖ経験 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合乱れ牡丹はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;バイブ挿入中はダメ
@@ -3301,7 +3301,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;[猫舌]だとダメ
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;ボールギャグ使用中は不可
 SIF TEQUIP:45
@@ -3348,10 +3348,10 @@ SIF (FLAG:61 & 1) == 0
 SIF TEQUIP:90 && TEQUIP:89 == 0
 	RETURN 0
 ;調教者が禁断の知識をもっていないとダメ
-SIF TALENT:PLAYER:125 == 0
+SIF TALENT:PLAYER:禁断の知識 == 0
 	RETURN 0
 ;調教者が変身魔法をもっていないとダメ
-SIF TALENT:PLAYER:211 == 0
+SIF TALENT:PLAYER:変身魔法 == 0
 	RETURN 0
 ;道具使用中はダメ
 SIF TEQUIP:90 == 0 && (TEQUIP:11 || TEQUIP:13 || TEQUIP:14 || TEQUIP:15 || TEQUIP:16 || TEQUIP:17 || TEQUIP:19 || TEQUIP:44 || TEQUIP:46|| TEQUIP:47 || TEQUIP:48 || TEQUIP:49 || TEQUIP:54 || TEQUIP:61 || TEQUIP:69 || TEQUIP:70 || TEQUIP:71 || TEQUIP:72 || TEQUIP:79)
@@ -3395,7 +3395,7 @@ SIF (FLAG:61 & 1) == 0
 SIF TEQUIP:90 && TEQUIP:89
 	RETURN 0
 ;調教者が禁断の知識をもっていないとダメ
-SIF TALENT:PLAYER:125 == 0
+SIF TALENT:PLAYER:禁断の知識 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:24 == 0 && NOITEM == 0
@@ -3438,7 +3438,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:90 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 RETURN 1
 
@@ -3469,7 +3469,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:90 == 0
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 RETURN 1
 
@@ -3502,7 +3502,7 @@ SIF TEQUIP:90 == 0
 SIF TEQUIP:15
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 RETURN 1
 
@@ -3559,7 +3559,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:90 == 0
 	RETURN 0
 ;オトコかふたなりじゃないとダメ
-SIF TALENT:121 == 0 && TALENT:122 == 0
+SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 RETURN 1
 
@@ -3585,7 +3585,7 @@ SIF TEQUIP:90
 SIF TEQUIP:61
 	RETURN 1
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:40 == 0 && NOITEM == 0
@@ -3595,12 +3595,12 @@ SIF EXP:Ｖ経験 == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合クスコはできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合クスコはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -3621,14 +3621,14 @@ SIF TEQUIP:14
 SIF TEQUIP:59
 	RETURN 0
 ;薬毒耐性だとダメ
-SIF TALENT:56
+SIF TALENT:薬毒耐性
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:針さばき == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3661,14 +3661,14 @@ SIF TEQUIP:71
 SIF TEQUIP:59
 	RETURN 0
 ;薬毒耐性だとダメ
-SIF TALENT:56
+SIF TALENT:薬毒耐性
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:針さばき == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3719,11 +3719,11 @@ SIF TEQUIP:79
 SIF TEQUIP:59
 	RETURN 0
 ;薬毒耐性だとダメ
-SIF TALENT:56
+SIF TALENT:薬毒耐性
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:針さばき == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3758,11 +3758,11 @@ SIF TEQUIP:59
 SIF TEQUIP:76
 	RETURN 0
 ;薬毒耐性だとダメ
-SIF TALENT:56
+SIF TALENT:薬毒耐性
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:針さばき == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3923,7 +3923,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順3以上or好感度300以上or恋人が必要(遊んでないでさっさと解決しろ！って言われる)
-SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
+SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:恋人 == 0
 	RETURN 0
 RETURN 1
 
@@ -3940,7 +3940,7 @@ SIF TFLAG:44 == 1
 SIF TEQUIP:2
 	RETURN 0
 ;従順4以上or好感度400以上or恋人が必要(何でそんな事しないといけないの！って言われる)
-SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:恋人 == 0
 	RETURN 0
 RETURN 1
 
@@ -3954,7 +3954,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順4以上or好感度400以上or恋人が必要
-SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:恋人 == 0
 	RETURN 0
 RETURN 1
 
@@ -3968,7 +3968,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順5以上or好感度500以上or恋人が必要
-SIF ABL:親密 < 5 && CFLAG:2 < 500 && TALENT:153 == 0
+SIF ABL:親密 < 5 && CFLAG:2 < 500 && TALENT:恋人 == 0
 	RETURN 0
 RETURN 1
 
@@ -3982,13 +3982,13 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;調教者が猫舌だとできない
-SIF TALENT:PLAYER:54
+SIF TALENT:PLAYER:猫舌
 	RETURN 0
 ;相手が猫舌だとできない
-SIF TALENT:54
+SIF TALENT:猫舌
 	RETURN 0
 ;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
-SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:恋人 == 0)
 	RETURN 0
 RETURN 1
 
@@ -4002,10 +4002,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;デート中は淫乱じゃないと無理
-SIF TEQUIP:2 && TALENT:76 == 0
+SIF TEQUIP:2 && TALENT:淫乱 == 0
 	RETURN 0
 ;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
-SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:恋人 == 0)
 	RETURN 0
 RETURN 1
 
@@ -4019,10 +4019,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;デート中は淫乱じゃないと無理
-SIF TEQUIP:2 && TALENT:76 == 0
+SIF TEQUIP:2 && TALENT:淫乱 == 0
 	RETURN 0
 ;欲望5以上かつ、従順7以上or好感度700以上or恋人が必要
-SIF ABL:欲望 < 5 || (ABL:親密 < 7 && CFLAG:2 < 700 && TALENT:153 == 0)
+SIF ABL:欲望 < 5 || (ABL:親密 < 7 && CFLAG:2 < 700 && TALENT:恋人 == 0)
 	RETURN 0
 RETURN 1
 
@@ -4039,7 +4039,7 @@ SIF TFLAG:44 == 1
 SIF ASSIPLAY
 	RETURN 0
 ;もう恋人だと無理
-SIF TALENT:153
+SIF TALENT:恋人
 	RETURN 0
 RETURN 1
 

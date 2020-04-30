@@ -88,7 +88,7 @@ PRINTFORML 桃色の霧が発生するという霧の事件を解決してから
 PRINTFORMW 霧が発生したという話も最近では聞かなくなりようやく平穏な日常が取り戻されつつあった
 PRINTL 
 PRINTFORM %CALLNAME:MASTER%
-SIF TARGET > 0 && TALENT:153
+SIF TARGET > 0 && TALENT:恋人
 	PRINTFORM と%CALLNAME:TARGET%
 PRINTFORML は未だ霧の影響下にある人を救い出しながらいつも通りの生活を続けていた
 PRINTFORMW しかしある日のこと……
@@ -102,10 +102,10 @@ PRINTL
 IF TARGET <= 0
 	PRINTFORML ならばこの霧を対処できるのは自分しかいない
 	PRINTFORMW そう思った、%CALLNAME:MASTER%は新たな霧の事件の元凶を懲らしめることにした
-ELSEIF TALENT:153
+ELSEIF TALENT:恋人
 	PRINTFORML ならばこの霧を対処できるのは自分しかいない
 	PRINTFORM そう思った、%CALLNAME:MASTER%は
-	IF TALENT:89
+	IF TALENT:相愛
 		PRINTFORM 嫁である
 	ELSE
 		PRINTFORM 恋人である
@@ -116,7 +116,7 @@ ELSE
 	PRINTFORMW そう判断し頭を抱えていた%CALLNAME:MASTER%の前に来客があった
 	PRINTL 
 	PRINTFORM ……来客は
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORM 先の霧の事件を共に解決した
 	ELSE
 		PRINTFORM 先の霧の事件で救出した

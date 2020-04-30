@@ -8,7 +8,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;潤滑が高くないとダメ
 SIF PALAM:3 < 2000
@@ -71,7 +71,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -208,12 +208,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 2
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 3
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 8
 	SOURCE:15 += 300
 ENDIF
@@ -318,12 +318,12 @@ ENDIF
 STAIN:4 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:4
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +7
 	EXP:レズ経験 += 7
 	EXP:PLAYER:レズ経験 += 7
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +7
 	EXP:ＢＬ経験 += 7
@@ -339,7 +339,7 @@ TFLAG:100 = 1
 TFLAG:200 = 2
 
 ;調教者がふたなり
-IF TALENT:PLAYER:121
+IF TALENT:PLAYER:ふたなり
 	SOURCE:13 /= 2
 ENDIF
 
@@ -354,23 +354,23 @@ RETURN 1
 IF TFLAG:45
 	PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に跨り、ペニスを尻の割れ目ではさみ、
 	;恋慕＋淫乱＋欲情Lv5以上
-	IF TALENT:85 && TALENT:76 && PALAM:5 > PALAMLV:6
+	IF TALENT:恋慕 && TALENT:淫乱 && PALAM:5 > PALAMLV:6
 		PRINTFORM 快楽に溺れきった表情で%CALLNAME:PLAYER%を見つめながら
-	ELSEIF TALENT:85 && PALAM:5 > PALAMLV:6
+	ELSEIF TALENT:恋慕 && PALAM:5 > PALAMLV:6
 		PRINT 今にも蕩けそうな表情を浮かべながら
-	ELSEIF TALENT:76 && PALAM:5 > PALAMLV:6
+	ELSEIF TALENT:淫乱 && PALAM:5 > PALAMLV:6
 		PRINTFORM 懇願するような眼差しで
 	ELSEIF PALAM:5 > PALAMLV:5
 		PRINT 口の端から涎を溢しながら
-	ELSEIF TALENT:85 && TALENT:76
+	ELSEIF TALENT:恋慕 && TALENT:淫乱
 		PRINTFORM 陶酔しきった瞳で%CALLNAME:PLAYER%を見つめながら
-	ELSEIF TALENT:85
+	ELSEIF TALENT:恋慕
 		PRINT 幸せそうな表情を浮かべながら
-	ELSEIF TALENT:76
+	ELSEIF TALENT:淫乱
 		PRINT 淫猥な目つきで挑発しながら
-	ELSEIF TALENT:36
+	ELSEIF TALENT:恥薄い
 		PRINT 大胆に腰を動かしながら
-	ELSEIF TALENT:22
+	ELSEIF TALENT:感情乏しい
 		PRINT うっすらと上気した顔で
 	ELSE
 		PRINT 恥ずかしそうに
@@ -378,7 +378,7 @@ IF TFLAG:45
 	PRINTFORM ペニスの裏側に手を添えて、
 	PRINT 自らのお尻の
 	;小柄体型
-	IF TALENT:100
+	IF TALENT:小柄体型
 		PRINT 小さなワレメ
 	ELSE
 		PRINT ワレメ
@@ -388,14 +388,14 @@ IF TFLAG:45
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は自分のペニスを
 	;小柄体型&ひんぬー
-	SIF TALENT:100 && TALENT:109
+	SIF TALENT:小柄体型 && TALENT:貧乳
 		PRINT 肉付きの薄い
 	PRINTFORML %CALLNAME:TARGET%のお尻に挟んで激しく擦った
-	IF TALENT:85 == 0 && TALENT:88 == 0 && TALENT:89 == 0 && MARK:3 > 1
+	IF TALENT:恋慕 == 0 && TALENT:親愛 == 0 && TALENT:相愛 == 0 && MARK:3 > 1
 		PRINTFORML %CALLNAME:TARGET%はあまりの屈辱に、目に涙を浮かべていた…
-	ELSEIF ASSIPLAY == 0 && TALENT:MASTER:219 && TALENT:220 && PALAM:5 > PALAMLV:5
+	ELSEIF ASSIPLAY == 0 && TALENT:MASTER:虜 && TALENT:主人 && PALAM:5 > PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%は巧みに腰を操り、%CALLNAME:PLAYER%の射精感を引き出した…
-	ELSEIF ASSIPLAY == 0 && TALENT:85 && PALAM:5 > PALAMLV:5
+	ELSEIF ASSIPLAY == 0 && TALENT:恋慕 && PALAM:5 > PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%は、愛する人にお尻を使われて気持ちが高ぶっているようだ…
 	ELSEIF PALAM:8 > PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%は、さすがにお尻を使われることは恥ずかしいと思っているようだ…
@@ -453,25 +453,25 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 3
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 3
 	S = 3
 ENDIF
 
 ;調教者がふたなり
-IF TALENT:PLAYER:121
+IF TALENT:PLAYER:ふたなり
 	A += 8
 ENDIF
 
@@ -493,9 +493,9 @@ SIF STAIN:PLAYER:2 & 8
 SIF STAIN:PLAYER:2 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;素股では汚れの影響が少なめ
@@ -505,8 +505,8 @@ Y /= 3
 IF Y
 	A -= Y
 	;汚臭鈍感
-	IF TALENT:61
-	ELSEIF TALENT:62
+	IF TALENT:汚臭鈍感
+	ELSEIF TALENT:汚臭敏感
 	ELSE
 	ENDIF
 ENDIF
@@ -536,7 +536,7 @@ IF CFLAG:2 >= 1500
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 5
 ENDIF
 
@@ -598,28 +598,28 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい'
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -628,7 +628,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者がふたなり
-	IF TALENT:PLAYER:121
+	IF TALENT:PLAYER:ふたなり
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:121
@@ -658,9 +658,9 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:PLAYER:2 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;素股では汚れの影響が少なめ
@@ -670,10 +670,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	IF Y
 		PRINT  - 
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE
@@ -715,7 +715,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,5,')

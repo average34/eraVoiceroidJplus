@@ -118,10 +118,10 @@ RETURN 99
 ;--------------------------------------------------
 @GET_STRAINCORRECT
 ;素質「蓬莱人」持ちなら種族を蓬莱人にする
-IF TALENT:L:128 != 0
+IF TALENT:L:蓬莱人 != 0
 	CFLAG:L:14 = 8
 ;素質「吸血鬼持ち」なら種族を吸血鬼に変更
-ELSEIF TALENT:L:114 != 0
+ELSEIF TALENT:L:吸血鬼 != 0
 	CFLAG:L:14 = 11
 ;ハクタク化している場合は妖怪に変更
 ELSEIF TEQUIP:L:1 != 0
@@ -141,10 +141,10 @@ RETURN 0
 @GET_STRAINCORR_VALUE
 ;THROW 関数"@GET_STRAINCORR_VALUE"は現在使われるべきではありません。
 ;素質「蓬莱人」持ちなら種族を蓬莱人にする
-IF TALENT:L:128 != 0
+IF TALENT:L:蓬莱人 != 0
 	L = 8
 ;素質「吸血鬼持ち」なら種族を吸血鬼に変更
-ELSEIF TALENT:L:114 != 0
+ELSEIF TALENT:L:吸血鬼 != 0
 	L = 11
 ;ハクタク化している場合は6
 ELSEIF TEQUIP:L:1 != 0
@@ -165,7 +165,7 @@ RETURN 0
 @INTOXICATION_SHOW
 PRINT 酒気
 ;酒豪持ち
-IF TALENT:217 != 0
+IF TALENT:酒豪 != 0
 	CALL PRINT_BAR, TFLAG:47, 180, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("紫"), RESULT:1
 ELSE
 	CALL PRINT_BAR, TFLAG:47, 100, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("紫"), RESULT:1

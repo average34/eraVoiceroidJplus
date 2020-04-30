@@ -156,7 +156,7 @@ ELSEIF ABL:精液中毒 == 3
 	B = 300000
 	C = 40
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES C , 1.10
@@ -166,7 +166,7 @@ ELSEIF ABL:精液中毒 == 4
 	B = 900000
 	C = 100
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -180,7 +180,7 @@ ELSE
 	B = B * (ABL:精液中毒 - 3)
 	C = C * (ABL:精液中毒 - 2) / 2
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -194,35 +194,35 @@ IF EXP:精液経験 >= C * 2
 ENDIF
 
 ;汚臭鈍感
-IF TALENT:61
+IF TALENT:汚臭鈍感
 	TIMES A , 0.25
 	TIMES B , 0.25
 	TIMES C , 0.25
 ENDIF
 
 ;汚臭敏感
-IF TALENT:62
+IF TALENT:汚臭敏感
 	TIMES A , 2.50
 	TIMES B , 2.50
 	TIMES C , 2.50
 ENDIF
 
 ;中毒しやすい
-IF TALENT:72
+IF TALENT:中毒しやすい
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
 ENDIF
 
 ;ＬＶ２以降に上げるときは異常経験必要（素質：[汚臭鈍感][中毒しやすい]なら無視できる）
-IF ABL:精液中毒 >= 2 && TALENT:61 == 0 && TALENT:72 == 0
+IF ABL:精液中毒 >= 2 && TALENT:汚臭鈍感 == 0 && TALENT:中毒しやすい == 0
 	F = ABL:精液中毒 * 5
 ELSE
 	F = 0

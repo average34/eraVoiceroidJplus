@@ -41,9 +41,9 @@ ELSE
 	LOCAL:3 = 100+100*ABL:親密
 ENDIF
 ;親愛、恋人時ブースト
-IF TALENT:88 && TALENT:153
+IF TALENT:親愛 && TALENT:恋人
 	TIMES LOCAL:3 , 1.5
-ELSEIF TALENT:88 || TALENT:153
+ELSEIF TALENT:親愛 || TALENT:恋人
 	TIMES LOCAL:3 , 1.25
 ENDIF
 ;性行動,達成感の計算
@@ -68,7 +68,7 @@ LOCAL:13 = 1500
 ;ノーリスクと言えばノーリスクだし・・・
 ;バランス取りやすくするためだったり
 ;主従関係のときは軽減
-IF TALENT:MASTER:219 == 1 && TALENT:220 == 1
+IF TALENT:MASTER:虜 == 1 && TALENT:主人 == 1
 	TIMES LOCAL:3 , 0.8
 	TIMES LOCAL:4 , 0.8
 	TIMES LOCAL:5 , 0.8
@@ -135,13 +135,13 @@ TFLAG:301 = 1
 
 ;TARGETが主導権を握っている+主人公が素質【虜】を持ってない+TARGETのサドっ気がLv5以上
 ;+精液経験(主人公を射精させた回数として使用）が1000以上もしくはパートナーが主人公を耐力なくなるまでが100以上
-IF TFLAG:45 == 1 && TALENT:MASTER:219 == 0 && ABL:サドっ気 >= 5 && (EXP:精液経験 >= 1000 || CFLAG:31 >= 100)
+IF TFLAG:45 == 1 && TALENT:MASTER:虜 == 0 && ABL:サドっ気 >= 5 && (EXP:精液経験 >= 1000 || CFLAG:31 >= 100)
 	;逆調教イベント口上の呼び出し
 	TFLAG:300 = 8
 	CALL COUNTER_KOJO
 	;主人公に【虜】、TARGETに【主人】素質を付加
-	TALENT:MASTER:219 = 1
-	TALENT:220 = 1
+	TALENT:MASTER:虜 = 1
+	TALENT:主人 = 1
 	PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%のモノとなってしまった……
 ENDIF
 PRINTFORML （%CALLNAME:MASTER%の体力が限界に来ています。一旦別れました）

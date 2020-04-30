@@ -398,7 +398,7 @@ ELSEIF ABL:自慰中毒 == 3
 	R = 100000
 	S = 100000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 2.00
 		TIMES B , 2.00
 		TIMES C , 2.00
@@ -418,7 +418,7 @@ ELSEIF ABL:自慰中毒 == 4
 	R = 300000
 	S = 300000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 3.00
 		TIMES B , 3.00
 		TIMES C , 3.00
@@ -448,7 +448,7 @@ ELSE
 	R = R * (ABL:自慰中毒 - 3)
 	S = S * (ABL:自慰中毒 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		A = A * 3
 		B = B * 3
 		C = C * 3
@@ -462,7 +462,7 @@ ELSE
 ENDIF
 
 ;自慰しやすい
-IF TALENT:60
+IF TALENT:自慰しやすい
 	TIMES A , 0.25
 	TIMES B , 0.25
 	TIMES C , 0.25
@@ -473,7 +473,7 @@ IF TALENT:60
 ENDIF
 
 ;中毒しやすい
-IF TALENT:72
+IF TALENT:中毒しやすい
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
@@ -484,7 +484,7 @@ IF TALENT:72
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
@@ -495,7 +495,7 @@ IF TALENT:80
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
@@ -506,24 +506,24 @@ IF TALENT:76
 ENDIF
 
 ;淫核
-SIF TALENT:75
+SIF TALENT:淫核
 	TIMES B , 0.50
 
 ;尻穴狂い
-SIF TALENT:77
+SIF TALENT:尻穴狂い
 	TIMES F , 0.50
 
 ;淫壷
-SIF TALENT:74
+SIF TALENT:淫壷
 	TIMES R , 0.50
 
 ;淫乳
-SIF TALENT:78
+SIF TALENT:淫乳
 	TIMES S , 0.50
 
 
 ;ＬＶ２以降に上げるときは異常経験必要（素質：[自慰しやすい][中毒しやすい][淫乱化]なら無視できる）
-IF ABL:自慰中毒 >= 2 && TALENT:60 == 0 && TALENT:72 == 0 && TALENT:76 == 0
+IF ABL:自慰中毒 >= 2 && TALENT:自慰しやすい == 0 && TALENT:中毒しやすい == 0 && TALENT:淫乱 == 0
 	H = ABL:自慰中毒 * 5
 ELSE
 	H = 0
@@ -531,21 +531,21 @@ ENDIF
 
 ;C/A感覚が必要
 G:0 = ABL:自慰中毒 + 1
-IF TALENT:77
+IF TALENT:尻穴狂い
 	G:1 = ABL:自慰中毒 + 1
 ELSE
 	G:1 = ABL:自慰中毒 + 2
 ENDIF
 
 ;Ｖ感覚の補正
-IF TALENT:74
+IF TALENT:淫壷
 	G:2 = ABL:自慰中毒 + 1
 ELSE
 	G:2 = ABL:自慰中毒 + 2
 ENDIF
 
 ;Ｂ感覚の補正
-IF TALENT:78
+IF TALENT:淫乳
 	G:3 = ABL:自慰中毒 + 1
 ELSE
 	G:3 = ABL:自慰中毒 + 2

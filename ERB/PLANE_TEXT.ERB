@@ -30,7 +30,7 @@ ELSEIF TFLAG:600 == 2
 		PRINTFORMW そして%CALLNAME:TARGET%は、自分の方から%CALLNAME:MASTER%の事が好きだと伝えてきた
 	ENDIF
 
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINTFORMW ……そして恋人となった%CALLNAME:MASTER%と%CALLNAME:TARGET%は、長く、熱い口づけを交わしました
 		PRINTL  
 	ENDIF
@@ -46,7 +46,7 @@ ELSEIF TFLAG:600 == 3
 		T = TARGET
 		CALL GET_INITIATIVE_RATE
 		IF R <= 0
-			IF TALENT:85
+			IF TALENT:恋慕
 				PRINTFORMW どうやら雰囲気で内容を察知したらしい%CALLNAME:TARGET%は、顔を真っ赤にして逃げ出してしまった……
 				PRINTL  
 			ELSE
@@ -54,7 +54,7 @@ ELSEIF TFLAG:600 == 3
 				PRINTL  
 			ENDIF
 		ELSE
-			IF TALENT:85
+			IF TALENT:恋慕
 				PRINTFORMW どうやら雰囲気で内容を察知したらしい%CALLNAME:TARGET%は、顔を真っ赤にして逃げ出してしまった……
 				PRINTL  
 			ELSE
@@ -68,7 +68,7 @@ ELSEIF TFLAG:600 == 3
 		T = TARGET
 		CALL GET_INITIATIVE_RATE
 		IF R <= 0
-			IF TALENT:85
+			IF TALENT:恋慕
 				PRINTFORMW どうやら雰囲気で内容を察知したらしい%CALLNAME:TARGET%は、顔を真っ赤にして逃げ出してしまった……
 				PRINTL  
 			ELSE
@@ -76,7 +76,7 @@ ELSEIF TFLAG:600 == 3
 				PRINTL  
 			ENDIF
 		ELSE
-			IF TALENT:85
+			IF TALENT:恋慕
 				PRINTFORMW どうやら雰囲気で内容を察知したらしい%CALLNAME:TARGET%は、顔を真っ赤にして逃げ出してしまった……
 				PRINTL  
 			ELSE
@@ -269,7 +269,7 @@ ELSEIF TFLAG:600 == 25
 
 ;-------------------------------------------------
 ;デート中に向こうから告白　 CFLAG136
-;ちなみにTALENT:151を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
+;ちなみにTALENT:キス未経験を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
 ;-------------------------------------------------
 ELSEIF TFLAG:600 == 26
 	PRINTFORMW %CALLNAME:MASTER%がデートを終えて帰ろうとすると、突然%CALLNAME:TARGET%に呼び止められた
@@ -284,7 +284,7 @@ ELSEIF TFLAG:600 == 26
 		PRINTL  
 	ENDIF
 
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINTFORMW ……そして恋人となった%CALLNAME:MASTER%と%CALLNAME:TARGET%は、長く、熱い口づけを交わしました
 		PRINTL  
 	ENDIF

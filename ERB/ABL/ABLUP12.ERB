@@ -8,7 +8,7 @@
 ;レズ中毒up本体
 ;-------------------------------------------------
 @ABLUP12MAIN
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 
 DRAWLINE
@@ -96,7 +96,7 @@ PRINTW になりました。
 ;レズ中毒が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP12
-IF ABL:レズ中毒 >= 9999 || TALENT:122
+IF ABL:レズ中毒 >= 9999 || TALENT:オトコ
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -166,7 +166,7 @@ ELSEIF ABL:レズ中毒 == 3
 	B = 100000
 	C = 5000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES C , 1.10
@@ -176,7 +176,7 @@ ELSEIF ABL:レズ中毒 == 4
 	B = 300000
 	C = 8000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -196,7 +196,7 @@ ELSE
 	B = B * (ABL:レズ中毒 - 3)*(100 - LOCAL)/100
 	C = C * (ABL:レズ中毒 - 2) / 2
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES C , 1.30
@@ -204,39 +204,39 @@ ELSE
 ENDIF
 
 ;両刀
-IF TALENT:81
+IF TALENT:両刀
 	TIMES A , 0.25
 	TIMES B , 0.25
 	TIMES C , 0.25
 ENDIF
 
 ;中毒しやすい
-IF TALENT:72
+IF TALENT:中毒しやすい
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
 ENDIF
 
 ;淫核
-SIF TALENT:75
+SIF TALENT:淫核
 	TIMES B , 0.50
 
 ;ＬＶ２以降に上げるときは異常経験必要（素質：[両刀][中毒しやすい]なら無視できる）
-IF ABL:レズ中毒 >= 2 && TALENT:81 == 0 && TALENT:72 == 0
+IF ABL:レズ中毒 >= 2 && TALENT:両刀 == 0 && TALENT:中毒しやすい == 0
 	F = ABL:レズ中毒 * 5
 ELSE
 	F = 0

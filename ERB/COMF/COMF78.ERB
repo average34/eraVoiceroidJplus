@@ -8,7 +8,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がミスティアまたは衣玖さんまたは禁断の知識をもっていないとダメ
-SIF TALENT:PLAYER:125 == 0 && NO:PLAYER != 25 && NO:PLAYER != 62
+SIF TALENT:PLAYER:禁断の知識 == 0 && NO:PLAYER != 25 && NO:PLAYER != 62
 	RETURN 0
 ;野外はダメ
 SIF TEQUIP:54
@@ -229,13 +229,13 @@ ELSE
 		SOURCE:17 = 2000
 	ENDIF
 	;小柄体型
-	SIF TALENT:100
+	SIF TALENT:小柄体型
 		TIMES SOURCE:6 , 1.20
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		TIMES A , 2.00
 	;感情乏しい
-	SIF TALENT:22
+	SIF TALENT:感情乏しい
 		TIMES A , 0.60
 	LOSEBASE:体力 += A / 4
 	LOSEBASE:気力 += A / 2
@@ -388,18 +388,18 @@ ELSE
 ENDIF
 
 ;臆病
-SIF TALENT:10
+SIF TALENT:臆病
 	TIMES A , 2.00
 
 ;感情乏しい
-SIF TALENT:22
+SIF TALENT:感情乏しい
 	TIMES A , 0.60
 
 ;小柄体型
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES A , 1.20
 ;小人体型
-SIF TALENT:149
+SIF TALENT:小人体型
 	TIMES A , 1.80
 
 LOSEBASE:体力 += A / 2

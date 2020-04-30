@@ -46,13 +46,13 @@ STR:0 = 秘貝開帳
 ;  露出癖代入
 H = ABL:露出癖
 ;  恥じらいで-1
-SIF TALENT:35
+SIF TALENT:恥じらい
 	H -= 1
 ;  目立ちたがりで+1
-SIF TALENT:28
+SIF TALENT:目立ちたがり
 	H += 1
 ;  淫乱で+1
-SIF TALENT:76
+SIF TALENT:淫乱
 	H += 1
 ;  主導権が奴隷で-1、主人で+1
 IF F == 0
@@ -86,13 +86,13 @@ I = ABL:自慰中毒
 ;  先のH(羞恥)で判断、Hが低いとマイナス
 I -= (5 - H)
 ;  自制心で-1
-SIF TALENT:20
+SIF TALENT:自制心
 	I -= 1
 ;  自慰しやすいで+1
-SIF TALENT:60
+SIF TALENT:自慰しやすい
 	I += 1
 ;  淫乱で+1
-SIF TALENT:76
+SIF TALENT:淫乱
 	I += 1
 ;  主導権が奴隷で+1、主人で-1
 IF F == 0
@@ -372,39 +372,39 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;恥じらい・恥薄い
-SIF TALENT:35
+SIF TALENT:恥じらい
 	TIMES SOURCE:8 , 1.20
-SIF TALENT:36
+SIF TALENT:恥薄い
 	TIMES SOURCE:8 , 0.50
 
 ;それぞれの箇所の敏感、鈍感をみる
 ;快Ｃ自体のチェックは後でまとめてやる
 IF J == 1
-	IF TALENT:102
+	IF TALENT:Ｃ敏感
 		TIMES SOURCE:0 , 1.50
 		TIMES SOURCE:13 , 1.50
 		TIMES SOURCE:14 , 1.50
-	ELSEIF TALENT:101
+	ELSEIF TALENT:Ｃ鈍感
 		TIMES SOURCE:0 , 0.60
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 1.50
 	ENDIF
 ELSEIF J == 2
-	IF TALENT:104
+	IF TALENT:Ｖ敏感
 		TIMES SOURCE:1 , 1.50
 		TIMES SOURCE:13 , 1.50
 		TIMES SOURCE:14 , 1.50
-	ELSEIF TALENT:103
+	ELSEIF TALENT:Ｖ鈍感
 		TIMES SOURCE:1 , 0.60
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 1.50
 	ENDIF
 ELSEIF J == 3
-	IF TALENT:106
+	IF TALENT:Ａ敏感
 		TIMES SOURCE:2 , 1.50
 		TIMES SOURCE:13 , 1.50
 		TIMES SOURCE:14 , 1.50
-	ELSEIF TALENT:105
+	ELSEIF TALENT:Ａ鈍感
 		TIMES SOURCE:2 , 0.60
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 1.50
@@ -419,7 +419,7 @@ IF TALENT:処女
 		TIMES SOURCE:8 , 2.00
 		TIMES SOURCE:13 , 2.00
 		SOURCE:12 += 2000
-		SIF TALENT:30
+		SIF TALENT:貞操観念
 			TIMES SOURCE:12 , 2.00
 	ENDIF
 ENDIF
@@ -449,11 +449,11 @@ IF F == 0
 	U = PLAYER
 	V:0 = 1
 	V:1 = 1
-	IF TALENT:T:122 == 0 && TALENT:U:122 == 0 && V:0
+	IF TALENT:T:オトコ == 0 && TALENT:U:オトコ == 0 && V:0
 		PRINTFORML %EXPNAME:40%+{V:0}
 		EXP:T:レズ経験 += V:0
 		EXP:U:レズ経験 += V:0
-	ELSEIF TALENT:T:122 == 1 && TALENT:U:122 == 1 && V:1
+	ELSEIF TALENT:T:オトコ == 1 && TALENT:U:オトコ == 1 && V:1
 		PRINTFORML %EXPNAME:41%+{V:1}
 		EXP:T:ＢＬ経験 += V:1
 		EXP:U:ＢＬ経験 += V:1
@@ -507,7 +507,7 @@ A = RAND:10 + 5
 
 IF F == 0
 	;合意がないと好感度が下がる
-	IF TALENT:152 == 0 && TFLAG:48 == 0
+	IF TALENT:合意 == 0 && TFLAG:48 == 0
 		A -= 8
 		SOURCE:15 += 300
 	ENDIF
@@ -521,7 +521,7 @@ RETURN 1
 
 @TRAIN_MESSAGE_COM71
 ;  合意か主人のサド(素質)を見る
-IF TALENT:152 || TALENT:MASTER:83
+IF TALENT:合意 || TALENT:MASTER:サド
 	PRINTFORM %CALLNAME:PLAYER%に頼まれた%CALLNAME:TARGET%は、
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%に命令された%CALLNAME:TARGET%は、
@@ -531,13 +531,13 @@ ENDIF
 IF H == 0
 	PRINTFORML 涙を浮かべてこちらを睨んだが、
 	;  合意か主人のサド(素質)を見る
-	IF TALENT:152 || TALENT:MASTER:83
+	IF TALENT:合意 || TALENT:MASTER:サド
 		PRINTFORM 再度懇願されるとしぶしぶといった様子で自分の
 	ELSE
 		PRINTFORM 再度命令されると絶望した様子で自分の
 	ENDIF
 	;小柄体形
-	IF TALENT:100
+	IF TALENT:小柄体型
 		PRINT 幼いワレメに
 	ELSE
 		PRINT 陰唇に
@@ -556,7 +556,7 @@ ELSEIF H == 3
 ELSEIF H == 4
 	PRINTFORML 両手の指を使って陰唇だけでなく、膣口も同時に拡げた
 	PRINTFORML 膣の中まで見られていることに感じているのか、%CALLNAME:TARGET%の頬は仄かに紅く染まっている
-ELSEIF H >= 5 && TALENT:76
+ELSEIF H >= 5 && TALENT:淫乱
 	PRINTFORML 両手の指を陰唇にひっかけて膣口ごと
 	PRINTFORML %CALLNAME:PLAYER%に見せつけるように大きく拡げた
 	PRINTFORML だらしなく開いた膣口から覗く膣内はたっぷりと粘液にまみれた襞がざわめき、
@@ -577,18 +577,18 @@ ELSEIF K == 2
 	PRINTL  
 	PRINTFORM 先ほどたっぷりと注ぎ込んだものを膣圧で押し出すように
 	;  合意か主人のサド(素質)を見る
-	IF TALENT:152 || TALENT:MASTER:83
+	IF TALENT:合意 || TALENT:MASTER:サド
 		PRINTFORML 言うと、
 	ELSE
 		PRINTFORML 命じると、
 	ENDIF
 	PRINTFORML 精液と愛液が混じりあって薄く濁った液体がとろとろと流れ出てきた……
 ;  処女＆淫乱なし
-ELSEIF TALENT:処女 && TALENT:76 == 0 
+ELSEIF TALENT:処女 && TALENT:淫乱 == 0 
 	PRINTL  
 	PRINTFORML 陰門の入り口に純潔の証が頼りなさげにひくついているのが見て取れる
 ;  処女＆淫乱あり
-ELSEIF TALENT:処女 && TALENT:76
+ELSEIF TALENT:処女 && TALENT:淫乱
 	PRINTL  
 	PRINTFORML 陰門の入り口には純潔の証が貫かれるのを待っているかのように艶めいている
 ENDIF
@@ -608,7 +608,7 @@ IF J > 0
 		IF K == 3
 			PRINTFORM それを見た%CALLNAME:PLAYER%が、
 			PRINTFORM 自分で膣内の精液を掻き出すように
-			IF TALENT:152 || TALENT:MASTER:83
+			IF TALENT:合意 || TALENT:MASTER:サド
 				PRINTFORML 言うと、
 			ELSE
 				PRINTFORML 命じると、
@@ -629,7 +629,7 @@ IF J > 0
 	ENDIF
 ENDIF
 
-IF (TALENT:MASTER:35 || TALENT:MASTER:122) && CFLAG:2 < 20
+IF (TALENT:MASTER:恥じらい || TALENT:MASTER:オトコ) && CFLAG:2 < 20
 	PRINTL  
 	PRINTFORML 自分で命令を出しておきながらいざ%CALLNAME:TARGET%の痴態を目の当たりにした%CALLNAME:PLAYER%は
 	PRINTL 微かな罪悪感と羞恥心を煽られ、朱に染まった顔を僅かにそむけてしまった
@@ -685,23 +685,23 @@ IF L
 ENDIF
 
 ;自制心
-IF TALENT:20
+IF TALENT:自制心
 	A -= 5
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;恥薄い
-IF TALENT:36
+IF TALENT:恥薄い
 	A += 2
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 5
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
@@ -739,7 +739,7 @@ ENDIF
 
 ;合意
 IF F == 0
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		A -= 20
 	ENDIF
 ENDIF
@@ -801,21 +801,21 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;自制心
-	IF TALENT:20
+	IF TALENT:自制心
 		PRINT  - 
 		PRINTS TALENTNAME:20
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恥薄い
-	IF TALENT:36
+	IF TALENT:恥薄い
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:36
@@ -823,14 +823,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -882,7 +882,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	;合意
 	IF F == 0
-		IF TALENT:152 == 0
+		IF TALENT:合意 == 0
 			PRINT  - 
 			PRINTFORM %TALENTNAME:152%無し
 			PRINTV '(,20,')

@@ -8,7 +8,7 @@
 ;V感覚up本体
 ;-------------------------------------------------
 @ABLUP4MAIN
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 
 DRAWLINE
@@ -79,7 +79,7 @@ PRINTW になりました。
 ;V感覚が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP4
-IF ABL:Ｖ感覚 >= 9999 || TALENT:122
+IF ABL:Ｖ感覚 >= 9999 || TALENT:オトコ
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -121,13 +121,13 @@ ELSEIF ABL:Ｖ感覚 == 2
 ELSEIF ABL:Ｖ感覚 == 3
 	A = 7000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 	ENDIF
 ELSEIF ABL:Ｖ感覚 == 4
 	A = 45000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ELSE
@@ -135,26 +135,26 @@ ELSE
 	
 	A = A * (ABL:Ｖ感覚 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ENDIF
 
 ;V鈍感
-IF TALENT:103
+IF TALENT:Ｖ鈍感
 	TIMES A , 1.20
 ENDIF
 
 ;V敏感
-IF TALENT:104
+IF TALENT:Ｖ敏感
 	TIMES A , 0.80
 ENDIF
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 ENDIF
 
 ;淫壷
-IF TALENT:74
+IF TALENT:淫壷
 	TIMES A , 0.80
 ENDIF

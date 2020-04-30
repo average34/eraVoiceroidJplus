@@ -21,9 +21,9 @@ REPEAT A:0
 	LOCAL = X:COUNT
 	
 	;オトコ、女でそれぞれ不要なABLを表示しない
-	SIF LOCAL == 13 && TALENT:W:122 == 0
+	SIF LOCAL == 13 && TALENT:W:オトコ == 0
 		CONTINUE
-	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:W:122
+	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:W:オトコ
 		CONTINUE
 	
 	IF ABL:W:LOCAL > 0
@@ -69,7 +69,7 @@ REPEAT 750
 			;巨乳
 			ELSEIF COUNT == 110 && (CFLAG:W:60 & 32) == 0
 				;着痩せ持ちの場合一段階小さく
-				IF TALENT:W:142
+				IF TALENT:W:着痩せ
 					PRINTFORM [並乳？] 
 				ELSE
 					PRINTFORM [巨乳？] 
@@ -95,12 +95,12 @@ REPEAT 750
 				PRINTL 
 		ENDIF
 	;並乳処理、巨乳、貧乳両方持っていない。オトコでない。インビジブルモードの場合
-	ELSEIF COUNT == 110 && TALENT:W:109 == 0 && TALENT:W:110 == 0 && TALENT:W:122 == 0 && FLAG:2 == 1
+	ELSEIF COUNT == 110 && TALENT:W:貧乳 == 0 && TALENT:W:巨乳 == 0 && TALENT:W:オトコ == 0 && FLAG:2 == 1
 		;並乳発覚フラグ
 		IF (CFLAG:W:60 & 32) == 0
 			;並乳
 			;着痩せ持ちの場合一段階小さく
-			IF TALENT:W:142
+			IF TALENT:W:着痩せ
 				PRINTFORM [貧乳？] 
 			ELSE
 				PRINTFORM [並乳？] 
@@ -304,9 +304,9 @@ REPEAT A:0
 	LOCAL = X:COUNT
 	
 	;オトコ、女でそれぞれ不要なEXPを表示しない
-	SIF LOCAL == 41 && TALENT:W:122 == 0
+	SIF LOCAL == 41 && TALENT:W:オトコ == 0
 		CONTINUE
-	SIF (LOCAL == 0 || LOCAL == 40) && TALENT:W:122
+	SIF (LOCAL == 0 || LOCAL == 40) && TALENT:W:オトコ
 		CONTINUE
 	
 	IF EXP:W:LOCAL > 0

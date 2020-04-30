@@ -105,20 +105,20 @@ ENDIF
 ;-------------------------------------------------
 ;ダミーIF構文
 ;IF 0は要するにIF 3 != 3で、3が3じゃないときという意味で絶対成立しません
-;下記のとおり書いた場合、動作的には普通にIF TALENT:85～と書いていった場合とたいしてかわりませんが
+;下記のとおり書いた場合、動作的には普通にIF TALENT:恋慕～と書いていった場合とたいしてかわりませんが
 ;書いてる最中に恋慕と恋人の優先度を入れ替えるときにIFをELSEIFになおして、ELSEIFをIFに直してとかせずにELSEIF同士を普通に入れ替えるだけですむようになります
 ;また、ここに親愛分岐を追加する場合も、通常なら親愛をIFで追加して、恋慕のIFをELSEIFに直すという作業が発生しますが
 ;このダミーをおいとけば、親愛をELSEIFで挿入するだけですむようになります
 ;-------------------------------------------------
 IF 0
 ;恋慕
-ELSEIF TALENT:85
+ELSEIF TALENT:恋慕
 	PRINTFORMW 
 ;恋人
-ELSEIF TALENT:153
+ELSEIF TALENT:恋人
 	PRINTFORMW 
 ;合意
-ELSEIF TALENT:152
+ELSEIF TALENT:合意
 	PRINTFORMW 
 ENDIF
 
@@ -647,10 +647,10 @@ IF TFLAG:600 == 5
 	;初めて
 	IF CFLAG:224 == 0 
 		;恋慕
-		IF TALENT:85
+		IF TALENT:恋慕
 			PRINTFORMW 
 		;恋人
-		ELSEIF TALENT:153
+		ELSEIF TALENT:恋人
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -664,7 +664,7 @@ IF TFLAG:600 == 5
 	;二回目以降
 	ELSE
 		;恋慕&恋人&既成事実Lv3
-		IF (TALENT:153 && TALENT:85) && MARK:2 == 3 && (CFLAG:224 < 5 || FLAG:7 == 2)
+		IF (TALENT:恋人 && TALENT:恋慕) && MARK:2 == 3 && (CFLAG:224 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:224 = 5
 		;反発感情Lv2以上
@@ -672,7 +672,7 @@ IF TFLAG:600 == 5
 			PRINTFORMW 
 			CFLAG:224 = 4
 		;恋人
-		ELSEIF (TALENT:153 || TALENT:85) && (CFLAG:224 < 3 || FLAG:7 == 2)
+		ELSEIF (TALENT:恋人 || TALENT:恋慕) && (CFLAG:224 < 3 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:224 = 3
 		;それ以外
@@ -728,7 +728,7 @@ ENDIF
 ;主人公が童貞か
 ;-------------------------------------------------
 ;主人公が童貞
-IF TALENT:MASTER:154
+IF TALENT:MASTER:童貞
 	PRINTFORMW 
 ;主人公が童貞で無い場合
 ELSE

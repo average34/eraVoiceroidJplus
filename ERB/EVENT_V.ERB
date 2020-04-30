@@ -10,7 +10,7 @@ ENDIF
 SIF TARGET < 0
 	RETURN 0
 
-IF TALENT:114 == 0
+IF TALENT:吸血鬼 == 0
 	;マスターが吸血
 	IF TFLAG:65 & 1
 		T = TARGET
@@ -26,7 +26,7 @@ ENDIF
 
 ;マスターが吸血させる
 IF TFLAG:65 & 4
-	IF TALENT:MASTER:114 == 0
+	IF TALENT:MASTER:吸血鬼 == 0
 		T = MASTER
 		V = TARGET
 		CALL EXP57_CHECK
@@ -35,7 +35,7 @@ ENDIF
 
 ;助手が吸血させる
 IF TFLAG:65 & 8
-	IF TALENT:ASSI:114 == 0
+	IF TALENT:ASSI:吸血鬼 == 0
 		T = ASSI
 		V = TARGET
 		CALL EXP57_CHECK
@@ -45,7 +45,7 @@ ENDIF
 @EXP57_CHECK
 ;被吸血経験で基準値決定
 ;吸血者が[眷属]かどうか
-IF TALENT:V:218
+IF TALENT:V:眷属
 	IF EXP:被吸血経験 < EXPLV:3
 		A = EXP:T:被吸血経験
 	ELSEIF EXP:T:被吸血経験 < EXPLV:4
@@ -78,13 +78,13 @@ IF RAND:998 < A
 		PRINTFORMW なんだか体に違和感がある…
 		PRINTFORML どうやら%CALLNAME:V%に血を吸われたせいで吸血鬼になってしまったようだ…
 		PRINTFORMW %NAME:T%は[%TALENTNAME:114%]を得た
-		TALENT:T:114 = 1
-		TALENT:T:218 = 1
+		TALENT:T:吸血鬼 = 1
+		TALENT:T:眷属 = 1
 		;種族変更
 		CFLAG:T:14 = 11
 		
 		PRINTFORMW %CALLNAME:V%に吸血鬼になった事を伝えた
-		IF TALENT:V:85
+		IF TALENT:V:恋慕
 			PRINTFORMW %CALLNAME:V%は申し訳なさそうな顔をしながらも、どこか嬉しそうだ
 		ELSEIF MARK:V:3 >= 2
 			PRINTFORMW しかし、%CALLNAME:V%は興味なさそうだ…
@@ -100,21 +100,21 @@ IF RAND:998 < A
 		PRINTFORMW %CALLNAME:T%の様子ががおかしい…
 		PRINTFORML どうやら%CALLNAME:V%に血を吸われたせいで吸血鬼になってしまったようだ…
 		PRINTFORMW %NAME:T%は[%TALENTNAME:114%]を得た
-		TALENT:T:114 = 1
-		TALENT:T:218 = 1
+		TALENT:T:吸血鬼 = 1
+		TALENT:T:眷属 = 1
 		;種族変更
 		CFLAG:T:14 = 11
 		
 		;恋慕付きで主人が吸血鬼
 		;もっと詳しく分けようかと思ったけど、収集付かなくなってきたので(ry
-		IF TALENT:T:85 && TALENT:MASTER:114
+		IF TALENT:T:恋慕 && TALENT:MASTER:吸血鬼
 			PRINTFORMW %CALLNAME:T%は困惑しながらも、%CALLNAME:MASTER%と同じ
 			
 			;ぱんくしょんの関数を利用して人間かどうかを取得
 			;作者の方ありがとうございます
 			;ぱんくしょん更新で@LOSTNAMEが無くなったため分岐の条件を変更
 			;相愛
-			IF TALENT:T:89 && TALENT:T:128 == 0
+			IF TALENT:T:相愛 && TALENT:T:蓬莱人 == 0
 				PRINTFORMW 時間を生きられる事に深い喜びを感じているようだ
 			ELSE
 				PRINTFORMW 吸血鬼になれたことを喜んでいるようだ
@@ -133,12 +133,12 @@ IF RAND:998 < A
 				TFLAG:21 = 3
 				PRINTL 反発感情LV3を取得
 				;感情乏しいの場合は反発感情による従順ダウンはなし
-				IF ABL:T:親密 > 0 && ABL:T:親密 <= 6 && TALENT:T:22 == 0
+				IF ABL:T:親密 > 0 && ABL:T:親密 <= 6 && TALENT:T:感情乏しい == 0
 					ABL:T:親密 -= 4
 					SIF ABL:T:親密 < 0
 						ABL:T:親密 = 0
 					PRINTFORML そして親密がLV{ABL:T:親密}に下がった
-				ELSEIF ABL:T:親密 > 0 && ABL:T:親密 <= 9 && TALENT:T:22 == 0
+				ELSEIF ABL:T:親密 > 0 && ABL:T:親密 <= 9 && TALENT:T:感情乏しい == 0
 					ABL:T:親密 -= 2
 					SIF ABL:T:親密 < 0
 						ABL:T:親密 = 0

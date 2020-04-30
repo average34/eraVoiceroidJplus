@@ -338,7 +338,7 @@ ENDIF
 ;-------------------------------------------------
 @COSTABLUP0
 IF ABL:親密 <= 1
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 10
 	ELSE
 		A = 1
@@ -354,7 +354,7 @@ IF ABL:親密 <= 1
 	D = D * (ABL:親密 + 1)
 	E = E * (ABL:親密 + 1)
 ELSEIF ABL:親密 <= 3
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 150
 	ELSE
 		A = 10
@@ -370,7 +370,7 @@ ELSEIF ABL:親密 <= 3
 	D = D * (ABL:親密 - 1)
 	E = E * (ABL:親密 - 1)
 ELSEIF ABL:親密 <= 5
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 1000
 	ELSE
 		A = 50
@@ -386,7 +386,7 @@ ELSEIF ABL:親密 <= 5
 	D = D * (ABL:親密 - 3)
 	E = E * (ABL:親密 - 3)
 ELSEIF ABL:親密 <= 8
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 3000
 	ELSE
 		A = 600
@@ -396,7 +396,7 @@ ELSEIF ABL:親密 <= 8
 	D = 0
 	E = 5000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 		TIMES B , 1.10
 		TIMES E , 1.10
@@ -405,7 +405,7 @@ ELSEIF ABL:親密 <= 8
 	B = B * (ABL:親密 - 5)
 	E = E * (ABL:親密 - 5)
 ELSEIF ABL:親密 <= 11
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 8000
 	ELSE
 		A = 3000
@@ -415,12 +415,12 @@ ELSEIF ABL:親密 <= 11
 	D = 0
 	E = 25000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES E , 1.30
 	ENDIF
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = A + 2000 * (ABL:親密 - 9)
 	ELSE
 		A = A + 1000 * (ABL:親密 - 9)
@@ -428,7 +428,7 @@ ELSEIF ABL:親密 <= 11
 	B = B + 5000 * (ABL:親密 - 9)
 	E = E + 8000 * (ABL:親密 - 9)
 ELSE
-	IF TALENT:10 == 0
+	IF TALENT:臆病 == 0
 		A = 8000
 	ELSE
 		A = 3000
@@ -442,7 +442,7 @@ ELSE
 	B = B * (ABL:親密 - 9)
 	E = E * (ABL:親密 - 9)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 		TIMES B , 1.30
 		TIMES E , 1.30
@@ -450,7 +450,7 @@ ELSE
 ENDIF
 
 ;気丈
-IF TALENT:12
+IF TALENT:気丈
 	TIMES A , 3.00
 	TIMES B , 2.00
 	TIMES C , 1.50
@@ -459,33 +459,33 @@ IF TALENT:12
 ENDIF
 
 ;生意気
-IF TALENT:16
+IF TALENT:生意気
 	TIMES A , 1.50
 	TIMES B , 2.00
 	TIMES D , 1.50
 	TIMES E , 2.00
 ENDIF
 ;素直
-IF TALENT:13
+IF TALENT:素直
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES D , 0.50
 	TIMES E , 0.50
 ENDIF
 ;恋慕
-IF TALENT:85
+IF TALENT:恋慕
 	TIMES B , 0.50
 	TIMES E , 0.50
 ENDIF
 
 ;親愛
-IF TALENT:88
+IF TALENT:親愛
 	TIMES B , 0.50
 	TIMES E , 0.50
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES C , 0.80
@@ -495,7 +495,7 @@ ENDIF
 
 
 ;ＬＶ１２から１３に上げるときは異常経験必要（素質：[臆病][素直][妄信][淫乱化][恋慕]なら無視できる）
-IF ABL:親密 == 12 && TALENT:10 == 0 && TALENT:13 == 0 && TALENT:86 == 0 && TALENT:76 == 0 && TALENT:85 == 0
+IF ABL:親密 == 12 && TALENT:臆病 == 0 && TALENT:素直 == 0 && TALENT:妄信 == 0 && TALENT:淫乱 == 0 && TALENT:恋慕 == 0
 	F = 1
 ELSE
 	F = 0

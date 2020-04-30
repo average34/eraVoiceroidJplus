@@ -305,7 +305,7 @@ IF TFLAG:13 == 9
 	;恋慕
 	IF TALENT:恋慕 && (CFLAG:314 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 		;更に淫乱持ち
-		IF TALENT:76
+		IF TALENT:淫乱
 			;親愛または相愛
 			IF (TALENT:親愛 || TALENT:相愛)
 				PRINTFORMW 
@@ -380,7 +380,7 @@ ENDIF
 ;----------------------------------------------------------------
 IF TFLAG:13 == 19
 	;キス魔（地の文が変わる）
-	IF TALENT:155 && (CFLAG:318 < 2 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:キス魔 && (CFLAG:318 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:318 = 2
 	;それ以外
@@ -2667,7 +2667,7 @@ ENDIF
 IF TFLAG:9 > 0 && (TEQUIP:2 == 7 && SELECTCOM == 370)
 	PRINTL  
 	;淫乱系素質持ち
-	IF (TALENT:74 || TALENT:75 || TALENT:76 || TALENT:77 || TALENT:78) && FLAG:キャラ口上の表示頻度 == 2
+	IF (TALENT:淫壷 || TALENT:淫核 || TALENT:淫乱 || TALENT:尻穴狂い || TALENT:淫乳) && FLAG:キャラ口上の表示頻度 == 2
 		;精液中毒Lv5
 		IF ABL:精液中毒 > 4
 			PRINTFORMW 

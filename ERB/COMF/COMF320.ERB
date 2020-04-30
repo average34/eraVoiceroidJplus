@@ -110,7 +110,7 @@ ENDIF
 
 ;好感度ランダム変化
 ;酒豪もちの場合変化
-IF TALENT:TARGET:217
+IF TALENT:TARGET:酒豪
 	A = RAND:12 + 1
 ELSE
 	A = RAND:7 - 1
@@ -120,7 +120,7 @@ ENDIF
 
 ;ほろ酔い値＋
 ;酒豪もちの場合効果上昇
-IF TALENT:TARGET:217
+IF TALENT:TARGET:酒豪
 	TFLAG:47 += 15
 ELSE
 	TFLAG:47 += 10

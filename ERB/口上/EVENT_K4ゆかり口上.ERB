@@ -221,7 +221,7 @@ IF TFLAG:600 == 38
 		PRINTFORMW 「油断してると唇の感触が思い出されて、%CSTR:1%の息が私の 口に/喉に/肺に 送り込まれる感覚まで蘇ってしまって……」
 		PRINTFORMW 「キスしただけでこうなってしまうのなら、そこから先の事になると一体どうなってしまうのでしょう？」
 		;パートナーであるならばテキスト追加
-		IF TALENT:150
+		IF TALENT:パートナー
 			PRINTFORML 興味あるのか、と%CALLNAME:MASTER%がからかうと、ゆかりは怒るどころかくすくすと笑い始めた……
 			PRINTFORMW 「当然です。ボイスロイドにも性欲はあるのですから」
 		ENDIF
@@ -254,7 +254,7 @@ IF TFLAG:600 == 34
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:326 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:326 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 「真の変態は私と%CSTR:1%だけで良い……そうは思いませんか、%CSTR:1%？」
 			CFLAG:326 = 5
 		;親愛または相愛
@@ -422,7 +422,7 @@ IF TFLAG:600 == 10
 	;三面以降（六面ラスボス除く）
 	ELSEIF FLAG:24 > 3
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:229 < 104 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:229 < 104 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORML 「エッチはただ闇雲にやれば良いというものではありません」
 			PRINTFORML 「プレイの濃さで言えば、ド変態の%CSTR:1%に付き合った私の方が上と言えるでしょう」
 			PRINTFORMW 「降伏して下さい%STR:1%さん。発情してるだけの人が変態二人に敵うと思っているのですか」
@@ -482,7 +482,7 @@ IF TFLAG:600 == 11
 	;三面以降（六面ラスボス除く）
 	ELSEIF FLAG:24 > 3 && (FLAG:24 != 6 || FLAG:27 == 10)
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:230 < 104 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:230 < 104 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORML 「良いイきっぷりでした。飛沫が顔まで届きましたよ」
 			PRINTFORMW 「面白い人ですね。気に入りました。もっとディープな、めくるめく快楽の世界に案内しましょう」
 			CFLAG:230 = 104
@@ -508,7 +508,7 @@ IF TFLAG:600 == 11
 	;ラストバトル
 	ELSEIF FLAG:24 == 6 && FLAG:27 >= 20
 		;淫乱
-		IF TALENT:76 == 1
+		IF TALENT:淫乱 == 1
 			PRINTFORML %STR:1%は盛大に絶頂を果たし、その場にへたり込んだ
 			PRINTFORML どっぷりと大量の汗をかき荒く息を吐く%STR:1%に手を伸ばそうとすると、ゆかりにそっと制された
 			PRINTFORMW 「まだ安心してはいけません%CSTR:1%。油断マイスターの勘は当たるのですよ」
@@ -516,7 +516,7 @@ IF TFLAG:600 == 11
 			PRINTFORMW 「なので、念入りにトドメを刺しましょう」
 			PRINTFORML ゆかりは一歩一歩踏みしめるようにして%STR:1%に歩み寄る
 			;ゆかりが[ふたなり]の場合
-			IF TALENT:121 == 1
+			IF TALENT:ふたなり == 1
 				PRINTFORML %STR:1%の顔の位置はちょうどゆかりの腰と同じ高さだ
 				PRINTFORMW きっと%STR:1%には見えているのだろう……服の上からでもカリのくびれ具合まで丸分かりな、隆起したゆかりの逸物を
 				PRINTFORML 勿体つけてスカートをたくし上げると、その怒張は重力の勢いでブルンと%STR:1%の鼻先に振り下ろされた
@@ -540,7 +540,7 @@ IF TFLAG:600 == 11
 			PRINTFORML ゆかりは%STR:1%に歩み寄る……
 			PRINTFORMW 「ここだけの話、私は貴方に感謝しているのですよ、%STR:1%さん」
 			;パートナーである
-			IF TALENT:150
+			IF TALENT:パートナー
 				PRINTFORMW 「この異変のお陰で%CSTR:1%と結ばれる事ができましたので」
 				PRINTFORMW 「……ずっと%CSTR:1%に抱かれる妄想で自慰に浸るだけの日々にはもう戻りたくないですね」
 			;パートナーじゃない
@@ -559,7 +559,7 @@ IF TFLAG:600 == 11
 			PRINTFORMW %STR:1%は一際高い絶叫の声をあげ、その場にへたり込んだ
 			PRINTFORMW 「これで終わりですね」
 			;パートナーであるならばテキスト追加
-			IF TALENT:150
+			IF TALENT:パートナー
 				PRINTFORMW 「……終わって……しまいましたね…………」
 			ENDIF
 		ENDIF
@@ -590,7 +590,7 @@ IF TFLAG:600 == 12
 	;三面以降（六面ラスボス除く）
 	ELSEIF FLAG:24 > 3 && (FLAG:24 != 6 || FLAG:27 == 10)
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:231 < 104 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:231 < 104 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORML 「まさか、私と%CSTR:1%の変態コンビが負けるなんて……」
 			PRINTFORMW 「悔しいですが、その、負けるのも存外に“気持ち良い”ですね……%UNICODE(0x2661)%」
 			CFLAG:231 = 104
@@ -644,7 +644,7 @@ CALL COMMON_PLANE_TEXT
 			PRINTFORML 「……私たちが、既にカラダを許した関係と知らずに……」
 		ENDIF
 		;淫乱
-		IF TALENT:76 == 1
+		IF TALENT:淫乱 == 1
 			PRINTFORML 「その上、変態の私たちをウブだと思い込んでるとは。これはお仕置きが必要なようですね」
 		ENDIF
 		PRINTFORML 「ですが、今は言う通りにしておきましょう……少なくとも今の私たちにデメリットは無い筈です」
@@ -675,7 +675,7 @@ IF TFLAG:600 == 31
 	PRINTFORMW 「その瞳に映るのは性欲の捌け口としての肉穴か肉バイブ。相手の想いを考える余裕など、そこにはありません」
 	PRINTFORMW 「抱かれてる間『もっと』と思う事はありませんでしたか？どれ程爛れた生活を送っても満たされぬ『もっと』を」
 	;[恋慕]あり、または[恋人]ありの場合
-	IF TALENT:85 == 1 || TALENT:153 == 1
+	IF TALENT:恋慕 == 1 || TALENT:恋人 == 1
 		PRINTFORMW 「……同情します」
 		PRINTFORMW 「私には想いに応える人が居て、あなたには居なかった。ただ、それだけの違いなのです」
 	ENDIF
@@ -698,7 +698,7 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 29
 	;淫乱
-	IF TALENT:76 == 1
+	IF TALENT:淫乱 == 1
 		PRINTFORML 「なるほど。この瓶から霧が出ていたのですね？」
 		PRINTFORML ゆかりは小瓶をまじまじと見つめている
 		PRINTFORMW 「この瓶の中身を封印してしまえば、皆が元に戻る、と」
@@ -746,7 +746,7 @@ IF TFLAG:600 == 29
 	;それ以外
 	ELSE
 		;<パートナー>且つ<処女のまま、あるいは合意なし>の場合、関係は進展しなかったと見做す
-		IF TALENT:150 && (TALENT:処女 == 1 || TALENT:152 == 0)
+		IF TALENT:パートナー && (TALENT:処女 == 1 || TALENT:合意 == 0)
 			;マキや茜がですます口調なのは違和感あるので、とりあえずラスボスがその二人の場合は口調を変える
 			;ラスボスはずん子orきりたんの固定のようだが、念のため
 			;マキの場合
@@ -1055,7 +1055,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;デート中に向こうから告白
-;ちなみにTALENT:151を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
+;ちなみにTALENT:キス未経験を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
 ;-------------------------------------------------
 IF TFLAG:600 == 26
 	;キス経験有り
@@ -1193,7 +1193,7 @@ IF TFLAG:600 == 7
 	;初めて
 	IF CFLAG:226 == 0
 		;パートナーである
-		IF TALENT:150
+		IF TALENT:パートナー
 			PRINTFORMW 「ずっと、この時を待ち焦がれていました。%CSTR:1%に抱かれる、この時を」
 			PRINTFORML 「さて、まずはどこから%CSTR:1%をお迎えしましょう？私の口にしましょうか？」
 			PRINTFORMW ゆかりは%CALLNAME:MASTER%の指に舌を這わせ、挑発的な視線をこちらに送っている
@@ -1389,7 +1389,7 @@ IF TFLAG:600 == 4
 		;それ以外
 		ELSE
 			;パートナーである
-			IF TALENT:150
+			IF TALENT:パートナー
 				PRINTFORMW 「確認しますが、今から私を無理矢理犯すのですね%CSTR:1%？」
 				PRINTFORMW 「私に挑発されて引くに引けなくなった%CSTR:1%が“仕方なく”ぐちゃぐちゃにしてくれるのですね？」
 				PRINTFORMW 「それなら……“仕方ない”、ですね……%UNICODE(0x2661)%」
@@ -1412,7 +1412,7 @@ IF TFLAG:600 == 4
 		;それ以外
 		ELSEIF (CFLAG:223 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 			;パートナーである
-			IF TALENT:150
+			IF TALENT:パートナー
 				PRINTFORMW 「この強引さ、まさに“調教”という感じがしますね」
 				PRINTFORMW 「……相手が%CSTR:1%なら、嫌いではありませんよ」
 			;パートナーじゃない（わぉ、不倫だよ）
@@ -1455,7 +1455,7 @@ IF TFLAG:600 == 32
 	A:1 = 0
 	REPEAT CHARANUM
 		IF NO:COUNT == 4
-			IF TALENT:COUNT:150 || TALENT:COUNT:85 || TALENT:COUNT:153
+			IF TALENT:COUNT:パートナー || TALENT:COUNT:恋慕 || TALENT:COUNT:恋人
 				A:1 = 1
 			ENDIF
 		ENDIF
@@ -1501,7 +1501,7 @@ IF TFLAG:600 == 33
 	A:1 = 0
 	REPEAT CHARANUM
 		IF NO:COUNT == 4
-			IF TALENT:COUNT:150 || TALENT:COUNT:85 || TALENT:COUNT:153
+			IF TALENT:COUNT:パートナー || TALENT:COUNT:恋慕 || TALENT:COUNT:恋人
 				A:1 = 1
 			ENDIF
 		ENDIF
@@ -1945,7 +1945,7 @@ IF TFLAG:13 == 9
 	;恋慕
 	IF TALENT:恋慕 && (CFLAG:314 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 		;更に淫乱持ち
-		IF TALENT:76
+		IF TALENT:淫乱
 			;親愛または相愛
 			IF (TALENT:親愛 || TALENT:相愛)
 				PRINTFORMW 
@@ -2020,7 +2020,7 @@ ENDIF
 ;----------------------------------------------------------------
 IF TFLAG:13 == 19
 	;キス魔（地の文が変わる）
-	IF TALENT:155 && (CFLAG:318 < 2 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:キス魔 && (CFLAG:318 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:318 = 2
 	;それ以外
@@ -2348,7 +2348,7 @@ IF TFLAG:13 == 23
 	;相手がマスター
 	IF CFLAG:111 == NO:MASTER
 		;育児中
-		IF TALENT:135
+		IF TALENT:育児中
 			;恋慕or恋人
 			IF TALENT:恋人 || TALENT:恋慕
 				;夜
@@ -2731,7 +2731,7 @@ IF TFLAG:13 == 81
 	;主人が吸血鬼化
 	IF T == MASTER
 		;恋慕
-		IF TALENT:V:85
+		IF TALENT:V:恋慕
 			PRINTFORMW 
 		;反発感情LV2以上
 		ELSEIF MARK:V:3 >= 2
@@ -2743,9 +2743,9 @@ IF TFLAG:13 == 81
 	;助手かパートナーが吸血鬼化
 	ELSE
 		;恋慕かつ主人に吸血鬼化された
-		IF TALENT:T:85 && (V == MASTER)
+		IF TALENT:T:恋慕 && (V == MASTER)
 			;相愛
-			IF TALENT:T:89
+			IF TALENT:T:相愛
 				PRINTFORMW 
 			;それ以外
 			ELSE
@@ -2793,7 +2793,7 @@ IF CFLAG:201 == 0
 		CALL NAME_SET_K4
 	ENDIF
 	;素質:パートナーの場合
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORMW 「では、改めまして……私をパートナーに選んでくれてありがとうございます」
 		PRINTFORMW 「一緒に素敵な時間を過ごしましょうね、%CSTR:1%」
 	;それ以外
@@ -2816,7 +2816,7 @@ ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && CFLAG:201 < 2
 	DRAWLINE
 	;素質:パートナーの場合
 	;「この関係」＝こっそりオカズにしたり、そのオナニーを収録して%CALLNAME:MASTER%に聞かせたり
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORML ゆかりはずっと夢見心地な表情をしている……
 		PRINTFORMW 「先日はデートのお誘い、ありがとうございました。二人でどこかに行って時を過ごすって素敵な事だったんですね」
 		PRINTFORMW 「嬉し過ぎて、次はどこにお出掛けしようってずっと考えてました」
@@ -2827,7 +2827,7 @@ ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && CFLAG:201 < 2
 		;[パートナー]持ちのキャラが手元にいるか調べる
 		C = 0
 		REPEAT CHARANUM
-			IF TALENT:COUNT:150 == 1
+			IF TALENT:COUNT:パートナー == 1
 				C = COUNT
 			ENDIF
 		REND
@@ -2941,7 +2941,7 @@ ENDIF
 IF MARK:3 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	;素質:パートナーの場合
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORML 「どれ程好きであろうとしても、人に失望する瞬間というのはコントロールできないものなのですね」
 		PRINTFORMW 「何故あんな事をしてしまったのですか、%CSTR:1%？」
 	;それ以外
@@ -2980,7 +2980,7 @@ ELSEIF EXP:キス経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示�
 ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	;素質:パートナーの場合
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORMW 「今日も素敵な一日にしましょうね、%CSTR:1%」
 	;それ以外
 	ELSE
@@ -2993,7 +2993,7 @@ ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表�
 ELSEIF EXP:デート経験 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	;素質:パートナーの場合
-	IF TALENT:150
+	IF TALENT:パートナー
 		PRINTFORMW 「今日はどんな事しましょうか、%CSTR:1%」
 	;それ以外
 	ELSE
@@ -3052,7 +3052,7 @@ IF TFLAG:44 == 1
 	ELSEIF EXP:キス経験 && TALENT:恋慕 == 0
 		DRAWLINE
 		;素質:パートナーの場合
-		IF TALENT:150
+		IF TALENT:パートナー
 			IF RAND:2 == 0
 				PRINTFORML 「私、今幸せです。ずっと待ち焦がれてた願いが叶って、夢を見てるんじゃないかって思う位」
 				PRINTFORML 「だから……んっ」
@@ -3086,7 +3086,7 @@ IF TFLAG:44 == 1
 	ELSEIF EXP:キス経験 == 0 && TALENT:恋慕 == 0
 		DRAWLINE
 		;素質:パートナーの場合
-		IF TALENT:150
+		IF TALENT:パートナー
 			PRINTFORML 「おつかれさまです、%CSTR:1%」
 			PRINTFORMW 「これからも一緒に既成事実を積み上げていきましょうね」
 		;それ以外
@@ -7851,7 +7851,7 @@ ENDIF
 ;-------------------------------------------------
 ;強制放尿 CFLAG:491
 ;-------------------------------------------------
-IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:57 && TEQUIP:22 == 0)
+IF SELECTCOM == 85 && (TALENT:おもらし癖 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:おもらし癖 && TEQUIP:22 == 0)
 	;初めて
 	IF CFLAG:491 == 0
 		PRINTFORMW 
@@ -7969,7 +7969,7 @@ IF SELECTCOM == 70
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:マゾ || ABL:マゾっ気 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:496 = 5
 		;恋慕または恋人
@@ -9127,7 +9127,7 @@ IF SELECTCOM == 186 && (TFLAG:17 == MASTER)
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:マゾ || ABL:マゾっ気 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:509 = 5
 		;恋慕または恋人
@@ -9272,7 +9272,7 @@ IF TFLAG:2 > 0
 				;対象に童貞を捧げている
 				IF FLAG:47 == 4
 					;パートナーである
-					IF TALENT:150
+					IF TALENT:パートナー
 						PRINTFORML 「これで正真正銘、私が%CSTR:1%の初めての人になれたのですね……」
 						PRINTFORML 「もし%CSTR:1%が将来他の女を抱いたり結婚するような事があっても」
 						PRINTFORML 「この事実だけは、胸を張って良いですよね……？」
@@ -9293,7 +9293,7 @@ IF TFLAG:2 > 0
 						;[パートナー]持ちのキャラが手元にいるか調べる
 						C = 0
 						REPEAT CHARANUM
-							IF TALENT:COUNT:150 == 1
+							IF TALENT:COUNT:パートナー == 1
 								C = COUNT
 							ENDIF
 						REND
@@ -9337,7 +9337,7 @@ IF TFLAG:2 > 0
 				;対象に童貞を捧げている
 				IF FLAG:47 == 4
 					;パートナーである
-					IF TALENT:150
+					IF TALENT:パートナー
 						PRINTFORML 「これで正真正銘、私が%CSTR:1%の初めての人になれたのですね……」
 						PRINTFORML 「もし%CSTR:1%が将来他の女を抱いたり結婚するような事があっても」
 						PRINTFORML 「この事実だけは、胸を張って良いですよね……？」
@@ -9374,7 +9374,7 @@ IF TFLAG:2 > 0
 				PRINTFORML ゆかりは無理矢理膣内射精され、華奢な身体をびくびくと震わせている
 				PRINTFORMW 彼女の秘裂から白濁が溢れ、彼女の頬もまた涙に濡れていた
 				;パートナーであるならばテキスト追加
-				IF TALENT:150
+				IF TALENT:パートナー
 					PRINTFORMW だが、ゆかりの泣き声には幾分かの哄笑も孕んでいる……
 					PRINTFORMW 「デキてしまったら、もう私からは逃げられませんね…%UNICODE(0x2661)%」
 					PRINTFORMW 「ああ…%UNICODE(0x2661)% だから、射精しないでと言ったのに。おバカな%CSTR:1%…%UNICODE(0x2661)%」
@@ -9424,7 +9424,7 @@ IF TFLAG:2 > 0
 		;それ以外（合意なし）
 		ELSE
 			;二回目の膣内射精且つパートナーである
-			IF CFLAG:353 == 1 && TALENT:150
+			IF CFLAG:353 == 1 && TALENT:パートナー
 				PRINTFORML 「あぁ…%UNICODE(0x2661)% また射精しましたね%UNICODE(0x2661)%」
 				PRINTFORML ゆかりは%CALLNAME:MASTER%の頬に手を添え、笑みを投げかける
 				PRINTFORMW だが、ゆかりの顔に彫られた表情は可愛いとか綺麗とかとは正反対の、飢えた肉食獣がようやっと獲物に巡り付いて牙を剥いた時のそれである
@@ -9436,7 +9436,7 @@ IF TFLAG:2 > 0
 				CFLAG:353 = 2
 			ELSE
 				;パートナーである
-				IF TALENT:150
+				IF TALENT:パートナー
 					IF RAND:2 == 0
 						PRINTFORML 「精液、ナカに下さって、ありがとうございます…%UNICODE(0x2661)%」
 						PRINTFORMW 「家族ができるのが楽しみですね%UNICODE(0x2661)%」
@@ -9629,7 +9629,7 @@ ENDIF
 IF TFLAG:9 > 0 && (TEQUIP:2 == 7 && SELECTCOM == 370)
 	PRINTL  
 	;淫乱系素質持ち
-	IF (TALENT:74 || TALENT:75 || TALENT:76 || TALENT:77 || TALENT:78) && FLAG:キャラ口上の表示頻度 == 2
+	IF (TALENT:淫壷 || TALENT:淫核 || TALENT:淫乱 || TALENT:尻穴狂い || TALENT:淫乳) && FLAG:キャラ口上の表示頻度 == 2
 		;精液中毒Lv5
 		IF ABL:精液中毒 > 4
 			PRINTFORMW 
@@ -9987,7 +9987,7 @@ ENDIF
 P = PALAM:17 + UP:17
 IF P > PALAMLV:2 && CFLAG:343 == 0
 	;主人が小柄体型且つオトコ
-	IF TALENT:MASTER:100 && TALENT:MASTER:122
+	IF TALENT:MASTER:小柄体型 && TALENT:MASTER:オトコ
 		PRINTFORML 「おねショタ、というのもアリかも……ですね」
 	ELSE
 		PRINTFORML 「なかなか、母性本能をくすぐられますね」
@@ -10007,7 +10007,7 @@ IF P > PALAMLV:2 && CFLAG:344 == 0
 	;それ以外
 	ELSE
 		;<パートナーでない>且つ<合意なし>の場合
-		IF TALENT:150 == 0 && TALENT:合意 == 0
+		IF TALENT:パートナー == 0 && TALENT:合意 == 0
 			PRINTFORML 「濡れている？冗談が上手いですね、%CSTR:1%」
 			PRINTFORMW 「この純情乙女なゆかりさんが無理矢理犯されて濡らす程の淫乱では……」
 			PRINTFORMW 「…………濡れている！？」
@@ -10043,7 +10043,7 @@ IF P > PALAMLV:3 && CFLAG:345 == 0
 		IF TFLAG:44 == 1
 			PRINTFORML 「今までお預けにされてた分、気が昂りますね」
 			;<パートナーでない>且つ<合意なし>の場合
-			IF TALENT:150 == 0 && TALENT:合意 == 0
+			IF TALENT:パートナー == 0 && TALENT:合意 == 0
 				PRINTFORMW 「ええ、否定はしません。カラダはそういうものだと、その手のゲームで予習しましたので」
 			;それ以外(<パートナーである>または<合意あり>)
 			ELSE

@@ -23,28 +23,28 @@ IF FLAG:2 == 1 && (CFLAG:60 & 32) == 0
 	ELSEIF TEQUIP:2 == 5
 		A = 50
 		;臆病
-		SIF TALENT:10
+		SIF TALENT:臆病
 			A += 25
 		;気丈
-		SIF TALENT:12
+		SIF TALENT:気丈
 			A -= 10
 		;プライド高い
-		SIF TALENT:15
+		SIF TALENT:プライド高い
 			A -= 10
 		;ツンデレ
-		SIF TALENT:18
+		SIF TALENT:ツンデレ
 			A += 10
 		;自制心
-		SIF TALENT:20
+		SIF TALENT:自制心
 			A -= 10
 		;感情乏しい
-		SIF TALENT:22
+		SIF TALENT:感情乏しい
 			A -= 15
 		;恋慕
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 15
 		;恋人
-		SIF TALENT:153
+		SIF TALENT:恋人
 			A += 10
 		;欲情
 		IF PALAM:5 >= 8000
@@ -87,22 +87,22 @@ ENDIF
 IF TEQUIP:2 == 5
 	PRINTFORMW 暗がりを二人で歩いていると、ガサッ、と物音がした。
 	;恋慕
-	IF TALENT:85
+	IF TALENT:恋慕
 		PRINTFORML %CALLNAME:TARGET%は小さく悲鳴を上げて%CALLNAME:MASTER%の腕に抱きついてきた。
 		;小悪魔もしくは欲情1000以上
-		SIF TALENT:87 || PALAM:5 >= 1000
+		SIF TALENT:小悪魔 || PALAM:5 >= 1000
 			PRINTFORMW 少々わざとらしい気がしたが、悪い気分はしないので何も言わないでおいた。
 	;感情乏しい、もしくは無関心
-	ELSEIF TALENT:21 || TALENT:22
+	ELSEIF TALENT:無関心 || TALENT:感情乏しい
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%の後ろに回ると%CALLNAME:MASTER%を前に押し出した。
 		PRINTFORMW どうやら身代わりに差し出されたようだ…
 	;気丈、プライド高い、ツンデレ
-	ELSEIF TALENT:12 || TALENT:15 || TALENT:18
+	ELSEIF TALENT:気丈 || TALENT:プライド高い || TALENT:ツンデレ
 		;あたってない
 		PRINTFORML %CALLNAME:TARGET%は思わず一歩下がり身構えた。
 		PRINTFORMW その際%CALLNAME:MASTER%の抱いていた事に気づくと、なんでもないと手を離した。
 	;臆病
-	ELSEIF TALENT:10
+	ELSEIF TALENT:臆病
 		PRINTFORML %CALLNAME:TARGET%は可愛らしい悲鳴をあげ、%CALLNAME:MASTER%に抱きついてきた。
 		PRINTFORMW %CALLNAME:MASTER%が腕を動かすのに不自由なくらいに%CALLNAME:TARGET%は怯えている…
 		IF (CFLAG:61 & 1) == 0
@@ -116,33 +116,33 @@ IF TEQUIP:2 == 5
 	ENDIF
 	;素質分岐内にぶち込む必要が出るかもしれない
 	;きょぬー
-	IF TALENT:110
+	IF TALENT:巨乳
 		;恋慕がなく、感情乏しい、もしくは無関心の場合、背中に当たる
-		IF TALENT:85 == 0 && (TALENT:21 || TALENT:22)
+		IF TALENT:恋慕 == 0 && (TALENT:無関心 || TALENT:感情乏しい)
 			PRINTFORML %CALLNAME:MASTER%の背中に柔らかい物が押し当てられる。
 		ELSE
 			PRINTFORML %CALLNAME:MASTER%の腕に、柔らかい物に挟まれているような感触が伝わってくる。
 		ENDIF
 		;着痩せ
-		IF TALENT:142
+		IF TALENT:着痩せ
 			PRINTFORMW 思っていた以上に、%CALLNAME:TARGET%の胸は大きいようだ…
 		ELSE
 			PRINTFORMW みた通りに間違いなく、%CALLNAME:TARGET%の胸は大きいようだ…
 		ENDIF
 	;ひんぬー
-	ELSEIF TALENT:109
+	ELSEIF TALENT:貧乳
 		PRINTFORML 何か当たっているような気もするが、気のせいかもしれない。
 		PRINTFORMW わかってはいた事だが、%CALLNAME:TARGET%の胸は大分小さいようだ…
 	;並乳
 	ELSE
 		;恋慕がなく、感情乏しい、もしくは無関心の場合、背中に当たる
-		IF TALENT:85 == 0 && (TALENT:21 || TALENT:22)
+		IF TALENT:恋慕 == 0 && (TALENT:無関心 || TALENT:感情乏しい)
 			PRINTFORML %CALLNAME:MASTER%の背中に柔らかい物が押し当てられる。
 		ELSE
 			PRINTFORML %CALLNAME:MASTER%の腕に柔らかい感触が伝わってくる。
 		ENDIF
 		;着痩せ
-		IF TALENT:142
+		IF TALENT:着痩せ
 			PRINTFORMW 思っていたよりも、%CALLNAME:TARGET%の胸は大きいようだ…
 		ELSE
 			PRINTFORMW %CALLNAME:TARGET%の胸は見た目どおり、程よい大きさのようだ…
@@ -151,12 +151,12 @@ IF TEQUIP:2 == 5
 ;それ以外の状況
 ELSE
 	;着痩せを持っている
-	IF TALENT:142
+	IF TALENT:着痩せ
 		PRINTFORML %CALLNAME:TARGET%は意外と胸がある……
 	ENDIF
-	IF TALENT:110
+	IF TALENT:巨乳
 		PRINTFORMW %CALLNAME:TARGET%はどうやら【巨乳】のようだ
-	ELSEIF TALENT:109
+	ELSEIF TALENT:貧乳
 		PRINTFORMW %CALLNAME:TARGET%はどうやら【貧乳】のようだ
 	ELSE
 		PRINTFORMW %CALLNAME:TARGET%はどうやら【並乳】のようだ

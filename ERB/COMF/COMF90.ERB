@@ -19,7 +19,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック（ふたなりの場合）
 ;-------------------------------------------------
-SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -159,12 +159,12 @@ PRINTFORML Ａ経験＋１(%CALLNAME:PLAYER%)　(現在{EXP:PLAYER:Ａ経験})
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 10
 	SOURCE:15 += 800
 ENDIF
@@ -268,7 +268,7 @@ ENDIF
 STAIN:0 |= STAIN:PLAYER:4
 STAIN:PLAYER:4 |= STAIN:0
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +6
 	EXP:レズ経験 += 6
@@ -307,39 +307,39 @@ IF MARK:1
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 ;汚臭鈍感
-IF TALENT:61
+IF TALENT:汚臭鈍感
 	A += 2
 ENDIF
 ;汚臭敏感
-IF TALENT:62
+IF TALENT:汚臭敏感
 	A -= 2
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 4
 ENDIF
 ;汚れ無視
-IF TALENT:64
+IF TALENT:汚れ無視
 	A += 3
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 1
 ENDIF
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	A += 3
 ENDIF
 ;サド
-IF TALENT:PLAYER:83
+IF TALENT:PLAYER:サド
 	A += 3
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
@@ -358,9 +358,9 @@ SIF STAIN:PLAYER:4 & 8
 SIF STAIN:PLAYER:4 & 16
 	Y += 15
 
-SIF TALENT:61
+SIF TALENT:汚臭鈍感
 	Y /= 3
-SIF TALENT:62
+SIF TALENT:汚臭敏感
 	Y *= 2
 
 ;アナル愛撫させるでは汚れがそれほど影響しない
@@ -398,14 +398,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい'
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;汚臭鈍感
-	IF TALENT:61
+	IF TALENT:汚臭鈍感
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:61
@@ -413,14 +413,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;汚臭敏感
-	IF TALENT:62
+	IF TALENT:汚臭敏感
 		PRINT  - 
 		PRINTS TALENTNAME:62
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -428,7 +428,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;汚れ無視
-	IF TALENT:64
+	IF TALENT:汚れ無視
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:64
@@ -436,14 +436,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;倒錯的
-	IF TALENT:80
+	IF TALENT:倒錯的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:80
@@ -451,7 +451,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;サド
-	IF TALENT:PLAYER:83
+	IF TALENT:PLAYER:サド
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:83
@@ -459,7 +459,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -481,9 +481,9 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	SIF STAIN:PLAYER:4 & 16
 		Y += 15
 
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		Y /= 3
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		Y *= 2
 
 	;アナル愛撫させるでは汚れがそれほど影響しない
@@ -492,10 +492,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	IF Y
 		PRINT  - 
 		;汚臭鈍感
-		IF TALENT:61
+		IF TALENT:汚臭鈍感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:61
-		ELSEIF TALENT:62
+		ELSEIF TALENT:汚臭敏感
 			PRINT 汚れあり、
 			PRINTS TALENTNAME:62
 		ELSE
@@ -524,9 +524,9 @@ ENDIF
 ;アナル愛撫させる
 @TRAIN_MESSAGE_COM90
 PRINTFORM %CALLNAME:TARGET%は
-SIF TALENT:85
+SIF TALENT:恋慕
 	PRINT 愛しむような表情で、
-SIF TALENT:76
+SIF TALENT:淫乱
 	PRINT 自分から
 IF EXP:PLAYER:Ａ経験 > EXPLV:4 && RAND:4
 	PRINTFORMW %CALLNAME:PLAYER%のアヌスに指を根元まで突き刺し、精嚢を直腸側から圧迫している…
@@ -555,7 +555,7 @@ SIF !RESULT
 SIF TFLAG:44 == 0
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44

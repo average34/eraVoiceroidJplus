@@ -22,9 +22,9 @@ REPEAT (A:0 - 3)
 	LOCAL = X:COUNT
 	
 	;オトコ、女でそれぞれ不要なABLを表示しない
-	SIF LOCAL == 13 && TALENT:122 == 0
+	SIF LOCAL == 13 && TALENT:オトコ == 0
 		CONTINUE
-	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:122
+	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:オトコ
 		CONTINUE
 	
 	;以下行数合わせ処理を含んだもの

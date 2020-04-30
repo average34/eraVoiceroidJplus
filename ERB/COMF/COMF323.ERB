@@ -192,7 +192,7 @@ IF FLAG:8
 		LOSEBASE:体力 += 15
 	ENDIF
 	;恋慕or恋人による体力消費軽減（デートとウフフが長続きする、の再現だとでも脳内補完）
-	SIF TALENT:85 || TALENT:153
+	SIF TALENT:恋慕 || TALENT:恋人
 		LOSEBASE:体力 -= 7
 	GOTO DATE_LOOP1
 ENDIF
@@ -203,11 +203,11 @@ IF TFLAG:62
 ELSE
 	LOSEBASE:気力 += 220
 	;恋慕・恋人・親愛による気力消費軽減（デートが長続きする、の再現だとでも脳内補完）
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		LOSEBASE:気力 -= 40
-	SIF TALENT:153
+	SIF TALENT:恋人
 		LOSEBASE:気力 -= 50
-	SIF TALENT:88
+	SIF TALENT:親愛
 		LOSEBASE:気力 -= 90
 ENDIF
 
@@ -314,21 +314,21 @@ ELSE
 ENDIF
 
 ;恋慕
-IF TALENT:85
+IF TALENT:恋慕
 	TIMES SOURCE:18 , 1.10
 	TIMES SOURCE:9 , 1.30
 	TIMES SOURCE:20 , 1.10
 	TIMES SOURCE:21 , 1.20
 ENDIF
 ;恋人
-IF TALENT:153
+IF TALENT:恋人
 	TIMES SOURCE:18 , 1.20
 	TIMES SOURCE:9 , 1.50
 	TIMES SOURCE:20 , 1.20
 	TIMES SOURCE:21 , 1.10
 ENDIF
 ;親愛
-IF TALENT:88
+IF TALENT:親愛
 	TIMES SOURCE:18 , 1.50
 	TIMES SOURCE:9 , 2.00
 	TIMES SOURCE:20 , 1.50
@@ -571,7 +571,7 @@ IF DAY:1 == 1
 	N = 2000
 ELSE
 	;PLAYERがオトコの場合
-	IF TALENT:PLAYER:122
+	IF TALENT:PLAYER:オトコ
 		;火曜日はメンズディ（紳士$1000）、木曜日はレディースディ（淑女$1000）
 		IF DAY:5 == 1 || DAY:5 == 3
 			N = 2800
@@ -612,10 +612,10 @@ REPEAT CHARANUM
 REND
 
 ;禁断の知識を持っているか
-SIF TALENT:MASTER:125 || TALENT:TARGET:125
+SIF TALENT:MASTER:禁断の知識 || TALENT:TARGET:禁断の知識
 	S = 1
 IF ASSI > 0
-	SIF TALENT:ASSI:125
+	SIF TALENT:ASSI:禁断の知識
 		S = 1
 ENDIF
 
@@ -651,7 +651,7 @@ REPEAT 43
 	IF (COUNT == 6 || COUNT == 9 || COUNT == 19 || COUNT == 36 || COUNT == 38 || COUNT == 39 || COUNT == 42 || COUNT == 43) && SELECTCOM == 323
 
 		;温泉
-		IF COUNT == 6 && (TALENT:153 || (ABL:親密 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
+		IF COUNT == 6 && (TALENT:恋人 || (ABL:親密 >= 10 && ((TALENT:オトコ == 0 && TALENT:MASTER:オトコ == 0) || (TALENT:オトコ && TALENT:MASTER:オトコ))))
 		
 		
 		;キャラ固有デート先(1)
@@ -740,7 +740,7 @@ ELSEIF TSTR:RESULT == ""
 ELSEIF (RESULT == 6 || RESULT == 9 || RESULT == 19 || RESULT == 36 || RESULT == 38 || RESULT == 39 || RESULT == 42 || RESULT == 43) && SELECTCOM == 323
 	;条件のあるデート先はここで判定
 	;温泉
-	IF RESULT == 6 && (TALENT:153 || (ABL:親密 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
+	IF RESULT == 6 && (TALENT:恋人 || (ABL:親密 >= 10 && ((TALENT:オトコ == 0 && TALENT:MASTER:オトコ == 0) || (TALENT:オトコ && TALENT:MASTER:オトコ))))
 		TEQUIP:2 = 7
 	ELSEIF RESULT == 6 
 		PRINTFORML %CALLNAME:TARGET%は一緒に温泉に入るのを恥ずかしがっているようです
@@ -848,7 +848,7 @@ REPEAT 5
 	
 	;条件のあるデート先はここで判定
 	;ポルノ
-	IF COUNT == 4 && TALENT:153 == 0 && SELECTCOM == 323
+	IF COUNT == 4 && TALENT:恋人 == 0 && SELECTCOM == 323
 		CONTINUE
 	ENDIF
 	
@@ -875,7 +875,7 @@ ELSEIF RESULT + 18 == FLAG:8
 ELSEIF CFLAG:779 & (T:(RESULT+8))
 	;口上側による行き先制限判定
 	GOTO INPUT_LOOP5
-ELSEIF RESULT == 4 && TALENT:153 == 0 && SELECTCOM == 323
+ELSEIF RESULT == 4 && TALENT:恋人 == 0 && SELECTCOM == 323
 	GOTO INPUT_LOOP5
 ELSEIF (RESULT >= 0 || RESULT <= 4)
 	TEQUIP:2 = RESULT + 18
@@ -911,7 +911,7 @@ ELSEIF TEQUIP:2 == 5
 ELSEIF TEQUIP:2 == 6
 	STR:4 = カラオケ
 ELSEIF TEQUIP:2 == 7
-	IF (TALENT:122 && TALENT:PLAYER:122 == 0) || (TALENT:122 == 0 && TALENT:PLAYER:122)
+	IF (TALENT:オトコ && TALENT:PLAYER:オトコ == 0) || (TALENT:オトコ == 0 && TALENT:PLAYER:オトコ)
 		STR:4 = 混浴の温泉
 	ELSE
 		STR:4 = 温泉
@@ -1023,11 +1023,11 @@ PRINTFORML ＜%STR:4%でデート中＞
 LOSEBASE:気力 += 35
 
 ;恋慕・恋人・親愛による気力消費軽減（デートが長続きする、の再現だとでも脳内補完）
-SIF TALENT:85
+SIF TALENT:恋慕
 	LOSEBASE:気力 -= 5
-SIF TALENT:153
+SIF TALENT:恋人
 	LOSEBASE:気力 -= 5
-SIF TALENT:88
+SIF TALENT:親愛
 	LOSEBASE:気力 -= 10
 
 B = 0
@@ -1137,21 +1137,21 @@ ELSE
 ENDIF
 
 ;恋慕
-IF TALENT:85
+IF TALENT:恋慕
 	TIMES B , 1.10
 	TIMES C , 1.30
 	TIMES D , 1.10
 	TIMES E , 1.20
 ENDIF
 ;恋人
-IF TALENT:153
+IF TALENT:恋人
 	TIMES B , 1.20
 	TIMES C , 1.50
 	TIMES D , 1.20
 	TIMES E , 1.10
 ENDIF
 ;親愛
-IF TALENT:88
+IF TALENT:親愛
 	TIMES B , 1.50
 	TIMES C , 2.00
 	TIMES D , 1.50
@@ -1231,7 +1231,7 @@ ELSEIF TEQUIP:2 == 7
 	STAIN:PLAYER:4 = 8
 	STAIN:PLAYER:5 = 0
 
-	IF TALENT:152
+	IF TALENT:合意
 		SOURCE:12 += RAND:501 + 500
 		;冬は更にUP
 		IF DAY:2 == 3
@@ -1517,7 +1517,7 @@ IF TFLAG:62 >= 5
 	R = RAND:19 + 1
 	IF R <= 9
 		;温泉は恋人以上じゃないと行けない
-		SIF R == 7 && (TALENT:153 == 0 || (ABL:親密 < 10 && ((TALENT:122 == 0 && TALENT:PLAYER:122) || (TALENT:122 && TALENT:PLAYER:122 == 0))))
+		SIF R == 7 && (TALENT:恋人 == 0 || (ABL:親密 < 10 && ((TALENT:オトコ == 0 && TALENT:PLAYER:オトコ) || (TALENT:オトコ && TALENT:PLAYER:オトコ == 0))))
 			GOTO DATE_LOOP6
 		TEQUIP:2 = R
 	ELSEIF R >= 10 && R <= 18
@@ -1564,7 +1564,7 @@ TFLAG:33 = 1
 
 ;告白判定
 ;最低でも従順5、好感度1000が必要
-IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
+IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:恋人 == 0 && ASSIPLAY == 0
 	A = 0
 	;目標難易度は190
 	V = 190
@@ -1576,31 +1576,31 @@ IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
 	A += CFLAG:2 / 50
 
 	;キス未経験
-	SIF TALENT:151
+	SIF TALENT:キス未経験
 		A -= 10
 
 	;恋慕
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		A += 30
 
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		A -= 10
 
 	;恥じらい
-	SIF TALENT:35
+	SIF TALENT:恥じらい
 		A -= 10
 
 	;恥薄い
-	SIF TALENT:36
+	SIF TALENT:恥薄い
 		A += 5
 
 	;悲観的
-	SIF TALENT:26
+	SIF TALENT:悲観的
 		A -= 5
 
 	;一線越えない
-	SIF TALENT:27
+	SIF TALENT:一線越えない
 		A -= 15
 
 	;Aの値を退避
@@ -1655,30 +1655,30 @@ IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
 		;この辺の描写は口上との兼ね合いが難しいけど、とりあえず暫定処置
 		;口上表示
 		TFLAG:600 = 26
-		TALENT:153 = 1
+		TALENT:恋人 = 1
 		CALL KOJO_JUN
-		SIF TALENT:153 == 0
+		SIF TALENT:恋人 == 0
 			RETURN 0
-		IF TALENT:85 == 0
-			TALENT:85 = 1
+		IF TALENT:恋慕 == 0
+			TALENT:恋慕 = 1
 			PRINTFORMW %CALLNAME:TARGET%は【恋慕】を得ました
 			;堕とした人数＋１
 			FLAG:30 += 1
 
 			;堕とした人数が5人以上で、謎の魅力が付く
-			IF FLAG:30 >= 5 && TALENT:MASTER:92 == 0
+			IF FLAG:30 >= 5 && TALENT:MASTER:謎の魅力 == 0
 				PRINTFORMW %NAME:MASTER%は【謎の魅力】を身につけた
-				TALENT:MASTER:92 = 1
+				TALENT:MASTER:謎の魅力 = 1
 			ENDIF
 		ENDIF
 		T = TARGET
 		CALL GET_LOVERS
-		IF TALENT:PLAYER:151
+		IF TALENT:PLAYER:キス未経験
 			PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
-			TALENT:PLAYER:151 = 0
+			TALENT:PLAYER:キス未経験 = 0
 		ENDIF
-		IF TALENT:151
-			TALENT:151 = 0
+		IF TALENT:キス未経験
+			TALENT:キス未経験 = 0
 			PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
 			TFLAG:38 = 1
 		ENDIF
@@ -1694,7 +1694,7 @@ ENDIF
 
 ;ファーストキス判定
 ;最低でも従順4、好感度400が必要
-IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALENT:153 == 0
+IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:キス未経験 == 1 && ASSIPLAY == 0 && TALENT:恋人 == 0
 	A = 0
 	;目標難易度は70
 	V = 70
@@ -1706,27 +1706,27 @@ IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALE
 	A += CFLAG:2 / 50
 
 	;恋慕
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		A += 30
 
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		A -= 10
 
 	;恥じらい
-	SIF TALENT:35
+	SIF TALENT:恥じらい
 		A -= 10
 
 	;恥薄い
-	SIF TALENT:36
+	SIF TALENT:恥薄い
 		A += 5
 
 	;悲観的
-	SIF TALENT:26
+	SIF TALENT:悲観的
 		A -= 5
 
 	;一線越えない
-	SIF TALENT:27
+	SIF TALENT:一線越えない
 		A -= 10
 
 	;Aの値を退避
@@ -1779,13 +1779,13 @@ IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALE
 		;口上表示
 		TFLAG:600 = 25
 		CALL KOJO_JUN
-		TALENT:151 = 0
+		TALENT:キス未経験 = 0
 		PRINTFORML %EXPNAME:96%＋１
 		EXP:キス経験 += 1
 		EXP:PLAYER:キス経験 += 1
-		IF TALENT:PLAYER:151
+		IF TALENT:PLAYER:キス未経験
 			PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
-			TALENT:PLAYER:151 = 0
+			TALENT:PLAYER:キス未経験 = 0
 		ENDIF
 		PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
 		TFLAG:38 = 1
@@ -1954,19 +1954,19 @@ ENDIF
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
@@ -1995,21 +1995,21 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -2017,7 +2017,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85

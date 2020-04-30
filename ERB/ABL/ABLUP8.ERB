@@ -392,7 +392,7 @@ ELSEIF ABL:マゾっ気 == 3
 	D = 3000
 	E = 6000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES C , 1.10
 		TIMES D , 1.10
 		TIMES E , 1.10
@@ -404,7 +404,7 @@ ELSEIF ABL:マゾっ気 == 4
 	D = 5000
 	E = 12000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES C , 1.30
 		TIMES D , 1.30
 		TIMES E , 1.30
@@ -420,7 +420,7 @@ ELSE
 	D = D * (ABL:マゾっ気 - 3)
 	E = E * (ABL:マゾっ気 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES C , 1.30
 		TIMES D , 1.30
 		TIMES E , 1.30
@@ -428,7 +428,7 @@ ELSE
 ENDIF
 
 ;解放
-IF TALENT:33
+IF TALENT:解放
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
@@ -437,7 +437,7 @@ IF TALENT:33
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 	TIMES B , 0.75
 	TIMES C , 0.75
@@ -446,7 +446,7 @@ IF TALENT:80
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 	TIMES B , 0.80
 	TIMES C , 0.80
@@ -455,7 +455,7 @@ IF TALENT:76
 ENDIF
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 0.50
 	TIMES B , 0.50
 	TIMES C , 0.50
@@ -464,7 +464,7 @@ IF TALENT:79
 ENDIF
 
 ;サド
-IF TALENT:83
+IF TALENT:サド
 	TIMES A , 1.50
 	TIMES B , 1.50
 	TIMES C , 1.50
@@ -518,7 +518,7 @@ ENDIF
 ;ENDIF
 
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[解放][マゾ]なら無視できる）
-IF ABL:マゾっ気 >= 3 && TALENT:33 == 0 && TALENT:79 == 0
+IF ABL:マゾっ気 >= 3 && TALENT:解放 == 0 && TALENT:マゾ == 0
 	F = ABL:マゾっ気 * 3
 ELSE
 	F = 0

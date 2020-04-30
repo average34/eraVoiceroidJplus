@@ -48,7 +48,7 @@ SIF TEQUIP:49
 SIF TEQUIP:79
 	RETURN 0
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && TALENT:MASTER:125 == 0
+SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 RETURN 1
 
@@ -153,25 +153,25 @@ ELSE
 ENDIF
 
 ;小柄体型
-IF TALENT:100
+IF TALENT:小柄体型
 	TIMES SOURCE:6 , 2.00
-SIF TALENT:132 || TALENT:131
+SIF TALENT:幼稚 || TALENT:幼児
 	TIMES SOURCE:2 , 2.00
 ENDIF
 
 ;Ａ敏感、鈍感をみる
 ;快Ａ自体のチェックは後でまとめてやる
-IF TALENT:105
+IF TALENT:Ａ鈍感
 	TIMES SOURCE:6 , 1.50
 	TIMES SOURCE:13 , 1.50
 	TIMES SOURCE:14 , 1.50
-ELSEIF TALENT:106
+ELSEIF TALENT:Ａ敏感
 	TIMES SOURCE:6 , 0.60
 	TIMES SOURCE:13 , 0.60
 	TIMES SOURCE:14 , 0.60
 ENDIF
 
-IF EXP:Ｖ経験 == 0 && TALENT:30
+IF EXP:Ｖ経験 == 0 && TALENT:貞操観念
 	SOURCE:13 /= 3
 ENDIF
 
@@ -207,14 +207,14 @@ RETURN 1
 ;巨峰の着脱
 IF TEQUIP:70
 	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%の菊穴から生えている蔓をつまむと勢い良く引き抜いた…
-	IF ABL:Ａ感覚 >= 5 && TALENT:76
+	IF ABL:Ａ感覚 >= 5 && TALENT:淫乱
 		PRINTFORML 一時は幸せそうな顔をしていた%CALLNAME:TARGET%だったが、次第に直腸の喪失感が増してきたのか
 		PRINTFORM 涙と涎をこぼし、腰を振って自らの手で肛門を拡げながら哀願するような目で%CALLNAME:PLAYER%を見上げて
-	ELSEIF ABL:Ａ感覚 >= 3 && EXP:Ａ経験 < 5 && TALENT:76
+	ELSEIF ABL:Ａ感覚 >= 3 && EXP:Ａ経験 < 5 && TALENT:淫乱
 		PRINTFORM 葡萄の実が肛門から排泄されるとその度に%CALLNAME:TARGET%はぶるっと腰を震わせ
-	ELSEIF ABL:Ａ感覚 >= 1 && EXP:Ａ経験 < 3 && TALENT:76
+	ELSEIF ABL:Ａ感覚 >= 1 && EXP:Ａ経験 < 3 && TALENT:淫乱
 		PRINTFORM 大きく拡がった%CALLNAME:TARGET%の肛門から腸内に溜まっていたであろう粘液が滴り出し
-	ELSEIF ABL:Ａ感覚 == 0 && TALENT:76
+	ELSEIF ABL:Ａ感覚 == 0 && TALENT:淫乱
 		PRINTFORM %CALLNAME:TARGET%は痛そうに顔を歪ませながらも陰唇からは愛液を滲ませ
 	ELSEIF ABL:Ａ感覚 >= 4
 		PRINTFORM %CALLNAME:TARGET%は恍惚感を浮かべた目付きで%CALLNAME:PLAYER%の方を振り返っ
@@ -232,20 +232,20 @@ ELSE
 		PRINT 粘液をたたえた
 	SIF PALAM:3 < PALAMLV:3
 		PRINT 硬く閉ざされた
-	IF TALENT:100
+	IF TALENT:小柄体型
 		PRINT 可愛らしい菊門を
 	ELSE
 		PRINT アヌスを
 	ENDIF
 	PRINTL 無理やり拡げ、大粒の葡萄の実ををひとつづつ捻じ込んでいった…
 	PRINTFORM %CALLNAME:PLAYER%
-	IF EXP:Ａ経験 >= 201 && TALENT:85
+	IF EXP:Ａ経験 >= 201 && TALENT:恋慕
 		PRINT は１粒挿入されただけでガクガクと腰を震わせてイきそうな気配を漂わせて
-	ELSEIF EXP:Ａ経験 >= 101 && EXP:Ａ経験 <= 200 && TALENT:85
+	ELSEIF EXP:Ａ経験 >= 101 && EXP:Ａ経験 <= 200 && TALENT:恋慕
 		PRINT の肛門はまるで食べ盛りの子供みたく、貪欲に葡萄を飲み込んで
-	ELSEIF EXP:Ａ経験 >= 51 && EXP:Ａ経験 <= 100 && TALENT:85
+	ELSEIF EXP:Ａ経験 >= 51 && EXP:Ａ経験 <= 100 && TALENT:恋慕
 		PRINT は葡萄の実が腸内を転がっていく感触を楽しむため腰を高々と上げて
-	ELSEIF EXP:Ａ経験 >= 1 && EXP:Ａ経験 <= 50 && TALENT:85
+	ELSEIF EXP:Ａ経験 >= 1 && EXP:Ａ経験 <= 50 && TALENT:恋慕
 		PRINT は苦痛に顔をしかめていたが実を飲み込むごとに快楽を感じ始めたのか徐々に頬を緩ませて
 	ELSEIF EXP:Ａ経験 >= 201
 		PRINT は直腸に巨大な質量をもつ何かが転がり込むたびに恍惚とした表情を浮かべて
@@ -354,7 +354,7 @@ ELSE
 ENDIF
 
 ;小柄体型
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES C , 1.50
 
 SOURCE:2 += A
@@ -362,7 +362,7 @@ SOURCE:13 += B
 SOURCE:6 += C
 
 ;処女で貞操観念
-IF EXP:Ｖ経験 == 0 && TALENT:30
+IF EXP:Ｖ経験 == 0 && TALENT:貞操観念
 	SOURCE:13 /= 3
 ENDIF
 
@@ -373,11 +373,11 @@ PRINTL Ａ拡張経験＋２
 
 TFLAG:74 += 1
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1

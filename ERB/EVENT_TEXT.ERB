@@ -11,7 +11,7 @@ IF SELECTCOM == 0
 	C = A+B
 
 	IF C < 100
-		IF TALENT:11
+		IF TALENT:反抗的
 			PRINTFORML %CALLNAME:TARGET%は愛撫されながらも反抗的な態度を取っている。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%はむずかゆそうに身体をよじるが快楽を感じるまでには至っていないようだ。
@@ -40,13 +40,13 @@ ELSEIF SELECTCOM == 1
 		PRINTFORML %CALLNAME:TARGET%はクンニの刺激にじっと耐えているものの、確実に感じてきているようだ。
 	IF A > 999 && A < 3000
 		PRINTFORM 敏感な豆を舐められると感じるのか、%CALLNAME:TARGET%は
-		SIF TALENT:35
+		SIF TALENT:恥じらい
 			PRINT 羞恥に頬を赤く染め手で自分の口を抑えて声が出るのをこらえながら
-		SIF TALENT:70 || TALENT:33
+		SIF TALENT:快感に素直 || TALENT:解放
 			PRINTL 熱い吐息を吐きながら快楽に身をゆだねている。
-		SIF TALENT:71 || TALENT:32
+		SIF TALENT:快感の否定 || TALENT:抑圧
 			PRINTL 快楽を否定するように首を振って耐えている。
-		SIF TALENT:32 == 0 && TALENT:33 == 0 && TALENT:70 == 0 && TALENT:71 == 0
+		SIF TALENT:抑圧 == 0 && TALENT:解放 == 0 && TALENT:快感に素直 == 0 && TALENT:快感の否定 == 0
 			PRINTL 秘所から愛液を垂らしつつわずかに小さく吐息を漏らした。
 	ENDIF
 	SIF A > 2999 && A < 6000
@@ -54,7 +54,7 @@ ELSEIF SELECTCOM == 1
 	SIF A > 5999 && A < 10000
 		PRINTFORML %CALLNAME:TARGET%は明らかな快楽の声をあげ、無意識にこちらの頭を手で押さえてさらにその部分を押し付けてきた。
 	IF A > 9999
-		IF TALENT:102
+		IF TALENT:Ｃ敏感
 			PRINTFORML %CALLNAME:TARGET%は敏感なクリトリスへの責めに激しく身もだえし、あられも無い声を張り上げ続けた。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%はクリトリスへの刺激に激しい喘ぎ声を上げながら悶え続けた。
@@ -83,20 +83,20 @@ ELSEIF SELECTCOM == 2
 		ENDIF
 	ELSEIF A > 999 && A < 3000
 		PRINTFORM %CALLNAME:TARGET%は小さく嬌声を上げて体を跳ねさせた。
-		SIF TALENT:106
+		SIF TALENT:Ａ敏感
 			PRINT もともとアナルへの刺激に弱かったらしく、
 		PRINTL 明らかに快楽を感じ始めている。
 	ELSEIF A > 2999 && A < 6000
 		PRINTFORML %CALLNAME:TARGET%はアナルへの刺激に明らかな快楽を感じているようだ。
 	ELSEIF A > 5999 && A < 10000
-		SIF TALENT:106
+		SIF TALENT:Ａ敏感
 			PRINT 敏感なアナルを責められると
-		SIF TALENT:106 == 0
+		SIF TALENT:Ａ敏感 == 0
 			PRINT アナルへの刺激に
 		PRINTFORM %CALLNAME:TARGET%はよがり声を上げながら
-			IF TALENT:70 || TALENT:33
+			IF TALENT:快感に素直 || TALENT:解放
 				PRINTL 快楽を訴えた。
-			ELSEIF TALENT:71 || TALENT:32
+			ELSEIF TALENT:快感の否定 || TALENT:抑圧
 				PRINTL 必死で快楽を否定した。
 			ELSE
 				PRINTL 悶え狂った。
@@ -116,11 +116,11 @@ ELSEIF SELECTCOM == 3
 	E = A+B+C+D
 
 	PRINTFORM %CALLNAME:TARGET%は
-	SIF TALENT:35 && ABL:露出癖 <= 3
+	SIF TALENT:恥じらい && ABL:露出癖 <= 3
 		PRINT 羞恥に顔を真っ赤に染め、涙を浮かべて
-	SIF TALENT:100
+	SIF TALENT:小柄体型
 	PRINT 小さな身体で
-	SIF TALENT:100 == 0 && (TEQUIP:11 || TEQUIP:13)
+	SIF TALENT:小柄体型 == 0 && (TEQUIP:11 || TEQUIP:13)
 		PRINT 自らの中に
 	SIF TEQUIP:11 && TEQUIP:13
 		PRINT ２本のバイブをくわえ込んでいる卑猥な様を見せながら、
@@ -166,7 +166,7 @@ ELSEIF SELECTCOM == 5
 		PRINTFORML %CALLNAME:TARGET%は胸への愛撫にトロンとした表情になってされるがままになっている。
 	ELSEIF A >= 6000 && A < 10000
 		PRINTFORM %CALLNAME:TARGET%は
-		IF TALENT:109
+		IF TALENT:貧乳
 			PRINT その小振りな胸で
 		ELSEIF TALENT:140
 			PRINT その膨らみのほぼ皆無な胸で
@@ -174,11 +174,11 @@ ELSEIF SELECTCOM == 5
 		PRINT 感じまくっており、胸への刺激だけで法悦を極めようとしている。 
 	ELSEIF A >= 10000
 		PRINTFORM %CALLNAME:TARGET%の胸を揉み続けてやるとそれだけで感じまくって身体を跳ねさせ、
-		SIF TALENT:110
+		SIF TALENT:巨乳
 			PRINTL 目の前でその巨乳を弾ませてこちらの目を楽しませてくれた。
 		SIF TALENT:141
 			PRINTL 目の前でその豊乳を大きく弾ませてこちらの目を楽しませてくれた。
-		SIF TALENT:110 == 0
+		SIF TALENT:巨乳 == 0
 			PRINTL 緩んだ表情で快楽に身を任せていた。
 	ENDIF
 
@@ -193,7 +193,7 @@ ELSEIF SELECTCOM == 10
 	ELSEIF A >= 300 && A < 1000
 		PRINTFORML %CALLNAME:TARGET%のクリトリスにローターを押し付けると小さく悲鳴を上げてビクンと身体を跳ねさせた。
 	ELSEIF A >= 1000 && A < 3000
-		IF TALENT:70
+		IF TALENT:快感に素直
 			PRINTFORML %CALLNAME:TARGET%はローターの刺激に気持ちよさそうにその快楽を享受している。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%のクリトリスにローターを押し付けると快楽の声を上げながら刺激から逃れようと身をよじった。
@@ -203,7 +203,7 @@ ELSEIF SELECTCOM == 10
 	ELSEIF A >= 6000 && A < 10000
 		PRINTFORML %CALLNAME:TARGET%のクリトリスをローターで刺激してやると激しい快楽にのたうち、腰を卑猥にグラインドさせた。
 	ELSEIF A >= 10000
-		IF TALENT:42
+		IF TALENT:濡れやすい
 			PRINTFORML %CALLNAME:TARGET%はローターを押し付けられると、強烈すぎる快楽に激しく背中を反らせたまま連続で潮を噴いた。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%はローターを押し付けられあまりの快楽に涎すら垂らしながら身体をのた打ち回らせた。
@@ -225,12 +225,12 @@ ELSEIF SELECTCOM == 11
 			PRINTFORML %CALLNAME:TARGET%はすでにヴァギナでも快楽を感じれる体になってきたのか、振動するバイブを入れてやると明らかに感じている声を上げた。
 		ELSEIF A >= 3000 && A < 6000 
 			PRINTFORM %CALLNAME:TARGET%の
-			SIF TALENT:100
+			SIF TALENT:小柄体型
 				PRINT 小さな
 			PRINTL ヴァギナにバイブを突っ込んでやるとすぐに快楽に蕩けた表情になった。
 		ELSEIF A >= 6000 && A < 10000
 			PRINTFORM %CALLNAME:TARGET%は
-			SIF TALENT:100
+			SIF TALENT:小柄体型
 				PRINT その小さな体で
 			PRINTL 極太のバイブをくわえ込んで、激しい振動による刺激と快楽にその裸身を若鮎のように跳ねさせている。
 		ELSEIF A >= 10000
@@ -273,9 +273,9 @@ ELSEIF SELECTCOM == 12
 		PRINTFORML %CALLNAME:TARGET%はクリトリスに感じるマッサージャの振動がもたらす余りの快楽に必死に逃げようとしながら色っぽい喘ぎ声を出し続けている。
 	ELSEIF A >= 10000
 		PRINTFORM %CALLNAME:TARGET%はマッサージャを押し当てた瞬間に激しく体をのけぞらせ、
-		SIF TALENT:42
+		SIF TALENT:濡れやすい
 		PRINTL あそこから何度も潮をふいた。
-		SIF TALENT:42 == 0
+		SIF TALENT:濡れやすい == 0
 		PRINTL 強烈な快楽に身体を跳ねまくらせた。
 	ENDIF
 
@@ -298,9 +298,9 @@ ELSEIF SELECTCOM == 13
 			PRINTFORML %CALLNAME:TARGET%はアナルバイブのもたらす強烈な快楽に表情を緩ませている。
 		ELSEIF A >= 10000
 			PRINTFORM %CALLNAME:TARGET%はアナルへの刺激に激しく感じまくって
-			SIF TALENT:100
+			SIF TALENT:小柄体型
 			PRINT その小さな身体を
-			SIF TALENT:100 == 0
+			SIF TALENT:小柄体型 == 0
 			PRINT その汗まみれの全身を
 			PRINTL のたうちまわらせた。
 		ENDIF
@@ -353,17 +353,17 @@ ELSEIF SELECTCOM == 34
 	ELSEIF A > 999 && A < 3000
 		PRINTFORML %CALLNAME:TARGET%は腰を振りながらこらえきれない快楽に可愛らしい声を漏らしている。
 	ELSEIF A > 2999 && A < 6000
-		SIF TALENT:110
+		SIF TALENT:巨乳
 		PRINTFORML 目の前で%CALLNAME:TARGET%は大きな乳房を腰の動きに合わせて上下に弾ませながら快楽に浸りきっている。
-		SIF TALENT:110 == 0
+		SIF TALENT:巨乳 == 0
 		PRINTFORML %CALLNAME:TARGET%は大分慣れてきたのか、快楽に突き上げられながら自ら進んで腰を振っている。
 	ELSEIF A > 5999 && A < 10000
 		PRINTFORM %CALLNAME:TARGET%は
-		SIF TALENT:100
+		SIF TALENT:小柄体型
 		PRINTFORM その小さな身体で
-		SIF TALENT:32 || TALENT:71
+		SIF TALENT:抑圧 || TALENT:快感の否定
 		PRINTFORML 快楽を否定する言葉を吐きつつ、こらえ切れない喘ぎ声を上げ続けている。
-		SIF TALENT:32 == 0 && TALENT:71 == 0
+		SIF TALENT:抑圧 == 0 && TALENT:快感の否定 == 0
 		PRINTFORML 一生懸命腰を振り背中を反らしながら快楽の喘ぎ声を上げた。
 	ENDIF
 	SIF A > 9999
@@ -386,7 +386,7 @@ ELSEIF SELECTCOM == 40 || SELECTCOM == 41 || SELECTCOM == 42
 		B = 3
 	SIF A >= 3000
 		B = 4
-	SIF TALENT:40
+	SIF TALENT:痛みに弱い
 		B += 1
 	SIF B == 0
 		PRINTFORML %CALLNAME:TARGET%は悲鳴をこらえながら痛みに耐えた。
@@ -411,21 +411,21 @@ ELSEIF SELECTCOM == 40 || SELECTCOM == 41 || SELECTCOM == 42
 ELSEIF SELECTCOM == 311
 	IF TFLAG:18 <= -1
 		;恋人
-		IF TALENT:153
+		IF TALENT:恋人
 			PRINTFORML %CALLNAME:TARGET%は戸惑い、苦笑している。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%はあまりの寒さに凍り付いてしまった。
 		ENDIF
 	ELSEIF TFLAG:18 == 0
 		;恋人
-		IF TALENT:153
+		IF TALENT:恋人
 			PRINTFORML %CALLNAME:TARGET%は微笑を浮かべ、%CALLNAME:MASTER%の言葉に聞きいっている。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%は少し嬉しそうな表情で、%CALLNAME:MASTER%の言葉を聞いている。
 		ENDIF
 	ELSEIF TFLAG:18 <= 2
 		;恋人
-		IF TALENT:153
+		IF TALENT:恋人
 			PRINTFORML %CALLNAME:TARGET%はうっとりとした表情を浮かべ、%CALLNAME:MASTER%の言葉に聞き惚れている。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%は頬を赤く染め、%CALLNAME:MASTER%の目をじっと見つめながら、夢中で話を聞いている。
@@ -444,19 +444,19 @@ ELSEIF SELECTCOM >= 300 && SELECTCOM <= 339 && (SELECTCOM != 323 || TEQUIP:2) &&
 	IF PALAM:15 > 100000000
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に完全に愛情の篭った眼差しを向けている。
 	ELSEIF A < 300
-		IF TALENT:11 || TALENT:12 || TALENT:15 || TALENT:16 || TALENT:32 || TALENT:34 || TALENT:20 || TALENT:21 || TALENT:82 && TALENT:PLAYER:122
+		IF TALENT:反抗的 || TALENT:気丈 || TALENT:プライド高い || TALENT:生意気 || TALENT:抑圧 || TALENT:抵抗 || TALENT:自制心 || TALENT:無関心 || TALENT:男嫌い && TALENT:PLAYER:オトコ
 			PRINTFORML %CALLNAME:TARGET%はこちらの様子を警戒している。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%はまだまだぎこちない様子だ。
 		ENDIF
 	ELSEIF A < 1000
-		IF TALENT:11 || TALENT:12 || TALENT:15 || TALENT:16 || TALENT:32 || TALENT:34 || TALENT:20 || TALENT:21 || TALENT:82 && TALENT:PLAYER:122
+		IF TALENT:反抗的 || TALENT:気丈 || TALENT:プライド高い || TALENT:生意気 || TALENT:抑圧 || TALENT:抵抗 || TALENT:自制心 || TALENT:無関心 || TALENT:男嫌い && TALENT:PLAYER:オトコ
 			PRINTFORML 少しは打ち解けてきたようだが、%CALLNAME:TARGET%はまだこちらに気を許すつもりは無いようだ。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%とも少しは打ち解けてきたようだ。
 		ENDIF
 	ELSEIF A < 3000
-		IF TALENT:11 || TALENT:12 || TALENT:15 || TALENT:16 || TALENT:32 || TALENT:34 || TALENT:20 || TALENT:21 || TALENT:82 && TALENT:PLAYER:122
+		IF TALENT:反抗的 || TALENT:気丈 || TALENT:プライド高い || TALENT:生意気 || TALENT:抑圧 || TALENT:抵抗 || TALENT:自制心 || TALENT:無関心 || TALENT:男嫌い && TALENT:PLAYER:オトコ
 			PRINTFORML %CALLNAME:TARGET%はこちらの事を信用する気になったようだ。
 		ELSE
 			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%と一緒に居る事を楽しんでいるようだ。
@@ -500,9 +500,9 @@ ELSEIF SELECTCOM == 360
 
 	IF A > 100000000
 		PRINTFORM %CALLNAME:TARGET%の胸を揉み続けてやると、それだけで身体を跳ねさせ、
-		SIF TALENT:110
+		SIF TALENT:巨乳
 		PRINTL 目の前でその巨乳を弾ませてこちらの目を楽しませてくれた。
-		SIF TALENT:110 == 0
+		SIF TALENT:巨乳 == 0
 		PRINTL 緩んだ表情で快楽に身を任せていた。
 	ELSEIF A < 50
 		PRINTFORML %CALLNAME:TARGET%にはまだくすぐったいという感情の方が強いようだ。
@@ -514,14 +514,14 @@ ELSEIF SELECTCOM == 360
 		PRINTFORML %CALLNAME:TARGET%は胸への愛撫にトロンとした表情になっている。
 	ELSEIF A >= 3000 && A < 10000
 		PRINTFORM %CALLNAME:TARGET%は
-		SIF TALENT:109
+		SIF TALENT:貧乳
 			PRINT その小振りな胸で
 		PRINT 強い快感を感じ、服越しの刺激だけでも法悦を極めようとしている。 
 	ELSEIF A >= 10000
 		PRINTFORM %CALLNAME:TARGET%の胸を揉み続けてやると、それだけで身体を跳ねさせ、
-		SIF TALENT:110
+		SIF TALENT:巨乳
 			PRINTL 目の前でその巨乳を弾ませてこちらの目を楽しませてくれた。
-		SIF TALENT:110 == 0
+		SIF TALENT:巨乳 == 0
 			PRINTL 緩んだ表情で快楽に身を任せていた。
 	ENDIF
 
@@ -559,17 +559,17 @@ ELSEIF SELECTCOM == 367
 			PRINTFORML %CALLNAME:TARGET%はローターの刺激に熱い吐息を漏らしながら小さく震えている。
 		ELSEIF A < 100000
 			PRINTFORM %CALLNAME:TARGET%は首筋まで赤く染め
-			IF TALENT:35
+			IF TALENT:恥じらい
 				PRINTFORML 声が出るのをこらえようと、%CALLNAME:PLAYER%に頭を押し付けてきた。
-			ELSEIF TALENT:70 || TALENT:33
+			ELSEIF TALENT:快感に素直 || TALENT:解放
 				PRINTL 緩んだ表情で小さく喘ぎ声をあげている。
-			ELSEIF TALENT:71 || TALENT:32
+			ELSEIF TALENT:快感の否定 || TALENT:抑圧
 				PRINTL 快楽を否定するように首を振りながらもこらえ切れない喘ぎ声が口から漏れている。
 			ELSE
 				PRINTL 腰を卑猥に震わせている。
 			ENDIF
 		ELSE
-			IF TALENT:102
+			IF TALENT:Ｃ敏感
 				PRINTFORML %CALLNAME:TARGET%は敏感なクリトリスへの刺激に身悶えし、%CALLNAME:PLAYER%にしなだれかかってきた。
 			ELSE
 				PRINTFORML %CALLNAME:TARGET%はクリトリスへの刺激に耐えきれずしなだれかかってきた。
@@ -580,18 +580,18 @@ ELSEIF SELECTCOM == 367
 		;戦闘訓練
 		IF TFLAG:17 == 1
 			PRINTFORM %CALLNAME:TARGET%はいつの間にか集まった観客の視線
-			IF TALENT:35
+			IF TALENT:恥じらい
 				PRINTFORML を気にして恥ずかしそうに俯いている…
-			ELSEIF TALENT:28
+			ELSEIF TALENT:目立ちたがり
 				PRINTFORML に熱い吐息を漏らしている…
 			ELSE
 				PRINTFORML を気にしてわずかに頬を染めている…
 			ENDIF
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%は
-			IF TALENT:35
+			IF TALENT:恥じらい
 				PRINTFORML 周囲を気にして羞恥に頬を朱に染めている…
-			ELSEIF TALENT:28
+			ELSEIF TALENT:目立ちたがり
 				PRINTFORML 頬を上気させ熱い吐息を漏らしている…
 			ELSE
 				PRINTFORML 周囲を気にして薄っすらと頬が上気している…
@@ -606,11 +606,11 @@ ELSEIF SELECTCOM == 367
 			PRINTFORML %CALLNAME:TARGET%は頬が少しずつ赤く染まりだしたものの、まだくすぐったいという感情の方が強いようだ。
 		ELSEIF A < 6000
 			PRINTFORM %CALLNAME:TARGET%は羞恥に頬を赤く染め
-			SIF TALENT:35
+			SIF TALENT:恥じらい
 				PRINT 手で自分の口をおさえて声が出るのをこらえながら
-			IF TALENT:70 || TALENT:33
+			IF TALENT:快感に素直 || TALENT:解放
 				PRINTL 熱い吐息を吐きながら表情を緩ませている。
-			ELSEIF TALENT:71 || TALENT:32
+			ELSEIF TALENT:快感の否定 || TALENT:抑圧
 				PRINTL 快楽を否定するように首を振って耐えている。
 			ELSE
 				PRINTL わずかに小さく吐息を漏らした。
@@ -618,7 +618,7 @@ ELSEIF SELECTCOM == 367
 		ELSEIF A < 10000
 			PRINTFORML %CALLNAME:TARGET%はローターの刺激に熱い吐息を漏らしながら小さく震えている。
 		ELSE
-			IF TALENT:102
+			IF TALENT:Ｃ敏感
 				PRINTFORML %CALLNAME:TARGET%は敏感なクリトリスへの刺激に身悶えし、%CALLNAME:PLAYER%にしなだれかかってきた。
 			ELSE
 				PRINTFORML %CALLNAME:TARGET%はクリトリスへの刺激に耐えきれずしなだれかかってきた。

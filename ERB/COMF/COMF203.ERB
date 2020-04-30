@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 ;SIF TEQUIP:61
 ;	RETURN 1
 ;マスターがオトコだとダメ
-SIF TALENT:MASTER:122
+SIF TALENT:MASTER:オトコ
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
 SIF ITEM:40 == 0 && NOITEM == 0
@@ -32,7 +32,7 @@ SIF TEQUIP:45
 ;SIF TEQUIP:61
 ;	RETURN 0
 ;従順4以下・レズっ気4以下のTARGETの場合クスコしてくれない（サドならＯＫ）
-SIF (ABL:親密 <= 4 || ABL:レズっ気 <= 4) && TALENT:83 == 0
+SIF (ABL:親密 <= 4 || ABL:レズっ気 <= 4) && TALENT:サド == 0
 	RETURN 0
 ;技巧が5以下だとできない
 SIF ABL:技巧 < 5
@@ -83,9 +83,9 @@ SOURCE:14 = 500
 ;ABL:欲情をみる
 SOURCE:11 = 500
 ;ふたなり、ふたなり淫核、排卵誘発状態ならそれぞれ追加
-SIF TALENT:121
+SIF TALENT:ふたなり
 	SOURCE:11 += 500
-SIF TALENT:75 && TALENT:121
+SIF TALENT:淫核 && TALENT:ふたなり
 	SOURCE:11 += 500
 SIF TEQUIP:MASTER:86
 	SOURCE:11 += 500
@@ -109,7 +109,7 @@ ENDIF
 ;ABL:奉仕精神をみる
 ;コンドーム精飲からコピペして改変
 ;倒錯的なら情愛追加
-SIF TALENT:80
+SIF TALENT:倒錯的
 	SOURCE:3 += 500
 IF ABL:奉仕精神 == 0
 	SOURCE:4 = 420
@@ -146,38 +146,38 @@ ENDIF
 ;ABL:サドっ気をみる
 A = 0
 ;淫乱なら中毒充足に梃入れ
-SIF TALENT:76
+SIF TALENT:淫乱
 	SOURCE:7 += 500
 IF ABL:サドっ気 == 0
 	A += 400
 	SOURCE:7 += 100
 	SOURCE:20 = 300
 	;倒錯的なら情愛も追加
-	SIF TALENT:80
+	SIF TALENT:倒錯的
 		TIMES SOURCE:3 , 1.00
 ELSEIF ABL:サドっ気 == 1
 	A += 500
 	SOURCE:7 += 500
 	SOURCE:20 = 600
-	SIF TALENT:80
+	SIF TALENT:倒錯的
 		TIMES SOURCE:3 , 1.20
 ELSEIF ABL:サドっ気 == 2
 	A += 700
 	SOURCE:7 += 900
 	SOURCE:20 = 900
-	SIF TALENT:80
+	SIF TALENT:倒錯的
 		TIMES SOURCE:3 , 1.40
 ELSEIF ABL:サドっ気 == 3
 	A += 900
 	SOURCE:7 += 1300
 	SOURCE:20 = 1200
-	SIF TALENT:80
+	SIF TALENT:倒錯的
 		TIMES SOURCE:3 , 1.60
 ELSEIF ABL:サドっ気 == 4
 	A += 1100
 	SOURCE:7 += 1700
 	SOURCE:20 = 1500
-	SIF TALENT:80
+	SIF TALENT:倒錯的
 		TIMES SOURCE:3 , 1.80
 ELSE
 	;数値を使いまわすためAに代入、主導権相手時にほぼ100%分入るように調整
@@ -188,7 +188,7 @@ ELSE
 		SOURCE:3 += SOURCE:3 + ((ABL:奉仕精神 + ABL:サドっ気) * 100)
 ENDIF
 SOURCE:20 += A
-SIF TALENT:220 && ASSIPLAY == 0
+SIF TALENT:主人 && ASSIPLAY == 0
 	TIMES SOURCE:7 , 1.20
 
 ;ABL:技巧をみる
@@ -237,12 +237,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 2
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 3
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 8
 	SOURCE:15 += 300
 ENDIF
@@ -250,7 +250,7 @@ TFLAG:30 += A
 TFLAG:37 += A / 2
 
 ;女同士ならレズ経験が増える
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTFORML %EXPNAME:40%＋4
 	EXP:レズ経験 += 4
 ENDIF
@@ -261,7 +261,7 @@ TFLAG:100 = 1
 TFLAG:200 = 2
 
 ;調教者がふたなり
-IF TALENT:PLAYER:121
+IF TALENT:PLAYER:ふたなり
 	SOURCE:13 /= 2
 ENDIF
 
@@ -279,13 +279,13 @@ ELSE
 	PRINTFORM %CALLNAME:MASTER%は%CALLNAME:TARGET%に
 ENDIF
 ;暫定的にムードを使用
-IF TFLAG:37 > 30 || TALENT:220
+IF TFLAG:37 > 30 || TALENT:主人
 	PRINT 淫らにヒクつく膣
 ELSEIF TFLAG:50 > 10
 	PRINT 濡れそぼった膣
-ELSEIF TALENT:100 && TALENT:109
+ELSEIF TALENT:小柄体型 && TALENT:貧乳
 	PRINT 幼いワレメ
-ELSEIF TALENT:100
+ELSEIF TALENT:小柄体型
 	PRINT 小さな膣
 ELSE
 	PRINT 陰唇
@@ -309,9 +309,9 @@ IF CFLAG:PLAYER:103 > 0
 	ENDIF
 ;暫定的にムード値or排卵誘発剤
 ELSEIF TFLAG:37 > 30 || TEQUIP:MASTER:86
-	IF TEQUIP:MASTER:86 || TALENT:220
+	IF TEQUIP:MASTER:86 || TALENT:主人
 		PRINT 広げられた秘肉から大量の白濁した愛液が流れている様を
-	ELSEIF TALENT:37 > 30
+	ELSEIF TALENT:弱味 > 30
 		PRINT 子宮口が降りてきている様を
 	ELSE
 		PRINT ぷっくりと膨れたＧスポットの様子を
@@ -331,13 +331,13 @@ ELSE
 	PRINTFORM %CALLNAME:MASTER%に伝え
 ENDIF
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	PRINT 、その中
 	;サドで女でふたなりでない
-	IF TALENT:83 && TALENT:MASTER:122 == 0 && TALENT:121 == 0
+	IF TALENT:サド && TALENT:MASTER:オトコ == 0 && TALENT:ふたなり == 0
 		PRINT に自らの唾液を垂らし
 	;サドで男かふたなり
-	;ELSEIF TALENT:83 && (TALENT:121 || TALENT:122)
+	;ELSEIF TALENT:サド && (TALENT:ふたなり || TALENT:オトコ)
 	;	PRINT へ向けて自分の精を放っ
 	;サドのみ
 	ELSE
@@ -347,14 +347,14 @@ IF TALENT:80
 ENDIF
 PRINT ている
 
-IF TALENT:88 || TALENT:220
+IF TALENT:親愛 || TALENT:主人
 	PRINTFORM %CALLNAME:MASTER%は愛する
-	IF TALENT:220
+	IF TALENT:主人
 		PRINT 御主人様
 	ELSE
 		PRINT 人
 	ENDIF
-	IF TALENT:80 && TALENT:MASTER:122 == 0 && TALENT:121 == 0
+	IF TALENT:倒錯的 && TALENT:MASTER:オトコ == 0 && TALENT:ふたなり == 0
 		PRINT に体の奥まで
 		IF ABL:サドっ気 >= 5
 			PRINT 犯される
@@ -362,9 +362,9 @@ IF TALENT:88 || TALENT:220
 			PRINT 見せつける
 		ENDIF
 		PRINT 快楽に溺れ
-		SIF TALENT:72
+		SIF TALENT:中毒しやすい
 			PRINTFORM 、涎を垂らし
-		SIF TALENT:70 || TALENT:80 || TALENT:79
+		SIF TALENT:快感に素直 || TALENT:倒錯的 || TALENT:マゾ
 			PRINT ながら自ら腰を突き上げ
 		PRINTL ている…
 	ELSEIF TEQUIP:MASTER:86
@@ -372,7 +372,7 @@ IF TALENT:88 || TALENT:220
 	ELSE
 		PRINTL に割り開かれた場所を見られ、興奮のあまり涎と涙と愛液を溢れさせている…
 	ENDIF
-ELSEIF TALENT:85 && TALENT:153
+ELSEIF TALENT:恋慕 && TALENT:恋人
 	PRINTFORML %CALLNAME:MASTER%は秘洞の奥まで見られていることに倒錯的な興奮を覚えている…
 ENDIF
 
@@ -424,75 +424,75 @@ IF L
 ENDIF
 
 ;臆病
-IF TALENT:10
+IF TALENT:臆病
 	A -= 10
 ENDIF
 ;一線越えない（合意が無い場合）
-IF TALENT:27 && TALENT:152 == 0
+IF TALENT:一線越えない && TALENT:合意 == 0
 	A -= 20
 ENDIF
 ;貞操観念
-IF TALENT:30
+IF TALENT:貞操観念
 	A -= 5
 ENDIF
 ;貞操無頓着
-IF TALENT:31
+IF TALENT:貞操無頓着
 	A += 5
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;汚臭鈍感
-IF TALENT:61
+IF TALENT:汚臭鈍感
 	A += 5
 ENDIF
 ;汚臭敏感
-IF TALENT:62
+IF TALENT:汚臭敏感
 	A -= 5
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 5
 ENDIF
 ;汚れ無視
-IF TALENT:64
+IF TALENT:汚れ無視
 	A += 3
 ENDIF
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 5
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 ENDIF
 ;淫乱
-IF TALENT:76
+IF TALENT:淫乱
 	A += 10
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	A += 7
 ENDIF
 ;サド
-IF TALENT:83
+IF TALENT:サド
 	A += 5
 ENDIF
 ;小悪魔
-IF TALENT:87
+IF TALENT:小悪魔
 	A += 3
 ENDIF
 ;禁断の知識
-IF TALENT:125
+IF TALENT:禁断の知識
 	A += 3
 ENDIF
 ;主人
-IF TALENT:220
+IF TALENT:主人
 	A += 3
 ENDIF
 
@@ -523,7 +523,7 @@ IF CFLAG:2 >= 4000
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 10
 ENDIF
 
@@ -585,126 +585,126 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;臆病
-	IF TALENT:10
+	IF TALENT:臆病
 		PRINT  - 
 		PRINTS TALENTNAME:10
 		PRINTV '(,10,')
 		S = 1
 	ENDIF
 	;一線越えない(合意が無い場合)
-	IF TALENT:27 && TALENT:152 == 0
+	IF TALENT:一線越えない && TALENT:合意 == 0
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,20,')
 		S = 1
 	ENDIF
 	;貞操観念
-	IF TALENT:30
+	IF TALENT:貞操観念
 		PRINT  - 
 		PRINTS TALENTNAME:30
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;貞操無頓着
-	IF TALENT:31
+	IF TALENT:貞操無頓着
 		PRINT  + 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;汚臭鈍感
-	IF TALENT:61
+	IF TALENT:汚臭鈍感
 		PRINT  + 
 		PRINTS TALENTNAME:61
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;汚臭敏感
-	IF TALENT:62
+	IF TALENT:汚臭敏感
 		PRINT  - 
 		PRINTS TALENTNAME:62
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		PRINT  + 
 		PRINTS TALENTNAME:63
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:64
+	IF TALENT:汚れ無視
 		PRINT  + 
 		PRINTS TALENTNAME:64
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;快感に素直
-	IF TALENT:10
+	IF TALENT:臆病
 		PRINT  - 
 		PRINTS TALENTNAME:70
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;淫乱
-	IF TALENT:76
+	IF TALENT:淫乱
 		PRINT  + 
 		PRINTS TALENTNAME:76
 		PRINTV '(,10,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:71 && ASSIPLAY == 0
+	IF TALENT:快感の否定 && ASSIPLAY == 0
 		PRINT  + 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;倒錯的
-	IF TALENT:80
+	IF TALENT:倒錯的
 		PRINT  - 
 		PRINTS TALENTNAME:80
 		PRINTV '(,7,')
 		S = 1
 	ENDIF
 	;サド
-	IF TALENT:83
+	IF TALENT:サド
 		PRINT  + 
 		PRINTS TALENTNAME:83
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;小悪魔
-	IF TALENT:87
+	IF TALENT:小悪魔
 		PRINT  + 
 		PRINTS TALENTNAME:87
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;禁断の知識
-	IF TALENT:125
+	IF TALENT:禁断の知識
 		PRINT  + 
 		PRINTS TALENTNAME:125
 		PRINTV '(,3,')
 		S = 1
 	ENDIF
 	;主人
-	IF TALENT:220
+	IF TALENT:主人
 		PRINT  + 
 		PRINTS TALENTNAME:220
 		PRINTV '(,3,')
@@ -742,7 +742,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,10,')

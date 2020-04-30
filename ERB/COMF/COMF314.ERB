@@ -297,7 +297,7 @@ ELSE
 	ENDIF
 	
 	;猫舌なら効果アップ(猫科ボーナス)
-	SIF TALENT:TARGET:54
+	SIF TALENT:TARGET:猫舌
 		TIMES A:1 , 1.3
 	;雪、吹雪、細氷だと効果アップ(極寒ボーナス)
 	SIF TIME:5 >= 5 && TIME:5 <= 8 && TIME:5 != 7
@@ -308,11 +308,11 @@ ELSE
 ENDIF
 
 ;恋慕且つ恋人
-IF TALENT:85 && TALENT:153 && ASSIPLAY == 0
+IF TALENT:恋慕 && TALENT:恋人 && ASSIPLAY == 0
 	SOURCE:9 = (RAND:5+1) * ABL:親密 + 500
 
 	;猫舌なら効果アップ(猫科ボーナス)
-	SIF TALENT:TARGET:54
+	SIF TALENT:TARGET:猫舌
 		TIMES SOURCE:9 , 1.3
 ENDIF
 
@@ -334,7 +334,7 @@ IF TEQUIP:7 == 0
 	IF MARK:3 > 0
 		PRINTFORMW %CALLNAME:TARGET%は一人で炬燵を占拠していた…
 	;狭いし密着度アップさ
-	ELSEIF TALENT:85 == 1 || TALENT:153 == 1
+	ELSEIF TALENT:恋慕 == 1 || TALENT:恋人 == 1
 		PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%と同じ箇所から潜り込み擦り寄ってきた…
 	ELSEIF CFLAG:2 > 100
 		PRINTFORMW %CALLNAME:TARGET%は向かいに潜り込んだ…

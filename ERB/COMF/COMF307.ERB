@@ -11,7 +11,7 @@ SIF TFLAG:44 == 1
 SIF ITEM:51 == 0 && NOITEM == 0
 	RETURN 0
 ;親密3以上or好感度300以上or恋人が必要
-SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
+SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:恋人 == 0
 	RETURN 0
 RETURN 1
 
@@ -193,7 +193,7 @@ ELSEIF TFLAG:18 == 0
 	TIMES SOURCE:21 , 1.00
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
-	IF TALENT:85 || TALENT:153
+	IF TALENT:恋慕 || TALENT:恋人
 		EXP:愛情経験 += 1
 		PRINTFORML %EXPNAME:23%+1
 	ENDIF
@@ -205,7 +205,7 @@ ELSE
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A
 	;愛情経験追加
-	IF TALENT:85 || TALENT:153
+	IF TALENT:恋慕 || TALENT:恋人
 		EXP:愛情経験 += 3
 		PRINTFORML %EXPNAME:23%+3
 	ELSE
@@ -230,13 +230,13 @@ V = 20
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 	S = 1
 ENDIF
 
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
@@ -294,7 +294,7 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
@@ -302,7 +302,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -378,7 +378,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	PRINTV A
 
 	;同性の方が抵抗少ないような気もするが、とりあえず保留
-	;SIF TALENT:MASTER:122 && TALENT:122 == 0
+	;SIF TALENT:MASTER:オトコ && TALENT:オトコ == 0
 	;	V += 5
 	IF A < V
 		PRINT  < 

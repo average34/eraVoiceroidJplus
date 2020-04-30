@@ -14,7 +14,7 @@ SIF TFLAG:44 == 0
 SIF NO:TARGET != 19
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 RETURN 1
 
@@ -30,7 +30,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -81,7 +81,7 @@ ENDIF
 
 ;調教者がふたなり
 IF ASSIPLAY
-	SIF TALENT:ASSI:121
+	SIF TALENT:ASSI:ふたなり
 		TIMES SOURCE:1 , 2.50
 ENDIF
 
@@ -193,7 +193,7 @@ ENDIF
 ;	TFLAG:2 = 1
 ;ENDIF
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4

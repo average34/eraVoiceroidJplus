@@ -2,10 +2,10 @@
 ;放尿
 
 ;おもらし癖なしでも、従順４以上欲望３以上、マゾっ気３以上は
-SIF TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3
+SIF TALENT:おもらし癖 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3
 	JUMP COM86
 ;おもらし癖ありで利尿剤が無い
-SIF TALENT:57 && TEQUIP:22 == 0
+SIF TALENT:おもらし癖 && TEQUIP:22 == 0
 	JUMP COM86
 
 PRINTL 放尿
@@ -108,47 +108,47 @@ ENDIF
 	ENDIF
 
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		TIMES A , 1.20
 
 	;反抗的
-	SIF TALENT:11
+	SIF TALENT:反抗的
 		TIMES A , 2.00
 
 	;プライド高い
-	SIF TALENT:15
+	SIF TALENT:プライド高い
 		TIMES A , 2.00
 
 	;プライド低い
-	SIF TALENT:17
+	SIF TALENT:プライド低い
 		TIMES A , 0.80
 
 	;自制心
-	SIF TALENT:20
+	SIF TALENT:自制心
 		TIMES A , 1.50
 
 	;感情乏しい
-	SIF TALENT:22
+	SIF TALENT:感情乏しい
 		TIMES A , 0.60
 
 	;目立ちたがり
-	SIF TALENT:28
+	SIF TALENT:目立ちたがり
 		TIMES A , 0.80
 
 	;抑圧
-	SIF TALENT:32
+	SIF TALENT:抑圧
 		TIMES A , 3.00
 
 	;抵抗
-	SIF TALENT:34
+	SIF TALENT:抵抗
 		TIMES A , 3.00
 
 	;恥じらい
-	SIF TALENT:35
+	SIF TALENT:恥じらい
 		TIMES A , 3.50
 
 	;恥薄い
-	SIF TALENT:36
+	SIF TALENT:恥薄い
 		TIMES A , 0.50
 
 	UP:10 += A * 3
@@ -164,11 +164,11 @@ EXP:放尿経験 += 2
 ;既成事実２に相当
 TFLAG:200 = 2
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
 	EXP:レズ経験 += 1
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
 	EXP:ＢＬ経験 += 1

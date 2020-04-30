@@ -12,10 +12,10 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;オトコ、半人半妖、ふたなりでない場合、ペニスバンドがないとダメ
-IF (TALENT:TARGET:119 || TALENT:TARGET:121 || TALENT:TARGET:122) == 0
+IF (TALENT:TARGET:半人半妖 || TALENT:TARGET:ふたなり || TALENT:TARGET:オトコ) == 0
 	SIF ITEM:4 == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
@@ -59,12 +59,12 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック(パートナー)
 ;-------------------------------------------------
-SIF TALENT:TARGET:119 || TALENT:TARGET:121 || TALENT:TARGET:122
+SIF TALENT:TARGET:半人半妖 || TALENT:TARGET:ふたなり || TALENT:TARGET:オトコ
 	BASE:TARGET:射精 += CALC_EJAC(SELECTCOM, TARGET)
 ;-------------------------------------------------
 ;射精ゲージチェック(実行者が射精できる場合)
 ;-------------------------------------------------
-SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -180,12 +180,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 10
 	SOURCE:15 += 800
 ENDIF
@@ -215,14 +215,14 @@ IF E >= 1
 	CALL SAMEN_SHOOT
 ENDIF
 
-IF TALENT:119 || TALENT:121 || TALENT:122
+IF TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ
 	;奴隷のＰ⇔調教者のAの汚れが移動
 	STAIN:2 |= STAIN:PLAYER:8
 	STAIN:PLAYER:8 |= STAIN:2
 ENDIF
 
 ;将来オトコ持ちキャラが追加された時の為の保険
-IF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+IF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +4
 	EXP:ＢＬ経験 += 4
@@ -240,7 +240,7 @@ IF TFLAG:60 && PREVCOM == 204 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TF
 	PRINTFORMW %CALLNAME:TARGET%は、再び腰を動かし始めた…
 ;同様に前回の調教が正常位させるか後背位させるか騎乗位するの場合
 ELSEIF TFLAG:60 && (PREVCOM == 193 || PREVCOM == 194 || PREVCOM == 195) && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
-	PRINTFORM %CALLNAME:TARGET%は、膣内からペニス\@ TALENT:119 || TALENT:121 || TALENT:122 ? # バンド \@を抜き去ると%CALLNAME:PLAYER%のアナルに挿入して、再び腰を動かし始めた…
+	PRINTFORM %CALLNAME:TARGET%は、膣内からペニス\@ TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ ? # バンド \@を抜き去ると%CALLNAME:PLAYER%のアナルに挿入して、再び腰を動かし始めた…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%に自らのアナルに入れるように言った…
 ENDIF
@@ -289,15 +289,15 @@ IF L
 ENDIF
 
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 2
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 2
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -307,12 +307,12 @@ IF EXP:PLAYER:Ｖ経験 == 0
 ENDIF
 
 ;調教者が貞操観念
-IF TALENT:PLAYER:30
+IF TALENT:PLAYER:貞操観念
 	A -= 10
 ENDIF
 
 ;調教者が貞操無頓着
-IF TALENT:PLAYER:30
+IF TALENT:PLAYER:貞操観念
 	A += 5
 ENDIF
 
@@ -371,7 +371,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -379,14 +379,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -396,7 +396,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;調教者が貞操観念
-	IF TALENT:PLAYER:30
+	IF TALENT:PLAYER:貞操観念
 		PRINT  - 
 		PRINTFORM %NAME:PLAYER%が貞操観念
 		PRINTV '(,10,')
@@ -404,7 +404,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者が貞操無頓着
-	IF TALENT:PLAYER:30
+	IF TALENT:PLAYER:貞操観念
 		PRINT  + 
 		PRINTFORM %NAME:PLAYER%が貞操無頓着
 		PRINTV '(,5,')

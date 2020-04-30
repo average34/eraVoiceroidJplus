@@ -164,39 +164,39 @@ ELSEIF ABL:露出癖 == 2
 ELSEIF ABL:露出癖 == 3
 	A = 15000
 	;一線越えない
-	SIF TALENT:27
+	SIF TALENT:一線越えない
 		TIMES A , 1.10
 ELSEIF ABL:露出癖 == 4
 	A = 35000
 	;一線越えない
-	SIF TALENT:27
+	SIF TALENT:一線越えない
 		TIMES A , 1.30
 ELSE
 	A = 35000
 	
 	A = A * (ABL:露出癖 - 3)
 	;一線越えない
-	SIF TALENT:27
+	SIF TALENT:一線越えない
 		TIMES A , 1.30
 ENDIF
 
 ;倒錯的
-IF TALENT:80
+IF TALENT:倒錯的
 	TIMES A , 0.75
 ENDIF
 
 ;目立ちたがり
-IF TALENT:28
+IF TALENT:目立ちたがり
 	TIMES A , 0.50
 ENDIF
 
 ;マゾ
-IF TALENT:79
+IF TALENT:マゾ
 	TIMES A , 0.75
 ENDIF
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
-IF ABL:露出癖 >= 3 && TALENT:28 == 0
+IF ABL:露出癖 >= 3 && TALENT:目立ちたがり == 0
 	F = ABL:露出癖 * 3
 ELSE
 	F = 0

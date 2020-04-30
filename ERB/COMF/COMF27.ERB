@@ -34,7 +34,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -125,16 +125,16 @@ ENDIF
 
 ;調教者がふたなり
 IF ASSIPLAY
-	SIF TALENT:ASSI:121
+	SIF TALENT:ASSI:ふたなり
 		TIMES SOURCE:1 , 2.50
 ENDIF
 
 ;小柄体形
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES SOURCE:6 , 2.00
 
 ;貞操観念
-IF TALENT:30
+IF TALENT:貞操観念
 	IF EXP:Ａ経験 == 0
 		TIMES SOURCE:3 , 1.20
 		TIMES SOURCE:16 , 1.10
@@ -187,11 +187,11 @@ ENDIF
 
 ;Ａ敏感、鈍感をみる
 ;快Ａ自体のチェックは後でまとめてやる
-IF TALENT:105
+IF TALENT:Ａ鈍感
 	TIMES SOURCE:6 , 1.50
 	TIMES SOURCE:13 , 1.50
 	TIMES SOURCE:14 , 1.50
-ELSEIF TALENT:106
+ELSEIF TALENT:Ａ敏感
 	TIMES SOURCE:6 , 0.60
 	TIMES SOURCE:13 , 0.60
 	TIMES SOURCE:14 , 0.60
@@ -234,12 +234,12 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 10
 	SOURCE:15 += 500
 ENDIF
@@ -318,7 +318,7 @@ ENDIF
 STAIN:4 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:4
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4

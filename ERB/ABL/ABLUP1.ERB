@@ -194,7 +194,7 @@ ELSEIF ABL:欲望 <= 8
 	A = 8000
 	B = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 	ENDIF
 	A = A * (ABL:欲望 - 5)
@@ -202,7 +202,7 @@ ELSEIF ABL:欲望 <= 11
 	A = 24000
 	B = 0
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 	A = A + 8000 * (ABL:欲望 - 9)
@@ -212,19 +212,19 @@ ELSE
 
 	A = A * (ABL:欲望 - 9)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 	TIMES B , 0.80
 ENDIF
 
 ;ＬＶ１２から１３に上げるときは異常経験必要（素質：[快感に素直][淫乱化]なら無視できる）
-IF ABL:欲望 == 12 && TALENT:70 == 0 && TALENT:76 == 0
+IF ABL:欲望 == 12 && TALENT:快感に素直 == 0 && TALENT:淫乱 == 0
 	C = 1
 ELSE
 	C = 0

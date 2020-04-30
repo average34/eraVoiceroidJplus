@@ -1215,7 +1215,7 @@ ENDIF
 
 ;-------------------------------------------------
 ;デート中に向こうから告白
-;ちなみにTALENT:151を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
+;ちなみにTALENT:キス未経験を持ってる＝キス未経験の場合、このタイミングで一緒にファーストキスもする
 ;-------------------------------------------------
 IF TFLAG:600 == 26
 		PRINTFORMW 別れ際、きりたんが袖を掴む
@@ -1597,7 +1597,7 @@ IF TFLAG:13 == 9
 	;恋慕
 	IF TALENT:恋慕 && (CFLAG:314 < 2 || FLAG:7 == 2)
 		;更に淫乱持ち
-		IF TALENT:76
+		IF TALENT:淫乱
 			;親愛または相愛
 			IF (TALENT:親愛 || TALENT:相愛)
 				PRINTFORMW 
@@ -1820,7 +1820,7 @@ IF TFLAG:13 == 23
 	;相手がマスター
 	IF CFLAG:111 == NO:MASTER
 		;育児中
-		IF TALENT:135 == 1
+		IF TALENT:育児中 == 1
 			;恋慕or相愛or恋人
 			IF TALENT:恋人 == 1 || TALENT:恋慕 == 1 || TALENT:相愛 == 1
 				B = RAND:3
@@ -2343,7 +2343,7 @@ SIF NO:TARGET != 10
 IF CFLAG:201 == 0
 	DRAWLINE
 	;素質:パートナーの場合
-	IF TALENT:150 == 1
+	IF TALENT:パートナー == 1
 		CALL PRINTFORMW2T , @"「ここが食卓、あそこの部屋がこれから泊まる私の部屋ですね」"
 		CALL PRINTFORMW2T , @"「本日からよろしくお願いいたします。」"
 	ENDIF
@@ -5165,7 +5165,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 			;合意
 			IF TALENT:合意 == 1
 				;主人公が童貞
-				IF TALENT:MASTER:154 == 1
+				IF TALENT:MASTER:童貞 == 1
 					PRINTFORMW 
 					;射精する
 					IF TFLAG:2 == 1 || TFLAG:2 == 2
@@ -5187,7 +5187,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 			;反発付き
 			ELSEIF MARK:3 >= 2
 				;主人公が童貞
-				IF TALENT:MASTER:154 == 1
+				IF TALENT:MASTER:童貞 == 1
 					PRINTFORMW 
 					;射精する
 					IF TFLAG:2 == 1 || TFLAG:2 == 2
@@ -5209,7 +5209,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 			;合意も反発も無い
 			ELSE
 				;主人公が童貞
-				IF TALENT:MASTER:154 == 1
+				IF TALENT:MASTER:童貞 == 1
 					PRINTFORMW 
 					;射精する
 					IF TFLAG:2 == 1 || TFLAG:2 == 2
@@ -6525,7 +6525,7 @@ ENDIF
 ;	;二回目以降
 ;	ELSE
 ;		;淫乱
-;		IF TALENT:76 == 1 && (CFLAG:470 < 5 || FLAG:7 == 2)
+;		IF TALENT:淫乱 == 1 && (CFLAG:470 < 5 || FLAG:7 == 2)
 ;			PRINTFORMW 
 ;			CFLAG:470 = 5
 ;		;恋慕
@@ -6814,7 +6814,7 @@ ENDIF
 ;-------------------------------------------------
 ;IF SELECTCOM == 51
 ;	;淫乱
-;	IF TALENT:76 == 1 && (CFLAG:479 < 5 || FLAG:7 == 2)
+;	IF TALENT:淫乱 == 1 && (CFLAG:479 < 5 || FLAG:7 == 2)
 ;		PRINTFORMW 
 ;		PRINTFORMW 
 ;		CFLAG:479 = 5
@@ -6921,7 +6921,7 @@ ENDIF
 ;	;二回目以降
 ;	ELSE
 ;		;淫乱
-;		IF TALENT:76 == 1 && (CFLAG:483 < 5 || FLAG:7 == 2)
+;		IF TALENT:淫乱 == 1 && (CFLAG:483 < 5 || FLAG:7 == 2)
 ;			PRINTFORMW 
 ;			CFLAG:483 = 5
 ;		;恋慕
@@ -7067,7 +7067,7 @@ IF SELECTCOM == 100 && TEQUIP:90
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:487 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:487 < 5 || FLAG:7 == 2)
 ;			PRINTFORMW 
 			CFLAG:487 = 5
 		;恋慕
@@ -7091,7 +7091,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 100 && TEQUIP:90 == 0
 	;淫乱
-	IF TALENT:76 == 1 && (CFLAG:488 < 5 || FLAG:7 == 2)
+	IF TALENT:淫乱 == 1 && (CFLAG:488 < 5 || FLAG:7 == 2)
 ;		PRINTFORMW 
 		CFLAG:488 = 5
 	;恋慕
@@ -7117,7 +7117,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 52
 	;淫乱
-	IF TALENT:76 == 1 && (CFLAG:489 < 5 || FLAG:7 == 2)
+	IF TALENT:淫乱 == 1 && (CFLAG:489 < 5 || FLAG:7 == 2)
 ;		PRINTFORMW 
 		CFLAG:489 = 5
 	;恋慕
@@ -7151,7 +7151,7 @@ IF SELECTCOM == 85
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:490 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:490 < 5 || FLAG:7 == 2)
 ;			PRINTFORMW 
 			CFLAG:490 = 5
 		;恋慕
@@ -7173,7 +7173,7 @@ ENDIF
 ;-------------------------------------------------
 ;強制放尿 CFLAG491
 ;-------------------------------------------------
-IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:57 && TEQUIP:22 == 0)
+IF SELECTCOM == 85 && (TALENT:おもらし癖 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:おもらし癖 && TEQUIP:22 == 0)
 	;初めて
 	IF CFLAG:491 == 0
 		;合意
@@ -7186,7 +7186,7 @@ IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && A
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:491 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:491 < 5 || FLAG:7 == 2)
 ;			PRINTFORMW 
 			CFLAG:491 = 5
 		;恋慕
@@ -7224,7 +7224,7 @@ IF SELECTCOM == 64
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:492 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:492 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:492 = 5
 		;恋慕
@@ -7259,7 +7259,7 @@ IF SELECTCOM == 63
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:494 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:494 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:494 = 5
 		;恋慕
@@ -7298,7 +7298,7 @@ IF SELECTCOM == 70
 			PRINTFORMW 
 			CFLAG:496 = 6
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		ELSEIF TALENT:恋慕 == 1 && (TALENT:79 || ABL:マゾっ気 >= 5) && (CFLAG:496 < 5 || FLAG:7 == 2)
+		ELSEIF TALENT:恋慕 == 1 && (TALENT:マゾ || ABL:マゾっ気 >= 5) && (CFLAG:496 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:496 = 5
 		;恋慕
@@ -7324,7 +7324,7 @@ IF SELECTCOM == 71
 	;初めて
 	IF CFLAG:497 == 0
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
 			;処女
 			IF TALENT:処女 == 1
 				PRINTFORMW 
@@ -7390,7 +7390,7 @@ IF SELECTCOM == 71
 	;二回目以降
 	ELSE
 		;淫乱
-		IF TALENT:76 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
+		IF TALENT:淫乱 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
 			;処女
 			IF TALENT:処女 == 1
 				PRINTFORMW 
@@ -7812,7 +7812,7 @@ IF SELECTCOM == 186 && TFLAG:17 == TARGET
 			PRINTFORMW 
 			CFLAG:508 = 6
 		;恋慕+淫乱
-		ELSEIF TALENT:恋慕 == 1 && TALENT:76 == 1 && (CFLAG:508 < 5 || FLAG:7 == 2)
+		ELSEIF TALENT:恋慕 == 1 && TALENT:淫乱 == 1 && (CFLAG:508 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:508 = 5
 		;恋慕
@@ -7851,7 +7851,7 @@ IF SELECTCOM == 186 && TFLAG:17 != TARGET
 			PRINTFORMW 
 			CFLAG:509 = 6
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		ELSEIF TALENT:恋慕 == 1 && (TALENT:79 || ABL:マゾっ気 >= 5) && (CFLAG:509 < 5 || FLAG:7 == 2)
+		ELSEIF TALENT:恋慕 == 1 && (TALENT:マゾ || ABL:マゾっ気 >= 5) && (CFLAG:509 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:509 = 5
 		;恋慕
@@ -7895,7 +7895,7 @@ IF SELECTCOM == 187
 			PRINTFORMW 
 			CFLAG:510 = 6
 		;恋慕+淫乱
-		ELSEIF TALENT:恋慕 == 1 && TALENT:76 == 1 && (CFLAG:510 < 5 || FLAG:7 == 2)
+		ELSEIF TALENT:恋慕 == 1 && TALENT:淫乱 == 1 && (CFLAG:510 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			PRINTFORMW 
 			PRINTFORMW 
@@ -7947,7 +7947,7 @@ IF SELECTCOM == 191
 			PRINTFORMW 
 			CFLAG:512 = 6
 		;恋慕+淫乱
-		ELSEIF TALENT:恋慕 == 1 && TALENT:76 == 1 && (CFLAG:512 < 5 || FLAG:7 == 2)
+		ELSEIF TALENT:恋慕 == 1 && TALENT:淫乱 == 1 && (CFLAG:512 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:512 = 5
 		;恋慕

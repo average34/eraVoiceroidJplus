@@ -3,7 +3,7 @@
 #LATER
 
 IF ASSI >= 0
-	IF TALENT:ASSI:90 && ITEM:26 == 0
+	IF TALENT:ASSI:妖狐 && ITEM:26 == 0
 		PRINTFORMW [%TALENTNAME:90%]の効果で媚薬を手に入れました。
 		ITEM:26 = 1
 	ENDIF
@@ -11,9 +11,9 @@ ENDIF
 
 @YOUJI
 ;調教者が幼稚
-IF TALENT:PLAYER:132
+IF TALENT:PLAYER:幼稚
 	PRINTFORMW %NAME:PLAYER%が乳を吸ううちに%NAME:TARGET%は母乳が出るようになった。
-	TALENT:130 = 1
+	TALENT:母乳体質 = 1
 ENDIF
 
 @EVENTCOMEND
@@ -21,7 +21,7 @@ ENDIF
 SIF CFLAG:TARGET:100
 	RETURN 0
 
-IF EXP:Ｖ経験 == 0 && EXP:Ａ経験 > 0 && TALENT:30
+IF EXP:Ｖ経験 == 0 && EXP:Ａ経験 > 0 && TALENT:貞操観念
 	CFLAG:TARGET:100 = 1
 	PRINTW （貞操を守れるなら、少しは後ろを攻められてもよいと思っているようだ・・・）
 ENDIF
@@ -39,28 +39,28 @@ IF TARGET >= 0
 	TRYCALLFORM EVENT_NEXTDAY_K{NO:TARGET}
 
 	;不思議の根持ちで精液経験が1200以上で生える(1200以上はパッチまとめ仕様でJ本体では300以上)
-	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:120 == 1 && EXP:TARGET:精液経験 >= 1200
+	IF TALENT:ふたなり == 0 && TALENT:オトコ == 0 && TALENT:TARGET:不思議な根 == 1 && EXP:TARGET:精液経験 >= 1200
 		CALL EVENT_FUTA_F
 	ENDIF
 
 	;具現持ちでレズ経験10000以上で生える(10000以上はパッチまとめ仕様でJ本体では2500以上)
-	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:127 == 1 && EXP:TARGET:レズ経験 >= 10000
+	IF TALENT:ふたなり == 0 && TALENT:オトコ == 0 && TALENT:TARGET:具現 == 1 && EXP:TARGET:レズ経験 >= 10000
 		CALL EVENT_FUTA_G
 	ENDIF
 
 	;放尿経験３０以上でおもらし癖がつく
-	IF TALENT:57 == 0
-		SIF TALENT:TARGET:132 && EXP:TARGET:放尿経験 >= 10 
+	IF TALENT:おもらし癖 == 0
+		SIF TALENT:TARGET:幼稚 && EXP:TARGET:放尿経験 >= 10 
 			CALL EVENT_MORASI
-		SIF TALENT:TARGET:132 == 0 && EXP:TARGET:放尿経験 >= 30 
+		SIF TALENT:TARGET:幼稚 == 0 && EXP:TARGET:放尿経験 >= 30 
 			CALL EVENT_MORASI
 	ENDIF
 
 	;反発感情３があり、かつ[幼稚]である時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が５以上になる
-	IF TALENT:TARGET:132 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:異常経験 >= 5
+	IF TALENT:TARGET:幼稚 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:異常経験 >= 5
 		CALL EVENT_YOUJI
 	;反発感情３があり、かつ[幼稚]でなく、蓬莱人がない時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が７以上に加え露出５とおもらし癖がつく
-	ELSEIF TALENT:TARGET:128 == 0 && TALENT:TARGET:132 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:異常経験 >= 7 && TALENT:57 == 1
+	ELSEIF TALENT:TARGET:蓬莱人 == 0 && TALENT:TARGET:幼稚 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:異常経験 >= 7 && TALENT:おもらし癖 == 1
 		CALL EVENT_YOUJI
 	ENDIF
 ENDIF
@@ -71,12 +71,12 @@ IF FLAG:5 == 10
 	REPEAT CHARANUM
 		IF COUNT == 0
 			CONTINUE
-		ELSEIF TALENT:COUNT:134 || TALENT:COUNT:135
+		ELSEIF TALENT:COUNT:妊娠 || TALENT:COUNT:育児中
 			CONTINUE
 		ELSE
 			CFLAG:COUNT:18 += 1
 			;制限日数をオーバーした場合
-			IF (CFLAG:COUNT:18 >= (10 + ABL:MASTER:霧無効化能力強化 * 2) * (TALENT:COUNT:150 * 5 + 10) / 10 - CFLAG:COUNT:20 / 10) && CFLAG:COUNT:17 == 0
+			IF (CFLAG:COUNT:18 >= (10 + ABL:MASTER:霧無効化能力強化 * 2) * (TALENT:COUNT:パートナー * 5 + 10) / 10 - CFLAG:COUNT:20 / 10) && CFLAG:COUNT:17 == 0
 				;!!!
 				;暫定メッセージ。とりあえず必要最小限だけ
 				CFLAG:COUNT:17 = 1
@@ -118,9 +118,9 @@ REPEAT CHARANUM
 	ELSEIF (CFLAG:COUNT:19 >= 5 + ABL:MASTER:霧浄化能力強化 || (CFLAG:COUNT:17 && CFLAG:COUNT:2 < 0)) && A == 0
 		PRINTFORMW %CALLNAME:COUNT%は完全に霧に飲み込まれてしまった…
 		;【パートナー】引継ぎ
-		IF TALENT:COUNT:150
+		IF TALENT:COUNT:パートナー
 			IF TARGET > 0
-				TALENT:TARGET:150 = 1
+				TALENT:TARGET:パートナー = 1
 				PRINTFORMW %CALLNAME:TARGET%が次の【パートナー】となります
 			ENDIF
 		ENDIF
@@ -165,7 +165,7 @@ ENDIF
 @EVENT_FUTA_F
 ;生える
 ;恋慕があると相談しに来る
-IF TALENT:85
+IF TALENT:恋慕
 	PRINTFORML 真夜中、ノックの音で目を覚まし扉を開けると、
 	PRINTFORMW かなり混乱した様子の%CALLNAME:TARGET%が立っていた
 	PRINTFORMW 落ち着かせて話を聞くと、体が変になってしまったという
@@ -178,13 +178,13 @@ TFLAG:13 = 48
 CALL SELF_KOJO
 PRINTL  
 PRINTFORMW %CALLNAME:TARGET%は[ふたなり]となっていた。
-;TALENT:TARGET:120 = 0
-TALENT:TARGET:121 = 1
+;TALENT:TARGET:不思議な根 = 0
+TALENT:TARGET:ふたなり = 1
 
 @EVENT_FUTA_G
 ;生える
 ;恋慕があると相談しに来る
-IF TALENT:85
+IF TALENT:恋慕
 	PRINTFORML 真夜中、ノックの音で目を覚まし扉を開けると、
 	PRINTFORMW かなり混乱した様子の%CALLNAME:TARGET%が立っていた
 	PRINTFORMW 落ち着かせて話を聞くと、体が変になってしまったという
@@ -197,8 +197,8 @@ TFLAG:13 = 48
 CALL SELF_KOJO
 PRINTL  
 PRINTFORMW %CALLNAME:TARGET%は[ふたなり]となっていた。
-;TALENT:TARGET:127 = 0
-TALENT:TARGET:121 = 1
+;TALENT:TARGET:具現 = 0
+TALENT:TARGET:ふたなり = 1
 
 @EVENT_MORASI
 ;おねしょ
@@ -206,30 +206,30 @@ PRINTFORMW （む･･･なんだこれ？）
 TFLAG:13 = 49
 CALL SELF_KOJO
 PRINTFORM %CALLNAME:TARGET%は
-SIF TALENT:TARGET:132 && EXP:TARGET:放尿経験 >= 10
+SIF TALENT:TARGET:幼稚 && EXP:TARGET:放尿経験 >= 10
 PRINTFORM おねしょを
-SIF TALENT:TARGET:132 == 0 && EXP:TARGET:放尿経験 >= 30 
+SIF TALENT:TARGET:幼稚 == 0 && EXP:TARGET:放尿経験 >= 30 
 PRINTFORM 粗相を
 PRINTFORMW してしまったようだ…
 PRINTFORMW %CALLNAME:TARGET%は[おもらし癖]がついた。
-TALENT:TARGET:57 = 1
+TALENT:TARGET:おもらし癖 = 1
 
 @EVENT_YOUJI
 ;幼児退行
 PRINTFORMW （む･･･どうしたんだ？）
 PRINTFORMW %CALLNAME:TARGET%の様子がおかしい…
 PRINTFORMW %CALLNAME:TARGET%は過酷な調教に耐え切れず、[幼児退行]してしまったようだ…
-	SIF TALENT:TARGET:132
-		TALENT:TARGET:132 = 0
-	SIF TALENT:TARGET:27
-		TALENT:TARGET:27 = 0
-	SIF TALENT:TARGET:30
-		TALENT:TARGET:30 = 0
-	SIF TALENT:TARGET:32
-		TALENT:TARGET:32 = 0
-	SIF TALENT:TARGET:34
-		TALENT:TARGET:34 = 0
-TALENT:TARGET:131 = 1
+	SIF TALENT:TARGET:幼稚
+		TALENT:TARGET:幼稚 = 0
+	SIF TALENT:TARGET:一線越えない
+		TALENT:TARGET:一線越えない = 0
+	SIF TALENT:TARGET:貞操観念
+		TALENT:TARGET:貞操観念 = 0
+	SIF TALENT:TARGET:抑圧
+		TALENT:TARGET:抑圧 = 0
+	SIF TALENT:TARGET:抵抗
+		TALENT:TARGET:抵抗 = 0
+TALENT:TARGET:幼児 = 1
 MARK:TARGET:3 = 0
 
 
@@ -416,7 +416,7 @@ ENDIF
 
 
 
-IF TALENT:134
+IF TALENT:妊娠
 	PRINTFORMW 黄色のキャンディを飲み込んだ%NAME:TARGET%は急激な体の変調を訴えた
 	PRINTFORML 妊婦のお腹のまま長い間かなり苦しそうにのた打ち回っていたが、
 	PRINTFORML Ｍの字に開脚した膣口から可愛らしい形の卵が顔を見せたかと思うと
@@ -427,7 +427,7 @@ IF TALENT:134
 	CALL SELF_KOJO
 	PRINTFORMW 卵を産んだ途端、%NAME:TARGET%のお腹は妊娠する前の大きさに戻った。
 	PRINTFORMW %NAME:TARGET%は[%TALENTNAME:134%]を失った
-	TALENT:134 = 0
+	TALENT:妊娠 = 0
 	;妊娠イベントで減った体力の最大値が回復
 	MAXBASE:体力 += 500
 	EXP:Ｖ経験 += 5
@@ -482,9 +482,9 @@ ENDIF
 
 ;鳥、昆虫、両生類、爬虫類以外のキャラで異常経験5以下、あるいは親愛、相愛、服従なしだとランダムで狂気が付く
 IF NO:TARGET != 24 && NO:TARGET != 25 && NO:TARGET != 32 && NO:TARGET != 43 && NO:TARGET != 44 && NO:TARGET != 78
-	IF EXP:異常経験 < 6 && (TALENT:88 == 0 || TALENT:89 == 0 || TALENT:180 == 0) && TALENT:123 == 0 && RAND:3 != 0
+	IF EXP:異常経験 < 6 && (TALENT:親愛 == 0 || TALENT:相愛 == 0 || TALENT:服従 == 0) && TALENT:狂気 == 0 && RAND:3 != 0
 		PRINTFORMW %NAME:TARGET%は発狂してしまった
-		TALENT:123 = 1
+		TALENT:狂気 = 1
 	ENDIF
 ENDIF
 

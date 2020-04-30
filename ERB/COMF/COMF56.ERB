@@ -19,7 +19,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122
+SIF TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, MASTER)
 
 ;-------------------------------------------------
@@ -131,7 +131,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 	SOURCE:15 += 400
 ENDIF
@@ -214,18 +214,18 @@ ENDIF
 ;	TFLAG:7 = 1
 ;ENDIF
 
-IF TALENT:MASTER:119 || TALENT:MASTER:122 || TALENT:MASTER:121
+IF TALENT:MASTER:半人半妖 || TALENT:MASTER:オトコ || TALENT:MASTER:ふたなり
 	;主人のＰ⇔助手のＶの汚れが移動
 	STAIN:MASTER:2 |= STAIN:ASSI:3
 	STAIN:ASSI:3 |= STAIN:MASTER:2
 ENDIF
 
-IF TALENT:MASTER:122 == 0 && TALENT:ASSI:122 == 0
+IF TALENT:MASTER:オトコ == 0 && TALENT:ASSI:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINT +10
 	PRINTFORML (%CALLNAME:ASSI%) 
 	EXP:ASSI:レズ経験 += 10
-ELSEIF TALENT:MASTER:122 == 1 && TALENT:ASSI:122 == 1
+ELSEIF TALENT:MASTER:オトコ == 1 && TALENT:ASSI:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINT +10
 	PRINTFORML (%CALLNAME:ASSI%) 
@@ -284,16 +284,16 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -329,7 +329,7 @@ IF CFLAG:2 >= 3000
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 20
 ENDIF
 
@@ -383,14 +383,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -399,7 +399,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -449,7 +449,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,20,')

@@ -8,13 +8,13 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;欲望4以上かつ、親密8以上or好感度1000以上or恋人が必要
-SIF ABL:欲望 < 4 || (ABL:親密 < 8 && CFLAG:2 < 1000 && TALENT:153 == 0)
+SIF ABL:欲望 < 4 || (ABL:親密 < 8 && CFLAG:2 < 1000 && TALENT:恋人 == 0)
 	RETURN 0
 ;デート中は恋人か親愛か解放か恥薄いが必要
-SIF TALENT:153 == 0 && TALENT:88 == 0 && TALENT:33 == 0 && TALENT:36 == 0 && TEQUIP:2 > 0 && TEQUIP:2 != 7
+SIF TALENT:恋人 == 0 && TALENT:親愛 == 0 && TALENT:解放 == 0 && TALENT:恥薄い == 0 && TEQUIP:2 > 0 && TEQUIP:2 != 7
 	RETURN 0
 ;温泉デート中は親愛か相愛が必要
-SIF TALENT:88 == 0 && TALENT:89 == 0 && TEQUIP:2 == 7
+SIF TALENT:親愛 == 0 && TALENT:相愛 == 0 && TEQUIP:2 == 7
 	RETURN 0
 RETURN 1
 
@@ -59,11 +59,11 @@ TFLAG:17 = 0
 IF (TFLAG:37 >= 25 || TFLAG:47 >= 17) && TEQUIP:2 == 0
 	TFLAG:17 = 1
 ;(ムード35以上or酔い27以上)且つ温泉以外のデートスポットかつ(恥薄い、快感に素直、淫乱、倒錯的)
-ELSEIF (TFLAG:37 >= 35 || TFLAG:47 >= 27) && (TEQUIP:2 > 0 && (TEQUIP:2 != 6)) && (TALENT:36 || TALENT:70 || TALENT:76 || TALENT:80)
+ELSEIF (TFLAG:37 >= 35 || TFLAG:47 >= 27) && (TEQUIP:2 > 0 && (TEQUIP:2 != 6)) && (TALENT:恥薄い || TALENT:快感に素直 || TALENT:淫乱 || TALENT:倒錯的)
 	TFLAG:17 = 1
 ENDIF
 ;好感度3500より大きい、欲望Lv8、恋慕、上二つのどっちか
-SIF CFLAG:2 > 3500 && ABL:欲望 >= 8 && TALENT:85 && TFLAG:17
+SIF CFLAG:2 > 3500 && ABL:欲望 >= 8 && TALENT:恋慕 && TFLAG:17
 	TFLAG:17 = 2
 ;TFLAG:17でおおまかな状況を見られるように
 
@@ -230,13 +230,13 @@ ENDIF
 
 
 ;TALENT:恋慕をみる
-SIF TALENT:85
+SIF TALENT:恋慕
 	TIMES SOURCE:3 , 1.50
 ;TALENT:恋人をみる
-SIF TALENT:153
+SIF TALENT:恋人
 	TIMES SOURCE:3 , 1.50
 ;TALENT:親愛をみる
-SIF TALENT:88
+SIF TALENT:親愛
 	TIMES SOURCE:3 , 2.00
 
 
@@ -286,7 +286,7 @@ ENDIF
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -350,7 +350,7 @@ ENDIF
 J = 0
 J:1 = 0
 ;キス経験者同士ならキスする
-IF TALENT:151 == 0 && TALENT:PLAYER:151 == 0
+IF TALENT:キス未経験 == 0 && TALENT:PLAYER:キス未経験 == 0
 	IF TFLAG:17 == 2
 		EXP:キス経験 += 2
 		EXP:PLAYER:キス経験 += 2
@@ -364,14 +364,14 @@ IF TALENT:151 == 0 && TALENT:PLAYER:151 == 0
 ENDIF
 
 ;百合の園
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	IF TFLAG:17 == 2
 		J += 4
 	ELSE
 		J += 1
 	ENDIF
 ;ハッテン
-ELSEIF TALENT:122 && TALENT:PLAYER:122
+ELSEIF TALENT:オトコ && TALENT:PLAYER:オトコ
 	IF TFLAG:17 == 2
 		J:1 += 4 + J
 	ELSE
@@ -412,7 +412,7 @@ ELSEIF TFLAG:18 == 0
 	TIMES SOURCE:21 , 1.00
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
-	IF TALENT:85 || TALENT:153
+	IF TALENT:恋慕 || TALENT:恋人
 		EXP:愛情経験 += 2
 		PRINTFORML %EXPNAME:23%+2
 	ENDIF
@@ -424,7 +424,7 @@ ELSE
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A
 	;愛情経験追加
-	IF TALENT:85 || TALENT:153
+	IF TALENT:恋慕 || TALENT:恋人
 		EXP:愛情経験 += 6
 		PRINTFORML %EXPNAME:23%+6
 	ELSE
@@ -438,10 +438,10 @@ IF TFLAG:17 == 2
 	IF (ABL:Ｃ感覚 + ABL:Ｂ感覚) > 2
 		J = (ABL:Ｃ感覚 + ABL:Ｂ感覚) - 2
 		;淫乳
-		SIF TALENT:75
+		SIF TALENT:淫核
 			J += 1
 		;淫核
-		SIF TALENT:78
+		SIF TALENT:淫乳
 			J += 1
 		PRINTFORML %EXPNAME:21%+{J}
 	ENDIF
@@ -463,18 +463,18 @@ RETURN 1
 IF TFLAG:45
 	PRINTFORM %CALLNAME:TARGET%は
 	IF TEQUIP:2
-		IF (TALENT:28 && TALENT:33 && TALENT:36 && TALENT:75 && TALENT:76 && TALENT:78) == 0
+		IF (TALENT:目立ちたがり && TALENT:解放 && TALENT:恥薄い && TALENT:淫核 && TALENT:淫乱 && TALENT:淫乳) == 0
 			PRINT 周囲を気にしつつも
-		ELSEIF (TALENT:10 == 0 && TALENT:35 == 0 && (TALENT:28 || TALENT:33) && TALENT:85) && CFLAG:2 > 3500 && ABL:欲望 >= 8
+		ELSEIF (TALENT:臆病 == 0 && TALENT:恥じらい == 0 && (TALENT:目立ちたがり || TALENT:解放) && TALENT:恋慕) && CFLAG:2 > 3500 && ABL:欲望 >= 8
 			PRINT 人目もはばからず
 		ENDIF
 	ENDIF
-	SIF TALENT:85 == 0
+	SIF TALENT:恋慕 == 0
 		PRINT 遠慮がちな様子で
 	PRINTFORM %CALLNAME:PLAYER%
-	IF TALENT:85
+	IF TALENT:恋慕
 		;温泉以外のデートスポット且つ幼児退行or幼稚
-		IF TEQUIP:2 != 7 && (TALENT:131 || TALENT:132)
+		IF TEQUIP:2 != 7 && (TALENT:幼児 || TALENT:幼稚)
 			PRINT の袖を引っ張り、
 		ELSE
 			PRINT の背中に手を廻すと、
@@ -485,10 +485,10 @@ IF TFLAG:45
 			IF ABL:欲望 >= 12 && TFLAG:17 == 2 && PALAM:5 > PALAMLV:7
 				PRINT 蕩けきった表情で
 			;欲望Lv10以上、淫乱、(サドor小悪魔)+いつもの
-			ELSEIF ABL:欲望 >= 10 && TALENT:76 && (TALENT:83 || TALENT:87) && TFLAG:17 == 2
+			ELSEIF ABL:欲望 >= 10 && TALENT:淫乱 && (TALENT:サド || TALENT:小悪魔) && TFLAG:17 == 2
 				PRINT 妖しい笑みを浮かべながら
 			;(臆病or恥じらい)、欲望Lv8以上、デート中
-			ELSEIF (TALENT:10 || TALENT:35) && ABL:欲望 >= 8 && TEQUIP:2
+			ELSEIF (TALENT:臆病 || TALENT:恥じらい) && ABL:欲望 >= 8 && TEQUIP:2
 				PRINT 羞恥に頬を染めながらも
 			ENDIF
 		ELSEIF TFLAG:17 == 1
@@ -498,22 +498,22 @@ IF TFLAG:45
 		;欲望Lv12以上+いつもの
 		IF ABL:欲望 >= 12 && TFLAG:17 == 2
 			;淫核or淫乳
-			IF TALENT:75 && TALENT:78
+			IF TALENT:淫核 && TALENT:淫乳
 				PRINT 身をよじりながら絡み付くように
 			;淫乳
-			ELSEIF TALENT:78
+			ELSEIF TALENT:淫乳
 				;貧乳
-				IF TALENT:109
+				IF TALENT:貧乳
 					PRINT 控えめな
 				;巨乳
-				ELSEIF TALENT:110
+				ELSEIF TALENT:巨乳
 					PRINT 豊かな
 				ELSE
 					PRINT 形の良い
 				ENDIF
 				PRINT 胸をぐいぐいと押し付けるようにして
 			;淫核
-			ELSEIF TALENT:75
+			ELSEIF TALENT:淫核
 				PRINT 下半身を擦り付けるように
 			ELSE
 				PRINT 身体を密着させるようにして
@@ -521,16 +521,16 @@ IF TFLAG:45
 		ELSE
 			IF CFLAG:2 >= 3500
 				;楽観的
-				IF TALENT:25
+				IF TALENT:楽観的
 					PRINT 嬉しそうに
 				;恥じらい
-				ELSEIF TALENT:35
+				ELSEIF TALENT:恥じらい
 					PRINT 顔を埋めるようにして
 				;臆病
-				ELSEIF TALENT:10
+				ELSEIF TALENT:臆病
 					PRINT おずおずと
 				;幼児退行or幼稚
-				ELSEIF TALENT:131 || TALENT:132
+				ELSEIF TALENT:幼児 || TALENT:幼稚
 					PRINT しがみつくように
 				ELSE
 					PRINT ぎゅっと
@@ -545,27 +545,27 @@ IF TFLAG:45
 	PRINTW 抱きついてきた…
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は
-	SIF TALENT:85 == 0
+	SIF TALENT:恋慕 == 0
 		PRINT 戸惑い気味な
 	PRINTFORM %CALLNAME:TARGET%の腰に腕を廻して
 	SIF ABL:Ｃ感覚 < 3 && ABL:Ｂ感覚 < 3
 		PRINT 優しく
-	IF TALENT:85 == 0
+	IF TALENT:恋慕 == 0
 		PRINTW 抱き寄せた…
 	ELSE
 		PRINTL 抱き寄せると
-		SIF (TALENT:28 && TALENT:33 && TALENT:36 && TALENT:75 && TALENT:76 && TALENT:78) == 0 && TEQUIP:2 != 0
+		SIF (TALENT:目立ちたがり && TALENT:解放 && TALENT:恥薄い && TALENT:淫核 && TALENT:淫乱 && TALENT:淫乳) == 0 && TEQUIP:2 != 0
 			PRINT 周囲を気にしつつ、
 		PRINTFORM %CALLNAME:TARGET%も
 		IF TFLAG:17 == 2
-			IF TALENT:75 && TALENT:78
+			IF TALENT:淫核 && TALENT:淫乳
 				PRINT 身をよじりながら、絡み付くように
-			ELSEIF TALENT:75
+			ELSEIF TALENT:淫核
 				PRINT 下半身を擦り付けるように
-			ELSEIF TALENT:78
-				IF TALENT:109
+			ELSEIF TALENT:淫乳
+				IF TALENT:貧乳
 					PRINT 控えめな
-				ELSEIF TALENT:110
+				ELSEIF TALENT:巨乳
 					PRINT 豊かな
 				ELSE
 					PRINT 形の良い
@@ -575,13 +575,13 @@ ELSE
 				PRINT 身体を密着させるようにして
 			ENDIF
 		ELSE
-			IF TALENT:25 && CFLAG:2 > 3500
+			IF TALENT:楽観的 && CFLAG:2 > 3500
 				PRINT 嬉しそうに
-			ELSEIF TALENT:35 && CFLAG:2 > 3500
+			ELSEIF TALENT:恥じらい && CFLAG:2 > 3500
 				PRINT 顔を埋めるようにして
-			ELSEIF TALENT:10
+			ELSEIF TALENT:臆病
 				PRINT おずおずと
-			ELSEIF TALENT:131 && CFLAG:2 > 3500
+			ELSEIF TALENT:幼児 && CFLAG:2 > 3500
 				PRINT しがみつくように
 			ELSEIF CFLAG:2 < 3500
 				PRINT ぎゅっと
@@ -607,7 +607,7 @@ V = 65
 CALL COM_ORDER
 
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 7
 ENDIF
 
@@ -638,36 +638,36 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 1
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 	S = 5
 ENDIF
 
 ;キス未経験
-IF TALENT:151
+IF TALENT:キス未経験
 	A -= 30
 ENDIF
 
 ;合意
-IF TALENT:152
+IF TALENT:合意
 	A += 20
 	S = 5
 ENDIF
 
 ;一線越えない（合意が無い時のみ）
-IF TALENT:152 == 0 && TALENT:27
+IF TALENT:合意 == 0 && TALENT:一線越えない
 	A -= 15
 ENDIF
 
@@ -715,7 +715,7 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,7,')
@@ -761,14 +761,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい'
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -776,14 +776,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -792,7 +792,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;キス未経験
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINT  - 
 		PRINTS TALENTNAME:151
 		PRINTV '(,20,')
@@ -800,7 +800,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152
+	IF TALENT:合意
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:152
@@ -809,7 +809,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（合意が無い時のみ）
-	IF TALENT:152 == 0 && TALENT:27
+	IF TALENT:合意 == 0 && TALENT:一線越えない
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,15,')

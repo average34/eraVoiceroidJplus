@@ -534,7 +534,7 @@ IF TFLAG:13 == 23
 	;相手がマスター
 	IF CFLAG:111 == NO:MASTER
 		;育児中
-		IF TALENT:135
+		IF TALENT:育児中
 			;恋慕or恋人
 			IF TALENT:恋人 || TALENT:恋慕
 				;夜
@@ -917,7 +917,7 @@ IF TFLAG:13 == 81
 	;主人が吸血鬼化
 	IF T == MASTER
 		;恋慕
-		IF TALENT:V:85
+		IF TALENT:V:恋慕
 			PRINTFORMW 
 		;反発感情LV2以上
 		ELSEIF MARK:V:3 >= 2
@@ -929,9 +929,9 @@ IF TFLAG:13 == 81
 	;助手かパートナーが吸血鬼化
 	ELSE
 		;恋慕かつ主人に吸血鬼化された
-		IF TALENT:T:85 && (V == MASTER)
+		IF TALENT:T:恋慕 && (V == MASTER)
 			;相愛
-			IF TALENT:T:89
+			IF TALENT:T:相愛
 				PRINTFORMW 
 			;それ以外
 			ELSE
@@ -3120,7 +3120,7 @@ ENDIF
 ;-------------------------------------------------
 ;強制放尿 CFLAG:491
 ;-------------------------------------------------
-IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:57 && TEQUIP:22 == 0)
+IF SELECTCOM == 85 && (TALENT:おもらし癖 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:おもらし癖 && TEQUIP:22 == 0)
 	;初めて
 	IF CFLAG:491 == 0
 		PRINTFORMW 
@@ -3240,7 +3240,7 @@ IF SELECTCOM == 70
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:マゾ || ABL:マゾっ気 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:496 = 5
 		;恋慕または恋人
@@ -4269,7 +4269,7 @@ IF SELECTCOM == 186 && (TFLAG:17 == MASTER)
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:マゾ || ABL:マゾっ気 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:509 = 5
 		;恋慕または恋人

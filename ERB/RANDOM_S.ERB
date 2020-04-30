@@ -23,135 +23,135 @@ REPEAT 26
 		;臆病・気丈
 		P = RAND:4
 		IF P == 0
-			TALENT:10 = 1
-			TALENT:12 = 0
+			TALENT:臆病 = 1
+			TALENT:気丈 = 0
 		ELSEIF P == 1
-			TALENT:12 = 1
-			TALENT:10 = 0
+			TALENT:気丈 = 1
+			TALENT:臆病 = 0
 		ENDIF
 	ELSEIF O == 5
 		;好奇心・楽観的
 		SIF RAND:2 == 0
-			TALENT:23 = 1
+			TALENT:好奇心 = 1
 		SIF RAND:3 == 0
-			TALENT:25 = 1
+			TALENT:楽観的 = 1
 	ELSEIF O == 6
 		;恥じらい・恥薄い
 		P = RAND:4
 		IF P == 0
-			TALENT:35 = 1
-			TALENT:36 = 0
+			TALENT:恥じらい = 1
+			TALENT:恥薄い = 0
 		ELSEIF P == 1
-			TALENT:36 = 1
-			TALENT:35 = 0
+			TALENT:恥薄い = 1
+			TALENT:恥じらい = 0
 		ENDIF
 	ELSEIF O == 7
 		;痛みに弱い・痛みに強い・サド
 		P = RAND:4
 		IF P == 0
-			TALENT:40 = 1
-			TALENT:41 = 0
+			TALENT:痛みに弱い = 1
+			TALENT:痛みに強い = 0
 		ELSEIF P == 1
-			TALENT:41 = 1
-			TALENT:40 = 0
+			TALENT:痛みに強い = 1
+			TALENT:痛みに弱い = 0
 		ENDIF
 		P = RAND:8
 		IF P <= 2 && (CFLAG:14 == 5 || CFLAG:14 == 6)
 			;天狗
-			TALENT:83 = 1
+			TALENT:サド = 1
 		ELSEIF P == 0
-			TALENT:83 = 1
+			TALENT:サド = 1
 		ENDIF
 	ELSEIF O == 8
 		;濡れやすい・濡れにくい
 		P = RAND:4
 		IF P == 0
-			TALENT:42 = 1
-			TALENT:43 = 0
+			TALENT:濡れやすい = 1
+			TALENT:濡れにくい = 0
 		ELSEIF P == 1
-			TALENT:43 = 1
-			TALENT:42 = 0
+			TALENT:濡れにくい = 1
+			TALENT:濡れやすい = 0
 		ENDIF
 	ELSEIF O == 9
 		;習得早い・習得遅い
 		P = RAND:4
 		IF P == 0
-			TALENT:50 = 1
-			TALENT:51 = 0
+			TALENT:習得早い = 1
+			TALENT:習得遅い = 0
 		ELSEIF P == 1
-			TALENT:51 = 1
-			TALENT:50 = 0
+			TALENT:習得遅い = 1
+			TALENT:習得早い = 0
 		ENDIF
 	ELSEIF O == 10
 		;汚臭鈍感・汚臭敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:61 = 1
-			TALENT:62 = 0
+			TALENT:汚臭鈍感 = 1
+			TALENT:汚臭敏感 = 0
 		ELSEIF P == 1
-			TALENT:62 = 1
-			TALENT:61 = 0
+			TALENT:汚臭敏感 = 1
+			TALENT:汚臭鈍感 = 0
 		ENDIF
 	ELSEIF O == 11
 		;自慰しやすい・中毒しやすい・献身的
 		P = RAND:3
 		SIF P == 0
-			TALENT:60 = 1
+			TALENT:自慰しやすい = 1
 		P = RAND:3
 		SIF P == 0
-			TALENT:72 = 1
+			TALENT:中毒しやすい = 1
 		P = RAND:3
 		SIF P == 0
-			TALENT:63 = 1
+			TALENT:献身的 = 1
 	ELSEIF O == 12
 		;Ｃ鈍感・Ｃ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:101 = 1
-			TALENT:102 = 0
+			TALENT:Ｃ鈍感 = 1
+			TALENT:Ｃ敏感 = 0
 		ELSEIF P == 1
-			TALENT:102 = 1
-			TALENT:101 = 0
+			TALENT:Ｃ敏感 = 1
+			TALENT:Ｃ鈍感 = 0
 		ENDIF
 	ELSEIF O == 13
 		;Ｖ鈍感・Ｖ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:103 = 1
-			TALENT:104 = 0
+			TALENT:Ｖ鈍感 = 1
+			TALENT:Ｖ敏感 = 0
 		ELSEIF P == 1
-			TALENT:104 = 1
-			TALENT:103 = 0
+			TALENT:Ｖ敏感 = 1
+			TALENT:Ｖ鈍感 = 0
 		ENDIF
 	ELSEIF O == 14
 		;Ａ鈍感・Ａ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:105 = 1
-			TALENT:106 = 0
+			TALENT:Ａ鈍感 = 1
+			TALENT:Ａ敏感 = 0
 		ELSEIF P == 1
-			TALENT:106 = 1
-			TALENT:105 = 0
+			TALENT:Ａ敏感 = 1
+			TALENT:Ａ鈍感 = 0
 		ENDIF
 	ELSEIF O == 15
 		;Ｂ鈍感・Ｂ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:107 = 1
-			TALENT:108 = 0
+			TALENT:Ｂ鈍感 = 1
+			TALENT:Ｂ敏感 = 0
 		ELSEIF P == 1
-			TALENT:108 = 1
-			TALENT:107 = 0
+			TALENT:Ｂ敏感 = 1
+			TALENT:Ｂ鈍感 = 0
 		ENDIF
 	ELSEIF O == 16
 		;貧乳・巨乳
 		P = RAND:6
 		IF P <= 2
-			TALENT:109 = 1
-			TALENT:110 = 0
+			TALENT:貧乳 = 1
+			TALENT:巨乳 = 0
 		ELSEIF P == 3
-			TALENT:110 = 1
-			TALENT:109 = 0
+			TALENT:巨乳 = 1
+			TALENT:貧乳 = 0
 		ENDIF
 	ELSEIF O == 17
 		;回復早い・回復遅い
@@ -159,74 +159,74 @@ REPEAT 26
 			;妖精
 			P = RAND:4
 			IF P > 0
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:14 == 1
 			;人間
 			P = RAND:8
 			IF P < 2
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ELSEIF P > 5
-				IF TALENT:111 == 0
-					TALENT:112 = 1
+				IF TALENT:回復早い == 0
+					TALENT:回復遅い = 1
 				ELSE
-					TALENT:111 = 0
+					TALENT:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:14 == 2 || CFLAG:14 == 5 || CFLAG:14 == 6
 			;妖怪兎・天狗
 			P = RAND:8
 			IF P < 4
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ELSEIF P > 6
-				IF TALENT:111 == 0
-					TALENT:112 = 1
+				IF TALENT:回復早い == 0
+					TALENT:回復遅い = 1
 				ELSE
-					TALENT:111 = 0
+					TALENT:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:14 == 3
 			;人形
 			P = RAND:8
 			IF P < 1
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ELSEIF P > 4
-				IF TALENT:111 == 0
-					TALENT:112 = 1
+				IF TALENT:回復早い == 0
+					TALENT:回復遅い = 1
 				ELSE
-					TALENT:111 = 0
+					TALENT:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:14 == 4
 			;魔界人
 			P = RAND:8
 			IF P < 3
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ELSEIF P > 5
-				IF TALENT:111 == 0
-					TALENT:112 = 1
+				IF TALENT:回復早い == 0
+					TALENT:回復遅い = 1
 				ELSE
-					TALENT:111 = 0
+					TALENT:回復早い = 0
 				ENDIF
 			ENDIF
 		ENDIF
@@ -234,16 +234,16 @@ REPEAT 26
 		;魅力・両刀
 		P = RAND:4
 		SIF P > 1
-			TALENT:113 = 1
+			TALENT:魅力 = 1
 		P = RAND:16
 		IF P <= 3 && (CFLAG:14 == 5 || CFLAG:14 == 6)
 			;天狗
-			TALENT:81 = 1
+			TALENT:両刀 = 1
 		ELSEIF P <= 1 && CFLAG:14 == 2
 			;妖怪兎
-			TALENT:81 = 1
+			TALENT:両刀 = 1
 		ELSEIF P == 0
-			TALENT:81 = 1
+			TALENT:両刀 = 1
 		ENDIF
 	ELSEIF O == 19
 		;日光浴・月光浴
@@ -251,65 +251,65 @@ REPEAT 26
 			;妖精
 			P = RAND:4
 			IF P == 0
-				TALENT:115 = 1
+				TALENT:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:116 = 1
+				TALENT:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:14 == 1 || CFLAG:14 == 3
 			;人間、人形
 			P = RAND:16
 			IF P == 0
-				TALENT:115 = 1
+				TALENT:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:116 = 1
+				TALENT:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:14 == 2 || CFLAG:14 == 5 || CFLAG:14 == 6
 			;妖怪兎・天狗
 			P = RAND:8
 			IF P == 0
-				TALENT:115 = 1
+				TALENT:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:116 = 1
+				TALENT:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:14 == 4
 			;魔界人
 			P = RAND:6
 			IF P == 0
-				TALENT:115 = 1
+				TALENT:日光浴 = 1
 			ELSEIF P <= 3
-				TALENT:116 = 1
+				TALENT:月光浴 = 1
 			ENDIF
 		ENDIF
 	ELSEIF O == 20
 		;鼓舞
 		P = RAND:4
 		SIF P == 0
-			TALENT:118 = 1
+			TALENT:鼓舞 = 1
 	ELSEIF O == 21
 		;幼稚・小悪魔
 		P = RAND:4
 		IF P == 0 && CFLAG:14 == 0
-			TALENT:132 = 1
+			TALENT:幼稚 = 1
 		ELSEIF P == 1
-			TALENT:87 = 1
+			TALENT:小悪魔 = 1
 		ENDIF
 	ELSEIF O == 22
 		;プライド高い・プライド低い
 		P = RAND:4
 		IF P == 0
-			TALENT:15 = 1
-			TALENT:17 = 0
+			TALENT:プライド高い = 1
+			TALENT:プライド低い = 0
 		ELSEIF P == 1
-			TALENT:17 = 1
-			TALENT:15 = 0
+			TALENT:プライド低い = 1
+			TALENT:プライド高い = 0
 		ENDIF
 	ELSEIF O == 23
 		;貞操観念・貞操無頓着
 		P = RAND:4
-		IF P == 0 && TALENT:31 == 0
-			TALENT:30 = 1
-		ELSEIF P == 1 && TALENT:30 == 0
-			TALENT:31 = 1
+		IF P == 0 && TALENT:貞操無頓着 == 0
+			TALENT:貞操観念 = 1
+		ELSEIF P == 1 && TALENT:貞操観念 == 0
+			TALENT:貞操無頓着 = 1
 		ENDIF
 	ELSEIF O == 24
 		;マイナス素質のオンパレード
@@ -317,43 +317,43 @@ REPEAT 26
 		IF P == 0
 			;男嫌い(両刀が無い時に限る)・嫉妬
 			P = RAND:12
-			IF P < 2 && TALENT:81 == 0
-				TALENT:82 = 1
+			IF P < 2 && TALENT:両刀 == 0
+				TALENT:男嫌い = 1
 			ELSEIF P >= 1 && P < 3
-				TALENT:84 = 1
+				TALENT:嫉妬 = 1
 			ENDIF
 			;快感の否定・一線越えない
 			P = RAND:16
 			SIF P < 2
-				TALENT:71 = 1
+				TALENT:快感の否定 = 1
 			SIF P >= 1 && P <= 3
-				TALENT:27 = 1
+				TALENT:一線越えない = 1
 			;抑圧
 			P = RAND:8
 			SIF P == 0
-				TALENT:32 = 1
+				TALENT:抑圧 = 1
 			;保守的
 			P = RAND:8
 			SIF P == 0
-				TALENT:24 = 1
+				TALENT:保守的 = 1
 			;抵抗
 			P = RAND:8
 			SIF P == 0
-				TALENT:34 = 1
+				TALENT:抵抗 = 1
 			;反抗的
 			P = RAND:8
-			SIF P == 0 && TALENT:13 == 0
-				TALENT:11 = 1
+			SIF P == 0 && TALENT:素直 == 0
+				TALENT:反抗的 = 1
 		ENDIF
 	ELSEIF O == 25
 		;ツンデレ追加判定。強制的に反抗的が付加、素直が削除されます
 		P = RAND:8
 		IF P == 0
-			TALENT:18 = 1
-			SIF TALENT:13
-				TALENT:13 = 0
-			SIF TALENT:11 == 0
-				TALENT:11 = 1
+			TALENT:ツンデレ = 1
+			SIF TALENT:素直
+				TALENT:素直 = 0
+			SIF TALENT:反抗的 == 0
+				TALENT:反抗的 = 1
 		ENDIF
 	ENDIF
 REND
@@ -465,115 +465,115 @@ REPEAT 23
 		;臆病・気丈
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:10 = 1
+			TALENT:MASTER:臆病 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:12 = 1
+			TALENT:MASTER:気丈 = 1
 		ENDIF
 	ELSEIF O == 5
 		;好奇心・楽観的
 		P = RAND:2
 		SIF P == 0
-			TALENT:MASTER:23 = 1
+			TALENT:MASTER:好奇心 = 1
 		P = RAND:3
 		SIF P == 0
-			TALENT:MASTER:25 = 1
+			TALENT:MASTER:楽観的 = 1
 	ELSEIF O == 6
 		;恥じらい・恥薄い
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:35 = 1
+			TALENT:MASTER:恥じらい = 1
 		ELSEIF P == 1
-			TALENT:MASTER:36 = 1
+			TALENT:MASTER:恥薄い = 1
 		ENDIF
 	ELSEIF O == 7
 		;痛みに弱い・痛みに強い・サド
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:40 = 1
+			TALENT:MASTER:痛みに弱い = 1
 		ELSEIF P == 1
-			TALENT:MASTER:41 = 1
+			TALENT:MASTER:痛みに強い = 1
 		ENDIF
 		P = RAND:8
 		IF P <= 2 && (CFLAG:MASTER:14 == 5 || CFLAG:MASTER:14 == 6)
 			;天狗
-			TALENT:MASTER:83 = 1
+			TALENT:MASTER:サド = 1
 		ELSEIF P == 0
-			TALENT:MASTER:83 = 1
+			TALENT:MASTER:サド = 1
 		ENDIF
 	ELSEIF O == 8
 		;濡れやすい・濡れにくい
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:42 = 1
+			TALENT:MASTER:濡れやすい = 1
 		ELSEIF P == 1
-			TALENT:MASTER:43 = 1
+			TALENT:MASTER:濡れにくい = 1
 		ENDIF
 	ELSEIF O == 9
 		;習得早い・習得遅い
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:50 = 1
+			TALENT:MASTER:習得早い = 1
 		ELSEIF P == 1
-			TALENT:MASTER:51 = 1
+			TALENT:MASTER:習得遅い = 1
 		ENDIF
 	ELSEIF O == 10
 		;汚臭鈍感・汚臭敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:61 = 1
+			TALENT:MASTER:汚臭鈍感 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:62 = 1
+			TALENT:MASTER:汚臭敏感 = 1
 		ENDIF
 	ELSEIF O == 11
 		;自慰しやすい・中毒しやすい・献身的
 		P = RAND:3
 		SIF P == 0
-			TALENT:MASTER:60 = 1
+			TALENT:MASTER:自慰しやすい = 1
 		P = RAND:3
 		SIF P == 0
-			TALENT:MASTER:72 = 1
+			TALENT:MASTER:中毒しやすい = 1
 		P = RAND:3
 		SIF P == 0
-			TALENT:MASTER:63 = 1
+			TALENT:MASTER:献身的 = 1
 	ELSEIF O == 12
 		;Ｃ鈍感・Ｃ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:101 = 1
+			TALENT:MASTER:Ｃ鈍感 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:102 = 1
+			TALENT:MASTER:Ｃ敏感 = 1
 		ENDIF
 	ELSEIF O == 13
 		;Ｖ鈍感・Ｖ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:103 = 1
+			TALENT:MASTER:Ｖ鈍感 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:104 = 1
+			TALENT:MASTER:Ｖ敏感 = 1
 		ENDIF
 	ELSEIF O == 14
 		;Ａ鈍感・Ａ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:105 = 1
+			TALENT:MASTER:Ａ鈍感 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:106 = 1
+			TALENT:MASTER:Ａ敏感 = 1
 		ENDIF
 	ELSEIF O == 15
 		;Ｂ鈍感・Ｂ敏感
 		P = RAND:4
 		IF P == 0
-			TALENT:MASTER:107 = 1
+			TALENT:MASTER:Ｂ鈍感 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:108 = 1
+			TALENT:MASTER:Ｂ敏感 = 1
 		ENDIF
 	ELSEIF O == 16
 		;貧乳・巨乳
 		P = RAND:6
 		IF P <= 2
-			TALENT:MASTER:109 = 1
+			TALENT:MASTER:貧乳 = 1
 		ELSEIF P == 3
-			TALENT:MASTER:110 = 1
+			TALENT:MASTER:巨乳 = 1
 		ENDIF
 	ELSEIF O == 17
 		;回復早い・回復遅い
@@ -581,74 +581,74 @@ REPEAT 23
 			;妖精
 			P = RAND:4
 			IF P > 0
-				IF TALENT:MASTER:112 == 0
-					TALENT:MASTER:111 = 1
+				IF TALENT:MASTER:回復遅い == 0
+					TALENT:MASTER:回復早い = 1
 				ELSE
-					TALENT:MASTER:112 = 0
+					TALENT:MASTER:回復遅い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 1
 			;人間
 			P = RAND:8
 			IF P < 2
-				IF TALENT:MASTER:112 == 0
-					TALENT:MASTER:111 = 1
+				IF TALENT:MASTER:回復遅い == 0
+					TALENT:MASTER:回復早い = 1
 				ELSE
-					TALENT:MASTER:112 = 0
+					TALENT:MASTER:回復遅い = 0
 				ENDIF
 			ELSEIF P > 5
-				IF TALENT:MASTER:111 == 0
-					TALENT:MASTER:112 = 1
+				IF TALENT:MASTER:回復早い == 0
+					TALENT:MASTER:回復遅い = 1
 				ELSE
-					TALENT:MASTER:111 = 0
+					TALENT:MASTER:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 2 || CFLAG:MASTER:14 == 5 || CFLAG:MASTER:14 == 6
 			;妖怪兎・天狗
 			P = RAND:8
 			IF P < 4
-				IF TALENT:MASTER:112 == 0
-					TALENT:MASTER:111 = 1
+				IF TALENT:MASTER:回復遅い == 0
+					TALENT:MASTER:回復早い = 1
 				ELSE
-					TALENT:MASTER:112 = 0
+					TALENT:MASTER:回復遅い = 0
 				ENDIF
 			ELSEIF P > 6
-				IF TALENT:MASTER:111 == 0
-					TALENT:MASTER:112 = 1
+				IF TALENT:MASTER:回復早い == 0
+					TALENT:MASTER:回復遅い = 1
 				ELSE
-					TALENT:MASTER:111 = 0
+					TALENT:MASTER:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 3
 			;人形
 			P = RAND:8
 			IF P < 1
-				IF TALENT:MASTER:112 == 0
-					TALENT:MASTER:111 = 1
+				IF TALENT:MASTER:回復遅い == 0
+					TALENT:MASTER:回復早い = 1
 				ELSE
-					TALENT:MASTER:112 = 0
+					TALENT:MASTER:回復遅い = 0
 				ENDIF
 			ELSEIF P > 4
-				IF TALENT:MASTER:111 == 0
-					TALENT:MASTER:112 = 1
+				IF TALENT:MASTER:回復早い == 0
+					TALENT:MASTER:回復遅い = 1
 				ELSE
-					TALENT:MASTER:111 = 0
+					TALENT:MASTER:回復早い = 0
 				ENDIF
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 4
 			;魔界人
 			P = RAND:8
 			IF P < 3
-				IF TALENT:112 == 0
-					TALENT:111 = 1
+				IF TALENT:回復遅い == 0
+					TALENT:回復早い = 1
 				ELSE
-					TALENT:112 = 0
+					TALENT:回復遅い = 0
 				ENDIF
 			ELSEIF P > 5
-				IF TALENT:111 == 0
-					TALENT:112 = 1
+				IF TALENT:回復早い == 0
+					TALENT:回復遅い = 1
 				ELSE
-					TALENT:111 = 0
+					TALENT:回復早い = 0
 				ENDIF
 			ENDIF
 		ENDIF
@@ -656,16 +656,16 @@ REPEAT 23
 		;魅力・両刀
 		P = RAND:4
 		SIF P > 1
-			TALENT:MASTER:113 = 1
+			TALENT:MASTER:魅力 = 1
 		P = RAND:16
 		IF P <= 3 && (CFLAG:MASTER:14 == 5 || CFLAG:MASTER:14 == 6)
 			;天狗
-			TALENT:81 = 1
+			TALENT:両刀 = 1
 		ELSEIF P <= 1 && CFLAG:MASTER:14 == 2
 			;妖怪兎
-			TALENT:MASTER:81 = 1
+			TALENT:MASTER:両刀 = 1
 		ELSEIF P == 0
-			TALENT:MASTER:81 = 1
+			TALENT:MASTER:両刀 = 1
 		ENDIF
 	ELSEIF O == 19
 		;日光浴・月光浴
@@ -673,47 +673,47 @@ REPEAT 23
 			;妖精
 			P = RAND:4
 			IF P == 0
-				TALENT:MASTER:115 = 1
+				TALENT:MASTER:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:MASTER:116 = 1
+				TALENT:MASTER:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 1 || CFLAG:MASTER:14 == 3
 			;人間、人形
 			P = RAND:16
 			IF P == 0
-				TALENT:MASTER:115 = 1
+				TALENT:MASTER:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:MASTER:116 = 1
+				TALENT:MASTER:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 2 || CFLAG:MASTER:14 == 5 || CFLAG:MASTER:14 == 6
 			;妖怪兎・天狗
 			P = RAND:8
 			IF P == 0
-				TALENT:MASTER:115 = 1
+				TALENT:MASTER:日光浴 = 1
 			ELSEIF P == 1
-				TALENT:MASTER:116 = 1
+				TALENT:MASTER:月光浴 = 1
 			ENDIF
 		ELSEIF CFLAG:MASTER:14 == 4
 			;魔界人
 			P = RAND:6
 			IF P == 0
-				TALENT:MASTER:115 = 1
+				TALENT:MASTER:日光浴 = 1
 			ELSEIF P <= 3
-				TALENT:MASTER:116 = 1
+				TALENT:MASTER:月光浴 = 1
 			ENDIF
 		ENDIF
 	ELSEIF O == 20
 		;鼓舞
 		P = RAND:4
 		SIF P == 0
-			TALENT:MASTER:118 = 1
+			TALENT:MASTER:鼓舞 = 1
 	ELSEIF O == 21
 		;幼稚・小悪魔
 		P = RAND:4
 		IF P == 0 && CFLAG:MASTER:14 == 0
-			TALENT:MASTER:132 = 1
+			TALENT:MASTER:幼稚 = 1
 		ELSEIF P == 1
-			TALENT:MASTER:87 = 1
+			TALENT:MASTER:小悪魔 = 1
 		ENDIF
 	ENDIF
 REND

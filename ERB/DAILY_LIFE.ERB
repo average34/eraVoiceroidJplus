@@ -51,14 +51,14 @@ NEXT
 ;体力1000以下
 IF BASE:ARG:体力 <= 1000
 	;吸血鬼 && 昼
-	IF TALENT:ARG:114 && TIME == 0
+	IF TALENT:ARG:吸血鬼 && TIME == 0
 		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
 		PRINTFORMW カーテンの締めきられた真っ暗な部屋に、蓋のきっちり閉じられた棺桶が置いてある
 ;		PRINTFORMW 恐らく棺桶の中で寝ているのだろう……
 	;日光浴 && 昼
-	ELSEIF TALENT:ARG:115 && TIME == 0
+	ELSEIF TALENT:ARG:日光浴 && TIME == 0
 		;動物耳の時・マーメイドは…多分ないと思う
-		IF TALENT:ARG:124
+		IF TALENT:ARG:動物耳
 			PRINTFORMW 通りすがりに、庭の日のあたる場所で%CALLNAME:ARG%を見つけた……
 			PRINTFORMW %CALLNAME:ARG%は毛布を敷いてその上で丸くなって眠っている
 		ELSE
@@ -66,7 +66,7 @@ IF BASE:ARG:体力 <= 1000
 			PRINTFORMW %CALLNAME:ARG%は木にかけたハンモックに毛布を敷いて寝ている
 		ENDIF
 	;月光浴 && 夜
-	ELSEIF TALENT:ARG:116 && (TIME:5 == 0 || TIME:5 == 1) && TIME == 1
+	ELSEIF TALENT:ARG:月光浴 && (TIME:5 == 0 || TIME:5 == 1) && TIME == 1
 		PRINTFORMW ふと窓の外から見える屋根のてっぺんに、%CALLNAME:ARG%がいるのが見えた
 		PRINTFORMW 月を見上げている……
 		;反発感情Lv3
@@ -80,7 +80,7 @@ IF BASE:ARG:体力 <= 1000
 			PRINTFORMW こちらに気付いて、妖しい笑みを浮かべた……
 		ENDIF
 	;動物耳の時
-	ELSEIF TALENT:ARG:124
+	ELSEIF TALENT:ARG:動物耳
 		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
 		PRINTFORMW %CALLNAME:ARG%はベッドの上で丸くなって眠っている
 	;その他
@@ -89,12 +89,12 @@ IF BASE:ARG:体力 <= 1000
 		PRINTFORMW %CALLNAME:ARG%はベッドで眠っているようだ
 	ENDIF
 	;(吸血鬼の時 && 昼) || (月光浴 && 夜)
-	IF (TALENT:ARG:114 && TIME == 0) || (TALENT:ARG:116 && TIME == 1)
+	IF (TALENT:ARG:吸血鬼 && TIME == 0) || (TALENT:ARG:月光浴 && TIME == 1)
 		PRINTL 
 	;反発感情Lv3の時
 	ELSEIF MARK:ARG:3 == 3
 		;臆病or悲観的のとき
-		IF TALENT:ARG:10 || TALENT:ARG:26
+		IF TALENT:ARG:臆病 || TALENT:ARG:悲観的
 			PRINTFORMW その表情は悲しげだ……
 		ELSEIF RAND:2 == 0
 			PRINTFORMW その表情は険しい……
@@ -102,16 +102,16 @@ IF BASE:ARG:体力 <= 1000
 			PRINTFORMW その表情は固い……
 		ENDIF
 	;恋慕の時
-	ELSEIF TALENT:ARG:85
+	ELSEIF TALENT:ARG:恋慕
 		;生意気or小悪魔の時
-		IF (TALENT:ARG:16 || TALENT:ARG:87) && RAND:7 == 0
+		IF (TALENT:ARG:生意気 || TALENT:ARG:小悪魔) && RAND:7 == 0
 			PRINTFORMW 眠りながらニヤニヤしている……
 ;			PRINTFORMW ……何の夢を見ているんだか……
 		;謎の魅力or魅惑の時
-		ELSEIF (TALENT:ARG:91 || TALENT:ARG:91) && RAND:6 == 0
+		ELSEIF (TALENT:ARG:魅惑 || TALENT:ARG:魅惑) && RAND:6 == 0
 			PRINTFORMW ふっとその寝顔に魅入られてしまうような気がした……
 		;幼稚の時
-		ELSEIF TALENT:ARG:132 && RAND:5 == 0
+		ELSEIF TALENT:ARG:幼稚 && RAND:5 == 0
 			PRINTFORMW 蹴飛ばしてずれた毛布を直してやりました
 		ELSEIF RAND:4 == 0
 			PRINTFORMW 寝乱れた姿が色っぽい……
@@ -126,14 +126,14 @@ IF BASE:ARG:体力 <= 1000
 	;既成事実Lv2以上
 	ELSEIF MARK:ARG:2 >= 2
 		;生意気or小悪魔の時
-		IF (TALENT:ARG:16 || TALENT:ARG:87) && RAND:7 == 0
+		IF (TALENT:ARG:生意気 || TALENT:ARG:小悪魔) && RAND:7 == 0
 			PRINTFORMW 眠りながらニヤニヤしている……
 ;			PRINTFORMW ……何の夢を見ているんだか……
 		;謎の魅力or魅惑の時
-		ELSEIF (TALENT:ARG:91 || TALENT:ARG:91) && RAND:6 == 0
+		ELSEIF (TALENT:ARG:魅惑 || TALENT:ARG:魅惑) && RAND:6 == 0
 			PRINTFORMW ふっとその寝顔に魅入られてしまうような気がした……
 		;幼稚の時
-		ELSEIF TALENT:ARG:132 && RAND:5 == 0
+		ELSEIF TALENT:ARG:幼稚 && RAND:5 == 0
 			PRINTFORMW 蹴飛ばしてずれた毛布を直してやりました
 		ELSEIF RAND:4 == 0
 			PRINTFORMW 寝乱れた姿が色っぽい……
@@ -161,76 +161,76 @@ IF BASE:ARG:体力 <= 1000
 ELSE
 	VARSET LOCALS
 	;禁断の知識の時、妖しい儀式
-	SIF TALENT:ARG:125
+	SIF TALENT:ARG:禁断の知識
 		LOCALS += "0/"
 	;歌唱技能持ちの時、歌の練習
 	SIF ABL:ARG:歌唱技能 > 0
 		LOCALS += "1/"
 	;狂気の時、ぶつぶつ言う
-	SIF TALENT:ARG:123
+	SIF TALENT:ARG:狂気
 		LOCALS += "2/"
 	;魔法使いの時、魔法の儀式orタロット占い
 	SIF GROUPMATCH(NO:ARG, 2, 8, 14, 51, 59, 60, 66)
 		LOCALS += "3/"
 	;調合知識持ちの時、実験or原料育成
-	SIF TALENT:ARG:55
+	SIF TALENT:ARG:調合知識
 		LOCALS += "4/"
 	;大人しいの時本を読む
-	SIF TALENT:ARG:14
+	SIF TALENT:ARG:大人しい
 		LOCALS += "5/"
 	;おもらし癖の時、世界地図を広げる
-	SIF TIME == 0 && TALENT:ARG:57
+	SIF TIME == 0 && TALENT:ARG:おもらし癖
 		LOCALS += "6/"
 	;日光浴の時、日向ぼっこ
-	SIF TIME == 0 && TALENT:ARG:115
+	SIF TIME == 0 && TALENT:ARG:日光浴
 		LOCALS += "7/"
 	;動物耳の時、庭を歩いてみる
-	SIF TALENT:ARG:124
+	SIF TALENT:ARG:動物耳
 		LOCALS += "8/"
 	;針さばき持ちのとき、お裁縫
-	SIF TALENT:ARG:53
+	SIF TALENT:ARG:針さばき
 		LOCALS += "9/"
 	;献身的のとき、家事
-	SIF TALENT:ARG:63
+	SIF TALENT:ARG:献身的
 		LOCALS += "10/"
 	;治療もちの場合お祈りする
-	SIF TIME == 0 && TALENT:ARG:117
+	SIF TIME == 0 && TALENT:ARG:治療
 		LOCALS += "11/"
 	;感情乏しいor無関心の時はぼーっとする
-	SIF (TALENT:ARG:21 || TALENT:ARG:22)
+	SIF (TALENT:ARG:無関心 || TALENT:ARG:感情乏しい)
 		LOCALS += "12/"
 	;目立ちたがりのとき、踊る
-	SIF TALENT:ARG:28 && MARK:ARG:3 != 3 && STRCOUNT(LLIST, "/") >= 1
+	SIF TALENT:ARG:目立ちたがり && MARK:ARG:3 != 3 && STRCOUNT(LLIST, "/") >= 1
 		LOCALS += "13/"
 	;猫舌の時、木に昇るorマタタビ酒で酔っ払う
-;	SIF TALENT:ARG:54
+;	SIF TALENT:ARG:猫舌
 ;		LOCALS += "14/"
 	;反抗的・素直の時、ちょっとした用事を頼まれる
-	SIF (TALENT:ARG:11 || TALENT:ARG:13)
+	SIF (TALENT:ARG:反抗的 || TALENT:ARG:素直)
 		LOCALS += "15/"
 	;妖精の時、花壇で遊ぶ
 	SIF TIME == 0 && GROUPMATCH(NO:ARG, 4, 5, 15, 45, 46, 47, 56, 99)
 		LOCALS += "16/"
 	;恥じらいの時、とったビデオを見る
-	SIF TALENT:ARG:35 && ABL:ARG:欲望 >= 5
+	SIF TALENT:ARG:恥じらい && ABL:ARG:欲望 >= 5
 		LOCALS += "17/"
 	;恥薄いの時…裸でうろつく
-	SIF TALENT:ARG:36
+	SIF TALENT:ARG:恥薄い
 		LOCALS += "18/"
 	;好奇心の時…珍しいものに心をとらわれる
-	SIF TALENT:ARG:23
+	SIF TALENT:ARG:好奇心
 		LOCALS += "19/"
 	;習得遅い、幼稚の時 本を読むけど寝ちゃうorおやつをつまみ食いする
-	SIF (TALENT:ARG:51 || TALENT:ARG:132)
+	SIF (TALENT:ARG:習得遅い || TALENT:ARG:幼稚)
 		LOCALS += "20/"
 	;習得早いが練習しているor習得遅いもちに何か教える…
-	SIF TALENT:ARG:50 && MARK:ARG:3 != 3
+	SIF TALENT:ARG:習得早い && MARK:ARG:3 != 3
 		LOCALS += "21/"
 	;楽観的が、鼻歌を歌うor悲観的を慰めている…
-	SIF TALENT:ARG:25
+	SIF TALENT:ARG:楽観的
 		LOCALS += "22/"
 	;悲観的が、悲しげに外を見つめている
-	SIF TALENT:ARG:26
+	SIF TALENT:ARG:悲観的
 		LOCALS += "23/"
 	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
 	SIF ABL:ARG:親密 >= 7 && MARK:ARG:3 != 3
@@ -239,13 +239,13 @@ ELSE
 	SIF DAY:2 == 3 && GROUPMATCH(TIME:5, 5, 6)
 		LOCALS += "25/"
 	;月光浴の時、月見
-	SIF TIME == 1 && TALENT:ARG:116 && (TIME:5 == 0 || TIME:5 == 1)
+	SIF TIME == 1 && TALENT:ARG:月光浴 && (TIME:5 == 0 || TIME:5 == 1)
 		LOCALS += "26/"
 	;臆病・気丈の時、夜間見回り中に遭遇する
-	SIF TIME == 1 && (TALENT:ARG:10 || TALENT:ARG:12)
+	SIF TIME == 1 && (TALENT:ARG:臆病 || TALENT:ARG:気丈)
 		LOCALS += "27/"
 	;サドが、SM調教の練習をしている
-	SIF TIME == 1 && TALENT:ARG:83
+	SIF TIME == 1 && TALENT:ARG:サド
 		LOCALS += "28/"
 	;それ以外
 	SIF 1
@@ -275,9 +275,9 @@ ELSE
 	CASE 1
 		PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中から歌声が漏れてきた……
 ;		IF EXP:ARG:産卵経験 >= 100 && RAND:2 == 0
-;			IF TALENT:ARG:25
+;			IF TALENT:ARG:楽観的
 ;				PRINTFORMW リズミカルなテンポにつられて、知らず知らず心が躍っていく…
-;			ELSEIF TALENT:ARG:26
+;			ELSEIF TALENT:ARG:悲観的
 ;				PRINTFORMW しっとりとした歌い方に心が落ち着いていく…
 ;			ELSE
 ;				PRINTFORMW 透き通るような高音が見事で、聞いていて心地良い
@@ -300,7 +300,7 @@ ELSE
 ;		IF MARK:ARG:3 == 3
 ;			PRINTFORMW が、今度は睨みながら悪口のようなものを壁と話し始めた
 ;			PRINTFORMW ……やっぱり怖い
-;		ELSEIF TALENT:ARG:85
+;		ELSEIF TALENT:ARG:恋慕
 ;			PRINTFORMW が微笑んで手招きしてきた
 ;			PRINTFORMW ……壁を交えて３人（？）でおしゃべりすることになった……
 ;		ELSE
@@ -312,7 +312,7 @@ ELSE
 		IF RAND:2 == 0
 			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%が儀式のようなものをしているのが見えた……
 			PRINTFORMW 魔法陣に向かって巻物を読みながら何か唱えている
-;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
+;			IF TALENT:ARG:習得遅い || ABL:ARG:技巧 <= RAND:5
 ;				PRINTFORMW と思ったら爆発した……
 ;				PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
 ;				PRINTFORMW 仕方がないので手当てして別の部屋に寝かせることにした……
@@ -324,7 +324,7 @@ ELSE
 		ELSE
 			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%がタロット占いをしているのが見えた……
 			PRINTFORMW 何事か呟きながら真剣な表情でカードをめくっている……
-;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
+;			IF TALENT:ARG:習得遅い || ABL:ARG:技巧 <= RAND:5
 ;				PRINTFORMW 引いたカードの意味をうまく解釈出来ないでいるらしい
 ;				PRINTFORMW 難しい表情のまま、目の前のカードを見つめている……
 ;			ELSE
@@ -337,7 +337,7 @@ ELSE
 		IF RAND:2 == 0
 			PRINTFORMW 台所で、%CALLNAME:ARG%が鍋やフラスコなどを組み合わせて実験をしている……
 ;			PRINTFORMW 鍋の中でぐつぐつと煮えたぎる液体の中にコップから青い液体をたらした……
-;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
+;			IF TALENT:ARG:習得遅い || ABL:ARG:技巧 <= RAND:5
 ;				IF RAND:2 == 0
 ;					PRINTFORMW と思ったら爆発した
 ;					PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
@@ -365,7 +365,7 @@ ELSE
 ;			ENDIF
 		ELSE
 			PRINTFORM 何気なく%CALLNAME:ARG%の部屋を覗くと
-			IF TALENT:ARG:125 || ABL:ARG:技巧 >= RAND:5
+			IF TALENT:ARG:禁断の知識 || ABL:ARG:技巧 >= RAND:5
 				IF RAND:2 == 0
 					PRINTFORMW 幾つもの箱が並んでいるのが見える
 					PRINTFORMW イモリだかヤモリだか、その様なものを飼っているらしい……
@@ -395,13 +395,13 @@ ELSE
 		IF MARK:ARG:3 == 3
 			PRINTFORMW %CALLNAME:ARG%は入ってきた%CALLNAME:MASTER%に気付くと、本をそのままに何も言わずどこかに行ってしまった
 			PRINTFORMW 本のタイトルは『%RAND_SPLIT("復讐者/監獄からの脱出/殺さずに苦しませる方法")%』だった……
-		ELSEIF TALENT:ARG:85
+		ELSEIF TALENT:ARG:恋慕
 			IF RAND:3 == 0
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと慌てて読んでいた本を戻しにいった
 ;				PRINTFORM 不思議に思って何を読んでいたか聞くと、
-;				IF TALENT:ARG:36 && RAND:2 == 0
+;				IF TALENT:ARG:恥薄い && RAND:2 == 0
 ;					PRINTFORMW 顔を赤くして何か小声で言いながら図書室を出て行った
-;				ELSEIF TALENT:ARG:12 || TALENT:ARG:15
+;				ELSEIF TALENT:ARG:気丈 || TALENT:ARG:プライド高い
 ;					PRINTFORMW 赤くなった%CALLNAME:ARG%に怒られた
 ;					PRINTFORMW そして%CALLNAME:ARG%は逃げるように図書室を出て行った
 ;				ELSE
@@ -445,15 +445,15 @@ ELSE
 			PRINTFORMW 奇妙な連帯感が生じたらしく、二人で仲良くお喋りしながら布団干し作業を楽しんでいる……
 		ELSE
 			PRINTFORMW ふと窓から庭を見下ろすと布団が干されている
-			IF TALENT:ARG:35
+			IF TALENT:ARG:恥じらい
 				PRINTFORMW 傍らには顔を真っ赤に染めた%CALLNAME:ARG%の姿がある……
-			ELSEIF TALENT:ARG:25
+			ELSEIF TALENT:ARG:楽観的
 				PRINTFORMW 傍らにはあっけらかんとした表情の%CALLNAME:ARG%の姿がある……
 			ELSE
 				PRINTFORMW 傍らには浮かない表情の%CALLNAME:ARG%の姿がある……
 			ENDIF
 ;			PRINTFORMW どうやらまた粗相をしてしまったようだ……
-;			SIF TALENT:ARG:51 || TALENT:ARG:132
+;			SIF TALENT:ARG:習得遅い || TALENT:ARG:幼稚
 ;				PRINTFORMW それにしても干す前に洗濯した方が良いと思うのだが……
 		ENDIF
 	;日向ぼっこ
@@ -461,7 +461,7 @@ ELSE
 		PRINTFORMW 庭で%CALLNAME:ARG%が日向ぼっこをしているところに通りすがりました
 		IF MARK:ARG:3 == 3
 			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%を見つけると、直ぐに固い表情でその場を立ち去った……
-		ELSEIF TALENT:ARG:124
+		ELSEIF TALENT:ARG:動物耳
 			PRINTFORMW %CALLNAME:ARG%は日差しの中で気持ち良さそうに目を細めている……
 			PRINTFORMW こちらに気付くと、目を細めて耳を動かした
 ;			IF RAND:2 == 0
@@ -512,7 +512,7 @@ ELSE
 ;			PRINTFORMW ふと嫌な予感がして身をかわすと、風切る音と共に、カッと何かが刺さる乾いた音
 ;			PRINTFORMW 後ろを振り向くと、壁に針が刺さっている……
 ;			PRINTFORMW 舌打ちをする%CALLNAME:ARG%を置いて、ひとまずそこを離れた……
-;		ELSEIF TALENT:ARG:85
+;		ELSEIF TALENT:ARG:恋慕
 ;			PRINTFORMW 感心して眺めていると、だんだん%CALLNAME:ARG%の顔が赤くなってきて……
 ;			PRINTFORMW 邪魔をするなと怒られた
 ;			PRINTFORMW 邪魔をするなと怒られました
@@ -526,12 +526,12 @@ ELSE
 	;家事
 	CASE 10
 		;吸血鬼
-		IF RAND:2 == 0 || TALENT:ARG:114
+		IF RAND:2 == 0 || TALENT:ARG:吸血鬼
 			PRINTFORM %CALLNAME:ARG%が
 			;昼
 			IF TIME == 0
 				;吸血鬼
-				IF RAND:2 == 0 || TALENT:ARG:114
+				IF RAND:2 == 0 || TALENT:ARG:吸血鬼
 					PRINT 廊下の
 				;それ以外
 				ELSE
@@ -549,7 +549,7 @@ ELSE
 			IF MARK:ARG:3 == 3
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
 				;PRINTFORMW …………おい。
-			ELSEIF TALENT:ARG:85
+			ELSEIF TALENT:ARG:恋慕
 				PRINTFORMW こちらに気付いて微笑む%CALLNAME:ARG%と挨拶を交わした
 ;				IF RAND:2 == 0
 ;					PRINTFORMW 褒めると、顔を赤くして掃除を続ける
@@ -584,10 +584,10 @@ ELSE
 			IF MARK:ARG:3 == 3
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
 ;				PRINTFORMW …………おい。
-;			ELSEIF TALENT:ARG:85 && (TALENT:ARG:24 || TALENT:ARG:30 || TALENT:ARG:35) && RAND:2 == 0
+;			ELSEIF TALENT:ARG:恋慕 && (TALENT:ARG:保守的 || TALENT:ARG:貞操観念 || TALENT:ARG:恥じらい) && RAND:2 == 0
 ;				PRINTFORMW 不意に%CALLNAME:ARG%が固まった
 ;				PRINTFORMW %CALLNAME:MASTER%の下着を手に真っ赤になっている
-;				IF TALENT:ARG:76
+;				IF TALENT:ARG:淫乱
 ;					PRINTFORMW そしてごそごそと下着を懐に隠した……
 ;					PRINTFORMW はっと気が付いてあたりを見回した%CALLNAME:ARG%と%CALLNAME:MASTER%の目が合いました
 ;					PRINTFORMW %CALLNAME:ARG%は逃げ出した！
@@ -596,7 +596,7 @@ ELSE
 ;					PRINTFORMW 深呼吸を繰り返し、暫く何事か考えてから、洗濯を再開しました
 ;					;PRINTFORMW ？
 ;				ENDIF
-;			ELSEIF TALENT:ARG:85 && TALENT:ARG:76 && TALENT:ARG:24 == 0 && TALENT:ARG:30 == 0 && TALENT:ARG:35 == 0 && RAND:2 == 0
+;			ELSEIF TALENT:ARG:恋慕 && TALENT:ARG:淫乱 && TALENT:ARG:保守的 == 0 && TALENT:ARG:貞操観念 == 0 && TALENT:ARG:恥じらい == 0 && RAND:2 == 0
 ;				PRINTFORMW と、洗濯物の塊の中から何か引っ張り出した
 ;				PRINTFORMW %CALLNAME:MASTER%の下着のようだ
 ;				IF RAND:2 == 0
@@ -606,7 +606,7 @@ ELSE
 ;					PRINTFORMW なにやら匂いを嗅いでいる……
 ;					PRINTFORMW そのまま片手をイケナイ感じに動かし始めたので、ツッコんでおきました
 ;				ENDIF
-;			ELSEIF TALENT:ARG:85
+;			ELSEIF TALENT:ARG:恋慕
 ;				PRINTFORMW こちらに気付いて微笑む%CALLNAME:ARG%と挨拶を交わした
 ;				IF RAND:2 == 0
 ;					PRINTFORMW %CALLNAME:ARG%はうきうきした顔で洗濯物を干し始めた
@@ -637,13 +637,13 @@ ELSE
 			ELSE
 				PRINTFORMW 『真人間になりますように』
 			ENDIF
-		ELSEIF TALENT:ARG:85
+		ELSEIF TALENT:ARG:恋慕
 			IF RAND:3 == 0
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと美しい笑顔を浮かべた。
 				PRINTFORM 不思議に思って何を祈っていたか聞くと、
-				IF TALENT:ARG:36 && RAND:2 == 0
+				IF TALENT:ARG:恥薄い && RAND:2 == 0
 					PRINTFORMW 「ずっとこの生活が続きますように」
-				ELSEIF TALENT:ARG:12 || TALENT:ARG:15
+				ELSEIF TALENT:ARG:気丈 || TALENT:ARG:プライド高い
 					PRINTFORMW %CALLNAME:ARG%は静かに笑った
 ;					PRINTFORMW そして%CALLNAME:ARG%は軽くキスをして部屋へ戻った。
 				ELSE
@@ -673,7 +673,7 @@ ELSE
 	;ぼーっとする
 	CASE 12
 		PRINTFORM ふと
-		IF TALENT:ARG:114 == 0 && RAND:3 == 0
+		IF TALENT:ARG:吸血鬼 == 0 && RAND:3 == 0
 			PRINTFORM 庭に立って
 		ELSEIF RAND:2 == 0
 			PRINTFORM 食堂の椅子に座って
@@ -681,7 +681,7 @@ ELSE
 			PRINTFORM 部屋のベッドに腰掛けて
 		ENDIF
 		PRINTFORMW %CALLNAME:ARG%がぼーっとしているところに通りすがった……
-;		IF TALENT:ARG:85
+;		IF TALENT:ARG:恋慕
 ;			PRINTFORMW …………
 ;			PRINTFORMW …………
 ;			PRINTFORMW あ。赤くなった
@@ -707,17 +707,17 @@ ELSE
 			PRINTFORMW %CALLNAME:TOINT(LOCALS)%もきているようだ
 		ENDSELECT
 		PRINTFORMW %CALLNAME:ARG%はテーブルの上にのぼるとポーズをとって、踊り始めた
-		IF TALENT:ARG:76 && RAND:2 == 0
+		IF TALENT:ARG:淫乱 && RAND:2 == 0
 			PRINTFORMW 身体のラインを強調しながらイヤラシイ動きを繰り返している……
-			SIF TALENT:ARG:85
+			SIF TALENT:ARG:恋慕
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に艶っぽい視線を送ってきた
 		ELSEIF RAND:2 == 0
 			PRINTFORMW 演劇調のゆったりとした繊細な舞だ……
-			SIF TALENT:ARG:85
+			SIF TALENT:ARG:恋慕
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に儚げな視線を送ってきた
 		ELSE
 			PRINTFORMW リズムの早いアクロバティックなダンスだ
-			SIF TALENT:ARG:85
+			SIF TALENT:ARG:恋慕
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%にウインクしてみせた
 		ENDIF
 ;		IF ABL:ARG:技巧 * 10 > RAND:100
@@ -728,15 +728,15 @@ ELSE
 ;				PRINTFORMW 注目の中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
 ;				PRINTFORM みんなの拍手と歓声に得意げになって%CALLNAME:ARG%はテーブルから降り
 ;			ELSEIF F == 4
-;				IF TALENT:B:22 && TALENT:C:22
+;				IF TALENT:B:感情乏しい && TALENT:C:感情乏しい
 ;					PRINTFORMW %CALLNAME:MASTER%は感心して%CALLNAME:ARG%に見入った
 ;					PRINTFORMW %CALLNAME:MASTER%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
 ;					PRINTFORM %CALLNAME:MASTER%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
-;				ELSEIF TALENT:B:22 && TALENT:C:22 == 0
+;				ELSEIF TALENT:B:感情乏しい && TALENT:C:感情乏しい == 0
 ;					PRINTFORMW %CALLNAME:C%も感心して見入っている
 ;					PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:C%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
 ;					PRINTFORM %CALLNAME:MASTER%と%CALLNAME:C%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
-;				ELSEIF TALENT:B:22 == 0 && TALENT:C:22
+;				ELSEIF TALENT:B:感情乏しい == 0 && TALENT:C:感情乏しい
 ;					PRINTFORMW %CALLNAME:B%も感心して見入っている
 ;					PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:B%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
 ;					PRINTFORM %CALLNAME:MASTER%と%CALLNAME:B%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
@@ -746,7 +746,7 @@ ELSE
 ;					PRINTFORM みんなの拍手と歓声に得意げになって%CALLNAME:ARG%はテーブルから降り
 ;				ENDIF
 ;			ELSEIF F == 3
-;				IF TALENT:B:22
+;				IF TALENT:B:感情乏しい
 ;					PRINTFORMW %CALLNAME:MASTER%は感心して%CALLNAME:ARG%に見入った
 ;					PRINTFORMW %CALLNAME:MASTER%の見つめる中、佳境に入った%CALLNAME:ARG%は最後のポーズを決めた
 ;					PRINTFORM %CALLNAME:MASTER%の拍手に得意げになって%CALLNAME:ARG%はテーブルから降り
@@ -761,7 +761,7 @@ ELSE
 ;				PRINTFORMW るはずがテーブルが前に倒れかけて後ろに盛大な音と共にひっくり返った……
 ;				PRINTFORMW 目を回してぶっ倒れている%CALLNAME:ARG%に溜息をついて部屋に運びました……
 ;			ELSE
-;				IF TALENT:ARG:85
+;				IF TALENT:ARG:恋慕
 ;					PRINTFORMW 、%CALLNAME:MASTER%に嬉しそうに抱きついてきた……
 ;				ELSE
 ;					PRINTFORMW 、鼻を高くしてご満悦の様子だ
@@ -791,16 +791,16 @@ ELSE
 	;ちょっとした用事を頼まれる
 	CASE 15
 		PRINTFORMW 街で買い込んできた生活物資を倉庫に運ぼうとした丁度そのとき、良いタイミングで%CALLNAME:ARG%が通りかかった
-		IF TALENT:ARG:13
-			IF TALENT:ARG:63 || ABL:ARG:親密 >= 7
+		IF TALENT:ARG:素直
+			IF TALENT:ARG:献身的 || ABL:ARG:親密 >= 7
 				PRINTFORMW %CALLNAME:ARG%は山と積まれた荷物を見るとすぐに、自発的に手伝いを申し出てくれた……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
 			ELSE
 				PRINTFORMW %CALLNAME:ARG%に声を掛けると、快く手伝ってくれた……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で 日が暮れるまでに作業が終わりました……
 			ENDIF
-		ELSEIF TALENT:ARG:11
-			IF TALENT:ARG:85
+		ELSEIF TALENT:ARG:反抗的
+			IF TALENT:ARG:恋慕
 				PRINTFORMW %CALLNAME:ARG%はそのまま素通りする勢いだったが、%CALLNAME:MASTER%と目が合うと、少し頬を染めながら手伝いを申し出てくれた……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
 			ELSEIF ABL:ARG:親密 >= 7
@@ -849,7 +849,7 @@ ELSE
 ;			ENDIF
 ;			IF MARK:ARG:3 == 3
 ;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気がつくと、あっかんべーをしてどこかに飛んで行った……
-;			ELSEIF TALENT:ARG:85
+;			ELSEIF TALENT:ARG:恋慕
 ;				PRINTFORMW %CALLNAME:MASTER%に気がつくと、一緒に遊ぼうと誘ってきました
 ;				PRINTFORMW 承諾すると、嬉しそうにはにかんだ……
 ;			ELSE
@@ -892,7 +892,7 @@ ELSE
 		ELSE
 			PRINTFORMW 暫くすると、飲み物を手にやはりバスタオルだけの%CALLNAME:ARG%が通り過ぎました
 ;			PRINTFORMW 紅茶を吹きました
-;			IF TALENT:ARG:85
+;			IF TALENT:ARG:恋慕
 ;				PRINTFORMW 不思議そうな顔をした%CALLNAME:ARG%が戻ってきた
 ;				PRINTFORMW どうやらお風呂に入った後飲み物を食堂に取りにいったらしい
 ;				PRINTFORMW %CALLNAME:ARG%は軽くポーズを取って見せて%CALLNAME:MASTER%にウィンクを送ると、お尻をふりふり戻っていった……
@@ -909,7 +909,7 @@ ELSE
 		PRINTFORMW その視線の先にあるのは%RAND_SPLIT("小さな振り子時計/入れ子人形/古びた水差し/木彫りのクマ")%だ……
 ;		IF MARK:ARG:3 == 3
 ;			PRINTFORMW %CALLNAME:ARG%はしばらく眺めていたが、%CALLNAME:MASTER%の存在に気が付くと足早にその場を立ち去った……
-;		ELSEIF TALENT:ARG:11
+;		ELSEIF TALENT:ARG:反抗的
 ;			PRINTFORMW 頂戴オーラを発していたのでプレゼントしようとしたが、%CALLNAME:ARG%は慌てて拒絶する
 ;			IF ABL:ARG:親密 >= 7
 ;				PRINTFORMW だが%CALLNAME:ARG%の胸元に小物を押し付けるように差し出すと、何とか受け取ってくれた
@@ -917,7 +917,7 @@ ELSE
 ;			ELSE
 ;				PRINTFORMW 気になる小物から精一杯目を逸らし、%CALLNAME:ARG%は自分の部屋に帰って行ってしまった……
 ;			ENDIF
-;		ELSEIF TALENT:ARG:51 || TALENT:ARG:100
+;		ELSEIF TALENT:ARG:習得遅い || TALENT:ARG:小柄体型
 ;			PRINTFORMW %CALLNAME:ARG%が頂戴オーラを発していたのでプレゼントすると、目を輝かせながら抱きかかえて自分の部屋に走り去っていった……
 ;		ELSE
 ;			PRINTFORMW %CALLNAME:MASTER%が紅茶を淹れ、注ぎ、飲み終えても、%CALLNAME:ARG%は小物を観察し続けていた……
@@ -942,7 +942,7 @@ ELSE
 ;					ENDIF
 ;				ELSE
 ;					PRINTFORMW 戻ってきてみると、%CALLNAME:ARG%は本の上につっぷして寝息を立てている
-;					IF TALENT:ARG:85
+;					IF TALENT:ARG:恋慕
 ;						PRINTFORMW 何か寝言を言っている……
 ;						PRINTFORMW 勉強して%CALLNAME:MASTER%をメロメロにしてやるそうです
 ;						PRINTFORMW 苦笑して部屋まで抱いて連れて行った……
@@ -997,7 +997,7 @@ ELSE
 ;			PRINTFORMW %CALLNAME:ARG%が、何だか悲しそうな表情の%CALLNAME:B%を慰めているらしい
 ;			PRINTFORMW %CALLNAME:B%の表情は冴えない……
 ;			PRINTFORMW %CALLNAME:ARG%は諦めずに優しい態度を取っている……
-;			IF TALENT:ARG:85 && TALENT:B:85
+;			IF TALENT:ARG:恋慕 && TALENT:B:恋慕
 ;				PRINTFORMW ……どうやら%CALLNAME:B%は気を取り直したようだ
 ;				PRINTFORMW 少し安心して、ひとまずそこを立ち去った
 ;			ELSE
@@ -1016,7 +1016,7 @@ ELSE
 	CASE 23
 		PRINTFORMW %CALLNAME:ARG%の部屋に通りかかると、%CALLNAME:ARG%が窓の外を眺めているのが見えた……
 		PRINTFORMW 小さく溜息をついたようだ
-;		IF TALENT:ARG:85
+;		IF TALENT:ARG:恋慕
 ;			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付いて振り返り、悲しげな顔を伏せた
 ;			PRINTFORMW ……隣に立って肩に手を置いた
 ;			PRINTFORMW 暫くそのままでいた……
@@ -1027,18 +1027,18 @@ ELSE
 	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
 	CASE 24
 		PRINTFORMW 今日の昼食の当番は%CALLNAME:ARG%だ
-		IF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25
+		IF TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:楽観的
 			PRINTFORMW %CALLNAME:ARG%はガッツポーズをしてみせるとはりきって料理を始めた……
-		ELSEIF TALENT:ARG:21 || TALENT:ARG:22
+		ELSEIF TALENT:ARG:無関心 || TALENT:ARG:感情乏しい
 			PRINTFORMW %CALLNAME:ARG%は無表情に頷いてみせると料理を始めた……
-		ELSEIF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+		ELSEIF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:生意気 || TALENT:ARG:抵抗
 			PRINTFORMW %CALLNAME:ARG%はしぶしぶながら料理を始めた……
 		ELSE
 			PRINTFORMW %CALLNAME:ARG%は頷いて料理を始めた……
 		ENDIF
 ;		CALL DAILY_LIFE_E
 ;		PRINTFORMW …………
-;		IF B > 0 && (TALENT:ARG:81 || TALENT:ARG:82 || ABL:ARG:レズ中毒 >= 5) && (ABL:ARG:欲望 >= 10 || TALENT:ARG:76) && RAND:4 >= 1
+;		IF B > 0 && (TALENT:ARG:両刀 || TALENT:ARG:男嫌い || ABL:ARG:レズ中毒 >= 5) && (ABL:ARG:欲望 >= 10 || TALENT:ARG:淫乱) && RAND:4 >= 1
 ;			PRINTFORMW どうも遅い……
 ;			PRINTFORMW 気になって台所に様子を見に行った
 ;			PRINTFORMW ……%CALLNAME:ARG%が%CALLNAME:B%を料理しています……
@@ -1049,10 +1049,10 @@ ELSE
 ;			PRINTFORMW ……！
 ;			PRINTFORMW 自分が生きていることが不思議な味です……
 ;			PRINTFORMW 不思議そうな%CALLNAME:ARG%の目の前で、顔が真っ青になった%CALLNAME:MASTER%はぶっ倒れました……
-;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;			IF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:生意気 || TALENT:ARG:抵抗
 ;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%のあんまりな反応に怒って自分で料理を食べてみた
 ;				PRINTFORMW そして、二人で仲良くノックダウンすることになった……
-;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;			ELSEIF TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:楽観的 || TALENT:ARG:臆病 || TALENT:ARG:大人しい || TALENT:ARG:幼稚
 ;				PRINTFORMW %CALLNAME:ARG%は慌てて心配そうに%CALLNAME:MASTER%に駆け寄り、ふと自分のつくった料理を食べてみた……
 ;				PRINTFORMW そして、二人で仲良くノックダウンすることになった……
 ;			ELSE
@@ -1063,10 +1063,10 @@ ELSE
 ;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
 ;			PRINTFORMW ……！
 ;			PRINTFORMW ギリギリセー……いやアウトな味です……
-;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;			IF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:生意気 || TALENT:ARG:抵抗
 ;				PRINTFORMW 顔を青くして押し黙った%CALLNAME:MASTER%に不審な目をむけ、%CALLNAME:ARG%は自分の料理を食べてみた……
 ;				PRINTFORMW そして、自分も顔を青くすると逃げていきました……
-;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:25 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;			ELSEIF TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:楽観的 || TALENT:ARG:臆病 || TALENT:ARG:大人しい || TALENT:ARG:幼稚
 ;				PRINTFORMW %CALLNAME:MASTER%はにこにこしている%CALLNAME:ARG%を見て、覚悟を決めて飲み込んだ……
 ;				PRINTFORMW 味を尋ねてくる%CALLNAME:ARG%に、正直に言うべきか嘘も方便でいくか悩んだ瞬間答えを直ぐ言わないとという方向へ思考が傾き後に考えたほうのひとまずおいしいと言いました
 ;				PRINTFORMW %CALLNAME:ARG%は嬉しそうに笑って料理を勧めてくる……
@@ -1101,17 +1101,17 @@ ELSE
 ;			PRINTL [1]おいしくないという
 ;			INPUT
 ;			IF RESULT == 0
-;				IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;				IF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:生意気 || TALENT:ARG:抵抗
 ;					PRINTFORMW %CALLNAME:ARG%は当然だという顔をしている
-;					SIF TALENT:ARG:85
+;					SIF TALENT:ARG:恋慕
 ;						PRINTFORMW だが、嬉しさは隠せないようだ……
-;				ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;				ELSEIF TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:臆病 || TALENT:ARG:大人しい || TALENT:ARG:幼稚
 ;					PRINTFORMW %CALLNAME:ARG%はよかったと胸を撫で下ろした……
-;					SIF TALENT:ARG:85
+;					SIF TALENT:ARG:恋慕
 ;						PRINTFORMW 次はもっと頑張るとはりきっている
 ;				ELSE
 ;					PRINTFORMW %CALLNAME:ARG%はちょっと得意げに頷いた
-;					SIF TALENT:ARG:85
+;					SIF TALENT:ARG:恋慕
 ;						PRINTFORMW %CALLNAME:ARG%のおでこにキスをして食堂に戻っていった……
 ;				ENDIF
 ;			ELSEIF RESULT == 1
@@ -1129,26 +1129,26 @@ ELSE
 ;				PRINTFORMW ……好物が増えたかもしれない
 ;			ENDIF
 ;			PRINTFORMW 思わずうまいと口にした
-;			IF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:16 || TALENT:ARG:34
+;			IF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:生意気 || TALENT:ARG:抵抗
 ;				PRINTFORMW %CALLNAME:ARG%は当然だという顔で胸を張った
-;				IF TALENT:ARG:85
+;				IF TALENT:ARG:恋慕
 ;					PRINTFORMW そして、%CALLNAME:MASTER%が食べ終わるまでにやにやするのを我慢している赤い顔で%CALLNAME:MASTER%を見つめた……
 ;				ELSE
 ;					PRINTFORMW そして、ふんと鼻を鳴らして台所に戻っていった
 ;				ENDIF
-;			ELSEIF TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:132
+;			ELSEIF TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:臆病 || TALENT:ARG:大人しい || TALENT:ARG:幼稚
 ;				PRINTFORMW %CALLNAME:ARG%は嬉しそうにはにかんだ……
-;				IF TALENT:ARG:85 && (TALENT:ARG:63 || TALENT:ARG:118 || TALENT:ARG:132)
+;				IF TALENT:ARG:恋慕 && (TALENT:ARG:献身的 || TALENT:ARG:鼓舞 || TALENT:ARG:幼稚)
 ;					PRINTFORMW そして赤い顔で抱きついてきた
 ;					PRINTFORMW ちょっと食べづらいが抱きつかれたまま食べました
-;				ELSEIF TALENT:ARG:85
+;				ELSEIF TALENT:ARG:恋慕
 ;					PRINTFORMW 持っていたお盆で口元を隠したが、顔が赤いのがわかる……
 ;					PRINTFORMW そして嬉しそうに小走りでお代わり用の鍋を取ってくると台所に行きました
 ;				ELSE
 ;					PRINTFORMW そして照れて台所に戻っていった
 ;				ENDIF
 ;			ELSE
-;				IF TALENT:ARG:85
+;				IF TALENT:ARG:恋慕
 ;					PRINTFORMW %CALLNAME:ARG%は嬉しそうに微笑んで%CALLNAME:MASTER%の食事を見つめている
 ;					PRINTFORMW 食べ終わって、ごちそうさまと言う%CALLNAME:MASTER%にデザートだといってキスをした……
 ;				ELSE
@@ -1162,7 +1162,7 @@ ELSE
 ;		IF DAY:2 == 0
 ;			PRINTFORMW 春…花粉症の季節だ
 ;			;薬毒耐性
-;			IF TALENT:ARG:56
+;			IF TALENT:ARG:薬毒耐性
 ;				IF RAND:2 == 0
 ;					PRINTFORMW くしゃみの止まらない%CALLNAME:MASTER%の様子を、%CALLNAME:ARG%が愉快そうに眺めている
 ;				ELSE
@@ -1170,7 +1170,7 @@ ELSE
 ;				ENDIF
 ;				PRINTFORMW 花粉症とは無縁の%CALLNAME:ARG%が恨めしい…
 ;			;調合知識
-;			ELSEIF TALENT:ARG:55
+;			ELSEIF TALENT:ARG:調合知識
 ;				IF F > 5
 ;					PRINTFORMW %CALLNAME:ARG%の部屋の前には人だかりが出来ている
 ;					PRINTFORMW 彼女が調合した特製目薬がお目当てなのだろう
@@ -1217,7 +1217,7 @@ ELSE
 ;		ELSEIF DAY:2 == 3
 			PRINTFORMW 昨夜から降り続いた大雪により 外は一面の銀世界だ
 			;丸くなって寝る(猫舌)
-			IF TALENT:ARG:54
+			IF TALENT:ARG:猫舌
 				PRINTFORMW %CALLNAME:ARG%の様子を見に行くと、布団を被り、丸くなって寝ていた
 ;				PRINTFORMW 何というか、期待していた通りのリアクションだ……
 			;出不精
@@ -1228,35 +1228,35 @@ ELSE
 			ELSEIF RAND:6 == 0 && STRCOUNT(LLIST, "/") >= 1
 ;				CALL DAILY_LIFE_A
 				PRINTFORMW 外が騒がしいので庭に出てみると、少女たちによる雪合戦が繰り広げられていた
-;				IF (TALENT:ARG:55 || TALENT:ARG:125)
+;				IF (TALENT:ARG:調合知識 || TALENT:ARG:禁断の知識)
 ;					C = 0
 ;					PRINTFORM 奇策を弄する%CALLNAME:ARG%チームと、
-;				ELSEIF (TALENT:ARG:51 || TALENT:ARG:54 || TALENT:ARG:132)
+;				ELSEIF (TALENT:ARG:習得遅い || TALENT:ARG:猫舌 || TALENT:ARG:幼稚)
 ;					C = 1
 ;					PRINTFORM 機動力に定評のある%CALLNAME:ARG%チームと、
-;				ELSEIF (TALENT:ARG:16 || TALENT:ARG:15)
+;				ELSEIF (TALENT:ARG:生意気 || TALENT:ARG:プライド高い)
 ;					C = 2
 ;					PRINTFORM 真っ向勝負の%CALLNAME:ARG%チームと、
-;				ELSEIF (TALENT:ARG:50 || TALENT:ARG:53)
+;				ELSEIF (TALENT:ARG:習得早い || TALENT:ARG:針さばき)
 ;					C = 3
 ;					PRINTFORM 地の利を最大限に活用した%CALLNAME:ARG%チームと、
 ;				ELSE
 ;					C = 4
 ;					PRINTFORM 基本に忠実な%CALLNAME:ARG%チームと、
 ;				ENDIF
-;				IF (TALENT:B:55 || TALENT:B:125)
+;				IF (TALENT:B:調合知識 || TALENT:B:禁断の知識)
 ;					SIF C == 0
 ;						PRINTFORM 同じく
 ;					PRINTFORMW 奇策を弄する%CALLNAME:B%チームとの激闘は
-;				ELSEIF (TALENT:B:51 || TALENT:B:54 || TALENT:B:132)
+;				ELSEIF (TALENT:B:習得遅い || TALENT:B:猫舌 || TALENT:B:幼稚)
 ;					SIF C == 1
 ;						PRINTFORM 同じく
 ;					PRINTFORMW 機動力に定評のある%CALLNAME:B%チームとの激闘は
-;				ELSEIF (TALENT:B:16 || TALENT:B:15)
+;				ELSEIF (TALENT:B:生意気 || TALENT:B:プライド高い)
 ;					SIF C == 2
 ;						PRINTFORM 同じく
 ;					PRINTFORMW 真っ向勝負の%CALLNAME:B%チームとの激闘は
-;				ELSEIF (TALENT:B:50 || TALENT:B:53)
+;				ELSEIF (TALENT:B:習得早い || TALENT:B:針さばき)
 ;					SIF C == 3
 ;						PRINTFORM 同じく
 ;					PRINTFORMW 地の利を最大限に活用した%CALLNAME:B%チームとの激闘は
@@ -1287,7 +1287,7 @@ ELSE
 ;					PRINTFORMW すし詰め状態だが、とっても楽しそうだ……
 ;				ELSE
 ;					PRINTFORMW 中を覗き込むと、%CALLNAME:ARG%がちょこんと座っていた
-;					IF TALENT:ARG:85
+;					IF TALENT:ARG:恋慕
 ;						PRINTFORMW すし詰め状態だが、とっても楽しそうだ……
 ;					ELSE
 ;						PRINTFORMW %CALLNAME:MASTER%も入れてもらおうとしたが、断られてしまった
@@ -1315,7 +1315,7 @@ ELSE
 				PRINTFORMW 庭に出てみると至る所に雪だるまが作られていた
 ;				PRINTFORMW それぞれの雪だるまには角や翼があったりして、色々な妖怪がモチーフになっているらしい
 ;				PRINTFORMW 感心しながら一連の作品群を見歩いていると、%CALLNAME:ARG%が雪だるまを作っているところに出くわした
-;				IF TALENT:ARG:85
+;				IF TALENT:ARG:恋慕
 ;					PRINTFORMW が、%CALLNAME:ARG%は%CALLNAME:MASTER%の姿に気づくと顔を真っ赤にして作りかけの雪だるまを慌てて崩してしまった
 ;					PRINTFORMW 誰の雪だるまを作っていたんだろう？
 ;				ELSE
@@ -1338,7 +1338,7 @@ ELSE
 	;臆病・気丈の時、夜間見回り中に遭遇する
 	CASE 27
 		PRINTFORMW ランプ片手に薄暗い館内を見回りしていると、ちょうどトイレから出てきた%CALLNAME:ARG%と鉢合わせになった
-		IF TALENT:ARG:10
+		IF TALENT:ARG:臆病
 ;			IF ABL:ARG:親密 >= 7
 ;				PRINTFORMW 暗闇に震えてしがみつく%CALLNAME:ARG%を、部屋までエスコートしました……
 ;			ELSE
@@ -1350,8 +1350,8 @@ ELSE
 					PRINTFORMW 走り去ってしまった……
 				ENDIF
 ;			ENDIF
-		ELSEIF TALENT:ARG:12
-;			IF TALENT:ARG:85
+		ELSEIF TALENT:ARG:気丈
+;			IF TALENT:ARG:恋慕
 ;				PRINTFORMW そのまま%CALLNAME:ARG%にも巡回に付き合ってもらいました……
 ;			ELSEIF ABL:ARG:親密 >= 7
 				PRINTFORMW 暗闇にも全く動じることのない%CALLNAME:ARG%であったが、念のため部屋までエスコートしました……
@@ -1418,7 +1418,7 @@ ELSE
 		ENDIF
 ;		IF MARK:ARG:3 == 3
 ;			PRINTFORMW ふと目が合うと、残忍な笑顔を浮かべて手招きしてきた……
-;		ELSEIF TALENT:ARG:85
+;		ELSEIF TALENT:ARG:恋慕
 ;			PRINTFORMW ふと目が合うと、悪戯っ子のように無邪気な笑顔を浮かべて手招きしてきた……
 ;		ELSE
 ;			PRINTFORMW ふと目が合うと、妖しい笑顔を浮かべて手招きしてきた……
@@ -1429,18 +1429,18 @@ ELSE
 		PRINTFORMW %CALLNAME:ARG%はどうしているかと様子を見に行ってみた……
 		PRINTFORMW %CALLNAME:ARG%の部屋の扉が軽く開いている
 		PRINTFORMW ちょっと覗いてみると、%CALLNAME:ARG%が鏡の前で色々ポーズを取っていた
-		SIF TALENT:ARG:114
+		SIF TALENT:ARG:吸血鬼
 			PRINTFORMW といっても映っていないのだが……癖のようなものだろうか？
-;		IF TALENT:ARG:110
+;		IF TALENT:ARG:巨乳
 ;			PRINTFORMW %CALLNAME:ARG%は自分の豊かな胸を確認するように触り始めた
-;			IF TALENT:ARG:10 || TALENT:ARG:14 || TALENT:ARG:26
+;			IF TALENT:ARG:臆病 || TALENT:ARG:大人しい || TALENT:ARG:悲観的
 ;				PRINTFORMW どうやら自分の胸があまり好きでないらしく、浮かぬ顔をしている
 ;			ELSE
 ;				PRINTFORMW そして、自分の胸を持ち上げてみている……重そうだ
 ;			ENDIF
-;		ELSEIF TALENT:ARG:109
+;		ELSEIF TALENT:ARG:貧乳
 ;			PRINTFORMW %CALLNAME:ARG%は自分の控えめな胸にぺたぺたと手を当てた
-;			SIF TALENT:ARG:100
+;			SIF TALENT:ARG:小柄体型
 ;				PRINTFORMW それから、自分のくびれの辺りも確かめるように触る……
 ;			PRINTFORMW 色々と考えるところがあるようだ……
 ;		ELSE
@@ -1455,15 +1455,15 @@ ELSE
 ;		IF MARK:ARG:3 == 3
 ;			PRINTFORMW と、%CALLNAME:MASTER%に気がついた%CALLNAME:ARG%が振り返り、つかつかと冷たい表情で歩いてきて、扉を強く閉めた……
 ;			PRINTFORMW 肩をすくめてそこを立ち去った……
-;		ELSEIF TALENT:ARG:24 || TALENT:ARG:35
+;		ELSEIF TALENT:ARG:保守的 || TALENT:ARG:恥じらい
 ;			PRINTFORMW と、%CALLNAME:MASTER%に気がついて真っ赤になった%CALLNAME:ARG%が慌てて跳んで来て、扉を閉めた……
 ;			PRINTFORMW %CALLNAME:MASTER%は頭を掻いてそこを離れることにした
-;		ELSEIF TALENT:ARG:21 || TALENT:ARG:22
+;		ELSEIF TALENT:ARG:無関心 || TALENT:ARG:感情乏しい
 ;			PRINTFORMW %CALLNAME:ARG%が、ふと鏡越しに%CALLNAME:MASTER%をちらりと見た
 ;			PRINTFORMW だが気にしないで続けている……
-;		ELSEIF TALENT:ARG:31 || TALENT:ARG:36 || TALENT:ARG:16 || TALENT:ARG:87
+;		ELSEIF TALENT:ARG:貞操無頓着 || TALENT:ARG:恥薄い || TALENT:ARG:生意気 || TALENT:ARG:小悪魔
 ;			PRINTFORMW と、%CALLNAME:MASTER%に気がつくと、%CALLNAME:ARG%は挑発的にポーズを取ってみせた……
-;		ELSEIF TALENT:ARG:11 || TALENT:ARG:15 || TALENT:ARG:34
+;		ELSEIF TALENT:ARG:反抗的 || TALENT:ARG:プライド高い || TALENT:ARG:抵抗
 ;			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと、少し怒った様子で扉を閉めた
 ;			PRINTFORMW %CALLNAME:MASTER%は頭を掻いてそこを離れることにした
 ;		ELSE
@@ -1535,7 +1535,7 @@ ELSE
 			SIF CFLAG:COUNT:21
 				CONTINUE
 			;登録番号がCOUNTのキャラが保守的もしくは貞操観念を持っていた時 
-			IF TALENT:COUNT:24 || TALENT:COUNT:30
+			IF TALENT:COUNT:保守的 || TALENT:COUNT:貞操観念
 				;C:Dにキャラ登録番号を保存する
 				C:D = COUNT
 				;Dを1増やす
@@ -1653,7 +1653,7 @@ ELSE
 			SIF CFLAG:COUNT:21
 				CONTINUE
 			;登録番号がCOUNTのキャラが臆病もしくは大人しいもしくは幼稚を持っていた時 
-			IF TALENT:COUNT:10 || TALENT:COUNT:14 || TALENT:COUNT:132
+			IF TALENT:COUNT:臆病 || TALENT:COUNT:大人しい || TALENT:COUNT:幼稚
 				;C:Dにキャラ登録番号を保存する
 				C:D = COUNT
 				;Dを1増やす

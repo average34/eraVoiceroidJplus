@@ -11,14 +11,14 @@ SIF TFLAG:44 == 1
 SIF TEQUIP:2
 	RETURN 0
 ;オトコだとダメ
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
-SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
+SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
-SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
+SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;炬燵使用中以外は無理
 SIF TEQUIP:7 == 0
@@ -39,10 +39,10 @@ SIF ABL:欲望 < 9
 SIF ABL:親密 < 13 && CFLAG:2 < 6000
 	RETURN 0
 ;合意と恋慕と恋人が必要
-SIF TALENT:152 == 0 && TALENT:85 == 0 && TALENT:153 == 0
+SIF TALENT:合意 == 0 && TALENT:恋慕 == 0 && TALENT:恋人 == 0
 	RETURN 0
 ;淫乱が必要
-SIF TALENT:76 == 0
+SIF TALENT:淫乱 == 0
 	RETURN 0
 ;ムードか酒の勢いが必要
 SIF TFLAG:37 < 50 && TFLAG:47 < 30
@@ -57,7 +57,7 @@ RETURN 1
 ;前回と今回の調教者が同じで、前回の調教が同一コマンドであり、抜かないフラグがある場合
 IF TFLAG:60 && PREVCOM == 368 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
 	;調教者がオトコか半人半妖かふたなりである
-	IF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
+	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 		PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、そのまま再び腰を動かし始めた…
 	ELSE
 	;ペニスバンドを使用している場合
@@ -83,7 +83,7 @@ ELSE
 		PRINTFORM 、ゆっくりと腰を下ろし
 		SIF EXP:Ｖ経験 > 0 && EXP:Ｖ経験 <= 10
 			PRINTFORM 、まだあまり開発されていない
-		IF TALENT:100
+		IF TALENT:小柄体型
 			PRINT 幼いワレメでペニスを飲み込んでいった…
 		ELSE
 			PRINT 秘裂でペニスを飲み込んでいった…
@@ -91,9 +91,9 @@ ELSE
 		IF EXP:Ｖ経験 >= EXPLV:3
 			PRINTL  
 			PRINTFORM %CALLNAME:TARGET%は
-			SIF TALENT:100
+			SIF TALENT:小柄体型
 				PRINT 小さな身体で懸命に
-			SIF TALENT:110
+			SIF TALENT:巨乳
 				PRINT 大きく胸を揺らしながら
 			PRINT 自ら腰を動かしている…
 		ENDIF
@@ -119,7 +119,7 @@ ELSE
 		ENDIF
 		SIF EXP:Ｖ経験 > 0 && EXP:Ｖ経験 <= 10
 			PRINTFORM 、まだあまり開発されていない
-		IF TALENT:100
+		IF TALENT:小柄体型
 			PRINT 幼いワレメ
 		ELSE
 			PRINT 秘裂
@@ -167,13 +167,13 @@ ENDIF
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
+SIF TALENT:恋慕 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
-SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
+SIF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
@@ -215,7 +215,7 @@ IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 5000
 
-	IF ASSIPLAY && TALENT:PLAYER:122 == 0
+	IF ASSIPLAY && TALENT:PLAYER:オトコ == 0
 		EXP:異常経験 += 3
 		PRINTFORML %EXPNAME:50%＋３
 	ENDIF
@@ -257,16 +257,16 @@ ELSEIF PALAM:3 >= PALAMLV:4
 ENDIF
 
 ;調教者がふたなり
-SIF TALENT:PLAYER:121
+SIF TALENT:PLAYER:ふたなり
 	TIMES SOURCE:1 , 2.50
 
 
 ;小柄体形
-SIF TALENT:100
+SIF TALENT:小柄体型
 	TIMES SOURCE:6 , 2.00
 
 ;貞操観念
-IF TALENT:30 && TALENT:85 == 0
+IF TALENT:貞操観念 && TALENT:恋慕 == 0
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 13000
@@ -275,7 +275,7 @@ IF TALENT:30 && TALENT:85 == 0
 		SOURCE:15 = 1300
 	ENDIF
 ;貞操無頓着
-ELSEIF TALENT:31 || TALENT:88 && ASSIPLAY == 0
+ELSEIF TALENT:貞操無頓着 || TALENT:親愛 && ASSIPLAY == 0
 	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 350
@@ -370,11 +370,11 @@ ENDIF
 
 ;Ｖ敏感、鈍感をみる
 ;快Ｖ自体のチェックは後でまとめてやる
-IF TALENT:103
+IF TALENT:Ｖ鈍感
 	TIMES SOURCE:6 , 1.50
 	TIMES SOURCE:13 , 1.50
 	TIMES SOURCE:14 , 1.50
-ELSEIF TALENT:104
+ELSEIF TALENT:Ｖ敏感
 	TIMES SOURCE:6 , 0.60
 	TIMES SOURCE:13 , 0.60
 	TIMES SOURCE:14 , 0.60
@@ -385,15 +385,15 @@ PRINTL Ｖ経験＋１
 
 ;好感度ランダム変化
 A = RAND:12 + 3
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 ;恋慕でも反感
-	IF TALENT:85
+	IF TALENT:恋慕
 		SOURCE:15 += 200
 	ELSE
 ;恋慕なしだと反感増加
@@ -473,7 +473,7 @@ ENDIF
 STAIN:3 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:3
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4
@@ -545,19 +545,19 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 5
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 5
 ENDIF
 ;男嫌い
-IF TALENT:82 && TALENT:PLAYER:122
+IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 	A -= 12
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 8
 	S = 5
 ENDIF
@@ -570,7 +570,7 @@ ELSEIF EXP:Ｖ経験 < EXPLV:2
 ENDIF
 
 ;一線越えない（処女のみ）
-IF TALENT:27 && TALENT:処女
+IF TALENT:一線越えない && TALENT:処女
 	A -= 20
 ENDIF
 
@@ -580,7 +580,7 @@ IF TEQUIP:21
 ENDIF
 
 ;童貞
-IF TALENT:PLAYER:154
+IF TALENT:PLAYER:童貞
 	A += 3
 ENDIF
 
@@ -631,7 +631,7 @@ IF CFLAG:2 >= 2500
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 35
 ENDIF
 
@@ -707,28 +707,28 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,5,')
 		S = 1
 	ENDIF
 	;男嫌い
-	IF TALENT:82 && TALENT:PLAYER:122
+	IF TALENT:男嫌い && TALENT:PLAYER:オトコ
 		PRINT  - 
 		PRINTS TALENTNAME:82
 		PRINTV '(,12,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -751,7 +751,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（処女のみ）
-	IF TALENT:27 && TALENT:処女
+	IF TALENT:一線越えない && TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,20,')
@@ -768,7 +768,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;童貞
-	IF TALENT:PLAYER:154
+	IF TALENT:PLAYER:童貞
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:154
@@ -838,7 +838,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,35,')

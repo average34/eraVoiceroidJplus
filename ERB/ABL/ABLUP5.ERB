@@ -117,13 +117,13 @@ ELSEIF ABL:Ａ感覚 == 2
 ELSEIF ABL:Ａ感覚 == 3
 	A = 7000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.10
 	ENDIF
 ELSEIF ABL:Ａ感覚 == 4
 	A = 45000
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ELSE
@@ -131,27 +131,27 @@ ELSE
 	
 	A = A * (ABL:Ａ感覚 - 3)
 	;一線越えない
-	IF TALENT:27
+	IF TALENT:一線越えない
 		TIMES A , 1.30
 	ENDIF
 ENDIF
 
 ;A鈍感
-IF TALENT:105
+IF TALENT:Ａ鈍感
 	TIMES A , 1.20
 ENDIF
 
 ;A敏感
-IF TALENT:106
+IF TALENT:Ａ敏感
 	TIMES A , 0.80
 ENDIF
 
 ;淫乱化
-IF TALENT:76
+IF TALENT:淫乱
 	TIMES A , 0.80
 ENDIF
 
 ;尻穴狂い
-IF TALENT:77
+IF TALENT:尻穴狂い
 	TIMES A , 0.80
 ENDIF

@@ -14,7 +14,7 @@ SIF ASSIPLAY
 SIF TEQUIP:90
 	RETURN 0
 ;汚れ無視がないとダメ
-SIF TALENT:MASTER:64 == 0
+SIF TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;それまでの調教でゴム射してないとダメ
 ;CFLAG107
@@ -156,7 +156,7 @@ ELSE
 ENDIF
 PRINTFORMW の使用済みコンドームを手に取った……
 PRINT そして、
-IF TALENT:MASTER:83
+IF TALENT:MASTER:サド
 	PRINTFORM %CALLNAME:TARGET%が舌をのばせば届きそうなぐらいの距離で、
 ELSE
 	PRINTFORM %CALLNAME:TARGET%に見せびらかすように
@@ -169,7 +169,7 @@ ENDIF
 PRINTFORM %CALLNAME:TARGET%は
 IF ABL:TARGET:精液中毒 >= 5
 	PRINTL 我慢できないのか、涎を垂らしながらその光景を見ている……
-ELSEIF ABL:TARGET:精液中毒 >= 3 || (TALENT:85 && (CFLAG:108 == 1))
+ELSEIF ABL:TARGET:精液中毒 >= 3 || (TALENT:恋慕 && (CFLAG:108 == 1))
 	PRINTL 物欲しげな表情でじっとその光景を見ている……
 ELSEIF ABL:TARGET:精液中毒 >= 1
 	PRINTL 必死に目をそらそうとしているが、その目は目の前の光景に釘付けになっている……

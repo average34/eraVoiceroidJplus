@@ -457,29 +457,29 @@ SELECTCOM = -1
 IF TIME
 	CFLAG:653 = 1
 	;朝フェラの条件回避のために一晩の間女に
-	IF TALENT:MASTER:119
-		TALENT:MASTER:119 = 0
+	IF TALENT:MASTER:半人半妖
+		TALENT:MASTER:半人半妖 = 0
 		CFLAG:653 |= 2
 	ENDIF
-	IF TALENT:MASTER:121
-		TALENT:MASTER:121 = 0
+	IF TALENT:MASTER:ふたなり
+		TALENT:MASTER:ふたなり = 0
 		CFLAG:653 |= 4
 	ENDIF
-	IF TALENT:MASTER:122
-		TALENT:MASTER:122 = 0
+	IF TALENT:MASTER:オトコ
+		TALENT:MASTER:オトコ = 0
 		CFLAG:653 |= 8
 	ENDIF
 	;拡張朝イベントの条件回避に淫乱と恋慕と相愛を一時的に0に
-	IF TALENT:76
-		TALENT:76 = 0
+	IF TALENT:淫乱
+		TALENT:淫乱 = 0
 		CFLAG:653 |= 16
 	ENDIF
-	IF TALENT:85
-		TALENT:85 = 0
+	IF TALENT:恋慕
+		TALENT:恋慕 = 0
 		CFLAG:653 |= 32
 	ENDIF
-	IF TALENT:89
-		TALENT:89 = 0
+	IF TALENT:相愛
+		TALENT:相愛 = 0
 		CFLAG:653 |= 64
 	ENDIF
 	;恋慕の再獲得を防止のために好感度がすごいことに
@@ -489,47 +489,47 @@ ENDIF
 ;一時的な素質変化の復帰
 ;胸の復帰
 IF TEQUIP:40 & 7
-	TALENT:109 = 0
-	TALENT:110 = 0
+	TALENT:貧乳 = 0
+	TALENT:巨乳 = 0
 	IF TEQUIP:40 & 1
-		TALENT:109 = 1
+		TALENT:貧乳 = 1
 	ELSEIF TEQUIP:40 & 4
-		TALENT:110 = 1
+		TALENT:巨乳 = 1
 	ENDIF
 ENDIF
 ;体型を正常に
 IF TEQUIP:40 & 8
-	TALENT:100 = 0
+	TALENT:小柄体型 = 0
 ENDIF
 IF TEQUIP:40 & 16
-	TALENT:100 = 1
+	TALENT:小柄体型 = 1
 ENDIF
 ;獣耳喪失
 IF TEQUIP:40 & 32
-	TALENT:124 = 0
+	TALENT:動物耳 = 0
 ENDIF
 ;超敏感体質喪失
 IF TEQUIP:40 & 64
 	;有利素質は手抜き
-	TALENT:42 -= 1
-	TALENT:102 -= 1
-	TALENT:104 -= 1
-	TALENT:106 -= 1
-	TALENT:108 -= 1
+	TALENT:濡れやすい -= 1
+	TALENT:Ｃ敏感 -= 1
+	TALENT:Ｖ敏感 -= 1
+	TALENT:Ａ敏感 -= 1
+	TALENT:Ｂ敏感 -= 1
 	IF (TEQUIP:40 & 128) > 0
-		TALENT:43 = 1
+		TALENT:濡れにくい = 1
 	ENDIF
 	IF (TEQUIP:40 & 256) > 0
-		TALENT:101 = 1
+		TALENT:Ｃ鈍感 = 1
 	ENDIF
 	IF (TEQUIP:40 & 512) > 0
-		TALENT:103 = 1
+		TALENT:Ｖ鈍感 = 1
 	ENDIF
 	IF (TEQUIP:40 & 1024) > 0
-		TALENT:105 = 1
+		TALENT:Ａ鈍感 = 1
 	ENDIF
 	IF (TEQUIP:40 & 2048) > 0
-		TALENT:107 = 1
+		TALENT:Ｂ鈍感 = 1
 	ENDIF
 ENDIF
 
@@ -542,29 +542,29 @@ SELECTCOM = -1
 IF TIME
 	CFLAG:653 = 1
 	;朝フェラの条件回避のために一晩の間女に
-	IF TALENT:MASTER:119
-		TALENT:MASTER:119 = 0
+	IF TALENT:MASTER:半人半妖
+		TALENT:MASTER:半人半妖 = 0
 		CFLAG:653 |= 2
 	ENDIF
-	IF TALENT:MASTER:121
-		TALENT:MASTER:121 = 0
+	IF TALENT:MASTER:ふたなり
+		TALENT:MASTER:ふたなり = 0
 		CFLAG:653 |= 4
 	ENDIF
-	IF TALENT:MASTER:122
-		TALENT:MASTER:122 = 0
+	IF TALENT:MASTER:オトコ
+		TALENT:MASTER:オトコ = 0
 		CFLAG:653 |= 8
 	ENDIF
 	;拡張朝イベントの条件回避に淫乱と恋慕と相愛を一時的に0に
-	IF TALENT:76
-		TALENT:76 = 0
+	IF TALENT:淫乱
+		TALENT:淫乱 = 0
 		CFLAG:653 |= 16
 	ENDIF
-	IF TALENT:85
-		TALENT:85 = 0
+	IF TALENT:恋慕
+		TALENT:恋慕 = 0
 		CFLAG:653 |= 32
 	ENDIF
-	IF TALENT:89
-		TALENT:89 = 0
+	IF TALENT:相愛
+		TALENT:相愛 = 0
 		CFLAG:653 |= 64
 	ENDIF
 	;恋慕の再獲得を防止のために好感度がすごいことに
@@ -576,23 +576,23 @@ SIF CFLAG:653 == 0
 	RETURN 0
 ;朝フェラの条件回避復帰
 IF (CFLAG:653 & 2) > 0
-	TALENT:MASTER:119 = 1
+	TALENT:MASTER:半人半妖 = 1
 ENDIF
 IF (CFLAG:653 & 4) > 0
-	TALENT:MASTER:121 = 1
+	TALENT:MASTER:ふたなり = 1
 ENDIF
 IF (CFLAG:653 & 8) > 0
-	TALENT:MASTER:122 = 1
+	TALENT:MASTER:オトコ = 1
 ENDIF
 ;拡張朝イベントの条件回避に淫乱と恋慕と相愛を一時的に0にしたのを復帰
 IF (CFLAG:653 & 16) > 0
-	TALENT:76 = 1
+	TALENT:淫乱 = 1
 ENDIF
 IF (CFLAG:653 & 32) > 0
-	TALENT:85 = 1
+	TALENT:恋慕 = 1
 ENDIF
 IF (CFLAG:653 & 64) > 0
-	TALENT:89 = 1
+	TALENT:相愛 = 1
 ENDIF
 CFLAG:653 = 0
 ;好感度復帰
@@ -1413,7 +1413,7 @@ ENDIF
 ;----------------------------------------------------------------
 @ADDITIONAL_BASTPETTING
 IF SELECTCOM == 5
-	IF RAND:6 == 0 && TALENT:130
+	IF RAND:6 == 0 && TALENT:母乳体質
 		TFLAG:17 = 6
 	ELSEIF RAND:5 == 0
 		TFLAG:17 = 1
@@ -1633,30 +1633,30 @@ IF SELECTCOM == 5
 		RETURN 0
 	;胸揉み
 	ELSEIF TFLAG:17 == 1
-		IF TALENT:130
+		IF TALENT:母乳体質
 			PRINTFORM %CALLNAME:TARGET%の
 			SIF PALAM:5 > PALAMLV:3
 				PRINT 期待に震える
-			IF TALENT:100 && TALENT:109
+			IF TALENT:小柄体型 && TALENT:貧乳
 				PRINT 僅かに膨らみが感じられる程度の
-			ELSEIF TALENT:109
+			ELSEIF TALENT:貧乳
 				PRINT 標準よりやや小さめの
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINT 手から溢れそうなほどの
 			ENDIF
 			IF TEQUIP:63
 				PRINTFORMW 胸を下からそっと揉み上げた…
-			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:85
+			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:恋慕
 				PRINTW 胸を強く搾り上げてやると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
-				IF TALENT:109
+				IF TALENT:貧乳
 					PRINT その控えめな
-				ELSEIF TALENT:110
+				ELSEIF TALENT:巨乳
 					PRINT その大きな
 				ELSEIF TALENT:141
 					PRINT その巨大な
 				ENDIF
-				SIF TALENT:130
+				SIF TALENT:母乳体質
 					PRINT 母乳が滴る
 				PRINTL 胸を強調するように突き出し、
 				PRINTW より強い刺激を求めた…
@@ -1669,29 +1669,29 @@ IF SELECTCOM == 5
 			PRINTFORM %CALLNAME:TARGET%の
 			SIF PALAM:5 > PALAMLV:3
 				PRINT 期待に震える
-			IF TALENT:100 && TALENT:109
+			IF TALENT:小柄体型 && TALENT:貧乳
 				PRINT 僅かに膨らみが感じられる程度の
-			ELSEIF TALENT:109
+			ELSEIF TALENT:貧乳
 				PRINT 標準よりやや小さめの
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINT 手から溢れそうなほどの
 			ENDIF
-			IF PALAM:5 > PALAMLV:3 && TALENT:85
+			IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
 				PRINTL 胸を優しく撫でてやると、
 				PRINTFORMW %CALLNAME:TARGET%は少し恥ずかしそうにしながら胸を突き出すようにして激しい愛撫を求めた…
 			ELSEIF TALENT:140
 				PRINTW 胸を優しく撫でるように触れた…
 			ELSEIF TEQUIP:63
 				PRINTFORMW 胸を下からそっと揉み上げた…
-			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:85
+			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:恋慕
 				PRINTW 胸を強く揉みしだいてやると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
-				IF TALENT:109
+				IF TALENT:貧乳
 					PRINT その控えめな
-				ELSEIF TALENT:110
+				ELSEIF TALENT:巨乳
 					PRINT その大きな
 				ENDIF
-				SIF TALENT:130
+				SIF TALENT:母乳体質
 					PRINT 母乳が滴る
 				PRINTL 胸を強調するように突き出し、
 				PRINTW より強い愛撫を求めた…
@@ -1703,11 +1703,11 @@ IF SELECTCOM == 5
 		ENDIF
 	ELSEIF TFLAG:17 == 2
 		PRINTFORM %CALLNAME:TARGET%の
-		IF TALENT:100 && TALENT:109
+		IF TALENT:小柄体型 && TALENT:貧乳
 			PRINT 僅かに膨らみが感じられる程度の
-		ELSEIF TALENT:109
+		ELSEIF TALENT:貧乳
 			PRINT 標準よりやや小さめの
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
 		IF PALAM:5 > PALAMLV:3
@@ -1720,11 +1720,11 @@ IF SELECTCOM == 5
 	;乳首舐め/乳首あまがみ
 	ELSEIF TFLAG:17 == 3 || TFLAG:17 == 4
 		PRINTFORM %CALLNAME:TARGET%の
-		IF TALENT:100 && TALENT:109
+		IF TALENT:小柄体型 && TALENT:貧乳
 			PRINT 僅かに膨らみが感じられる程度の
-		ELSEIF TALENT:109
+		ELSEIF TALENT:貧乳
 			PRINT 標準よりやや小さめの
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
 		PRINT 胸の先端の、
@@ -1735,7 +1735,7 @@ IF SELECTCOM == 5
 		ENDIF
 		IF TFLAG:17 == 4
 			PRINTW に歯を立てて甘噛みした…
-		ELSEIF TALENT:PLAYER:54
+		ELSEIF TALENT:PLAYER:猫舌
 			PRINTW に舌の棘を押し当てた…
 		ELSE
 			PRINTW を舐めあげた…
@@ -1743,24 +1743,24 @@ IF SELECTCOM == 5
 	;乳首吸い
 	ELSEIF TFLAG:17 == 5
 		PRINTFORM %CALLNAME:TARGET%の
-		IF TALENT:100 && TALENT:109
+		IF TALENT:小柄体型 && TALENT:貧乳
 			PRINT 僅かに膨らみが感じられる程度の
-		ELSEIF TALENT:109
+		ELSEIF TALENT:貧乳
 			PRINT 標準よりやや小さめの
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
 		IF RAND:2 == 0
-			IF PALAM:5 > PALAMLV:3 && TALENT:85
+			IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
 				PRINTL 期待に震える胸の先端を
 				PRINTW 強く赤子のように吸い上げると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
-				IF TALENT:109
+				IF TALENT:貧乳
 					PRINT その控えめな
-				ELSEIF TALENT:110
+				ELSEIF TALENT:巨乳
 					PRINT その大きな
 				ENDIF
-				SIF TALENT:130
+				SIF TALENT:母乳体質
 					PRINT 母乳が滴る
 				PRINTFORML 胸を強調するように突き出し、
 				PRINTFORMW %CALLNAME:PLAYER%の顔に押し付けた…
@@ -1770,7 +1770,7 @@ IF SELECTCOM == 5
 				PRINTW 胸の先端の、まだ柔らかい突起を吸いあげた…
 			ENDIF
 		ELSE
-			IF TALENT:130
+			IF TALENT:母乳体質
 				IF PALAM:5 > PALAMLV:3
 					PRINTW 先端の、勃起しきった突起から母乳を吸い出そうとした…
 				ELSE
@@ -1786,47 +1786,47 @@ IF SELECTCOM == 5
 		ENDIF
 	ELSEIF TFLAG:17 == 6
 		PRINTFORM %CALLNAME:TARGET%の
-		IF TALENT:100 && TALENT:109
+		IF TALENT:小柄体型 && TALENT:貧乳
 			PRINT 僅かに膨らみが感じられる程度の
-		ELSEIF TALENT:109
+		ELSEIF TALENT:貧乳
 			PRINT 標準よりやや小さめの
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
-		IF PALAM:5 > PALAMLV:3 && TALENT:85
+		IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
 			PRINTL 胸を絞り込むようにしながら
 			PRINTW その先端を強く吸い上げると、
 			PRINTFORM %CALLNAME:TARGET%は嬌声をあげながらも
-			IF TALENT:109
+			IF TALENT:貧乳
 				PRINT その控えめな
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINT その大きな
 			ENDIF
 			PRINT 胸
-			SIF TALENT:110
+			SIF TALENT:巨乳
 				PRINT の谷間
 			PRINTFORML に%CALLNAME:PLAYER%の頭を寄せ、
 			PRINTFORMW 快感で力が入ってしまうのか強く抱きしめ圧迫した…
-		ELSEIF PALAM:5 > PALAMLV:3 && TALENT:76
+		ELSEIF PALAM:5 > PALAMLV:3 && TALENT:淫乱
 			PRINTW 胸を絞り込むようにしながらその先端を強く吸い上げると、
 			PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
-			IF TALENT:109
+			IF TALENT:貧乳
 				PRINT その控えめな
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINT その大きな
 			ENDIF
 			PRINTFORML 胸を強調するように突き出し、
 			PRINTFORMW %CALLNAME:PLAYER%の顔に押し付けた…
-		ELSEIF TALENT:85
+		ELSEIF TALENT:恋慕
 			PRINTW 胸を揉みしだきながらその先端を吸い上げると、
 			PRINTFORM %CALLNAME:TARGET%は優しい笑みを浮かべ
-			IF TALENT:109
+			IF TALENT:貧乳
 				PRINT その控えめな
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINT その大きな
 			ENDIF
 			PRINT 胸
-			SIF TALENT:110
+			SIF TALENT:巨乳
 				PRINT の谷間
 			PRINTFORML に%CALLNAME:PLAYER%の頭を寄せ、
 			PRINTFORMW 優しく抱きしめた…
@@ -1848,7 +1848,7 @@ IF SELECTCOM == 6
 		PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%に軽く啄ばむように口づけた…
 	ELSEIF TFLAG:17 == 3
 		PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%に優しく
-		SIF TALENT:153
+		SIF TALENT:恋人
 			PRINTFORM 、愛情をこめて
 		PRINTFORMW キスをした…
 	ELSE
@@ -1867,7 +1867,7 @@ IF SELECTCOM == 21
 		;前回と今回の調教者が同じで、前回の調教が後背位であり、抜かないフラグがある場合
 		IF TFLAG:60 && PREVCOM == 21 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
 			;調教者がオトコか半人半妖かふたなりである
-			IF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
+			IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 				PRINTFORMW %CALLNAME:TARGET%に壁を手をつかせて立たせると、膣内の感触を味わいながら、再び腰を動かし始めた…
 			ELSE
 			;ペニスバンドを使用している場合
@@ -1887,7 +1887,7 @@ IF SELECTCOM == 21
 				TFLAG:31 = 2
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%に壁に手をつかせて立たせると、後ろから
-			IF TALENT:100
+			IF TALENT:小柄体型
 				PRINT 幼いワレメ
 			ELSE
 				PRINT 秘裂
@@ -1930,7 +1930,7 @@ IF SELECTCOM == 24
 			PRINTFORM %CALLNAME:TARGET%の
 			SIF PALAM:3 >= PALAMLV:4
 				PRINT 濡れそぼった
-			IF TALENT:100
+			IF TALENT:小柄体型
 				PRINT 幼いワレメ
 			ELSE
 				PRINT 秘裂
@@ -1969,7 +1969,7 @@ IF SELECTCOM == 25
 			PRINTFORM %CALLNAME:TARGET%の、
 			SIF PALAM:3 >= PALAMLV:4
 				PRINT 濡れそぼった
-			IF TALENT:100
+			IF TALENT:小柄体型
 				PRINT 幼いワレメ
 			ELSE
 				PRINT 秘裂
@@ -1987,29 +1987,29 @@ IF SELECTCOM == 32
 		RETURN 0
 	ELSEIF TFLAG:17 == 1
 		PRINTFORM %CALLNAME:MASTER%は%CALLNAME:TARGET%の
-		IF TALENT:109
+		IF TALENT:貧乳
 			PRINT 薄い
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 豊満な
 		ENDIF
 		PRINT 胸にペニスを
-		IF TALENT:109
+		IF TALENT:貧乳
 			PRINT 押し付けると、激しく擦り付けた…
 		ELSE
 			PRINTFORMW 突き入れると、激しく腰を振りたてた…
 		ENDIF
 	ELSE
 		PRINTFORM %CALLNAME:TARGET%は
-		IF TALENT:109
+		IF TALENT:貧乳
 			PRINT 薄い胸にペニスを当てさせると
-		ELSEIF TALENT:110
+		ELSEIF TALENT:巨乳
 			PRINT 豊満な胸でペニスを包み込むと
 		ELSE
 			PRINT 胸でペニスをはさむと
 		ENDIF
 		PRINTFORMW 動きを止めて、%CALLNAME:MASTER%を見て微笑んだ…
 		PRINTFORM %CALLNAME:MASTER%は少し待ったが堪えきれなくなり、自ら腰を振って、
-		IF TALENT:109
+		IF TALENT:貧乳
 			PRINT ペニスを胸に擦りつけはじめた…
 		ELSE
 			PRINTFORMW 、快楽を貪りはじめた…
@@ -2129,7 +2129,7 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 		TIMES B , 10.00
 	ENDIF
 
-	SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
+	SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 		BASE:PLAYER:射精 += B
 
 	SOURCE:8 = 200
@@ -2243,12 +2243,12 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	STAIN:1 |= STAIN:PLAYER:2
 	STAIN:PLAYER:4 |= STAIN:1
 
-	IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		PRINTS EXPNAME:40
 		PRINTL +4
 		EXP:レズ経験 += 4
 		EXP:PLAYER:レズ経験 += 4
-	ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+	ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 		PRINTS EXPNAME:41
 		PRINTL +4
 		EXP:ＢＬ経験 += 4
@@ -2258,7 +2258,7 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	TFLAG:100 = 1
 
 	;調教者がふたなり
-	IF TALENT:PLAYER:121
+	IF TALENT:PLAYER:ふたなり
 		SOURCE:13 /= 2
 	ENDIF
 ENDIF

@@ -67,7 +67,7 @@ IF TARGET != -1
 	SIF TEQUIP:87
 		RETURN 0
 	;奴隷の妊娠チェック
-	IF TALENT:TARGET:134 == 0
+	IF TALENT:TARGET:妊娠 == 0
 		T = TARGET
 		P = 1
 		CALL NAKADASHI_CHECK
@@ -83,7 +83,7 @@ IF ASSI >= 1
 	SIF TEQUIP:ASSI:87
 		RETURN 0
 	;助手の妊娠チェック
-	IF TALENT:ASSI:134 == 0
+	IF TALENT:ASSI:妊娠 == 0
 		T = ASSI
 		P = 1
 		CALL NAKADASHI_CHECK
@@ -100,7 +100,7 @@ IF ASSI >= 1 && TARGET != -1
 	SIF TEQUIP:87
 		RETURN 0
 	;奴隷が妊娠してるかの判定
-	IF TALENT:TARGET:134 == 0
+	IF TALENT:TARGET:妊娠 == 0
 		T = TARGET
 		P = 2
 		CALL NAKADASHI_CHECK
@@ -116,7 +116,7 @@ IF ASSI >= 1
 	SIF TEQUIP:ASSI:87
 		RETURN 0
 	;助手が妊娠してるかの判定
-	IF TALENT:ASSI:134 == 0
+	IF TALENT:ASSI:妊娠 == 0
 		T = ASSI
 		P = 3
 		CALL NAKADASHI_CHECK
@@ -132,7 +132,7 @@ IF TARGET != -1
 	SIF TEQUIP:MASTER:87
 		RETURN 0
 	;主人が妊娠してるかの判定
-	IF TALENT:MASTER:134 == 0
+	IF TALENT:MASTER:妊娠 == 0
 		T = MASTER
 		P = 3
 		CALL NAKADASHI_CHECK
@@ -157,7 +157,7 @@ SIF CFLAG:T:F == 0
 
 ;膣内射精量で分岐するのでその下準備
 ;危険日である
-IF TALENT:T:137
+IF TALENT:T:危険日
 	X = CFLAG:T:F 
 ;危険日でない
 ELSE
@@ -169,9 +169,9 @@ SIF X > 5
 ;1~36分の1で妊娠する
 ;6 - X + (X == 1) + (X == 0) * 2：基本値設定
 ;(P > 1) * ((X > 0) + (X > 1))：父親が主人以外時の補正
-;TALENT:T:100 * 2：小柄体型の補正
+;TALENT:T:小柄体型 * 2：小柄体型の補正
 ;3 - (TEQUIP:T:86 * 2)：排卵誘発剤による補正←が小柄体型の時しか動いていない…多分不具合だと思うので上記計算結果に掛かる様に修正
-SIF RAND:(((6 - X + (X == 1) + (X == 0) * 2) + ((P > 1) * ((X > 0) + (X > 1))) + (TALENT:T:100 * 2)) * (3 - (TEQUIP:T:86 * 2))) == 0
+SIF RAND:(((6 - X + (X == 1) + (X == 0) * 2) + ((P > 1) * ((X > 0) + (X > 1))) + (TALENT:T:小柄体型 * 2)) * (3 - (TEQUIP:T:86 * 2))) == 0
 	CFLAG:T:104 = P
 
 ;---------------------------------------------------------
@@ -182,11 +182,11 @@ SIF RAND:(((6 - X + (X == 1) + (X == 0) * 2) + ((P > 1) * ((X > 0) + (X > 1))) +
 ;マスターの精液でターゲット妊娠発覚時の処理
 ;CFLAG:108→素質の消滅をカウントする変数
 IF TARGET != -1
-	IF TALENT:TARGET:134 == 0 && CFLAG:TARGET:104 == 1
+	IF TALENT:TARGET:妊娠 == 0 && CFLAG:TARGET:104 == 1
 		PRINTFORMW %CALLNAME:TARGET%の様子がおかしい…
 		PRINTFORML %CALLNAME:TARGET%は子供を身篭った様だ
 		PRINTFORMW %NAME:TARGET%は[%TALENTNAME:134%]した
-		TALENT:TARGET:134 = 1
+		TALENT:TARGET:妊娠 = 1
 
 		T = TARGET
 		CALL CHANGE_N_STATUS
@@ -204,11 +204,11 @@ ENDIF
 
 ;助手がいるか
 IF ASSI >= 1
-	IF TALENT:ASSI:134 == 0 && CFLAG:ASSI:104 == 1
+	IF TALENT:ASSI:妊娠 == 0 && CFLAG:ASSI:104 == 1
 		PRINTFORMW %CALLNAME:ASSI%の様子がおかしい…
 		PRINTFORML %CALLNAME:ASSI%は子供を身篭った様だ
 		PRINTFORMW %NAME:ASSI%は[%TALENTNAME:134%]した
-		TALENT:ASSI:134 = 1
+		TALENT:ASSI:妊娠 = 1
 
 		T = ASSI
 		CALL CHANGE_N_STATUS
@@ -231,11 +231,11 @@ ENDIF
 
 ;助手と奴隷がいるか
 IF ASSI >= 1 && TARGET != -1
-	IF TALENT:TARGET:134 == 0 && CFLAG:TARGET:104 == 2
+	IF TALENT:TARGET:妊娠 == 0 && CFLAG:TARGET:104 == 2
 		PRINTFORMW %CALLNAME:TARGET%の様子がおかしい…
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:ASSI%の子供を身篭った様だ
 		PRINTFORMW %NAME:TARGET%は[%TALENTNAME:134%]した
-		TALENT:TARGET:134 = 1
+		TALENT:TARGET:妊娠 = 1
 
 		T = TARGET
 		CALL CHANGE_N_STATUS
@@ -261,11 +261,11 @@ ENDIF
 
 ;助手がいるか
 IF ASSI >= 1 && TARGET != -1
-	IF TALENT:ASSI:134 == 0 && CFLAG:ASSI:104 == 3
+	IF TALENT:ASSI:妊娠 == 0 && CFLAG:ASSI:104 == 3
 		PRINTFORMW %CALLNAME:ASSI%の様子がおかしい…
 		PRINTFORML %CALLNAME:ASSI%は%CALLNAME:TARGET%の子供を身篭った様だ
 		PRINTFORMW %NAME:ASSI%は[%TALENTNAME:134%]した
-		TALENT:ASSI:134 = 1
+		TALENT:ASSI:妊娠 = 1
 
 		T = ASSI
 		CALL CHANGE_N_STATUS
@@ -291,11 +291,11 @@ ENDIF
 
 
 IF TARGET != -1
-	IF TALENT:MASTER:134 == 0 && CFLAG:MASTER:104 == 3
+	IF TALENT:MASTER:妊娠 == 0 && CFLAG:MASTER:104 == 3
 		PRINTFORMW なんだか体の調子がおかしい…
 		PRINTFORML どうやら%CALLNAME:TARGET%の子供を身篭った様だ
 		PRINTFORMW %NAME:MASTER%は[%TALENTNAME:134%]した
-		TALENT:MASTER:134 = 1
+		TALENT:MASTER:妊娠 = 1
 
 		T = MASTER
 		CALL CHANGE_N_STATUS
@@ -336,12 +336,12 @@ ENDIF
 ;主人→助手、パートナー
 IF CFLAG:T:104 == 1
 	;恋慕なら
-	IF TALENT:T:85 == 1
+	IF TALENT:T:恋慕 == 1
 		;相愛なら
-		IF TALENT:T:89 == 1
+		IF TALENT:T:相愛 == 1
 			PRINTFORMW %NAME:T%は%CALLNAME:MASTER%の子を授かった喜びに表情を緩ませている
 		;相愛を持っておらず親愛を持っていれば
-		ELSEIF TALENT:T:88 == 1
+		ELSEIF TALENT:T:親愛 == 1
 			PRINTFORMW %CALLNAME:MASTER%の子を授かった喜びに表情を緩ませている
 		ELSE
 			PRINTFORMW %CALLNAME:MASTER%の子を授かった喜びに表情を緩ませている
@@ -358,12 +358,12 @@ IF CFLAG:T:104 == 1
 ;助手→パートナー
 ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 	;恋慕無しで反発感情Lv2以上なら壊れる
-	IF TALENT:T:85 == 0 && MARK:T:3 >= 2
+	IF TALENT:T:恋慕 == 0 && MARK:T:3 >= 2
 		PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 		PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 		CALL N_TALENT_K
 	ELSE
-		IF TALENT:T:85 == 0
+		IF TALENT:T:恋慕 == 0
 			PRINTFORM %CALLNAME:TARGET%は困惑しつつも
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%は複雑な表情を浮かべつつも
@@ -373,12 +373,12 @@ ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 ;パートナー→助手
 ELSEIF CFLAG:T:104 == 3 && ASSI >= 0 && T == ASSI
 	;恋慕無しで反発感情Lv2以上なら壊れる
-	IF TALENT:T:85 == 0 && MARK:T:3 >= 2
+	IF TALENT:T:恋慕 == 0 && MARK:T:3 >= 2
 		PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 		PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 		CALL N_TALENT_K
 	ELSE
-		IF TALENT:T:85 == 0
+		IF TALENT:T:恋慕 == 0
 			PRINTFORM %CALLNAME:ASSI%は困惑しつつも
 		ELSE
 			PRINTFORM %CALLNAME:ASSI%は複雑な表情を浮かべつつも
@@ -388,16 +388,16 @@ ELSEIF CFLAG:T:104 == 3 && ASSI >= 0 && T == ASSI
 ELSEIF CFLAG:T:104 == 3 && T == MASTER
 	PRINTFORMW %CALLNAME:TARGET%の子を授かった事を伝えた
 	;恋慕なら
-	IF TALENT:85 == 1
+	IF TALENT:恋慕 == 1
 		PRINTFORM %CALLNAME:TARGET%は
-		SIF TALENT:TARGET:122 == 0
+		SIF TALENT:TARGET:オトコ == 0
 			PRINT 困惑しながらも
 		PRINTFORMW %CALLNAME:MASTER%との間に子供が出来た喜びに表情を緩ませている
 	;反発感情LV2以上
 	ELSEIF MARK:3 >= 2
 		PRINTFORMW しかし、%CALLNAME:TARGET%は興味なさそうだ…
 	ELSE
-		IF TALENT:TARGET:122
+		IF TALENT:TARGET:オトコ
 			PRINTFORMW %CALLNAME:TARGET%は困惑しながらもどこか嬉しそうである
 		ELSE
 			PRINTFORMW %CALLNAME:TARGET%は困惑しながらも事態を受け入れた
@@ -407,32 +407,32 @@ ENDIF
 	
 ;乳がワンランクパワーアップする
 ;貧→普　普→巨　巨→そのまま
-IF TALENT:T:109 == 1
+IF TALENT:T:貧乳 == 1
 	PRINTFORMW %CALLNAME:T%の胸が大きくなった
 	PRINTFORMW [%TALENTNAME:109%]から普通のサイズになった
 	PRINTFORMW 　
-	TALENT:T:109 = 0
+	TALENT:T:貧乳 = 0
 	MARK:T:89 = 1
-ELSEIF TALENT:T:109 == 0 && TALENT:T:110 == 0
+ELSEIF TALENT:T:貧乳 == 0 && TALENT:T:巨乳 == 0
 	PRINTFORMW %CALLNAME:T%の胸が大きくなった
 	PRINTFORMW [%TALENTNAME:110%]になった
 	PRINTFORMW 　
-	TALENT:T:110 = 1
+	TALENT:T:巨乳 = 1
 	MARK:T:89 = 1
 ENDIF
 
 ;回復遅いをつける(回復早いは一時的に消去)
 ;CFLAG:RESULT:96に回復遅い等を元々持っていたかを記録
-IF TALENT:T:111
+IF TALENT:T:回復早い
 	CFLAG:T:96 = 1
-ELSEIF TALENT:T:112
+ELSEIF TALENT:T:回復遅い
 	CFLAG:T:96 = 2
 ENDIF
-IF TALENT:T:112 == 0
+IF TALENT:T:回復遅い == 0
 	PRINTFORMW %CALLNAME:T%は[%TALENTNAME:112%]を得た
 	PRINTFORMW 　
-	TALENT:T:111 = 0
-	TALENT:T:112 = 1
+	TALENT:T:回復早い = 0
+	TALENT:T:回復遅い = 1
 ENDIF
 
 ;---------------------------------------------------------
@@ -470,21 +470,21 @@ REND
 ;以下は特殊なため別枠
 ;男嫌い
 F = CFLAG:T:111
-IF TALENT:T:82 && TALENT:F:122
+IF TALENT:T:男嫌い && TALENT:F:オトコ
 	IF LOCAL:99 == 0
 		PRINTS NAME:T
 		PRINT は
 	ENDIF
 	PRINTFORM [%TALENTNAME:82%]
-	TALENT:T:82 = 0
+	TALENT:T:男嫌い = 0
 	LOCAL:99 = 1
 ENDIF
 ;貞操観念
-IF TALENT:T:30 == 0
+IF TALENT:T:貞操観念 == 0
 	SIF LOCAL:99 != 0
 		PRINTW を失い、
 	PRINTFORMW [%TALENTNAME:30%]を得た
-	TALENT:T:30 = 1
+	TALENT:T:貞操観念 = 1
 ELSEIF LOCAL:99 != 0
 	PRINTW を失った
 ENDIF
@@ -541,7 +541,7 @@ REPEAT 4
 REND
 LOCAL:0 = 21
 LOCAL:1 = 22
-SIF TALENT:E:122
+SIF TALENT:E:オトコ
 	LOCAL:2 = 82
 LOCAL:3 = 123
 
@@ -619,7 +619,7 @@ IF C == MASTER
 		;ノーマル
 		TFLAG:17 = 2
 	;居て恋慕
-	ELSEIF TALENT:E:85
+	ELSEIF TALENT:E:恋慕
 		;父親
 		Y = E
 		;グッド
@@ -635,13 +635,13 @@ IF C == MASTER
 	TFLAG:13 = 102
 ELSE
 	;恋慕、父親がMASTER
-	IF TALENT:C:85 && CFLAG:C:111 == NO:MASTER
+	IF TALENT:C:恋慕 && CFLAG:C:111 == NO:MASTER
 		;母親
 		Y = C
 		;グッド
 		TFLAG:17 = 1
 	;恋慕無し、感情乏しい、無関心
-	ELSEIF TALENT:C:85 == 0 && TALENT:C:21 && TALENT:C:22
+	ELSEIF TALENT:C:恋慕 == 0 && TALENT:C:無関心 && TALENT:C:感情乏しい
 		;母親
 		Y = C
 		;バッド
@@ -674,12 +674,12 @@ IF TFLAG:17 == 1
 	IF (CFLAG:C:99 & 1) == 0
 		PRINTFORMW %CALLNAME:C%は、%CALLNAME:E%の子供を無事出産しました
 		PRINTFORMW %CALLNAME:C%は産まれたばかりの赤ん坊を受け取ると、優しく抱きかかえ母乳を飲ませ始めた
-		IF TALENT:C:136 == 0
+		IF TALENT:C:母性 == 0
 			PRINTFORMW %CALLNAME:C%は[%TALENTNAME:136%]に目覚めた！
-			IF TALENT:C:41 == 0
+			IF TALENT:C:痛みに強い == 0
 				PRINTFORML %CALLNAME:C%は産みの苦しみを経験したことで精神的に強くなった
 				PRINTFORM %CALLNAME:C%は
-				IF TALENT:C:40 == 1
+				IF TALENT:C:痛みに弱い == 1
 					PRINTFORM [%TALENTNAME:40%]を克服し、
 				ENDIF
 				PRINTFORMW [%TALENTNAME:41%]を得た
@@ -687,11 +687,11 @@ IF TFLAG:17 == 1
 		ENDIF
 	ENDIF
 	;妊娠消去、育児中・母性追加、痛みに弱い消去、痛みに強い追加
-	TALENT:C:134 = 0
-	TALENT:C:135 = 1
-	TALENT:C:136 = 1
-	TALENT:C:40 = 0
-	TALENT:C:41 = 1
+	TALENT:C:妊娠 = 0
+	TALENT:C:育児中 = 1
+	TALENT:C:母性 = 1
+	TALENT:C:痛みに弱い = 0
+	TALENT:C:痛みに強い = 1
 ;バッド
 ELSEIF TFLAG:17 == 3
 	;地の文章カット処理
@@ -703,7 +703,7 @@ ELSEIF TFLAG:17 == 3
 	
 	A = 0
 	REPEAT CHARANUM
-		SIF TALENT:COUNT:134 == 0 && (TALENT:COUNT:135 || TALENT:COUNT:136)
+		SIF TALENT:COUNT:妊娠 == 0 && (TALENT:COUNT:育児中 || TALENT:COUNT:母性)
 			A += 1
 	REND
 	IF A > 0
@@ -711,7 +711,7 @@ ELSEIF TFLAG:17 == 3
 	ELSE
 		PRINTFORMW %CALLNAME:MASTER%はやむなく、赤ん坊を里子に出しました……
 	ENDIF
-	TALENT:C:134 = 0
+	TALENT:C:妊娠 = 0
 	MARK:C:90 = 0
 	CALL RESET_FLAG_N_FORCE
 	CALL REVERSE_B_SIZE
@@ -726,8 +726,8 @@ ELSE
 	ENDIF
 
 	;妊娠から育児へ移行
-	TALENT:C:134 = 0
-	TALENT:C:135 = 1
+	TALENT:C:妊娠 = 0
+	TALENT:C:育児中 = 1
 ENDIF
 
 IF Y > -1
@@ -743,10 +743,10 @@ EXP:C:出産経験 += 1
 PRINTW 出産経験＋１
 
 ;母乳出るようになる(妊娠時から移動)
-IF TALENT:C:130 == 0
+IF TALENT:C:母乳体質 == 0
 	PRINTFORMW %CALLNAME:C%は母乳が出るようになった
 	PRINTFORMW 　
-	TALENT:C:130 = 1
+	TALENT:C:母乳体質 = 1
 ENDIF
 
 ;妊娠時に減った体力の最大値が回復
@@ -768,7 +768,7 @@ PRINTW
 PRINTL 誰に任せますか？
 REPEAT CHARANUM
 	;現在[妊娠]状態でなく、[育児中]か[母性]持ちのキャラを羅列
-	IF TALENT:COUNT:134 == 0 && (TALENT:COUNT:135 || TALENT:COUNT:136)
+	IF TALENT:COUNT:妊娠 == 0 && (TALENT:COUNT:育児中 || TALENT:COUNT:母性)
 		PRINTFORML [{COUNT,2}]%NAME:COUNT,16,LEFT% 
 	ENDIF
 REND
@@ -780,7 +780,7 @@ IF RESULT == 100
 	PRINTFORMW %CALLNAME:MASTER%はやむなく、赤ん坊を里子に出しました……
 ELSEIF RESULT < 0 || RESULT >= CHARANUM
 	GOTO INPUT_LOOP
-ELSEIF TALENT:RESULT:134 == 1 || (TALENT:RESULT:135 ==0 && TALENT:RESULT:136 == 0)
+ELSEIF TALENT:RESULT:妊娠 == 1 || (TALENT:RESULT:育児中 ==0 && TALENT:RESULT:母性 == 0)
 	GOTO INPUT_LOOP
 ENDIF
 IF RESULT != 100
@@ -790,18 +790,18 @@ IF RESULT != 100
 	MARK:RESULT:90 = 1
 	;回復遅いをつける(回復早いは一時的に消去)
 	;CFLAG:RESULT:96に回復遅い等を元々持っていたかを記録
-	IF TALENT:RESULT:111
+	IF TALENT:RESULT:回復早い
 		CFLAG:RESULT:96 = 1
-	ELSEIF TALENT:RESULT:112
+	ELSEIF TALENT:RESULT:回復遅い
 		CFLAG:RESULT:96 = 2
 	ENDIF
-	IF TALENT:RESULT:112 == 0
+	IF TALENT:RESULT:回復遅い == 0
 		PRINTFORMW %CALLNAME:RESULT%は[%TALENTNAME:112%]を得た
-		TALENT:RESULT:111 = 0
-		TALENT:RESULT:112 = 1
+		TALENT:RESULT:回復早い = 0
+		TALENT:RESULT:回復遅い = 1
 	ENDIF
-	IF TALENT:RESULT:135 == 0
-		TALENT:RESULT:135 = 1
+	IF TALENT:RESULT:育児中 == 0
+		TALENT:RESULT:育児中 = 1
 		CFLAG:RESULT:13 = 0
 	ENDIF
 ENDIF
@@ -814,7 +814,7 @@ PRINTL どの部屋へ様子を見に行きますか？
 
 REPEAT CHARANUM
 	;現在臨月か[育児中]のキャラを羅列
-	IF MARK:COUNT:90 || TALENT:COUNT:135
+	IF MARK:COUNT:90 || TALENT:COUNT:育児中
 		PRINTFORML [{COUNT,2}]%NAME:COUNT,16,LEFT% 
 	ENDIF
 REND
@@ -826,7 +826,7 @@ IF RESULT == 100
 	RETURN 0
 ELSEIF RESULT < 0 || RESULT >= CHARANUM
 	GOTO INPUT_LOOP
-ELSEIF MARK:RESULT:90 == 0 && TALENT:RESULT:135 == 0
+ELSEIF MARK:RESULT:90 == 0 && TALENT:RESULT:育児中 == 0
 	GOTO INPUT_LOOP
 ENDIF
 
@@ -837,7 +837,7 @@ IF RESULT == MASTER
 	E = E-1
 	
 	;父親恋慕
-	IF TALENT:E:85
+	IF TALENT:E:恋慕
 		IF TIME == 0
 			PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:E%は親子水入らずの時間を楽しんだ
 		ELSE
@@ -865,9 +865,9 @@ CALL SELF_KOJO
 ;地の文章カット
 IF (CFLAG:99 & 1) == 0
 	;まだ出産前の場合
-	IF TALENT:TARGET:134
+	IF TALENT:TARGET:妊娠
 		;[恋慕]あり
-		IF TALENT:TARGET:85
+		IF TALENT:TARGET:恋慕
 			PRINTFORM %CALLNAME:TARGET%は%CALLNAME:MASTER%の顔を見ると、
 			PRINTFORMW 元気づけられたように笑顔を向けてきた
 			PRINTFORMW %CALLNAME:MASTER%はもうすぐ出産を迎える%CALLNAME:TARGET%を心の底から励ました
@@ -877,7 +877,7 @@ IF (CFLAG:99 & 1) == 0
 			PRINTFORMW %CALLNAME:MASTER%はこれも罰なのかもしれないと思いながら帰るほかなかった……
 		ENDIF
 	;[恋慕]ありで父親がMASTER
-	ELSEIF TALENT:TARGET:85 && CFLAG:TARGET:111 == NO:MASTER
+	ELSEIF TALENT:TARGET:恋慕 && CFLAG:TARGET:111 == NO:MASTER
 		IF TIME == 0
 			PRINTFORM %CALLNAME:MASTER%が部屋に入ってきたことに気づくと、
 			PRINTFORMW %CALLNAME:TARGET%は満面の笑顔で出迎えた
@@ -889,7 +889,7 @@ IF (CFLAG:99 & 1) == 0
 			PRINTW そして、どちらからというわけでもなく顔を見合わせ、ほころばせていた
 		ENDIF
 	;[恋慕]ありで父親MASTER以外
-	ELSEIF TALENT:TARGET:85
+	ELSEIF TALENT:TARGET:恋慕
 		PRINTFORM %CALLNAME:MASTER%が部屋に入ってくると、
 		PRINTFORMW %CALLNAME:TARGET%は少しとまどいながらもそれを迎えた
 		PRINTW それから、子供の様子を見ながら久しぶりに二人の会話を楽しんだ
@@ -910,25 +910,25 @@ PRINTFORMW %CALLNAME:C%の育てていた子供が親離れしました
 ;子育て終了で母乳体質、回復遅い消失(元々持ってる場合は消失しない)
 
 PRINTFORM %CALLNAME:C%は
-SIF TALENT:C:112 && CFLAG:C:96 != 2
+SIF TALENT:C:回復遅い && CFLAG:C:96 != 2
 	PRINTFORM [%TALENTNAME:112%]
-SIF TALENT:C:130
+SIF TALENT:C:母乳体質
 	PRINTFORM [%TALENTNAME:130%]
 PRINTFORMW を失いました
-TALENT:C:112 = 0
-TALENT:C:130 = 0
+TALENT:C:回復遅い = 0
+TALENT:C:母乳体質 = 0
 ;回復遅い系の素質復帰
 IF CFLAG:C:96 == 1
 	;元々回復早い持ち
-	TALENT:C:111 = 1
+	TALENT:C:回復早い = 1
 ELSEIF CFLAG:C:96 == 2
 	;元々回復遅い持ち
-	TALENT:C:112 = 1
+	TALENT:C:回復遅い = 1
 ENDIF
 CFLAG:C:96 = 0
 
 ;育児中消失
-TALENT:C:135 = 0
+TALENT:C:育児中 = 0
 MARK:C:90 = 0
 IF MARK:C:89 == 1
 	PRINTFORMW %CALLNAME:C%の胸は母乳を与える役割を終えたことで小さくなりました
@@ -992,7 +992,7 @@ TEQUIP:MASTER:87 = 0
 FLAG:97 = 0
 REPEAT CHARANUM
 	;他にも対象キャラがいれば、フラグを再設定
-	SIF MARK:COUNT:90 == 1 || TALENT:COUNT:135
+	SIF MARK:COUNT:90 == 1 || TALENT:COUNT:育児中
 		FLAG:97 = 1
 REND
 
@@ -1003,10 +1003,10 @@ REND
 SIF MARK:C:89 == 0
 	RETURN 0
 ;巨→普　普→貧
-IF TALENT:C:110 == 1
-	TALENT:C:110 = 0
-ELSEIF TALENT:C:109 == 0 && TALENT:C:110 == 0
-	TALENT:C:109 = 1
+IF TALENT:C:巨乳 == 1
+	TALENT:C:巨乳 = 0
+ELSEIF TALENT:C:貧乳 == 0 && TALENT:C:巨乳 == 0
+	TALENT:C:貧乳 = 1
 ENDIF
 
 MARK:C:89 = 0

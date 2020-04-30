@@ -1,6 +1,6 @@
 ﻿;[?] 正常位させる、後背位させる、騎乗位する
 ;[!] アナルに入れさせる、助手を犯させる
-;[?] TALENT:119
+;[?] TALENT:半人半妖
 ;-------------------------------------------------
 ;射精ゲージをチェック
 ;-------------------------------------------------
@@ -59,7 +59,7 @@ CASE 6
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -912,7 +912,7 @@ CASE 30
 		ENDIF
 
 		;対象が恋慕さとりだと変化
-		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 			TIMES B, 2.00
 	ENDIF
 ;-------------------------------------------------
@@ -981,7 +981,7 @@ CASE 31
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -1000,7 +1000,7 @@ CASE 31
 		ENDIF
 		
 		;対象が恋慕さとりだと変化
-		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 			TIMES B, 2.00
 	ENDIF
 ;-------------------------------------------------
@@ -1069,7 +1069,7 @@ CASE 32
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -1283,7 +1283,7 @@ CASE 34
 		IF EXP:Ｖ経験 < EXPLV:1
 			TIMES B , 1.50
 
-			IF ASSIPLAY && TALENT:PLAYER:122 == 0
+			IF ASSIPLAY && TALENT:PLAYER:オトコ == 0
 				EXP:異常経験 += 5
 				PRINTFORML %EXPNAME:50%＋５
 		;	ELSE
@@ -1879,7 +1879,7 @@ CASE 60
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -1948,7 +1948,7 @@ CASE 61
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -2297,7 +2297,7 @@ CASE 66
 	ENDIF
 	
 	;TALENT:舌使いをみる
-	SIF TALENT:52
+	SIF TALENT:舌使い
 		TIMES B , 2.00
 	
 	IF ARG:1 == MASTER
@@ -2399,7 +2399,7 @@ CASE 68
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;助手のABL:技巧をみる
@@ -2414,7 +2414,7 @@ CASE 68
 		ENDIF
 
 		;助手のTALENT:舌使いをみる
-		SIF TALENT:ASSI:52
+		SIF TALENT:ASSI:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -2498,7 +2498,7 @@ CASE 69
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -2582,7 +2582,7 @@ CASE 80
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -2729,7 +2729,7 @@ CASE 90
 		ENDIF
 
 		;TALENT:献身的、サド、小悪魔をみる
-		SIF TALENT:63 || TALENT:83 || TALENT:87
+		SIF TALENT:献身的 || TALENT:サド || TALENT:小悪魔
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ａ感覚をみる
@@ -2824,7 +2824,7 @@ CASE 93
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -3569,7 +3569,7 @@ CASE 185
 		ENDIF
 
 		;TALENT:舌使いをみる(精液中毒Lv1以上の場合)
-		SIF TALENT:52 && ABL:精液中毒 >= 1
+		SIF TALENT:舌使い && ABL:精液中毒 >= 1
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -4079,9 +4079,9 @@ CASE 205
 
 		;Ｃ感覚の上げられない主人かつオトコの場合、倍率ドン(ということにしておく＆それでも10000には届かないんだぜウフフ)
 		;このあたりの処理はYMの同名コマンドを参考に独自に改変
-		IF ASSIPLAY == 0 && TALENT:PLAYER:122
+		IF ASSIPLAY == 0 && TALENT:PLAYER:オトコ
 			;パートナーの虜の場合は6倍
-			IF ASSIPLAY == 0 && TALENT:MASTER:219 && TALENT:TARGET:220
+			IF ASSIPLAY == 0 && TALENT:MASTER:虜 && TALENT:TARGET:主人
 				TIMES B , 6.00
 			;そうでない場合は3倍
 			ELSE
@@ -4519,7 +4519,7 @@ CASE 366
 		IF EXP:Ｖ経験 < EXPLV:1
 			TIMES B , 1.50
 
-			IF ASSIPLAY && TALENT:PLAYER:122 == 0
+			IF ASSIPLAY && TALENT:PLAYER:オトコ == 0
 				EXP:異常経験 += 5
 				PRINTFORML %EXPNAME:50%＋５
 		;	ELSE
@@ -4768,7 +4768,7 @@ CASE 373
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
@@ -4787,7 +4787,7 @@ CASE 373
 		ENDIF
 		
 		;対象が恋慕さとりだと変化
-		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:85
+		SIF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 			TIMES B, 2.00
 	ENDIF
 ENDSELECT
@@ -4931,7 +4931,7 @@ CASE 33
 		ENDIF
 
 		;TALENT:舌使いをみる
-		SIF TALENT:52
+		SIF TALENT:舌使い
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる

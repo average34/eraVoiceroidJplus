@@ -89,7 +89,7 @@ PRINTFORML 現在Stage{FLAG:24}攻略中  所持金：${MONEY}
 CALL SHOW_BATTLE_STATUS
 
 ;千里眼持ちがいれば常に中ボス・ボスの居場所が分かる
-IF TALENT:MASTER:240 || (TARGET >= 0 && TALENT:240) || (ASSI >= 0 && TALENT:ASSI:240)
+IF TALENT:MASTER:千里眼 || (TARGET >= 0 && TALENT:千里眼) || (ASSI >= 0 && TALENT:ASSI:千里眼)
 	IF FLAG:27 <= 10
 		FLAG:27 = 10
 	ELSEIF FLAG:27 >= 11 && FLAG:27 <= 20
@@ -108,7 +108,7 @@ VARSET LOCAL, 0
 X = 1
 N = 1
 ;脱衣制限解除有ならV:4（TARGET脱衣）、V:5（MASTER脱衣）を1にする
-IF TALENT:MASTER:202
+IF TALENT:MASTER:脱衣制限解除
 	V:4 = 1
 	V:5 = 1
 ENDIF
@@ -669,7 +669,7 @@ IF FLAG:23 & 32
 	ELSEIF RESULT == 1
 		A = RAND:100 + 5
 		;10%で逃げるの失敗。あなたが囮になって好感度UP
-		IF A <= 15 && TALENT:MASTER:207 == 0
+		IF A <= 15 && TALENT:MASTER:逃走能力強化 == 0
 			PRINTFORMW %CALLNAME:MASTER%達は逃げ出した！！
 			PRINTFORMW しかし%STR:1%に回り込まれてしまった！！
 			PRINTL  
@@ -1234,7 +1234,7 @@ VARSET LOCAL, 0
 X = 1
 N = 1
 ;脱衣制限解除有ならV:4（TARGET脱衣）、V:5（MASTER脱衣）を1にする
-IF TALENT:MASTER:202
+IF TALENT:MASTER:脱衣制限解除
 	V:4 = 1
 	V:5 = 1
 ENDIF
@@ -1407,7 +1407,7 @@ IF FLAG:23 & 64
 		ENDIF
 		A = RAND:100 + 5
 		;10%で逃げるの失敗。あなたが囮になって好感度UP
-		IF A <= 15 && TALENT:MASTER:207 == 0
+		IF A <= 15 && TALENT:MASTER:逃走能力強化 == 0
 			PRINTFORMW %CALLNAME:MASTER%達は逃げ出した！！
 			PRINTFORMW しかし%STR:1%に回り込まれてしまった！！
 			PRINTL  
@@ -1579,10 +1579,10 @@ B = 0
 ;Phモード限定の恋慕ボーナス
 IF FLAG:5 == 10 || TALENT:MASTER:恋慕ボーナス || TALENT:MASTER:恋慕ボーナス強化
 	REPEAT CHARANUM
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			B += 1
 	REND
-	SIF TALENT:MASTER:204
+	SIF TALENT:MASTER:恋慕ボーナス強化
 		TIMES B , 2.00
 ENDIF
 
@@ -1723,19 +1723,19 @@ IF TARGET >= 0
 		PRINTFORML [2] 魔力転換
 		LOCAL:2 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && (LOCAL:103 == 1 || V:4 == 1)
+	IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && (LOCAL:103 == 1 || V:4 == 1)
 		PRINTFORML [3] 愛撫する
 		LOCAL:3 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:欲望 > (5 + A:1 * 2) && (LOCAL:104 == 1 || V:4 == 1)
+	IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && ABL:欲望 > (5 + A:1 * 2) && (LOCAL:104 == 1 || V:4 == 1)
 		PRINTFORML [4] 霧の効果を吸い出す
 		LOCAL:4 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:欲望 > (8 + A:1 * 3) && V:4 == 1
+	IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && ABL:欲望 > (8 + A:1 * 3) && V:4 == 1
 		PRINTFORML [5] 絡み合う
 		LOCAL:5 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && V:4 == 0
+	IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && V:4 == 0
 		PRINTFORML [9] 自分も脱ぐ
 		LOCAL:9 = 1
 	ENDIF
@@ -1845,19 +1845,19 @@ ELSE
 		LOCAL:2 = 1
 	ENDIF
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && (LOCAL:103 == 1 || V:5 == 1)
+IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && (LOCAL:103 == 1 || V:5 == 1)
 	PRINTFORML [3] 愛撫する
 	LOCAL:3 = 1
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:技巧 > (3 + A:1 * 2) && (LOCAL:104 == 1 || V:5 == 1)
+IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && ABL:MASTER:技巧 > (3 + A:1 * 2) && (LOCAL:104 == 1 || V:5 == 1)
 	PRINTFORML [4] 霧の効果を吸い出す
 	LOCAL:4 = 1
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:技巧 > (5 + A:1 * 2) && V:5 == 1
+IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && ABL:MASTER:技巧 > (5 + A:1 * 2) && V:5 == 1
 	PRINTFORML [5] 絡み合う
 	LOCAL:5 = 1
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && V:5 == 0
+IF (TALENT:MASTER:脱衣制限解除 || FLAG:24 > 3) && V:5 == 0
 	PRINTFORML [9] 自分も脱ぐ
 	LOCAL:9 = 1
 ENDIF
@@ -2275,17 +2275,17 @@ ELSE
 ENDIF
 
 ;生理中の場合被ダメージアップ
-SIF TARGET >= 0 && TALENT:138 && (FLAG:62 & 1)
+SIF TARGET >= 0 && TALENT:生理 && (FLAG:62 & 1)
 	TIMES A , 1.20
 
 B = 0
 ;Phモード限定の恋慕ボーナス
 IF FLAG:5 == 10 || TALENT:MASTER:恋慕ボーナス || TALENT:MASTER:恋慕ボーナス強化
 	REPEAT CHARANUM
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			B += 1
 	REND
-	SIF TALENT:MASTER:204
+	SIF TALENT:MASTER:恋慕ボーナス強化
 		TIMES B , 2.00
 ENDIF
 
@@ -2614,7 +2614,7 @@ ELSEIF BASE:耐力 <= 0
 	TFLAG:600 = 12
 	CALL KOJO_JUN
 	;Phモード限定
-	IF FLAG:5 == 10 && RAND:100 <= 85 + (TALENT:151 * 5) - (TALENT:153 * 10) - (TALENT:85 * 10) - (TALENT:88 * 15)
+	IF FLAG:5 == 10 && RAND:100 <= 85 + (TALENT:キス未経験 * 5) - (TALENT:恋人 * 10) - (TALENT:恋慕 * 10) - (TALENT:親愛 * 15)
 		PRINTFORMW %CALLNAME:TARGET%は霧に飲まれかけているようだ…
 		CFLAG:17 = 1
 		CFLAG:19 += 1

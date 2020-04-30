@@ -103,15 +103,15 @@ ELSE
 ENDIF
 
 ;倒錯的
-SIF TALENT:80
+SIF TALENT:倒錯的
 	TIMES SOURCE:5 , 1.80
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
 	EXP:レズ経験 += 4
 	EXP:PLAYER:レズ経験 += 4
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +4
 	EXP:ＢＬ経験 += 4
@@ -121,7 +121,7 @@ ENDIF
 TFLAG:100 = 1
 
 ;調教者がふたなり
-IF TALENT:PLAYER:121
+IF TALENT:PLAYER:ふたなり
 	SOURCE:13 /= 2
 ENDIF
 
@@ -165,7 +165,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 7
 	SOURCE:15 += 200
 ENDIF
@@ -218,20 +218,20 @@ IF L
 ENDIF
 
 ;保守的
-IF TALENT:24
+IF TALENT:保守的
 	A -= 3
 ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 3
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 1
 ENDIF
 
@@ -241,15 +241,15 @@ IF ABL:PLAYER:精液中毒
 ENDIF
 
 ;サド
-IF TALENT:PLAYER:83
+IF TALENT:PLAYER:サド
 	A += 6
 ENDIF
 ;小悪魔
-IF TALENT:PLAYER:87
+IF TALENT:PLAYER:小悪魔
 	A += 3
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -279,7 +279,7 @@ IF CFLAG:2 >= 1500
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 5
 ENDIF
 
@@ -332,7 +332,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;保守的
-	IF TALENT:24
+	IF TALENT:保守的
 		SIF S
 			PRINT  - 
 		PRINTS TALENTNAME:24
@@ -340,7 +340,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
@@ -348,7 +348,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -356,7 +356,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
@@ -374,7 +374,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;サド
-	IF TALENT:PLAYER:83
+	IF TALENT:PLAYER:サド
 		SIF S
 			PRINT  + 
 		PRINTFORM %NAME:PLAYER%が
@@ -383,7 +383,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;小悪魔
-	IF TALENT:PLAYER:87
+	IF TALENT:PLAYER:小悪魔
 		SIF S
 			PRINT  + 
 		PRINTFORM %NAME:PLAYER%が
@@ -392,7 +392,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -433,7 +433,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,5,')

@@ -44,8 +44,8 @@ IF RESULT == 100
 	BEGIN TITLE
 ELSEIF RESULT == 998
 	PRINTW “DEBUG”モードを選択しました
-	TALENT:MASTER:240 = 1
-	TALENT:MASTER:998 = 1
+	TALENT:MASTER:千里眼 = 1
+	TALENT:MASTER:Debug = 1
 	RESULT = 1
 ;ELSEIF RESULT == 20
 ;	PRINTL ★★INVISIBLEモードの難易度を選択してください★★
@@ -86,7 +86,7 @@ ELSE
 	GOTO INPUT_LOOP
 ENDIF
 ;攻略ルート選択(デフォルトでは選択不可能。選択可能にしたい場合はSYSTEM_DEBUG.ERBの該当関数参照。)
-SIF TALENT:MASTER:998 == 0
+SIF TALENT:MASTER:Debug == 0
 	CALL EDIT_GAME_ROOT
 
 ;日付を1日に設定
@@ -190,7 +190,7 @@ IF NO:MASTER == 0
 	ENDIF
 ENDIF
 
-SIF TALENT:MASTER:122 == 0
+SIF TALENT:MASTER:オトコ == 0
 	ABL:MASTER:レズっ気 = 3
 
 ;主人公のキャラID設定
@@ -314,9 +314,9 @@ IF (FLAG:23 & 8) == 0
 	;主導権を毎回設定
 	PRINTL 今回はどちらが主導権を握りますか？
 	PRINTL [0] - 成り行きに任せる
-	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:素直 || TALENT:大人しい || TALENT:プライド低い || TALENT:恋人
 		PRINTL [1] - 自分で握る
-	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:サド || TALENT:恋人
 		PRINTFORML [2] - %CALLNAME:TARGET%に握らせる
 
 	INPUT
@@ -324,12 +324,12 @@ IF (FLAG:23 & 8) == 0
 		RESTART
 	ELSEIF RESULT == 0
 		CFLAG:15 = 0
-	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
+	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:素直 || TALENT:大人しい || TALENT:プライド低い || TALENT:恋人)
 		CFLAG:15 = 1
 		TFLAG:45 = 0
 	ELSEIF RESULT == 1
 		RESTART
-	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
+	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:サド || TALENT:恋人)
 		CFLAG:15 = 2
 		TFLAG:45 = 1
 	ELSEIF RESULT == 2
@@ -358,7 +358,7 @@ ELSEIF CFLAG:15 == 1
 	IF R >= 50
 		A = R / 10
 		;霊夢様以外は確率に上限アリ
-		SIF A > 15 && TALENT:201 == 0
+		SIF A > 15 && TALENT:eraVoiceroidJも支配する程度の能力 == 0
 			A = 15
 		IF A > RAND:100
 			;相手が握る
@@ -390,7 +390,7 @@ ENDIF
 
 @EVENTCOMEND
 #PRI
-IF BASE:体力 <= 0 && TALENT:128
+IF BASE:体力 <= 0 && TALENT:蓬莱人
 	PRINTW ＜リザレクション＞
 	EXP:異常経験 += 3
 	PRINTL 異常経験＋３
@@ -401,12 +401,12 @@ IF BASE:体力 <= 0 && TALENT:128
 		TFLAG:21 = 2
 		PRINTL 反発感情LV2を取得
 		;感情乏しいの場合は反発感情による従順ダウンはなし
-		IF ABL:親密 > 0 && ABL:親密 <= 3 && TALENT:22 == 0
+		IF ABL:親密 > 0 && ABL:親密 <= 3 && TALENT:感情乏しい == 0
 			ABL:親密 -= 2
 			SIF ABL:親密 < 0
 				ABL:親密 = 0
 			PRINTFORML そして親密がLV{ABL:親密}に下がった
-		ELSEIF ABL:親密 <= 6 && TALENT:22 == 0
+		ELSEIF ABL:親密 <= 6 && TALENT:感情乏しい == 0
 			ABL:親密 -= 2
 			SIF ABL:親密 < 0
 				ABL:親密 = 0
@@ -425,12 +425,12 @@ ELSEIF BASE:体力 <= 0
 		TFLAG:21 = 3
 		PRINTL 反発感情LV3を取得
 		;感情乏しいの場合は反発感情による従順ダウンはなし
-		IF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:22 == 0
+		IF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:感情乏しい == 0
 			ABL:親密 -= 4
 			SIF ABL:親密 < 0
 				ABL:親密 = 0
 			PRINTFORML そして親密がLV{ABL:親密}に下がった
-		ELSEIF ABL:親密 > 0 && ABL:親密 <= 9 && TALENT:22 == 0
+		ELSEIF ABL:親密 > 0 && ABL:親密 <= 9 && TALENT:感情乏しい == 0
 			ABL:親密 -= 2
 			SIF ABL:親密 < 0
 				ABL:親密 = 0
@@ -439,7 +439,7 @@ ELSEIF BASE:体力 <= 0
 	ENDIF
 
 	PRINTFORMW （%CALLNAME:TARGET%は疲れ果てて気絶してしまった。%CALLNAME:MASTER%は%CALLNAME:TARGET%を寝床まで運び、一旦別れました）
-	IF ABL:親密 > 0 && TALENT:153 == 0
+	IF ABL:親密 > 0 && TALENT:恋人 == 0
 		ABL:親密 -= 1
 		PRINTFORML %CALLNAME:TARGET%の親密が１下がった
 	ENDIF
@@ -489,10 +489,10 @@ ENDIF
 IF FLAG:5 == 10 || TALENT:MASTER:淫乱ボーナス || TALENT:MASTER:淫乱ボーナス強化
 	I = 0
 	REPEAT CHARANUM
-		SIF TALENT:COUNT:76
+		SIF TALENT:COUNT:淫乱
 			I += 1
 	REND
-	SIF TALENT:MASTER:206
+	SIF TALENT:MASTER:淫乱ボーナス強化
 		TIMES I , 3.00
 ENDIF
 
@@ -622,41 +622,41 @@ REPEAT CHARANUM
 	ENDIF
 
 	;回復早い、回復遅い、吸血鬼、蓬莱人
-	IF TALENT:COUNT:128
+	IF TALENT:COUNT:蓬莱人
 		A *= 3
 		B *= 3
-	ELSEIF TALENT:COUNT:111 || (TALENT:COUNT:114 && TALENT:COUNT:218 == 0)
+	ELSEIF TALENT:COUNT:回復早い || (TALENT:COUNT:吸血鬼 && TALENT:COUNT:眷属 == 0)
 		A *= 2
 		B *= 2
-	ELSEIF TALENT:COUNT:114 && TALENT:COUNT:218
+	ELSEIF TALENT:COUNT:吸血鬼 && TALENT:COUNT:眷属
 		TIMES A , 1.5
 		TIMES B , 1.5
-	ELSEIF TALENT:COUNT:112
+	ELSEIF TALENT:COUNT:回復遅い
 		A /= 2
 		B /= 2
 	ENDIF
 	
 	;日光浴、月光浴、吸血鬼
 	IF TIME == 0
-		IF TALENT:COUNT:115 && TIME:5 == 1
+		IF TALENT:COUNT:日光浴 && TIME:5 == 1
 			A += 400
 			B += 400
-		ELSEIF TALENT:COUNT:115 && (TIME:5 == 0 || TIME:5 == 7)
+		ELSEIF TALENT:COUNT:日光浴 && (TIME:5 == 0 || TIME:5 == 7)
 			A += 200
 			B += 200
 		ENDIF
 	ELSE
-		IF (TALENT:COUNT:114 || TALENT:COUNT:116) && TIME:5 == 1
+		IF (TALENT:COUNT:吸血鬼 || TALENT:COUNT:月光浴) && TIME:5 == 1
 			A += 400
 			B += 400
-			IF TALENT:COUNT:114 && TALENT:COUNT:218
+			IF TALENT:COUNT:吸血鬼 && TALENT:COUNT:眷属
 				A -= 200
 				B -= 200
 			ENDIF
-		ELSEIF (TALENT:COUNT:114 || TALENT:COUNT:116) && TIME:5 == 0
+		ELSEIF (TALENT:COUNT:吸血鬼 || TALENT:COUNT:月光浴) && TIME:5 == 0
 			A += 200
 			B += 200
-			IF TALENT:COUNT:114 && TALENT:COUNT:218
+			IF TALENT:COUNT:吸血鬼 && TALENT:COUNT:眷属
 				A -= 100
 				B -= 100
 			ENDIF
@@ -665,12 +665,12 @@ REPEAT CHARANUM
 
 	;治療
 	IF ASSI >= 0
-		IF (TALENT:ASSI:117 || TALENT:MASTER:117)
+		IF (TALENT:ASSI:治療 || TALENT:MASTER:治療)
 			A += 100
 			B += 100
 		ENDIF
 	ELSE
-		IF TALENT:MASTER:117
+		IF TALENT:MASTER:治療
 			A += 100
 			B += 100
 		ENDIF
@@ -690,13 +690,13 @@ REPEAT CHARANUM
 	IF FLAG:0 && COUNT == TARGET
 		A += 100
 		TIMES B , 1.20
-		SIF TALENT:153
+		SIF TALENT:恋人
 			CFLAG:2 += 1
 	ENDIF
 	IF FLAG:0 && COUNT == ASSI
 		A += 100
 		TIMES B , 1.20
-		SIF TALENT:ASSI:153
+		SIF TALENT:ASSI:恋人
 			CFLAG:ASSI:2 += 1
 	ENDIF
 
@@ -851,7 +851,7 @@ REPEAT CHARANUM
 		
 			JUEL:COUNT:6 += RAND:500 + 500
 			JUEL:COUNT:7 += RAND:500 + 500
-			IF TALENT:COUNT:121
+			IF TALENT:COUNT:ふたなり
 				EXP:COUNT:射精経験 += RAND:10 + 3
 				JUEL:COUNT:8 += RAND:200 + 200
 			ENDIF
@@ -1086,7 +1086,7 @@ IF FLAG:63 == 4
 			BASE:COUNT:体力 = MAXBASE:COUNT:体力
 			MAXBASE:COUNT:気力 = 1000
 			BASE:COUNT:気力 = MAXBASE:COUNT:気力
-			TALENT:COUNT:86 = 0
+			TALENT:COUNT:妄信 = 0
 		ENDIF
 	REND
 	FLAG:63 = 5
@@ -1264,7 +1264,7 @@ IF FLAG:63 == 14
 	;回復素質記録互換（妊娠時に付加される回復遅い等を元々持っているか記録するフラグ）
 	REPEAT CHARANUM
 		;妊娠、もしくは臨月or育児中のキャラでCFLAG:98が1か2
-		IF (TALENT:COUNT:134 || TALENT:COUNT:135 || MARK:COUNT:90) && (CFLAG:COUNT:98 == 1 || CFLAG:COUNT:98 == 2)
+		IF (TALENT:COUNT:妊娠 || TALENT:COUNT:育児中 || MARK:COUNT:90) && (CFLAG:COUNT:98 == 1 || CFLAG:COUNT:98 == 2)
 			CFLAG:COUNT:96 = CFLAG:COUNT:98
 			CFLAG:COUNT:98 = 0
 		ENDIF
@@ -1349,7 +1349,7 @@ ENDIF
 IF FLAG:63 == 18
 	FOR LOCAL, 0, CHARANUM
 		SIF NO:LOCAL != 102
-			TALENT:LOCAL:596 = 0
+			TALENT:LOCAL:Ｍ鈍感 = 0
 	NEXT
 	FLAG:63 = 19
 ENDIF

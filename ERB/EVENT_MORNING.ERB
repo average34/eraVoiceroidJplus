@@ -10,7 +10,7 @@ IF TARGET > -1
 	ELSEIF MARK:3 >= 3
 		;騒音で起こされる
 		CALL EVENT_NEWDAY_OTO
-	ELSEIF TALENT:85 == 0 && TALENT:76 == 0
+	ELSEIF TALENT:恋慕 == 0 && TALENT:淫乱 == 0
 		;朝イベントは起きない
 	ELSE
 		;朝に起こるイベントが発生するかチェック
@@ -41,7 +41,7 @@ RETURN 0
 IF (FLAG:62 & 1)
 	REPEAT CHARANUM
 		;妊娠時
-		IF TALENT:COUNT:134
+		IF TALENT:COUNT:妊娠
 			;出産3日前からは臨月突入で調教不可に
 			IF (CFLAG:COUNT:110 - 3) <= DAY:7 && (MARK:COUNT:90 != 1)
 				DRAWLINE
@@ -52,19 +52,19 @@ IF (FLAG:62 & 1)
 					DRAWLINE
 					CALL CHILD_BIRTH
 				ELSE
-					TALENT:COUNT:134 = 0
-					TALENT:COUNT:135 = 1
+					TALENT:COUNT:妊娠 = 0
+					TALENT:COUNT:育児中 = 1
 				ENDIF
 			ENDIF
 		;育児中
-		ELSEIF TALENT:COUNT:135
+		ELSEIF TALENT:COUNT:育児中
 			;出産20日で親離れで調教可能に
 			IF (CFLAG:COUNT:110 + 20) <= DAY:7
 				IF CFLAG:COUNT:21 == 0
 					DRAWLINE
 					CALL DEPEARENT
 				ELSE
-					TALENT:COUNT:135 = 0
+					TALENT:COUNT:育児中 = 0
 					MARK:COUNT:90 = 0
 				ENDIF
 			ENDIF
@@ -128,14 +128,14 @@ RETURN 0
 SIF CFLAG:97 & 1
 	RETURN 0
 ;パートナーがオトコならリターン
-SIF TALENT:122
+SIF TALENT:オトコ
 	RETURN 0
 ;反発感情があるとダメ
 SIF MARK:3 > 0
 	RETURN 0
 ;パイズリで起こされる
 ;欲望8以上奉仕精神8以上精液中毒1以上で発生、奉仕精神と精液中毒で回数判定
-IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:85
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:恋慕
 	IF ABL:奉仕精神 + ABL:精液中毒 < 6
 		A = 1
 	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 12
@@ -149,37 +149,37 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 	ENDIF
 	
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:122
+	SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 		A -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:122 == 0
+	SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 		A += 1
 	;汚臭鈍感
-	SIF TALENT:61
+	SIF TALENT:汚臭鈍感
 		A += 1
 	;汚臭敏感
-	SIF TALENT:62
+	SIF TALENT:汚臭敏感
 		A -= 1
 	;献身的
-	SIF TALENT:63
+	SIF TALENT:献身的
 		A += 1
 	;親愛
-	SIF TALENT:88
+	SIF TALENT:親愛
 		A += 1
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		A += 1
 	;淫乱
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		A += 1
 	;B鈍感
-	SIF TALENT:107
+	SIF TALENT:Ｂ鈍感
 		A -= 1
 	;B敏感
-	SIF TALENT:108
+	SIF TALENT:Ｂ敏感
 		A += 1
 	;淫乳
-	SIF TALENT:78
+	SIF TALENT:淫乳
 		A += 1
 	
 	A:1 = A
@@ -198,11 +198,11 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 		IF (CFLAG:99 & 1) == 0
 			PRINTFORML 朝、%CALLNAME:MASTER%が目覚めると下腹部に違和感があるのに気づいた
 			;貧乳の場合
-			IF TALENT:109
+			IF TALENT:貧乳
 				PRINTFORML 気づかれないように目をやると、%CALLNAME:TARGET%が胸でペニスを弄っていた
 				PRINTFORML どうやらパイズリの練習をしているらしい……
 			;巨乳の場合	
-			ELSEIF TALENT:110
+			ELSEIF TALENT:巨乳
 				PRINTFORML 目をやると%CALLNAME:TARGET%が大きな胸でペニスを挟み、擦り上げている
 			;それ以外
 			ELSE
@@ -221,21 +221,21 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 		PRINTFORML %EXPNAME:20%＋{A}
 		EXP:奉仕快楽経験 += A/2
 		PRINTFORML %EXPNAME:21%＋{A/2}
-		IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
+		IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 			PRINTFORML %EXPNAME:40%＋{A*2}
 			EXP:レズ経験 += A*2
 			EXP:MASTER:レズ経験 += A*2
 		ENDIF
 		PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 		;巨乳の場合のボーナス,欲情が2倍
-		IF TALENT:110
+		IF TALENT:巨乳
 			PRINTFORML %PALAMNAME:5%の珠＋{A:1*60}
 		ELSE
 			PRINTFORML %PALAMNAME:5%の珠＋{A:1*30}
 		ENDIF
 		PRINTFORMW %PALAMNAME:6%の珠＋{A:1*40}
 		;普乳の場合のボーナス追加、習得が少し増える
-		IF TALENT:109 == 0 && TALENT:110 == 0
+		IF TALENT:貧乳 == 0 && TALENT:巨乳 == 0
 			PRINTFORML %PALAMNAME:7%の珠＋{A:1*60}
 		ELSE
 			PRINTFORML %PALAMNAME:7%の珠＋{A:1*40}
@@ -243,18 +243,18 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 		;貧乳の場合のボーナス,恥情が入る
 		PRINTFORML %PALAMNAME:8%の珠＋{A:1*30}
 		JUEL:4 += A:1*100
-		IF TALENT:110
+		IF TALENT:巨乳
 			JUEL:5 += A:1*60
 		ELSE
 			JUEL:5 += A:1*30
 		ENDIF
 		JUEL:6 += A*40
-		IF TALENT:109 == 0 && TALENT:110 == 0
+		IF TALENT:貧乳 == 0 && TALENT:巨乳 == 0
 			JUEL:7 += A:1*60
 		ELSE
 			JUEL:7 += A:1*40
 		ENDIF
-		SIF TALENT:109
+		SIF TALENT:貧乳
 			JUEL:8 += A:1*30
 		;カットフラグを戻す
 		CFLAG:99 = LOCAL:100
@@ -277,8 +277,8 @@ ENDIF
 SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
-IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:TARGET:152
-	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験 > 0 && EXP:精液経験 > 0 && TALENT:MASTER:154 == 0 && (CFLAG:97 & 2) == 0
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:恋慕 || TALENT:TARGET:淫乱) && TALENT:TARGET:合意
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験 > 0 && EXP:精液経験 > 0 && TALENT:MASTER:童貞 == 0 && (CFLAG:97 & 2) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:奉仕精神 < 6
 			A = 1
@@ -293,34 +293,34 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGE
 		ENDIF
 		
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:オトコ
+		SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		;V鈍感
-		SIF TALENT:103
+		SIF TALENT:Ｖ鈍感
 			A -= 1
 		;V敏感
-		SIF TALENT:104
+		SIF TALENT:Ｖ敏感
 			A += 1
 		;淫壷
-		SIF TALENT:74
+		SIF TALENT:淫壷
 			A += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -391,31 +391,31 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGE
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		;C鈍感
-		SIF TALENT:101
+		SIF TALENT:Ｃ鈍感
 			A -= 1
 		;C敏感
-		SIF TALENT:102
+		SIF TALENT:Ｃ敏感
 			A += 1
 		;淫核
-		SIF TALENT:75
+		SIF TALENT:淫核
 			A += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -487,8 +487,8 @@ ENDIF
 SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
-IF ITEM:19 == 1 && TALENT:89
-	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
+IF ITEM:19 == 1 && TALENT:相愛
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:童貞 == 0 && TALENT:TARGET:合意 && (CFLAG:97 & 8) == 0
 		IF ABL:奉仕精神 + ABL:露出癖 < 12
 			A = 1
 		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 18
@@ -500,34 +500,34 @@ IF ITEM:19 == 1 && TALENT:89
 		ENDIF
 	
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:オトコ
+		SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		;V鈍感
-		SIF TALENT:103
+		SIF TALENT:Ｖ鈍感
 			A -= 1
 		;V敏感
-		SIF TALENT:104
+		SIF TALENT:Ｖ敏感
 			A += 1
 		;淫壷
-		SIF TALENT:74
+		SIF TALENT:淫壷
 			A += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -598,25 +598,25 @@ IF ITEM:19 == 1 && TALENT:89
 		ENDIF
 	
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:オトコ
+		SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		IF A & 1
 			A /= 2
@@ -626,22 +626,22 @@ IF ITEM:19 == 1 && TALENT:89
 			A = B + 1
 		ENDIF
 		;C鈍感
-		SIF TALENT:101
+		SIF TALENT:Ｃ鈍感
 			A -= 1
 		;C敏感
-		SIF TALENT:102
+		SIF TALENT:Ｃ敏感
 			A += 1
 		;淫核
-		SIF TALENT:75
+		SIF TALENT:淫核
 			A += 1
 		;B鈍感
-		SIF TALENT:107
+		SIF TALENT:Ｂ鈍感
 			B -= 1
 		;B敏感
-		SIF TALENT:107
+		SIF TALENT:Ｂ鈍感
 			B += 1
 		;淫乳
-		SIF TALENT:78
+		SIF TALENT:淫乳
 			B += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -714,7 +714,7 @@ SIF CFLAG:97 & 32
 	RETURN 0
 ;キスで起こされる
 ;親密6奉仕精神6以上で発生、親密と奉仕精神で回数判定
-IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
+IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:恋慕 && TALENT:TARGET:キス未経験 == 0
 	IF ABL:奉仕精神 + ABL:親密 < 12
 		A = 1
 	ELSEIF ABL:奉仕精神 + ABL:親密 < 18
@@ -724,28 +724,28 @@ IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:85 && TALENT:TARGET
 	ENDIF
 
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:オトコ
+	SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 		A -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+	SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 		A += 1
 	;献身的
-	SIF TALENT:63
+	SIF TALENT:献身的
 		A += 1
 	;恋慕
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		A += 1
 	;親愛
-	SIF TALENT:88
+	SIF TALENT:親愛
 		A += 1
 	;恋人
-	SIF TALENT:153
+	SIF TALENT:恋人
 		A += 1
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		A += 2
 	;キス魔
-	SIF TALENT:155
+	SIF TALENT:キス魔
 		A += 2
 	;反発感情があるとダメ
 	SIF MARK:3 > 0
@@ -781,7 +781,7 @@ IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:85 && TALENT:TARGET
 			EXP:MASTER:レズ経験 += A*2
 		ENDIF
 		IF (CFLAG:99 & 1) == 0
-			IF TALENT:155
+			IF TALENT:キス魔
 				PRINTFORML %CALLNAME:TARGET%は起き上がろうとする%CALLNAME:MASTER%を押さえつけて、さらに唇を押しつけた
 			ELSE
 				PRINTFORML %CALLNAME:TARGET%は顔を朱に染めながら朝の挨拶をしてきた
@@ -808,13 +808,13 @@ ENDIF
 @EVENT_NEWDAY_FEMALE
 SIF TALENT:MASTER:オトコ
 	RETURN 0
-SIF (TALENT:119 || TALENT:121 || TALENT:オトコ) == 0
+SIF (TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ) == 0
 	RETURN 0
 
-IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
+IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:恋慕 || TALENT:TARGET:淫乱)
 	A = RAND:2
 	;セックス
-	IF TALENT:MASTER:処女 == 0 && A && TALENT:154 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
+	IF TALENT:MASTER:処女 == 0 && A && TALENT:童貞 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
@@ -829,31 +829,31 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			B += 1
 		;サド
-		SIF TALENT:83
+		SIF TALENT:サド
 			B += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			B += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			B += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			B += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			B += 1
 		;C鈍感
-		SIF TALENT:101
+		SIF TALENT:Ｃ鈍感
 			B -= 1
 		;C敏感
-		SIF TALENT:102
+		SIF TALENT:Ｃ敏感
 			B += 1
 		;淫核
-		SIF TALENT:75
+		SIF TALENT:淫核
 			B += 1
 		IF B > 0
 			DRAWLINE
@@ -921,37 +921,37 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 		
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			B += 1
 		;サド
-		SIF TALENT:83
+		SIF TALENT:サド
 			B += 1
 		;快感に素直
-		SIF TALENT:70
+		SIF TALENT:快感に素直
 			B += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			B += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			B += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			B += 1
 		;C鈍感
-		SIF TALENT:101
+		SIF TALENT:Ｃ鈍感
 			B -= 1
 		;C敏感
-		SIF TALENT:102
+		SIF TALENT:Ｃ敏感
 			B += 1
 		;淫核
-		SIF TALENT:75
+		SIF TALENT:淫核
 			B += 1
 		;マスターが貧乳
-		SIF TALENT:MASTER:109
+		SIF TALENT:MASTER:貧乳
 			B -= 1
 		;マスターが巨乳
-		SIF TALENT:MASTER:110
+		SIF TALENT:MASTER:巨乳
 			B += 1
 		IF B > 0
 			DRAWLINE
@@ -965,9 +965,9 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 			IF (CFLAG:99 & 1) == 0
 				PRINTFORML %CALLNAME:MASTER%が朝起きると腰の辺りに重みを感じた
 				PRINTFORM 目をやると%CALLNAME:TARGET%が上に跨り%CALLNAME:MASTER%の
-				IF TALENT:MASTER:109
+				IF TALENT:MASTER:貧乳
 					PRINT 小さな
-				ELSEIF TALENT:MASTER:110
+				ELSEIF TALENT:MASTER:巨乳
 					PRINT 豊かな
 				ENDIF
 				PRINTL 胸にペニスを挟み、腰を振っている…
@@ -1023,7 +1023,7 @@ ENDIF
 ;欲望8奉仕精神8かつ[恋慕]か[淫乱]で発生
 ;[オトコ]か[ふたなり]か[半人半妖]なら精液中毒1以上でフェラ
 ;[オトコ]でないならレズ中毒1以上でクンニ
-IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:恋慕 || TALENT:TARGET:淫乱)
 	;フェラ判定
 	IF ABL:精液中毒 >= 1 && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && (CFLAG:97 & 256) == 0
 		IF ABL:精液中毒 == 1
@@ -1039,37 +1039,37 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 		
 		;猫舌だとダメ
-		SIF TALENT:54
+		SIF TALENT:猫舌
 			RETURN 0
 		;男嫌い
-		SIF TALENT:82 && TALENT:MASTER:オトコ
+		SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 			A -= 1
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;汚臭鈍感
-		SIF TALENT:61
+		SIF TALENT:汚臭鈍感
 			A += 1
 		;汚臭敏感
-		SIF TALENT:62
+		SIF TALENT:汚臭敏感
 			A -= 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;恋慕
-		SIF TALENT:76
+		SIF TALENT:淫乱
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;恋人
-		SIF TALENT:153
+		SIF TALENT:恋人
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -1103,7 +1103,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 			;PRINTFORML %CALLNAME:TARGET%は精液の貼りついた顔で朝の挨拶をしてきた
 			IF (CFLAG:99 & 1) == 0
 				;[サド]いと口移し
-				IF TALENT:83 && TALENT:151 == 0
+				IF TALENT:サド && TALENT:キス未経験 == 0
 					PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%を押し倒し口付けてきた
 					PRINTFORML %CALLNAME:TARGET%の舌と共に何とも言えない味が広がる…
 					PRINTFORML %EXPNAME:96%＋1
@@ -1139,34 +1139,34 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 		
 		;猫舌だとダメ
-		SIF TALENT:54
+		SIF TALENT:猫舌
 			RETURN 0
 		;両刀
-		SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+		SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 			A += 1
 		;汚臭鈍感
-		SIF TALENT:61
+		SIF TALENT:汚臭鈍感
 			A += 1
 		;汚臭敏感
-		SIF TALENT:62
+		SIF TALENT:汚臭敏感
 			A -= 1
 		;献身的
-		SIF TALENT:63
+		SIF TALENT:献身的
 			A += 1
 		;恋慕
-		SIF TALENT:76
+		SIF TALENT:淫乱
 			A += 1
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			A += 1
 		;恋人
-		SIF TALENT:153
+		SIF TALENT:恋人
 			A += 1
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			A += 1
 		;淫乱
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			A += 1
 		;反発感情があるとダメ
 		SIF MARK:3 > 0
@@ -1221,7 +1221,7 @@ SIF CFLAG:97 & 1024
 	RETURN 0
 ;起きたら隣で寝てる
 ;[恋慕]かつ親密LV6以上で発生
-IF ABL:親密 >= 6 && TALENT:85
+IF ABL:親密 >= 6 && TALENT:恋慕
 	IF ABL:親密 == 1
 		A = 2
 	ELSEIF ABL:親密 == 2
@@ -1235,22 +1235,22 @@ IF ABL:親密 >= 6 && TALENT:85
 	ENDIF
 
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:オトコ
+	SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 		A -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+	SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 		A += 1
 	;恋慕
-	SIF TALENT:76
+	SIF TALENT:淫乱
 		A += 2
 	;親愛
-	SIF TALENT:88
+	SIF TALENT:親愛
 		A += 2
 	;恋人
-	SIF TALENT:153
+	SIF TALENT:恋人
 		A += 1
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		A += 3
 	;反発感情があるとダメ
 	SIF MARK:3 > 0
@@ -1293,7 +1293,7 @@ ENDIF
 @EVENT_NEWDAY_NEGAO
 ;起きたら見られてた
 ;[恋慕]かつ親密LV6以上で発生
-IF ABL:親密 >= 6 && TALENT:85 && (CFLAG:97 & 4096) == 0
+IF ABL:親密 >= 6 && TALENT:恋慕 && (CFLAG:97 & 4096) == 0
 	IF ABL:親密 == 1
 		B = 2
 	ELSEIF ABL:親密 == 2
@@ -1307,22 +1307,22 @@ IF ABL:親密 >= 6 && TALENT:85 && (CFLAG:97 & 4096) == 0
 	ENDIF
 	
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:オトコ
+	SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 		B -= 1
 	;両刀
-	SIF TALENT:81 && TALENT:MASTER:オトコ == 0
+	SIF TALENT:両刀 && TALENT:MASTER:オトコ == 0
 		B += 1
 	;恋慕
-	SIF TALENT:76
+	SIF TALENT:淫乱
 		B += 2
 	;親愛
-	SIF TALENT:88
+	SIF TALENT:親愛
 		B += 2
 	;恋人
-	SIF TALENT:153
+	SIF TALENT:恋人
 		B += 1
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		B += 3
 	;反発感情があるとダメ
 	SIF MARK:3 > 0
@@ -1400,43 +1400,43 @@ IF MARK:3 >= 3
 	ENDIF
 
 	;反抗的
-	SIF TALENT:11
+	SIF TALENT:反抗的
 		B += 1
 	;生意気
-	SIF TALENT:16
+	SIF TALENT:生意気
 		B += 1
 	;サド
-	SIF TALENT:83
+	SIF TALENT:サド
 		B += 3
 	;小悪魔
-	SIF TALENT:87
+	SIF TALENT:小悪魔
 		B += 1
 	;男嫌い
-	SIF TALENT:82 && TALENT:MASTER:オトコ
+	SIF TALENT:男嫌い && TALENT:MASTER:オトコ
 		B += 1
 	;臆病
-	SIF TALENT:10
+	SIF TALENT:臆病
 		B -= 2
 	;自制心
-	SIF TALENT:20
+	SIF TALENT:自制心
 		B -= 3
 	;無関心
-	SIF TALENT:21
+	SIF TALENT:無関心
 		B -= 1
 	;献身的
-	SIF TALENT:63
+	SIF TALENT:献身的
 		B -= 1
 	;恋慕
-	SIF TALENT:76
+	SIF TALENT:淫乱
 		B -= 1
 	;親愛
-	SIF TALENT:88
+	SIF TALENT:親愛
 		B -= 1
 	;恋人
-	SIF TALENT:153
+	SIF TALENT:恋人
 		B -= 1
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		B -= 1
 	IF B > 0
 		DRAWLINE

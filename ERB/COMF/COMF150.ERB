@@ -10,7 +10,7 @@ SIF TFLAG:44 == 0
 SIF TFLAG:65 & 3
 	RETURN 0
 ;調教者が吸血鬼でないとダメ
-SIF TALENT:PLAYER:114 == 0
+SIF TALENT:PLAYER:吸血鬼 == 0
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -119,7 +119,7 @@ ELSE
 ENDIF
 
 ;狂気(むしろ妹様かどうか、か)
-IF TALENT:PLAYER:123
+IF TALENT:PLAYER:狂気
 	TIMES SOURCE:6 , 5.00
 	LOSEBASE:体力 += 450
 	LOSEBASE:気力 += 350
@@ -130,7 +130,7 @@ ENDIF
 IF CFLAG:2 > 10000 && ASSIPLAY == 0
 	SOURCE:3 += 1000 + (CFLAG:2 - 10000) / 50
 	;相愛
-	SIF TALENT:89
+	SIF TALENT:相愛
 		TIMES SOURCE:3 , 3.00
 ENDIF
 
@@ -171,24 +171,24 @@ ENDIF
 
 ;好感度ランダム変化
 A = RAND:10 + 5
-SIF TALENT:85 || TALENT:153
+SIF TALENT:恋慕 || TALENT:恋人
 	A += 5
-SIF TALENT:88
+SIF TALENT:親愛
 	A += 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 	SOURCE:15 += 400
 ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
 
-IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
+IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +2
 	EXP:レズ経験 += 2
 	EXP:PLAYER:レズ経験 += 2
-ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +2
 	EXP:ＢＬ経験 += 2
@@ -268,39 +268,39 @@ IF L
 ENDIF
 
 ;;保守的
-;IF TALENT:24
+;IF TALENT:保守的
 ;	A -= 3
 ;ENDIF
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 3
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 1
 ENDIF
 
 
 
 ;一線越えない
-IF TALENT:151
+IF TALENT:キス未経験
 	A -= 20
 ENDIF
 
 
 
 ;調教者の小悪魔
-IF TALENT:PLAYER:87
+IF TALENT:PLAYER:小悪魔
 	A += 3
 ENDIF
 
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -357,7 +357,7 @@ IF EXP:被吸血経験 == 0
 ENDIF
 
 ;合意
-IF TALENT:152 == 0
+IF TALENT:合意 == 0
 	A -= 20
 ENDIF
 
@@ -412,7 +412,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;;保守的
-	;IF TALENT:24
+	;IF TALENT:保守的
 	;	SIF S
 	;		PRINT  - 
 	;	PRINTS TALENTNAME:24
@@ -420,7 +420,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;	S = 1
 	;ENDIF
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
@@ -428,7 +428,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -436,7 +436,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,1,')
@@ -446,7 +446,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;一線越えない
-	IF TALENT:151
+	IF TALENT:キス未経験
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,20,')
@@ -456,7 +456,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;調教者の小悪魔
-	IF TALENT:PLAYER:87
+	IF TALENT:PLAYER:小悪魔
 		SIF S
 			PRINT  + 
 		PRINTFORM %NAME:PLAYER%が
@@ -466,7 +466,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
@@ -544,7 +544,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;合意
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		PRINT  - 
 		PRINTFORM %TALENTNAME:152%無し
 		PRINTV '(,20,')

@@ -225,11 +225,11 @@ ELSEIF RESULT == 101
 	;体力回復系の調合結果があるため、気力消費のみここで行う
 	LOSEBASE:気力 += 150
 	;恋慕・恋人・調合知識があるとそれぞれ軽減
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		LOSEBASE:気力 -= 20
-	SIF TALENT:153
+	SIF TALENT:恋人
 		LOSEBASE:気力 -= 30
-	SIF TALENT:55
+	SIF TALENT:調合知識
 		LOSEBASE:気力 -= 60
 	;成否フラグ
 	;失敗作ができたときのみTFLAG:18 = -1 に
@@ -319,7 +319,7 @@ ELSEIF RESULT == 101
 	SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 10 + 100) / 100
 	SOURCE:5 = SOURCE:5 * (ABL:料理技能 * 20 + 100) / 100
 	;調合知識を持っていると効果上昇
-	IF TALENT:TARGET:55
+	IF TALENT:TARGET:調合知識
 		TIMES SOURCE:19 , 2.00
 		TIMES SOURCE:5 , 2.00
 	ENDIF
@@ -401,12 +401,12 @@ ELSEIF RESULT == 101
 		PRINTFORML 調合経験+{P}
 	ENDIF
 	;調合知識なし
-	IF TALENT:TARGET:55 == 0 
+	IF TALENT:TARGET:調合知識 == 0 
 		;習得早い
-		IF TALENT:TARGET:50 == 1
+		IF TALENT:TARGET:習得早い == 1
 			A = 1500
 		;習得遅い
-		ELSEIF TALENT:TARGET:51 == 1
+		ELSEIF TALENT:TARGET:習得遅い == 1
 			A = 3000
 		;それ以外
 		ELSE
@@ -417,7 +417,7 @@ ELSEIF RESULT == 101
 			PRINTFORML 
 			PRINTFORMW %CALLNAME:TARGET%は調合師として板についてきたようだ…
 			PRINTFORMW %CALLNAME:TARGET%は[調合知識]を得ました
-			TALENT:TARGET:55 = 1
+			TALENT:TARGET:調合知識 = 1
 		ENDIF
 	ENDIF
 	;TFLAG初期化
@@ -718,7 +718,7 @@ TFLAG:17 = 0
 TFLAG:91 = 0
 ;『失敗作』
 ;調合知識・禁断の知識がないと3割の確率で失敗
-IF TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && RAND:10 < 3
+IF TALENT:PLAYER:調合知識 == 0 && TALENT:TARGET:調合知識 == 0 && TALENT:PLAYER:禁断の知識 == 0 && TALENT:TARGET:禁断の知識 == 0 && RAND:10 < 3
 	TFLAG:17 = 1
 	TFLAG:91 = 0
 ;『蓬莱の薬』
@@ -1713,7 +1713,7 @@ ELSEIF TFLAG:900 == 0 && TFLAG:901 == 0 && TFLAG:902 == 0 && TFLAG:903 == 0 && T
 ;	TFLAG:17 = X
 ;『奇跡の薬』
 ;確率は調合に使用した素材の数/999　早苗様専用素質：奇跡があると確率超上昇
-ELSEIF RAND:998 < (MATCH(TFLAG, 1, 900, 1000) + (TALENT:TARGET:216 * 700))
+ELSEIF RAND:998 < (MATCH(TFLAG, 1, 900, 1000) + (TALENT:TARGET:淫魔 * 700))
 	TFLAG:17 = 666
 ;『失敗作』
 ELSE
@@ -1856,15 +1856,15 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;マスターが蓬莱の薬を飲む
-	IF TALENT:MASTER:128 == 0
+	IF TALENT:MASTER:蓬莱人 == 0
 		TFLAG:91 = 0
 	;すでにマスター(実行者ではない)が蓬莱の薬を飲んでいると、パートナーに飲ませる
-	ELSEIF TALENT:MASTER:128 == 1 && TALENT:MASTER:92 == 1 && TALENT:MASTER:111 == 1 && TALENT:TARGET:128 == 0
+	ELSEIF TALENT:MASTER:蓬莱人 == 1 && TALENT:MASTER:謎の魅力 == 1 && TALENT:MASTER:回復早い == 1 && TALENT:TARGET:蓬莱人 == 0
 		;親愛＋相愛か相愛＋妄信でないと反発感情3がつく
-		IF (TALENT:TARGET:89 == 1 && TALENT:TARGET:88 == 1) || (TALENT:TARGET:89 == 1 && TALENT:TARGET:86 == 1)
+		IF (TALENT:TARGET:相愛 == 1 && TALENT:TARGET:親愛 == 1) || (TALENT:TARGET:相愛 == 1 && TALENT:TARGET:妄信 == 1)
 			TFLAG:91 = 1
 		;恋慕or相愛or妄信or恋人＋合意or好感度5000以上じゃないとそもそも飲ませられない
-		ELSEIF TALENT:TARGET:89 == 1 || TALENT:TARGET:85 == 1 || TALENT:TARGET:86 == 1 || (TALENT:TARGET:153 == 1 && TALENT:TARGET:152 == 1) || CFLAG:TARGET:2 >= 5000
+		ELSEIF TALENT:TARGET:相愛 == 1 || TALENT:TARGET:恋慕 == 1 || TALENT:TARGET:妄信 == 1 || (TALENT:TARGET:恋人 == 1 && TALENT:TARGET:合意 == 1) || CFLAG:TARGET:2 >= 5000
 			TFLAG:91 = 2
 		;飲まない
 		ELSE
@@ -1882,16 +1882,16 @@ CASE 1
 		PRINTFORMW %CALLNAME:MASTER%は[蓬莱人]を得ました
 		PRINTFORMW %CALLNAME:MASTER%は[謎の魅力]を得ました
 		PRINTFORMW %CALLNAME:MASTER%は[回復早い]を得ました
-		TALENT:MASTER:128 = 1
-		TALENT:MASTER:92 = 1
-		TALENT:MASTER:111 = 1
+		TALENT:MASTER:蓬莱人 = 1
+		TALENT:MASTER:謎の魅力 = 1
+		TALENT:MASTER:回復早い = 1
 		;種族変更
 		L = MASTER
 		CALL GET_STRAINCORRECT
 	;パートナーが飲む
 	CASE 1
 		PRINTFORMW %CALLNAME:TARGET%は[蓬莱人]を得ました
-		TALENT:TARGET:128 = 1
+		TALENT:TARGET:蓬莱人 = 1
 		;種族変更
 		L = TARGET
 		CALL GET_STRAINCORRECT
@@ -1899,7 +1899,7 @@ CASE 1
 	CASE 2
 		PRINTFORMW %CALLNAME:TARGET%は[蓬莱人]を得ました
 		PRINTFORMW 反発感情Lv3取得
-		TALENT:TARGET:128 = 1
+		TALENT:TARGET:蓬莱人 = 1
 		MARK:TARGET:3 = 3
 		;種族変更
 		L = TARGET
@@ -1981,7 +1981,7 @@ CASE 1
 	PRINTFORMW %CALLNAME:PLAYER%の耐力が{S}回復しました
 	PRINTFORMW ……下半身が元気になってきた
 	BASE:PLAYER:耐力 += S
-	IF TALENT:PLAYER:133
+	IF TALENT:PLAYER:早漏
 		BASE:PLAYER:射精 = 4999
 	ELSE
 		BASE:PLAYER:射精 = 9999
@@ -2126,7 +2126,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;両者とも薬毒耐性あり
-	IF TALENT:PLAYER:56 == 1 && TALENT:TARGET:56 == 1
+	IF TALENT:PLAYER:薬毒耐性 == 1 && TALENT:TARGET:薬毒耐性 == 1
 		PRINTFORMW 特に何も起こらなかったようだ
 	ELSE
 		S -= 1000
@@ -2136,16 +2136,16 @@ CASE 1
 		
 		A = S * -1
 		B = U * -1
-		SIF TALENT:PLAYER:56 == 0 && TALENT:TARGET:56 == 1
+		SIF TALENT:PLAYER:薬毒耐性 == 0 && TALENT:TARGET:薬毒耐性 == 1
 			PRINTFORM %CALLNAME:PLAYER%の
 		PRINTFORMW 体力と気力が{A}ずつ減少しました
-		IF TALENT:TARGET:56 == 0
+		IF TALENT:TARGET:薬毒耐性 == 0
 			PRINTFORMW 好感度{B}
 			BASE:TARGET:体力 += S
 			BASE:TARGET:気力 += S
 			BASE:TARGET:耐力 += S
 		ENDIF
-		IF TALENT:PLAYER:56 == 0
+		IF TALENT:PLAYER:薬毒耐性 == 0
 			BASE:PLAYER:体力 += S
 			BASE:PLAYER:気力 += S
 			BASE:PLAYER:耐力 += S
@@ -2529,7 +2529,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;恋人かつ恋慕だと一緒に食べる
-	IF TALENT:TARGET:85 && TALENT:TARGET:153
+	IF TALENT:TARGET:恋慕 && TALENT:TARGET:恋人
 		U += 15
 		;好感度をみる
 		IF CFLAG:2 <= 500
@@ -2569,7 +2569,7 @@ ENDSELECT
 
 @TRAIN_MESSAGE_COM310_22
 ;恋人かつ恋慕だと一緒に食べる
-IF TALENT:TARGET:85 && TALENT:TARGET:153
+IF TALENT:TARGET:恋慕 && TALENT:TARGET:恋人
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と１つの[ハニーソフト]を一緒に舐めた…
 ;それ以外
 ELSE
@@ -3655,7 +3655,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;早漏持ち
-	IF TALENT:MASTER:133 == 1
+	IF TALENT:MASTER:早漏 == 1
 		TFLAG:91 = 0
 	;それ以外
 	ELSE
@@ -3666,7 +3666,7 @@ CASE 1
 	SELECTCASE TFLAG:91
 	CASE 0
 		PRINTFORMW %CALLNAME:MASTER%の[早漏]が消えました
-		TALENT:MASTER:133 = 0
+		TALENT:MASTER:早漏 = 0
 		MAXBASE:MASTER:射精 = 10000
 	CASE 1
 		PRINTFORMW しかし何も起こらなかった
@@ -4254,10 +4254,10 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;既に動物耳持ちかつマスターが動物耳を持っていない
-	IF TALENT:MASTER:124 == 0 && TALENT:124 == 1
+	IF TALENT:MASTER:動物耳 == 0 && TALENT:動物耳 == 1
 		TFLAG:91 = 0
 	;二人とも動物耳もち
-	ELSEIF TALENT:MASTER:124 == 1 && TALENT:124 == 1
+	ELSEIF TALENT:MASTER:動物耳 == 1 && TALENT:動物耳 == 1
 		TFLAG:91 = 1
 	;動物耳なし
 	ELSE
@@ -4269,7 +4269,7 @@ CASE 1
 	;既に動物耳持ちかつマスターが動物耳を持っていない
 	CASE 0
 		PRINTFORMW %CALLNAME:MASTER%は[動物耳]を得てしまった
-		TALENT:MASTER:124 = 1
+		TALENT:MASTER:動物耳 = 1
 	;二人とも動物耳もち
 	CASE 1
 		PRINTFORMW しかし何も起こらなかった…
@@ -4277,7 +4277,7 @@ CASE 1
 	CASE 2
 		PRINTFORMW %CALLNAME:TARGET%は一時的に[動物耳]を得た
 		TEQUIP:40 |= 32
-		TALENT:124 = 1
+		TALENT:動物耳 = 1
 	ENDSELECT
 ;売却
 CASE -1
@@ -4307,10 +4307,10 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;本来動物耳を持ってないのに動物耳を持っているMASTERがいる時
-	IF !CSVTALENT(NO:MASTER, 124, CFLAG:MASTER:0) && TALENT:MASTER:124 == 1
+	IF !CSVTALENT(NO:MASTER, 124, CFLAG:MASTER:0) && TALENT:MASTER:動物耳 == 1
 		TFLAG:91 = 0
 	;本来動物耳を持ってないのに動物耳を持っているTARGETがいる時
-	ELSEIF !CSVTALENT(NO:TARGET, 124, CFLAG:0) && TALENT:124 == 1
+	ELSEIF !CSVTALENT(NO:TARGET, 124, CFLAG:0) && TALENT:動物耳 == 1
 		TFLAG:91 = 3
 	;本来動物耳を持っているTARGETがいる時
 	ELSEIF CSVTALENT(NO:TARGET, 124, CFLAG:0)
@@ -4325,7 +4325,7 @@ CASE 1
 	;本来動物耳を持ってないのに動物耳を持っているMASTERがいる時
 	CASE 0
 		PRINTFORMW %CALLNAME:MASTER%の[動物耳]が消えました
-		TALENT:MASTER:124 = 0
+		TALENT:MASTER:動物耳 = 0
 	;本来動物耳を持っているTARGETがいる時
 	CASE 1
 		PRINTFORMW 好感度-20
@@ -4337,7 +4337,7 @@ CASE 1
 	;本来動物耳を持ってないのに動物耳を持っているTARGETがいる時
 	CASE 3
 		PRINTFORMW %CALLNAME:TARGET%の[動物耳]が消えました
-		TALENT:TARGET:124 = 0
+		TALENT:TARGET:動物耳 = 0
 	ENDSELECT
 ;売却
 CASE -1
@@ -4909,13 +4909,13 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;両者薬毒耐性持ち
-	IF TALENT:TARGET:56 == 1 && TALENT:PLAYER:56 == 1
+	IF TALENT:TARGET:薬毒耐性 == 1 && TALENT:PLAYER:薬毒耐性 == 1
 		TFLAG:91 = 0
 	;PLAYERのみダメージ（TARGETのみ薬毒耐性がある）
-	ELSEIF TALENT:TARGET:56 == 1 && TALENT:PLAYER:56 == 0
+	ELSEIF TALENT:TARGET:薬毒耐性 == 1 && TALENT:PLAYER:薬毒耐性 == 0
 		TFLAG:91 = 1
 	;TARGETのみダメージ（PLAYERのみ薬毒耐性ある）
-	ELSEIF TALENT:TARGET:56 == 0 && TALENT:PLAYER:56 == 1
+	ELSEIF TALENT:TARGET:薬毒耐性 == 0 && TALENT:PLAYER:薬毒耐性 == 1
 		TFLAG:91 = 2
 	;両方ダメージ（両者薬毒耐性なし）
 	ELSE
@@ -5350,7 +5350,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;恋人かつ恋慕だと一緒に食べる
-	IF TALENT:TARGET:85 && TALENT:TARGET:153
+	IF TALENT:TARGET:恋慕 && TALENT:TARGET:恋人
 		;好感度をみる
 		IF CFLAG:2 <= 500
 			S += CFLAG:2 / 2
@@ -5391,7 +5391,7 @@ ENDSELECT
 
 @TRAIN_MESSAGE_COM310_97
 ;恋人かつ恋慕だと一緒に食べる
-IF TALENT:TARGET:85 && TALENT:TARGET:153
+IF TALENT:TARGET:恋慕 && TALENT:TARGET:恋人
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と１つの[ピーチソフト]を一緒に舐めた…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[ピーチソフト]を食べてみた…
@@ -5531,7 +5531,7 @@ CASE 1
 		SIF CFLAG:COUNT:21
 			CONTINUE
 		;恋慕キャラは好感度を上げる
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			CFLAG:COUNT:2 += A
 	REND
 	
@@ -5614,7 +5614,7 @@ CASE 1
 		SIF CFLAG:COUNT:21
 			CONTINUE
 		;恋慕キャラは好感度を上げる
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			CFLAG:COUNT:2 += A
 	REND
 	
@@ -5697,7 +5697,7 @@ CASE 1
 		SIF CFLAG:COUNT:21
 			CONTINUE
 		;恋慕キャラは好感度を上げる
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			CFLAG:COUNT:2 += A
 	REND
 	
@@ -5780,7 +5780,7 @@ CASE 1
 		SIF CFLAG:COUNT:21
 			CONTINUE
 		;恋慕キャラは好感度を上げる
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			CFLAG:COUNT:2 += A
 	REND
 	;ムード上昇
@@ -5856,13 +5856,13 @@ CASE 1
 	ELSE
 		S += 2000 + (CFLAG:2 - 5000) / 8
 	ENDIF
-	SIF TALENT:89
+	SIF TALENT:相愛
 		TIMES S , 1.50
-	SIF TALENT:88
+	SIF TALENT:親愛
 		TIMES S , 1.30
-	SIF TALENT:85
+	SIF TALENT:恋慕
 		TIMES S , 1.20
-	SIF TALENT:153
+	SIF TALENT:恋人
 		TIMES S , 1.20
 	U += 5
 	A = MAXBASE:TARGET:体力 * U / 100
@@ -6341,7 +6341,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;早漏持ち
-	IF TALENT:MASTER:133 == 1
+	IF TALENT:MASTER:早漏 == 1
 		TFLAG:91 = 0
 	;それ以外
 	ELSE
@@ -6358,7 +6358,7 @@ CASE 1
 	;それ以外
 	CASE 1
 		PRINTFORMW %CALLNAME:MASTER%は[早漏]を得た
-		TALENT:MASTER:133 = 1
+		TALENT:MASTER:早漏 = 1
 	ENDSELECT
 ;売却
 CASE -1
@@ -7793,7 +7793,7 @@ CASE 1
 			SIF (FLAG:5 == 10 && CFLAG:RESULT:17 == 0)
 				GOTO INPUT_LOOPK
 			;恋人または恋慕あり
-			IF TALENT:RESULT:153 == 1 || TALENT:RESULT:85 == 1
+			IF TALENT:RESULT:恋人 == 1 || TALENT:RESULT:恋慕 == 1
 				;作った本人に使う（恋人）
 				IF RESULT == TARGET
 					TFLAG:91 = 0
@@ -7838,10 +7838,10 @@ CASE 1
 		S += 200
 		S += RAND:100
 		;無関心、感情乏しい、目立ちたがり、解放、恥薄い
-		SIF TALENT:A:21 || TALENT:A:22 || TALENT:A:28 || TALENT:A:33 || TALENT:A:36
+		SIF TALENT:A:無関心 || TALENT:A:感情乏しい || TALENT:A:目立ちたがり || TALENT:A:解放 || TALENT:A:恥薄い
 			S /= 2
 		;恥じらい、倒錯的、マスターが謎の魅力持ち
-		SIF TALENT:A:35 || TALENT:A:80 || TALENT:MASTER:92
+		SIF TALENT:A:恥じらい || TALENT:A:倒錯的 || TALENT:MASTER:謎の魅力
 			S *= 2
 		PRINTFORMW 恥情の珠+{S}
 		JUEL:A:8 += S
@@ -7850,7 +7850,7 @@ CASE 1
 		PRINTFORML %CALLNAME:A%の[弱味]を得た
 		PRINTFORMW 被写経験+1
 		PRINTFORMW 否定の珠+1000
-		TALENT:A:37 = 1
+		TALENT:A:弱味 = 1
 		;好感度下げる
 		TFLAG:30 -= 300
 		JUEL:A:100 += 1000
@@ -7999,7 +7999,7 @@ CASE 1
 		ENDIF
 		;ほろ酔い値＋
 		;酒豪もちの場合効果上昇
-		IF TALENT:TARGET:217
+		IF TALENT:TARGET:酒豪
 			TFLAG:47 += 15
 		ELSE
 			TFLAG:47 += 10
@@ -8782,11 +8782,11 @@ CASE 1
 		SIF COUNT == TARGET
 			CONTINUE
 		A = CFLAG:COUNT:2
-		SIF TALENT:COUNT:153
+		SIF TALENT:COUNT:恋人
 			A *= 2
-		SIF TALENT:COUNT:85
+		SIF TALENT:COUNT:恋慕
 			A *= 2
-		SIF TALENT:COUNT:88
+		SIF TALENT:COUNT:親愛
 			A *= 2
 		S += A
 	REND
@@ -8799,13 +8799,13 @@ CASE 1
 		S /= 5
 	ENDIF
 	;恋人ないと半減
-	SIF TALENT:153 == 0
+	SIF TALENT:恋人 == 0
 		S /= 2
 	;恋慕無いと半減
-	SIF TALENT:85 == 0
+	SIF TALENT:恋慕 == 0
 		S /= 2
 	;嫉妬あり
-	SIF TALENT:84
+	SIF TALENT:嫉妬
 		S *= 2
 
 	SIF S < 0
@@ -8848,7 +8848,7 @@ CASE 1
 		;痛みプラス
 		SOURCE:6 += S
 		;好感度500以下or恋人なしor恋慕なしで反感プラス
-		SIF CFLAG:2 <= 500 || TALENT:TARGET:85 == 0 || TALENT:TARGET:153 == 0
+		SIF CFLAG:2 <= 500 || TALENT:TARGET:恋慕 == 0 || TALENT:TARGET:恋人 == 0
 			SOURCE:15 += S
 	;主導権が相手側
 	ELSE
@@ -8987,7 +8987,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;相手が嫉妬持ちだと[ジェラシックパーク]
-	IF TALENT:84
+	IF TALENT:嫉妬
 		TFLAG:91 = 0
 	;[ジュラシックパーク]
 	ELSE
@@ -9065,7 +9065,7 @@ CASE 1
 		SOURCE:0 = 1500 + (ABL:Ｃ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		SOURCE:15 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
@@ -9188,16 +9188,16 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;巨乳
-	IF TALENT:110
+	IF TALENT:巨乳
 		TFLAG:91 = 0
 	ELSE
 		TFLAG:91 = 1
 		;同一ターンで胸のサイズを変更していない場合に限りビットを立てる
 		IF (TEQUIP:40 & 7) == 0
 			;貧乳
-			IF TALENT:109
+			IF TALENT:貧乳
 				TEQUIP:40 |= 1
-				TALENT:109 = 0
+				TALENT:貧乳 = 0
 			;並乳
 			ELSE
 				TEQUIP:40 |= 2
@@ -9211,7 +9211,7 @@ CASE 1
 		PRINTFORMW しかし何も起こらなかった
 	CASE 1
 		;巨乳化
-		TALENT:110 = 1
+		TALENT:巨乳 = 1
 		PRINTFORMW %CALLNAME:TARGET%の胸が膨らんでいく…！
 		PRINTFORMW %CALLNAME:TARGET%は一時的に[巨乳]になりました
 	ENDSELECT
@@ -9232,16 +9232,16 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;貧乳
-	IF TALENT:TARGET:109
+	IF TALENT:TARGET:貧乳
 		TFLAG:91 = 0
 	ELSE
 		TFLAG:91 = 1
 		;同一ターンで胸のサイズを変更していない場合に限りビットを立てる
 		IF (TEQUIP:40 & 7) == 0
 			;巨乳
-			IF TALENT:110
+			IF TALENT:巨乳
 				TEQUIP:40 |= 4
-				TALENT:110 = 0
+				TALENT:巨乳 = 0
 			;並乳
 			ELSE
 				TEQUIP:40 |= 2
@@ -9255,7 +9255,7 @@ CASE 1
 		PRINTFORMW しかし何も起こらなかった
 	CASE 1
 		;貧乳化
-		TALENT:109 = 1
+		TALENT:貧乳 = 1
 		PRINTFORMW %CALLNAME:TARGET%の胸が小さくなっていく…！
 		PRINTFORMW %CALLNAME:TARGET%は一時的に[貧乳]になりました
 	ENDSELECT
@@ -9388,7 +9388,7 @@ CASE 1
 	PRINTFORM 欲望Lv+1
 	EXP:TARGET:異常経験 += S
 	;対象の好感度3500未満または(恋人＋恋慕)か親愛か相愛が無い場合　反発感情上昇＋親密DOWN
-	IF CFLAG:TARGET:2 < 3500 || (TALENT:85 == 0 || TALENT:153 == 0) && TALENT:88 == 0 && TALENT:89 == 0
+	IF CFLAG:TARGET:2 < 3500 || (TALENT:恋慕 == 0 || TALENT:恋人 == 0) && TALENT:親愛 == 0 && TALENT:相愛 == 0
 		PRINTFORML 
 		PRINTFORML 反発感情Lv3を取得
 		MARK:TARGET:3 = 3
@@ -9635,7 +9635,7 @@ CASE 1
 		SOURCE:17 = 2200 + (ABL:Ｂ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		SOURCE:15 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
@@ -9779,7 +9779,7 @@ CASE 1
 	;好感度はカット
 	;ほろ酔い値＋
 	;酒豪もちの場合効果上昇
-	IF TALENT:TARGET:217
+	IF TALENT:TARGET:酒豪
 		TFLAG:47 += 15
 	ELSE
 		TFLAG:47 += 10
@@ -11007,10 +11007,10 @@ CASE 1
 	;仲間で調合知識、禁断の知識を持っているキャラが居るか（自分達含む）
 	REPEAT CHARANUM
 		;調合知識
-		SIF TALENT:COUNT:55
+		SIF TALENT:COUNT:調合知識
 			A |= 1p0
 		;禁断の知識
-		SIF TALENT:COUNT:125
+		SIF TALENT:COUNT:禁断の知識
 			A |= 1p1
 	REND
 	;該当キャラが居るかどうかで選ばれる項目が増える（基本5種類、調合知識4種類、禁断の知識4種類）
@@ -11045,7 +11045,7 @@ CASE 1
 	;毒薬
 	CASE 4
 		;薬毒耐性あり
-		SIF TALENT:56
+		SIF TALENT:薬毒耐性
 			TFLAG:91 = -TFLAG:91
 	;エリクサー
 	CASE 5
@@ -11056,7 +11056,7 @@ CASE 1
 	;けもみみそうる
 	CASE 8
 		;動物耳あり
-		SIF TALENT:124
+		SIF TALENT:動物耳
 			TFLAG:91 = -TFLAG:91
 	;浄化の健忘薬
 	CASE 9
@@ -11066,12 +11066,12 @@ CASE 1
 	;朝の雫
 	CASE 10
 		;小柄体型、または体型変化済み
-		SIF TALENT:100 || TEQUIP:40 & 24
+		SIF TALENT:小柄体型 || TEQUIP:40 & 24
 			TFLAG:91 = -TFLAG:91
 	;即席巨乳薬
 	CASE 11
 		;巨乳
-		SIF TALENT:110
+		SIF TALENT:巨乳
 			TFLAG:91 = -TFLAG:91
 	;桃色の秘薬
 	CASE 12
@@ -11088,9 +11088,9 @@ CASE 1
 		PRINTFORMW %CALLNAME:TARGET%の耐力が{S}回復しました
 		BASE:PLAYER:耐力 += S
 		;ふたなり、オトコの場合
-		IF TALENT:121 == 1 || TALENT:122 == 1
+		IF TALENT:ふたなり == 1 || TALENT:オトコ == 1
 			PRINTFORMW ……下半身が元気になってきた
-			IF TALENT:133
+			IF TALENT:早漏
 				BASE:射精 = 4999
 			ELSE
 				BASE:射精 = 9999
@@ -11162,7 +11162,7 @@ CASE 1
 		PRINTFORML 
 		PRINTFORML %CALLNAME:TARGET%は一時的に[動物耳]を得た
 		TEQUIP:40 |= 32
-		TALENT:124 = 1
+		TALENT:動物耳 = 1
 	;けもみみそうる（無効）
 	CASE -8
 		PRINTFORMW しかし何も起こらなかった…
@@ -11183,14 +11183,14 @@ CASE 1
 		PRINTFORMW なんと%CALLNAME:TARGET%の体が縮んでいく！
 		PRINTFORML %CALLNAME:TARGET%は一時的に[小柄体型]になりました
 		TEQUIP:40 |= 8
-		TALENT:100 = 1
+		TALENT:小柄体型 = 1
 	;朝の雫（無効）
 	CASE -10
 		PRINTFORMW %CALLNAME:TARGET%の体型に変化は無かった
 	;即席巨乳薬
 	CASE 11
 		;巨乳化
-		TALENT:110 = 1
+		TALENT:巨乳 = 1
 		PRINTFORMW 服を押し上げながら%CALLNAME:TARGET%の胸が膨らんでいく…！
 		PRINTFORMW %CALLNAME:TARGET%は一時的に[巨乳]になりました
 	;即席巨乳薬（無効）
@@ -12365,12 +12365,12 @@ CASE 1
 			CALL CALC_SOURCE0
 			A = UP:0
 			;液体追加
-			IF A > 100 && TALENT:122 == 0
+			IF A > 100 && TALENT:オトコ == 0
 				A /= 5
 				;濡れやすいと濡れにくいはここで処理
-				SIF TALENT:42
+				SIF TALENT:濡れやすい
 					TIMES A , 3.00
-				SIF TALENT:43
+				SIF TALENT:濡れにくい
 					TIMES A , 0.40
 				SOURCE:10 += A
 			ENDIF
@@ -12426,7 +12426,7 @@ CASE 1
 		ENDIF
 	NEXT
 	;合意がないと好感度が下がる
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		SOURCE:15 += 400 * LCOUNT:0
 		PRINTL 
 		PRINTFORML 好感度-{20*LCOUNT:0}
@@ -12466,9 +12466,9 @@ CASE 1
 	IF PALAM:3 >= 10000
 		PRINT 愛液で濡れ透いた下着の上からヒクつく
 		;ふたなり
-		IF TALENT:121
+		IF TALENT:ふたなり
 			PRINT 秘唇に
-		ELSEIF TALENT:122
+		ELSEIF TALENT:オトコ
 			PRINT 秘所に
 		ELSE
 			PRINT クリトリスに
@@ -12484,12 +12484,12 @@ CASE 2
 	IF A:1 > 0
 		PRINTFORM %CALLNAME:TARGET%は
 		;恋慕解禁
-		IF RAND:5 == 0 && TALENT:85 && ASSIPLAY == 0
+		IF RAND:5 == 0 && TALENT:恋慕 && ASSIPLAY == 0
 			PRINTFORM %CALLNAME:PLAYER%の顔を抱き寄せながら
-		ELSEIF RAND:4 == 0 && TALENT:85 && ASSIPLAY == 0
+		ELSEIF RAND:4 == 0 && TALENT:恋慕 && ASSIPLAY == 0
 			PRINTFORM %CALLNAME:PLAYER%の首元に腕を回して
 		;恋人解禁
-		ELSEIF RAND:3 == 0 && TALENT:153 && ASSIPLAY == 0
+		ELSEIF RAND:3 == 0 && TALENT:恋人 && ASSIPLAY == 0
 			PRINTFORM %CALLNAME:PLAYER%の手を握りながら
 		ELSEIF RAND:2 == 0
 			PRINTFORM 秘唇から愛液を滴らせながら
@@ -12547,7 +12547,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;相手が既に妊娠している場合、オトコやふたなりでない場合、助手の場合は慈しむへ
-	IF ASSIPLAY || (TALENT:PLAYER:122 == 0 && TALENT:PLAYER:121 == 0) || TALENT:134
+	IF ASSIPLAY || (TALENT:PLAYER:オトコ == 0 && TALENT:PLAYER:ふたなり == 0) || TALENT:妊娠
 		TFLAG:91 = 0
 	ELSE
 		PRINTFORML [コウノトリの羽]の力をどう使いますか？
@@ -12575,20 +12575,20 @@ CASE 1
 		;付加価値を見る
 		SOURCE:3 *= (S + U + 100) / 100
 		;恋人
-		SIF TALENT:153
+		SIF TALENT:恋人
 			TIMES SOURCE:3, 1.30
 		;恋慕
-		SIF TALENT:85
+		SIF TALENT:恋慕
 			TIMES SOURCE:3, 1.30
 		;親愛
-		SIF TALENT:88
+		SIF TALENT:親愛
 			TIMES SOURCE:3, 1.50
 		;相愛
-		SIF TALENT:89
+		SIF TALENT:相愛
 			TIMES SOURCE:3, 2.00
 		;妊娠
 		;コウノトリさんの精神を反映
-		IF TALENT:134
+		IF TALENT:妊娠
 			TIMES SOURCE:3, 3.00
 			S += 500
 			PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
@@ -12682,11 +12682,11 @@ CASE 1
 	ENDIF
 	;Ａ敏感、鈍感をみる
 	;快Ａ自体のチェックは後でまとめてやる
-	IF TALENT:105
+	IF TALENT:Ａ鈍感
 		TIMES SOURCE:6 , 1.50
 		TIMES SOURCE:13 , 1.50
 		TIMES SOURCE:14 , 1.50
-	ELSEIF TALENT:106
+	ELSEIF TALENT:Ａ敏感
 		TIMES SOURCE:6 , 0.60
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 0.60
@@ -12697,7 +12697,7 @@ CASE 1
 	PRINTFORML %EXPNAME:50%+1
 	PRINTFORML 
 	;合意がないと好感度が下がる
-	IF TALENT:152 == 0
+	IF TALENT:合意 == 0
 		SOURCE:15 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
@@ -12794,10 +12794,10 @@ CASE 1
 		SOURCE:17 += S + U
 		SOURCE:17 *= (S + U + 100) / 100
 		;巨乳だと快感が増えます（触れる面積が増えるため）
-		IF TALENT:110
+		IF TALENT:巨乳
 			TIMES SOURCE:17, 1.50
 		;貧乳だと減ります（触れる面積が…）
-		ELSEIF TALENT:109
+		ELSEIF TALENT:貧乳
 			TIMES SOURCE:17, 0.70
 		ENDIF
 		;B絶頂、噴乳で倍増
@@ -12824,12 +12824,12 @@ CASE 1
 		CALL CALC_SOURCE17
 		A = UP:14
 		;液体追加
-		IF A > 100 && TALENT:122 == 0
+		IF A > 100 && TALENT:オトコ == 0
 			A /= 5
 			;濡れやすいと濡れにくいはここで処理
-			SIF TALENT:42
+			SIF TALENT:濡れやすい
 				TIMES A , 3.00
-			SIF TALENT:43
+			SIF TALENT:濡れにくい
 				TIMES A , 0.40
 			SOURCE:10 += A
 		ENDIF
@@ -12881,9 +12881,9 @@ ENDSELECT
 SELECTCASE TFLAG:94
 CASE 0
 	PRINTFORM [触手ブラ]は%CALLNAME:TARGET%の服の中にするりと入り込み、
-	IF TALENT:110
+	IF TALENT:巨乳
 		PRINT たわわな
-	ELSEIF TALENT:109
+	ELSEIF TALENT:貧乳
 		PRINT 控えめな
 	ENDIF
 	PRINTFORMW 胸を押し包む！
@@ -13091,10 +13091,10 @@ IF NO:TARGET == 11
 			U += 3
 	ENDSELECT
 	;ハニーソフト（恋人恋慕）
-	SIF TFLAG:17 == 22 && TALENT:TARGET:85 == 1 && TALENT:TARGET:153 == 1
+	SIF TFLAG:17 == 22 && TALENT:TARGET:恋慕 == 1 && TALENT:TARGET:恋人 == 1
 		S += 135
 	;ピーチソフト（恋人恋慕）
-	SIF TFLAG:17 == 97 && TALENT:TARGET:85 == 1 && TALENT:TARGET:153 == 1
+	SIF TFLAG:17 == 97 && TALENT:TARGET:恋慕 == 1 && TALENT:TARGET:恋人 == 1
 		S += 85
 	;太古の巨大魚
 	SIF TFLAG:17 == 72
@@ -13110,7 +13110,7 @@ IF GROUPMATCH(NO:TARGET, 3, 4, 5, 6, 7, 10, 11, 50, 51)
 			U += 5
 	ENDSELECT
 	;ハニーソフト恋人恋慕
-	SIF TFLAG:17 == 22 && TALENT:85 && TALENT:153
+	SIF TFLAG:17 == 22 && TALENT:恋慕 && TALENT:恋人
 		S += 250
 ENDIF
 ;洋菓子ボーナス（対象：マキ、ゆかり、茜、葵、あかり、ささら、ONE、IA）
@@ -13452,7 +13452,7 @@ REPEAT 300
 	PRINTFORM [{COUNT,3}]
 		
 	IF FLAG:A
-		IF FLAG:A == 1 || FLAG:A == 2 || (FLAG:A & 128) || TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1
+		IF FLAG:A == 1 || FLAG:A == 2 || (FLAG:A & 128) || TALENT:PLAYER:調合知識 == 1 || TALENT:TARGET:調合知識 == 1 || TALENT:PLAYER:禁断の知識 == 1 || TALENT:TARGET:禁断の知識 == 1
 			PRINTFORM [%STR:A%]
 			IF FLAG:A == 2
 				SETCOLOR 0xC0C000
@@ -13473,7 +13473,7 @@ REPEAT 300
 		;多重REPEATなのでAを利用してCOUNT復元。
 		COUNT = A - 2000
 	ELSE
-		IF TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1
+		IF TALENT:PLAYER:調合知識 == 1 || TALENT:TARGET:調合知識 == 1 || TALENT:PLAYER:禁断の知識 == 1 || TALENT:TARGET:禁断の知識 == 1
 			PRINTFORML [%STR:A%]
 		ELSE
 			STRLENS STR:A
@@ -13699,7 +13699,7 @@ STR:2170 = ミスタービーン
 STR:2171 = 古びた日本人形
 STR:2172 = インツタントカーメン
 ;相手が嫉妬持ちの時名称変更
-IF TARGET > O && TALENT:TARGET:84 == 1
+IF TARGET > O && TALENT:TARGET:嫉妬 == 1
 	STR:2173 = ジェラシックパーク
 ELSE
 	STR:2173 = ジュラシックパーク
@@ -17157,10 +17157,10 @@ CALL RECIPE_NAME
 ;調合ランク判定
 B = EXP:TARGET:調合経験
 ;習得早い場合は経験値1.5倍、遅い場合は2/3倍
-IF TALENT:TARGET:50
+IF TALENT:TARGET:習得早い
 	B *= 3
 	B /= 2
-ELSEIF TALENT:TARGET:51
+ELSEIF TALENT:TARGET:習得遅い
 	B *= 2
 	B /= 3
 ENDIF
@@ -17182,19 +17182,19 @@ ELSE
 	B = 1
 ENDIF
 ;調教者が調合知識もしくは禁断の知識を持っている場合、ランクは最低でも5になる
-SIF (TALENT:PLAYER:55 || TALENT:PLAYER:125) && B <= 5
+SIF (TALENT:PLAYER:調合知識 || TALENT:PLAYER:禁断の知識) && B <= 5
 	B = 5
 ;調教対象が調合知識もしくは禁断の知識を持っている場合、ランクは最低でも10になる
-SIF (TALENT:TARGET:55 || TALENT:TARGET:125) && B <= 10
+SIF (TALENT:TARGET:調合知識 || TALENT:TARGET:禁断の知識) && B <= 10
 	B = 10
 ;ふたりとも禁断の知識を持っていない場合は1%の確率で、片方が持っている場合は10%で、二人とも持っている場合20%で、ランクMAXになる
-IF TALENT:PLAYER:125 && TALENT:TARGET:125
+IF TALENT:PLAYER:禁断の知識 && TALENT:TARGET:禁断の知識
 	SIF RAND:20 == 0
 		B = 120
-ELSEIF TALENT:TARGET:125
+ELSEIF TALENT:TARGET:禁断の知識
 	SIF RAND:10 == 0
 		B = 120
-ELSEIF TALENT:PLAYER:125
+ELSEIF TALENT:PLAYER:禁断の知識
 	SIF RAND:10 == 0
 		B = 120
 ELSE
@@ -17243,7 +17243,7 @@ ELSE
 	;必要素材数を取得
 	CALL TYOGO_CHECK
 	;調合知識・禁断の知識があるときは名前フラグも立てておく
-	SIF TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1
+	SIF TALENT:PLAYER:調合知識 == 1 || TALENT:TARGET:調合知識 == 1 || TALENT:PLAYER:禁断の知識 == 1 || TALENT:TARGET:禁断の知識 == 1
 		FLAG:A |= 128
 	;未取得のレシピの位置を選定
 	N = 0
@@ -17297,7 +17297,7 @@ ELSE
 	CALL RECIPE_BOOK_LIST_NAME
 	PRINT 以上のレシピで
 	;調合知識か禁断の知識があるか、名前をレシピで拾ってるか
-	IF (FLAG:A & 128) || TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1
+	IF (FLAG:A & 128) || TALENT:PLAYER:調合知識 == 1 || TALENT:TARGET:調合知識 == 1 || TALENT:PLAYER:禁断の知識 == 1 || TALENT:TARGET:禁断の知識 == 1
 		PRINTFORM [{A - 2000}][%STR:A%]が
 	ELSE
 		PRINTFORM 何かが

@@ -19,7 +19,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;射精ゲージチェック（パートナーがふたなりの場合）
 ;-------------------------------------------------
-SIF TALENT:TARGET:119 || TALENT:TARGET:121 || TALENT:TARGET:122
+SIF TALENT:TARGET:半人半妖 || TALENT:TARGET:ふたなり || TALENT:TARGET:オトコ
 	BASE:TARGET:射精 += CALC_EJAC(SELECTCOM, TARGET)
 
 ;-------------------------------------------------
@@ -143,7 +143,7 @@ ENDIF
 ;好感度ランダム変化
 A = RAND:10 + 5
 ;合意がないと好感度が下がる
-IF TALENT:152 == 0 && TFLAG:48 == 0
+IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 9
 	SOURCE:15 += 400
 ENDIF
@@ -245,18 +245,18 @@ ENDIF
 ;	TFLAG:6 = 1
 ;ENDIF
 
-IF TALENT:119 || TALENT:121 || TALENT:122
+IF TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ
 	;パートナーのＰ⇔助手のＶの汚れが移動
 	STAIN:2 |= STAIN:ASSI:3
 	STAIN:ASSI:3 |= STAIN:2
 ENDIF
 
-IF TALENT:122 == 0 && TALENT:ASSI:122 == 0
+IF TALENT:オトコ == 0 && TALENT:ASSI:オトコ == 0
 	PRINTS EXPNAME:40
 	PRINTL +10
 	EXP:レズ経験 += 10
 	EXP:ASSI:レズ経験 += 10
-ELSEIF TALENT:122 == 1 && TALENT:ASSI:122 == 1
+ELSEIF TALENT:オトコ == 1 && TALENT:ASSI:オトコ == 1
 	PRINTS EXPNAME:41
 	PRINTL +10
 	EXP:ＢＬ経験 += 10
@@ -314,23 +314,23 @@ IF L
 ENDIF
 
 ;恥じらい
-IF TALENT:35
+IF TALENT:恥じらい
 	A -= 1
 ENDIF
 ;献身的
-IF TALENT:63
+IF TALENT:献身的
 	A += 6
 ENDIF
 ;快感に素直
-IF TALENT:70
+IF TALENT:快感に素直
 	A += 2
 ENDIF
 ;快感の否定
-IF TALENT:71
+IF TALENT:快感の否定
 	A -= 2
 ENDIF
 ;恋慕
-IF TALENT:85 && ASSIPLAY == 0
+IF TALENT:恋慕 && ASSIPLAY == 0
 	A += 5
 ENDIF
 
@@ -415,14 +415,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;恥じらい
-	IF TALENT:35
+	IF TALENT:恥じらい
 		PRINT  - 
 		PRINTS TALENTNAME:35
 		PRINTV '(,1,')
 		S = 1
 	ENDIF
 	;献身的
-	IF TALENT:63
+	IF TALENT:献身的
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:63
@@ -430,7 +430,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感に素直
-	IF TALENT:70
+	IF TALENT:快感に素直
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:70
@@ -438,14 +438,14 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 	;快感の否定
-	IF TALENT:71
+	IF TALENT:快感の否定
 		PRINT  - 
 		PRINTS TALENTNAME:71
 		PRINTV '(,2,')
 		S = 1
 	ENDIF
 	;恋慕
-	IF TALENT:85 && ASSIPLAY == 0
+	IF TALENT:恋慕 && ASSIPLAY == 0
 		SIF S
 			PRINT  + 
 		PRINTS TALENTNAME:85
