@@ -66,13 +66,13 @@ ENDIF
 ;射精ゲージチェック
 ;-------------------------------------------------
 ;SIF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
-;	BASE:PLAYER:2 += B
+;	BASE:PLAYER:射精 += B
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 30
-LOSEBASE:1 += 180
+LOSEBASE:体力 += 30
+LOSEBASE:気力 += 180
 
 SOURCE:3 = 1000
 SOURCE:7 = 400
@@ -192,10 +192,10 @@ TFLAG:37 += A / 2
 
 
 ;調教者が処女
-IF TALENT:PLAYER:0
+IF TALENT:PLAYER:処女
 	TIMES SOURCE:13 , 10.00
 	TIMES SOURCE:14 , 3.00
-	TALENT:PLAYER:0 = 0
+	TALENT:PLAYER:処女 = 0
 	
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
@@ -223,7 +223,7 @@ IF TALENT:PLAYER:0
 		TIMES SOURCE:22 , 0.50
 
 	PRINTFORML ＜%CALLNAME:PLAYER%が処女＞
-	EXP:50 += 3
+	EXP:異常経験 += 3
 	PRINTFORML %EXPNAME:50%+3
 	IF TALENT:85 && ASSIPLAY == 0
 		IF ABL:親密 < 10
@@ -243,7 +243,7 @@ IF TALENT:PLAYER:0
 	ENDIF
 ENDIF
 
-EXP:PLAYER:0 += 1
+EXP:PLAYER:Ｖ経験 += 1
 
 ;-------------------------------------------------
 ;射精チェック
@@ -302,13 +302,13 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
-	EXP:PLAYER:40 += 1
+	EXP:レズ経験 += 1
+	EXP:PLAYER:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
-	EXP:PLAYER:41 += 1
+	EXP:ＢＬ経験 += 1
+	EXP:PLAYER:ＢＬ経験 += 1
 ENDIF
 
 TFLAG:100 = 0
@@ -330,7 +330,7 @@ ELSEIF TFLAG:60 && (PREVCOM == 194 || PREVCOM == 195) && ((ASSIPLAY && TFLAG:50)
 	PRINTFORMW %CALLNAME:TARGET%は、膣内から抜き去ることなく%CALLNAME:PLAYER%を仰向けに寝かせ、再び腰を動かし始めた…
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニス\@ TALENT:119 || TALENT:121 || TALENT:122 ? # バンド \@を優しく、
-	SIF EXP:PLAYER:0 == 0
+	SIF EXP:PLAYER:Ｖ経験 == 0
 		PRINT 男を受け入れた事のない
 	PRINTFORMW 自らのヴァギナに導いた…
 ENDIF
@@ -440,7 +440,7 @@ IF TALENT:152 == 0
 ENDIF
 
 ;調教者が処女
-IF EXP:PLAYER:0 == 0
+IF EXP:PLAYER:Ｖ経験 == 0
 	A -= 15
 ENDIF
 
@@ -592,7 +592,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者が処女
-	IF EXP:PLAYER:0 == 0
+	IF EXP:PLAYER:Ｖ経験 == 0
 		PRINT  - 
 		PRINTFORM %NAME:PLAYER%が処女
 		PRINTV '(,15,')

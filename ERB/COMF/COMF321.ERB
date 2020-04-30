@@ -38,7 +38,7 @@ SIF RESULT == 0
 STR:0 = 遊びに行く
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:1 += 150
+LOSEBASE:気力 += 150
 MONEY -= 1500
 
 ;固定で獲得するソース
@@ -169,8 +169,8 @@ IF B > 0
 	PRINTFORML 遊びに行った先で、少し運動することにした
 	PRINTFORML %EXPNAME:95%+{B}
 	PRINTFORMW %EXPNAME:95%（%CALLNAME:PLAYER%）+{B}
-	EXP:95 += B
-	EXP:PLAYER:95 += B
+	EXP:戦闘経験 += B
+	EXP:PLAYER:戦闘経験 += B
 ELSEIF TFLAG:17 == 2
 	PRINTFORMW 何故か幽霊屋敷に遊びに行く事になってしまった
 ENDIF

@@ -120,7 +120,7 @@ IF ABL:欲望 < ABL:露出癖+1
 ENDIF
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
-IF EXP:50 < F
+IF EXP:異常経験 < F
 	;異常経験が不足
 	I |= 2
 ENDIF
@@ -130,11 +130,11 @@ SIF JUEL:8 < A
 	I |= 1
 IF ABL:露出癖 < 2
 	;絶頂経験が必要
-	SIF EXP:2 == 0
+	SIF EXP:絶頂経験 == 0
 		I |= 2
 ELSE
 	;調教自慰経験が必要
-	SIF EXP:11 == 0
+	SIF EXP:強制自慰経験 == 0
 		I |= 2
 ENDIF
 

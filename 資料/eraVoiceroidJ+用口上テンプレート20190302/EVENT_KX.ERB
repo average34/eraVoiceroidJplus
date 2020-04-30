@@ -856,9 +856,9 @@ ENDIF
 ;	INPUT
 ;	IF RESULT == 0
 ;		PRINTFORMW ―%NAME:TARGET%を処女に変更します―
-;		TALENT:TARGET:0 = 1
+;		TALENT:TARGET:処女 = 1
 ;		ABL:TARGET:Ｖ感覚 = 0
-;		EXP:TARGET:0 = 0
+;		EXP:TARGET:Ｖ経験 = 0
 ;	ELSEIF RESULT == 1
 ;		PRINTFORMW ―通常の素質で開始します―
 ;	ELSE
@@ -2399,13 +2399,13 @@ ELSEIF EXP:キス経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示�
 	RETURN 1
 
 ;デート経験済み
-ELSEIF EXP:94 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
+ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	PRINTFORMW 
 	RETURN 1
 
 ;進展無し（デート経験0）
-ELSEIF EXP:94 == 0 && FLAG:キャラ口上の表示頻度 == 2
+ELSEIF EXP:デート経験 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	PRINTFORMW 
 	RETURN 1
@@ -4092,7 +4092,7 @@ ENDIF
 ;-------------------------------------------------
 ;正常位 CFLAG:436(射精するかどうかは行為前に判定があるので、射精の分岐を入れる事により射精直前の口上を入れることが可能)
 ;射精はTFLAG:2で管理、通常射精1、大量射精2
-;処女かどうかは IF EXP:0 == 1 で判定すること(処女喪失処理が既に終了しているので、V経験1の場合)
+;処女かどうかは IF EXP:Ｖ経験 == 1 で判定すること(処女喪失処理が既に終了しているので、V経験1の場合)
 ;-------------------------------------------------
 IF SELECTCOM == 20
 	;初めて
@@ -6458,7 +6458,7 @@ IF SELECTCOM == 101 && TEQUIP:11 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6496,7 +6496,7 @@ IF SELECTCOM == 101 && TEQUIP:11 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6534,7 +6534,7 @@ IF SELECTCOM == 102 && TEQUIP:13 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6572,7 +6572,7 @@ IF SELECTCOM == 102 && TEQUIP:13 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6610,7 +6610,7 @@ IF SELECTCOM == 104 && TEQUIP:15 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6648,7 +6648,7 @@ IF SELECTCOM == 104 && TEQUIP:15 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6686,7 +6686,7 @@ IF SELECTCOM == 105 && TEQUIP:16 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6724,7 +6724,7 @@ IF SELECTCOM == 105 && TEQUIP:16 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6762,7 +6762,7 @@ IF SELECTCOM == 106 && TEQUIP:44 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6800,7 +6800,7 @@ IF SELECTCOM == 106 && TEQUIP:44 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6838,7 +6838,7 @@ IF SELECTCOM == 103 && TEQUIP:14 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6876,7 +6876,7 @@ IF SELECTCOM == 103 && TEQUIP:14 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6914,7 +6914,7 @@ IF SELECTCOM == 107 && TEQUIP:46 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6952,7 +6952,7 @@ IF SELECTCOM == 107 && TEQUIP:46 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -6990,7 +6990,7 @@ IF SELECTCOM == 108 && TEQUIP:98 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7028,7 +7028,7 @@ IF SELECTCOM == 108 && TEQUIP:98 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7066,7 +7066,7 @@ IF SELECTCOM == 109 && TEQUIP:17 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7098,7 +7098,7 @@ IF SELECTCOM == 109 && TEQUIP:17 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7651,7 +7651,7 @@ IF SELECTCOM == 193
 	;初めて
 	IF CFLAG:514 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -7695,7 +7695,7 @@ IF SELECTCOM == 194
 	;初めて
 	IF CFLAG:515 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -7739,7 +7739,7 @@ IF SELECTCOM == 195
 	;初めて
 	IF CFLAG:516 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -8114,7 +8114,7 @@ IF SELECTCOM == 128
 	;初めて
 	IF CFLAG:370 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			PRINTFORMW 
 		;非処女
 		ELSE
@@ -8149,7 +8149,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 181 && TFLAG:17 == 1 && TEQUIP:PLAYER:85
 	;処女
-	IF TALENT:0
+	IF TALENT:処女
 		;恋慕または恋人
 		IF (TALENT:恋慕 || TALENT:恋人)
 			PRINTFORMW 

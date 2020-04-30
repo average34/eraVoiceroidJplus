@@ -244,7 +244,7 @@ P = 0
 Z = 0
 
 ;ＬＶ２以降に上げるときは異常経験必要（素質：[自慰しやすい][中毒しやすい][淫乱化]なら無視できる）
-IF EXP:50 < H
+IF EXP:異常経験 < H
 	;異常経験が不足
 	I |= 2
 	J |= 2
@@ -275,7 +275,7 @@ SIF JUEL:0 < B
 SIF JUEL:8 < C
 	I |= 1
 ;自慰経験または強制自慰経験が必要
-SIF EXP:10 < D && EXP:11 < E
+SIF EXP:自慰経験 < D && EXP:強制自慰経験 < E
 	I |= 2
 
 IF I == 0
@@ -297,7 +297,7 @@ SIF JUEL:2 < F
 SIF JUEL:8 < C
 	J |= 1
 ;自慰経験または強制自慰経験が必要
-SIF EXP:10 < D && EXP:11 < E
+SIF EXP:自慰経験 < D && EXP:強制自慰経験 < E
 	J |= 2
 
 IF J == 0
@@ -319,7 +319,7 @@ SIF JUEL:1 < R
 SIF JUEL:8 < C
 	M |= 1
 ;自慰経験が必要
-SIF EXP:10 < D
+SIF EXP:自慰経験 < D
 	M |= 2
 
 IF M == 0
@@ -341,7 +341,7 @@ SIF JUEL:14 < S
 SIF JUEL:8 < C
 	P |= 1
 ;自慰経験が必要
-SIF EXP:10 < D
+SIF EXP:自慰経験 < D
 	P |= 2
 
 IF P == 0

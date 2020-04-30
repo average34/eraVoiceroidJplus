@@ -76,12 +76,12 @@ ELSE
 		PRINTFORM 下着をずらし
 	ENDIF
 	PRINTFORM 、後ろから
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		PRINT 男を知らない
 	ELSEIF PALAM:3 >= PALAMLV:4
 		PRINT 濡れそぼった
 	ENDIF
-	SIF EXP:0 > 0 && EXP:0 <= 10
+	SIF EXP:Ｖ経験 > 0 && EXP:Ｖ経験 <= 10
 		PRINTFORM 、まだあまり開発されていない
 	IF TALENT:100
 		PRINT 幼いワレメ
@@ -130,20 +130,20 @@ ENDIF
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:0 == 0
+SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 60
-LOSEBASE:1 += 130
+LOSEBASE:体力 += 60
+LOSEBASE:気力 += 130
 
 SOURCE:12 = 800
 SOURCE:14 = 400
@@ -174,24 +174,24 @@ ELSE
 ENDIF
 
 ;EXP:Ｖ経験をみる
-IF EXP:0 < EXPLV:1
+IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 5000
 
 	IF ASSIPLAY && TALENT:PLAYER:122 == 0
-		EXP:50 += 3
+		EXP:異常経験 += 3
 		PRINTFORML %EXPNAME:50%＋３
 	ENDIF
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	TIMES SOURCE:1 , 0.60
 	SOURCE:6 = 220
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES SOURCE:1 , 1.00
 	SOURCE:6 = 30
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES SOURCE:1 , 1.20
 	SOURCE:6 = 5
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES SOURCE:1 , 1.30
 	SOURCE:6 = 0
 ELSE
@@ -230,7 +230,7 @@ SIF TALENT:100
 
 ;貞操観念
 IF TALENT:30 && TALENT:85 == 0
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 13000
 	ELSE
@@ -239,12 +239,12 @@ IF TALENT:30 && TALENT:85 == 0
 	ENDIF
 ;貞操無頓着
 ELSEIF TALENT:31 || TALENT:88 && ASSIPLAY == 0
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 350
 	ENDIF
 ELSE
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		SOURCE:15 = 3500
 	ENDIF
 ENDIF
@@ -342,7 +342,7 @@ ELSEIF TALENT:104
 	TIMES SOURCE:14 , 0.60
 ENDIF
 
-EXP:0 += 1
+EXP:Ｖ経験 += 1
 PRINTL Ｖ経験＋１
 
 ;好感度ランダム変化
@@ -375,11 +375,11 @@ TFLAG:200 = 3
 ;-------------------------------------------------
 CALL SAMEN_CHECK
 ;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
-;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
-;	BASE:PLAYER:2 = 100000000
+;IF BASE:PLAYER:射精 > 100000000 || BASE:PLAYER:射精 < 0
+;	BASE:PLAYER:射精 = 100000000
 ;ENDIF
-;S = BASE:PLAYER:2
-;EJAC = MAXBASE:PLAYER:2
+;S = BASE:PLAYER:射精
+;EJAC = MAXBASE:PLAYER:射精
 ;
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -401,31 +401,31 @@ ENDIF
 
 ;大量射精
 ;IF E == 2
-;	EXP:PLAYER:3 += 2
-;	EXP:20 += 20
+;	EXP:PLAYER:射精経験 += 2
+;	EXP:精液経験 += 20
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋20
 ;	;Ｐに精液汚れ
 ;	STAIN:PLAYER:2 |= 4
 ;
-;	BASE:PLAYER:2 -= EJAC*2
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC*2
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;セックスで射精フラグ
 ;	TFLAG:2 = 2
 ;;通常の射精
 ;ELSEIF E == 1
-;	EXP:PLAYER:3 += 1
+;	EXP:PLAYER:射精経験 += 1
 ;	;Ｐに精液汚れ
-;	EXP:20 += 10
+;	EXP:精液経験 += 10
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋10
 ;	STAIN:PLAYER:2 |= 4
 ;
-;	BASE:PLAYER:2 -= EJAC
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;セックスで射精フラグ
 ;	TFLAG:2 = 1
@@ -438,8 +438,8 @@ STAIN:PLAYER:2 |= STAIN:3
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
-	EXP:40 += 4
-	EXP:PLAYER:40 += 4
+	EXP:レズ経験 += 4
+	EXP:PLAYER:レズ経験 += 4
 ENDIF
 
 ;IF ASSIPLAY == 0
@@ -525,14 +525,14 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;処女
-IF TALENT:0
+IF TALENT:処女
 	A -= 30
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	A -= 10
 ENDIF
 
 ;一線越えない（処女のみ）
-IF TALENT:27 && TALENT:0
+IF TALENT:27 && TALENT:処女
 	A -= 20
 ENDIF
 
@@ -699,12 +699,12 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;処女
-	IF TALENT:0
+	IF TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:0
 		PRINTV '(,30,')
 		S = 1
-	ELSEIF EXP:0 < EXPLV:2
+	ELSEIF EXP:Ｖ経験 < EXPLV:2
 		PRINT  - 
 		PRINTS EXPNAME:0
 		PRINT 不足
@@ -713,7 +713,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;一線越えない（処女のみ）
-	IF TALENT:27 && TALENT:0
+	IF TALENT:27 && TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:27
 		PRINTV '(,20,')

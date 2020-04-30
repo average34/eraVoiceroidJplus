@@ -21,8 +21,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 0
-LOSEBASE:1 += 30
+LOSEBASE:体力 += 0
+LOSEBASE:気力 += 30
 
 SOURCE:14 = 50
 
@@ -153,7 +153,7 @@ FOR LOCAL, 0, 5
 
 	;各敏感もちなら各快感SOURCE取得
 	IF TALENT:T
-		LOSEBASE:1 += 10
+		LOSEBASE:気力 += 10
 		
 		;ABL:親密をみる
 		IF ABL:親密 == 0

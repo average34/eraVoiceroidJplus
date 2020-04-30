@@ -73,14 +73,14 @@ IF ABL:親密 >= 3 && CFLAG:2 >= 300 && ASSIPLAY == 0
 	ENDIF
 
 	;デート経験 これも割と大きい
-	IF EXP:94 < 50
+	IF EXP:デート経験 < 50
 		A -= 5
-	ELSEIF EXP:94 < 100
+	ELSEIF EXP:デート経験 < 100
 		A += 5
-	ELSEIF EXP:94 < 500
-		A += EXP:94 / 15
+	ELSEIF EXP:デート経験 < 500
+		A += EXP:デート経験 / 15
 	ELSE
-		A += EXP:94 / 10
+		A += EXP:デート経験 / 10
 	ENDIF
 
 	;判定成功

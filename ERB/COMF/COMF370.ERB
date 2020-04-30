@@ -73,10 +73,10 @@ CALL TRAIN_MESSAGE_B
 ;ソースの計算
 ;-------------------------------------------------
 IF TFLAG:17 == 2
-	LOSEBASE:0 += 20
-	LOSEBASE:1 += 180
+	LOSEBASE:体力 += 20
+	LOSEBASE:気力 += 180
 ELSE
-	LOSEBASE:1 += 80
+	LOSEBASE:気力 += 80
 ENDIF
 
 ;固定で獲得するソース
@@ -138,25 +138,25 @@ IF TFLAG:17 == 2
 		SOURCE:3 = 60
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.20
-		EXP:21 += 1
+		EXP:奉仕快楽経験 += 1
 	ELSEIF ABL:Ｃ感覚 == 3
 		SOURCE:0 = 300
 		SOURCE:3 = 80
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.50
-		EXP:21 += 2
+		EXP:奉仕快楽経験 += 2
 	ELSEIF ABL:Ｃ感覚 == 4
 		SOURCE:0 = 500
 		SOURCE:3 = 90
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.80
-		EXP:21 += 3
+		EXP:奉仕快楽経験 += 3
 	ELSE
 		SOURCE:0 = 160 + (ABL:Ｃ感覚 * 100)
 		SOURCE:3 = 80 + (ABL:Ｃ感覚 * 4)
 		SIF TEQUIP:2 != 0
 			SOURCE:12 *= (ABL:Ｃ感覚 * 10 + 90) / 100
-		EXP:21 += ABL:Ｃ感覚 - 1
+		EXP:奉仕快楽経験 += ABL:Ｃ感覚 - 1
 	ENDIF
 ELSE
 	IF ABL:Ｃ感覚 == 0
@@ -192,25 +192,25 @@ IF TFLAG:17 == 2
 		SOURCE:3 = 60
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.20
-		EXP:21 += 1
+		EXP:奉仕快楽経験 += 1
 	ELSEIF ABL:Ｂ感覚 == 3
 		SOURCE:17 = 300
 		SOURCE:3 = 80
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.50
-		EXP:21 += 2
+		EXP:奉仕快楽経験 += 2
 	ELSEIF ABL:Ｂ感覚 == 4
 		SOURCE:17 = 500
 		SOURCE:3 = 90
 		SIF TEQUIP:2 != 0
 			TIMES SOURCE:12 , 1.80
-		EXP:21 += 3
+		EXP:奉仕快楽経験 += 3
 	ELSE
 		SOURCE:17 = 160 + (ABL:Ｂ感覚 * 100)
 		SOURCE:3 = 80 + (ABL:Ｂ感覚 * 4)
 		SIF TEQUIP:2 != 0
 			SOURCE:12 = SOURCE:12 * (ABL:Ｂ感覚 * 10 + 90) / 100
-		EXP:21 += ABL:Ｂ感覚 - 1
+		EXP:奉仕快楽経験 += ABL:Ｂ感覚 - 1
 	ENDIF
 ELSE
 	IF ABL:Ｂ感覚 == 0
@@ -287,7 +287,7 @@ ENDIF
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;射精チェック
@@ -328,12 +328,12 @@ IF E
 
 	;着衣なので温泉以外では精液経験増えず、フラグも無し
 	;汚れは相手に移動しない。温泉なら次のコマンド前に汚れ消えるし
-	EXP:PLAYER:3 += E
+	EXP:PLAYER:射精経験 += E
 	PRINTFORML 射精(%CALLNAME:PLAYER%)
 	IF TEQUIP:2 == 7
 		;射精(=1)、大量射精(=3)
 		J = 1 + ((E == 2)*2)
-		EXP:20 += J
+		EXP:精液経験 += J
 		PRINTFORML 精液経験+{J}
 		TFLAG:9 = E
 	ELSE
@@ -342,9 +342,9 @@ IF E
 	ENDIF
 	PRINTL 
 
-	BASE:PLAYER:2 -= EJAC * E
-	SIF BASE:PLAYER:2 >= EJAC
-		BASE:PLAYER:2 = EJAC - 1
+	BASE:PLAYER:射精 -= EJAC * E
+	SIF BASE:PLAYER:射精 >= EJAC
+		BASE:PLAYER:射精 = EJAC - 1
 ENDIF
 
 J = 0
@@ -352,12 +352,12 @@ J:1 = 0
 ;キス経験者同士ならキスする
 IF TALENT:151 == 0 && TALENT:PLAYER:151 == 0
 	IF TFLAG:17 == 2
-		EXP:96 += 2
-		EXP:PLAYER:96 += 2
+		EXP:キス経験 += 2
+		EXP:PLAYER:キス経験 += 2
 		PRINTFORML %EXPNAME:96%+2
 	ELSE
-		EXP:96 += 1
-		EXP:PLAYER:96 += 1
+		EXP:キス経験 += 1
+		EXP:PLAYER:キス経験 += 1
 		PRINTFORML %EXPNAME:96%+1
 	ENDIF
 	J = 1
@@ -384,12 +384,12 @@ ENDIF
 
 ;レズ、BL経験
 IF J > 0
-	EXP:40 += J
-	EXP:PLAYER:40 += J
+	EXP:レズ経験 += J
+	EXP:PLAYER:レズ経験 += J
 	PRINTFORML %EXPNAME:40%+{J}
 ELSEIF J:1 > 0
-	EXP:41 += J:1
-	EXP:PLAYER:41 += J:1
+	EXP:ＢＬ経験 += J:1
+	EXP:PLAYER:ＢＬ経験 += J:1
 	PRINTFORML %EXPNAME:41%+{J:1}
 ENDIF
 
@@ -413,7 +413,7 @@ ELSEIF TFLAG:18 == 0
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 2
+		EXP:愛情経験 += 2
 		PRINTFORML %EXPNAME:23%+2
 	ENDIF
 ELSE
@@ -425,10 +425,10 @@ ELSE
 	TFLAG:37 += 5 + A
 	;愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 6
+		EXP:愛情経験 += 6
 		PRINTFORML %EXPNAME:23%+6
 	ELSE
-		EXP:23 += 2
+		EXP:愛情経験 += 2
 		PRINTFORML %EXPNAME:23%+2
 	ENDIF
 ENDIF

@@ -17,13 +17,13 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 70
-LOSEBASE:1 += 90
+LOSEBASE:体力 += 70
+LOSEBASE:気力 += 90
 
 SOURCE:12 = 200
 
@@ -55,36 +55,36 @@ ELSE
 ENDIF
 
 ;EXP:Ａ経験をみる
-IF EXP:1 < EXPLV:1
+IF EXP:Ａ経験 < EXPLV:1
 	TIMES SOURCE:2 , 0.10
 	SOURCE:6 = 18000
-	LOSEBASE:0 += 40
-	LOSEBASE:1 += 60
-ELSEIF EXP:1 < EXPLV:2
+	LOSEBASE:体力 += 40
+	LOSEBASE:気力 += 60
+ELSEIF EXP:Ａ経験 < EXPLV:2
 	TIMES SOURCE:2 , 0.30
 	SOURCE:6 = 10000
-	LOSEBASE:0 += 30
-	LOSEBASE:1 += 50
-ELSEIF EXP:1 < EXPLV:3
+	LOSEBASE:体力 += 30
+	LOSEBASE:気力 += 50
+ELSEIF EXP:Ａ経験 < EXPLV:3
 	TIMES SOURCE:2 , 0.50
 	SOURCE:6 = 4500
-	LOSEBASE:0 += 20
-	LOSEBASE:1 += 40
-ELSEIF EXP:1 < EXPLV:4
+	LOSEBASE:体力 += 20
+	LOSEBASE:気力 += 40
+ELSEIF EXP:Ａ経験 < EXPLV:4
 	TIMES SOURCE:2 , 1.00
 	SOURCE:6 = 1500
-	LOSEBASE:0 += 10
-	LOSEBASE:1 += 30
-ELSEIF EXP:1 < EXPLV:5
+	LOSEBASE:体力 += 10
+	LOSEBASE:気力 += 30
+ELSEIF EXP:Ａ経験 < EXPLV:5
 	TIMES SOURCE:2 , 1.40
 	SOURCE:6 = 700
-	LOSEBASE:0 += 0
-	LOSEBASE:1 += 20
+	LOSEBASE:体力 += 0
+	LOSEBASE:気力 += 20
 ELSE
 	TIMES SOURCE:2 , 1.60
 	SOURCE:6 = 300
-	LOSEBASE:0 += 0
-	LOSEBASE:1 += 0
+	LOSEBASE:体力 += 0
+	LOSEBASE:気力 += 0
 ENDIF
 
 ;ABL:Ｂ感覚をみる
@@ -153,7 +153,7 @@ SIF TALENT:100
 
 ;貞操観念
 IF TALENT:30
-	IF EXP:1 == 0
+	IF EXP:Ａ経験 == 0
 		TIMES SOURCE:3 , 1.20
 		TIMES SOURCE:16 , 1.10
 		SOURCE:15 = 500
@@ -296,11 +296,11 @@ ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
 
-EXP:1 += 2
+EXP:Ａ経験 += 2
 PRINTL Ａ経験＋２
 
 ;異常経験増加
-EXP:50 += 1
+EXP:異常経験 += 1
 PRINTFORML %EXPNAME:50%＋１
 
 ;既成事実3に相当
@@ -311,11 +311,11 @@ TFLAG:200 = 3
 ;-------------------------------------------------
 CALL SAMEN_CHECK
 ;;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
-;IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
-;	BASE:PLAYER:2 = 100000000
+;IF BASE:PLAYER:射精 > 100000000 || BASE:PLAYER:射精 < 0
+;	BASE:PLAYER:射精 = 100000000
 ;ENDIF
-;S = BASE:PLAYER:2
-;EJAC = MAXBASE:PLAYER:2
+;S = BASE:PLAYER:射精
+;EJAC = MAXBASE:PLAYER:射精
 ;
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -341,28 +341,28 @@ ENDIF
 
 ;;大量射精
 ;IF E == 2
-;	EXP:PLAYER:3 += 2
-;	EXP:20 += 1
+;	EXP:PLAYER:射精経験 += 2
+;	EXP:精液経験 += 1
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋１
 ;	;Ｐに精液汚れ
 ;	STAIN:PLAYER:2 |= 4
 ;
-;	BASE:PLAYER:2 -= EJAC*2
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC*2
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;セックスで射精フラグ
 ;	TFLAG:2 = 2
 ;;通常の射精
 ;ELSEIF E == 1
-;	EXP:PLAYER:3 += 1
+;	EXP:PLAYER:射精経験 += 1
 ;	;Ｐに精液汚れ
 ;	PRINTL 射精
 ;	STAIN:PLAYER:2 |= 4
-;	BASE:PLAYER:2 -= EJAC
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;セックスで射精フラグ
 ;	TFLAG:2 = 1
@@ -375,7 +375,7 @@ STAIN:PLAYER:2 |= STAIN:4
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
-	EXP:40 += 4
+	EXP:レズ経験 += 4
 ENDIF
 
 IF ASSIPLAY == 0

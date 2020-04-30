@@ -71,7 +71,7 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:1 += 70
+LOSEBASE:気力 += 70
 
 ;固定で獲得するソース
 SOURCE:18 = 0
@@ -223,9 +223,9 @@ IF TFLAG:17 == 0
 ;		PRINTFORMW %CALLNAME:TARGET%の部屋を片付け始めた…
 ;		IF TALENT:85 && RAND:3 >= 1
 ;			PRINTFORMW %CALLNAME:TARGET%は自分を責める器具にわずかに興奮しているようだ…
-;		ELSEIF ABL:親密 >= 4 && EXP:21 >= 250
+;		ELSEIF ABL:親密 >= 4 && EXP:奉仕快楽経験 >= 250
 ;			PRINTFORMW %CALLNAME:TARGET%は慌てた様子で%CALLNAME:PLAYER%を手伝った
-;		ELSEIF ABL:親密 >= 2 && EXP:21 <= 150
+;		ELSEIF ABL:親密 >= 2 && EXP:奉仕快楽経験 <= 150
 ;			PRINTFORMW %CALLNAME:TARGET%は仕方なさそうに%CALLNAME:PLAYER%を手伝った…
 ;		ELSE
 ;			PRINTFORMW %CALLNAME:TARGET%は何もしないでいる…

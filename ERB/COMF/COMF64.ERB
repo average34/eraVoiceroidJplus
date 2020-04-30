@@ -63,26 +63,26 @@ CALL TRAIN_MESSAGE_B
 SIF TFLAG:40 == 1 || TFLAG:41 == 1
 	TFLAG:19 = 1
 
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:0 == 0 && TFLAG:40 == 1
+SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0 && TFLAG:40 == 1
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック１
 ;-------------------------------------------------
 SIF TALENT:MASTER:121 || TALENT:MASTER:122
-	BASE:MASTER:2 += CALC_EJAC(SELECTCOM, MASTER)
+	BASE:MASTER:射精 += CALC_EJAC(SELECTCOM, MASTER)
 
 ;-------------------------------------------------
 ;射精ゲージチェック２（助手）
 ;-------------------------------------------------
 SIF TALENT:ASSI:121 || TALENT:ASSI:122
-	BASE:ASSI:2 += CALC_EJAC(SELECTCOM, ASSI)
+	BASE:ASSI:射精 += CALC_EJAC(SELECTCOM, ASSI)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 160
-LOSEBASE:1 += 350
+LOSEBASE:体力 += 160
+LOSEBASE:気力 += 350
 
 SOURCE:9 = 2800
 SOURCE:11 = 1500
@@ -120,30 +120,30 @@ IF TFLAG:40 == 1 || TFLAG:41 == 1
 	ENDIF
 
 	;EXP:Ｖ経験をみる
-	IF EXP:0 < EXPLV:1
+	IF EXP:Ｖ経験 < EXPLV:1
 		TIMES SOURCE:1 , 0.20
 		SOURCE:6 += 20000
 		SOURCE:11 += 2000
 
 		IF TALENT:MASTER:122 == 0
-			EXP:50 += 2
+			EXP:異常経験 += 2
 			IF TALENT:ASSI:122 == 0
-				EXP:50 += 1
+				EXP:異常経験 += 1
 				PRINTFORML %EXPNAME:50%+3
 			ELSE
 				PRINTFORML %EXPNAME:50%+2
 			ENDIF
 		ENDIF
-	ELSEIF EXP:0 < EXPLV:2
+	ELSEIF EXP:Ｖ経験 < EXPLV:2
 		TIMES SOURCE:1 , 0.60
 		SOURCE:6 += 300
-	ELSEIF EXP:0 < EXPLV:3
+	ELSEIF EXP:Ｖ経験 < EXPLV:3
 		TIMES SOURCE:1 , 1.00
 		SOURCE:6 += 50
-	ELSEIF EXP:0 < EXPLV:4
+	ELSEIF EXP:Ｖ経験 < EXPLV:4
 		TIMES SOURCE:1 , 1.20
 		SOURCE:6 += 10
-	ELSEIF EXP:0 < EXPLV:5
+	ELSEIF EXP:Ｖ経験 < EXPLV:5
 		TIMES SOURCE:1 , 1.40
 		SOURCE:6 += 0
 	ELSE
@@ -181,23 +181,23 @@ IF TFLAG:40 == 2 || TFLAG:41 == 2
 	ENDIF
 
 	;EXP:Ａ経験をみる
-	IF EXP:1 < EXPLV:1
+	IF EXP:Ａ経験 < EXPLV:1
 		TIMES SOURCE:2 , 0.10
 		SOURCE:6 += 5000
 		SOURCE:11 += 1000
-	ELSEIF EXP:1 < EXPLV:2
+	ELSEIF EXP:Ａ経験 < EXPLV:2
 		TIMES SOURCE:2 , 0.30
 		SOURCE:6 += 2000
 		SOURCE:11 += 1000
-	ELSEIF EXP:1 < EXPLV:3
+	ELSEIF EXP:Ａ経験 < EXPLV:3
 		TIMES SOURCE:2 , 0.50
 		SOURCE:6 += 2000
 		SOURCE:11 += 1000
-	ELSEIF EXP:1 < EXPLV:4
+	ELSEIF EXP:Ａ経験 < EXPLV:4
 		TIMES SOURCE:2 , 1.00
 		SOURCE:6 += 2000
 		SOURCE:11 += 1000
-	ELSEIF EXP:1 < EXPLV:5
+	ELSEIF EXP:Ａ経験 < EXPLV:5
 		TIMES SOURCE:2 , 1.40
 		SOURCE:6 += 1000
 		SOURCE:11 += 200
@@ -373,14 +373,14 @@ IF TFLAG:40 == 2 || TFLAG:41 == 2
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 0.60
 	ENDIF
-	EXP:1 += 5
+	EXP:Ａ経験 += 5
 	PRINTL Ａ経験+5
 ENDIF
 
 IF TFLAG:40 == 1 || TFLAG:41 == 1
 	;貞操観念
 	IF TALENT:30 && TALENT:85 == 0
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:3 , 0.60
 			TIMES SOURCE:11, 5.00
 		ELSE
@@ -389,14 +389,14 @@ IF TFLAG:40 == 1 || TFLAG:41 == 1
 		ENDIF
 	;貞操無頓着
 	ELSEIF TALENT:31
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:11, 0.50
 		ELSE
 			TIMES SOURCE:11, 0.30
 		ENDIF
 	ENDIF
 
-	EXP:0 += 1
+	EXP:Ｖ経験 += 1
 	PRINTL Ｖ経験+1
 ENDIF
 
@@ -450,7 +450,7 @@ ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
 
-EXP:50 += 2
+EXP:異常経験 += 2
 PRINTFORML %EXPNAME:50%+2
 
 ;ASSIPLAYを保持
@@ -462,8 +462,8 @@ A:1 = ASSIPLAY
 ASSIPLAY = 0
 PLAYER = MASTER
 CALL SAMEN_CHECK
-;S = BASE:MASTER:2
-;EJAC = MAXBASE:MASTER:2
+;S = BASE:MASTER:射精
+;EJAC = MAXBASE:MASTER:射精
 ;
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -484,16 +484,16 @@ IF E
 
 ;;大量射精
 ;IF E == 2
-;	EXP:MASTER:3 += 2
-;	EXP:20 += 20
+;	EXP:MASTER:射精経験 += 2
+;	EXP:精液経験 += 20
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋20
 ;	;Ｐに精液汚れ
 ;	STAIN:MASTER:2 |= 4
 ;
-;	BASE:MASTER:2 -= EJAC*2
-;	SIF BASE:MASTER:2 >= EJAC
-;		BASE:MASTER:2 = EJAC-1
+;	BASE:MASTER:射精 -= EJAC*2
+;	SIF BASE:MASTER:射精 >= EJAC
+;		BASE:MASTER:射精 = EJAC-1
 ;
 ;	;主人が射精フラグ
 ;	IF TFLAG:40 == 1 || TFLAG:40 == 2
@@ -504,15 +504,15 @@ IF E
 ;;通常の射精
 ;ELSEIF E == 1
 ;	;Ｐに精液汚れ
-;	EXP:20 += 10
+;	EXP:精液経験 += 10
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋10
-;	EXP:MASTER:3 += 1
+;	EXP:MASTER:射精経験 += 1
 ;	STAIN:MASTER:2 |= 4
 ;
-;	BASE:MASTER:2 -= EJAC
-;	SIF BASE:MASTER:2 >= EJAC
-;		BASE:MASTER:2 = EJAC-1
+;	BASE:MASTER:射精 -= EJAC
+;	SIF BASE:MASTER:射精 >= EJAC
+;		BASE:MASTER:射精 = EJAC-1
 ;
 ;	;主人が射精フラグ
 ;	IF TFLAG:40 == 1 || TFLAG:40 == 2
@@ -528,8 +528,8 @@ ENDIF
 ASSIPLAY = 1
 PLAYER = ASSI
 CALL SAMEN_CHECK
-;S = BASE:ASSI:2
-;EJAC = MAXBASE:ASSI:2
+;S = BASE:ASSI:射精
+;EJAC = MAXBASE:ASSI:射精
 ;
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -550,31 +550,31 @@ IF E
 
 ;;大量射精
 ;IF E == 2
-;	EXP:ASSI:3 += 2
-;	EXP:20 += 10
+;	EXP:ASSI:射精経験 += 2
+;	EXP:精液経験 += 10
 ;	PRINTL 大量射精（助手）
 ;	PRINTL 精液経験＋10
 ;	;Ｐに精液汚れ
 ;	STAIN:ASSI:2 |= 4
 ;
-;	BASE:ASSI:2 -= EJAC*2
-;	SIF BASE:ASSI:2 >= EJAC
-;		BASE:ASSI:2 = EJAC-1
+;	BASE:ASSI:射精 -= EJAC*2
+;	SIF BASE:ASSI:射精 >= EJAC
+;		BASE:ASSI:射精 = EJAC-1
 ;	;助手が射精フラグ
 ;	TFLAG:6 = 2
 ;;通常の射精
 ;ELSEIF E == 1
-;	EXP:ASSI:3 += 1
+;	EXP:ASSI:射精経験 += 1
 ;
 ;	;Ｐに精液汚れ
-;	EXP:20 += 5
+;	EXP:精液経験 += 5
 ;	PRINTL 射精（助手）
 ;	PRINTL 精液経験＋5
 ;	STAIN:ASSI:2 |= 4
 ;
-;	BASE:ASSI:2 -= EJAC
-;	SIF BASE:ASSI:2 >= EJAC
-;		BASE:ASSI:2 = EJAC-1
+;	BASE:ASSI:射精 -= EJAC
+;	SIF BASE:ASSI:射精 >= EJAC
+;		BASE:ASSI:射精 = EJAC-1
 ;	;助手が射精フラグ
 ;	TFLAG:6 = 1
 ENDIF
@@ -628,26 +628,26 @@ ENDIF
 ;マスターと奴隷のレズorBL
 IF TALENT:122 == 0 && TALENT:MASTER:122 == 0
 	PRINTFORML %EXPNAME:40%+7
-	EXP:40 += 7
-	EXP:MASTER:40 += 7
+	EXP:レズ経験 += 7
+	EXP:MASTER:レズ経験 += 7
 ELSEIF TALENT:122 == 1 && TALENT:MASTER:122 == 1
 	PRINTFORML %EXPNAME:40%+7
-	EXP:41 += 7
-	EXP:MASTER:41 += 7
+	EXP:ＢＬ経験 += 7
+	EXP:MASTER:ＢＬ経験 += 7
 ENDIF
 
 ;助手と奴隷のレズorBL
 IF TALENT:122 == 0 && TALENT:ASSI:122 == 0
 	PRINTFORML %EXPNAME:40%(助手)+7
 	PRINTFORML %EXPNAME:40%+7
-	EXP:40 += 7
-	EXP:ASSI:40 += 7
+	EXP:レズ経験 += 7
+	EXP:ASSI:レズ経験 += 7
 ELSEIF TALENT:122 == 1 && TALENT:ASSI:122 == 1
 	PRINTFORML %EXPNAME:41%(助手)+7
 	PRINTFORML %EXPNAME:41%+7
 	PRINTL +7
-	EXP:41 += 7
-	EXP:ASSI:41 += 7
+	EXP:ＢＬ経験 += 7
+	EXP:ASSI:ＢＬ経験 += 7
 ENDIF
 
 ;ASSIPLAYとPLAYERの戻し

@@ -109,7 +109,7 @@ I = 0
 ;能力アップ可能なら1にする
 Z = 0
 
-IF EXP:50 < F
+IF EXP:異常経験 < F
 	;異常経験が不足
 	I |= 2
 ENDIF
@@ -130,7 +130,7 @@ SIF JUEL:5 < A
 SIF JUEL:6 < A
 	I |= 1
 ;レズ経験が必要
-SIF EXP:40 < C
+SIF EXP:レズ経験 < C
 	I |= 2
 
 IF I == 0

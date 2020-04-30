@@ -223,14 +223,14 @@ ELSEIF RESULT == 101
 	SIF B < 2
 		GOTO INPUT_MADA
 	;体力回復系の調合結果があるため、気力消費のみここで行う
-	LOSEBASE:1 += 150
+	LOSEBASE:気力 += 150
 	;恋慕・恋人・調合知識があるとそれぞれ軽減
 	SIF TALENT:85
-		LOSEBASE:1 -= 20
+		LOSEBASE:気力 -= 20
 	SIF TALENT:153
-		LOSEBASE:1 -= 30
+		LOSEBASE:気力 -= 30
 	SIF TALENT:55
-		LOSEBASE:1 -= 60
+		LOSEBASE:気力 -= 60
 	;成否フラグ
 	;失敗作ができたときのみTFLAG:18 = -1 に
 	TFLAG:18 = 0
@@ -387,17 +387,17 @@ ELSEIF RESULT == 101
 	;調合経験プラス
 	;蓬莱の薬か奇跡の薬でプラス1999
 	IF GROUPMATCH(ABS(TFLAG:17), 2, 666)
-		EXP:TARGET:89 += 1999
+		EXP:TARGET:調合経験 += 1999
 		PRINTFORML 調合経験+1999
 	;失敗作は一律プラス１
 	ELSEIF TFLAG:18 < 0
-		EXP:TARGET:89 += 1
+		EXP:TARGET:調合経験 += 1
 		PRINTFORML 調合経験+1
 	;その他は使用素材のレア度と付加価値に依存
 	ELSE
 		CALL TYOGO_EXP
 		P += 1
-		EXP:TARGET:89 += P
+		EXP:TARGET:調合経験 += P
 		PRINTFORML 調合経験+{P}
 	ENDIF
 	;調合知識なし
@@ -413,7 +413,7 @@ ELSEIF RESULT == 101
 			A = 2000
 		ENDIF
 		;習得早いと調合経験1500以上で、習得遅いと調合経験3000以上で、それ以外は調合経験2000以上で、調合知識入手
-		IF EXP:TARGET:89 >= A
+		IF EXP:TARGET:調合経験 >= A
 			PRINTFORML 
 			PRINTFORMW %CALLNAME:TARGET%は調合師として板についてきたようだ…
 			PRINTFORMW %CALLNAME:TARGET%は[調合知識]を得ました
@@ -1823,8 +1823,8 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	CALL TRAIN_MESSAGE_B
-	LOSEBASE:0 += 200
-	LOSEBASE:1 += 250
+	LOSEBASE:体力 += 200
+	LOSEBASE:気力 += 250
 ;売却
 CASE -1
 	M += 20
@@ -1951,8 +1951,8 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	A = 1000
@@ -1980,11 +1980,11 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:PLAYER%の耐力が{S}回復しました
 	PRINTFORMW ……下半身が元気になってきた
-	BASE:PLAYER:4 += S
+	BASE:PLAYER:耐力 += S
 	IF TALENT:PLAYER:133
-		BASE:PLAYER:2 = 4999
+		BASE:PLAYER:射精 = 4999
 	ELSE
-		BASE:PLAYER:2 = 9999
+		BASE:PLAYER:射精 = 9999
 	ENDIF
 ;売却
 CASE -1
@@ -2009,9 +2009,9 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 1000
@@ -2103,9 +2103,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2141,14 +2141,14 @@ CASE 1
 		PRINTFORMW 体力と気力が{A}ずつ減少しました
 		IF TALENT:TARGET:56 == 0
 			PRINTFORMW 好感度{B}
-			BASE:TARGET:0 += S
-			BASE:TARGET:1 += S
-			BASE:TARGET:4 += S
+			BASE:TARGET:体力 += S
+			BASE:TARGET:気力 += S
+			BASE:TARGET:耐力 += S
 		ENDIF
 		IF TALENT:PLAYER:56 == 0
-			BASE:PLAYER:0 += S
-			BASE:PLAYER:1 += S
-			BASE:PLAYER:4 += S
+			BASE:PLAYER:体力 += S
+			BASE:PLAYER:気力 += S
+			BASE:PLAYER:耐力 += S
 		ENDIF
 		CFLAG:TARGET:2 += U
 	ENDIF
@@ -2177,9 +2177,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2206,9 +2206,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2261,7 +2261,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 戦闘経験+{U}
-	EXP:TARGET:95 += U
+	EXP:TARGET:戦闘経験 += U
 ;売却
 CASE -1
 	M += 5000
@@ -2284,7 +2284,7 @@ CASE 1
 	A = U - 5
 	PRINTFORMW 戦闘経験+{A}
 	PRINTFORMW 好感度+{U}
-	EXP:95 += A
+	EXP:戦闘経験 += A
 	CFLAG:TARGET:2 += U
 	;ライオンの鬣が手に入るくらいなら固定ソース入れても大丈夫なくらい仲良いよね？
 	;むしろこれくらいやってもいいのでは？
@@ -2324,9 +2324,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2358,9 +2358,9 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -2398,9 +2398,9 @@ CASE 1
 		
 		PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -2471,7 +2471,7 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2556,9 +2556,9 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -2587,7 +2587,7 @@ CASE 1
 	PRINTFORML 
 	U += 45
 	PRINTFORMW 戦闘経験+{U}
-	EXP:TARGET:95 += U
+	EXP:TARGET:戦闘経験 += U
 ;売却
 CASE -1
 	M += 10000
@@ -2612,7 +2612,7 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	PRINTFORMW 戦闘経験+{U}
-	EXP:TARGET:95 += U
+	EXP:TARGET:戦闘経験 += U
 ;売却
 CASE -1
 	M += 5000
@@ -2660,7 +2660,7 @@ CASE 1
 	PRINTFORML 
 	U += 1
 	PRINTFORMW 精液経験＋{U}
-	EXP:20 += U
+	EXP:精液経験 += U
 ;売却
 CASE -1
 	M += 50
@@ -2786,11 +2786,11 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;パートナーの耐力が全快でない
-	IF BASE:TARGET:4 < MAXBASE:TARGET:4
-		BASE:TARGET:4 = MAXBASE:TARGET:4
+	IF BASE:TARGET:耐力 < MAXBASE:TARGET:耐力
+		BASE:TARGET:耐力 = MAXBASE:TARGET:耐力
 	;実行者の耐力が全快でない
-	ELSEIF BASE:PLAYER:4 < MAXBASE:PLAYER:4
-		BASE:PLAYER:4 = MAXBASE:PLAYER:4
+	ELSEIF BASE:PLAYER:耐力 < MAXBASE:PLAYER:耐力
+		BASE:PLAYER:耐力 = MAXBASE:PLAYER:耐力
 		PRINTFORM %CALLNAME:PLAYER%の
 	ENDIF
 	PRINTFORMW 耐力が全回復しました
@@ -2996,9 +2996,9 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	;気力/50だけ＋
-	A = MAXBASE:1 / 50
+	A = MAXBASE:気力 / 50
 	A += U
-	EXP:95 += A
+	EXP:戦闘経験 += A
 	PRINTFORMW 戦闘経験+{A}
 ;売却
 CASE -1
@@ -3021,10 +3021,10 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;気力/20だけ＋
-	A = MAXBASE:1 / 20
+	A = MAXBASE:気力 / 20
 	;二人の耐力1/4弱減少
-	B = MAXBASE:4 / 4
-	C = MAXBASE:MASTER:4 / 4
+	B = MAXBASE:耐力 / 4
+	C = MAXBASE:MASTER:耐力 / 4
 	;パチュリー効果上昇（被害も少なくできる）
 	CALL TYOGO_BONUS
 	
@@ -3035,10 +3035,10 @@ CASE 1
 		B = 100
 	SIF C < 0
 		C = 300
-	BASE:4 -= B
-	BASE:MASTER:4 -= C
+	BASE:耐力 -= B
+	BASE:MASTER:耐力 -= C
 	A += U
-	EXP:95 += A
+	EXP:戦闘経験 += A
 	PRINTFORMW %CALLNAME:TARGET%の耐力-{B}、%CALLNAME:MASTER%の耐力-{C}
 	PRINTFORMW 戦闘経験+{A}
 ;売却
@@ -3068,9 +3068,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3120,9 +3120,9 @@ CASE 1
 	U += 7
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3180,9 +3180,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{S}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3213,8 +3213,8 @@ CASE 1
 	PRINTFORML 
 	S += 400
 	PRINTFORMW %CALLNAME:TARGET%は体力を100消費し気力を{S}回復しました
-	BASE:TARGET:0 -= 100
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 -= 100
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	M += 3000
@@ -3257,8 +3257,8 @@ CASE 1
 	
 	B += S
 	PRINTFORMW %CALLNAME:TARGET%の体力を70消費し気力を{B}回復しました
-	BASE:TARGET:0 -= 70
-	BASE:TARGET:1 += B
+	BASE:TARGET:体力 -= 70
+	BASE:TARGET:気力 += B
 ;売却
 CASE -1
 	M += 1000
@@ -3298,8 +3298,8 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	A += S
-	BASE:TARGET:0 += A
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:耐力 += A
 	U += 10
 	CFLAG:TARGET:2 += U
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}ずつ回復しました
@@ -3341,9 +3341,9 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{A}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += A
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += A
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -3383,9 +3383,9 @@ CASE 1
 		S += 40
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3412,9 +3412,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	;元ネタの０マナ使用の再現
-	LOSEBASE:1 = 0
+	LOSEBASE:気力 = 0
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3442,9 +3442,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	;元ネタの０マナ使用の再現
-	LOSEBASE:1 = 0
+	LOSEBASE:気力 = 0
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3481,7 +3481,7 @@ CASE 1
 	CASE 0
 		U += 15
 		PRINTFORMW 家事経験+{U}
-		EXP:90 += U
+		EXP:家事経験 += U
 	;アクセサリー
 	CASE 1
 		CLEARLINE 1
@@ -3587,7 +3587,7 @@ CASE 1
 
 		U += 30
 		PRINTFORMW 戦闘経験+{U}
-		EXP:95 += U
+		EXP:戦闘経験 += U
 	ENDSELECT
 ;売却
 CASE -1
@@ -3667,7 +3667,7 @@ CASE 1
 	CASE 0
 		PRINTFORMW %CALLNAME:MASTER%の[早漏]が消えました
 		TALENT:MASTER:133 = 0
-		MAXBASE:MASTER:2 = 10000
+		MAXBASE:MASTER:射精 = 10000
 	CASE 1
 		PRINTFORMW しかし何も起こらなかった
 	ENDSELECT
@@ -3819,8 +3819,8 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%の耐力が{S}回復しました
 	PRINTFORMW 好感度+{U}	
-	BASE:PLAYER:4 += S
-	BASE:TARGET:4 += S
+	BASE:PLAYER:耐力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3847,8 +3847,8 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3875,9 +3875,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3904,8 +3904,8 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -3941,8 +3941,8 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -3988,9 +3988,9 @@ CASE 1
 		PRINTFORM 、気力が{S}
 	PRINTFORMW 回復しました
 	
-	BASE:TARGET:0 += A
+	BASE:TARGET:体力 += A
 	SIF TFLAG:916 == 1
-		BASE:TARGET:1 += S
+		BASE:TARGET:気力 += S
 	PRINTFORMW 痛み+{B}
 	SOURCE:6 += B
 ;売却
@@ -4028,8 +4028,8 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の気力が{S}、体力が{A}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += A
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -4062,9 +4062,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4091,8 +4091,8 @@ CASE 1
 
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4379,7 +4379,7 @@ CASE 1
 
 	PRINTFORMW 家事経験+{U}
 	PRINTFORMW 好感度+{A}
-	EXP:90 += U
+	EXP:家事経験 += U
 	CFLAG:TARGET:2 += A
 ;売却
 CASE -1
@@ -4407,7 +4407,7 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	PRINTFORMW 歌唱経験＋{U}
-	EXP:TARGET:93 += U
+	EXP:TARGET:歌唱経験 += U
 ;売却
 CASE -1
 	M += 6000
@@ -4437,11 +4437,11 @@ CASE 1
 	PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORML 調理経験+{C}
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
-	EXP:90 += C
+	EXP:家事経験 += C
 ;売却
 CASE -1
 	M += 3000
@@ -4490,9 +4490,9 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	;レミリア、フラン、萃香、勇儀、くるみ以外は好感度上昇
 	IF !GROUPMATCH(NO:TARGET, 10, 11, 23, 73, 80)
 		PRINTFORMW 好感度+{U}
@@ -4521,8 +4521,8 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	M += 850
@@ -4548,9 +4548,9 @@ CASE 1
 		U -= 3
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4585,9 +4585,9 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -4626,9 +4626,9 @@ CASE 1
 	U += 5
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4656,7 +4656,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘経験+{U}
 	PRINTFORMW 好感度+{A}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 	CFLAG:TARGET:2 += A
 ;売却
 CASE -1
@@ -4708,9 +4708,9 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -4777,9 +4777,9 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -4888,9 +4888,9 @@ CASE 1
 	
 	PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4939,28 +4939,28 @@ CASE 1
 		PRINTFORMW %CALLNAME:TARGET%には効いてないようだ
 		PRINTFORMW %CALLNAME:PLAYER%の体力と気力が{A}ずつ減少しました
 		PRINTFORMW 好感度{B}
-		BASE:PLAYER:0 += S
-		BASE:PLAYER:1 += S
-		BASE:PLAYER:4 += S
+		BASE:PLAYER:体力 += S
+		BASE:PLAYER:気力 += S
+		BASE:PLAYER:耐力 += S
 		CFLAG:TARGET:2 += U
 	;TARGETのみダメージ（PLAYERのみ薬毒耐性ある）
 	CASE 2
 		PRINTFORMW 体力と気力が{A}ずつ減少しました
 		PRINTFORMW 好感度{B}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	;両方ダメージ（両者薬毒耐性なし）
 	CASE 3
 		PRINTFORMW 二人の体力と気力が{A}ずつ減少しました
 		PRINTFORMW 好感度{B}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
-		BASE:PLAYER:0 += S
-		BASE:PLAYER:1 += S
-		BASE:PLAYER:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
+		BASE:PLAYER:体力 += S
+		BASE:PLAYER:気力 += S
+		BASE:PLAYER:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDSELECT
 ;売却
@@ -4994,9 +4994,9 @@ CASE 1
 		S += 40
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5032,9 +5032,9 @@ CASE 1
 	U += 15
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5066,9 +5066,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5098,9 +5098,9 @@ CASE 1
 	U += 15
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5127,9 +5127,9 @@ CASE 1
 
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{S}、気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5159,9 +5159,9 @@ CASE 1
 	B += S
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5200,9 +5200,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5246,9 +5246,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5275,8 +5275,8 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力と気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5304,8 +5304,8 @@ CASE 1
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
 	CFLAG:TARGET:2 += U
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	M += 4000
@@ -5329,8 +5329,8 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	M += 1000
@@ -5378,9 +5378,9 @@ CASE 1
 		U += 15
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -5413,9 +5413,9 @@ CASE 1
 
 	PRINTFORMW %CALLNAME:TARGET%の体力と気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -5865,13 +5865,13 @@ CASE 1
 	SIF TALENT:153
 		TIMES S , 1.20
 	U += 5
-	A = MAXBASE:TARGET:0 * U / 100
-	B = MAXBASE:TARGET:4 * U / 100
+	A = MAXBASE:TARGET:体力 * U / 100
+	B = MAXBASE:TARGET:耐力 * U / 100
 	;夜
 	IF TIME == 1
 		PRINTFORML %CALLNAME:MASTER%の耐力が{B}、体力が{A}回復した
-		BASE:TARGET:0 += A
-		BASE:TARGET:4 += B
+		BASE:TARGET:体力 += A
+		BASE:TARGET:耐力 += B
 	ENDIF
 	PRINTFORMW %CALLNAME:TARGET%は漠然とした不安に襲われた…
 	SOURCE:23 += S
@@ -5895,10 +5895,10 @@ CASE 1
 	PRINTFORML 
 	;雛は効果なし
 	IF NO:TARGET == 39
-		IF EXP:TARGET:96 > 0
+		IF EXP:TARGET:キス経験 > 0
 			U += 1
 			PRINTFORMW キス経験+{U}
-			EXP:TARGET:96 += U
+			EXP:TARGET:キス経験 += U
 			TFLAG:37 += 7
 		ENDIF
 	ELSE
@@ -5932,10 +5932,10 @@ CASE 1
 	PRINTFORML 
 	;雛は効果なし
 	IF NO:TARGET == 39
-		IF EXP:TARGET:96 > 0
+		IF EXP:TARGET:キス経験 > 0
 			U += 1
 			PRINTFORMW キス経験+{U}
-			EXP:TARGET:96 += U
+			EXP:TARGET:キス経験 += U
 			TFLAG:37 += 7
 		ELSE
 			CLEARLINE 1
@@ -5972,9 +5972,9 @@ CASE 1
 	;雛は効果なし
 	IF NO:TARGET == 39
 		;密かに回復するように
-		BASE:0 += 89
-		BASE:1 += 89
-		BASE:4 += 891
+		BASE:体力 += 89
+		BASE:気力 += 89
+		BASE:耐力 += 891
 	ELSE
 		S += 800
 		PRINTFORMW 抑鬱+{S}
@@ -6018,12 +6018,12 @@ CASE 1
 		PALAM:TARGET:13 += A
 	ENDIF
 	PRINTFORMW 好感度{B}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
-	BASE:PLAYER:0 += S
-	BASE:PLAYER:1 += S
-	BASE:PLAYER:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
+	BASE:PLAYER:体力 += S
+	BASE:PLAYER:気力 += S
+	BASE:PLAYER:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -6058,9 +6058,9 @@ CASE 1
 	ELSE
 		CLEARLINE 1
 	ENDIF
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 891
@@ -6202,7 +6202,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘経験+{U}
 	PRINTFORMW 好感度+{A}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 	CFLAG:TARGET:2 += A
 ;売却
 CASE -1
@@ -6224,7 +6224,7 @@ CASE 1
 	PRINTFORML 
 	U += 15
 	PRINTFORMW 最大気力が{U}上昇した
-	MAXBASE:TARGET:1 += U
+	MAXBASE:TARGET:気力 += U
 ;売却
 CASE -1
 	M += 50000
@@ -6302,7 +6302,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 戦闘経験＋{U}
-	EXP:TARGET:95 += U
+	EXP:TARGET:戦闘経験 += U
 ;売却
 CASE -1
 	M += 20000
@@ -6323,7 +6323,7 @@ CASE 1
 	PRINTFORML 
 	U += 30
 	PRINTFORMW 戦闘経験＋{U}
-	EXP:TARGET:95 += U
+	EXP:TARGET:戦闘経験 += U
 ;売却
 CASE -1
 	M += 32000
@@ -6354,7 +6354,7 @@ CASE 1
 	CASE 0
 		S += 1000
 		PRINTFORMW %CALLNAME:MASTER%の耐力が{S}回復しました
-		BASE:MASTER:4 += S
+		BASE:MASTER:耐力 += S
 	;それ以外
 	CASE 1
 		PRINTFORMW %CALLNAME:MASTER%は[早漏]を得た
@@ -6388,9 +6388,9 @@ CASE 1
 	U += 7
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -6438,9 +6438,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力と気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -6463,7 +6463,7 @@ CASE 1
 	U += 5
 	PRINTFORMW 家事経験+{U}
 	PRINTFORMW 好感度+{U}
-	EXP:90 += U
+	EXP:家事経験 += U
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -6490,9 +6490,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力と気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7001,7 +7001,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘経験+{U}
 	PRINTFORMW 好感度+{A}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 	CFLAG:TARGET:2 += A
 ;売却
 CASE -1
@@ -7027,15 +7027,15 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	C = 10 + U
-	C = MAXBASE:TARGET:4 * C / 100
+	C = MAXBASE:TARGET:耐力 * C / 100
 	A += S
 	B += S
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += C
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += C
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7061,15 +7061,15 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	C = 5 + U
-	C = MAXBASE:TARGET:4 * C / 100
+	C = MAXBASE:TARGET:耐力 * C / 100
 	A += S
 	B += S
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += C
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += C
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7101,15 +7101,15 @@ CASE 1
 		CALL TYOGO_BONUS
 
 		C = 8 + U
-		C = MAXBASE:TARGET:4 * C / 100
+		C = MAXBASE:TARGET:耐力 * C / 100
 		A += S
 		B += S
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += C
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += C
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7145,15 +7145,15 @@ CASE 1
 		CALL TYOGO_BONUS
 		
 		C = 9 + U
-		C = MAXBASE:TARGET:4 * C / 100
+		C = MAXBASE:TARGET:耐力 * C / 100
 		A += S
 		B += S
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += C
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += C
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7184,15 +7184,15 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	C = 8 + U
-	C = MAXBASE:TARGET:4 * C / 100
+	C = MAXBASE:TARGET:耐力 * C / 100
 	A += S
 	B += S
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += C
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += C
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7217,15 +7217,15 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	C = 12 + U
-	C = MAXBASE:TARGET:4 * C / 100
+	C = MAXBASE:TARGET:耐力 * C / 100
 	A += S
 	B += S
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += C
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += C
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7250,15 +7250,15 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	C = 12 + U
-	C = MAXBASE:TARGET:4 * C / 100
+	C = MAXBASE:TARGET:耐力 * C / 100
 	A += S
 	B += S
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}、耐力が{C}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += C
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += C
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7358,7 +7358,7 @@ CASE 1
 	;気力ダウン
 	CASE 4
 		PRINTFORML [失せ物は出ない。諦めるべし]という旨の結果が出た。%CALLNAME:MASTER%は気落ちした…
-		LOSEBASE:1 += 30
+		LOSEBASE:気力 += 30
 	;ムード増
 	CASE 5
 		PRINTFORML ……何だかその場のムードが良くなったような気がした
@@ -7391,7 +7391,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 ;売却
 CASE -1
 	M += 3000
@@ -7422,8 +7422,8 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7466,9 +7466,9 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7503,9 +7503,9 @@ CASE 1
 	U += 10
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7548,14 +7548,14 @@ CASE 1
 			B += 4
 		ENDIF
 		
-		A = MAXBASE:TARGET:0 * A / 100
-		B = MAXBASE:TARGET:1 * B / 100
+		A = MAXBASE:TARGET:体力 * A / 100
+		B = MAXBASE:TARGET:気力 * B / 100
 		U += 10
 		
 		PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7591,9 +7591,9 @@ CASE 1
 	U += 15
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7633,9 +7633,9 @@ CASE 1
 		U += 15
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7677,7 +7677,7 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -7711,9 +7711,9 @@ CASE 1
 		U += 10
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -7854,7 +7854,7 @@ CASE 1
 		;好感度下げる
 		TFLAG:30 -= 300
 		JUEL:A:100 += 1000
-		EXP:A:92 += 1
+		EXP:A:被写経験 += 1
 		;ムードも下げる
 		TFLAG:37 = 0
 	;失敗
@@ -7970,7 +7970,7 @@ CASE 1
 		ENDIF
 		U += 15
 		PRINTFORMW 戦闘経験+{U}
-		EXP:95 += U
+		EXP:戦闘経験 += U
 		TFLAG:17 = 150
 	;飲む
 	CASE 1
@@ -8013,7 +8013,7 @@ CASE 1
 		CASE 0
 			;歌唱経験+5
 			U += 5
-			EXP:93 += U
+			EXP:歌唱経験 += U
 		;踊る
 		CASE 1
 			;歓楽上昇
@@ -8075,7 +8075,7 @@ CASE 1
 		ENDIF
 		;金額減少と気力消費増大
 		MONEY -= 3000
-		LOSEBASE:1 += 100
+		LOSEBASE:気力 += 100
 	ENDSELECT
 ;売却
 CASE -1
@@ -8392,9 +8392,9 @@ CASE 1
 	PRINTFORML 
 	S += 150
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 1500
@@ -8415,9 +8415,9 @@ CASE 1
 	PRINTFORML 
 	S += 200
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 2500
@@ -8450,9 +8450,9 @@ CASE 1
 	U += 15
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -8492,9 +8492,9 @@ CASE 1
 		U += 15
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -8530,9 +8530,9 @@ CASE 1
 	B += S
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -8558,9 +8558,9 @@ CASE 1
 	B += S
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -8586,9 +8586,9 @@ CASE 1
 	B += S
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
-	BASE:TARGET:4 += A
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
+	BASE:TARGET:耐力 += A
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -8616,7 +8616,7 @@ CASE 1
 
 	PRINTFORMW 戦闘経験+{U}
 	PRINTFORMW 好感度+{A}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 	CFLAG:TARGET:2 += A
 ;売却
 CASE -1
@@ -8864,7 +8864,7 @@ CASE 1
 			S += 400
 		ENDSELECT
 		;実行者の体力マイナス、相手の優越プラス
-		BASE:PLAYER:0 -= S
+		BASE:PLAYER:体力 -= S
 		SOURCE:20 += S
 	ENDIF
 ;売却
@@ -9004,7 +9004,7 @@ CASE 1
 		PRINTFORMW %CALLNAME:PLAYER%の気力-300
 		CFLAG:TARGET:2 += U
 		SOURCE:18 += S
-		BASE:PLAYER:1 -= 300
+		BASE:PLAYER:気力 -= 300
 	;ジュラシックパーク
 	CASE 1
 		S += 1000
@@ -9170,7 +9170,7 @@ CASE 1
 	PRINTFORMW 戦闘素質＋1
 	PRINTFORMW 戦闘経験＋{U}
 	ABL:TARGET:戦闘素質 += 1
-	EXP:95 += U
+	EXP:戦闘経験 += U
 ;売却
 CASE -1
 	M += 5000
@@ -9277,9 +9277,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	IF EXP:TARGET:50 > 0
+	IF EXP:TARGET:異常経験 > 0
 		PRINTFORMW 異常経験-1
-		EXP:TARGET:50 -= 1
+		EXP:TARGET:異常経験 -= 1
 	ENDIF
 	IF ABL:TARGET:技巧 > 0
 		PRINTFORMW 技巧Lv-1
@@ -9309,7 +9309,7 @@ CASE 1
 	S += 350
 	U += 5
 	TFLAG:37 += U
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	PRINTFORML %CALLNAME:TARGET%の気力が{S}回復し、ムードが良くなりました
 	PRINTFORMW 好感度＋{U}
 	;ひそかに歓楽も
@@ -9386,7 +9386,7 @@ CASE 1
 	ABL:TARGET:欲望 += 1
 	PRINTFORML 異常経験+{S}
 	PRINTFORM 欲望Lv+1
-	EXP:TARGET:50 += S
+	EXP:TARGET:異常経験 += S
 	;対象の好感度3500未満または(恋人＋恋慕)か親愛か相愛が無い場合　反発感情上昇＋親密DOWN
 	IF CFLAG:TARGET:2 < 3500 || (TALENT:85 == 0 || TALENT:153 == 0) && TALENT:88 == 0 && TALENT:89 == 0
 		PRINTFORML 
@@ -9459,8 +9459,8 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力が{S}、耐力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -9677,10 +9677,10 @@ CASE 1
 		CALL TYOGO_BONUS
 		
 		PRINTFORML 気力+{S}
-		BASE:1 += S
+		BASE:気力 += S
 	ENDIF
 	PRINTFORMW 戦闘経験+{U}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 ;売却
 CASE -1
 	M += 9000
@@ -9877,9 +9877,9 @@ CASE 1
 		CALL TYOGO_BONUS
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 	;それ以外（料理技能Lv5以下）
 	;海水を持っている（歓楽ソース＋500）
 	CASE 2
@@ -9928,9 +9928,9 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 6000
@@ -9972,7 +9972,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;どちらかの耐力が10%以下
-	IF BASE:PLAYER:4 <= MAXBASE:PLAYER:4 / 10 || BASE:TARGET:4 <= MAXBASE:TARGET:4 / 10
+	IF BASE:PLAYER:耐力 <= MAXBASE:PLAYER:耐力 / 10 || BASE:TARGET:耐力 <= MAXBASE:TARGET:耐力 / 10
 		TFLAG:91 = 1
 	;それ以外
 	ELSE
@@ -9988,7 +9988,7 @@ CASE 1
 		SOURCE:13 += 1000
 	CASE 2
 		;戦闘経験/10だけ＋
-		C = EXP:95 / 10
+		C = EXP:戦闘経験 / 10
 		;魔女ボーナス
 		CALL TYOGO_BONUS
 		
@@ -9997,11 +9997,11 @@ CASE 1
 			C = 1
 		SIF C > 200
 			C = 200
-		EXP:95 += C
+		EXP:戦闘経験 += C
 		PRINTFORML 戦闘経験+{C}
 		;耐力を1/10に
-		BASE:PLAYER:4 = A
-		BASE:TARGET:4 = B
+		BASE:PLAYER:耐力 = A
+		BASE:TARGET:耐力 = B
 		PRINTFORML %CALLNAME:PLAYER%の耐力：{A}
 		PRINTFORMW %CALLNAME:TARGET%の耐力：{B}
 	ENDSELECT
@@ -10131,9 +10131,9 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 2000
@@ -10300,9 +10300,9 @@ CASE 1
 	CALL TYOGO_BONUS
 	PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	;好感度変化
 	CFLAG:TARGET:2 += U
 ;売却
@@ -10369,9 +10369,9 @@ CASE 1
 		A += S
 		B += S
 		PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{A}、気力が{B}回復しました
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
-		BASE:TARGET:4 += A
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
+		BASE:TARGET:耐力 += A
 	;黒太陽の炎あり
 	CASE 2
 		B += 400
@@ -10387,9 +10387,9 @@ CASE 1
 			SIF A < 50
 				A = 50
 			PRINTFORMW %CALLNAME:TARGET%の耐力と体力を{A}消費し、気力を{B}回復しました
-			BASE:TARGET:0 -= A
-			BASE:TARGET:1 += B
-			BASE:TARGET:4 -= A
+			BASE:TARGET:体力 -= A
+			BASE:TARGET:気力 += B
+			BASE:TARGET:耐力 -= A
 		ENDIF
 	ENDSELECT
 ;売却
@@ -10423,7 +10423,7 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -10450,7 +10450,7 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:1 += S
+	BASE:TARGET:気力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -10505,8 +10505,8 @@ CASE 1
 	B += S
 
 	PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}回復しました
-	BASE:TARGET:0 += A
-	BASE:TARGET:1 += B
+	BASE:TARGET:体力 += A
+	BASE:TARGET:気力 += B
 ;売却
 CASE -1
 	M += 1150
@@ -10530,9 +10530,9 @@ CASE 1
 	CALL TYOGO_BONUS
 
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 ;売却
 CASE -1
 	M += 500
@@ -10701,7 +10701,7 @@ CASE 1
 	U += 6
 	PRINTFORMW 家事経験+{U}
 	PRINTFORMW 好感度+{U}
-	EXP:90 += U
+	EXP:家事経験 += U
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -10728,9 +10728,9 @@ CASE 1
 	
 	PRINTFORMW %CALLNAME:TARGET%の耐力と体力と気力が{S}回復しました
 	PRINTFORMW 好感度+{U}
-	BASE:TARGET:0 += S
-	BASE:TARGET:1 += S
-	BASE:TARGET:4 += S
+	BASE:TARGET:体力 += S
+	BASE:TARGET:気力 += S
+	BASE:TARGET:耐力 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -10891,8 +10891,8 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の体力が{A}、気力が{B}回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += A
-		BASE:TARGET:1 += B
+		BASE:TARGET:体力 += A
+		BASE:TARGET:気力 += B
 		CFLAG:TARGET:2 += U
 	ENDIF
 ;売却
@@ -10932,7 +10932,7 @@ CASE 1
 	
 	SOURCE:19 += S
 	PRINTFORML 家事経験＋{U}
-	EXP:TARGET:90 += U
+	EXP:TARGET:家事経験 += U
 ;売却
 CASE -1
 	M += 10000
@@ -11061,7 +11061,7 @@ CASE 1
 	;浄化の健忘薬
 	CASE 9
 		;異常経験なし
-		SIF EXP:TARGET:50 == 0
+		SIF EXP:TARGET:異常経験 == 0
 			TFLAG:91 = -TFLAG:91
 	;朝の雫
 	CASE 10
@@ -11086,14 +11086,14 @@ CASE 1
 		S += 500
 		S += RAND:1000
 		PRINTFORMW %CALLNAME:TARGET%の耐力が{S}回復しました
-		BASE:PLAYER:4 += S
+		BASE:PLAYER:耐力 += S
 		;ふたなり、オトコの場合
 		IF TALENT:121 == 1 || TALENT:122 == 1
 			PRINTFORMW ……下半身が元気になってきた
 			IF TALENT:133
-				BASE:2 = 4999
+				BASE:射精 = 4999
 			ELSE
-				BASE:2 = 9999
+				BASE:射精 = 9999
 			ENDIF
 		ENDIF
 	;回復薬（小）
@@ -11101,9 +11101,9 @@ CASE 1
 		S += 50
 		S += RAND:100
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 	;惚れ薬ホレールA
 	CASE 2
 		S += 25
@@ -11115,7 +11115,7 @@ CASE 1
 		S += 250
 		S += RAND:500
 		PRINTFORMW %CALLNAME:TARGET%の気力が{S}回復しました
-		BASE:TARGET:1 += S
+		BASE:TARGET:気力 += S
 	;毒薬
 	CASE 4
 		S += 500
@@ -11124,9 +11124,9 @@ CASE 1
 		
 		PRINTFORMW %CALLNAME:TARGET%の体力と気力が{S}ずつ減少しました
 		PRINTFORMW 好感度{U}
-		BASE:TARGET:0 -= S
-		BASE:TARGET:1 -= S
-		BASE:TARGET:4 -= S
+		BASE:TARGET:体力 -= S
+		BASE:TARGET:気力 -= S
+		BASE:TARGET:耐力 -= S
 		CFLAG:TARGET:2 += U
 	;毒薬（無効）
 	CASE -4
@@ -11138,16 +11138,16 @@ CASE 1
 		U += 5
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 		PRINTFORMW 好感度+{U}
-		BASE:TARGET:0 += S
-		BASE:TARGET:1 += S
-		BASE:TARGET:4 += S
+		BASE:TARGET:体力 += S
+		BASE:TARGET:気力 += S
+		BASE:TARGET:耐力 += S
 		CFLAG:TARGET:2 += U
 	;ルーンメタル
 	CASE 6
 		U += 5
 		U += RAND:10
 		PRINTFORMW 最大気力が{U}上昇した
-		MAXBASE:TARGET:1 += U
+		MAXBASE:TARGET:気力 += U
 	;厄ルト
 	CASE 7
 		PRINTFORMW 厄がまとわり付いてきた…
@@ -11169,7 +11169,7 @@ CASE 1
 	;浄化の健忘薬
 	CASE 9
 		PRINTFORMW %CALLNAME:TARGET%の異常経験が1つ身体から消え去った
-		EXP:TARGET:50 -= 1
+		EXP:TARGET:異常経験 -= 1
 		;技巧下げる
 		IF ABL:TARGET:技巧 > 0
 			PRINTFORMW 技巧Lvが1下がった
@@ -11271,8 +11271,8 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の体力と耐力が{S}減少しました
-	BASE:TARGET:0 -= S
-	BASE:TARGET:4 -= S
+	BASE:TARGET:体力 -= S
+	BASE:TARGET:耐力 -= S
 	CFLAG:TARGET:2 -= U
 ;売却
 CASE -1
@@ -11299,9 +11299,9 @@ CASE 1
 		TFLAG:37 += U
 		CFLAG:TARGET:2 += U
 		;ひそかに回復
-		BASE:0 += 89
-		BASE:1 += 89
-		BASE:4 += 891
+		BASE:体力 += 89
+		BASE:気力 += 89
+		BASE:耐力 += 891
 	ELSE
 		S += 666
 		PALAM:11 += S
@@ -11339,7 +11339,7 @@ CASE 1
 	
 	PRINTFORML 
 	PRINTFORMW %CALLNAME:TARGET%の気力が{S}減少しました
-	BASE:TARGET:1 -= S
+	BASE:TARGET:気力 -= S
 ;売却
 CASE -1
 	M += 12000
@@ -11473,7 +11473,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 戦闘経験+{U}
-	EXP:95 += U
+	EXP:戦闘経験 += U
 ;売却
 CASE -1
 	M += 2000
@@ -11495,12 +11495,12 @@ CASE 1
 	;食物、中華ボーナス
 	CALL TYOGO_BONUS
 	C = 10 + U
-	C = MAXBASE:TARGET:0 * C / 100
+	C = MAXBASE:TARGET:体力 * C / 100
 	U += 10
 	
 	PRINTFORML %CALLNAME:TARGET%の体力が{C}回復しました
 	PRINTFORML 好感度+{U}
-	BASE:TARGET:0 += C
+	BASE:TARGET:体力 += C
 	CFLAG:2 += U
 ;売却
 CASE -1
@@ -11523,10 +11523,10 @@ CASE 1
 	;食物ボーナス
 	CALL TYOGO_BONUS
 	C = 12 + U
-	C = MAXBASE:TARGET:0 * C / 100
+	C = MAXBASE:TARGET:体力 * C / 100
 	
 	PRINTFORML %CALLNAME:TARGET%の体力が{C}回復しました
-	BASE:TARGET:0 += C
+	BASE:TARGET:体力 += C
 ;売却
 CASE -1
 	M += 1400
@@ -11553,14 +11553,14 @@ CASE 1
 		;食物ボーナス
 		CALL TYOGO_BONUS
 		C = 8 + U
-		C = MAXBASE:TARGET:0 * C / 100
+		C = MAXBASE:TARGET:体力 * C / 100
 		S += 80
 		U += 8
 		
 		PRINTFORML %CALLNAME:TARGET%の体力が{C}、気力が{S}回復しました
 		PRINTFORML 好感度+{U}
-		BASE:TARGET:0 += C
-		BASE:TARGET:1 += S
+		BASE:TARGET:体力 += C
+		BASE:TARGET:気力 += S
 		CFLAG:2 += U
 	ENDIF
 ;売却
@@ -11590,12 +11590,12 @@ CASE 1
 	CALL TYOGO_BONUS
 	A = 20 + U
 	B = A
-	A = MAXBASE:TARGET:0 * A / 100
-	B = MAXBASE:TARGET:4 * B / 100
+	A = MAXBASE:TARGET:体力 * A / 100
+	B = MAXBASE:TARGET:耐力 * B / 100
 	
 	PRINTFORML %CALLNAME:TARGET%の体力が{A}、耐力が{B}回復しました
-	BASE:TARGET:0 += A
-	BASE:TARGET:4 += B
+	BASE:TARGET:体力 += A
+	BASE:TARGET:耐力 += B
 ;売却
 CASE -1
 	M += 5000
@@ -12402,8 +12402,8 @@ CASE 1
 		NEXT
 		
 		VARSET SOURCE, 0
-		LOSEBASE:0 += 10
-		LOSEBASE:1 += 80
+		LOSEBASE:体力 += 10
+		LOSEBASE:気力 += 80
 		
 		IF LCOUNT:0 == 1 && ITEM:955 > 6
 			PRINTFORML 
@@ -12592,9 +12592,9 @@ CASE 1
 			TIMES SOURCE:3, 3.00
 			S += 500
 			PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
-			BASE:TARGET:0 += S
-			BASE:TARGET:1 += S
-			BASE:TARGET:4 += S
+			BASE:TARGET:体力 += S
+			BASE:TARGET:気力 += S
+			BASE:TARGET:耐力 += S
 		ENDIF
 		U += 15
 		PRINTFORMW 好感度+{U}
@@ -12636,17 +12636,17 @@ CASE 1
 	SOURCE:12 = 250
 	SOURCE:14 = 400
 	;EXP:Ａ経験をみる
-	IF EXP:1 < EXPLV:1
+	IF EXP:Ａ経験 < EXPLV:1
 		SOURCE:6 = 700
-	ELSEIF EXP:1 < EXPLV:2
+	ELSEIF EXP:Ａ経験 < EXPLV:2
 		SOURCE:6 = 600
-	ELSEIF EXP:1 < EXPLV:3
+	ELSEIF EXP:Ａ経験 < EXPLV:3
 		SOURCE:6 = 500
-	ELSEIF EXP:1 < EXPLV:4
+	ELSEIF EXP:Ａ経験 < EXPLV:4
 		TIMES SOURCE:2 , 1.20
 		TIMES SOURCE:13, 1.20
 		SOURCE:6 = 400
-	ELSEIF EXP:1 < EXPLV:5
+	ELSEIF EXP:Ａ経験 < EXPLV:5
 		TIMES SOURCE:2 , 1.60
 		TIMES SOURCE:13, 1.60
 		SOURCE:6 = 200
@@ -12691,9 +12691,9 @@ CASE 1
 		TIMES SOURCE:13 , 0.60
 		TIMES SOURCE:14 , 0.60
 	ENDIF
-	EXP:1 += 1
+	EXP:Ａ経験 += 1
 	PRINTL Ａ経験+1
-	EXP:50 += 1
+	EXP:異常経験 += 1
 	PRINTFORML %EXPNAME:50%+1
 	PRINTFORML 
 	;合意がないと好感度が下がる
@@ -12719,15 +12719,15 @@ ENDSELECT
 @TRAIN_MESSAGE_COM310_246
 PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%のお尻に[ヴォジャノーイの舌]をあてがった…
 ;EXP:Ａ経験をみる
-IF EXP:1 < EXPLV:1
+IF EXP:Ａ経験 < EXPLV:1
 	PRINTFORMW 粘液を滴らせた巨大な舌は硬く閉ざされたアヌスをほぐすように蠕動し、菊穴を出入りする
-ELSEIF EXP:1 < EXPLV:2
+ELSEIF EXP:Ａ経験 < EXPLV:2
 	PRINTFORMW 粘液を滴らせた巨大な舌はまだ慣れない快感を浸み込ますように蠕動し、奥までぬるりと入り込む
-ELSEIF EXP:1 < EXPLV:3
+ELSEIF EXP:Ａ経験 < EXPLV:3
 	PRINTFORMW 粘液を滴らせた巨大な舌はアナルを根元まで入り込み、脈動しながら穴の中を快感に満たす
-ELSEIF EXP:1 < EXPLV:4
+ELSEIF EXP:Ａ経験 < EXPLV:4
 	PRINTFORMW 粘液を滴らせた巨大な舌はアナルを根元まで入り込み、脈動しながら腹の中で跳ねた
-ELSEIF EXP:1 < EXPLV:5
+ELSEIF EXP:Ａ経験 < EXPLV:5
 	PRINTFORMW %CALLNAME:TARGET%の期待に応えるように、粘液を迸らせた巨大な舌は直腸をたっぷりとねぶり上げる
 ELSE
 	PRINTFORMW 粘液を迸らせた巨大な舌は、%CALLNAME:TARGET%の期待に応え直腸をたっぷりとねぶり上げ快楽に蕩けさせた
@@ -12761,9 +12761,9 @@ CASE 1
 		ENDIF
 		
 		PRINTL 異常経験+1
-		EXP:50 += 1
+		EXP:異常経験 += 1
 		PRINTL 触手経験+1
-		EXP:55 += 1
+		EXP:触手経験 += 1
 		
 		;ABL:Ｂ感覚をみる
 		IF ABL:Ｂ感覚 == 0
@@ -12805,15 +12805,15 @@ CASE 1
 		
 		;触手経験による恐怖パラ
 		UP:10 += 60
-		IF EXP:55 < EXPLV:1
+		IF EXP:触手経験 < EXPLV:1
 			TIMES UP:10 , 1.80
-		ELSEIF EXP:55 < EXPLV:2
+		ELSEIF EXP:触手経験 < EXPLV:2
 			TIMES UP:10 , 1.75
-		ELSEIF EXP:55 < EXPLV:3
+		ELSEIF EXP:触手経験 < EXPLV:3
 			TIMES UP:10 , 1.60
-		ELSEIF EXP:55 < EXPLV:4
+		ELSEIF EXP:触手経験 < EXPLV:4
 			TIMES UP:10 , 0.90
-		ELSEIF EXP:55 < EXPLV:5
+		ELSEIF EXP:触手経験 < EXPLV:5
 			TIMES UP:10 , 0.80
 		ELSE
 			TIMES UP:10 , 0.70
@@ -12867,8 +12867,8 @@ CASE 1
 	TFLAG:94 = 4
 	CALL TRAIN_MESSAGE_B
 	
-	LOSEBASE:0 += 100
-	LOSEBASE:1 += 150
+	LOSEBASE:体力 += 100
+	LOSEBASE:気力 += 150
 	
 	TFLAG:91 = 2
 ;売却
@@ -13033,10 +13033,10 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	BASE:TARGET:0 = 9999
-	BASE:TARGET:1 = 9999
-	BASE:PLAYER:0 = 9999
-	BASE:PLAYER:1 = 9999
+	BASE:TARGET:体力 = 9999
+	BASE:TARGET:気力 = 9999
+	BASE:PLAYER:体力 = 9999
+	BASE:PLAYER:気力 = 9999
 	K = U + S + 100
 	CFLAG:TARGET:2 += K
 	PRINTFORMW 好感度+{K}
@@ -13149,7 +13149,7 @@ IF 0
 		CASE 21,25,29,64,65,70,228
 			PRINTFORML お嬢様ボーナス＋
 			U += 3
-			LOSEBASE:1 -= 30
+			LOSEBASE:気力 -= 30
 	ENDSELECT
 	;好感度上昇を抑え、獲得ソース上昇
 	IF TFLAG:17 == 21 || TFLAG:17 == 29
@@ -13191,35 +13191,35 @@ ENDIF
 ;曇り（対象：なし）
 IF 0 && TFLAG:17 == 32
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;雨（対象：なし）
 ELSEIF 0 && TFLAG:17 == 33
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;晴れ（対象：なし）
 ELSEIF 0 && TFLAG:17 == 34
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;細氷（対象：なし）
 ELSEIF 0 && TFLAG:17 == 35
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;吹雪（対象：なし）
 ELSEIF 0 && TFLAG:17 == 36
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;雪（対象：なし）
 ELSEIF 0 && TFLAG:17 == 37
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;大雨（対象：なし）
 ELSEIF 0 && TFLAG:17 == 153
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ;狐の嫁入り（対象：なし）
 ELSEIF 0 && TFLAG:17 == 154
 	PRINTFORML 気質ボーナス＋
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 ENDIF
 
 ;---------------------------------------------------------
@@ -17155,7 +17155,7 @@ ITEM:800 -= 1
 ;レシピ名登録
 CALL RECIPE_NAME
 ;調合ランク判定
-B = EXP:TARGET:89
+B = EXP:TARGET:調合経験
 ;習得早い場合は経験値1.5倍、遅い場合は2/3倍
 IF TALENT:TARGET:50
 	B *= 3

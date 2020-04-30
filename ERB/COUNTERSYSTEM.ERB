@@ -1,5 +1,5 @@
 ﻿;---------------------------------------------------------
-;BASE:6 快感ゲージとして使用。
+;BASE:精神 快感ゲージとして使用。
 ;TFLAG:53  パートナーのターンでのコマンド内容
 ;TFLAG:300 口上開始フラグ
 ;	1:カウンターなし(現在この口上を呼び出す設定なし)
@@ -113,17 +113,17 @@ SIF TFLAG:51
 	LOCAL *= 2
 
 ;体力低下の処理。
-DOWNBASE:MASTER:0 = LOCAL
+DOWNBASE:MASTER:体力 = LOCAL
 
 ;---------------------------------------------------------
 ;体力低下でパートナーと過ごすが終了するかどうかの分岐。
 ;TFLAG:301 オちたときに1となります。
 ;---------------------------------------------------------
 @COUNTER_DOWN
-IF BASE:MASTER:0 <=0
+IF BASE:MASTER:体力 <=0
 	CFLAG:31 += 10
 	PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%の与える快感により気絶してしまった……
-ELSEIF BASE:MASTER:0 <= 500
+ELSEIF BASE:MASTER:体力 <= 500
 	CFLAG:31 += 1
 ENDIF
 TFLAG:301 = 1
@@ -135,7 +135,7 @@ TFLAG:301 = 1
 
 ;TARGETが主導権を握っている+主人公が素質【虜】を持ってない+TARGETのサドっ気がLv5以上
 ;+精液経験(主人公を射精させた回数として使用）が1000以上もしくはパートナーが主人公を耐力なくなるまでが100以上
-IF TFLAG:45 == 1 && TALENT:MASTER:219 == 0 && ABL:サドっ気 >= 5 && (EXP:20 >= 1000 || CFLAG:31 >= 100)
+IF TFLAG:45 == 1 && TALENT:MASTER:219 == 0 && ABL:サドっ気 >= 5 && (EXP:精液経験 >= 1000 || CFLAG:31 >= 100)
 	;逆調教イベント口上の呼び出し
 	TFLAG:300 = 8
 	CALL COUNTER_KOJO

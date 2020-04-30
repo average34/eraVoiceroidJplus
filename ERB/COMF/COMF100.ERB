@@ -51,15 +51,15 @@ A = 100
 ;触手変身中
 IF TEQUIP:89
 	;触手変身中は好感度と触手経験が影響
-	IF EXP:55 < EXPLV:1
+	IF EXP:触手経験 < EXPLV:1
 		TIMES A , 1.80
-	ELSEIF EXP:55 < EXPLV:2
+	ELSEIF EXP:触手経験 < EXPLV:2
 		TIMES A , 1.75
-	ELSEIF EXP:55 < EXPLV:3
+	ELSEIF EXP:触手経験 < EXPLV:3
 		TIMES A , 1.60
-	ELSEIF EXP:55 < EXPLV:4
+	ELSEIF EXP:触手経験 < EXPLV:4
 		TIMES A , 0.90
-	ELSEIF EXP:55 < EXPLV:5
+	ELSEIF EXP:触手経験 < EXPLV:5
 		TIMES A , 0.80
 	ELSE
 		TIMES A , 0.70
@@ -80,15 +80,15 @@ IF TEQUIP:89
 	ENDIF
 ELSE
 	;触手召喚中は触手経験が影響
-	IF EXP:55 < EXPLV:1
+	IF EXP:触手経験 < EXPLV:1
 		TIMES A , 3.00
-	ELSEIF EXP:55 < EXPLV:2
+	ELSEIF EXP:触手経験 < EXPLV:2
 		TIMES A , 2.50
-	ELSEIF EXP:55 < EXPLV:3
+	ELSEIF EXP:触手経験 < EXPLV:3
 		TIMES A , 2.00
-	ELSEIF EXP:55 < EXPLV:4
+	ELSEIF EXP:触手経験 < EXPLV:4
 		TIMES A , 1.00
-	ELSEIF EXP:55 < EXPLV:5
+	ELSEIF EXP:触手経験 < EXPLV:5
 		TIMES A , 0.80
 	ELSE
 		TIMES A , 0.60
@@ -110,8 +110,8 @@ ENDIF
 SIF TALENT:22
 	TIMES A , 0.60
 
-LOSEBASE:0 += A
-LOSEBASE:1 += A * 2
+LOSEBASE:体力 += A
+LOSEBASE:気力 += A * 2
 
 UP:10 += A * 20
 SOURCE:14 += A * 5
@@ -195,7 +195,7 @@ TIMES SOURCE:13 , 1.80
 ;-------------------------------------------------
 ;射精チェック
 ;-------------------------------------------------
-IF MAXBASE:PLAYER:7 != 0
+IF MAXBASE:PLAYER:触手射精 != 0
 	B = 0
 	;ABL:技巧をみる
 	IF ABL:技巧 == 0
@@ -270,10 +270,10 @@ IF MAXBASE:PLAYER:7 != 0
 	SIF TEQUIP:98
 		TIMES B , 1.50
 
-	BASE:PLAYER:7 += B
+	BASE:PLAYER:触手射精 += B
 
-	S = BASE:PLAYER:7
-	EJAC = MAXBASE:PLAYER:7
+	S = BASE:PLAYER:触手射精
+	EJAC = MAXBASE:PLAYER:触手射精
 
 	IF  S > EJAC * 2
 		E = 2
@@ -317,37 +317,37 @@ IF MAXBASE:PLAYER:7 != 0
 
 	;大量射精
 	IF E == 2
-		EXP:20 += 3
+		EXP:精液経験 += 3
 		PRINTL 触手大量射精
 		PRINTL 精液経験＋３
 		TFLAG:15 = 2
 		T += 1
 
-		BASE:PLAYER:7 -= EJAC*2
-		SIF BASE:PLAYER:7 >= EJAC
-			BASE:PLAYER:7 = EJAC-1
+		BASE:PLAYER:触手射精 -= EJAC*2
+		SIF BASE:PLAYER:触手射精 >= EJAC
+			BASE:PLAYER:触手射精 = EJAC-1
 
 	;通常の射精
 	ELSEIF E == 1
-		EXP:20 += 1
+		EXP:精液経験 += 1
 		PRINTL 触手射精
 		PRINTL 精液経験＋１
 		TFLAG:15 = 1
 		T += 1
 
-		BASE:PLAYER:7 -= EJAC
-		SIF BASE:PLAYER:7 >= EJAC
-			BASE:PLAYER:7 = EJAC-1
+		BASE:PLAYER:触手射精 -= EJAC
+		SIF BASE:PLAYER:触手射精 >= EJAC
+			BASE:PLAYER:触手射精 = EJAC-1
 	ENDIF
 ENDIF
 
-EXP:50 += 3
+EXP:異常経験 += 3
 PRINTL 異常経験＋3
 
 T += 1
 PRINT 触手経験＋
 PRINTVL T
-EXP:55 += T
+EXP:触手経験 += T
 T = 0
 RETURN 1
 
@@ -449,8 +449,8 @@ PRINTL 触手口辱
 STR:0 = 触手口辱
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:0 += 80
-LOSEBASE:1 += 100
+LOSEBASE:体力 += 80
+LOSEBASE:気力 += 100
 
 ;Ｍ感覚を設定している場合快Ｍソース取得
 CALL SOURCE_M_COM108
@@ -508,7 +508,7 @@ ELSE
 	STAIN:0 |= 4
 ENDIF
 
-EXP:22 += 1
+EXP:フェラ経験 += 1
 PRINTL フェラ経験＋１
 RETURN 1
 
@@ -524,8 +524,8 @@ ENDIF
 ;触手口辱中
 PRINTL ＜触手口辱中＞
 
-LOSEBASE:0 += 80
-LOSEBASE:1 += 100
+LOSEBASE:体力 += 80
+LOSEBASE:気力 += 100
 
 ;Ｍ感覚を設定している場合快Ｍソース取得
 CALL SOURCE_M_COM108
@@ -574,7 +574,7 @@ ENDIF
 SOURCE:13 += A
 SOURCE:16 += A
 
-EXP:22 += 1
+EXP:フェラ経験 += 1
 PRINTL フェラ経験＋１
 RETURN 1
 
@@ -799,9 +799,9 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;処女
-IF TALENT:0
+IF TALENT:処女
 	A -= 20
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	A -= 5
 ENDIF
 
@@ -932,12 +932,12 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;処女
-	IF TALENT:0
+	IF TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:0
 		PRINTV '(,20,')
 		S = 1
-	ELSEIF EXP:0 < EXPLV:2
+	ELSEIF EXP:Ｖ経験 < EXPLV:2
 		PRINT  - 
 		PRINTS EXPNAME:0
 		PRINT 不足

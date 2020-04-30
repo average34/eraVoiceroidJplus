@@ -42,10 +42,10 @@ Q = LOCAL:4
 R = LOCAL:5
 S = LOCAL:6
 
-BASE:MASTER:0 = MAXBASE:MASTER:0
-BASE:MASTER:4 = MAXBASE:MASTER:4
-BASE:TARGET:0 = MAXBASE:TARGET:0
-BASE:TARGET:4 = MAXBASE:TARGET:4
+BASE:MASTER:体力 = MAXBASE:MASTER:体力
+BASE:MASTER:耐力 = MAXBASE:MASTER:耐力
+BASE:TARGET:体力 = MAXBASE:TARGET:体力
+BASE:TARGET:耐力 = MAXBASE:TARGET:耐力
 
 ;地の文カット
 SIF CFLAG:99 == 1 || FLAG:6 == 0
@@ -145,7 +145,7 @@ JUEL:16 += ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20
 ;また、食後のイベントで押し倒すことを選ぶと奉仕快楽経験が入るようになる
 IF TFLAG:14 == 1 && TALENT:153
 	PRINTFORML %EXPNAME:23% ＋2
-	EXP:23 += 2
+	EXP:愛情経験 += 2
 	TFLAG:14 = 2
 ;服従持ちのときは食後のイベントで押し倒すことを選ぶと奉仕快楽経験が入るようになる
 ELSEIF TFLAG:14 == 1 && TALENT:160
@@ -157,13 +157,13 @@ IF R >= 10
 	SIF ABL:TARGET:料理技能 > 99
 		LOCAL = ABL:TARGET:料理技能 / 20
 	PRINTFORML %EXPNAME:90% ＋{LOCAL}
-	EXP:90 += LOCAL
+	EXP:家事経験 += LOCAL
 ELSEIF R >= 5
 	PRINTFORML %EXPNAME:90% ＋4
-	EXP:90 += 4
+	EXP:家事経験 += 4
 ELSE
 	PRINTFORML %EXPNAME:90% ＋3
-	EXP:90 += 3
+	EXP:家事経験 += 3
 ENDIF
 ;好感度増加（浪費癖/10をマイナスし、Aがマイナスになる場合好感度は増加しない）
 A = RAND:101 + 150 - (ABL:浪費癖 / 10)

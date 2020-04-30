@@ -25,8 +25,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 10
-LOSEBASE:1 += 100
+LOSEBASE:体力 += 10
+LOSEBASE:気力 += 100
 
 SOURCE:3  = 500
 SOURCE:11  = 800
@@ -124,13 +124,13 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
-	EXP:PLAYER:40 += 1
+	EXP:レズ経験 += 1
+	EXP:PLAYER:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
-	EXP:PLAYER:41 += 1
+	EXP:ＢＬ経験 += 1
+	EXP:PLAYER:ＢＬ経験 += 1
 ENDIF
 
 ;主導権をチェック

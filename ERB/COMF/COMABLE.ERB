@@ -153,7 +153,7 @@ SIF TFLAG:44 == 0
 SIF ((FLAG:61 & 1) == 0) && TEQUIP:53
 	RETURN 0
 ;従順3以下・レズっ気3以下のASSIの場合自慰はできない（小悪魔ならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:87 == 0
 		RETURN 0
 ENDIF
@@ -348,7 +348,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1)
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1)
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -372,7 +372,7 @@ SIF TALENT:149 && TALENT:MASTER:125 == 0
 SIF ITEM:1 == 0 && NOITEM == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合バイブはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -713,7 +713,7 @@ SIF TEQUIP:71
 SIF TALENT:122
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
@@ -723,7 +723,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -764,7 +764,7 @@ SIF TEQUIP:71
 SIF TALENT:122
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
@@ -774,7 +774,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位はできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -836,7 +836,7 @@ IF PALAM:3 < PALAMLV:2 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -861,7 +861,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (TALENT:PLAYER:0 == 1)
+SIF ((FLAG:61 & 1) == 0) && (TALENT:PLAYER:処女 == 1)
 	RETURN 0
 ;調教者がオトコだとダメ
 SIF TALENT:PLAYER:122
@@ -907,7 +907,7 @@ SIF TEQUIP:71
 SIF TALENT:122
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
@@ -925,7 +925,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位はできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -958,7 +958,7 @@ SIF TEQUIP:71
 SIF TALENT:122
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:122 == 0))
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
@@ -976,7 +976,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位はできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -1021,7 +1021,7 @@ SIF TEQUIP:61
 SIF TEQUIP:70
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1034,7 +1034,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位アナルはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -1090,7 +1090,7 @@ SIF TEQUIP:61
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
@@ -1100,7 +1100,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位アナルはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -1153,7 +1153,7 @@ SIF TEQUIP:61
 SIF TEQUIP:70
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1174,7 +1174,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -1219,7 +1219,7 @@ SIF TEQUIP:61
 SIF TEQUIP:70
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1240,7 +1240,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -1513,7 +1513,7 @@ SIF TEQUIP:61
 SIF TEQUIP:70
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1760,7 +1760,7 @@ SIF TEQUIP:70
 SIF TEQUIP:61
 	RETURN 0
 ;Ａ経験が100未満じゃできない
-SIF EXP:1 < 100 
+SIF EXP:Ａ経験 < 100 
 	RETURN 0
 ;露出癖、欲望、従順の合計が10ないとできない
 SIF ABL:親密 + ABL:欲望 + ABL:露出癖 < 10 
@@ -1814,7 +1814,7 @@ SIF TEQUIP:70
 SIF TEQUIP:61
 	RETURN 0
 ;Ａ経験が50未満じゃできない
-SIF EXP:1 < 50
+SIF EXP:Ａ経験 < 50
 	RETURN 0
 ;露出癖、欲望、従順の合計が10ないとできない
 SIF ABL:親密 + ABL:欲望 + ABL:露出癖 < 10
@@ -2061,7 +2061,7 @@ SIF ASSIPLAY
 SIF TALENT:ASSI:122
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (TALENT:ASSI:0 == 1)
+SIF ((FLAG:61 & 1) == 0) && (TALENT:ASSI:処女 == 1)
 	RETURN 0
 ;小人体型持ちは、双方が調教者と調教対象ならOK
 ;それ以外の場合は主人が禁断の知識持ちじゃないとダメ
@@ -2396,7 +2396,7 @@ SIF TALENT:ASSI:119 || TALENT:ASSI:121 || TALENT:ASSI:122
 SIF A + ITEM:PBAND < 2
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合二本刺しはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -2409,7 +2409,7 @@ IF PALAM:3 < PALAMLV:2 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
-SIF EXP:1 < EXPLV:3
+SIF EXP:Ａ経験 < EXPLV:3
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2625,7 +2625,7 @@ SIF TFLAG:44 == 0
 SIF ABL:親密 < 6
 	RETURN 0
 ;処女の場合、従順10以上または露出癖3以上または淫乱がないとダメ
-SIF TALENT:0 && ABL:親密 < 10 && ABL:露出癖 < 3 && TALENT:76 == 0
+SIF TALENT:処女 && ABL:親密 < 10 && ABL:露出癖 < 3 && TALENT:76 == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -2831,7 +2831,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;気力が残ってないと無理
-SIF BASE:1 <= 0
+SIF BASE:気力 <= 0
 	RETURN 0
 ;相手を責める場合
 IF CFLAG:15 == 0 || CFLAG:15 == 1
@@ -2912,7 +2912,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;一定のＶ経験が必要
-SIF EXP:0 < 150
+SIF EXP:Ｖ経験 < 150
 	RETURN 0
 ;バイブ使用中は不可
 SIF TEQUIP:11
@@ -2974,7 +2974,7 @@ SIF TEQUIP:61
 SIF TEQUIP:71
 	RETURN 0
 ;一定のＡ経験が必要
-SIF EXP:1 < 150
+SIF EXP:Ａ経験 < 150
 	RETURN 0
 ;浣腸＋アナルプラグ使用中は不可
 SIF TEQUIP:46
@@ -3075,7 +3075,7 @@ SIF TEQUIP:79
 SIF TALENT:122
 	RETURN 0	
 ;一定のＶ・Ａ経験が必要
-IF EXP:0 < 300 || EXP:1 < 300
+IF EXP:Ｖ経験 < 300 || EXP:Ａ経験 < 300
 	RETURN 0
 	ENDIF
 ;ASSIの場合、従順4以上かサドじゃないとできない。
@@ -3085,7 +3085,7 @@ IF ASSIPLAY
 ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上かつ拡張経験10以上じゃないと実行できない
 IF TALENT:100
-	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3 || EXP:53 < 10
+	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3 || EXP:Ａ拡張経験 < 10
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
@@ -3229,7 +3229,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:57 == 0
 	RETURN 0
 ;処女はダメ
-SIF EXP:0 == 0
+SIF EXP:Ｖ経験 == 0
 	RETURN 0
 ;オトコだとダメ
 SIF TALENT:122
@@ -3591,7 +3591,7 @@ SIF TALENT:122
 SIF ITEM:40 == 0 && NOITEM == 0
 	RETURN 0
 ;処女だとダメ
-SIF EXP:0 == 0
+SIF EXP:Ｖ経験 == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合クスコはできない（サドならＯＫ）
 IF ASSIPLAY

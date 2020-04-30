@@ -42,8 +42,8 @@ Q = LOCAL:4
 R = LOCAL:5
 S = LOCAL:6
 
-BASE:MASTER:4 -= 400
-BASE:TARGET:0 -= 500
+BASE:MASTER:耐力 -= 400
+BASE:TARGET:体力 -= 500
 
 ;地の文カット
 SIF CFLAG:99 == 1
@@ -98,19 +98,19 @@ JUEL:7 += Q
 PRINTFORML %PALAMNAME:16%の珠＋{ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 15}
 JUEL:16 += ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 15
 PRINTFORML %EXPNAME:21% ＋{S}
-EXP:21 += S
+EXP:奉仕快楽経験 += S
 IF R >= 10
 	LOCAL = 5
 	SIF ABL:TARGET:料理技能 > 99
 		LOCAL = ABL:TARGET:料理技能 / 20
 	PRINTFORML %EXPNAME:90% ＋{LOCAL}
-	EXP:90 += LOCAL
+	EXP:家事経験 += LOCAL
 ELSEIF R >= 5
 	PRINTFORML %EXPNAME:90% ＋4
-	EXP:90 += 4
+	EXP:家事経験 += 4
 ELSE
 	PRINTFORML %EXPNAME:90% ＋3
-	EXP:90 += 3
+	EXP:家事経験 += 3
 ENDIF
 ;好感度増加（浪費癖/10をマイナスし、Aがマイナスになる場合好感度は増加しない）
 A = RAND:51 + 50 - (ABL:浪費癖 / 10)

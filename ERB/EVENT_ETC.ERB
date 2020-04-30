@@ -21,7 +21,7 @@ ENDIF
 SIF CFLAG:TARGET:100
 	RETURN 0
 
-IF EXP:0 == 0 && EXP:1 > 0 && TALENT:30
+IF EXP:Ｖ経験 == 0 && EXP:Ａ経験 > 0 && TALENT:30
 	CFLAG:TARGET:100 = 1
 	PRINTW （貞操を守れるなら、少しは後ろを攻められてもよいと思っているようだ・・・）
 ENDIF
@@ -39,28 +39,28 @@ IF TARGET >= 0
 	TRYCALLFORM EVENT_NEXTDAY_K{NO:TARGET}
 
 	;不思議の根持ちで精液経験が1200以上で生える(1200以上はパッチまとめ仕様でJ本体では300以上)
-	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:120 == 1 && EXP:TARGET:20 >= 1200
+	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:120 == 1 && EXP:TARGET:精液経験 >= 1200
 		CALL EVENT_FUTA_F
 	ENDIF
 
 	;具現持ちでレズ経験10000以上で生える(10000以上はパッチまとめ仕様でJ本体では2500以上)
-	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:127 == 1 && EXP:TARGET:40 >= 10000
+	IF TALENT:121 == 0 && TALENT:122 == 0 && TALENT:TARGET:127 == 1 && EXP:TARGET:レズ経験 >= 10000
 		CALL EVENT_FUTA_G
 	ENDIF
 
 	;放尿経験３０以上でおもらし癖がつく
 	IF TALENT:57 == 0
-		SIF TALENT:TARGET:132 && EXP:TARGET:31 >= 10 
+		SIF TALENT:TARGET:132 && EXP:TARGET:放尿経験 >= 10 
 			CALL EVENT_MORASI
-		SIF TALENT:TARGET:132 == 0 && EXP:TARGET:31 >= 30 
+		SIF TALENT:TARGET:132 == 0 && EXP:TARGET:放尿経験 >= 30 
 			CALL EVENT_MORASI
 	ENDIF
 
 	;反発感情３があり、かつ[幼稚]である時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が５以上になる
-	IF TALENT:TARGET:132 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:50 >= 5
+	IF TALENT:TARGET:132 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:異常経験 >= 5
 		CALL EVENT_YOUJI
 	;反発感情３があり、かつ[幼稚]でなく、蓬莱人がない時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が７以上に加え露出５とおもらし癖がつく
-	ELSEIF TALENT:TARGET:128 == 0 && TALENT:TARGET:132 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:50 >= 7 && TALENT:57 == 1
+	ELSEIF TALENT:TARGET:128 == 0 && TALENT:TARGET:132 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:異常経験 >= 7 && TALENT:57 == 1
 		CALL EVENT_YOUJI
 	ENDIF
 ENDIF
@@ -206,9 +206,9 @@ PRINTFORMW （む･･･なんだこれ？）
 TFLAG:13 = 49
 CALL SELF_KOJO
 PRINTFORM %CALLNAME:TARGET%は
-SIF TALENT:TARGET:132 && EXP:TARGET:31 >= 10
+SIF TALENT:TARGET:132 && EXP:TARGET:放尿経験 >= 10
 PRINTFORM おねしょを
-SIF TALENT:TARGET:132 == 0 && EXP:TARGET:31 >= 30 
+SIF TALENT:TARGET:132 == 0 && EXP:TARGET:放尿経験 >= 30 
 PRINTFORM 粗相を
 PRINTFORMW してしまったようだ…
 PRINTFORMW %CALLNAME:TARGET%は[おもらし癖]がついた。
@@ -253,12 +253,12 @@ ELSEIF ABL:Ｖ感覚 >= 5
 	PRINTFORML %CALLNAME:TARGET%は、自分の膣口を指で拡げ、恍惚としている。
 ENDIF
 
-IF EXP:52 == 0 
-	EXP:50 += 1
+IF EXP:Ｖ拡張経験 == 0 
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 ENDIF
 
-EXP:52 += 1
+EXP:Ｖ拡張経験 += 1
 PRINTL Ｖ拡張経験＋1
 
 WAIT
@@ -283,12 +283,12 @@ ELSEIF ABL:Ａ感覚 >= 5
 	PRINTFORML %CALLNAME:TARGET%は、自分の肛門を指で拡げ、恍惚としている。
 ENDIF
 
-IF EXP:53 == 0 
-	EXP:50 += 1
+IF EXP:Ａ拡張経験 == 0 
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 ENDIF
 
-EXP:53 += 1
+EXP:Ａ拡張経験 += 1
 PRINTL Ａ拡張経験＋1
 
 WAIT
@@ -311,20 +311,20 @@ ELSEIF ABL:Ｖ感覚 >= 5 && ABL:Ａ感覚 >= 5
 	PRINTFORML 両手の指が、すっかり拡がって中身を曝している、膣口と肛門の周りを撫で回している。
 ENDIF
 
-IF EXP:52 == 0 
-	EXP:50 += 1
+IF EXP:Ｖ拡張経験 == 0 
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 ENDIF
 
-EXP:52 += 1
+EXP:Ｖ拡張経験 += 1
 PRINTL Ｖ拡張経験＋1
 
-IF EXP:53 == 0 
-	EXP:50 += 1
+IF EXP:Ａ拡張経験 == 0 
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 ENDIF
 
-EXP:53 += 3
+EXP:Ａ拡張経験 += 3
 PRINTL Ａ拡張経験＋3
 
 WAIT
@@ -333,21 +333,21 @@ WAIT
 A = TFLAG:35 * 100
 O = A * 5
 IF A > 0
-	IF EXP:54 <= EXPLV:0
+	IF EXP:噴乳経験 <= EXPLV:0
 		O = A * 1
-	ELSEIF EXP:54 <= EXPLV:1
+	ELSEIF EXP:噴乳経験 <= EXPLV:1
 		O = A * 2
-	ELSEIF EXP:54 <= EXPLV:2
+	ELSEIF EXP:噴乳経験 <= EXPLV:2
 		O = A * 3
-	ELSEIF EXP:54 <= EXPLV:3
+	ELSEIF EXP:噴乳経験 <= EXPLV:3
 		O = A * 4
-	ELSEIF EXP:54 <= EXPLV:4
+	ELSEIF EXP:噴乳経験 <= EXPLV:4
 		O = A * 5
 	ELSE
 		O = A * 6
 	ENDIF
 	
-	SIF TALENT:0
+	SIF TALENT:処女
 		O = O * 2
 	
 	PRINTFORML 搾乳器を使って%CALLNAME:TARGET%から{A}ccの母乳を搾り出した。
@@ -374,19 +374,19 @@ ELSE
 ENDIF
 
 ;EXP:Ｖ経験をみる
-IF EXP:0 < EXPLV:1
+IF EXP:Ｖ経験 < EXPLV:1
 	TIMES B , 0.20
 	C = 3000
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	TIMES B , 0.60
 	C = 2000
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES B , 1.00
 	C = 1500
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES B , 1.20
 	C = 1000
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES B , 1.40
 	C = 500
 ELSE
@@ -395,15 +395,15 @@ ELSE
 ENDIF
 
 ;EXP:産卵経験をみる
-IF EXP:60 < EXPLV:2
+IF EXP:産卵経験 < EXPLV:2
 	TIMES B , 0.80
 	TIMES C , 1.50
 	D = 1
-ELSEIF EXP:60 < EXPLV:4
+ELSEIF EXP:産卵経験 < EXPLV:4
 	TIMES B , 1.00
 	TIMES C , 1.00
 	D = 1+RAND:2
-ELSEIF EXP:60 < EXPLV:5
+ELSEIF EXP:産卵経験 < EXPLV:5
 	TIMES B , 1.20
 	TIMES C , 0.80
 	D = 1+RAND:4
@@ -429,10 +429,10 @@ IF TALENT:134
 	PRINTFORMW %NAME:TARGET%は[%TALENTNAME:134%]を失った
 	TALENT:134 = 0
 	;妊娠イベントで減った体力の最大値が回復
-	MAXBASE:0 += 500
-	EXP:0 += 5
-	EXP:52 += 1
-	EXP:60 += 1
+	MAXBASE:体力 += 500
+	EXP:Ｖ経験 += 5
+	EXP:Ｖ拡張経験 += 1
+	EXP:産卵経験 += 1
 	JUEL:1 += B
 	JUEL:6 += (B+C)/2
 	JUEL:9 += C
@@ -446,12 +446,12 @@ IF TALENT:134
 	PRINTL 産卵経験＋１
 	IF CFLAG:12 == 0
 		A = 1+RAND:2
-		EXP:50 += A
+		EXP:異常経験 += A
 		PRINTFORML 異常経験＋{A}
 	ENDIF
 	;入手した卵を展示室に
 	;CALL GET_EGG
-	BASE:0 = 100
+	BASE:体力 = 100
 ELSE
 	PRINTFORMW 黄色のキャンディを飲み込んだ%NAME:TARGET%は急激な体の変調を訴えた
 	PRINTFORMW %NAME:TARGET%のお腹は見る見るのうちに妊婦のように膨れ上がった
@@ -472,17 +472,17 @@ ELSE
 	PRINTL Ｖ経験＋５
 	PRINTL Ｖ拡張経験１
 	IF CFLAG:12 == 0
-		EXP:60 += D
+		EXP:産卵経験 += D
 		PRINTFORML %PALAMNAME:60%＋{D}
 	ENDIF
-	BASE:0 = 100
-	BASE:0 -= 10*(D+1)
+	BASE:体力 = 100
+	BASE:体力 -= 10*(D+1)
 ENDIF
 
 
 ;鳥、昆虫、両生類、爬虫類以外のキャラで異常経験5以下、あるいは親愛、相愛、服従なしだとランダムで狂気が付く
 IF NO:TARGET != 24 && NO:TARGET != 25 && NO:TARGET != 32 && NO:TARGET != 43 && NO:TARGET != 44 && NO:TARGET != 78
-	IF EXP:50 < 6 && (TALENT:88 == 0 || TALENT:89 == 0 || TALENT:180 == 0) && TALENT:123 == 0 && RAND:3 != 0
+	IF EXP:異常経験 < 6 && (TALENT:88 == 0 || TALENT:89 == 0 || TALENT:180 == 0) && TALENT:123 == 0 && RAND:3 != 0
 		PRINTFORMW %NAME:TARGET%は発狂してしまった
 		TALENT:123 = 1
 	ENDIF

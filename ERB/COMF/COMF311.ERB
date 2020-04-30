@@ -157,7 +157,7 @@ IF TALENT:36
 	TIMES B , 0.90
 ENDIF
 ;処女
-IF EXP:0 == 0
+IF EXP:Ｖ経験 == 0
 	TIMES A , 1.50
 	TIMES B , 1.50
 ENDIF
@@ -204,7 +204,7 @@ PRINTFORML 甘い言葉
 STR:0 = 甘い言葉
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:1 += 70
+LOSEBASE:気力 += 70
 
 ;固定で獲得するソース
 SOURCE:18 = 50

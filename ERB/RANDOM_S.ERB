@@ -10,15 +10,15 @@ REPEAT 26
 	
 	IF O == 0
 		;体力
-		MAXBASE:0 += 100 * RAND:11
+		MAXBASE:体力 += 100 * RAND:11
 	ELSEIF O == 1
 		;気力
-		MAXBASE:1 += 100 * RAND:11
+		MAXBASE:気力 += 100 * RAND:11
 	ELSEIF O == 2
 		;処女
 		P = RAND:4
 		SIF P > 0
-			TALENT:0 = 1
+			TALENT:処女 = 1
 	ELSEIF O == 3
 		;臆病・気丈
 		P = RAND:4
@@ -387,31 +387,31 @@ REND
 REPEAT 5
 	O = COUNT
 	
-	IF O == 0 && TALENT:0 == 0
+	IF O == 0 && TALENT:処女 == 0
 		;Ｖ経験
 		P = RAND:8
 		SIF P > 0
-			EXP:0 += 1 + RAND:2
+			EXP:Ｖ経験 += 1 + RAND:2
 	ELSEIF O == 1
 		;Ａ経験
 		P = RAND:8
 		SIF P > 0
-			EXP:1 += RAND:4
+			EXP:Ａ経験 += RAND:4
 	ELSEIF O == 2
 		;絶頂経験
 		P = RAND:4
 		SIF P > 0
-			EXP:2 += RAND:5
+			EXP:絶頂経験 += RAND:5
 	ELSEIF O == 3
 		;自慰経験
 		P = RAND:4
 		SIF P > 0
-			EXP:10 += RAND:7
+			EXP:自慰経験 += RAND:7
 	ELSEIF O == 4
 		;異常経験
 		P = RAND:4
 		SIF P > 0
-			EXP:50 += RAND:2
+			EXP:異常経験 += RAND:2
 	ENDIF
 REND
 ;反発感情
@@ -420,10 +420,10 @@ SIF P == 0
 	MARK:3 += RAND:4
 
 ;体力、気力が上昇していた場合、全快させる
-SIF BASE:0 != MAXBASE:0
-	BASE:0 = MAXBASE:0
-SIF BASE:1 != MAXBASE:1
-	BASE:1 = MAXBASE:1
+SIF BASE:体力 != MAXBASE:体力
+	BASE:体力 = MAXBASE:体力
+SIF BASE:気力 != MAXBASE:気力
+	BASE:気力 = MAXBASE:気力
 
 ;TARGETを戻す
 TARGET = LOCAL
@@ -452,15 +452,15 @@ REPEAT 23
 	
 	IF O == 0
 		;体力
-		MAXBASE:MASTER:0 += 100 * RAND:11
+		MAXBASE:MASTER:体力 += 100 * RAND:11
 	ELSEIF O == 1
 		;気力
-		MAXBASE:MASTER:1 += 100 * RAND:11
+		MAXBASE:MASTER:気力 += 100 * RAND:11
 	ELSEIF O == 2
 		;処女
 		P = RAND:4
 		SIF P > 0
-			TALENT:MASTER:0 = 1
+			TALENT:MASTER:処女 = 1
 	ELSEIF O == 3
 		;臆病・気丈
 		P = RAND:4
@@ -746,38 +746,38 @@ REND
 REPEAT 5
 	O = COUNT
 	
-	IF O == 0 && TALENT:MASTER:0 == 0
+	IF O == 0 && TALENT:MASTER:処女 == 0
 		;Ｖ経験
 		P = RAND:8
 		SIF P > 0
-			EXP:MASTER:0 += 1 + RAND:2
+			EXP:MASTER:Ｖ経験 += 1 + RAND:2
 	ELSEIF O == 1
 		;Ａ経験
 		P = RAND:8
 		SIF P > 0
-			EXP:MASTER:1 += RAND:4
+			EXP:MASTER:Ａ経験 += RAND:4
 	ELSEIF O == 2
 		;絶頂経験
 		P = RAND:4
 		SIF P > 0
-			EXP:MASTER:2 += RAND:5
+			EXP:MASTER:絶頂経験 += RAND:5
 	ELSEIF O == 3
 		;自慰経験
 		P = RAND:4
 		SIF P > 0
-			EXP:MASTER:10 += RAND:7
+			EXP:MASTER:自慰経験 += RAND:7
 	ELSEIF O == 4
 		;異常経験
 		P = RAND:4
 		SIF P > 0
-			EXP:MASTER:50 += RAND:2
+			EXP:MASTER:異常経験 += RAND:2
 	ENDIF
 REND
 
 ;体力、気力が上昇していた場合、全快させる
-SIF BASE:MASTER:0 != MAXBASE:MASTER:0
-	BASE:MASTER:0 = MAXBASE:MASTER:0
-SIF BASE:MASTER:1 != MAXBASE:MASTER:1
-	BASE:MASTER:1 = MAXBASE:MASTER:1
+SIF BASE:MASTER:体力 != MAXBASE:MASTER:体力
+	BASE:MASTER:体力 = MAXBASE:MASTER:体力
+SIF BASE:MASTER:気力 != MAXBASE:MASTER:気力
+	BASE:MASTER:気力 = MAXBASE:MASTER:気力
 
 RETURN 1

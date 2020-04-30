@@ -516,13 +516,13 @@ CALL TRAIN_MESSAGE_B
 
 ;強化版は体力消費が増える
 IF TFLAG:17 >= 2
-	LOSEBASE:0 += 20
+	LOSEBASE:体力 += 20
 ELSEIF TFLAG:17 == 1
-	LOSEBASE:0 += 15
+	LOSEBASE:体力 += 15
 ELSE
-	LOSEBASE:0 += 10
+	LOSEBASE:体力 += 10
 ENDIF
-LOSEBASE:1 += 60
+LOSEBASE:気力 += 60
 
 
 ;固定で獲得するソース、歓楽
@@ -626,7 +626,7 @@ IF TFLAG:17 != 0
 		A:1 += 1
 		;愛情経験も付加
 		PRINTFORML %EXPNAME:23%+1
-		EXP:23 += 1
+		EXP:愛情経験 += 1
 	ENDIF
 ENDIF
 

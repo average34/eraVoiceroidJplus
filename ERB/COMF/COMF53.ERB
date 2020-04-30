@@ -60,7 +60,7 @@ IF TFLAG:70 == 0
 ;初回はカウントに入れない
 	TFLAG:70 += 1
 
-	EXP:50 += 1
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 ELSEIF TFLAG:70 > 0 && TFLAG:70 <= K
 	S = TFLAG:70 + 10
@@ -77,8 +77,8 @@ ELSEIF TFLAG:70 > 0 && TFLAG:70 <= K
 
 	;パラメータ変化
 	;TODO バランス調整(ビデオによるパラメータ変化は考慮しないか？)
-	LOSEBASE:0 += 0
-	LOSEBASE:1 += 50
+	LOSEBASE:体力 += 0
+	LOSEBASE:気力 += 50
 
 	A = 370
 	B = 1750
@@ -155,7 +155,7 @@ ELSEIF TFLAG:70 > 0 && TFLAG:70 <= K
 	UP:5 += A
 	UP:10 += SOURCE:14
 
-	EXP:50 += 1
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋１
 
 ENDIF

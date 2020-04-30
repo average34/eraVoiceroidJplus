@@ -95,8 +95,8 @@ STR:0 = 公開野外ライブ
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 500
-LOSEBASE:1 += 500
+LOSEBASE:体力 += 500
+LOSEBASE:気力 += 500
 
 A = 750
 B = 900
@@ -280,7 +280,7 @@ T += 1 + RAND:5
 
 PRINTS EXPNAME:93
 PRINTFORML +{T}
-EXP:93 += T
+EXP:歌唱経験 += T
 
 RETURN 1
 
@@ -295,8 +295,8 @@ STR:0 = 公開野外ライブ
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 500
-LOSEBASE:1 += 500
+LOSEBASE:体力 += 500
+LOSEBASE:気力 += 500
 
 A = 1500
 B = 1000
@@ -424,7 +424,7 @@ T += 1 + RAND:3
 
 PRINTS EXPNAME:93
 PRINTFORML +{T}
-EXP:93 += T
+EXP:歌唱経験 += T
 
 RETURN 1
 
@@ -510,7 +510,7 @@ IF M < 10
 		V = 250
 	ENDIF
 	E = 2 + RAND:5
-	SIF TALENT:0
+	SIF TALENT:処女
 		V *= E
 ENDIF
 
@@ -519,9 +519,9 @@ O = D+E+F+(N/2)
 CALL TRAIN_MESSAGE_B
 
 IF E > 0
-	EXP:0 += E
-	IF TALENT:0 && EXP:0 == 0
-		EXP:50 += 3
+	EXP:Ｖ経験 += E
+	IF TALENT:処女 && EXP:Ｖ経験 == 0
+		EXP:異常経験 += 3
 		PRINTFORML 異常経験＋3
 	ENDIF
 	PRINTFORML Ｖ経験＋{E}
@@ -529,12 +529,12 @@ IF E > 0
 	STAIN:3 |= 4
 ENDIF
 IF D > 0
-	EXP:1 += D
+	EXP:Ａ経験 += D
 	PRINTFORML Ａ経験＋{D}
 	STAIN:4 |= 2
 	STAIN:4 |= 4
 ENDIF
-EXP:22 += F
+EXP:フェラ経験 += F
 PRINTFORML フェラ経験＋{F}
 SOURCE:6 += 150 * N
 SOURCE:14 += 150 * N
@@ -544,7 +544,7 @@ SOURCE:5 += 370 * N
 STAIN:0 |= 2
 STAIN:0 |= 4
 IF (D+E+F)/2 > 0
-	EXP:20 += (D+E+F)/2
+	EXP:精液経験 += (D+E+F)/2
 	PRINTFORML 精液経験＋{(D+E+F)/2}
 ENDIF
 SOURCE:0 += C

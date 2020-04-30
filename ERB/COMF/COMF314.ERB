@@ -34,8 +34,8 @@ ENDIF
 
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:0 += 30
-LOSEBASE:1 += 50
+LOSEBASE:体力 += 30
+LOSEBASE:気力 += 50
 
 ;炬燵を出す
 IF TEQUIP:7 == 0
@@ -157,10 +157,10 @@ IF RAND:4 == 0 && NO:TARGET != 5 && NO:TARGET != 12 && SELECTCOM != 368 && SELEC
 	TFLAG:13 = 100
 	IF RAND:2 == 0
 		TFLAG:17 = 1
-		BASE:0 = MAXBASE:0
-		BASE:4 = MAXBASE:4
-		BASE:PLAYER:0 = MAXBASE:PLAYER:0
-		BASE:PLAYER:4 = MAXBASE:PLAYER:4
+		BASE:体力 = MAXBASE:体力
+		BASE:耐力 = MAXBASE:耐力
+		BASE:PLAYER:体力 = MAXBASE:PLAYER:体力
+		BASE:PLAYER:耐力 = MAXBASE:PLAYER:耐力
 	ELSE
 		TFLAG:17 = 0
 	ENDIF
@@ -222,8 +222,8 @@ ENDIF
 
 ;チルノとレティの場合、苦しみます
 IF NO:TARGET == 5 || NO:TARGET == 12
-	LOSEBASE:0 += 55
-	LOSEBASE:1 += 100
+	LOSEBASE:体力 += 55
+	LOSEBASE:気力 += 100
 
 	;ABL:マゾっ気をみる
 	IF ABL:マゾっ気 == 0
@@ -285,14 +285,14 @@ ELSE
 		ENDIF
 
 		;性能が高いので凶悪なトラップ付き
-		LOSEBASE:0 += 3
-		LOSEBASE:1 -= 60
+		LOSEBASE:体力 += 3
+		LOSEBASE:気力 -= 60
 		TFLAG:18 = 1
 	ELSE
 		;性能が高いので凶悪なトラップ付き
 		;火傷の可能性があったり火力調整が面倒だったりで効果は落ちます
-		LOSEBASE:0 += 10
-		LOSEBASE:1 -= 50
+		LOSEBASE:体力 += 10
+		LOSEBASE:気力 -= 50
 		TFLAG:18 = 0
 	ENDIF
 	

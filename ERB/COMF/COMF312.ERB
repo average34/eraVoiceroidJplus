@@ -449,11 +449,11 @@ CALL TRAIN_MESSAGE_B
 
 ;幼児退行、幼稚持ちは気力消費が減るが体力消費が若干増える
 IF (TALENT:131 == 1 || TALENT:132 == 1)
-	LOSEBASE:0 += 15
-	LOSEBASE:1 += 50
+	LOSEBASE:体力 += 15
+	LOSEBASE:気力 += 50
 ELSE
-	LOSEBASE:0 += 10
-	LOSEBASE:1 += 60
+	LOSEBASE:体力 += 10
+	LOSEBASE:気力 += 60
 ENDIF
 
 
@@ -535,7 +535,7 @@ ELSE
 	ENDIF
 	;母性所持の場合、愛情経験を＋
 	IF TALENT:136
-		EXP:23 += 1
+		EXP:愛情経験 += 1
 		SIF TFLAG:17 == 0
 			PRINTFORML %EXPNAME:23%+1
 		TIMES SOURCE:5, 1.50
@@ -561,14 +561,14 @@ IF TFLAG:17 != 0
 		;幼児退行、幼稚所持の場合、愛情経験を＋
 		IF (TALENT:131 != 0 || TALENT:132 != 0)
 			PRINTFORML %EXPNAME:23%+1
-			EXP:23 += 1
+			EXP:愛情経験 += 1
 		ENDIF
 	ELSE
 		;母性所持の場合、愛情経験を＋
 		IF TALENT:136 != 0
 			TIMES SOURCE:5 , 1.50
 			PRINTFORML %EXPNAME:23%+2
-			EXP:23 += 1
+			EXP:愛情経験 += 1
 		ENDIF
 	ENDIF
 ENDIF

@@ -17,7 +17,7 @@ SIF TALENT:MASTER:122
 SIF ITEM:40 == 0 && NOITEM == 0
 	RETURN 0
 ;マスターが処女だとダメ
-SIF TALENT:MASTER:0 == 1
+SIF TALENT:MASTER:処女 == 1
 	RETURN 0
 ;アイマスク中だと意味が無いのでだめ
 SIF TEQUIP:43
@@ -71,8 +71,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 50
-LOSEBASE:1 += 150
+LOSEBASE:体力 += 50
+LOSEBASE:気力 += 150
 
 SOURCE:8 = 1000
 SOURCE:13 = 500
@@ -252,7 +252,7 @@ TFLAG:37 += A / 2
 ;女同士ならレズ経験が増える
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTFORML %EXPNAME:40%＋4
-	EXP:40 += 4
+	EXP:レズ経験 += 4
 ENDIF
 
 TFLAG:100 = 1

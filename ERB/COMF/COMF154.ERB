@@ -14,7 +14,7 @@ SIF TFLAG:44 == 0
 SIF 1
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1)
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1)
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -23,7 +23,7 @@ SIF TEQUIP:90
 SIF TEQUIP:71
 	RETURN 1
 ;体力が1000未満では装着不可能
-SIF BASE:0 < 1000 && TEQUIP:71 == 0
+SIF BASE:体力 < 1000 && TEQUIP:71 == 0
 	RETURN 0
 ;バイブ挿入中はダメ
 SIF TEQUIP:11
@@ -32,10 +32,10 @@ SIF TEQUIP:11
 SIF TEQUIP:61
 	RETURN 0
 ;気力が０の時はダメ
-SIF BASE:1 == 0
+SIF BASE:気力 == 0
 	RETURN 0
 ;Ｖ拡張経験少ないとダメ
-SIF EXP:52 < 5
+SIF EXP:Ｖ拡張経験 < 5
 	RETURN 0
 ;オトコだとダメ
 SIF TALENT:122
@@ -44,7 +44,7 @@ SIF TALENT:122
 SIF TALENT:149 && TALENT:MASTER:125 == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合焼芋責めはできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -62,8 +62,8 @@ PRINTL 焼芋責め
 STR:0 = 焼芋責め
 
 
-LOSEBASE:0 += 600
-LOSEBASE:1 += 500
+LOSEBASE:体力 += 600
+LOSEBASE:気力 += 500
 
 SOURCE:12 = 1000
 SOURCE:13 = 1500
@@ -86,22 +86,22 @@ ELSE
 ENDIF
 
 ;EXP:Ｖ経験をみる
-IF EXP:0 < EXPLV:1
+IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 7000
 
-	EXP:50 += 2
+	EXP:異常経験 += 2
 	PRINTFORML %EXPNAME:50%＋１
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	TIMES SOURCE:1 , 0.60
 	SOURCE:6 = 3500
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES SOURCE:1 , 1.00
 	SOURCE:6 = 1000
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES SOURCE:1 , 1.20
 	SOURCE:6 = 250
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES SOURCE:1 , 1.40
 	SOURCE:6 = 50
 ELSE
@@ -164,8 +164,8 @@ SIF TALENT:100
 SIF TEQUIP:70 == 1
 	TIMES SOURCE:1 , 1.80
 
-EXP:0 += 3
-EXP:52 += 4
+EXP:Ｖ経験 += 3
+EXP:Ｖ拡張経験 += 4
 PRINTL Ｖ経験＋３
 PRINTL Ｖ拡張経験＋４
 
@@ -187,7 +187,7 @@ RETURN 1
 IF TEQUIP:71
 	PRINTFORML %CALLNAME:TARGET%の性器に突き刺さっているを大きな焼芋をゆっくりと引き抜いた。
 	PRINTFORM %CALLNAME:TARGET%
-	IF EXP:52 >= 100 && TALENT:76
+	IF EXP:Ｖ拡張経験 >= 100 && TALENT:76
 		PRINT の開発させきった膣は、さらなる快楽を貪るかのように焼芋に絡みつい
 	ELSEIF TALENT:85 && TALENT:76
 		PRINT は、芋から生えているひげのような根が膣内のひだを撫でられる度、まるで痙攣するかのように四肢をはねさせ
@@ -214,17 +214,17 @@ ELSE
 	ENDIF
 	PRINTL 拳よりも大きな焼芋をあてがった…
 	PRINTFORM %CALLNAME:TARGET%は
-	IF TALENT:0 && TALENT:85 && TALENT:76
+	IF TALENT:処女 && TALENT:85 && TALENT:76
 		PRINT 処女である事を疑いたくなるような淫靡な笑みを浮かべ、中に誘っているように腰を振っ
-	ELSEIF TALENT:0 && TALENT:85
+	ELSEIF TALENT:処女 && TALENT:85
 		PRINTFORM 目をまん丸に開いて%CALLNAME:PLAYER%の手にあるものを見つめたまま固まっ
-	ELSEIF TALENT:0 && TALENT:76
+	ELSEIF TALENT:処女 && TALENT:76
 		PRINT 処女である事もお構いなしに、自ら陰唇を大きく拡げて挿入されるのを待っ
-	ELSEIF TALENT:0 && TALENT:27
+	ELSEIF TALENT:処女 && TALENT:27
 		PRINT 目尻に涙を見せながら固く目を閉ざし、目の前の現実を否定するかのように首を左右に振っ
-	ELSEIF TALENT:0 && TALENT:40
+	ELSEIF TALENT:処女 && TALENT:40
 		PRINT 半狂乱になりながらこの責めからなんとか逃れようと懸命に抵抗し
-	ELSEIF TALENT:0
+	ELSEIF TALENT:処女
 		PRINT 顔面蒼白でこれから自分の性器に入れられる物体を見つめ
 	ELSEIF TALENT:85 && TALENT:76
 		PRINT 熱のこもった視線で“それ”を見つめ、自分から進んで膣口を大きく拡げている
@@ -248,8 +248,8 @@ PRINTL ＜焼芋挿入中＞
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
 
-LOSEBASE:0 += 100
-LOSEBASE:1 += 90
+LOSEBASE:体力 += 100
+LOSEBASE:気力 += 90
 
 ;ABL:Ｖ感覚をみる
 IF ABL:Ｖ感覚 == 0
@@ -268,16 +268,16 @@ ENDIF
 
 ;EXP:Ｖ経験をみる
 ;処女はありえない
-IF EXP:0 < EXPLV:2
+IF EXP:Ｖ経験 < EXPLV:2
 	TIMES A , 0.60
 	B = 240
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES A , 1.00
 	B = 120
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES A , 1.20
 	B = 60
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES A , 1.40
 	B = 30
 ELSE
@@ -352,13 +352,13 @@ SOURCE:6 += B
 
 ;自慰実行時は経験＋１
 IF SELECTCOM == 3
-	EXP:0 += 3
-	EXP:52 += 3
+	EXP:Ｖ経験 += 3
+	EXP:Ｖ拡張経験 += 3
 	PRINTL Ｖ経験＋３
 	PRINTL Ｖ拡張経験＋３
 ELSE
-	EXP:0 += 2
-	EXP:52 += 2
+	EXP:Ｖ経験 += 2
+	EXP:Ｖ拡張経験 += 2
 	PRINTL Ｖ経験＋２
 	PRINTL Ｖ拡張経験＋２
 ENDIF
@@ -368,11 +368,11 @@ TFLAG:73 += 1
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
+	EXP:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
+	EXP:ＢＬ経験 += 1
 ENDIF
 
 RETURN 1

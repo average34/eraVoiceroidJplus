@@ -31,10 +31,10 @@ TFLAG:30 += TFLAG:29 * Q
 
 ;射精
 REPEAT 5
-	SIF TFLAG:COUNT > 0 && EXP:20 >= EXPLV:3
+	SIF TFLAG:COUNT > 0 && EXP:精液経験 >= EXPLV:3
 		TFLAG:30 += TFLAG:COUNT
 REND
-SIF TFLAG:9 > 0 && EXP:20 >= EXPLV:3
+SIF TFLAG:9 > 0 && EXP:精液経験 >= EXPLV:3
 	TFLAG:30 += TFLAG:9
 
 ;主人と対象の能力を計算
@@ -238,7 +238,7 @@ IF TALENT:85 && ASSIPLAY == 0
 	TIMES SOURCE:17 , 1.30
 	TIMES SOURCE:18 , 1.50
 	TIMES SOURCE:24 , 1.30
-	IF TALENT:0 && TFLAG:20
+	IF TALENT:処女 && TFLAG:20
 		L = 0
 		R = NO:PLAYER
 		SIF (RELATION:R == 0 || RELATION:R >= 100) && SOURCE:6 < 2000 && SOURCE:15 <= 3000
@@ -271,7 +271,7 @@ IF TALENT:88 && ASSIPLAY == 0
 	TIMES SOURCE:17 , 1.50
 	TIMES SOURCE:18 , 2.00
 	TIMES SOURCE:24 , 1.50
-	IF TALENT:0 && TFLAG:20
+	IF TALENT:処女 && TFLAG:20
 		L = 0
 		R = NO:PLAYER
 		SIF (RELATION:R == 0 || RELATION:R >= 100) && SOURCE:6 < 2000 && SOURCE:15 <= 3000
@@ -306,7 +306,7 @@ CALL EVENTCHECK_TALENT_CHANGE
 ;欲望10以上、異常経験100以上で淫乱、ただし、初期状態から最低でも10以上増えていないとダメ(好感度は必要なし)
 IF TARGET >= 0
 	IF MARK:3 == 0
-		IF  ABL:親密 >= 15 && ABL:奉仕精神 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && (EXP:50 - CFLAG:22) <= 0 && TALENT:TARGET:88 == 0
+		IF  ABL:親密 >= 15 && ABL:奉仕精神 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && (EXP:異常経験 - CFLAG:22) <= 0 && TALENT:TARGET:88 == 0
 				PRINTFORMW %CALLNAME:TARGET%のこちらを見る目が変わった…
 				PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に心からの愛情を感じているようだ…
 				TFLAG:13 = 35
@@ -332,7 +332,7 @@ IF TARGET >= 0
 			;堕とした人数＋１
 			FLAG:30 += 1
 		ENDIF
-		IF ABL:欲望 >= 10 && EXP:50 >= 100 && (EXP:50 - CFLAG:22) >= 10 && TALENT:76 == 0
+		IF ABL:欲望 >= 10 && EXP:異常経験 >= 100 && (EXP:異常経験 - CFLAG:22) >= 10 && TALENT:76 == 0
 			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に与えられる快楽に溺れているようだ…
 			TFLAG:13 = 34
@@ -355,7 +355,7 @@ ENDIF
 
 IF TARGET >= 0
 	;被写経験が20以上で、人気が付く
-	IF EXP:92 >= 20 && TALENT:TARGET:126 == 0
+	IF EXP:被写経験 >= 20 && TALENT:TARGET:126 == 0
 		PRINTFORMW %CALLNAME:TARGET%のビデオが人気を博しているようだ…
 		TFLAG:13 = 39
 		CALL SELF_KOJO
@@ -410,7 +410,7 @@ FOR LOCAL, 0, CHARANUM
 	SIF TALENT:LOCAL:153 || TALENT:LOCAL:152
 		LOCAL:1 = 0
 NEXT
-IF (MARK:4 == 0 && (EXP:50 - CFLAG:22) <= 0)
+IF (MARK:4 == 0 && (EXP:異常経験 - CFLAG:22) <= 0)
 	IF (ABL:親密 >= 7 || CFLAG:2 >= 2000) && LOCAL:1
 		IF TALENT:32 == 1
 			PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
@@ -526,7 +526,7 @@ IF (ABL:親密 >= 7 || CFLAG:2 >= 2000)
 	ENDIF
 ENDIF
 ;親密10以上、奉仕精神6以上、好感度3000以上または恋慕あり、かつ愛情経験50以上
-IF ((ABL:親密 >= 10 && ABL:奉仕精神 >= 6 && CFLAG:2 >= 3000) || TALENT:85) && EXP:23 >= 50
+IF ((ABL:親密 >= 10 && ABL:奉仕精神 >= 6 && CFLAG:2 >= 3000) || TALENT:85) && EXP:愛情経験 >= 50
 	IF TALENT:11 == 1
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%との行為を受け入れ始めたようだ…
@@ -553,7 +553,7 @@ IF ((ABL:親密 >= 10 && ABL:奉仕精神 >= 6 && CFLAG:2 >= 3000) || TALENT:85)
 	ENDIF
 ENDIF
 ;親密15以上かつ奉仕精神15以上かつ恋人&恋慕かつ好感度10000以上かつ愛情経験500以上
-IF ABL:親密 >= 15 && ABL:奉仕精神 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && EXP:23 >= 500
+IF ABL:親密 >= 15 && ABL:奉仕精神 >= 15 && TALENT:153 && TALENT:85 && CFLAG:2 >= 10000 && EXP:愛情経験 >= 500
 	IF TALENT:82 == 1 && TALENT:MASTER:122
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に対する苦手意識が薄れたようだ…
@@ -574,7 +574,7 @@ ENDIF
 
 ;Ｍ感覚関係
 ;Ｍ感覚8以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
-IF TALENT:597 == 0 && ABL:Ｍ感覚 >= 8 && EXP:96 >= 300 && EX:6 >= 50
+IF TALENT:597 == 0 && ABL:Ｍ感覚 >= 8 && EXP:キス経験 >= 300 && EX:6 >= 50
 	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 	IF TALENT:85 == 1 || TALENT:76 == 1
 		PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にキスして欲しいとねだってきた…
@@ -588,7 +588,7 @@ IF TALENT:597 == 0 && ABL:Ｍ感覚 >= 8 && EXP:96 >= 300 && EX:6 >= 50
 	TALENT:596 = 0
 	TALENT:597 = 1
 ;親密10以上、奉仕精神10以上、Ｍ感覚8以上、奉仕快楽経験250以上、愛情経験100以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
-ELSEIF TALENT:589 == 0 && ABL:親密 >= 10 && ABL:奉仕精神 >= 10 && ABL:Ｍ感覚 >= 8 && EXP:21 >= 250 && EXP:23 >= 100 && EXP:96 >= 300 && EX:6 >= 50
+ELSEIF TALENT:589 == 0 && ABL:親密 >= 10 && ABL:奉仕精神 >= 10 && ABL:Ｍ感覚 >= 8 && EXP:奉仕快楽経験 >= 250 && EXP:愛情経験 >= 100 && EXP:キス経験 >= 300 && EX:6 >= 50
 	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 	IF TALENT:85 == 1 || TALENT:76 == 1
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%を抱き寄せて熱いキスを交わし始めた…
@@ -646,7 +646,7 @@ IF ABL:欲望 >= 10 && ABL:技巧 >= 10 && ABL:サドっ気 >= 6 && TFLAG:61 >= 
 	ENDIF
 ELSEIF ABL:欲望 >= A
 	;親密15以上技巧10以上キス経験500以上ならばキス魔
-	IF TALENT:155 == 0 && ABL:親密 >= 15 && ABL:技巧 >= 10 && EXP:96 >= 500
+	IF TALENT:155 == 0 && ABL:親密 >= 15 && ABL:技巧 >= 10 && EXP:キス経験 >= 500
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		PRINTFORMW %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を抱き寄せ、幾度も口付けを繰り返している…
 		TFLAG:13 = 69
@@ -654,7 +654,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %CALLNAME:TARGET%は【キス魔】を得た
 		TALENT:155 = 1
 	;Ａ感覚4以上、Ａ経験150以上、Ａ快楽経験300以上、今回調教中にA絶頂30回以上で尻穴狂い
-	ELSEIF TALENT:77 == 0 && ABL:Ａ感覚 >= 4 && EXP:1 >= 150 && EXP:32 >= 300 && EX:2 >= 30
+	ELSEIF TALENT:77 == 0 && ABL:Ａ感覚 >= 4 && EXP:Ａ経験 >= 150 && EXP:Ａ快楽経験 >= 300 && EX:2 >= 30
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:85 == 1 || TALENT:76 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にお尻をいじめて欲しいと懇願してきた…
@@ -702,7 +702,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫核】を得た
 		TALENT:75 = 1
 	;Ｖ感覚8以上、Ｖ経験300以上、主人がオトコかふたなり、今回調教中にＶ絶頂50回以上で淫壷
-	ELSEIF TALENT:74 == 0 && ABL:Ｖ感覚 >= 8 && EXP:0 >= 300 && TALENT:122 == 0 && (TALENT:MASTER:121 || TALENT:MASTER:122) && EX:1 >= 50
+	ELSEIF TALENT:74 == 0 && ABL:Ｖ感覚 >= 8 && EXP:Ｖ経験 >= 300 && TALENT:122 == 0 && (TALENT:MASTER:121 || TALENT:MASTER:122) && EX:1 >= 50
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:85 == 1 || TALENT:76 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に子宮の渇きを癒してほしいと縋りついてきた…
@@ -714,7 +714,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫壷】を得た
 		TALENT:74 = 1
 	;マゾっ気と露出癖が共に6以上、苦痛依存3、緊縛経験と苦痛快楽経験が両方とも150以上、異常経験が100以上、今回調教中にPALAM:苦痛が30000以上でマゾ
-	ELSEIF TALENT:79 == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:30 >= 150 && EXP:50 >= 100 && EXP:51 >= 150 && MARK:0 == 3 && PALAM:9 >= 30000
+	ELSEIF TALENT:79 == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:苦痛快楽経験 >= 150 && EXP:異常経験 >= 100 && EXP:緊縛経験 >= 150 && MARK:0 == 3 && PALAM:9 >= 30000
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:85 == 1 || TALENT:76 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にもっと激しく責め立てて欲しいとおねだりしてきた…
@@ -734,7 +734,7 @@ ENDIF
 @COMABLE_3P
 ;派生コマンドなので実際には意味はないが、念のため
 ;処女で、従順4以下・レズっ気4以下のASSIの場合3Pはできない（サドならＯＫ）
-IF EXP:0 == 0
+IF EXP:Ｖ経験 == 0
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合3Pはできない（サドならＯＫ）

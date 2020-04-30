@@ -52,10 +52,10 @@ IF TFLAG:44
 ELSE
 	A /= 2
 ENDIF
-BASE:2 += A
+BASE:射精 += A
 
-S = BASE:2
-EJAC = MAXBASE:2
+S = BASE:射精
+EJAC = MAXBASE:射精
 
 IF S > EJAC * 4
 	E = 4
@@ -70,22 +70,22 @@ ENDIF
 
 ;超大量射精
 IF E == 4
-	LOSEBASE:0 += 40
-	LOSEBASE:1 += 200
+	LOSEBASE:体力 += 40
+	LOSEBASE:気力 += 200
 
-	IF EXP:3 < EXPLV:1
+	IF EXP:射精経験 < EXPLV:1
 		SOURCE:12 += 40000
 		SOURCE:13 += 20000
-	ELSEIF EXP:3 < EXPLV:2
+	ELSEIF EXP:射精経験 < EXPLV:2
 		SOURCE:12 += 20000
 		SOURCE:13 += 16000
-	ELSEIF EXP:3 < EXPLV:3
+	ELSEIF EXP:射精経験 < EXPLV:3
 		SOURCE:12 += 14000
 		SOURCE:13 += 12000
-	ELSEIF EXP:3 < EXPLV:4
+	ELSEIF EXP:射精経験 < EXPLV:4
 		SOURCE:12 += 10000
 		SOURCE:13 += 8000
-	ELSEIF EXP:3 < EXPLV:5
+	ELSEIF EXP:射精経験 < EXPLV:5
 		SOURCE:12 += 6000
 		SOURCE:13 += 4000
 	ELSE
@@ -98,26 +98,26 @@ IF E == 4
 	PRINTL 精液経験＋2
 	PRINTL 射精経験＋4
 
-	EXP:20 += 2
-	EXP:3 += 4
+	EXP:精液経験 += 2
+	EXP:射精経験 += 4
 ;大量射精
 ELSEIF E == 2
-	LOSEBASE:0 += 20
-	LOSEBASE:1 += 100
+	LOSEBASE:体力 += 20
+	LOSEBASE:気力 += 100
 
-	IF EXP:3 < EXPLV:1
+	IF EXP:射精経験 < EXPLV:1
 		SOURCE:12 += 20000
 		SOURCE:13 += 10000
-	ELSEIF EXP:3 < EXPLV:2
+	ELSEIF EXP:射精経験 < EXPLV:2
 		SOURCE:12 += 10000
 		SOURCE:13 += 8000
-	ELSEIF EXP:3 < EXPLV:3
+	ELSEIF EXP:射精経験 < EXPLV:3
 		SOURCE:12 += 7000
 		SOURCE:13 += 6000
-	ELSEIF EXP:3 < EXPLV:4
+	ELSEIF EXP:射精経験 < EXPLV:4
 		SOURCE:12 += 5000
 		SOURCE:13 += 4000
-	ELSEIF EXP:3 < EXPLV:5
+	ELSEIF EXP:射精経験 < EXPLV:5
 		SOURCE:12 += 3000
 		SOURCE:13 += 2000
 	ELSE
@@ -130,25 +130,25 @@ ELSEIF E == 2
 	PRINTL 精液経験＋1
 	PRINTL 射精経験＋2
 
-	EXP:20 += 1
-	EXP:3 += 2
+	EXP:精液経験 += 1
+	EXP:射精経験 += 2
 ;通常の射精
 ELSEIF E == 1
-	LOSEBASE:1 += 40
+	LOSEBASE:気力 += 40
 
-	IF EXP:3 < EXPLV:1
+	IF EXP:射精経験 < EXPLV:1
 		SOURCE:12 += 10000
 		SOURCE:13 += 5000
-	ELSEIF EXP:3 < EXPLV:2
+	ELSEIF EXP:射精経験 < EXPLV:2
 		SOURCE:12 += 5000
 		SOURCE:13 += 4000
-	ELSEIF EXP:3 < EXPLV:3
+	ELSEIF EXP:射精経験 < EXPLV:3
 		SOURCE:12 += 2500
 		SOURCE:13 += 2000
-	ELSEIF EXP:3 < EXPLV:4
+	ELSEIF EXP:射精経験 < EXPLV:4
 		SOURCE:12 += 1600
 		SOURCE:13 += 1400
-	ELSEIF EXP:3 < EXPLV:5
+	ELSEIF EXP:射精経験 < EXPLV:5
 		SOURCE:12 += 800
 		SOURCE:13 += 500
 	ELSE
@@ -159,12 +159,12 @@ ELSEIF E == 1
 	PRINTS NAME:TARGET
 	PRINTL 射精
 	PRINTL 射精経験＋1
-	EXP:3 += 1
+	EXP:射精経験 += 1
 ENDIF
 
 ;射精経験0かつオトコ、不思議な根、具現を持ってない場合は射精すると異常経験+5
-IF EXP:3 == 0 && TALENT:122 == 0 && TALENT:120 == 0 && TALENT:127 == 0
-	EXP:50 += 5
+IF EXP:射精経験 == 0 && TALENT:122 == 0 && TALENT:120 == 0 && TALENT:127 == 0
+	EXP:異常経験 += 5
 	PRINTL 異常経験＋5
 ENDIF
 
@@ -174,9 +174,9 @@ CALL IN_VAGINA_CHECK_T
 ;Ｐに精液汚れ
 STAIN:2 |= 4
 
-BASE:2 -= EJAC
-SIF BASE:2 >= EJAC
-	BASE:2 = EJAC-1
+BASE:射精 -= EJAC
+SIF BASE:射精 >= EJAC
+	BASE:射精 = EJAC-1
 
 ;調教対象が射精フラグ
 TFLAG:10 = 1
@@ -253,10 +253,10 @@ IF TFLAG:44
 ELSE
 	A /= 2
 ENDIF
-BASE:3 += A
+BASE:母乳 += A
 
-S = BASE:3
-EJAC = MAXBASE:3
+S = BASE:母乳
+EJAC = MAXBASE:母乳
 
 IF  S > EJAC * 2
 	E = 2
@@ -268,22 +268,22 @@ ENDIF
 
 ;大量噴乳
 IF E == 2
-	LOSEBASE:0 += 20
-	LOSEBASE:1 += 100
+	LOSEBASE:体力 += 20
+	LOSEBASE:気力 += 100
 
-	IF EXP:54 < EXPLV:1
+	IF EXP:噴乳経験 < EXPLV:1
 		SOURCE:12 += 20000
 		SOURCE:13 += 10000
-	ELSEIF EXP:54 < EXPLV:2
+	ELSEIF EXP:噴乳経験 < EXPLV:2
 		SOURCE:12 += 10000
 		SOURCE:13 += 8000
-	ELSEIF EXP:54 < EXPLV:3
+	ELSEIF EXP:噴乳経験 < EXPLV:3
 		SOURCE:12 += 7000
 		SOURCE:13 += 6000
-	ELSEIF EXP:54 < EXPLV:4
+	ELSEIF EXP:噴乳経験 < EXPLV:4
 		SOURCE:12 += 5000
 		SOURCE:13 += 4000
-	ELSEIF EXP:54 < EXPLV:5
+	ELSEIF EXP:噴乳経験 < EXPLV:5
 		SOURCE:12 += 3000
 		SOURCE:13 += 2000
 	ELSE
@@ -298,8 +298,8 @@ IF E == 2
 	IF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
-	ELSEIF (EXP:54 - CFLAG:25) == 0
-		EXP:50 += 5
+	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
+		EXP:異常経験 += 5
 		PRINTL 異常経験＋5
 	ENDIF
 	;母乳回収
@@ -318,13 +318,13 @@ IF E == 2
 	ENDIF
 	SIF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
 		CFLAG:25 += 2
-	EXP:54 += 2
+	EXP:噴乳経験 += 2
 	;Ｂに母乳汚れ
 	STAIN:5 |= 16
 
-	BASE:3 -= EJAC*2
-	SIF BASE:3 >= EJAC
-		BASE:3 = EJAC-1
+	BASE:母乳 -= EJAC*2
+	SIF BASE:母乳 >= EJAC
+		BASE:母乳 = EJAC-1
 
 	;調教対象が噴乳フラグ
 	TFLAG:11 += 2
@@ -336,21 +336,21 @@ IF E == 2
 	EX:4 += 1
 ;通常の噴乳
 ELSEIF E == 1
-	LOSEBASE:1 += 40
+	LOSEBASE:気力 += 40
 
-	IF EXP:54 < EXPLV:1
+	IF EXP:噴乳経験 < EXPLV:1
 		SOURCE:12 += 10000
 		SOURCE:13 += 5000
-	ELSEIF EXP:54 < EXPLV:2
+	ELSEIF EXP:噴乳経験 < EXPLV:2
 		SOURCE:12 += 5000
 		SOURCE:13 += 4000
-	ELSEIF EXP:54 < EXPLV:3
+	ELSEIF EXP:噴乳経験 < EXPLV:3
 		SOURCE:12 += 2500
 		SOURCE:13 += 2000
-	ELSEIF EXP:54 < EXPLV:4
+	ELSEIF EXP:噴乳経験 < EXPLV:4
 		SOURCE:12 += 1600
 		SOURCE:13 += 1400
-	ELSEIF EXP:54 < EXPLV:5
+	ELSEIF EXP:噴乳経験 < EXPLV:5
 		SOURCE:12 += 800
 		SOURCE:13 += 500
 	ELSE
@@ -365,8 +365,8 @@ ELSEIF E == 1
 	IF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
-	ELSEIF (EXP:54 - CFLAG:25) == 0
-		EXP:50 += 5
+	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
+		EXP:異常経験 += 5
 		PRINTL 異常経験＋5
 	ENDIF
 	;母乳回収
@@ -385,13 +385,13 @@ ELSEIF E == 1
 	ENDIF
 	SIF CFLAG:111 == NO:MASTER && (TALENT:85 || (TALENT:85 == 0 && TALENT:153 && MARK:3 < 2)) && (TALENT:134 || TALENT:135 || TALENT:136)
 		CFLAG:25 += 1
-	EXP:54 += 1
+	EXP:噴乳経験 += 1
 	;Ｂに母乳汚れ
 	STAIN:5 |= 16
 
-	BASE:3 -= EJAC
-	SIF BASE:3 >= EJAC
-		BASE:3 = EJAC-1
+	BASE:母乳 -= EJAC
+	SIF BASE:母乳 >= EJAC
+		BASE:母乳 = EJAC-1
 
 	;調教対象が噴乳フラグ
 	TFLAG:11 += 1
@@ -1218,21 +1218,21 @@ ENDIF
 
 ;異常経験(＝淫乱度合とみなす)による、抑鬱の軽減
 ;でもゆかり様だけはなかなか軽減しない
-IF EXP:50 <= 0
+IF EXP:異常経験 <= 0
 	TIMES UP:13 , 1.30
-ELSEIF EXP:50 < (10 + TALENT:201 * 255)
+ELSEIF EXP:異常経験 < (10 + TALENT:201 * 255)
 	TIMES UP:13 , 1.10
-ELSEIF EXP:50 < (50 + TALENT:201 * 500)
+ELSEIF EXP:異常経験 < (50 + TALENT:201 * 500)
 	TIMES UP:13 , 0.90
-ELSEIF EXP:50 < (100 + TALENT:201 * 1000)
+ELSEIF EXP:異常経験 < (100 + TALENT:201 * 1000)
 	TIMES UP:13 , 0.70
-ELSEIF EXP:50 < (200 + TALENT:201 * 2000)
+ELSEIF EXP:異常経験 < (200 + TALENT:201 * 2000)
 	TIMES UP:13 , 0.40
-ELSEIF EXP:50 < (400 + TALENT:201 * 4000)
+ELSEIF EXP:異常経験 < (400 + TALENT:201 * 4000)
 	TIMES UP:13 , 0.10
-ELSEIF EXP:50 < (700 + TALENT:201 * 7000)
+ELSEIF EXP:異常経験 < (700 + TALENT:201 * 7000)
 	TIMES UP:13 , 0.01
-ELSEIF EXP:50 < (1500 + TALENT:201 * 15000)
+ELSEIF EXP:異常経験 < (1500 + TALENT:201 * 15000)
 	TIMES UP:13 , 0.001
 ELSE
 	TIMES UP:13 , 0.0001
@@ -1338,11 +1338,11 @@ IF TFLAG:22 == 3
 	;実行者が【サド】持ち サドっ気が非常に高い場合正常位等でも苦痛依存LV3取得、異常経験増加してしまうためコメントアウト
 	;IF TALENT:PLAYER:83
 	;	PRINTFORML %EXPNAME:50%＋３
-	;	EXP:50 += 3
+	;	EXP:異常経験 += 3
 	;針の実行者が【針さばき】持ち
 	IF TALENT:PLAYER:53 && SELECTCOM == 42
 		PRINTFORML %EXPNAME:50%＋３
-		EXP:50 += 3
+		EXP:異常経験 += 3
 	ENDIF
 ENDIF
 
@@ -1520,7 +1520,7 @@ IF TFLAG:100
 	IF E
 		PRINT 奉仕快楽経験+
 		PRINTVL E
-		EXP:21 += E
+		EXP:奉仕快楽経験 += E
 		TFLAG:26 = E
 	ENDIF
 ENDIF
@@ -1558,7 +1558,7 @@ ENDIF
 IF E
 	PRINT 苦痛快楽経験+
 	PRINTVL E
-	EXP:30 += E
+	EXP:苦痛快楽経験 += E
 	TFLAG:27 = E
 ENDIF
 
@@ -1612,7 +1612,7 @@ ENDIF
 IF E
 	PRINT Ａ快楽経験+
 	PRINTVL E
-	EXP:32 += E
+	EXP:Ａ快楽経験 += E
 	TFLAG:128 = E
 ENDIF
 
@@ -1665,36 +1665,36 @@ REPEAT 10
 	ENDIF
 REND
 
-IF EXP:40 > 1 && ABL:レズっ気 < 1 && ABL:欲望 >= 1
+IF EXP:レズ経験 > 1 && ABL:レズっ気 < 1 && ABL:欲望 >= 1
 	ABL:レズっ気 = 1
 	PRINTFORML %ABLNAME:9%LV1になった
-ELSEIF EXP:40 > 5 && ABL:レズっ気 < 2 && ABL:欲望 >= 2
+ELSEIF EXP:レズ経験 > 5 && ABL:レズっ気 < 2 && ABL:欲望 >= 2
 	ABL:レズっ気 = 2
 	PRINTFORML %ABLNAME:9%LV2になった
-ELSEIF EXP:40 > 20 && ABL:レズっ気 < 3 && ABL:欲望 >= 3
+ELSEIF EXP:レズ経験 > 20 && ABL:レズっ気 < 3 && ABL:欲望 >= 3
 	ABL:レズっ気 = 3
 	PRINTFORML %ABLNAME:9%LV3になった
-ELSEIF EXP:40 > 40 && ABL:レズっ気 < 4 && ABL:欲望 >= 4
+ELSEIF EXP:レズ経験 > 40 && ABL:レズっ気 < 4 && ABL:欲望 >= 4
 	ABL:レズっ気 = 4
 	PRINTFORML %ABLNAME:9%LV4になった
-ELSEIF EXP:40 > 100 && ABL:レズっ気 < 5 && ABL:欲望 >= 5
+ELSEIF EXP:レズ経験 > 100 && ABL:レズっ気 < 5 && ABL:欲望 >= 5
 	ABL:レズっ気 = 5
 	PRINTFORML %ABLNAME:9%LV5になった
 ENDIF
 
-IF EXP:41 > 1 && ABL:ＢＬっ気 < 1 && ABL:欲望 >= 1
+IF EXP:ＢＬ経験 > 1 && ABL:ＢＬっ気 < 1 && ABL:欲望 >= 1
 	ABL:ＢＬっ気 = 1
 	PRINTFORML %ABLNAME:13%LV1になった
-ELSEIF EXP:41 > 5 && ABL:ＢＬっ気 < 2 && ABL:欲望 >= 2
+ELSEIF EXP:ＢＬ経験 > 5 && ABL:ＢＬっ気 < 2 && ABL:欲望 >= 2
 	ABL:ＢＬっ気 = 2
 	PRINTFORML %ABLNAME:13%LV2になった
-ELSEIF EXP:41 > 20 && ABL:ＢＬっ気 < 3 && ABL:欲望 >= 3
+ELSEIF EXP:ＢＬ経験 > 20 && ABL:ＢＬっ気 < 3 && ABL:欲望 >= 3
 	ABL:ＢＬっ気 = 3
 	PRINTFORML %ABLNAME:13%LV3になった
-ELSEIF EXP:41 > 40 && ABL:ＢＬっ気 < 4 && ABL:欲望 >= 4
+ELSEIF EXP:ＢＬ経験 > 40 && ABL:ＢＬっ気 < 4 && ABL:欲望 >= 4
 	ABL:ＢＬっ気 = 4
 	PRINTFORML %ABLNAME:13%LV4になった
-ELSEIF EXP:41 > 100 && ABL:ＢＬっ気 < 5 && ABL:欲望 >= 5
+ELSEIF EXP:ＢＬ経験 > 100 && ABL:ＢＬっ気 < 5 && ABL:欲望 >= 5
 	ABL:ＢＬっ気 = 5
 	PRINTFORML %ABLNAME:13%LV5になった
 ENDIF

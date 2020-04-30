@@ -367,21 +367,21 @@ ENDIF
 CALL GET_BATTLE_POWER_LIMIT
 
 ;魔力(魔力による戦闘力は素質の影響を受けない)
-IF BASE:T:5 <= 100
-	P += BASE:T:5
-ELSEIF BASE:T:5 <= 200
-	P += BASE:T:5 * 3
-ELSEIF BASE:T:5 <= 400
-	P += BASE:T:5 * 5
-ELSEIF BASE:T:5 <= 800
-	P += BASE:T:5 * 8
-ELSEIF BASE:T:5 <= 5000
-	P += BASE:T:5 * 12
+IF BASE:T:魔力 <= 100
+	P += BASE:T:魔力
+ELSEIF BASE:T:魔力 <= 200
+	P += BASE:T:魔力 * 3
+ELSEIF BASE:T:魔力 <= 400
+	P += BASE:T:魔力 * 5
+ELSEIF BASE:T:魔力 <= 800
+	P += BASE:T:魔力 * 8
+ELSEIF BASE:T:魔力 <= 5000
+	P += BASE:T:魔力 * 12
 ELSE
-	IF BASE:T:5 >= 588235294117647
+	IF BASE:T:魔力 >= 588235294117647
 		P += 999999999999999999
 	ELSE
-		P += BASE:T:5 * 17
+		P += BASE:T:魔力 * 17
 	ENDIF
 ENDIF
 
@@ -574,75 +574,75 @@ Q = 0
 IF ABL:T:戦闘技能 <= 1
 	P += 2000 + 2000 * ABL:T:戦闘技能
 	Q = 5
-	IF EXP:T:95 >= (20 + 20 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (20 + 20 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (15 + 15 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (15 + 15 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSEIF ABL:T:戦闘技能 <= 3
 	P += 4000 * ABL:T:戦闘技能
 	Q = 6
-	IF EXP:T:95 >= (35 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (35 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (25 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (25 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSEIF ABL:T:戦闘技能 <= 5
 	P += 8000 * ABL:T:戦闘技能
 	Q = 7
-	IF EXP:T:95 >= (50 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (50 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (35 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (35 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSEIF ABL:T:戦闘技能 <= 8
 	P += 12000 * ABL:T:戦闘技能
 	Q = 8
-	IF EXP:T:95 >= (65 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (65 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (45 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (45 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSEIF ABL:T:戦闘技能 <= 11
 	P += 18000 * ABL:T:戦闘技能
 	Q = 9
-	IF EXP:T:95 >= (80 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (80 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (55 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (55 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSEIF ABL:T:戦闘技能 <= 25
 	P += 30000 * ABL:T:戦闘技能
 	Q = 10
-	IF EXP:T:95 >= (90 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (90 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (65 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (65 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSE
 	P += 50000 * ABL:T:戦闘技能
 	Q = 12
-	IF EXP:T:95 >= (100 * ABL:T:戦闘技能)
+	IF EXP:T:戦闘経験 >= (100 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (80 * ABL:T:戦闘技能)
+	ELSEIF EXP:T:戦闘経験 >= (80 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ENDIF
 
 
 ;戦闘経験で値引き
-IF EXP:T:95 <= 100
-	P -= EXP:T:95 * 3 * Q
-ELSEIF EXP:T:95 <= 300
-	P -= EXP:T:95 * 4 * Q
-ELSEIF EXP:T:95 <= 500
-	P -= EXP:T:95 * 5 * Q
-ELSEIF EXP:T:95 <= 1000
-	P -= EXP:T:95 * 6 * Q
-ELSEIF EXP:T:95 <= 2000
-	P -= EXP:T:95 * 7 * Q
+IF EXP:T:戦闘経験 <= 100
+	P -= EXP:T:戦闘経験 * 3 * Q
+ELSEIF EXP:T:戦闘経験 <= 300
+	P -= EXP:T:戦闘経験 * 4 * Q
+ELSEIF EXP:T:戦闘経験 <= 500
+	P -= EXP:T:戦闘経験 * 5 * Q
+ELSEIF EXP:T:戦闘経験 <= 1000
+	P -= EXP:T:戦闘経験 * 6 * Q
+ELSEIF EXP:T:戦闘経験 <= 2000
+	P -= EXP:T:戦闘経験 * 7 * Q
 ELSE
-	P -= EXP:T:95 * 8 * Q
+	P -= EXP:T:戦闘経験 * 8 * Q
 ENDIF
 
 ;戦闘素質で割引
@@ -1154,10 +1154,10 @@ SIF NO:A == 99
 ;キス未経験付加
 TALENT:A:151 = 1
 ;初期異常経験を記憶
-CFLAG:A:22 = EXP:A:50
+CFLAG:A:22 = EXP:A:異常経験
 ;初期噴乳経験を記録
 SIF TALENT:A:130 == 0
-	CFLAG:A:25 = EXP:A:54
+	CFLAG:A:25 = EXP:A:噴乳経験
 ;初期好感度を決定
 CFLAG:A:2 = RAND:50 - 40
 ;初期戦闘技術を決定
@@ -1188,11 +1188,11 @@ CFLAG:A:13 = CFLAG:MASTER:13
 
 ;初期の耐力と魔力を計算
 ;耐力＝体力を基準値として、絶頂経験で増加
-MAXBASE:A:4 = MAXBASE:A:0 * (100 + EXP:A:2) / 100
+MAXBASE:A:耐力 = MAXBASE:A:体力 * (100 + EXP:A:絶頂経験) / 100
 ;魔力＝気力の10%を基準値として、精液経験で増加
-MAXBASE:A:5 = MAXBASE:A:1 / 10 * (50 + EXP:A:20) / 50
-BASE:A:4 = MAXBASE:A:4
-BASE:A:5 = MAXBASE:A:5
+MAXBASE:A:魔力 = MAXBASE:A:気力 / 10 * (50 + EXP:A:精液経験) / 50
+BASE:A:耐力 = MAXBASE:A:耐力
+BASE:A:魔力 = MAXBASE:A:魔力
 
 ;SPキャラ加入時、通常状態のSPキャラにエンゲージリングを贈っていた場合、
 ;SPキャラとして加入後エンゲージリングが贈れなくなってしまう為初期化
@@ -1210,42 +1210,42 @@ ENDIF
 ;陰毛なし
 ;ショウタ、アイ、きりたん、ウナ、ヒメ、ミコト
 IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81, 82, 83)
-	BASE:ARG:8 = 0
-	MAXBASE:ARG:8 = 0
+	BASE:ARG:陰毛 = 0
+	MAXBASE:ARG:陰毛 = 0
 	TALENT:ARG:65 = 1
 ;陰毛通常
 ;コウ、セイカ、イタコ、そら、タカハシ、ギャラ子
 ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 12, 13, 52, 80)
-	BASE:ARG:8 = 1000
-	MAXBASE:ARG:8 = 1000
+	BASE:ARG:陰毛 = 1000
+	MAXBASE:ARG:陰毛 = 1000
 	TALENT:ARG:65 = 0
 ;陰毛少なめ
 ;マキ、ゆかり、ずん子、茜、葵、あかり、ついな、ささら、つづみ、ＯＮＥ、ＩＡ、flower
 ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 14, 50, 51, 53, 54, 84)
-	BASE:ARG:8 = 300
-	MAXBASE:ARG:8 = 300
+	BASE:ARG:陰毛 = 300
+	MAXBASE:ARG:陰毛 = 300
 	TALENT:ARG:65 = 0
 ;マキ様, ゆかり様
 ELSEIF CFLAG:ARG:0 && GROUPMATCH(NO:ARG, 3, 4)
-	BASE:ARG:8 = 300
-	MAXBASE:ARG:8 = 300
+	BASE:ARG:陰毛 = 300
+	MAXBASE:ARG:陰毛 = 300
 	TALENT:ARG:65 = 0
 ;その他のキャラ
 ELSE
 	;小人体型は陰毛上限0、[パイパン]
 	IF TALENT:ARG:149
-		BASE:ARG:8 = 0
-		MAXBASE:ARG:8 = 0
+		BASE:ARG:陰毛 = 0
+		MAXBASE:ARG:陰毛 = 0
 		TALENT:ARG:65 = 1
 	;小柄体型は陰毛上限300
 	ELSEIF TALENT:ARG:100
-		BASE:ARG:8 = 300
-		MAXBASE:ARG:8 = 300
+		BASE:ARG:陰毛 = 300
+		MAXBASE:ARG:陰毛 = 300
 		TALENT:ARG:65 = 0
 	;それ以外は陰毛上限1000
 	ELSE
-		BASE:ARG:8 = 1000
-		MAXBASE:ARG:8 = 1000
+		BASE:ARG:陰毛 = 1000
+		MAXBASE:ARG:陰毛 = 1000
 		TALENT:ARG:65 = 0
 	ENDIF
 ENDIF
@@ -1287,9 +1287,9 @@ IF TALENT:TARGET:152
 		ENDCATCH
 		
 		;気力半分回復
-		BASE:1 += MAXBASE:1 / 2
-		SIF BASE:1 > MAXBASE:1
-			BASE:1 = MAXBASE:1
+		BASE:気力 += MAXBASE:気力 / 2
+		SIF BASE:気力 > MAXBASE:気力
+			BASE:気力 = MAXBASE:気力
 		
 		;ウフフ開始
 		TFLAG:44 = 1
@@ -1318,9 +1318,9 @@ IF TALENT:TARGET:152
 		ENDCATCH
 		
 		;気力半分回復
-		BASE:1 += MAXBASE:1 / 2
-		SIF BASE:1 > MAXBASE:1
-			BASE:1 = MAXBASE:1
+		BASE:気力 += MAXBASE:気力 / 2
+		SIF BASE:気力 > MAXBASE:気力
+			BASE:気力 = MAXBASE:気力
 		
 		;ウフフ開始
 		TFLAG:44 = 1
@@ -1346,7 +1346,7 @@ ELSE
 			TALENT:152 = 1
 		ENDIF
 		;気力全快
-		BASE:1 = MAXBASE:1
+		BASE:気力 = MAXBASE:気力
 
 		TFLAG:44 = 1
 
@@ -1366,9 +1366,9 @@ ELSE
 		PRINTL  
 
 		;気力半分回復
-		BASE:1 += MAXBASE:1 / 2
-		SIF BASE:1 > MAXBASE:1
-			BASE:1 = MAXBASE:1
+		BASE:気力 += MAXBASE:気力 / 2
+		SIF BASE:気力 > MAXBASE:気力
+			BASE:気力 = MAXBASE:気力
 
 		TFLAG:44 = 1
 		;映画館から追い出される
@@ -1521,7 +1521,7 @@ IF TFLAG:45
 ENDIF
 
 ;相手が非処女で、こちらが童貞
-IF TALENT:0 == 0 && TALENT:MASTER:154
+IF TALENT:処女 == 0 && TALENT:MASTER:154
 	A += 5
 ENDIF
 

@@ -6,8 +6,8 @@ STR:0 = アナルフィスト
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 600
-LOSEBASE:1 += 300
+LOSEBASE:体力 += 600
+LOSEBASE:気力 += 300
 
 SOURCE:6 = 1200
 SOURCE:12 = 1200
@@ -58,19 +58,19 @@ ELSE
 ENDIF
 
 ;EXP:Ａ経験をみる
-IF EXP:1 < EXPLV:1
+IF EXP:Ａ経験 < EXPLV:1
 	TIMES SOURCE:2 , 0.10
 	SOURCE:6 = 20000
-ELSEIF EXP:1 < EXPLV:2
+ELSEIF EXP:Ａ経験 < EXPLV:2
 	TIMES SOURCE:2 , 0.30
 	SOURCE:6 = 12000
-ELSEIF EXP:1 < EXPLV:3
+ELSEIF EXP:Ａ経験 < EXPLV:3
 	TIMES SOURCE:2 , 0.50
 	SOURCE:6 = 5000
-ELSEIF EXP:1 < EXPLV:4
+ELSEIF EXP:Ａ経験 < EXPLV:4
 	TIMES SOURCE:2 , 1.00
 	SOURCE:6 = 1800
-ELSEIF EXP:1 < EXPLV:5
+ELSEIF EXP:Ａ経験 < EXPLV:5
 	TIMES SOURCE:2 , 1.40
 	SOURCE:6 = 1000
 ELSE
@@ -131,12 +131,12 @@ ELSEIF TALENT:106
 ENDIF
 
 ;処女で貞操観念
-IF EXP:0 == 0 && TALENT:30
+IF EXP:Ｖ経験 == 0 && TALENT:30
 	SOURCE:13 /= 3
 ENDIF
 
 
-EXP:1 += 25
+EXP:Ａ経験 += 25
 PRINTL Ａ経験＋２５
 
 CALL EVENTKAKUTYOU_A

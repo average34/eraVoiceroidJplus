@@ -238,7 +238,7 @@ ENDIF
 ;猫舌キス（自分が猫舌）
 IF TALENT:PLAYER:54
 	PRINTFORM 痛みを与えないよう注意し、%CALLNAME:TARGET%の口に舌を入れ
-	IF ABL:親密 >= 2 && EXP:40 >= 1000 && TALENT:PLAYER:122 == 0
+	IF ABL:親密 >= 2 && EXP:レズ経験 >= 1000 && TALENT:PLAYER:122 == 0
 		PRINTFORMW 、舌先をつつき合いながら唾液を交換した…
 	ELSEIF ABL:親密 >= 2
 		PRINTFORMW ると、%CALLNAME:TARGET%は舌の棘を舌先でつついてきた…
@@ -248,7 +248,7 @@ IF TALENT:PLAYER:54
 ;猫舌キス（相手が猫舌）
 ELSEIF TALENT:54
 	PRINTFORM %CALLNAME:TARGET%の口に舌を入れ、ざらつく舌を舌でそっと押
-	IF ABL:親密 >= 2 && EXP:40 >= 1000 && TALENT:PLAYER:122 == 0
+	IF ABL:親密 >= 2 && EXP:レズ経験 >= 1000 && TALENT:PLAYER:122 == 0
 		PRINTFORMW し、優しく舐めながら唾液を交換した…
 	ELSEIF ABL:親密 >= 2
 		PRINTFORMW すと、%CALLNAME:TARGET%は傷付けないよう舌の力を抜いた…
@@ -257,7 +257,7 @@ ELSEIF TALENT:54
 	ENDIF
 ELSE
 	PRINTFORM %CALLNAME:TARGET%の口腔を隅々まで舐め回
-	IF ABL:親密 >= 2 && EXP:40 >= 1000 && TALENT:PLAYER:122 == 0
+	IF ABL:親密 >= 2 && EXP:レズ経験 >= 1000 && TALENT:PLAYER:122 == 0
 		PRINTFORMW し、ねっとりと舌を絡めあいながら唾液を交換した…
 	ELSEIF ABL:親密 >= 2
 		PRINTFORMW すと、%CALLNAME:TARGET%も積極的に舌を絡めてきた…
@@ -268,7 +268,7 @@ ENDIF
 ;指挿入れ
 @TRAIN_MESSAGE_COM8
 PRINTFORM %CALLNAME:TARGET%の
-IF EXP:0 == 0
+IF EXP:Ｖ経験 == 0
 	PRINT 男を知らない
 ELSEIF PALAM:3 >= PALAMLV:4
 	PRINT 濡れそぼった
@@ -295,18 +295,18 @@ ENDIF
 ;猫舌アナル舐め
 IF TALENT:PLAYER:54
 	PRINTFORM %CALLNAME:TARGET%の
-	SIF EXP:1 <= 10
+	SIF EXP:Ａ経験 <= 10
 		PRINT 硬く閉ざされた
 	PRINT アヌスを舌先で小刻みにくすぐ
-	SIF EXP:1 >= 100 && PALAM:5 >= PALAMLV:3
+	SIF EXP:Ａ経験 >= 100 && PALAM:5 >= PALAMLV:3
 		PRINT り、筒状にした舌を穴の中まで挿し入れてや
 	PRINTW った…
 ELSE
 	PRINTFORM %CALLNAME:TARGET%の
-	SIF EXP:1 <= 10
+	SIF EXP:Ａ経験 <= 10
 		PRINT 硬く閉ざされた
 	PRINT アヌスを丁寧に舐めほぐし
-	SIF EXP:1 >= 100 && PALAM:5 >= PALAMLV:3
+	SIF EXP:Ａ経験 >= 100 && PALAM:5 >= PALAMLV:3
 		PRINT 、舌先を突き入れて穴の中までかきまわしてやっ
 	PRINTW た…
 ENDIF
@@ -373,7 +373,7 @@ ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 21 || PREVCOM == 24 || PREVCOM == 25
 		TFLAG:31 = 2
 ELSE
 	PRINTFORM %CALLNAME:TARGET%の
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		PRINT 男を知らない
 	ELSEIF PALAM:3 >= PALAMLV:4
 		PRINT 濡れそぼった
@@ -410,7 +410,7 @@ ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 24 || PREVCOM == 25 || PREVCOM == 34
 		TFLAG:31 = 2
 ELSE
 	PRINTFORM 後ろから%CALLNAME:TARGET%の
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		PRINT 男を知らない
 	ELSEIF PALAM:3 >= PALAMLV:4
 		PRINT 濡れそぼった
@@ -451,7 +451,7 @@ IF TFLAG:60 && PREVCOM == 23 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFL
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニスをきつく食い締めたまま、執拗に腰を振りたてた…
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニスを強引に、
-	SIF EXP:PLAYER:0 == 0
+	SIF EXP:PLAYER:Ｖ経験 == 0
 		PRINT 男を受け入れた事のない
 	PRINTFORMW ヴァギナの奥まで咥えこんだ…
 ENDIF
@@ -753,14 +753,14 @@ ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 24 || PREVCOM == 25)
 	PRINTFORMW %CALLNAME:MASTER%は挿入したまま横になり、下から腰を突き上げた…
 ELSE
 	PRINTFORM %CALLNAME:TARGET%は%CALLNAME:PLAYER%の上にまたがり、ゆっくりと腰を下ろし
-	IF TALENT:100 && EXP:0 == 0
+	IF TALENT:100 && EXP:Ｖ経験 == 0
 		PRINT 、男を知らない幼いワレメでペニスを飲み込んでいった…
-	ELSEIF EXP:0 == 0
+	ELSEIF EXP:Ｖ経験 == 0
 		PRINT 、男を知らない秘裂でペニスを飲み込んでいった…
 	ELSE
 		PRINT てきた…
 	ENDIF
-	IF EXP:0 >= EXPLV:3
+	IF EXP:Ｖ経験 >= EXPLV:3
 		PRINTL  
 		PRINTFORM %CALLNAME:TARGET%は
 		SIF TALENT:100
@@ -801,7 +801,7 @@ ELSE
 		PRINT 粘液にまみれた
 		PRINT アヌスでゆっくりとモノを飲み込んでいった…
 ENDIF
-	IF EXP:0 >= EXPLV:3
+	IF EXP:Ｖ経験 >= EXPLV:3
 		PRINTL  
 		PRINTFORM %CALLNAME:TARGET%は
 		SIF TALENT:100
@@ -918,7 +918,7 @@ IF TFLAG:60 && PREVCOM == 56
 	PRINTFORMW %CALLNAME:TARGET%に見せつけながら、%CALLNAME:ASSI%を犯し続けた…
 ELSE
 	PRINTFORM %CALLNAME:TARGET%に見せつけながら、%CALLNAME:ASSI%の
-	IF EXP:ASSI:0 == 0
+	IF EXP:ASSI:Ｖ経験 == 0
 		PRINT 初めてを
 	ELSE
 		PRINT ヴァギナを
@@ -1423,20 +1423,20 @@ ENDIF
 
 ;バードキス
 @TRAIN_MESSAGE_COM340
-IF EXP:96 >= 50 && RAND:3 == 0
+IF EXP:キス経験 >= 50 && RAND:3 == 0
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%と何度も何度も口づけあった…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%に軽く口づけた…
 ENDIF
 
 IF TFLAG:18 == 1
-	IF EXP:96 >= 50
+	IF EXP:キス経験 >= 50
 		PRINTFORML %CALLNAME:TARGET%は何やら物足りなさそうにしている…
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%は頬を赤く染めている…
 	ENDIF
 ELSEIF TFLAG:18 == -1
-	IF EXP:96 >= 50
+	IF EXP:キス経験 >= 50
 		PRINTFORML ……どうやら、%CALLNAME:TARGET%には少し物足りなかったようだ…
 	ELSE
 		PRINTFORML ……%CALLNAME:TARGET%は恥ずかしがってそっぽを向いてしまった…
@@ -1448,13 +1448,13 @@ ENDIF
 PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%の口を、自分の口で塞いだ…
 
 IF TFLAG:18 == 1
-	IF EXP:96 >= 50
+	IF EXP:キス経験 >= 50
 		PRINTFORML %CALLNAME:TARGET%は何やら物足りなさそうにしている…
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%は頬を赤く染めている…
 	ENDIF
 ELSEIF TFLAG:18 == -1
-	IF EXP:96 >= 50
+	IF EXP:キス経験 >= 50
 		PRINTFORML ……どうやら、%CALLNAME:TARGET%には少し物足りなかったようだ…
 	ELSE
 		PRINTFORML ……キスをしようとして顔をぶつけてしまった…
@@ -1467,9 +1467,9 @@ ENDIF
 IF TFLAG:45
 	;相手側主導
 	PRINTFORM %CALLNAME:TARGET%は%CALLNAME:PLAYER%の口腔を隅々まで舐め回
-	IF EXP:96 >= 50 && RAND:2 == 0
+	IF EXP:キス経験 >= 50 && RAND:2 == 0
 		PRINTFORMW し、ねっとりと舌を絡め、唾液を交換しようとしてきた…
-	ELSEIF EXP:96 >= 50
+	ELSEIF EXP:キス経験 >= 50
 		PRINTFORMW し、積極的に舌を絡めてきた…
 	ELSE
 		PRINTFORMW した…
@@ -1477,9 +1477,9 @@ IF TFLAG:45
 ELSE
 	;主人公側主導
 	PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%の口腔を隅々まで舐め回
-	IF EXP:96 >= 50 && RAND:2 == 0
+	IF EXP:キス経験 >= 50 && RAND:2 == 0
 		PRINTFORMW し、ねっとりと舌を絡めあいながら唾液を交換した…
-	ELSEIF EXP:96 >= 50
+	ELSEIF EXP:キス経験 >= 50
 		PRINTFORMW すと、%CALLNAME:TARGET%も積極的に舌を絡めてきた…
 	ELSE
 		PRINTFORMW した…
@@ -1487,7 +1487,7 @@ ELSE
 ENDIF
 
 IF TFLAG:18 == 1
-	IF EXP:96 >= 50
+	IF EXP:キス経験 >= 50
 		PRINTFORML %CALLNAME:TARGET%は何やら物足りなさそうにしている…
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%は頬を赤く染めている…
@@ -1758,14 +1758,14 @@ ELSE
 		ENDIF
 	;手で射精
 	ELSEIF TFLAG:1 == 1
-		SIF EXP:20 == 0
+		SIF EXP:精液経験 == 0
 			PRINT 驚きの表情をうかべる
 		SIF ABL:精液中毒 > 2
 			PRINT 恍惚の表情をうかべる
 		PRINTFORML %CALLNAME:TARGET%に精液が降りかかっていった…
 	;手で大量射精
 	ELSEIF TFLAG:1 == 2
-		SIF EXP:20 == 0
+		SIF EXP:精液経験 == 0
 			PRINT 驚きの表情をうかべる
 		SIF ABL:精液中毒 > 2
 			PRINT 恍惚の表情をうかべる
@@ -1937,9 +1937,9 @@ IF TFLAG:29 >= 3 && (TEQUIP:22 || TALENT:57) && TEQUIP:97
 	PRINTFORML 触手と%CALLNAME:TARGET%の尿道口に生じた僅かな隙間から水滴が滴り、
 	PRINTFORML 小さな水溜りを作りあげた…
 	PRINTFORML %EXPNAME:31%＋１
-	EXP:31 += 1
+	EXP:放尿経験 += 1
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		SIF A > 10
 			A = 10
 		CFLAG:82 += A
@@ -1957,9 +1957,9 @@ ELSEIF TFLAG:29 >= 7 && TEQUIP:22 && TALENT:57
 	ENDIF
 	PRINTFORML どうやら排尿行為そのものに快楽を感じているようだ…
 	PRINTFORML %EXPNAME:31%＋５
-	EXP:31 += 5
+	EXP:放尿経験 += 5
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 5
 		SIF A > 10
 			A = 10
@@ -1983,9 +1983,9 @@ ELSEIF TFLAG:29 >= 7 && TEQUIP:22
 		PRINTFORML 痙攣する%CALLNAME:TARGET%の尿道口から噴水のように尿が噴き出した…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋４
-	EXP:31 += 4
+	EXP:放尿経験 += 4
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 4
 		SIF A > 10
 			A = 10
@@ -2009,9 +2009,9 @@ ELSEIF TFLAG:29 >= 7 && TALENT:57
 		PRINTFORML 痙攣する%CALLNAME:TARGET%の尿道口から勢い良く水流が迸り、弧を描いた…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋３
-	EXP:31 += 3
+	EXP:放尿経験 += 3
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 3
 		SIF A > 10
 			A = 10
@@ -2033,9 +2033,9 @@ ELSEIF TFLAG:29 >= 5 && TEQUIP:22 && TALENT:57
 		PRINTFORML ぐったりとした%CALLNAME:TARGET%の尿道口から噴水のように尿が噴き出した…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋４
-	EXP:31 += 4
+	EXP:放尿経験 += 4
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 4
 		SIF A > 10
 			A = 10
@@ -2059,9 +2059,9 @@ ELSEIF TFLAG:29 >= 5 && TEQUIP:22
 		PRINTFORML ぐったりとした%CALLNAME:TARGET%の尿道口から勢い良く水流が迸り、弧を描いた…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋３
-	EXP:31 += 3
+	EXP:放尿経験 += 3
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 3
 		SIF A > 10
 			A = 10
@@ -2085,9 +2085,9 @@ ELSEIF TFLAG:29 >= 5 && TALENT:57
 		PRINTFORML ぐったりとした%CALLNAME:TARGET%の尿道口から水流が滴り、水溜りを作った…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋２
-	EXP:31 += 2
+	EXP:放尿経験 += 2
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 2
 		SIF A > 10
 			A = 10
@@ -2108,9 +2108,9 @@ ELSEIF TFLAG:29 >= 3 && TEQUIP:22 && TALENT:57
 		PRINTFORML 震える%CALLNAME:TARGET%の尿道口から勢い良く水流が迸り、弧を描いた…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋３
-	EXP:31 += 3
+	EXP:放尿経験 += 3
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 3
 		SIF A > 10
 			A = 10
@@ -2135,9 +2135,9 @@ ELSEIF TFLAG:29 >= 3 && TEQUIP:22
 		PRINTFORML 震える%CALLNAME:TARGET%の尿道口から水流が滴り、水溜りを作った…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋２
-	EXP:31 += 2
+	EXP:放尿経験 += 2
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 2
 		SIF A > 10
 			A = 10
@@ -2162,9 +2162,9 @@ ELSEIF TFLAG:29 >= 3 && TALENT:57
 		PRINTFORML 震える%CALLNAME:TARGET%の陰唇から尿がちょろちょろと漏れ出ている…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋１
-	EXP:31 += 1
+	EXP:放尿経験 += 1
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		SIF A > 10
 			A = 10
 		CFLAG:82 += A
@@ -2185,9 +2185,9 @@ ELSEIF TFLAG:29 >= 1 && TEQUIP:22 && TALENT:57
 		PRINTFORML %CALLNAME:TARGET%の尿道口から水流が滴り、水溜りを作った…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋２
-	EXP:31 += 2
+	EXP:放尿経験 += 2
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		A *= 2
 		SIF A > 10
 			A = 10
@@ -2209,9 +2209,9 @@ ELSEIF TFLAG:29 >= 1 && (TEQUIP:22 || TALENT:57)
 		PRINTFORML %CALLNAME:TARGET%の陰唇から尿がちょろちょろと漏れ出ている…
 	ENDIF
 	PRINTFORML %EXPNAME:31%＋１
-	EXP:31 += 1
+	EXP:放尿経験 += 1
 	IF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 		SIF A > 10
 			A = 10
 		CFLAG:82 += A
@@ -2252,15 +2252,15 @@ ENDIF
 $CHIREI_AYAYA
 ;地の文カット時のお漏らし処理
 IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
-	EXP:31 += 1
+	EXP:放尿経験 += 1
 	SIF TALENT:57 == 0
-		A = 1 + (EXP:31 / 10)
+		A = 1 + (EXP:放尿経験 / 10)
 	IF TFLAG:29 >= 3 && (TEQUIP:22 || TALENT:57) && TEQUIP:97
 	ELSEIF TFLAG:29 >= 1 && (TEQUIP:22 || TALENT:57) && TEQUIP:97
-		EXP:31 -= 1
+		EXP:放尿経験 -= 1
 		A = 0
 	ELSEIF TFLAG:29 >= 7 && TEQUIP:22 && TALENT:57
-		EXP:31 += 4
+		EXP:放尿経験 += 4
 		A *= 5
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2269,7 +2269,7 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 			TFLAG:262 += 4
 		ENDIF
 	ELSEIF TFLAG:29 >= 7 && TEQUIP:22
-		EXP:31 += 3
+		EXP:放尿経験 += 3
 		A *= 4
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2278,13 +2278,13 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 			TFLAG:262 += 3
 		ENDIF
 	ELSEIF TFLAG:29 >= 7 && TALENT:57
-		EXP:31 += 2
+		EXP:放尿経験 += 2
 		IF UNDERWARED() && TEQUIP:20 == 0
 			TFLAG:262 += 2
 		ENDIF
 		A *= 3
 	ELSEIF P >= 5 && TEQUIP:22 && TALENT:57
-		EXP:31 += 3
+		EXP:放尿経験 += 3
 		A *= 4
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2293,7 +2293,7 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 			TFLAG:262 += 3
 		ENDIF
 	ELSEIF TFLAG:29 >= 5 && TEQUIP:22
-		EXP:31 += 2
+		EXP:放尿経験 += 2
 		A *= 3
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2302,13 +2302,13 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 			TFLAG:262 += 2
 		ENDIF
 	ELSEIF TFLAG:29 >= 5 && TALENT:57
-		EXP:31 += 1
+		EXP:放尿経験 += 1
 		IF UNDERWARED() && TEQUIP:20 == 0
 			TFLAG:262 += 1
 		ENDIF
 		A *= 2
 	ELSEIF TFLAG:29 >= 3 && TEQUIP:22 && TALENT:57
-		EXP:31 += 2
+		EXP:放尿経験 += 2
 		A *= 3
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2317,7 +2317,7 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 			TFLAG:262 += 2
 		ENDIF
 	ELSEIF TFLAG:29 >= 3 && TEQUIP:22
-		EXP:31 += 1
+		EXP:放尿経験 += 1
 		A *= 2
 		IF TEQUIP:22
 			TEQUIP:22 = 0
@@ -2327,7 +2327,7 @@ IF (TFLAG:99 == H:2 || CFLAG:99 & 2) && TFLAG:29 >= 1
 		ENDIF
 	ELSEIF TFLAG:29 >= 3 && TALENT:57
 	ELSEIF TFLAG:29 >= 1 && TEQUIP:22 && TALENT:57
-		EXP:31 += 1
+		EXP:放尿経験 += 1
 		IF UNDERWARED() && TEQUIP:20 == 0
 			TFLAG:262 += 1
 		ENDIF

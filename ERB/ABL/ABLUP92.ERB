@@ -102,7 +102,7 @@ Z = 0
 ;習得の珠で上げる
 SIF JUEL:7 < A
 	I |= 1
-SIF EXP:93 < B
+SIF EXP:歌唱経験 < B
 	I |= 2
 IF I == 0
 	Z = 1
@@ -126,22 +126,22 @@ IF ABL:歌唱技能 == 0
 ELSEIF ABL:歌唱技能 == 1
 	A = 100
 	B = 25
-	SIF EXP:93 >= EXPLV:3
+	SIF EXP:歌唱経験 >= EXPLV:3
 		A = 35
 ELSEIF ABL:歌唱技能 == 2
 	A = 250
 	B = 40
-	SIF EXP:93 >= EXPLV:4
+	SIF EXP:歌唱経験 >= EXPLV:4
 		A = 200
 ELSEIF ABL:歌唱技能 == 3
 	A = 2000
 	B = 80
-	SIF EXP:93 >= EXPLV:5
+	SIF EXP:歌唱経験 >= EXPLV:5
 		A = 1700
 ELSEIF ABL:歌唱技能 == 4
 	A = 30000
 	B = 100
-	SIF EXP:93 >= EXPLV:5
+	SIF EXP:歌唱経験 >= EXPLV:5
 		A = 15000
 ELSE
 	A = 20000
@@ -209,6 +209,6 @@ ENDIF
 SIF B >= 9999
 	B = 9999
 ;倍の経験を持っているなら必要数軽減
-IF EXP:93 >= B * 2
+IF EXP:歌唱経験 >= B * 2
 	A = A / 2
 ENDIF

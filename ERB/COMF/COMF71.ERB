@@ -75,7 +75,7 @@ ENDIF
 G = 0
 SIF H < 0
 	H = 0
-SIF TALENT:0 && H > 3
+SIF TALENT:処女 && H > 3
 	H = 3
 ;-------------------------------------------------------------------------------
 ;  自慰分岐用一時関数Iの計算
@@ -127,13 +127,13 @@ IF I >= 3
 	ELSEIF G == 2
 		J = 2
 		;  潤滑LV3以下、処女もしくはV経験10以下の場合V自慰せずC自慰
-		SIF ( PALAM:3 < PALAMLV:3 || TALENT:0 || EXP:0 <= 10 )
+		SIF ( PALAM:3 < PALAMLV:3 || TALENT:処女 || EXP:Ｖ経験 <= 10 )
 			J = 1
 	;  A自慰分岐
 	ELSEIF G == 3
 		J = 3
 		;  潤滑LV2以下、A感覚0もしくはA経験10以下の場合A自慰せずC自慰
-		SIF ( PALAM:3 < PALAMLV:2 || ABL:Ａ感覚 == 0 || EXP:1 <= 10 )
+		SIF ( PALAM:3 < PALAMLV:2 || ABL:Ａ感覚 == 0 || EXP:Ａ経験 <= 10 )
 			J = 1
 	ELSE
 		I = 0
@@ -219,8 +219,8 @@ ENDIF
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 50
-LOSEBASE:1 += 90
+LOSEBASE:体力 += 50
+LOSEBASE:気力 += 90
 
 SOURCE:10 = 10
 SOURCE:12 = 250
@@ -333,19 +333,19 @@ ELSE
 ENDIF
 
 ;EXP:自慰経験をみる
-IF EXP:10 < EXPLV:1
+IF EXP:自慰経験 < EXPLV:1
 	TIMES SOURCE:8, 1.50
 	TIMES SOURCE:13, 0.20
-ELSEIF EXP:10 < EXPLV:2
+ELSEIF EXP:自慰経験 < EXPLV:2
 	TIMES SOURCE:8, 1.20
 	TIMES SOURCE:13, 0.50
-ELSEIF EXP:10 < EXPLV:3
+ELSEIF EXP:自慰経験 < EXPLV:3
 	TIMES SOURCE:8, 1.00
 	TIMES SOURCE:13, 0.80
-ELSEIF EXP:10 < EXPLV:4
+ELSEIF EXP:自慰経験 < EXPLV:4
 	TIMES SOURCE:8, 0.80
 	TIMES SOURCE:13, 1.00
-ELSEIF EXP:10 < EXPLV:5
+ELSEIF EXP:自慰経験 < EXPLV:5
 	TIMES SOURCE:8, 0.50
 	TIMES SOURCE:13, 1.20
 ELSE
@@ -413,9 +413,9 @@ ELSE
 ENDIF
 
 ;処女、貞操観念
-IF TALENT:0
+IF TALENT:処女
 	TIMES SOURCE:8 , 1.20
-	IF TALENT:0 == 1
+	IF TALENT:処女 == 1
 		TIMES SOURCE:8 , 2.00
 		TIMES SOURCE:13 , 2.00
 		SOURCE:12 += 2000
@@ -430,7 +430,7 @@ CALL TRAIN_MESSAGE_B
 CALL FINE_VIRGIN
 
 IF ABL:露出癖 >= 3 && J > 0
-	EXP:10 += 1
+	EXP:自慰経験 += 1
 	PRINTL 自慰経験＋１
 ENDIF
 
@@ -451,12 +451,12 @@ IF F == 0
 	V:1 = 1
 	IF TALENT:T:122 == 0 && TALENT:U:122 == 0 && V:0
 		PRINTFORML %EXPNAME:40%+{V:0}
-		EXP:T:40 += V:0
-		EXP:U:40 += V:0
+		EXP:T:レズ経験 += V:0
+		EXP:U:レズ経験 += V:0
 	ELSEIF TALENT:T:122 == 1 && TALENT:U:122 == 1 && V:1
 		PRINTFORML %EXPNAME:41%+{V:1}
-		EXP:T:41 += V:1
-		EXP:U:41 += V:1
+		EXP:T:ＢＬ経験 += V:1
+		EXP:U:ＢＬ経験 += V:1
 	ENDIF
 ENDIF
 
@@ -584,11 +584,11 @@ ELSEIF K == 2
 	ENDIF
 	PRINTFORML 精液と愛液が混じりあって薄く濁った液体がとろとろと流れ出てきた……
 ;  処女＆淫乱なし
-ELSEIF TALENT:0 && TALENT:76 == 0 
+ELSEIF TALENT:処女 && TALENT:76 == 0 
 	PRINTL  
 	PRINTFORML 陰門の入り口に純潔の証が頼りなさげにひくついているのが見て取れる
 ;  処女＆淫乱あり
-ELSEIF TALENT:0 && TALENT:76
+ELSEIF TALENT:処女 && TALENT:76
 	PRINTL  
 	PRINTFORML 陰門の入り口には純潔の証が貫かれるのを待っているかのように艶めいている
 ENDIF

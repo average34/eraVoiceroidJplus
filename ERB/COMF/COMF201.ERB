@@ -51,8 +51,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 5
-LOSEBASE:1 += 50
+LOSEBASE:体力 += 5
+LOSEBASE:気力 += 50
 
 SOURCE:13 = 500
 SOURCE:14 = 200
@@ -163,11 +163,11 @@ STAIN:0 |= STAIN:PLAYER:1
 STAIN:PLAYER:1 |= STAIN:0
 
 PRINTFORML %EXPNAME:22%＋１
-EXP:22 += 1
+EXP:フェラ経験 += 1
 
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTFORML %EXPNAME:40%＋3
-	EXP:40 += 3
+	EXP:レズ経験 += 3
 ENDIF
 
 TFLAG:100 = 1

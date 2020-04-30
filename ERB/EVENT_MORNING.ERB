@@ -217,14 +217,14 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 		A = LOCAL
 		A:1 = LOCAL:1
 		
-		EXP:20 += A
+		EXP:精液経験 += A
 		PRINTFORML %EXPNAME:20%＋{A}
-		EXP:21 += A/2
+		EXP:奉仕快楽経験 += A/2
 		PRINTFORML %EXPNAME:21%＋{A/2}
 		IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
 			PRINTFORML %EXPNAME:40%＋{A*2}
-			EXP:40 += A*2
-			EXP:MASTER:40 += A*2
+			EXP:レズ経験 += A*2
+			EXP:MASTER:レズ経験 += A*2
 		ENDIF
 		PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 		;巨乳の場合のボーナス,欲情が2倍
@@ -278,7 +278,7 @@ SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
 IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGET:76) && TALENT:TARGET:152
-	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:0 == 0 && EXP:Ｖ経験 > 0 && EXP:精液経験 > 0 && TALENT:MASTER:154 == 0 && (CFLAG:97 & 2) == 0
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験 > 0 && EXP:精液経験 > 0 && TALENT:MASTER:154 == 0 && (CFLAG:97 & 2) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:奉仕精神 < 6
 			A = 1
@@ -352,16 +352,16 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGE
 			
 			EXP:Ｖ経験+= A
 			PRINTFORML %EXPNAME:0%＋{A}
-			EXP:2 += A/2
+			EXP:絶頂経験 += A/2
 			PRINTFORML %EXPNAME:2%＋{A/2}
-			EXP:20 += A/2
+			EXP:精液経験 += A/2
 			PRINTFORML %EXPNAME:20%＋{A/2}
-			EXP:21 += A/2
+			EXP:奉仕快楽経験 += A/2
 			PRINTFORML %EXPNAME:21%＋{A/2}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
-				EXP:40 += A*2
-				EXP:MASTER:40 += A*2
+				EXP:レズ経験 += A*2
+				EXP:MASTER:レズ経験 += A*2
 			ENDIF
 			;地の文章カット
 			IF (CFLAG:99 & 1) == 0
@@ -445,14 +445,14 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGE
 			A = LOCAL
 			A:1 = LOCAL:1
 			
-			EXP:2 += A/2
+			EXP:絶頂経験 += A/2
 			PRINTFORML %EXPNAME:2%＋{A/2}
-			EXP:21 += A/2
+			EXP:奉仕快楽経験 += A/2
 			PRINTFORML %EXPNAME:21%＋{A/2}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
-				EXP:40 += A*2
-				EXP:MASTER:40 += A*2
+				EXP:レズ経験 += A*2
+				EXP:MASTER:レズ経験 += A*2
 			ENDIF
 			;地の文章カット
 			IF (CFLAG:99 & 1) == 0
@@ -488,7 +488,7 @@ SIF TALENT:オトコ
 	RETURN 0
 VARSET A, 0
 IF ITEM:19 == 1 && TALENT:89
-	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:0 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
+	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:処女 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
 		IF ABL:奉仕精神 + ABL:露出癖 < 12
 			A = 1
 		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 18
@@ -560,16 +560,16 @@ IF ITEM:19 == 1 && TALENT:89
 			
 			EXP:Ｖ経験+= A
 			PRINTFORML %EXPNAME:0%＋{A}
-			EXP:2 += A
+			EXP:絶頂経験 += A
 			PRINTFORML %EXPNAME:2%＋{A}
-			EXP:20 += A
+			EXP:精液経験 += A
 			PRINTFORML %EXPNAME:20%＋{A}
-			EXP:23 += A / 2
+			EXP:愛情経験 += A / 2
 			PRINTFORML %EXPNAME:23%＋{A/2}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
-				EXP:40 += A*2
-				EXP:MASTER:40 += A*2
+				EXP:レズ経験 += A*2
+				EXP:MASTER:レズ経験 += A*2
 			ENDIF
 			IF (CFLAG:99 & 1) == 0
 				PRINTFORM %CALLNAME:MASTER%は思わず朝食前に%CALLNAME:TARGET%を
@@ -670,14 +670,14 @@ IF ITEM:19 == 1 && TALENT:89
 			A:1 = LOCAL:2
 			B = LOCAL:1
 			
-			EXP:2 += A + B
+			EXP:絶頂経験 += A + B
 			PRINTFORML %EXPNAME:2%＋{A+B}
-			EXP:23 += (A + B) / 2
+			EXP:愛情経験 += (A + B) / 2
 			PRINTFORML %EXPNAME:23%＋{(A+B)/2}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{(A+B)*2}
-				EXP:40 += (A + B) * 2
-				EXP:MASTER:40 += (A + B) * 2
+				EXP:レズ経験 += (A + B) * 2
+				EXP:MASTER:レズ経験 += (A + B) * 2
 			ENDIF
 			IF (CFLAG:99 & 1) == 0
 				PRINTFORM %CALLNAME:MASTER%は思わず朝食前に%CALLNAME:TARGET%を
@@ -770,15 +770,15 @@ IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:85 && TALENT:TARGET
 		A = LOCAL
 		A:1 = LOCAL:1
 		
-		EXP:23 += A/2
-		EXP:96 += A
-		EXP:MASTER:96 += A
+		EXP:愛情経験 += A/2
+		EXP:キス経験 += A
+		EXP:MASTER:キス経験 += A
 		PRINTFORML %EXPNAME:23%＋{A/2}
 		PRINTFORML %EXPNAME:96%＋{A}
 		IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 			PRINTFORML %EXPNAME:40%＋{A*2}
-			EXP:40 += A*2
-			EXP:MASTER:40 += A*2
+			EXP:レズ経験 += A*2
+			EXP:MASTER:レズ経験 += A*2
 		ENDIF
 		IF (CFLAG:99 & 1) == 0
 			IF TALENT:155
@@ -814,7 +814,7 @@ SIF (TALENT:119 || TALENT:121 || TALENT:オトコ) == 0
 IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 	A = RAND:2
 	;セックス
-	IF TALENT:MASTER:0 == 0 && A && TALENT:154 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
+	IF TALENT:MASTER:処女 == 0 && A && TALENT:154 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
@@ -873,15 +873,15 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 			CALL SELF_KOJO
 			B = LOCAL
 			
-			EXP:MASTER:0 += A
-			EXP:2 += A
+			EXP:MASTER:Ｖ経験 += A
+			EXP:絶頂経験 += A
 			PRINTFORML %EXPNAME:2%＋{B}
-			EXP:3 += A
+			EXP:射精経験 += A
 			PRINTFORML %EXPNAME:3%＋{B}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{B*2}
-				EXP:40 += B*2
-				EXP:MASTER:40 += B*2
+				EXP:レズ経験 += B*2
+				EXP:MASTER:レズ経験 += B*2
 			ENDIF
 			PRINTFORML %PALAMNAME:0%の珠＋{B*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{B*40}
@@ -906,7 +906,7 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 	ENDIF
 	;パイズリ
-	IF (A == 0 || TALENT:MASTER:0 || CFLAG:97 & 64) && (CFLAG:97 & 128) == 0
+	IF (A == 0 || TALENT:MASTER:処女 || CFLAG:97 & 64) && (CFLAG:97 & 128) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
@@ -977,14 +977,14 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 			CALL SELF_KOJO
 			B = LOCAL
 			
-			EXP:2 += B
+			EXP:絶頂経験 += B
 			PRINTFORML %EXPNAME:2%＋{B}
-			EXP:3 += B
+			EXP:射精経験 += B
 			PRINTFORML %EXPNAME:3%＋{B}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{B*2}
-				EXP:40 += B*2
-				EXP:MASTER:40 += B*2
+				EXP:レズ経験 += B*2
+				EXP:MASTER:レズ経験 += B*2
 			ENDIF
 			IF (CFLAG:99 & 1) == 0
 				PRINTFORML 気付かれないように胸からはみ出た先端を口に含むと、可愛らしい悲鳴を上げて%CALLNAME:TARGET%が精を放った
@@ -1091,14 +1091,14 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 			CALL SELF_KOJO
 			A = LOCAL
 			
-			EXP:22 += A
+			EXP:フェラ経験 += A
 			PRINTFORML %EXPNAME:22%＋{A}
-			EXP:20 += A*2
+			EXP:精液経験 += A*2
 			PRINTFORML %EXPNAME:20%＋{A*2}
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
-				EXP:40 += A*2
-				EXP:MASTER:40 += A*2
+				EXP:レズ経験 += A*2
+				EXP:MASTER:レズ経験 += A*2
 			ENDIF
 			;PRINTFORML %CALLNAME:TARGET%は精液の貼りついた顔で朝の挨拶をしてきた
 			IF (CFLAG:99 & 1) == 0
@@ -1107,8 +1107,8 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 					PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%を押し倒し口付けてきた
 					PRINTFORML %CALLNAME:TARGET%の舌と共に何とも言えない味が広がる…
 					PRINTFORML %EXPNAME:96%＋1
-					EXP:96 += 1
-					EXP:MASTER:96 += 1
+					EXP:キス経験 += 1
+					EXP:MASTER:キス経験 += 1
 				ELSE
 					PRINTFORML %CALLNAME:TARGET%は喉を鳴らして精液を飲み込んだ後、朝の挨拶をしてきた
 				ENDIF
@@ -1190,8 +1190,8 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 			
 			IF (TALENT:MASTER:オトコ == 0) && (TALENT:オトコ == 0)
 				PRINTFORML %EXPNAME:40%＋{A*2}
-				EXP:40 += A*2
-				EXP:MASTER:40 += A*2
+				EXP:レズ経験 += A*2
+				EXP:MASTER:レズ経験 += A*2
 			ENDIF
 			IF (CFLAG:99 & 1) == 0
 				PRINTFORML %CALLNAME:TARGET%の顔に付いた愛液を舐め取ってやると、%CALLNAME:TARGET%はくすぐったそうに身をよじった

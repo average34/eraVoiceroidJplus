@@ -57,8 +57,8 @@ ENDIF
 ;ソースの計算
 ;-------------------------------------------------
 
-LOSEBASE:0 += 20
-LOSEBASE:1 += 60
+LOSEBASE:体力 += 20
+LOSEBASE:気力 += 60
 
 W = RAND:3
 
@@ -159,11 +159,11 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
+	EXP:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
+	EXP:ＢＬ経験 += 1
 ENDIF
 
 RETURN 1

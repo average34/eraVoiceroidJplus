@@ -20,13 +20,13 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:PLAYER:119 || TALENT:PLAYER:121 || TALENT:PLAYER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 40
-LOSEBASE:1 += 220
+LOSEBASE:体力 += 40
+LOSEBASE:気力 += 220
 
 SOURCE:13 = 1500
 SOURCE:14 = 800
@@ -96,14 +96,14 @@ ELSE
 ENDIF
 
 ;調教者が処女
-IF TALENT:PLAYER:0 == 1
+IF TALENT:PLAYER:処女 == 1
 	TIMES SOURCE:13 , 20.00
 	TIMES SOURCE:14 , 3.00
-	TALENT:PLAYER:0 = 0
+	TALENT:PLAYER:処女 = 0
 
 	PRINTFORML ＜%CALLNAME:PLAYER%が処女＞
 
-	EXP:50 += 5
+	EXP:異常経験 += 5
 	PRINTFORML %EXPNAME:50%＋５
 
 	IF ABL:親密 < 1
@@ -111,7 +111,7 @@ IF TALENT:PLAYER:0 == 1
 		ABL:親密 = 1
 	ENDIF
 ENDIF
-EXP:PLAYER:0 += 1
+EXP:PLAYER:Ｖ経験 += 1
 
 
 ;主導権をチェック
@@ -221,8 +221,8 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
-	EXP:40 += 4
-	EXP:PLAYER:40 += 4
+	EXP:レズ経験 += 4
+	EXP:PLAYER:レズ経験 += 4
 ENDIF
 
 TFLAG:100 = 1
@@ -287,7 +287,7 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;調教者が処女
-IF EXP:PLAYER:0 == 0
+IF EXP:PLAYER:Ｖ経験 == 0
 	A -= 15
 ENDIF
 
@@ -380,7 +380,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;調教者が処女
-	IF EXP:PLAYER:0 == 0
+	IF EXP:PLAYER:Ｖ経験 == 0
 		PRINT  - 
 		PRINTFORM %NAME:PLAYER%が処女
 		PRINTV '(,15,')

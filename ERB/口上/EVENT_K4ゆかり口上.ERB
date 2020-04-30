@@ -204,9 +204,9 @@ IF TFLAG:600 == 28
 	PRINTFORMW 「え、あ、あれ？……こほん。お恥ずかしい限りで」
 	;恥情の珠/自慰経験/撮影経験/被写経験を微妙にプラスさせて、例えこの時点で気付かなくても能力確認時に「……ん？」と思わせるようにする
 	JUEL:8 += 50
-	EXP:10 += 1
-	EXP:91 += 1
-	EXP:92 += 1
+	EXP:自慰経験 += 1
+	EXP:撮影経験 += 1
+	EXP:被写経験 += 1
 ENDIF
 
 ;-------------------------------------------------
@@ -290,7 +290,7 @@ IF TFLAG:600 == 35
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:327 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			;体力半分以下の場合
-			IF BASE:4 <= (MAXBASE:4 / 2)
+			IF BASE:耐力 <= (MAXBASE:耐力 / 2)
 				PRINTFORML 「うっ」
 				PRINTFORML 張り詰めていた気が抜けて倒れそうになるゆかりに肩を貸してあげた……
 				PRINTFORMW 「すみません%CSTR:1%。少しはしゃぎ過ぎました」
@@ -301,7 +301,7 @@ IF TFLAG:600 == 35
 		;それ以外
 		ELSEIF (CFLAG:327 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 			;体力半分以下の場合
-			IF BASE:4 <= (MAXBASE:4 / 2)
+			IF BASE:耐力 <= (MAXBASE:耐力 / 2)
 				PRINTFORMW 「ナイス判断です。一旦引きましょう」
 			ELSE
 				PRINTFORMW 「アール・ティ・ビー（Return To Base）！」
@@ -331,7 +331,7 @@ IF TFLAG:600 == 8
 		;恋慕または恋人
 		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:227 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			;体力半分以下の場合
-			IF BASE:4 <= (MAXBASE:4 / 2)
+			IF BASE:耐力 <= (MAXBASE:耐力 / 2)
 				PRINTFORMW 「すぅ…はぁ……犠牲は多いですが、この手に限りますね」
 			ELSE
 				IF RAND:2 == 0
@@ -344,7 +344,7 @@ IF TFLAG:600 == 8
 		;それ以外
 		ELSEIF (CFLAG:227 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 			;体力半分以下の場合
-			IF BASE:4 <= (MAXBASE:4 / 2)
+			IF BASE:耐力 <= (MAXBASE:耐力 / 2)
 				PRINTFORMW 「はぁ…はぁっ……か、勝てましたね」
 			ELSE
 				IF RAND:2 == 0
@@ -498,7 +498,7 @@ IF TFLAG:600 == 11
 		;それ以外
 		ELSEIF (CFLAG:230 < 101 || FLAG:キャラ口上の表示頻度 == 2)
 			;欲望3以上且つ絶頂経験5未満
-			IF ABL:欲望 >= 3 && EXP:2 < 5
+			IF ABL:欲望 >= 3 && EXP:絶頂経験 < 5
 				PRINTFORMW 「……私も霧に飲まれたらあのように激しくしてくれるのでしょうか」
 			ELSE
 				PRINTFORMW 「どうやら私の勝ちのようですね……勝負も、エロスも……！」
@@ -746,7 +746,7 @@ IF TFLAG:600 == 29
 	;それ以外
 	ELSE
 		;<パートナー>且つ<処女のまま、あるいは合意なし>の場合、関係は進展しなかったと見做す
-		IF TALENT:150 && (TALENT:0 == 1 || TALENT:152 == 0)
+		IF TALENT:150 && (TALENT:処女 == 1 || TALENT:152 == 0)
 			;マキや茜がですます口調なのは違和感あるので、とりあえずラスボスがその二人の場合は口調を変える
 			;ラスボスはずん子orきりたんの固定のようだが、念のため
 			;マキの場合
@@ -1296,9 +1296,9 @@ ENDIF
 ;	INPUT
 ;	IF RESULT == 0
 ;		PRINTFORMW ―%NAME:TARGET%を処女に変更します―
-;		TALENT:TARGET:0 = 1
+;		TALENT:TARGET:処女 = 1
 ;		ABL:TARGET:Ｖ感覚 = 0
-;		EXP:TARGET:0 = 0
+;		EXP:TARGET:Ｖ経験 = 0
 ;	ELSEIF RESULT == 1
 ;		PRINTFORMW ―通常の素質で開始します―
 ;	ELSE
@@ -2812,7 +2812,7 @@ ELSEIF ASSI < 0
 	CALL K4_KOJO2
 
 ;デート経験済み
-ELSEIF EXP:94 && TALENT:恋慕 == 0 && CFLAG:201 < 2
+ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && CFLAG:201 < 2
 	DRAWLINE
 	;素質:パートナーの場合
 	;「この関係」＝こっそりオカズにしたり、そのオナニーを収録して%CALLNAME:MASTER%に聞かせたり
@@ -2977,7 +2977,7 @@ ELSEIF EXP:キス経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示�
 	RETURN 1
 
 ;デート経験済み
-ELSEIF EXP:94 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
+ELSEIF EXP:デート経験 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	;素質:パートナーの場合
 	IF TALENT:150
@@ -2990,7 +2990,7 @@ ELSEIF EXP:94 && TALENT:恋慕 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	RETURN 1
 
 ;進展無し（デート経験0）
-ELSEIF EXP:94 == 0 && FLAG:キャラ口上の表示頻度 == 2
+ELSEIF EXP:デート経験 == 0 && FLAG:キャラ口上の表示頻度 == 2
 	DRAWLINE
 	;素質:パートナーの場合
 	IF TALENT:150
@@ -4760,7 +4760,7 @@ ENDIF
 ;-------------------------------------------------
 ;正常位 CFLAG:436(射精するかどうかは行為前に判定があるので、射精の分岐を入れる事により射精直前の口上を入れることが可能)
 ;射精はTFLAG:2で管理、通常射精1、大量射精2
-;処女かどうかは IF EXP:0 == 1 で判定すること(処女喪失処理が既に終了しているので、V経験1の場合)
+;処女かどうかは IF EXP:Ｖ経験 == 1 で判定すること(処女喪失処理が既に終了しているので、V経験1の場合)
 ;-------------------------------------------------
 IF SELECTCOM == 20
 	;初めて
@@ -7139,7 +7139,7 @@ IF SELECTCOM == 101 && TEQUIP:11 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7177,7 +7177,7 @@ IF SELECTCOM == 101 && TEQUIP:11 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7215,7 +7215,7 @@ IF SELECTCOM == 102 && TEQUIP:13 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7253,7 +7253,7 @@ IF SELECTCOM == 102 && TEQUIP:13 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7291,7 +7291,7 @@ IF SELECTCOM == 104 && TEQUIP:15 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7329,7 +7329,7 @@ IF SELECTCOM == 104 && TEQUIP:15 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7367,7 +7367,7 @@ IF SELECTCOM == 105 && TEQUIP:16 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7405,7 +7405,7 @@ IF SELECTCOM == 105 && TEQUIP:16 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7443,7 +7443,7 @@ IF SELECTCOM == 106 && TEQUIP:44 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7481,7 +7481,7 @@ IF SELECTCOM == 106 && TEQUIP:44 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7519,7 +7519,7 @@ IF SELECTCOM == 103 && TEQUIP:14 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7557,7 +7557,7 @@ IF SELECTCOM == 103 && TEQUIP:14 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7595,7 +7595,7 @@ IF SELECTCOM == 107 && TEQUIP:46 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7633,7 +7633,7 @@ IF SELECTCOM == 107 && TEQUIP:46 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7671,7 +7671,7 @@ IF SELECTCOM == 108 && TEQUIP:98 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7709,7 +7709,7 @@ IF SELECTCOM == 108 && TEQUIP:98 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7747,7 +7747,7 @@ IF SELECTCOM == 109 && TEQUIP:17 == 0
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -7779,7 +7779,7 @@ IF SELECTCOM == 109 && TEQUIP:17 == 1
 	;二回目以降
 	ELSE
 		;触手経験60以上
-		IF EXP:TARGET:55 == 60
+		IF EXP:TARGET:触手経験 == 60
 			;恋慕
 			IF TALENT:恋慕
 				PRINTFORMW 
@@ -8332,7 +8332,7 @@ IF SELECTCOM == 193
 	;初めて
 	IF CFLAG:514 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -8376,7 +8376,7 @@ IF SELECTCOM == 194
 	;初めて
 	IF CFLAG:515 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -8420,7 +8420,7 @@ IF SELECTCOM == 195
 	;初めて
 	IF CFLAG:516 == 0
 		;調教者が処女
-		IF EXP:PLAYER:0 == 1
+		IF EXP:PLAYER:Ｖ経験 == 1
 			;恋慕or恋人
 			IF TALENT:恋慕 || TALENT:恋人
 				PRINTFORMW 
@@ -8795,7 +8795,7 @@ IF SELECTCOM == 128
 	;初めて
 	IF CFLAG:370 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			PRINTFORMW 
 		;非処女
 		ELSE
@@ -8830,7 +8830,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 181 && TFLAG:17 == 1 && TEQUIP:PLAYER:85
 	;処女
-	IF TALENT:0
+	IF TALENT:処女
 		;恋慕または恋人
 		IF (TALENT:恋慕 || TALENT:恋人)
 			PRINTFORMW 
@@ -9088,7 +9088,7 @@ IF SELECTCOM == 186 && TFLAG:17 == TARGET
 		IF TALENT:恋慕 && TALENT:淫乱 && (CFLAG:508 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORML 「%CSTR:1%……%UNICODE(0x2661)%　なんて事をっ%UNICODE(0x2661)%%UNICODE(0x2661)%　してくれたんですか%UNICODE(0x2661)%%UNICODE(0x2661)%%UNICODE(0x2661)%」
 			;一度でも出産経験がある場合
-			IF EXP:61 > 0
+			IF EXP:出産経験 > 0
 				PRINTFORML 「また%CSTR:1%の仔を産みたいって子宮がキュンキュンしているのですよ……%UNICODE(0x2661)%」
 			ELSE
 				PRINTFORML 「ずっと、ずっと……%CSTR:1%に孕まされたいと願ってきたのですよ……%UNICODE(0x2661)%」
@@ -9100,7 +9100,7 @@ IF SELECTCOM == 186 && TFLAG:17 == TARGET
 			PRINTFORML 「本気で私を孕ませたいのですね%CSTR:1%……%UNICODE(0x2661)%」
 			PRINTFORM 「十月十日%CSTR:1%との仔を私のお腹で預かり、そして産む……
 			;一度でも出産経験がある場合
-			IF EXP:61 > 0
+			IF EXP:出産経験 > 0
 				PRINTFORML 一度味わったら、やみつきになりますね%UNICODE(0x2661)%」
 			ELSE
 				PRINTFORML これからそうなれると思うと、胸が一杯になりますね%UNICODE(0x2661)%」

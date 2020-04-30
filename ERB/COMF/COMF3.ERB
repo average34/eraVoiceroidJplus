@@ -45,8 +45,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;実行決定
 ;-------------------------------------------------
-LOSEBASE:0 += 5
-LOSEBASE:1 += 50
+LOSEBASE:体力 += 5
+LOSEBASE:気力 += 50
 
 SOURCE:14 = 400
 A = 0
@@ -126,16 +126,16 @@ IF TEQUIP:11
 
 	;EXP:Ｖ経験をみる
 	;処女はありえない
-	IF EXP:0 < EXPLV:2
+	IF EXP:Ｖ経験 < EXPLV:2
 		TIMES A , 0.60
 		C += 150
-	ELSEIF EXP:0 < EXPLV:3
+	ELSEIF EXP:Ｖ経験 < EXPLV:3
 		TIMES A , 1.00
 		C += 20
-	ELSEIF EXP:0 < EXPLV:4
+	ELSEIF EXP:Ｖ経験 < EXPLV:4
 		TIMES A , 1.20
 		C += 0
-	ELSEIF EXP:0 < EXPLV:5
+	ELSEIF EXP:Ｖ経験 < EXPLV:5
 		TIMES A , 1.40
 		C += 0
 	ELSE
@@ -156,8 +156,8 @@ ENDIF
 
 ;アナルバイブ挿入中を確認
 IF TEQUIP:13
-	LOSEBASE:0 += 30
-	LOSEBASE:1 += 80
+	LOSEBASE:体力 += 30
+	LOSEBASE:気力 += 80
 
 	;ABL:Ａ感覚をみる
 	IF ABL:Ａ感覚 == 0
@@ -181,19 +181,19 @@ IF TEQUIP:13
 	ENDIF
 
 	;EXP:Ａ経験をみる
-	IF EXP:1 < EXPLV:1
+	IF EXP:Ａ経験 < EXPLV:1
 		TIMES B , 0.50
 		C += 1000
-	ELSEIF EXP:1 < EXPLV:2
+	ELSEIF EXP:Ａ経験 < EXPLV:2
 		TIMES B , 1.00
 		C += 150
-	ELSEIF EXP:1 < EXPLV:3
+	ELSEIF EXP:Ａ経験 < EXPLV:3
 		TIMES B , 1.10
 		C += 20
-	ELSEIF EXP:1 < EXPLV:4
+	ELSEIF EXP:Ａ経験 < EXPLV:4
 		TIMES B , 1.20
 		C += 0
-	ELSEIF EXP:1 < EXPLV:5
+	ELSEIF EXP:Ａ経験 < EXPLV:5
 		TIMES B , 1.40
 		C += 0
 	ELSE
@@ -485,14 +485,14 @@ SIF LOCAL >= 64
 SIF TEQUIP:53
 	LOCAL += 1
 
-EXP:10 += LOCAL
+EXP:自慰経験 += LOCAL
 PRINTFORML 自慰経験＋{LOCAL}
-EXP:11 += LOCAL
+EXP:強制自慰経験 += LOCAL
 PRINTFORML 強制自慰経験＋{LOCAL}
 
 ;ビデオ撮影時は異常経験にプラス
 IF TEQUIP:53
-	EXP:50 += 1
+	EXP:異常経験 += 1
 	PRINTL 異常経験＋1
 ENDIF
 
@@ -532,13 +532,13 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +3
-	EXP:40 += 3
-	EXP:PLAYER:40 += 3
+	EXP:レズ経験 += 3
+	EXP:PLAYER:レズ経験 += 3
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +3
-	EXP:41 += 3
-	EXP:PLAYER:41 += 3
+	EXP:ＢＬ経験 += 3
+	EXP:PLAYER:ＢＬ経験 += 3
 ENDIF
 
 

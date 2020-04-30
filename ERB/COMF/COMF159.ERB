@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 SIF NAME_CSV(NO:PLAYER, 0) != "アルケニー" && NAME_CSV(NO:PLAYER, 0) != "ヤマメ"
 	RETURN 0
 ;異常経験フィルタ
-SIF ((FLAG:61 & 1) == 0) && (EXP:0 < EXPLV:1) && (PREVCOM == 159 && TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0 && TEQUIP:19 == 0 && TEQUIP:46 == 0 && TEQUIP:47 == 0 && TEQUIP:48 == 0 && TEQUIP:49 == 0 && TEQUIP:61 == 0 && TEQUIP:70 == 0 && TEQUIP:71 == 0 && TEQUIP:79 == 0)
+SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (PREVCOM == 159 && TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0 && TEQUIP:19 == 0 && TEQUIP:46 == 0 && TEQUIP:47 == 0 && TEQUIP:48 == 0 && TEQUIP:49 == 0 && TEQUIP:61 == 0 && TEQUIP:70 == 0 && TEQUIP:71 == 0 && TEQUIP:79 == 0)
 	RETURN 0
 ;グルグル巻きにしないとダメ
 SIF TEQUIP:73 == 0
@@ -49,8 +49,8 @@ ENDIF
 ;蜘蛛脚愛撫
 ;たくさんある脚で全身いたる所を撫でまわします
 IF Y == 0 
-	LOSEBASE:0 += 50
-	LOSEBASE:1 += 120
+	LOSEBASE:体力 += 50
+	LOSEBASE:気力 += 120
 
 
 	SOURCE:4 = 120
@@ -144,23 +144,23 @@ IF Y == 0
 
 
 	;EXP:Ａ経験をみる
-	IF EXP:1 < EXPLV:1
+	IF EXP:Ａ経験 < EXPLV:1
 		TIMES SOURCE:2 , 0.20
 		TIMES SOURCE:13, 0.20
 		SOURCE:6 = 500
-	ELSEIF EXP:1 < EXPLV:2
+	ELSEIF EXP:Ａ経験 < EXPLV:2
 		TIMES SOURCE:2 , 0.50
 		TIMES SOURCE:13, 0.50
 		SOURCE:6 = 400
-	ELSEIF EXP:1 < EXPLV:3
+	ELSEIF EXP:Ａ経験 < EXPLV:3
 		TIMES SOURCE:2 , 1.00
 		TIMES SOURCE:13, 1.00
 		SOURCE:6 = 300
-	ELSEIF EXP:1 < EXPLV:4
+	ELSEIF EXP:Ａ経験 < EXPLV:4
 		TIMES SOURCE:2 , 1.20
 		TIMES SOURCE:13, 1.20
 		SOURCE:6 = 200
-	ELSEIF EXP:1 < EXPLV:5
+	ELSEIF EXP:Ａ経験 < EXPLV:5
 		TIMES SOURCE:2 , 1.60
 		TIMES SOURCE:13, 1.60
 		SOURCE:6 = 100
@@ -232,7 +232,7 @@ IF Y == 0
 	ENDIF
 
 	;処女で貞操観念
-	IF EXP:0 == 0 && TALENT:30
+	IF EXP:Ｖ経験 == 0 && TALENT:30
 		SOURCE:13 /= 3
 	ENDIF
 
@@ -258,14 +258,14 @@ IF Y == 0
 	ENDIF
 
 	UP:10 += A
-	EXP:1 += 1
+	EXP:Ａ経験 += 1
 	PRINTL Ａ経験＋１
 ;蜘蛛脚六点責め
 ;たくさんある脚をフルに活用させ、全身の穴に突っ込ませます
 ;処女喪失を伴うので注意
 ELSE
-	LOSEBASE:0 += 250
-	LOSEBASE:1 += 700
+	LOSEBASE:体力 += 250
+	LOSEBASE:気力 += 700
 
 	SOURCE:3 = 90
 	SOURCE:4 = 60
@@ -344,19 +344,19 @@ ELSE
 
 
 	;EXP:Ａ経験をみる
-	IF EXP:1 < EXPLV:1
+	IF EXP:Ａ経験 < EXPLV:1
 		TIMES SOURCE:2 , 0.10
 		SOURCE:6 += 20000
-	ELSEIF EXP:1 < EXPLV:2
+	ELSEIF EXP:Ａ経験 < EXPLV:2
 		TIMES SOURCE:2 , 0.30
 		SOURCE:6 += 12000
-	ELSEIF EXP:1 < EXPLV:3
+	ELSEIF EXP:Ａ経験 < EXPLV:3
 		TIMES SOURCE:2 , 0.50
 		SOURCE:6 += 5000
-	ELSEIF EXP:1 < EXPLV:4
+	ELSEIF EXP:Ａ経験 < EXPLV:4
 		TIMES SOURCE:2 , 1.00
 		SOURCE:6 += 1800
-	ELSEIF EXP:1 < EXPLV:5
+	ELSEIF EXP:Ａ経験 < EXPLV:5
 		TIMES SOURCE:2 , 1.40
 		SOURCE:6 += 1000
 	ELSE
@@ -365,23 +365,23 @@ ELSE
 	ENDIF
 
 	;EXP:Ｖ経験をみる
-	IF EXP:0 < EXPLV:1
+	IF EXP:Ｖ経験 < EXPLV:1
 		TIMES SOURCE:1 , 0.20
 		SOURCE:6 = 5000
 		IF ASSIPLAY && TALENT:PLAYER:122 == 0
-			EXP:50 += 1
+			EXP:異常経験 += 1
 			PRINTFORML %EXPNAME:50%＋１
 		ENDIF
-	ELSEIF EXP:0 < EXPLV:2
+	ELSEIF EXP:Ｖ経験 < EXPLV:2
 		TIMES SOURCE:1 , 0.60
 		SOURCE:6 += 220
-	ELSEIF EXP:0 < EXPLV:3
+	ELSEIF EXP:Ｖ経験 < EXPLV:3
 		TIMES SOURCE:1 , 1.00
 		SOURCE:6 += 30
-	ELSEIF EXP:0 < EXPLV:4
+	ELSEIF EXP:Ｖ経験 < EXPLV:4
 		TIMES SOURCE:1 , 1.20
 		SOURCE:6 += 5
-	ELSEIF EXP:0 < EXPLV:5
+	ELSEIF EXP:Ｖ経験 < EXPLV:5
 		TIMES SOURCE:1 , 1.30
 		SOURCE:6 += 0
 	ELSE
@@ -519,7 +519,7 @@ ELSE
 
 	;貞操観念
 	IF TALENT:30
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:3 , 0.60
 			SOURCE:15 = 10000
 			SOURCE:13 /= 3
@@ -529,19 +529,19 @@ ELSE
 		ENDIF
 	;貞操無頓着
 	ELSEIF TALENT:31
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			TIMES SOURCE:3 , 0.60
 			SOURCE:15 = 300
 		ENDIF
 	ELSE
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			SOURCE:15 = 3000
 		ENDIF
 	ENDIF
 
 	;V経験を伴うコマンドのフラグ(処女膜再生対応)
 	TFLAG:19 = 1
-	SIF TALENT:85 && ASSIPLAY == 0 && EXP:0 == 0
+	SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 		TFLAG:20 = 1
 
 	CALL TRAIN_MESSAGE_B
@@ -559,8 +559,8 @@ ELSE
 		STAIN:TARGET:4 |= 1
 	ENDIF
 
-	EXP:0 += 1
-	EXP:1 += 5
+	EXP:Ｖ経験 += 1
+	EXP:Ａ経験 += 5
 	PRINTL Ｖ経験＋１
 	PRINTL Ａ経験＋５
 ENDIF
@@ -568,11 +568,11 @@ ENDIF
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +2
-	EXP:40 += 2
+	EXP:レズ経験 += 2
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +2
-	EXP:41 += 2
+	EXP:ＢＬ経験 += 2
 ENDIF
 
 SIF ASSIPLAY == 0 && ABL:マゾっ気 >= 2
@@ -591,11 +591,11 @@ IF STR:0 == "蜘蛛脚六点責め"
 	PRINTL ありとあらゆる穴の中へと潜り込んだ…
 
 	PRINTFORM %CALLNAME:TARGET%は
-	IF TALENT:0 && TALENT:76 && ABL:TARGET:レズ中毒 > 0 && ASSIPLAY == 0
+	IF TALENT:処女 && TALENT:76 && ABL:TARGET:レズ中毒 > 0 && ASSIPLAY == 0
 		PRINTFORML 自分が処女であることを気にした様子もなく、%CALLNAME:PLAYER%の脚が膣に入っていく感触に幸福感を感じているようだ…
-	ELSEIF TALENT:0 && TALENT:76
+	ELSEIF TALENT:処女 && TALENT:76
 		PRINTL 自分が処女であった事も忘れ、前後の穴と口を同時に責められている感触を楽しんでいる…
-	ELSEIF TALENT:0
+	ELSEIF TALENT:処女
 		PRINTL 破瓜の痛みに絶叫をあげていたがすぐさま口も塞がれ、なすすべもなく蹂躙されている……
 	ELSEIF TALENT:85 && TALENT:76 && ASSIPLAY
 		PRINTL 初めやや困惑したような様子だったが、両の乳首に快感を与えられた瞬間から何もかも忘れたかの様に嬌声をあげ続けている…

@@ -16,8 +16,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 30
-LOSEBASE:1 += 90
+LOSEBASE:体力 += 30
+LOSEBASE:気力 += 90
 
 SOURCE:9 = 500
 SOURCE:12 = 250
@@ -150,8 +150,8 @@ STAIN:PLAYER:3 |= STAIN:3
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +8
-	EXP:40 += 8
-	EXP:PLAYER:40 += 8
+	EXP:レズ経験 += 8
+	EXP:PLAYER:レズ経験 += 8
 ENDIF
 
 SIF ASSIPLAY == 0 && ABL:Ｃ感覚 >= 3

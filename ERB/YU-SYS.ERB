@@ -107,8 +107,8 @@ ELSEIF NEXTCOM:998 > 0
 				CALL KOJO_NEXT_PLAY
 			ENDIF
 			;NEXTCOMを使った場合に破棄されないものを破棄
-			LOSEBASE:0 = 0
-			LOSEBASE:1 = 0
+			LOSEBASE:体力 = 0
+			LOSEBASE:気力 = 0
 			REPEAT 18
 				UP:COUNT = 0
 				DOWN:COUNT = 0
@@ -580,7 +580,7 @@ IF ARG == 3
 ENDIF
 ;バイブ(処女)
 IF ARG == 11
-	SIF (EXP:0 < EXPLV:1)
+	SIF (EXP:Ｖ経験 < EXPLV:1)
 		RETURNF 1
 ENDIF
 ;アナルバイブ
@@ -588,12 +588,12 @@ SIF ARG == 13
 	RETURNF 1
 ;正常位・後背位・対面座位・背面座位
 IF ARG == 20 || ARG == 21 || ARG == 24 || ARG == 25
-	SIF (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
+	SIF (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 		RETURNF 1
 ENDIF
 ;逆レイプ
 IF ARG == 23
-	SIF (TALENT:PLAYER:0 == 1)
+	SIF (TALENT:PLAYER:処女 == 1)
 		RETURNF 1
 ENDIF
 ;正常位アナル/後背位アナル/対面座位アナル/背面座位アナル
@@ -661,16 +661,16 @@ SIF ARG == 128
 SIF ARG == 150
 	RETURNF 1
 ;吸血させる
-SIF ARG == 151 && (EXP:56 == 0)
+SIF ARG == 151 && (EXP:吸血経験 == 0)
 	RETURNF 1
 ;焼芋責め
-SIF ARG == 154 && (EXP:0 < EXPLV:1)
+SIF ARG == 154 && (EXP:Ｖ経験 < EXPLV:1)
 	RETURNF 1
 ;蜘蛛の脚　封印コマンドすぎるから中身のチェックはしない
-SIF ARG == 159 && (EXP:0 < EXPLV:1) && (PREVCOM == 159 && TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0 && TEQUIP:19 == 0 && TEQUIP:46 == 0 && TEQUIP:47 == 0 && TEQUIP:48 == 0 && TEQUIP:49 == 0 && TEQUIP:61 == 0 && TEQUIP:70 == 0 && TEQUIP:71 == 0 && TEQUIP:79 == 0)
+SIF ARG == 159 && (EXP:Ｖ経験 < EXPLV:1) && (PREVCOM == 159 && TEQUIP:11 == 0 && TEQUIP:13 == 0 && TEQUIP:14 == 0 && TEQUIP:15 == 0 && TEQUIP:16 == 0 && TEQUIP:19 == 0 && TEQUIP:46 == 0 && TEQUIP:47 == 0 && TEQUIP:48 == 0 && TEQUIP:49 == 0 && TEQUIP:61 == 0 && TEQUIP:70 == 0 && TEQUIP:71 == 0 && TEQUIP:79 == 0)
 	RETURNF 1
 ;角挿入
-SIF ARG == 167 && (EXP:0 < EXPLV:1) && (TALENT:PLAYER:122 == 0)
+SIF ARG == 167 && (EXP:Ｖ経験 < EXPLV:1) && (TALENT:PLAYER:122 == 0)
 	RETURNF 1
 ;正常位させる・後背位させる・騎上位する・セックスさせる
 IF ARG == 193 || ARG == 194 || ARG == 195 || ARG == 381
@@ -679,7 +679,7 @@ IF ARG == 193 || ARG == 194 || ARG == 195 || ARG == 381
 ENDIF
 ;挿入Ｇスポ責め/挿入子宮口責め実行判定;これ、先に処女奪うから無理なんじゃ
 IF ARG == 255 || ARG == 256
-	SIF (EXP:0 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
+	SIF (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PLAYER:オトコ == 0))
 		RETURNF 1
 ENDIF
 ;縁側でくつろぐ実行判定

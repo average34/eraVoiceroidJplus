@@ -313,13 +313,13 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 38
 	;デート後一回目
-	IF EXP:94 > 0 && CFLAG:221 < 1
+	IF EXP:デート経験 > 0 && CFLAG:221 < 1
 		CALL PRINTFORMW2T , @"「ふぁー、おはようございます、%CSTR:1%」"
 		PRINTFORMW おはよう、と後から起きてきたきりたんに返事する
 		CALL PRINTFORMW2T , @"「この前のおでかけは楽しかったですね、また次も連れてってください」"
 		CFLAG:221 = 1
 	;キス後一回目
-	ELSEIF EXP:96 > 0 && CFLAG:221 < 2
+	ELSEIF EXP:キス経験 > 0 && CFLAG:221 < 2
 		CALL PRINTFORMW2T , @"「お、おはようございます……」"
 		CFLAG:221 = 2
 	;恋慕後一回目
@@ -344,10 +344,10 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 1
 	;デート経験有り&恋慕
-	IF EXP:94 > 0 && TALENT:恋慕 == 1
+	IF EXP:デート経験 > 0 && TALENT:恋慕 == 1
 		PRINTFORMW 
 	;デート経験有り
-	ELSEIF EXP:94 > 0
+	ELSEIF EXP:デート経験 > 0
 		PRINTFORMW 
 	;恋慕
 	ELSEIF TALENT:恋慕 == 1
@@ -376,12 +376,12 @@ ENDIF
 ;-------------------------------------------------
 IF TFLAG:600 == 3
 	;キス経験有り
-	IF EXP:96 > 0 && (CFLAG:222 < 3 || FLAG:7 == 2)
+	IF EXP:キス経験 > 0 && (CFLAG:222 < 3 || FLAG:7 == 2)
 		PRINTFORMW 
 		PRINTFORMW 
 		CFLAG:222 = 3
 	;デート経験有り
-	ELSEIF EXP:94 > 0 && (CFLAG:222 < 2 || FLAG:7 == 2)
+	ELSEIF EXP:デート経験 > 0 && (CFLAG:222 < 2 || FLAG:7 == 2)
 		PRINTFORMW 
 		CFLAG:222 = 2
 	;それ以外
@@ -578,7 +578,7 @@ IF TFLAG:600 == 10
 			PRINTFORMW 
 			CFLAG:229 = 3
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:229 < 5 || FLAG:7 == 2)
+		ELSEIF EXP:キス経験 > 0 && (CFLAG:229 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:229 = 2
 		;それ以外
@@ -645,7 +645,7 @@ IF TFLAG:600 == 11
 			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 3
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:230 < 5 || FLAG:7 == 2)
+		ELSEIF EXP:キス経験 > 0 && (CFLAG:230 < 5 || FLAG:7 == 2)
 			CALL PRINTFORMW2T , @"「やりましたね！%CSTR:1%！」"
 			CFLAG:230 = 2
 		;それ以外
@@ -701,7 +701,7 @@ IF TFLAG:600 == 12
 			CALL PRINTFORMW2T , @"「鍛えて出直してきましょう」"
 			CFLAG:231 = 3
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
+		ELSEIF EXP:キス経験 > 0 && (CFLAG:231 < 5 || FLAG:7 == 2) && 0
 			CALL PRINTFORMW2T , @"「ぐっ……やられちゃいましたね」"
 			CALL PRINTFORMW2T , @"「鍛えて出直してきましょう」"
 			CFLAG:231 = 2
@@ -933,11 +933,11 @@ IF TFLAG:600 == 14
 		CALL COMMON_PLANE_TEXT
 		CFLAG:237 = 5
 	;キス経験有り
-	ELSEIF EXP:96 > 0 && (CFLAG:237 < 5 || FLAG:7 == 2)
+	ELSEIF EXP:キス経験 > 0 && (CFLAG:237 < 5 || FLAG:7 == 2)
 		CALL COMMON_PLANE_TEXT
 		CFLAG:237 = 4
 	;デート経験有り
-	ELSEIF EXP:94 > 0 && (CFLAG:237 < 5 || FLAG:7 == 2)
+	ELSEIF EXP:デート経験 > 0 && (CFLAG:237 < 5 || FLAG:7 == 2)
 		CALL COMMON_PLANE_TEXT
 		CFLAG:237 = 3
 	;それ以外
@@ -960,11 +960,11 @@ IF TFLAG:600 == 15
 		CALL COMMON_PLANE_TEXT
 		CFLAG:238 = 5
 	;キス経験有り
-	ELSEIF EXP:96 > 0 && (CFLAG:238 < 5 || FLAG:7 == 2)
+	ELSEIF EXP:キス経験 > 0 && (CFLAG:238 < 5 || FLAG:7 == 2)
 		CALL COMMON_PLANE_TEXT
 		CFLAG:238 = 4
 	;デート経験有り
-	ELSEIF EXP:94 > 0 && (CFLAG:238 < 5 || FLAG:7 == 2)
+	ELSEIF EXP:デート経験 > 0 && (CFLAG:238 < 5 || FLAG:7 == 2)
 		CALL COMMON_PLANE_TEXT
 		CFLAG:238 = 3
 	;それ以外
@@ -1163,11 +1163,11 @@ ENDIF
 ;		PRINTFORMW 
 ;			CFLAG:246 = 5
 ;	;キス経験有り
-;	ELSEIF EXP:96 > 0 && (CFLAG:246 < 5 || FLAG:7 == 2)
+;	ELSEIF EXP:キス経験 > 0 && (CFLAG:246 < 5 || FLAG:7 == 2)
 ;		PRINTFORMW 
 ;		CFLAG:246 = 4
 ;	;デート経験有り
-;	ELSEIF EXP:94 > 0 && (CFLAG:246 < 5 || FLAG:7 == 2)
+;	ELSEIF EXP:デート経験 > 0 && (CFLAG:246 < 5 || FLAG:7 == 2)
 ;		PRINTFORMW 
 ;		CFLAG:246 = 3
 ;	;それ以外
@@ -2355,14 +2355,14 @@ IF CFLAG:201 == 0
 ;-------------------------------------------------
 
 ;デート経験済み
-ELSEIF EXP:94 > 0 && TALENT:TARGET:恋慕 == 0 && CFLAG:201 < 2
+ELSEIF EXP:デート経験 > 0 && TALENT:TARGET:恋慕 == 0 && CFLAG:201 < 2
 	DRAWLINE
 ;	PRINTFORMW 
 	CFLAG:201 = 2
 	RETURN 1
 
 ;キス経験済み
-ELSEIF EXP:96 > 0 && TALENT:TARGET:恋慕 == 0 && CFLAG:201 < 3
+ELSEIF EXP:キス経験 > 0 && TALENT:TARGET:恋慕 == 0 && CFLAG:201 < 3
 	DRAWLINE
 ;	PRINTFORMW 
 ;	PRINTFORMW 
@@ -2544,21 +2544,21 @@ IF MARK:3 >= 1
 	RETURN 1
 
 ;進展なし
-ELSEIF EXP:94 == 0 && TALENT:TARGET:恋慕 == 0
+ELSEIF EXP:デート経験 == 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
 	CALL PRINTFORMW2T , @"「そろそろゲームに戻りますね」"
 	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 ;デート経験済み
-ELSEIF EXP:94 > 0 && TALENT:TARGET:恋慕 == 0
+ELSEIF EXP:デート経験 > 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
 	CALL PRINTFORMW2T , @"「そろそろお部屋に戻りますね」"
 	CALL PRINTFORMW2T , @"「それでは、また」"
 	RETURN 1
 
 ;キス経験済み
-ELSEIF EXP:96 > 0 && TALENT:TARGET:恋慕 == 0
+ELSEIF EXP:キス経験 > 0 && TALENT:TARGET:恋慕 == 0
 	DRAWLINE
 	CALL PRINTFORMW2T , @"「そろそろお部屋に戻りますね」"
 	CALL PRINTFORMW2T , @"「それでは、また」"
@@ -2761,11 +2761,11 @@ IF SELECTCOM == 300
 			ENDIF
 			CFLAG:401 = 5
 		;キス経験有り
-		;ELSEIF EXP:96 > 0 && (CFLAG:401 < 4 || FLAG:7 == 2)
+		;ELSEIF EXP:キス経験 > 0 && (CFLAG:401 < 4 || FLAG:7 == 2)
 		;	PRINTFORMW 
 		;	CFLAG:401 = 4
 		;デート経験有り
-		ELSEIF EXP:94 > 0 && (CFLAG:401 < 3 || FLAG:7 == 2)
+		ELSEIF EXP:デート経験 > 0 && (CFLAG:401 < 3 || FLAG:7 == 2)
 			IF RAND:4 == 0
 				PRINTFORMW きりたんと護身術の練習をしている
 				CALL PRINTFORMW2T , @"「左手の手の甲を右手で掴んで、手首だけ上に上げる」"
@@ -3744,7 +3744,7 @@ IF SELECTCOM == 370
 		ELSEIF TALENT:TARGET:恋慕
 			PRINTFORMW 
 		;キス経験あり
-			ELSEIF EXP:96
+			ELSEIF EXP:キス経験
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -3776,11 +3776,11 @@ IF SELECTCOM == 320
 			CALL PRINTFORMW2T , @"「え、これお酒なんですか！」"
 			CFLAG:404 = 5
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:404 < 4 || FLAG:7 == 2)
+		ELSEIF EXP:キス経験 > 0 && (CFLAG:404 < 4 || FLAG:7 == 2)
 			CALL PRINTFORMW2T , @"「このたこわさおいしいですね」"
 			CFLAG:404 = 4
 		;デート経験有り
-		ELSEIF EXP:94 > 0 && (CFLAG:404 < 3 || FLAG:7 == 2)
+		ELSEIF EXP:デート経験 > 0 && (CFLAG:404 < 3 || FLAG:7 == 2)
 			CALL PRINTFORMW2T , @"「うーん、やっぱり居酒屋はあまり居心地がよくありませんね」"
 			CFLAG:404 = 3
 		;それ以外
@@ -3948,7 +3948,7 @@ IF SELECTCOM == 341
 			PRINTFORMW 
 			CFLAG:411 = 5
 		;キス経験有り
-		ELSEIF EXP:96 > 0 && (CFLAG:411 < 4 || FLAG:7 == 2)
+		ELSEIF EXP:キス経験 > 0 && (CFLAG:411 < 4 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:411 = 4
 		;それ以外
@@ -4644,7 +4644,7 @@ IF SELECTCOM == 8 && TEQUIP:11 == 0
 	;初めて
 	IF CFLAG:424 == 0
 		;処女
-		IF EXP:0 == 0
+		IF EXP:Ｖ経験 == 0
 			;恋慕+恋人
 			IF TALENT:恋慕 == 1 && TALENT:恋人 == 1
 				PRINTFORMW 
@@ -4747,7 +4747,7 @@ IF SELECTCOM == 84
 	;初めて
 	IF CFLAG:425 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -4831,7 +4831,7 @@ IF SELECTCOM == 11 && TEQUIP:11
 	;初めて
 	IF CFLAG:427 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -4951,7 +4951,7 @@ IF SELECTCOM == 20
 	;初めて
 	IF CFLAG:436 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -4998,7 +4998,7 @@ IF SELECTCOM == 21
 	;初めて
 	IF CFLAG:437 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -5044,7 +5044,7 @@ IF SELECTCOM == 24
 	;初めて
 	IF CFLAG:438 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -5109,7 +5109,7 @@ IF SELECTCOM == 25 && TEQUIP:57 == 0
 	;初めて
 	IF CFLAG:439 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				PRINTFORMW 
@@ -5161,7 +5161,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 	;初めて
 	IF CFLAG:440 == 0
 		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-		IF EXP:0 == 1
+		IF EXP:Ｖ経験 == 1
 			;合意
 			IF TALENT:合意 == 1
 				;主人公が童貞
@@ -7326,7 +7326,7 @@ IF SELECTCOM == 71
 		;淫乱
 		IF TALENT:76 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7347,7 +7347,7 @@ IF SELECTCOM == 71
 		;合意&恋慕もしくは恋人
 		ELSEIF TALENT:合意 == 1 && (TALENT:恋慕 == 1 || TALENT:恋人 == 1)
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7367,7 +7367,7 @@ IF SELECTCOM == 71
 			ENDIF
 		ELSE
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7392,7 +7392,7 @@ IF SELECTCOM == 71
 		;淫乱
 		IF TALENT:76 == 1 && (CFLAG:497 < 5 || FLAG:7 == 2)
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7414,7 +7414,7 @@ IF SELECTCOM == 71
 		;恋慕&恋人
 		ELSEIF (TALENT:恋慕 == 1 && TALENT:恋人 == 1) && (CFLAG:497 < 4 || FLAG:7 == 2)
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7436,7 +7436,7 @@ IF SELECTCOM == 71
 		;合意or恋人
 		ELSEIF (TALENT:合意 == 1 || TALENT:恋人 == 1) && (CFLAG:497 < 3 || FLAG:7 == 2)
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -7458,7 +7458,7 @@ IF SELECTCOM == 71
 		;それ以外
 		ELSEIF CFLAG:497 < 2 || FLAG:7 == 2
 			;処女
-			IF TALENT:0 == 1
+			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
 			ELSEIF STAIN:TARGET:3 & 32
@@ -8097,7 +8097,7 @@ ENDIF
 ;	;初めて
 ;	IF CFLAG:370 == 0
 ;		;処女(処女喪失処理が既に終了しているので、V経験1の場合)
-;		IF EXP:0 == 1
+;		IF EXP:Ｖ経験 == 1
 ;			;合意
 ;			IF TALENT:合意 == 1
 ;				PRINTFORMW 

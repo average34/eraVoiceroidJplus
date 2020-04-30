@@ -197,8 +197,8 @@ T:30 = 536870912
 PRINTL 衣装替え
 STR:0 = 衣装替え
 
-LOSEBASE:0 += 0
-LOSEBASE:1 += 20
+LOSEBASE:体力 += 0
+LOSEBASE:気力 += 20
 
 ;衣装名取得
 CALL CLOTH_NAME
@@ -551,28 +551,28 @@ ELSEIF TEQUIP:65 == 17
 			;イベント時愛情経験+5
 			PRINTS EXPNAME:23
 			PRINTL +5
-			EXP:23 += 5
+			EXP:愛情経験 += 5
 		ELSE
 			;それ以外+3
 			PRINTS EXPNAME:23
 			PRINTL +3
-			EXP:23 += 3
+			EXP:愛情経験 += 3
 		ENDIF
 	ELSEIF TIME:4 & 1
 		;誕生日愛情経験+3
 		PRINTS EXPNAME:23
 		PRINTL +3
-		EXP:23 += 3
+		EXP:愛情経験 += 3
 	ELSEIF TIME:1 == 17 || TIME:1 == 44 || TIME:1 == 47|| TIME:1 == 48
 		;イベント時愛情経験+2
 		PRINTS EXPNAME:23
 		PRINTL +2
-		EXP:23 += 2
+		EXP:愛情経験 += 2
 	ELSE
 		;愛情経験+1
 		PRINTS EXPNAME:23
 		PRINTL +1
-		EXP:23 += 1
+		EXP:愛情経験 += 1
 	ENDIF
 ELSEIF TEQUIP:65 == 18
 	;PRINTL ＜コスプレ中[小悪魔風衣装]＞

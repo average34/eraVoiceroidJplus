@@ -9,15 +9,15 @@ L = 0
 P = 0
 
 ;EXP:歌唱経験
-IF EXP:93 < EXPLV:1
+IF EXP:歌唱経験 < EXPLV:1
 	L = 1
-ELSEIF EXP:93 < EXPLV:2
+ELSEIF EXP:歌唱経験 < EXPLV:2
 	L = 2
-ELSEIF EXP:93 < EXPLV:3
+ELSEIF EXP:歌唱経験 < EXPLV:3
 	L = 5
-ELSEIF EXP:93 < EXPLV:4
+ELSEIF EXP:歌唱経験 < EXPLV:4
 	L = 10
-ELSEIF EXP:93 < EXPLV:5
+ELSEIF EXP:歌唱経験 < EXPLV:5
 	L = 15
 ELSE
 	L = 20
@@ -158,15 +158,15 @@ ELSE
 ENDIF
 
 ;EXP:歌唱経験をみる
-IF EXP:93 < EXPLV:1
+IF EXP:歌唱経験 < EXPLV:1
 	TIMES L , 0.80
-ELSEIF EXP:93 < EXPLV:2
+ELSEIF EXP:歌唱経験 < EXPLV:2
 	TIMES L , 1.00
-ELSEIF EXP:93 < EXPLV:3
+ELSEIF EXP:歌唱経験 < EXPLV:3
 	TIMES L , 1.20
-ELSEIF EXP:93 < EXPLV:4
+ELSEIF EXP:歌唱経験 < EXPLV:4
 	TIMES L , 1.40
-ELSEIF EXP:93 < EXPLV:5
+ELSEIF EXP:歌唱経験 < EXPLV:5
 	TIMES L , 1.70
 ELSE
 	TIMES L , 2.00
@@ -236,10 +236,10 @@ IF P > 0
 ENDIF
 JUEL:8 += N * (P+15)
 PRINTFORML %PALAMNAME:8%の珠+{N * (P+15)}
-EXP:93 += O
+EXP:歌唱経験 += O
 PRINTFORML %EXPNAME:93% +{O}
 SIF ASSI > 0
-	EXP:ASSI:93 += 1 + RAND:O
+	EXP:ASSI:歌唱経験 += 1 + RAND:O
 PRINTL 
 WAIT
 ;カットフラグを戻す
@@ -303,15 +303,15 @@ ELSE
 ENDIF
 
 ;EXP:歌唱経験をみる
-IF EXP:93 < EXPLV:1
+IF EXP:歌唱経験 < EXPLV:1
 	TIMES L , 0.80
-ELSEIF EXP:93 < EXPLV:2
+ELSEIF EXP:歌唱経験 < EXPLV:2
 	TIMES L , 1.00
-ELSEIF EXP:93 < EXPLV:3
+ELSEIF EXP:歌唱経験 < EXPLV:3
 	TIMES L , 1.20
-ELSEIF EXP:93 < EXPLV:4
+ELSEIF EXP:歌唱経験 < EXPLV:4
 	TIMES L , 1.40
-ELSEIF EXP:93 < EXPLV:5
+ELSEIF EXP:歌唱経験 < EXPLV:5
 	TIMES L , 1.70
 ELSE
 	TIMES L , 2.00
@@ -427,7 +427,7 @@ IF (CFLAG:99 & 1) == 0 && FLAG:6
 	ELSEIF N >= 60 && N < 120
 		PRINTW いい感じに成功したようだ。
 		PRINTFORMW %CALLNAME:TARGET%は歌い終えた後も気分が高揚しているのか、さっきからずっと鼻歌を歌っている……
-	ELSEIF N < 60 && EXP:93 == 0
+	ELSEIF N < 60 && EXP:歌唱経験 == 0
 		PRINTFORMW まだまだ完璧には程遠い。
 		PRINTL しかしどうやらファンを作ることには成功したようだ。
 		PRINTFORMW 練習を積めば%CALLNAME:TARGET%の人気は今以上に出るかもしれない……
@@ -482,17 +482,17 @@ ELSEIF ABL:歌唱技能 <= 70
 ELSE
 	O = P / 5
 ENDIF
-EXP:93 += O
+EXP:歌唱経験 += O
 PRINTFORML %EXPNAME:93% +{O}
 SIF ASSI > 0
-	EXP:ASSI:93 += 1 + RAND:O
+	EXP:ASSI:歌唱経験 += 1 + RAND:O
 PRINTL 
 
 M = L + N
 ;クリア後インフレ
 IF (FLAG:28 & 1) != 0
 	IF DAY >= 120
-		M += RAND:(1 + (EXP:93 / 10))
+		M += RAND:(1 + (EXP:歌唱経験 / 10))
 	ELSEIF DAY >= 90
 ;		M = L + N
 	ELSEIF DAY >= 60

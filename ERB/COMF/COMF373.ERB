@@ -50,13 +50,13 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:MASTER:122  || TALENT:MASTER:121
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, MASTER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, MASTER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 10
-LOSEBASE:1 += 120
+LOSEBASE:体力 += 10
+LOSEBASE:気力 += 120
 
 SOURCE:13 = 800
 SOURCE:14 = 700
@@ -162,7 +162,7 @@ IF TEQUIP:2 > 0
 		;さらに露出追加
 		SOURCE:12 += 4000
 		;さらに異常経験追加
-		EXP:50 += 2
+		EXP:異常経験 += 2
 		PRINTL 異常経験+2
 	ELSE
 	;ポルノ映画は
@@ -171,7 +171,7 @@ IF TEQUIP:2 > 0
 		;さらに露出追加
 		SOURCE:12 += 2000
 		;さらに異常経験追加
-		EXP:50 += 1
+		EXP:異常経験 += 1
 		PRINTL 異常経験+1
 	ENDIF
 ENDIF
@@ -260,7 +260,7 @@ ENDIF
 
 
 PRINTFORML %EXPNAME:22%+1
-EXP:22 += 1
+EXP:フェラ経験 += 1
 
 ;奴隷の口⇔調教者のＰの汚れが移動
 STAIN:0 |= STAIN:MASTER:2
@@ -275,19 +275,19 @@ ENDIF
 ;レズ経験
 IF TALENT:122 == 0 && TALENT:MASTER:122 == 0
 	PRINTFORML %EXPNAME:40%+7
-	EXP:40 += 7
-	EXP:MASTER:40 += 7
+	EXP:レズ経験 += 7
+	EXP:MASTER:レズ経験 += 7
 ;BL経験
 ELSEIF TALENT:122 && TALENT:MASTER:122
 	PRINTFORML %EXPNAME:41%+7
-	EXP:41 += 7
-	EXP:MASTER:41 += 7
+	EXP:ＢＬ経験 += 7
+	EXP:MASTER:ＢＬ経験 += 7
 ENDIF
 
 PRINTL 
 
 ;フェラ経験が20以上だと好感度ボーナス
-SIF EXP:22 >= EXPLV:3
+SIF EXP:フェラ経験 >= EXPLV:3
 	TFLAG:30 += 1
 
 ;調教者がふたなり

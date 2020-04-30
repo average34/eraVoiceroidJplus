@@ -1,14 +1,14 @@
 ﻿@EVENTTRAIN
 #PRI
 ;主人公の射精を0に
-BASE:MASTER:2 = 0
+BASE:MASTER:射精 = 0
 ;主人公の精神絶頂を0に
-BASE:MASTER:6 = 0
+BASE:MASTER:精神 = 0
 ;いちおう調教対象と助手も
-BASE:TARGET:2 = 0
+BASE:TARGET:射精 = 0
 SIF ASSI >= 0
-	BASE:ASSI:2 = 0
-BASE:TARGET:3 = 0
+	BASE:ASSI:射精 = 0
+BASE:TARGET:母乳 = 0
 
 ;射精フラグ、処女喪失フラグなどをリセット
 REPEAT 200
@@ -57,7 +57,7 @@ RETURN 0
 ;;[狐]である
 ;IF TALENT:ASSI:93
 ;	;技巧LV5、Ｃ感覚LV5で処女
-;	IF ABL:ASSI:技巧 >= 5 && ABL:ASSI:Ｃ感覚 >= 5 && TALENT:ASSI:0
+;	IF ABL:ASSI:技巧 >= 5 && ABL:ASSI:Ｃ感覚 >= 5 && TALENT:ASSI:処女
 ;		DRAWLINE
 ;		PRINTFORML %NAME:ASSI%は[妖狐]となった。
 ;		DRAWLINE

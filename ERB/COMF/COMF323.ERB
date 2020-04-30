@@ -185,30 +185,30 @@ CALL TRAIN_MESSAGE_B
 IF FLAG:8
 	;行き先変更場所によっての体力消費
 	IF ((FLAG:8 >= 10 && FLAG:8 <= 23) || (FLAG:8 >= 33 && FLAG:8 <= 36)) && (TEQUIP:2 <= 9 || (TEQUIP:2 >= 24 && TEQUIP:2 <= 32) || TEQUIP:2 == 37)
-		LOSEBASE:0 += 25
+		LOSEBASE:体力 += 25
 	ELSEIF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 33 && TEQUIP:2 <= 36)) && (FLAG:8 <= 9 || (FLAG:8 >= 24 && FLAG:8 <= 32) || FLAG:8 == 37)
-		LOSEBASE:0 += 25
+		LOSEBASE:体力 += 25
 	ELSE
-		LOSEBASE:0 += 15
+		LOSEBASE:体力 += 15
 	ENDIF
 	;恋慕or恋人による体力消費軽減（デートとウフフが長続きする、の再現だとでも脳内補完）
 	SIF TALENT:85 || TALENT:153
-		LOSEBASE:0 -= 7
+		LOSEBASE:体力 -= 7
 	GOTO DATE_LOOP1
 ENDIF
 
 
 IF TFLAG:62
-	LOSEBASE:1 += 50
+	LOSEBASE:気力 += 50
 ELSE
-	LOSEBASE:1 += 220
+	LOSEBASE:気力 += 220
 	;恋慕・恋人・親愛による気力消費軽減（デートが長続きする、の再現だとでも脳内補完）
 	SIF TALENT:85
-		LOSEBASE:1 -= 40
+		LOSEBASE:気力 -= 40
 	SIF TALENT:153
-		LOSEBASE:1 -= 50
+		LOSEBASE:気力 -= 50
 	SIF TALENT:88
-		LOSEBASE:1 -= 90
+		LOSEBASE:気力 -= 90
 ENDIF
 
 
@@ -341,7 +341,7 @@ MONEY -= 5000
 
 IF B > 0
 	PRINTFORML %EXPNAME:94%+{B}
-	EXP:94 += B
+	EXP:デート経験 += B
 ENDIF
 
 
@@ -1020,15 +1020,15 @@ CALL PLACE_NAME
 ;デート中
 PRINTFORML ＜%STR:4%でデート中＞
 
-LOSEBASE:1 += 35
+LOSEBASE:気力 += 35
 
 ;恋慕・恋人・親愛による気力消費軽減（デートが長続きする、の再現だとでも脳内補完）
 SIF TALENT:85
-	LOSEBASE:1 -= 5
+	LOSEBASE:気力 -= 5
 SIF TALENT:153
-	LOSEBASE:1 -= 5
+	LOSEBASE:気力 -= 5
 SIF TALENT:88
-	LOSEBASE:1 -= 10
+	LOSEBASE:気力 -= 10
 
 B = 0
 C = 0
@@ -1204,11 +1204,11 @@ ELSEIF TEQUIP:2 == 6
 	ELSE
 		IF ABL:歌唱技能 >= 5
 			PRINTFORML %EXPNAME:93%＋{ABL:歌唱技能 / 5 +1}
-			EXP:93 += ABL:歌唱技能 / 5 + 1
+			EXP:歌唱経験 += ABL:歌唱技能 / 5 + 1
 		ELSE
 			;歌唱経験に＋1
 			PRINTFORML %EXPNAME:93%＋1
-			EXP:93 += 1
+			EXP:歌唱経験 += 1
 		ENDIF
 	ENDIF
 ;温泉
@@ -1478,8 +1478,8 @@ ELSEIF TEQUIP:2 == 34
 ;スポーツ観戦
 ELSEIF TEQUIP:2 == 35
 	;体力気力消費(応援とか雰囲気で消費するよ！)
-	LOSEBASE:0 += RAND:11 + 5
-	LOSEBASE:1 += RAND:20 + 10
+	LOSEBASE:体力 += RAND:11 + 5
+	LOSEBASE:気力 += RAND:20 + 10
 	;歓楽のソースに+400～800
 	SOURCE:18 += RAND:401 + 400
 ;固有デート場所
@@ -1550,7 +1550,7 @@ SOURCE:21 += E
 
 IF F > 0
 	PRINTFORML %EXPNAME:94%+{F}
-	EXP:94 += F
+	EXP:デート経験 += F
 ENDIF
 
 RETURN 1
@@ -1635,14 +1635,14 @@ IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
 	ENDIF
 
 	;デート経験 これも割と大きい
-	IF EXP:94 < 50
+	IF EXP:デート経験 < 50
 		A -= 5
-	ELSEIF EXP:94 < 100
+	ELSEIF EXP:デート経験 < 100
 		A += 5
-	ELSEIF EXP:94 < 500
-		A += EXP:94 / 15
+	ELSEIF EXP:デート経験 < 500
+		A += EXP:デート経験 / 15
 	ELSE
-		A += EXP:94 / 10
+		A += EXP:デート経験 / 10
 	ENDIF
 
 	;桃色の秘薬使用中
@@ -1682,8 +1682,8 @@ IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
 			PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
 			TFLAG:38 = 1
 		ENDIF
-		EXP:96 += 1
-		EXP:PLAYER:96 += 1
+		EXP:キス経験 += 1
+		EXP:PLAYER:キス経験 += 1
 
 		;既成事実２に相当
 		TFLAG:200 = 2
@@ -1758,14 +1758,14 @@ IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALE
 	ENDIF
 
 	;デート経験 これも割と大きい
-	IF EXP:94 < 50
+	IF EXP:デート経験 < 50
 		A -= 5
-	ELSEIF EXP:94 < 100
+	ELSEIF EXP:デート経験 < 100
 		A += 5
-	ELSEIF EXP:94 < 500
-		A += EXP:94 / 15
+	ELSEIF EXP:デート経験 < 500
+		A += EXP:デート経験 / 15
 	ELSE
-		A += EXP:94 / 10
+		A += EXP:デート経験 / 10
 	ENDIF
 
 	;桃色の秘薬使用中
@@ -1781,8 +1781,8 @@ IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALE
 		CALL KOJO_JUN
 		TALENT:151 = 0
 		PRINTFORML %EXPNAME:96%＋１
-		EXP:96 += 1
-		EXP:PLAYER:96 += 1
+		EXP:キス経験 += 1
+		EXP:PLAYER:キス経験 += 1
 		IF TALENT:PLAYER:151
 			PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
 			TALENT:PLAYER:151 = 0

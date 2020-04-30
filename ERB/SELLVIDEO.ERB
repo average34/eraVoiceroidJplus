@@ -521,7 +521,7 @@ IF TFLAG:70
 	;処女喪失シーンがあれば加算
 	IF TFLAG:32 & 1
 		P += 5000
-		EXP:50 += 5
+		EXP:異常経験 += 5
 		PRINTFORML ビデオには%CALLNAME:TARGET%の処女喪失シーンが記録されている
 		PRINTFORML %EXPNAME:50%＋５
 	ENDIF
@@ -530,7 +530,7 @@ IF TFLAG:70
 	TRYCALL VIDEO_BONUS
 		
 	;素質:処女を見る
-	SIF TALENT:0
+	SIF TALENT:処女
 		TIMES P , 1.20
 	;素質:無関心を見る
 	SIF TALENT:21
@@ -585,28 +585,28 @@ IF TFLAG:70
 	
 	;助手がいる場合にMASTER撮影時
 	IF FLAG:22 == 1
-		EXP:MASTER:91 += P
-		EXP:ASSI:92 += P
+		EXP:MASTER:撮影経験 += P
+		EXP:ASSI:被写経験 += P
 		PRINTFORML 主人撮影経験＋{P}
 		PRINTFORML 助手被写経験＋{P}
 	;助手がいる場合に助手撮影時
 	ELSEIF FLAG:22 == 2
-		EXP:ASSI:91 += P
-		EXP:MASTER:92 += P
+		EXP:ASSI:撮影経験 += P
+		EXP:MASTER:被写経験 += P
 		PRINTFORML 助手撮影経験＋{P}
 		PRINTFORML 主人被写経験＋{P}
 	;助手がいない場合
 	ELSE
-		EXP:MASTER:91 += P
-		EXP:MASTER:92 += P
+		EXP:MASTER:撮影経験 += P
+		EXP:MASTER:被写経験 += P
 		PRINTFORML 主人撮影・被写経験＋{P}
 	ENDIF
-	EXP:TARGET:92 += P
+	EXP:TARGET:被写経験 += P
 	PRINTFORML パートナー被写経験＋{P}
 	
 	;撮影技能アップ処理 5,10,20,40,80
 	;主人
-	IF (ABL:MASTER:撮影技能 < 1 && EXP:MASTER:91 >= 5) || (ABL:MASTER:撮影技能 < 2 && EXP:MASTER:91 >= 10) || (ABL:MASTER:撮影技能 < 3 && EXP:MASTER:91 >= 20) || (ABL:MASTER:撮影技能 < 4 && EXP:MASTER:91 >= 40) || (ABL:MASTER:撮影技能 < 5 && EXP:MASTER:91 >= 80)
+	IF (ABL:MASTER:撮影技能 < 1 && EXP:MASTER:撮影経験 >= 5) || (ABL:MASTER:撮影技能 < 2 && EXP:MASTER:撮影経験 >= 10) || (ABL:MASTER:撮影技能 < 3 && EXP:MASTER:撮影経験 >= 20) || (ABL:MASTER:撮影技能 < 4 && EXP:MASTER:撮影経験 >= 40) || (ABL:MASTER:撮影技能 < 5 && EXP:MASTER:撮影経験 >= 80)
 		ABL:MASTER:撮影技能 += 1
 		PRINTFORML ＜%CALLNAME:MASTER%の撮影技能が{ABL:MASTER:撮影技能}になった＞
 	ENDIF
@@ -632,16 +632,16 @@ ELSE
 	SIF ABL:MASTER:撮影技能 >= 5
 		P *= ABL:MASTER:撮影技能 / 5
 	;主人の被写経験が10回以下の場合,減額
-	IF EXP:MASTER:92 <= 10
+	IF EXP:MASTER:被写経験 <= 10
 		TIMES P , 0.80
 	ENDIF
 ENDIF
 
 ;パートナーの被写経験を見る
-IF EXP:TARGET:92 >= 1000
+IF EXP:TARGET:被写経験 >= 1000
 	TIMES P , 6.00
-ELSEIF EXP:TARGET:92 >= 20
-	P = P * (10 + EXP:TARGET:92 / 20) / 10
+ELSEIF EXP:TARGET:被写経験 >= 20
+	P = P * (10 + EXP:TARGET:被写経験 / 20) / 10
 ENDIF
 
 ;アイテム:編集機材を見る

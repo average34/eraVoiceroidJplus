@@ -60,18 +60,18 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック(パートナー)
 ;-------------------------------------------------
 SIF TALENT:TARGET:119 || TALENT:TARGET:121 || TALENT:TARGET:122
-	BASE:TARGET:2 += CALC_EJAC(SELECTCOM, TARGET)
+	BASE:TARGET:射精 += CALC_EJAC(SELECTCOM, TARGET)
 ;-------------------------------------------------
 ;射精ゲージチェック(実行者が射精できる場合)
 ;-------------------------------------------------
 SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 60
-LOSEBASE:1 += 150
+LOSEBASE:体力 += 60
+LOSEBASE:気力 += 150
 
 SOURCE:3 = 1000
 SOURCE:7 = 800
@@ -193,7 +193,7 @@ TFLAG:30 += A
 TFLAG:37 += A / 2
 
 ;異常経験増加
-EXP:50 += 3
+EXP:異常経験 += 3
 PRINTFORML %EXPNAME:50%＋3
 
 ;既成事実2に相当
@@ -225,8 +225,8 @@ ENDIF
 IF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +4
-	EXP:41 += 4
-	EXP:PLAYER:41 += 4
+	EXP:ＢＬ経験 += 4
+	EXP:PLAYER:ＢＬ経験 += 4
 ENDIF
 
 TFLAG:100 = 1
@@ -302,7 +302,7 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;調教者が処女
-IF EXP:PLAYER:0 == 0
+IF EXP:PLAYER:Ｖ経験 == 0
 	A -= 15
 ENDIF
 

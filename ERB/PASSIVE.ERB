@@ -151,13 +151,13 @@ SIF TALENT:PLAYER:122 && TFLAG:53 >= 35 && TFLAG:53 <= 38
 SIF (TALENT:PLAYER:122 == 0 && TALENT:PLAYER:121 == 0) && ((TFLAG:53 >= 31 && TFLAG:53 <= 34) || TFLAG:53 == 39)
 	RETURN 0
 ;フェラ未経験の場合、フェラ系コマンドはダメ
-SIF EXP:22 == 0 && ((TFLAG:53 >= 31 && TFLAG:53 <= 34) || TFLAG:53 == 39)
+SIF EXP:フェラ経験 == 0 && ((TFLAG:53 >= 31 && TFLAG:53 <= 34) || TFLAG:53 == 39)
 	RETURN 0
 ;アナル経験不足または汚れ無視がない場合、アナル系コマンドはダメ
-SIF (EXP:1 < 100 || TALENT:PLAYER:64 == 0) && TFLAG:53 == 42
+SIF (EXP:Ａ経験 < 100 || TALENT:PLAYER:64 == 0) && TFLAG:53 == 42
 	RETURN 0
 ;キス未経験の場合、キスはダメ
-SIF EXP:96 == 0 && TFLAG:53 >= 8 && TFLAG:53 <= 10
+SIF EXP:キス経験 == 0 && TFLAG:53 >= 8 && TFLAG:53 <= 10
 	RETURN 0
 ;パートナーがオトコで、顔面騎乗クンニ、胸を使うコマンドはダメ
 SIF TALENT:TARGET:122 && TFLAG:53 >= 35 && (TFLAG:53 <= 39 || TFLAG:53 == 41 || TFLAG:53 == 44 || TFLAG:53 == 45 || TFLAG:53 == 46)
@@ -446,13 +446,13 @@ IF PENIS(PLAYER)
 	SELECTCASE ARG:1
 	;快感に耐える（1/4）
 	CASE 6
-		BASE:PLAYER:2 -= CALC_EJAC(ARG:0, PLAYER) / 4 * 3
+		BASE:PLAYER:射精 -= CALC_EJAC(ARG:0, PLAYER) / 4 * 3
 	;快感を受け入れる（3/4）
 	CASE 7
-		BASE:PLAYER:2 -= CALC_EJAC(ARG:0, PLAYER) / 4
+		BASE:PLAYER:射精 -= CALC_EJAC(ARG:0, PLAYER) / 4
 	;それ以外（1/2）
 	CASEELSE
-		BASE:PLAYER:2 -= CALC_EJAC(ARG:0, PLAYER) / 2
+		BASE:PLAYER:射精 -= CALC_EJAC(ARG:0, PLAYER) / 2
 	ENDSELECT
 ENDIF
 
@@ -500,14 +500,14 @@ ENDSELECT
 ;----------------------------------------------------------------
 @PASSIVEMODE_ACTIVECOM_323
 CALL PARTNER_SELECT_DATE
-LOSEBASE:1 += 220
+LOSEBASE:気力 += 220
 ;恋慕・恋人・親愛による気力消費軽減（デートが長続きする、の再現だとでも脳内補完）
 SIF TALENT:85
-	LOSEBASE:1 -= 40
+	LOSEBASE:気力 -= 40
 SIF TALENT:153
-	LOSEBASE:1 -= 50
+	LOSEBASE:気力 -= 50
 SIF TALENT:88
-	LOSEBASE:1 -= 90
+	LOSEBASE:気力 -= 90
 
 ;固定で獲得するソース
 SOURCE:18 = 100
@@ -592,7 +592,7 @@ TIMES SOURCE:21 , 2.00
 TFLAG:30 += 2
 TFLAG:37 += 5 + A * 4
 B = 25
-EXP:94 += B
+EXP:デート経験 += B
 
 ;恋慕
 IF TALENT:85
@@ -1314,7 +1314,7 @@ PRINTFORML 背後から%CALLNAME:PLAYER%の体を抱きしめてきた…
 ;バードキス
 @PASSIVE_MESSAGE_8
 A = RAND:3
-IF EXP:96 >= 50 && A == 0
+IF EXP:キス経験 >= 50 && A == 0
 	PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%と何度も何度も口づけあった…
 ELSE
 	PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に軽く口づけた…
@@ -1326,9 +1326,9 @@ PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%の口を、自分の口で塞�
 @PASSIVE_MESSAGE_10
 A = RAND:2
 PRINTFORM %CALLNAME:TARGET%は%CALLNAME:PLAYER%の口腔を隅々まで舐め回
-IF EXP:96 >= 50 && A == 0
+IF EXP:キス経験 >= 50 && A == 0
 	PRINTFORML し、ねっとりと舌を絡め、唾液を交換しようとしてきた…
-ELSEIF EXP:96 >= 50
+ELSEIF EXP:キス経験 >= 50
 	PRINTFORML し、積極的に舌を絡めてきた…
 ELSE
 	PRINTFORML した…

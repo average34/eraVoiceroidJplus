@@ -46,28 +46,28 @@ ENDIF
 ;被吸血経験で基準値決定
 ;吸血者が[眷属]かどうか
 IF TALENT:V:218
-	IF EXP:57 < EXPLV:3
-		A = EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:4
-		A = 20 + EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:5
-		A = 50 + EXP:T:57
+	IF EXP:被吸血経験 < EXPLV:3
+		A = EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:4
+		A = 20 + EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:5
+		A = 50 + EXP:T:被吸血経験
 	ELSE
 		A = 300
 	ENDIF
 ELSE
-	IF EXP:57 < EXPLV:1
-		A = EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:2
-		A = 20 + EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:3
-		A = 50 + EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:4
-		A = 100 + EXP:T:57
-	ELSEIF EXP:T:57 < EXPLV:5
-		A = 200 + EXP:T:57
+	IF EXP:被吸血経験 < EXPLV:1
+		A = EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:2
+		A = 20 + EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:3
+		A = 50 + EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:4
+		A = 100 + EXP:T:被吸血経験
+	ELSEIF EXP:T:被吸血経験 < EXPLV:5
+		A = 200 + EXP:T:被吸血経験
 	ELSE
-		A = 500 + EXP:T:57
+		A = 500 + EXP:T:被吸血経験
 	ENDIF
 ENDIF
 

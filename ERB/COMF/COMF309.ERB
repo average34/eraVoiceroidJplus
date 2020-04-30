@@ -49,18 +49,18 @@ STR:0 = 素材探し
 CALL SOZAI_SEARCH
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:0 += 50
-LOSEBASE:1 += 100
+LOSEBASE:体力 += 50
+LOSEBASE:気力 += 100
 
 ;恋慕・恋人による気力消費軽減
 SIF TALENT:85
-	LOSEBASE:1 -= 15
+	LOSEBASE:気力 -= 15
 SIF TALENT:153
-	LOSEBASE:1 -= 15
+	LOSEBASE:気力 -= 15
 ;親愛による体力・気力消費軽減
 IF TALENT:88
-	LOSEBASE:0 -= 20
-	LOSEBASE:1 -= 20
+	LOSEBASE:体力 -= 20
+	LOSEBASE:気力 -= 20
 ENDIF
 
 ;固定で獲得するソース
@@ -354,13 +354,13 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 		ELSEIF TEQUIP:2 == 23 && (TFLAG:37 >= 80)
 		
 		;魔界 自慰経験が100以上
-		ELSEIF TEQUIP:2 == 32 && EXP:TARGET:10 >= 100
+		ELSEIF TEQUIP:2 == 32 && EXP:TARGET:自慰経験 >= 100
 		
 		;牧場 噴乳経験が80以上
-		ELSEIF TEQUIP:2 == 33 && EXP:TARGET:54 >= 80
+		ELSEIF TEQUIP:2 == 33 && EXP:TARGET:噴乳経験 >= 80
 		
 		;教会 愛情経験が300以上
-		ELSEIF TEQUIP:2 == 34 && EXP:TARGET:23 >= 300
+		ELSEIF TEQUIP:2 == 34 && EXP:TARGET:愛情経験 >= 300
 		
 		;上記デート場所の条件を満たしていない場合、ランク２まで解禁。
 		ELSEIF (TEQUIP:2 >= 10 && TEQUIP:2 <= 14) || TEQUIP:2 == 17 || TEQUIP:2 == 23 || (TEQUIP:2 >= 32 && TEQUIP:2 <= 34)
@@ -440,7 +440,7 @@ ELSE
 		IF TEQUIP:2 == 0 && ABL:TARGET:金銭感覚 >= 4 && ABL:TARGET:料理技能 >= 4
 		
 		;街 デート経験400以上(街＝歓楽だけどそれに対応させるのがむずい)
-		ELSEIF TEQUIP:2 == 1 && EXP:TARGET:94 >= 400
+		ELSEIF TEQUIP:2 == 1 && EXP:TARGET:デート経験 >= 400
 		
 		;神社 所持金が80万以上(お賽銭無いんなら帰れ！！)
 		ELSEIF TEQUIP:2 == 2 && MONEY >= 800000
@@ -452,7 +452,7 @@ ELSE
 		ELSEIF TEQUIP:2 == 4 && CFLAG:TARGET:2 >= 8000
 		
 		;肝試し 戦闘経験が600以上
-		ELSEIF TEQUIP:2 == 5 && EXP:TARGET:95 >= 600
+		ELSEIF TEQUIP:2 == 5 && EXP:TARGET:戦闘経験 >= 600
 		
 		;温泉 天気が快晴・雪・狐の嫁入り・細氷（特にこれらの天気をえらんだ理由は無い、こんな感じの日に温泉てよくね？程度）
 		ELSEIF TEQUIP:2 == 7 && (TIME:5 == 1 || TIME:5 == 5 || TIME:5 == 7 || TIME:5 == 8)
@@ -464,7 +464,7 @@ ELSE
 		ELSEIF TEQUIP:2 == 9 && ABL:TARGET:欲望 >= 11
 		
 		;月の都 実行者か相手が蓬莱人・月光浴・処女・淫乱のいずれかを持っている
-		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:0 == 1 || TALENT:TARGET:0 == 1 || TALENT:PLAYER:76 == 1 || TALENT:TARGET:76 == 1 || TALENT:PLAYER:116 == 1 || TALENT:TARGET:116 == 1 || TALENT:PLAYER:128 == 1 || TALENT:TARGET:128 == 1)
+		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:処女 == 1 || TALENT:TARGET:処女 == 1 || TALENT:PLAYER:76 == 1 || TALENT:TARGET:76 == 1 || TALENT:PLAYER:116 == 1 || TALENT:TARGET:116 == 1 || TALENT:PLAYER:128 == 1 || TALENT:TARGET:128 == 1)
 		
 		;妖怪の山 季節が秋か、実行者か相手のどちらかが妄信か解放を持っているか、露出癖5以上(ゆがんだ信仰or常識に囚われない)
 		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:86 == 1 || TALENT:TARGET:86 == 1 || TALENT:PLAYER:33 == 1 || TALENT:TARGET:33 == 1 || ABL:TARGET:露出癖 >= 5)
@@ -473,16 +473,16 @@ ELSE
 		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:79 == 1 || TALENT:TARGET:79 == 1 || TALENT:TARGET:83 == 1 || (TALENT:PLAYER:83 == 1 && ABL:TARGET:マゾっ気 >= 3))
 		
 		;地霊殿 実行者か相手が異常経験3以上
-		ELSEIF TEQUIP:2 == 28 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
+		ELSEIF TEQUIP:2 == 28 && (EXP:PLAYER:異常経験 >= 3 || EXP:TARGET:異常経験 >= 3)
 		
 		;間欠泉地下センター どちらかの技巧が10以上
 		ELSEIF TEQUIP:2 == 29 && (ABL:TARGET:技巧 >= 10 || ABL:PLAYER:技巧 >= 10)
 		
 		;魔法の森 実行者か相手が異常経験3以上(犯罪臭)
-		ELSEIF TEQUIP:2 == 30 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
+		ELSEIF TEQUIP:2 == 30 && (EXP:PLAYER:異常経験 >= 3 || EXP:TARGET:異常経験 >= 3)
 		
 		;命蓮寺 V経験とA経験が0or100以上
-		ELSEIF TEQUIP:2 == 31 && ((EXP:0 == 0 && EXP:1 == 0) || (EXP:0 >= 100 && EXP:1 >= 100))
+		ELSEIF TEQUIP:2 == 31 && ((EXP:Ｖ経験 == 0 && EXP:Ａ経験 == 0) || (EXP:Ｖ経験 >= 100 && EXP:Ａ経験 >= 100))
 		
 		;上記デート場所の条件を満たしていない場合、ランク３まで解禁。
 		ELSEIF ((TEQUIP:2 >= 0 && TEQUIP:2 <= 9) || (TEQUIP:2 >= 25 && TEQUIP:2 <= 31))
@@ -843,8 +843,8 @@ ELSEIF T <= 89
 	PRINTFORML 
 	PRINTFORMW %CALLNAME:TARGET%の体力が50回復した
 	;ひそかに耐力も回復
-	BASE:TARGET:0 += 50
-	BASE:TARGET:4 += 50
+	BASE:TARGET:体力 += 50
+	BASE:TARGET:耐力 += 50
 	TFLAG:17 = 2
 ELSEIF T <= 99
 	TFLAG:900 = 1
@@ -1327,8 +1327,8 @@ IF T <= 59
 	PRINTFORML 
 	PRINTFORMW %CALLNAME:TARGET%の体力が30回復した
 	;ひそかに耐力も回復
-	BASE:TARGET:0 += 30
-	BASE:TARGET:4 += 30
+	BASE:TARGET:体力 += 30
+	BASE:TARGET:耐力 += 30
 	TFLAG:17 = 2
 ELSEIF T <= 89
 	TFLAG:900 = 1
@@ -1752,16 +1752,16 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 ELSE
 	;幻想郷内
 	;パートナーの調合経験が一定以上で参考書入手
-	IF ITEM:804 == 0 && EXP:89 >= 1000
+	IF ITEM:804 == 0 && EXP:調合経験 >= 1000
 		;高等錬金術講座
 		LOCAL = 804
-	ELSEIF ITEM:803 == 0 && EXP:89 >= 500
+	ELSEIF ITEM:803 == 0 && EXP:調合経験 >= 500
 		;中等錬金術講座
 		LOCAL = 803
-	ELSEIF ITEM:802 == 0 && EXP:89 >= 300
+	ELSEIF ITEM:802 == 0 && EXP:調合経験 >= 300
 		;初等錬金術講座
 		LOCAL = 802
-	ELSEIF ITEM:801 == 0 && EXP:89 >= 1
+	ELSEIF ITEM:801 == 0 && EXP:調合経験 >= 1
 		;絵で見る錬金術
 		LOCAL = 801
 	ENDIF
@@ -1826,7 +1826,7 @@ REPEAT 10
 			IF ITEM:(COUNT + 800) <= 5
 				PRINTFORM  第{ITEM:(COUNT + 800)}章 
 				;読める場合 * が表示される
-				IF EXP:89 >= LOCAL:(ITEM:(COUNT + 800))
+				IF EXP:調合経験 >= LOCAL:(ITEM:(COUNT + 800))
 					PRINT  *
 					;読める場合T:COUNT = 2
 					T:COUNT = 2

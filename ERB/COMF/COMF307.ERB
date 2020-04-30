@@ -91,7 +91,7 @@ SELECTCOM = 307
 STR:0 = 櫛で梳かす
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:1 += 60
+LOSEBASE:気力 += 60
 
 ;固定で獲得するソース
 SOURCE:18 = 0
@@ -194,7 +194,7 @@ ELSEIF TFLAG:18 == 0
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 1
+		EXP:愛情経験 += 1
 		PRINTFORML %EXPNAME:23%+1
 	ENDIF
 ELSE
@@ -206,10 +206,10 @@ ELSE
 	TFLAG:37 += 5 + A
 	;愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 3
+		EXP:愛情経験 += 3
 		PRINTFORML %EXPNAME:23%+3
 	ELSE
-		EXP:23 += 1
+		EXP:愛情経験 += 1
 		PRINTFORML %EXPNAME:23%+1
 	ENDIF
 ENDIF

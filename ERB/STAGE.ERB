@@ -59,13 +59,13 @@ $START_POINT
 K:3 = 0
 
 ;自動撤退判定
-IF TARGET >= 0 && FLAG:23 & 4 && BASE:4 <= MAXBASE:4 / 4
+IF TARGET >= 0 && FLAG:23 & 4 && BASE:耐力 <= MAXBASE:耐力 / 4
 	PRINTFORML  
 	PRINTFORMW %CALLNAME:TARGET%が霧に抵抗できなくなってきたので、%CALLNAME:MASTER%達は早めに撤退しました
 	TFLAG:600 = 35
 	CALL KOJO_JUN
 	RETURN 1
-ELSEIF FLAG:23 & 4 && BASE:MASTER:4 <= MAXBASE:MASTER:4 / 4
+ELSEIF FLAG:23 & 4 && BASE:MASTER:耐力 <= MAXBASE:MASTER:耐力 / 4
 	PRINTFORML  
 	PRINTFORM %CALLNAME:MASTER%はかなりの疲労を感じるようになってきたので、
 	SIF TARGET >= 0
@@ -164,7 +164,7 @@ IF K:1 == 0
 		;強制終了の値が帰ってきてたら、強制的に攻略終了
 		SIF RESULT == 2
 			RETURN 1
-		SIF (TARGET >= 0 && BASE:4 <= 0) || BASE:MASTER:4 <= 0
+		SIF (TARGET >= 0 && BASE:耐力 <= 0) || BASE:MASTER:耐力 <= 0
 			RETURN 1
 	ELSEIF RESULT == 2
 		IF TARGET >= 0
@@ -194,17 +194,17 @@ IF K:1 == 0
 			RESULT = 1
 		K:1 = RESULT + 1
 		IF TARGET >= 0
-			K:2 = MAXBASE:4 / 4
+			K:2 = MAXBASE:耐力 / 4
 		ELSE
-			K:2 = MAXBASE:MASTER:4 / 4
+			K:2 = MAXBASE:MASTER:耐力 / 4
 		ENDIF
 		PRINTFORMW %CALLNAME:MASTER%達は周囲の探索を開始した……
 	ELSEIF RESULT == 9
 		K:1 = 1
 		IF TARGET >= 0
-			K:2 = MAXBASE:4 / 4
+			K:2 = MAXBASE:耐力 / 4
 		ELSE
-			K:2 = MAXBASE:MASTER:4 / 4
+			K:2 = MAXBASE:MASTER:耐力 / 4
 		ENDIF
 		PRINTFORMW %CALLNAME:MASTER%達は周囲の探索を開始した……
 		CALL BATTLE_NORMAL
@@ -214,13 +214,13 @@ IF K:1 == 0
 		GOTO INPUT_LOOP
 	ENDIF
 	
-	SIF (TARGET >= 0 && BASE:4 <= 0) || BASE:MASTER:4 <= 0
+	SIF (TARGET >= 0 && BASE:耐力 <= 0) || BASE:MASTER:耐力 <= 0
 		RETURN 1
 	
 	GOTO KASOKU_END
 ELSE
 	;加速中
-	IF (TARGET >= 0 && (BASE:4 <= K:2 || BASE:5 <= 0)) || (TARGET < 0 && BASE:MASTER:4 <= K:2)
+	IF (TARGET >= 0 && (BASE:耐力 <= K:2 || BASE:魔力 <= 0)) || (TARGET < 0 && BASE:MASTER:耐力 <= K:2)
 		K:1 = 0
 		PRINTFORMW 消耗が激しくなってきたので、周囲の探索を終了します
 	ELSE
@@ -239,7 +239,7 @@ ELSE
 			CALL BATTLE_NORMAL
 			TFLAG:46 += 1
 		ENDIF
-		SIF (TARGET >= 0 && BASE:4 <= 0) || BASE:MASTER:4 <= 0
+		SIF (TARGET >= 0 && BASE:耐力 <= 0) || BASE:MASTER:耐力 <= 0
 			RETURN 1
 		IF K:1 > 1
 			K:1 -= 1
@@ -294,21 +294,21 @@ IF TARGET>= 0
 	ENDIF
 	PRINTFORML (%CALLNAME:TARGET%)  戦闘能力：{P}%LOCALS:2%
 	PRINT 耐力
-	A = BASE:4
-	SIF BASE:4 < 0
+	A = BASE:耐力
+	SIF BASE:耐力 < 0
 		A = 0
-	CALL PRINT_BAR_4, A, MAXBASE:4, 32
-	PRINTFORML ({A}/{MAXBASE:4})
+	CALL PRINT_BAR_4, A, MAXBASE:耐力, 32
+	PRINTFORML ({A}/{MAXBASE:耐力})
 	PRINT 魔力
-	A = BASE:5
-	SIF BASE:5 < 0
+	A = BASE:魔力
+	SIF BASE:魔力 < 0
 		A = 0
-	IF (A * 100 / MAXBASE:5) > 34
-		CALL PRINT_BAR, A, MAXBASE:5, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("緑"), RESULT:1
+	IF (A * 100 / MAXBASE:魔力) > 34
+		CALL PRINT_BAR, A, MAXBASE:魔力, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("緑"), RESULT:1
 	ELSE
-		CALL PRINT_BAR, A, MAXBASE:5, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("赤"), RESULT:1
+		CALL PRINT_BAR, A, MAXBASE:魔力, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("赤"), RESULT:1
 	ENDIF
-	PRINTFORML ({A}/{MAXBASE:5})
+	PRINTFORML ({A}/{MAXBASE:魔力})
 ENDIF
 
 ;あなたの戦闘能力計算
@@ -320,26 +320,26 @@ IF P >= 99999999
 ENDIF
 PRINTFORML (%CALLNAME:MASTER%)  戦闘能力：{P}%LOCALS:2%
 PRINT 耐力
-A = BASE:MASTER:4
-SIF BASE:MASTER:4 < 0
+A = BASE:MASTER:耐力
+SIF BASE:MASTER:耐力 < 0
 	A = 0
-CALL PRINT_BAR_4, A, MAXBASE:MASTER:4, 32
-PRINTFORML ({A}/{MAXBASE:MASTER:4})
+CALL PRINT_BAR_4, A, MAXBASE:MASTER:耐力, 32
+PRINTFORML ({A}/{MAXBASE:MASTER:耐力})
 PRINT 魔力
-A = BASE:MASTER:5
-SIF BASE:MASTER:5 < 0
+A = BASE:MASTER:魔力
+SIF BASE:MASTER:魔力 < 0
 	A = 0
-IF (A * 100 / MAXBASE:MASTER:5) > 34
-	CALL PRINT_BAR, A, MAXBASE:MASTER:5, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("緑"), RESULT:1
+IF (A * 100 / MAXBASE:MASTER:魔力) > 34
+	CALL PRINT_BAR, A, MAXBASE:MASTER:魔力, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("緑"), RESULT:1
 ELSE
-	CALL PRINT_BAR, A, MAXBASE:MASTER:5, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("赤"), RESULT:1
+	CALL PRINT_BAR, A, MAXBASE:MASTER:魔力, 32, UNICODE(0x2585), UNICODE(0x2585), BARCOLORSET("赤"), RESULT:1
 ENDIF
-PRINTFORML ({A}/{MAXBASE:MASTER:5})
+PRINTFORML ({A}/{MAXBASE:MASTER:魔力})
 
 ;ライオットドールの表示（連れて行っていて、所持かつ復活待ちでない）
 IF ITEM:852 > 0 && ITEM:852 < 51 && TFLAG:852 < 99
 	;最大耐力の設定（MASTERの1/3 * レベル補正）
-	R:1 = MAXBASE:MASTER:4 / 3
+	R:1 = MAXBASE:MASTER:耐力 / 3
 	R:1 *= (100 + ITEM:852) / 100
 	;サーキットあり
 	;冥界サーキット（耐力2倍）
@@ -679,7 +679,7 @@ IF FLAG:23 & 32
 			TFLAG:600 = 39
 			CALL KOJO_JUN
 			CFLAG:2 += A
-			BASE:MASTER:4 = 0
+			BASE:MASTER:耐力 = 0
 			RETURN 1
 		ELSE
 			PRINTFORMW %CALLNAME:MASTER%達は逃げ出した！！
@@ -702,7 +702,7 @@ CALL AUTO_BATTLE
 ;戦闘終了時の共通処理
 CALL BATTLE_COMMON_END
 
-IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTER:4 > 0)
+IF (TARGET >= 0 && BASE:耐力 > 0 && BASE:MASTER:耐力 > 0) || (TARGET < 0 && BASE:MASTER:耐力 > 0)
 	;勝利
 	IF TARGET >= 0 && K:1 == 0
 		TFLAG:600 = 8
@@ -770,7 +770,7 @@ ENDIF
 ;対ゆかり様の場合
 IF FLAG:25 == 666
 	CALL BATTLE_ANGELIA
-	IF BASE:4 > 0 && BASE:MASTER:4 > 0
+	IF BASE:耐力 > 0 && BASE:MASTER:耐力 > 0
 		IF FLAG:27 == 10 && K:3 == 0
 			FLAG:27 += 1
 		ELSEIF FLAG:27 >= 20 && K:3 == 0
@@ -930,7 +930,7 @@ SIF RESULT
 ;戦闘終了時の共通処理
 CALL BATTLE_COMMON_END
 
-IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTER:4 > 0)
+IF (TARGET >= 0 && BASE:耐力 > 0 && BASE:MASTER:耐力 > 0) || (TARGET < 0 && BASE:MASTER:耐力 > 0)
 	;勝利
 	IF TARGET >= 0
 		;特殊掛け合い、ボス戦勝利口上
@@ -1181,7 +1181,7 @@ RETURN 1
 ;ゆかり様に勝利
 ;---------------------------------------------------------
 @BATTLE_ANGELIA_V
-IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTER:4 > 0)
+IF (TARGET >= 0 && BASE:耐力 > 0 && BASE:MASTER:耐力 > 0) || (TARGET < 0 && BASE:MASTER:耐力 > 0)
 	;勝利
 	TFLAG:600 = 11
 	CALL KOJO_JUN
@@ -1216,7 +1216,7 @@ IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTE
 	ELSE
 		PRINTFORMW 気がつくと%STR:1%は消えていた。どうやら幻影だったようだ
 	ENDIF
-ELSEIF TARGET >= 0 && BASE:4 <= 0 && FLAG:5 == 10
+ELSEIF TARGET >= 0 && BASE:耐力 <= 0 && FLAG:5 == 10
 	;Phモード限定でパートナーがやられた時
 	;ゆかり様に負けると霧に飲まれる影響が大きい
 	CFLAG:20 += 5
@@ -1313,7 +1313,7 @@ T = NO:C
 CALL GET_CHARA_NAME
 T = C
 CALL GET_BATTLE_POWER
-Y:1 = MAXBASE:C:4
+Y:1 = MAXBASE:C:耐力
 Z:1 = P
 
 REPEAT X
@@ -1359,7 +1359,7 @@ SIF RESULT
 ;戦闘終了時の共通処理
 CALL BATTLE_COMMON_END
 
-IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTER:4 > 0)
+IF (TARGET >= 0 && BASE:耐力 > 0 && BASE:MASTER:耐力 > 0) || (TARGET < 0 && BASE:MASTER:耐力 > 0)
 	;勝利
 	PRINTFORMW 勝利！！
 	;戦闘経験取得と報酬の計算
@@ -1417,7 +1417,7 @@ IF FLAG:23 & 64
 			TFLAG:600 = 39
 			CALL KOJO_JUN
 			CFLAG:2 += A
-			BASE:MASTER:4 = 0
+			BASE:MASTER:耐力 = 0
 			RETURN 1
 		ELSE
 			PRINTFORMW %CALLNAME:MASTER%達は逃げ出した！！
@@ -1436,7 +1436,7 @@ IF FLAG:23 & 64
 		ELSEIF RESULT >= 1 && RESULT <= 99
 			LOCAL:1 = RESULT
 			FOR LOCAL, 0, LOCAL:1
-				IF (TARGET >= 0 && (BASE:4 <= MAXBASE:4 / 4 || BASE:5 <= 0)) || (TARGET < 0 && BASE:MASTER:4 <= MAXBASE:MASTER:4 / 4)
+				IF (TARGET >= 0 && (BASE:耐力 <= MAXBASE:耐力 / 4 || BASE:魔力 <= 0)) || (TARGET < 0 && BASE:MASTER:耐力 <= MAXBASE:MASTER:耐力 / 4)
 					DRAWLINE
 					PRINTFORMW 消耗が激しくなってきたので、戦闘を終了します
 					RETURN 1
@@ -1457,7 +1457,7 @@ IF FLAG:23 & 64
 		ENDIF
 	ELSEIF RESULT == 4 && ARG == 666
 		FOR LOCAL, 0, 999
-			IF (TARGET >= 0 && (BASE:4 <= MAXBASE:4 / 4 || BASE:5 <= 0)) || (TARGET < 0 && BASE:MASTER:4 <= MAXBASE:MASTER:4 / 4)
+			IF (TARGET >= 0 && (BASE:耐力 <= MAXBASE:耐力 / 4 || BASE:魔力 <= 0)) || (TARGET < 0 && BASE:MASTER:耐力 <= MAXBASE:MASTER:耐力 / 4)
 				DRAWLINE
 				PRINTFORMW 消耗が激しくなってきたので、戦闘を終了します
 				RETURN 1
@@ -1495,7 +1495,7 @@ IF TARGET >= 0
 	T = TARGET
 	CALL GET_BATTLE_POWER
 	;魔力が切れている場合、戦闘力1/10
-	SIF BASE:5 <= 0
+	SIF BASE:魔力 <= 0
 		P /= 10
 
 	REPEAT X
@@ -1516,15 +1516,15 @@ IF TARGET >= 0
 		RETURN 1
 	ENDIF
 	;既に魔力が切れている場合、耐力を少し消費
-	SIF BASE:5 <= 0
-		BASE:4 -= MAXBASE:4 / 200 + 1
+	SIF BASE:魔力 <= 0
+		BASE:耐力 -= MAXBASE:耐力 / 200 + 1
 	;攻撃により魔力を消費
-	BASE:5 -= MAXBASE:5 / 100 + 1
+	BASE:魔力 -= MAXBASE:魔力 / 100 + 1
 	;S-Lunaは更に消費
 	SIF FLAG:5 == 4
-		BASE:5 -= MAXBASE:5 / 100 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+		BASE:魔力 -= MAXBASE:魔力 / 100 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 ENDIF
 
 ;パートナーの戦闘能力を退避
@@ -1596,10 +1596,10 @@ REPEAT X
 		CALL DAMAGE_CAP
 		;パートナーがいればパートナーに攻撃
 		SIF TARGET >= 0
-			BASE:4 -= A
+			BASE:耐力 -= A
 		;25%で主人公にも攻撃（パートナーがいなければ必ず攻撃）
 		SIF RAND:4 == 0 || TARGET < 0
-			BASE:MASTER:4 -= A
+			BASE:MASTER:耐力 -= A
 	ENDIF
 REND
 
@@ -1608,10 +1608,10 @@ A:2 = 0
 
 ;パートナーの耐力0以下
 IF TARGET >= 0
-	IF BASE:4 <= 0
+	IF BASE:耐力 <= 0
 		;15%で逃げるのに失敗して主人公もやられる
 		IF RAND:100 < 15
-			BASE:MASTER:4 = 0
+			BASE:MASTER:耐力 = 0
 		ENDIF
 		
 		;脱がされて素質発覚
@@ -1619,8 +1619,8 @@ IF TARGET >= 0
 			CFLAG:60 |= 32
 
 		;好感度低下処理
-		IF BASE:MASTER:4 <= 0
-			EXP:2 += RAND:11 + 10
+		IF BASE:MASTER:耐力 <= 0
+			EXP:絶頂経験 += RAND:11 + 10
 			IF CFLAG:2 > 0
 				IF CFLAG:2 > 20000
 					A:2 += 2000
@@ -1630,7 +1630,7 @@ IF TARGET >= 0
 			ENDIF
 			A:2 += RAND:61 + 40
 		ELSE
-			EXP:2 += RAND:3 + 3
+			EXP:絶頂経験 += RAND:3 + 3
 			IF CFLAG:2 > 0
 				IF CFLAG:2 > 30000
 					A:2 += 750
@@ -1648,7 +1648,7 @@ IF TARGET >= 0
 	ENDIF
 
 	;主人公の体力0以下
-	IF BASE:MASTER:4 <= 0
+	IF BASE:MASTER:耐力 <= 0
 		IF CFLAG:2 > 0
 			IF CFLAG:2 > 20000
 				A:2 += 1000
@@ -1665,7 +1665,7 @@ IF TARGET >= 0
 	ENDIF
 ELSE
 	;主人公のみの場合
-	IF BASE:MASTER:4 <= 0
+	IF BASE:MASTER:耐力 <= 0
 		RETURN 1
 	ENDIF
 ENDIF
@@ -1688,7 +1688,7 @@ IF TARGET >= 0
 	T = TARGET
 	CALL GET_BATTLE_POWER
 	;魔力が切れている場合、戦闘力1/10
-	SIF BASE:5 <= 0
+	SIF BASE:魔力 <= 0
 		P /= 10
 
 	;攻撃力基準値を算出
@@ -1715,11 +1715,11 @@ IF TARGET >= 0
 	PRINTFORML %CALLNAME:TARGET%のターンです。どうしますか？
 	PRINTFORML [0] 通常攻撃
 	LOCAL:0 = 1
-	IF BASE:5 > MAXBASE:5 / 3
+	IF BASE:魔力 > MAXBASE:魔力 / 3
 		PRINTFORML [1] 特殊攻撃
 		LOCAL:1 = 1
 	ENDIF
-	IF BASE:5 < MAXBASE:5
+	IF BASE:魔力 < MAXBASE:魔力
 		PRINTFORML [2] 魔力転換
 		LOCAL:2 = 1
 	ENDIF
@@ -1788,15 +1788,15 @@ IF TARGET >= 0
 		RETURN 1
 	ENDIF
 	;既に魔力が切れている場合、耐力を少し消費
-	SIF BASE:5 <= 0
-		BASE:4 -= MAXBASE:4 / 200 + 1
+	SIF BASE:魔力 <= 0
+		BASE:耐力 -= MAXBASE:耐力 / 200 + 1
 	;攻撃により魔力を消費
-	BASE:5 -= MAXBASE:5 / 100 + 1
+	BASE:魔力 -= MAXBASE:魔力 / 100 + 1
 	;S-Lunaは更に消費
 	SIF FLAG:5 == 4
-		BASE:5 -= MAXBASE:5 / 100 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+		BASE:魔力 -= MAXBASE:魔力 / 100 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	
 	CALL SHOW_BATTLE_STATUS
 	CALL SHOW_ENEMY_INFO
@@ -1836,11 +1836,11 @@ IF TARGET >= 0
 	PRINTFORML [2] %CALLNAME:TARGET%を回復させる
 	LOCAL:2 = 1
 ELSE
-	IF BASE:MASTER:5 > MAXBASE:MASTER:5 / 3
+	IF BASE:MASTER:魔力 > MAXBASE:MASTER:魔力 / 3
 		PRINTFORML [1] 特殊攻撃
 		LOCAL:1 = 1
 	ENDIF
-	IF BASE:MASTER:5 < MAXBASE:MASTER:5
+	IF BASE:MASTER:魔力 < MAXBASE:MASTER:魔力
 		PRINTFORML [2] 魔力転換
 		LOCAL:2 = 1
 	ENDIF
@@ -1983,40 +1983,40 @@ IF ITEM:852 > 0 && (R:3 > 0 || TFLAG:852 == 8) && TFLAG:852 < 99
 			;永夜サーキット
 			IF TFLAG:852 == 3
 				;パートナーの耐力があなたより低い（かつダメージを受けている）
-				IF BASE:MASTER:4 > BASE:4 && MAXBASE:4 > BASE:4
+				IF BASE:MASTER:耐力 > BASE:耐力 && MAXBASE:耐力 > BASE:耐力
 					PRINTFORML ヒーリング効果発動！
 					PRINTFORML %CALLNAME:TARGET%の身体を侵していた霧が効力を失い徐々に抜けていく……
-					H = MAXBASE:4 / 15 + 1
+					H = MAXBASE:耐力 / 15 + 1
 					CALL HEAL_CAP
 					PRINTFORMW %CALLNAME:TARGET%の耐力が{H}回復した！
-					BASE:4 += H
-					SIF BASE:4 > MAXBASE:4
-						BASE:4 = MAXBASE:4
+					BASE:耐力 += H
+					SIF BASE:耐力 > MAXBASE:耐力
+						BASE:耐力 = MAXBASE:耐力
 				;あなたの耐力がパートナーより低い（かつダメージを受けている）
-				ELSEIF BASE:MASTER:4 < BASE:4 && MAXBASE:MASTER:4 > BASE:MASTER:4
+				ELSEIF BASE:MASTER:耐力 < BASE:耐力 && MAXBASE:MASTER:耐力 > BASE:MASTER:耐力
 					PRINTFORML ヒーリング効果発動！
 					PRINTFORML %CALLNAME:MASTER%の身体を侵していた霧が効力を失い徐々に抜けていく……
-					H = MAXBASE:MASTER:4 / 15 + 1
+					H = MAXBASE:MASTER:耐力 / 15 + 1
 					CALL HEAL_CAP
 					PRINTFORMW %CALLNAME:MASTER%の耐力が{H}回復した！
-					BASE:MASTER:4 += H
-					SIF BASE:MASTER:4 > MAXBASE:MASTER:4
-						BASE:MASTER:4 = MAXBASE:MASTER:4
+					BASE:MASTER:耐力 += H
+					SIF BASE:MASTER:耐力 > MAXBASE:MASTER:耐力
+						BASE:MASTER:耐力 = MAXBASE:MASTER:耐力
 				ENDIF
 			ENDIF
 		;パートナーなし
 		ELSE
 			PRINTFORMW %ITEMNAME:852%は%CALLNAME:MASTER%への攻撃に対し警戒している
 			;永夜サーキット
-			IF TFLAG:852 == 3 && MAXBASE:MASTER:4 > BASE:MASTER:4
+			IF TFLAG:852 == 3 && MAXBASE:MASTER:耐力 > BASE:MASTER:耐力
 				PRINTFORML ヒーリング効果発動！
 				PRINTFORML %CALLNAME:MASTER%の身体を侵していた霧が効力を失い徐々に抜けていく……
-				H = MAXBASE:MASTER:4 / 15 + 1
+				H = MAXBASE:MASTER:耐力 / 15 + 1
 				CALL HEAL_CAP
 				PRINTFORMW %CALLNAME:MASTER%の耐力が{H}回復した！
-				BASE:MASTER:4 += H
-				SIF BASE:MASTER:4 > MAXBASE:MASTER:4
-					BASE:MASTER:4 = MAXBASE:MASTER:4
+				BASE:MASTER:耐力 += H
+				SIF BASE:MASTER:耐力 > MAXBASE:MASTER:耐力
+					BASE:MASTER:耐力 = MAXBASE:MASTER:耐力
 			ENDIF
 		ENDIF
 		S:3 = 3
@@ -2075,7 +2075,7 @@ PRINTL
 REPEAT X
 	;Cに何人目の敵か保存
 	C = COUNT + 1
-	IF Y:C > 0 && BASE:MASTER:4 > 0 && (TARGET < 0 || (TARGET >= 0 && BASE:4 > 0))
+	IF Y:C > 0 && BASE:MASTER:耐力 > 0 && (TARGET < 0 || (TARGET >= 0 && BASE:耐力 > 0))
 		A = Z:C / 5
 		CALL ENEMY_ATTACK
 		PRINTL  
@@ -2089,7 +2089,7 @@ SIF R:2 > R:1 && TFLAG:852 != 8 && TFLAG:852 < 99 && R:3 > 0
 ;ライオットドールの表示（連れて行っていて、所持かつ復活待ちでない）
 IF ITEM:852 > 0 && ITEM:852 < 51 && TFLAG:852 < 99
 	;最大耐力の設定（MASTERの1/3 * レベル補正）
-	R:1 = MAXBASE:MASTER:4 / 3
+	R:1 = MAXBASE:MASTER:耐力 / 3
 	R:1 *= (100 + ITEM:852) / 100
 	;サーキットあり
 	;冥界サーキット（耐力2倍）
@@ -2142,15 +2142,15 @@ A:2 = 0
 
 IF TARGET >= 0
 	;パートナーの耐力0以下
-	IF BASE:4 <= 0
+	IF BASE:耐力 <= 0
 		;15%で逃げるのに失敗して主人公もやられる
 		IF RAND:100 < 15
-			BASE:MASTER:4 = 0
+			BASE:MASTER:耐力 = 0
 		ENDIF
 
 		;好感度低下処理
-		IF BASE:MASTER:4 <= 0
-			EXP:2 += RAND:11 + 10
+		IF BASE:MASTER:耐力 <= 0
+			EXP:絶頂経験 += RAND:11 + 10
 			IF CFLAG:2 > 0
 				IF CFLAG:2 > 20000
 					A:2 += 2000
@@ -2160,7 +2160,7 @@ IF TARGET >= 0
 			ENDIF
 			A:2 += RAND:61 + 40
 		ELSE
-			EXP:2 += RAND:3 + 3
+			EXP:絶頂経験 += RAND:3 + 3
 			IF CFLAG:2 > 0
 				IF CFLAG:2 > 30000
 					A:2 += 750
@@ -2178,7 +2178,7 @@ IF TARGET >= 0
 	ENDIF
 
 	;主人公の体力0以下
-	IF BASE:MASTER:4 <= 0
+	IF BASE:MASTER:耐力 <= 0
 		IF CFLAG:2 > 0
 			IF CFLAG:2 > 20000
 				A:2 += 1000
@@ -2195,7 +2195,7 @@ IF TARGET >= 0
 	ENDIF
 ELSE
 	;主人公の体力0以下
-	IF BASE:MASTER:4 <= 0
+	IF BASE:MASTER:耐力 <= 0
 		RETURN 1
 	ENDIF
 ENDIF
@@ -2335,7 +2335,7 @@ IF TFLAG:852 == 6 && RAND:5 < 1 && R:2 < R:1
 	PRINTFORMW %STR:C%の攻撃を避けきった！
 ELSEIF TARGET >= 0
 	;聖輦サーキットかつピンチ時（ピンチ以外に、耐久が0になるダメージの場合は50%の確率）
-	IF TFLAG:852 == 7 && (BASE:4 < MAXBASE:4 / 4 || (BASE:4 < A && RAND:2 < 1))
+	IF TFLAG:852 == 7 && (BASE:耐力 < MAXBASE:耐力 / 4 || (BASE:耐力 < A && RAND:2 < 1))
 		SIF V:7 == 1
 			TIMES A , 0.75
 		PRINTFORML 聖輦サーキット発動！
@@ -2345,8 +2345,8 @@ ELSEIF TARGET >= 0
 	;主人公が庇った場合
 	ELSEIF V:6 && V:7 == 0
 		PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%を庇って、影響を少し軽減させた！
-		BASE:4 -= A
-		BASE:MASTER:4 -= A
+		BASE:耐力 -= A
+		BASE:MASTER:耐力 -= A
 		PRINTFORMW %CALLNAME:MASTER%と%CALLNAME:TARGET%の耐力が{A}減少した！
 	;ライオットドールが警戒した場合（耐力が残っている時OR神霊サーキット時）
 	ELSEIF V:7 == 1 && (R:2 < R:1 || TFLAG:852 == 8)
@@ -2354,17 +2354,17 @@ ELSEIF TARGET >= 0
 		R:2 += A
 		PRINTFORMW %ITEMNAME:852%の耐力が{A}減少した！
 		;守矢サーキット
-		IF TFLAG:852 == 5 && BASE:5 < MAXBASE:5
+		IF TFLAG:852 == 5 && BASE:魔力 < MAXBASE:魔力
 			A /= 3
 			;最大回復率は50%
-			SIF A > MAXBASE:5 / 2
-				A = MAXBASE:5 / 2
+			SIF A > MAXBASE:魔力 / 2
+				A = MAXBASE:魔力 / 2
 			PRINTFORML 守矢サーキット展開！
 			PRINTFORMW %ITEMNAME:852%は受けた霧を転換し、%CALLNAME:TARGET%の魔力を{A}回復させた！
 			;魔力を回復
-			BASE:5 += A
-			SIF BASE:5 > MAXBASE:5
-				BASE:5 = MAXBASE:5
+			BASE:魔力 += A
+			SIF BASE:魔力 > MAXBASE:魔力
+				BASE:魔力 = MAXBASE:魔力
 		ENDIF
 		;神霊サーキットの場合
 		IF R:2 > R:1 && TFLAG:852 == 8
@@ -2373,23 +2373,23 @@ ELSEIF TARGET >= 0
 		ENDIF
 	;それ以外
 	ELSE
-		BASE:4 -= A
+		BASE:耐力 -= A
 		PRINTFORMW %CALLNAME:TARGET%の耐力が{A}減少した！
 	ENDIF
 
 ;	;ゆかり様は魔力も削ってくる
-;	IF FLAG:25 == 666 && BASE:5 > 0 && (BASE:4 > 0 && BASE:MASTER:4 > 0)
+;	IF FLAG:25 == 666 && BASE:魔力 > 0 && (BASE:耐力 > 0 && BASE:MASTER:耐力 > 0)
 ;		A += P / (100 + RAND:10)
 ;		CALL DAMAGE_CAP
-;		BASE:5 -= A
-;		SIF BASE:5 <= 0
-;			BASE:5 = 0
+;		BASE:魔力 -= A
+;		SIF BASE:魔力 <= 0
+;			BASE:魔力 = 0
 ;		PRINTFORMW %CALLNAME:TARGET%の魔力が{A}減少した！
 ;	ENDIF
 ;パートナーなし
 ELSE
 	;聖輦サーキット
-	IF TFLAG:852 == 7 && BASE:MASTER:4 < MAXBASE:MASTER:4 / 4
+	IF TFLAG:852 == 7 && BASE:MASTER:耐力 < MAXBASE:MASTER:耐力 / 4
 		SIF V:7 == 1
 		TIMES A , 0.75
 		PRINTFORML 聖輦サーキット発動！
@@ -2402,17 +2402,17 @@ ELSE
 		R:2 += A
 		PRINTFORMW %ITEMNAME:852%の耐力が{A}減少した！
 		;守矢サーキット
-		IF TFLAG:852 == 5 && BASE:MASTER:5 < MAXBASE:MASTER:5
+		IF TFLAG:852 == 5 && BASE:MASTER:魔力 < MAXBASE:MASTER:魔力
 			A /= 3
 			;最大回復率は50%
-			SIF A > MAXBASE:5 / 2
-				A = MAXBASE:5 / 2
+			SIF A > MAXBASE:魔力 / 2
+				A = MAXBASE:魔力 / 2
 			PRINTFORML 守矢サーキット展開！
 			PRINTFORMW %ITEMNAME:852%は受けた霧を転換し、%CALLNAME:MASTER%の魔力を{A}回復させた！
 			;魔力を回復
-			BASE:MASTER:5 += A
-			SIF BASE:MASTER:5 > MAXBASE:MASTER:5
-				BASE:MASTER:5 = MAXBASE:MASTER:5
+			BASE:MASTER:魔力 += A
+			SIF BASE:MASTER:魔力 > MAXBASE:MASTER:魔力
+				BASE:MASTER:魔力 = MAXBASE:MASTER:魔力
 		ENDIF
 		;神霊サーキットの場合
 		IF R:2 > R:1 && TFLAG:852 == 8
@@ -2423,20 +2423,20 @@ ELSE
 		PRINTFORML %ITEMNAME:852%は%CALLNAME:MASTER%を庇って、影響を少し軽減させた！
 		TIMES A , 0.75
 		R:2 += A
-		BASE:MASTER:4 -= A
+		BASE:MASTER:耐力 -= A
 		PRINTFORMW %CALLNAME:MASTER%と%ITEMNAME:852%の耐力が{A}減少した！
 		;守矢サーキット
-		IF TFLAG:852 == 5 && BASE:MASTER:5 < MAXBASE:MASTER:5
+		IF TFLAG:852 == 5 && BASE:MASTER:魔力 < MAXBASE:MASTER:魔力
 			A /= 3
 			;最大回復率は50%
-			SIF A > MAXBASE:5 / 2
-				A = MAXBASE:5 / 2
+			SIF A > MAXBASE:魔力 / 2
+				A = MAXBASE:魔力 / 2
 			PRINTFORML 守矢サーキット展開！
 			PRINTFORMW %ITEMNAME:852%は受けた霧を転換し、%CALLNAME:MASTER%の魔力を{A}回復させた！
 			;魔力を回復
-			BASE:MASTER:5 += A
-			SIF BASE:MASTER:5 > MAXBASE:MASTER:5
-				BASE:MASTER:5 = MAXBASE:MASTER:5
+			BASE:MASTER:魔力 += A
+			SIF BASE:MASTER:魔力 > MAXBASE:MASTER:魔力
+				BASE:MASTER:魔力 = MAXBASE:MASTER:魔力
 		ENDIF
 		;神霊サーキットの場合
 		IF R:2 > R:1 && TFLAG:852 == 8
@@ -2444,7 +2444,7 @@ ELSE
 			PRINTFORMW が、吊り上げられたかのようにユラリと立ち上がった
 		ENDIF
 	ELSE
-		BASE:MASTER:4 -= A
+		BASE:MASTER:耐力 -= A
 		PRINTFORMW %CALLNAME:MASTER%の耐力が{A}減少した！
 	ENDIF
 ENDIF
@@ -2584,18 +2584,18 @@ RETURN 1
 ;戦闘終了時の共通処理
 ;---------------------------------------------------------
 @BATTLE_COMMON_END
-IF (TARGET >= 0 && BASE:4 > 0 && BASE:MASTER:4 > 0) || (TARGET < 0 && BASE:MASTER:4 > 0)
+IF (TARGET >= 0 && BASE:耐力 > 0 && BASE:MASTER:耐力 > 0) || (TARGET < 0 && BASE:MASTER:耐力 > 0)
 	;勝利時の共通部分があればここで処理
 	;雑魚敵撃破数記録
 	FLAG:43 += X
-ELSEIF TARGET < 0 && BASE:MASTER:4 <= 0
+ELSEIF TARGET < 0 && BASE:MASTER:耐力 <= 0
 	;主人公だけで敗北
 	PRINTFORMW %CALLNAME:MASTER%は%STR:1%に予想外の攻撃を受け、気絶してしまった！
 	PRINTFORMW %CALLNAME:MASTER%が意識を失った事で、霧の影響が一気に強くなり始める……
 	PRINTFORML  
 	PRINTFORMW  
 	PRINTFORMW 数時間後、%STR:1%達が完全に満足してようやく解放された%CALLNAME:MASTER%は、ヘトヘトになりながら家路についた……
-ELSEIF BASE:4 <= 0 && BASE:MASTER:4 <= 0
+ELSEIF BASE:耐力 <= 0 && BASE:MASTER:耐力 <= 0
 	;全滅
 	TFLAG:600 = 14
 	CALL KOJO_JUN
@@ -2607,7 +2607,7 @@ ELSEIF BASE:4 <= 0 && BASE:MASTER:4 <= 0
 		CFLAG:17 = 1
 		CFLAG:19 += 1
 	ENDIF
-ELSEIF BASE:4 <= 0
+ELSEIF BASE:耐力 <= 0
 	;パートナーがヤられた
 	TFLAG:600 = 13
 	CALL KOJO_JUN
@@ -2621,7 +2621,7 @@ ELSEIF BASE:4 <= 0
 	ELSEIF FLAG:5 == 10
 		CFLAG:20 += 10
 	ENDIF
-ELSEIF BASE:MASTER:4 <= 0
+ELSEIF BASE:MASTER:耐力 <= 0
 	;主人公がやられた
 	TFLAG:600 = 15
 	CALL KOJO_JUN
@@ -2640,12 +2640,12 @@ SIF ABL:MASTER:戦闘経験ボーナス > 0
 	X += ABL:MASTER:戦闘経験ボーナス
 PRINTFORML %EXPNAME:95%+{X}
 SIF TARGET >= 0
-	EXP:95 += X
+	EXP:戦闘経験 += X
 ;主人公にも経験だけは入る
-EXP:MASTER:95 += X
+EXP:MASTER:戦闘経験 += X
 ;助手にも経験だけは入る
 SIF ASSI >= 0
-	EXP:ASSI:95 += X
+	EXP:ASSI:戦闘経験 += X
 
 ;報酬の補正
 ;獲得資金増加ボーナス

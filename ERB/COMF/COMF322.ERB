@@ -175,8 +175,8 @@ STR:0 = ストリートライブ
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 100
-LOSEBASE:1 += 400
+LOSEBASE:体力 += 100
+LOSEBASE:気力 += 400
 
 A = 500
 B = 600
@@ -316,7 +316,7 @@ SIF C > 60
 CALL TRAIN_MESSAGE_B
 
 IF C > 60
-	T = 1 + EXP:93
+	T = 1 + EXP:歌唱経験
 	T = (ABL:歌唱技能 * 90) + (ABL:歌唱技能 * RAND:20) + (RAND:T * 10)
 	;クリア前はリミットを加える
 	IF (FLAG:28 & 1) != 0
@@ -346,7 +346,7 @@ ELSE
 	ENDIF
 ENDIF
 PRINTFORML %EXPNAME:93%+{T}
-EXP:93 += T
+EXP:歌唱経験 += T
 
 RETURN 1
 
@@ -359,8 +359,8 @@ STR:0 = ストリートライブ
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 100
-LOSEBASE:1 += 400
+LOSEBASE:体力 += 100
+LOSEBASE:気力 += 400
 
 A = 400
 B = 300
@@ -442,7 +442,7 @@ CALL TRAIN_MESSAGE_B
 
 T = 1 + RAND:2
 PRINTFORML %EXPNAME:93%+{T}
-EXP:93 += T
+EXP:歌唱経験 += T
 
 RETURN 1
 
@@ -463,11 +463,11 @@ IF TFLAG:18 == -1
 	PRINTFORML %CALLNAME:MASTER%は%CALLNAME:TARGET%を連れてその場を後にした……
 	WAIT
 ELSE
-	IF EXP:93 <= 50
+	IF EXP:歌唱経験 <= 50
 		PRINTFORML %CALLNAME:TARGET%は路上で軽く歌ってみた
-	ELSEIF EXP:93 <= 100
+	ELSEIF EXP:歌唱経験 <= 100
 		PRINTFORML %CALLNAME:TARGET%はストリートライブを開いた
-	ELSEIF EXP:93 <= 200
+	ELSEIF EXP:歌唱経験 <= 200
 		PRINTFORML %CALLNAME:TARGET%は足を止めた人々を前にして歌い始めた
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%は待っていた人々に挨拶をしてから歌い始めた

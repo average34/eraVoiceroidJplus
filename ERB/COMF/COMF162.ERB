@@ -26,7 +26,7 @@ SIF TEQUIP:75
 SIF TEQUIP:90
 	RETURN 0
 ;体力が1000未満では使用不可
-SIF BASE:0 < 1000 && TEQUIP:75 == 0
+SIF BASE:体力 < 1000 && TEQUIP:75 == 0
 	RETURN 0
 RETURN 1
 
@@ -38,8 +38,8 @@ STR:0 = 昆虫採集セットの薬
 CALL TRAIN_MESSAGE_B
 
 
-LOSEBASE:0 += 300
-LOSEBASE:1 += 300
+LOSEBASE:体力 += 300
+LOSEBASE:気力 += 300
 
 
 PRINTFORM %CALLNAME:PLAYER%は
@@ -65,7 +65,7 @@ IF A == 0
 	SOURCE:17 = C
 ELSEIF A >= 1 && A < 3
 	PRINTFORM %CALLNAME:TARGET%は
-	SIF TALENT:0
+	SIF TALENT:処女
 		PRINT 処女であるにもかかわらず
 	PRINTL 子宮の奥が疼き始めた
 	IF ABL:Ｖ感覚 <= 2
@@ -77,7 +77,7 @@ ELSEIF A >= 1 && A < 3
 	ENDIF
 ELSEIF A >= 3 && A < 5
 	PRINTFORM %CALLNAME:TARGET%は
-	SIF EXP:1 == 0
+	SIF EXP:Ａ経験 == 0
 		PRINT 今まで後ろの穴を弄られたことがなかったにもかかわらず
 	PRINTL 急激に菊門をほじって貰いたい衝動に襲われた
 	IF ABL:Ａ感覚 <= 2
@@ -152,11 +152,11 @@ TEQUIP:75 = 1
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
+	EXP:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
+	EXP:ＢＬ経験 += 1
 ENDIF
 
 RETURN 1

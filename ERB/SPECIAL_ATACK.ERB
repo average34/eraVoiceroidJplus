@@ -24,74 +24,74 @@ ELSEIF LOCAL:0
 	;協力技は更に効果UP
 	TIMES A , 1.20
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF LOCAL:1
 	PRINTFORML %CALLNAME:TARGET%達の大合葬「霊車コンチェルトグロッソ」！
 	;協力技は更に効果UP
 	TIMES A , 1.30
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF LOCAL:2
 	PRINTFORML %CALLNAME:TARGET%達の「スリーフェアリーズ」！
 	;協力技は更に効果UP
 	TIMES A , 1.30
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF LOCAL:3
 	PRINTFORML %CALLNAME:TARGET%達の弦楽 「浄瑠璃世界」！
 	;協力技は更に効果UP
 	TIMES A , 1.20
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF (TARGET >= 0 && NO:TARGET == 19) && ((MASTER >= 0 && NO:MASTER == 87) || (ASSI >= 0 && NO:ASSI == 87))
 	PRINTFORML %CALLNAME:TARGET%の魂魄「幽明求聞持聡明の法」！
 	;協力技は更に効果UP
 	TIMES A , 1.20
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF (TARGET >= 0 && NO:TARGET == 21) && ((MASTER >= 0 && NO:MASTER == 13) || (ASSI >= 0 && NO:ASSI == 13))
 	PRINTFORML %CALLNAME:TARGET%の式神「橙」！
 	;協力技は更に効果UP
 	TIMES A , 1.20
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF (TARGET >= 0 && NO:TARGET == 22) && ((MASTER >= 0 && NO:MASTER == 21) || (ASSI >= 0 && NO:ASSI == 21))
 	PRINTFORML %CALLNAME:TARGET%の式神「八雲藍」！
 	;協力技は更に効果UP
 	TIMES A , 1.20
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
 ELSEIF (TARGET >= 0 && NO:TARGET == 22) && ASSI > 0 && ((NO:MASTER == 13 && NO:ASSI == 21) || (NO:MASTER == 21 && NO:ASSI == 13))
 	PRINTFORML %CALLNAME:TARGET%の「八雲の巣」！
 	;協力技は更に効果UP
 	TIMES A , 1.30
 	;協力技は更に魔力を消費
-	BASE:5 -= MAXBASE:5 / 10 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 10 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 	RETURN 0
-ELSEIF NO:TARGET == 44 && BASE:4 < MAXBASE:4 / 6
+ELSEIF NO:TARGET == 44 && BASE:耐力 < MAXBASE:耐力 / 6
 	;負けに瀕すると…
 	TIMES A , 1.15
 	PRINTFORML %CALLNAME:TARGET%の土着神「御射軍神さま」！
@@ -102,7 +102,7 @@ ELSEIF (TARGET >= 0 && NO:TARGET == 91) && ((MASTER >= 0 && NO:MASTER == 95) || 
 	TIMES A , 1.20
 	;協力技は更に魔力を…消費しない。宝塔の御力
 	RETURN 0
-ELSEIF NO:TARGET == 95 && BASE:4 < MAXBASE:4 / 6
+ELSEIF NO:TARGET == 95 && BASE:耐力 < MAXBASE:耐力 / 6
 	;負けに瀕すると…　ただしミシャクジと違って強さは変わらず
 	TIMES A , 1.10
 	PRINTFORML %CALLNAME:TARGET%の寅符「ハングリータイガー」！
@@ -127,14 +127,14 @@ RETURN 1
 IF ARG == 0
 	LOCALS = %CALLNAME:MASTER%
 	LOCAL:0 = NO:MASTER
-	LOCAL:1 = BASE:MASTER:4
-	LOCAL:2 = MAXBASE:MASTER:4
+	LOCAL:1 = BASE:MASTER:耐力
+	LOCAL:2 = MAXBASE:MASTER:耐力
 	LOCAL:3 = MASTER
 ELSEIF ARG == 1
 	LOCALS = %CALLNAME:TARGET%
 	LOCAL:0 = NO:TARGET
-	LOCAL:1 = BASE:TARGET:4
-	LOCAL:2 = MAXBASE:TARGET:4
+	LOCAL:1 = BASE:TARGET:耐力
+	LOCAL:2 = MAXBASE:TARGET:耐力
 	LOCAL:3 = TARGET
 ELSEIF ARG == 2
 	LOCALS = %STR:C%
@@ -259,9 +259,9 @@ ENDIF
 CALL SPECIAL_ATACK
 TIMES A , 1.50
 ;魔力を消費
-BASE:T:5 -= MAXBASE:T:5 / 3 + 1
-SIF BASE:T:5 < 0
-	BASE:T:5 = 0
+BASE:T:魔力 -= MAXBASE:T:魔力 / 3 + 1
+SIF BASE:T:魔力 < 0
+	BASE:T:魔力 = 0
 
 ;---------------------------------------------------------
 ;庇う
@@ -284,11 +284,11 @@ ENDIF
 PRINTFORML %CALLNAME:T%は周囲の霧を取り込んで魔力を回復させた！
 A = -1
 ;耐力を消費
-BASE:T:4 -= MAXBASE:T:4 / 3 + 1
+BASE:T:耐力 -= MAXBASE:T:耐力 / 3 + 1
 ;魔力を回復
-BASE:T:5 += MAXBASE:T:5 / 2 + 1
-SIF BASE:T:5 > MAXBASE:T:5
-	BASE:T:5 = MAXBASE:T:5
+BASE:T:魔力 += MAXBASE:T:魔力 / 2 + 1
+SIF BASE:T:魔力 > MAXBASE:T:魔力
+	BASE:T:魔力 = MAXBASE:T:魔力
 
 ;---------------------------------------------------------
 ;回復
@@ -303,26 +303,26 @@ SIF TALENT:88
 	R += 1
 IF R == 0
 	PRINTFORML の肩に手を触れた！
-	H = MAXBASE:4 / 15 + 1
+	H = MAXBASE:耐力 / 15 + 1
 ELSEIF R == 1
 	PRINTFORML の手を握った！
-	H = MAXBASE:4 / 10 + 1
+	H = MAXBASE:耐力 / 10 + 1
 ELSEIF R == 2
 	PRINTFORML を抱きしめた！
-	H = MAXBASE:4 / 7 + 1
+	H = MAXBASE:耐力 / 7 + 1
 ELSEIF R == 3 || TALENT:151
 	PRINTFORML を強く抱きしめた！
-	H = MAXBASE:4 / 5 + 1
+	H = MAXBASE:耐力 / 5 + 1
 ELSE
 	PRINTFORML と熱い口づけを交わした！
-	H = MAXBASE:4 / 3 + 1
+	H = MAXBASE:耐力 / 3 + 1
 ENDIF
 PRINTFORML %CALLNAME:TARGET%の身体を侵していた霧が効力を失い徐々に抜けていく……
 CALL HEAL_CAP
 PRINTFORMW %CALLNAME:TARGET%の耐力が{H}回復した！
-BASE:4 += H
-SIF BASE:4 > MAXBASE:4
-	BASE:4 = MAXBASE:4
+BASE:耐力 += H
+SIF BASE:耐力 > MAXBASE:耐力
+	BASE:耐力 = MAXBASE:耐力
 A = -1
 
 ;---------------------------------------------------------
@@ -381,9 +381,9 @@ ENDIF
 
 IF T == TARGET
 	;魔力を更に消費
-	BASE:5 -= MAXBASE:5 / 100 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 100 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 ENDIF
 
 ;---------------------------------------------------------
@@ -415,27 +415,27 @@ ENDIF
 
 IF R == 0
 	PRINTFORML に手を触れて、霧の影響を吸い取った！
-	H = MAXBASE:T:4 / 40 + 1
+	H = MAXBASE:T:耐力 / 40 + 1
 ELSEIF R == 1
 	PRINTFORML の首筋にキスをし、霧の影響を吸い取った！
-	H = MAXBASE:T:4 / 30 + 1
+	H = MAXBASE:T:耐力 / 30 + 1
 ELSEIF R == 2
 	PRINTFORML の胸に口づけ、霧の影響を吸い取った！
-	H = MAXBASE:T:4 / 25 + 1
+	H = MAXBASE:T:耐力 / 25 + 1
 ELSEIF R == 3
 	IF FLAG:25 == 0
 		PRINTFORML の性器に口づけ、霧の影響を吸い取った！
 	ELSE
 		PRINTFORML の秘所に口づけ、霧の影響を吸い取った！
 	ENDIF
-	H = MAXBASE:T:4 / 20 + 1
+	H = MAXBASE:T:耐力 / 20 + 1
 ELSE
 	IF FLAG:25 == 0
 		PRINTFORML の性器に吸い付き、霧の影響を吸い取った！
 	ELSE
 		PRINTFORML の秘所に吸い付き、霧の影響を吸い取った！
 	ENDIF
-	H = MAXBASE:T:4 / 10 + 1
+	H = MAXBASE:T:耐力 / 10 + 1
 ENDIF
 
 ;MASTER使用時は効果大
@@ -444,15 +444,15 @@ SIF T == MASTER
 
 CALL HEAL_CAP
 PRINTFORMW 吸い取った霧の力を%CALLNAME:MASTER%の力で変換し、%CALLNAME:T%の耐力が{H}回復した！
-BASE:T:4 += H
-SIF BASE:T:4 > MAXBASE:T:4
-	BASE:T:4 = MAXBASE:T:4
+BASE:T:耐力 += H
+SIF BASE:T:耐力 > MAXBASE:T:耐力
+	BASE:T:耐力 = MAXBASE:T:耐力
 
 IF T == TARGET
 	;魔力を更に消費
-	BASE:5 -= MAXBASE:5 / 100 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 100 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 ENDIF
 
 ;---------------------------------------------------------
@@ -486,22 +486,22 @@ R /= 2
 IF R == 0
 	PRINTFORML に抱きつき、ゆっくりと全身を愛撫した！
 	TIMES A , 1.60
-	BASE:T:4 -= MAXBASE:T:4 / 50 + 1
+	BASE:T:耐力 -= MAXBASE:T:耐力 / 50 + 1
 ELSEIF R == 1
 	PRINTFORML と抱き合い、胸を擦り合わせた！
 	TIMES A , 1.80
-	BASE:T:4 -= MAXBASE:T:4 / 40 + 1
+	BASE:T:耐力 -= MAXBASE:T:耐力 / 40 + 1
 ELSE
 	PRINTFORML と互いの秘所を擦り合わせた！
 	TIMES A , 2.20
-	BASE:T:4 -= MAXBASE:T:4 / 25 + 1
+	BASE:T:耐力 -= MAXBASE:T:耐力 / 25 + 1
 ENDIF
 
 IF T == TARGET
 	;魔力を更に消費
-	BASE:5 -= MAXBASE:5 / 100 + 1
-	SIF BASE:5 < 0
-		BASE:5 = 0
+	BASE:魔力 -= MAXBASE:魔力 / 100 + 1
+	SIF BASE:魔力 < 0
+		BASE:魔力 = 0
 ENDIF
 
 

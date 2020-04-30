@@ -518,7 +518,7 @@ IF RESULT == 1
 	FLAG:60 = 1
 	PRINTFORMW 先ほどのやり取りは、ハクタク先生に無かった事にしてもらいました
 	PRINTFORMW %CALLNAME:MASTER%の体力が1まで回復した
-	BASE:MASTER:0 = 1
+	BASE:MASTER:体力 = 1
 ENDIF
 BEGIN SHOP
 

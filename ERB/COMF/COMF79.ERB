@@ -56,15 +56,15 @@ ELSE
 	TEQUIP:92 = 1
 
 	A = 100
-	IF EXP:50 < EXPLV:1
+	IF EXP:異常経験 < EXPLV:1
 		TIMES A , 3.00
-	ELSEIF EXP:50 < EXPLV:2
+	ELSEIF EXP:異常経験 < EXPLV:2
 		TIMES A , 2.50
-	ELSEIF EXP:50 < EXPLV:3
+	ELSEIF EXP:異常経験 < EXPLV:3
 		TIMES A , 2.00
-	ELSEIF EXP:50 < EXPLV:4
+	ELSEIF EXP:異常経験 < EXPLV:4
 		TIMES A , 1.00
-	ELSEIF EXP:50 < EXPLV:5
+	ELSEIF EXP:異常経験 < EXPLV:5
 		TIMES A , 0.80
 	ELSE
 		TIMES A , 0.60
@@ -89,13 +89,13 @@ ELSE
 	ENDIF
 
 	IF NO:TARGET == 24 && NO:TARGET == 78
-		LOSEBASE:0 += A / 4
-		LOSEBASE:1 += A / 2
+		LOSEBASE:体力 += A / 4
+		LOSEBASE:気力 += A / 2
 		UP:10 += A * 20
 		SOURCE:14 += A * 3
 	ELSE
-		LOSEBASE:0 += A / 2
-		LOSEBASE:1 += A
+		LOSEBASE:体力 += A / 2
+		LOSEBASE:気力 += A
 		UP:10 += A * 30
 		SOURCE:14 += A * 10
 	ENDIF
@@ -105,8 +105,8 @@ ELSE
 	;既成事実２に相当
 	TFLAG:200 = 2
 	
-	IF EXP:50 > 7
-		EXP:50 += 2
+	IF EXP:異常経験 > 7
+		EXP:異常経験 += 2
 		PRINTL 異常経験＋２
 	ENDIF
 	
@@ -120,15 +120,15 @@ RETURN 1
 PRINTL ＜蟲風呂入浴中＞
 
 A = 100
-IF EXP:50 < EXPLV:1
+IF EXP:異常経験 < EXPLV:1
 	TIMES A , 3.00
-ELSEIF EXP:50 < EXPLV:2
+ELSEIF EXP:異常経験 < EXPLV:2
 	TIMES A , 2.50
-ELSEIF EXP:50 < EXPLV:3
+ELSEIF EXP:異常経験 < EXPLV:3
 	TIMES A , 2.00
-ELSEIF EXP:50 < EXPLV:4
+ELSEIF EXP:異常経験 < EXPLV:4
 	TIMES A , 1.00
-ELSEIF EXP:50 < EXPLV:5
+ELSEIF EXP:異常経験 < EXPLV:5
 	TIMES A , 0.80
 ELSE
 	TIMES A , 0.60
@@ -152,14 +152,14 @@ ELSE
 ENDIF
 
 IF NO:TARGET == 24 && NO:TARGET == 78
-	LOSEBASE:0 += A / 8
-	LOSEBASE:1 += A / 4
+	LOSEBASE:体力 += A / 8
+	LOSEBASE:気力 += A / 4
 	UP:10 += A * 20
 	SOURCE:8 += A * 6
 	SOURCE:14 += A * 3
 ELSE
-	LOSEBASE:0 += A / 4
-	LOSEBASE:1 += A / 2
+	LOSEBASE:体力 += A / 4
+	LOSEBASE:気力 += A / 2
 	UP:10 += A * 30
 	SOURCE:8 += A * 10
 	SOURCE:14 += A * 15
@@ -187,10 +187,10 @@ IF TALENT:22 == 0 && TALENT:123 == 0 && PALAM:10 > PALAMLV:4
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に反抗する気力を失ったようだ……
 			PRINTW 反発刻印がLV2に下がった
 			MARK:3 = 2
-		ELSEIF (L > 2 && L < 6) && BASE:0 >= 500
+		ELSEIF (L > 2 && L < 6) && BASE:体力 >= 500
 			PRINTFORM %CALLNAME:TARGET%はあまりの恐怖に気力が一気に消耗したようだ……
-			BASE:1 = 0
-		ELSEIF L >= 6 && TALENT:10 == 0 && BASE:0 >= 500
+			BASE:気力 = 0
+		ELSEIF L >= 6 && TALENT:10 == 0 && BASE:体力 >= 500
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に蟲風呂がトラウマとなったようだ……
 			IF TALENT:131 == 0 && L == 9
 				PRINTFORML %CALLNAME:TARGET%は[幼児退行]してしまった
@@ -198,7 +198,7 @@ IF TALENT:22 == 0 && TALENT:123 == 0 && PALAM:10 > PALAMLV:4
 			ENDIF
 			PRINTFORMW %CALLNAME:TARGET%は[臆病]になった
 			TALENT:TARGET:10 = 1
-		ELSEIF L >= 8 && TALENT:10 && TALENT:131 == 0 && BASE:0 >= 500
+		ELSEIF L >= 8 && TALENT:10 && TALENT:131 == 0 && BASE:体力 >= 500
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に蟲風呂がトラウマとなったようだ……
 			PRINTFORML %CALLNAME:TARGET%は[幼児退行]してしまった
 			TALENT:TARGET:131 = 1
@@ -209,7 +209,7 @@ ENDIF
 ;-------------------------------------------------
 ;射精チェック
 ;-------------------------------------------------
-IF MAXBASE:PLAYER:4 != 0
+IF MAXBASE:PLAYER:耐力 != 0
 
 	B = 0
 	;ABL:技巧をみる
@@ -257,10 +257,10 @@ IF MAXBASE:PLAYER:4 != 0
 		TIMES B , 1.50
 	ENDIF
 
-	BASE:PLAYER:4 += B
+	BASE:PLAYER:耐力 += B
 
-	S = BASE:PLAYER:4
-	EJAC = MAXBASE:PLAYER:4
+	S = BASE:PLAYER:耐力
+	EJAC = MAXBASE:PLAYER:耐力
 
 	IF  S > EJAC * 2
 		E = 2
@@ -272,29 +272,29 @@ IF MAXBASE:PLAYER:4 != 0
 
 	;大量射精
 	IF E == 2
-		EXP:20 += 3
+		EXP:精液経験 += 3
 		PRINTL 淫蟲大量射精
 		PRINTL 精液経験＋３
 		T += 1
 
 		SOURCE:11 += EJAC*2
 
-		BASE:PLAYER:4 -= EJAC*2
-		SIF BASE:PLAYER:4 >= EJAC
-			BASE:PLAYER:4 = EJAC-1
+		BASE:PLAYER:耐力 -= EJAC*2
+		SIF BASE:PLAYER:耐力 >= EJAC
+			BASE:PLAYER:耐力 = EJAC-1
 	
 	;通常の射精
 	ELSEIF E == 1
-		EXP:20 += 1
+		EXP:精液経験 += 1
 		PRINTL 淫蟲射精
 		PRINTL 精液経験＋１
 		T += 1
 
 		SOURCE:11 += EJAC
 
-		BASE:PLAYER:4 -= EJAC
-		SIF BASE:PLAYER:4 >= EJAC
-			BASE:PLAYER:4 = EJAC-1
+		BASE:PLAYER:耐力 -= EJAC
+		SIF BASE:PLAYER:耐力 >= EJAC
+			BASE:PLAYER:耐力 = EJAC-1
 	ENDIF
 ENDIF
 

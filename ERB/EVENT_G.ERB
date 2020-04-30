@@ -9,23 +9,23 @@
 ;;J風にアレンジしようと思ったら、なんかややこしい事をやっているので、ついでにソースをすっきり
 @EVENT_GROWTH
 ;それぞれ消費した量を記憶
-A = MAXBASE:0 - BASE:0
-B = MAXBASE:1 - BASE:1
+A = MAXBASE:体力 - BASE:体力
+B = MAXBASE:気力 - BASE:気力
 C = RAND:5
 ;Cが0と1の時に体力が1と2の時に気力が上がるかもしれない
-SIF C > 2 || (MAXBASE:1 == 9999 && MAXBASE:0 == 9999)
+SIF C > 2 || (MAXBASE:気力 == 9999 && MAXBASE:体力 == 9999)
 	RETURN 0
 
 ;体力＞気力だと気力が、気力＞体力だと体力が上がりやすくする
-SIF ((C < 1 && MAXBASE:0 > MAXBASE:1) || (C > 1 && MAXBASE:0 < MAXBASE:1)) && RAND:3 == 0
+SIF ((C < 1 && MAXBASE:体力 > MAXBASE:気力) || (C > 1 && MAXBASE:体力 < MAXBASE:気力)) && RAND:3 == 0
 	C = 1
 
 ;体力の上昇上限。戦闘経験で底上げ
 ;愛情経験でも底上げ追加
-I = 4000 + EXP:95 / 2 + EXP:23 / 3
+I = 4000 + EXP:戦闘経験 / 2 + EXP:愛情経験 / 3
 ;気力の上昇上限。デート経験で底上げ
 ;愛情経験でも底上げ追加
-J = 3000 + EXP:94 + EXP:23 / 2
+J = 3000 + EXP:デート経験 + EXP:愛情経験 / 2
 ;性別による補正
 IF TALENT:122
 	TIMES I , 1.50
@@ -41,8 +41,8 @@ SIF J > 9999
 
 ;体力は戦闘経験で増加。気力はムード値で増加
 ;愛情経験でも増加追加。ただし加減はわからない…
-G:0 = EXP:95 / 100 + EXP:23 / 20
-G:1 = TFLAG:37 / 10 + EXP:23 / 5
+G:0 = EXP:戦闘経験 / 100 + EXP:愛情経験 / 20
+G:1 = TFLAG:37 / 10 + EXP:愛情経験 / 5
 ;PHANTASMは1回の成長の最大値が大きい
 IF FLAG:5 == 10
 	SIF G:0 > 100
@@ -70,13 +70,13 @@ ELSE
 ENDIF
 
 ;愛情経験すごいなぁ
-G:0 += EXP:23 / 200
-G:1 += EXP:23 / 100
+G:0 += EXP:愛情経験 / 200
+G:1 += EXP:愛情経験 / 100
 
 ;体力が300以上で体力を消費してたら
-IF C <= 1 && A != 0 && BASE:0 >= 300 && MAXBASE:0 < I
+IF C <= 1 && A != 0 && BASE:体力 >= 300 && MAXBASE:体力 < I
 	;残り体力500未満
-	IF BASE:0 < 500
+	IF BASE:体力 < 500
 		D = 750
 	;消費した体力が2500より多い
 	ELSEIF A > 2500
@@ -104,16 +104,16 @@ IF C <= 1 && A != 0 && BASE:0 >= 300 && MAXBASE:0 < I
 		TFLAG:13 = 28
 		CALL SELF_KOJO
 		;上限を超えないように
-		IF I < MAXBASE:0+E+G:0
+		IF I < MAXBASE:体力+E+G:0
 			;上昇値表示用にEに上昇量を入れる
-			E = I - MAXBASE:0
-			MAXBASE:0 = I
+			E = I - MAXBASE:体力
+			MAXBASE:体力 = I
 			;誰かもっと気の利いた文を考え(ry
 			PRINTFORML よく運動した%CALLNAME:TARGET%は体力が付きました。
 			PRINTFORML %CALLNAME:TARGET%の体力の最大値が{E}上がりました。
 			PRINTFORML %CALLNAME:TARGET%の体力はもう上昇しません。
 		ELSE
-			MAXBASE:0 += E+G:0
+			MAXBASE:体力 += E+G:0
 			;誰かもっと気の利いた文を考え(ry
 			PRINTFORML よく運動した%CALLNAME:TARGET%は体力が付きました。
 			PRINTFORML %CALLNAME:TARGET%の体力の最大値が{E+G:0}上がりました。
@@ -125,9 +125,9 @@ IF C <= 1 && A != 0 && BASE:0 >= 300 && MAXBASE:0 < I
 ENDIF
 
 ;気力が100以上気力を消費してたら
-IF C >= 1 && B != 0 && BASE:1 >= 100 && MAXBASE:1 < J
+IF C >= 1 && B != 0 && BASE:気力 >= 100 && MAXBASE:気力 < J
 	;残り気力300未満
-	IF BASE:1 < 300
+	IF BASE:気力 < 300
 		D = 750
 	;消費した気力が2500より多い
 	ELSEIF B > 2500
@@ -157,15 +157,15 @@ IF C >= 1 && B != 0 && BASE:1 >= 100 && MAXBASE:1 < J
 		TFLAG:13 = 29
 		CALL SELF_KOJO
 		;上限を超えないように
-		IF J < MAXBASE:1+F+G:1
+		IF J < MAXBASE:気力+F+G:1
 			;上昇値表示用にFに上昇量を入れる
-			F = J - MAXBASE:1
-			MAXBASE:1 = J
+			F = J - MAXBASE:気力
+			MAXBASE:気力 = J
 			PRINTFORML %CALLNAME:TARGET%はこの心地よい時間をもっと楽しみたいと思った。
 			PRINTFORML %CALLNAME:TARGET%の気力の最大値が{F}上がりました。
 			PRINTFORML %CALLNAME:TARGET%の気力はもう上昇しません。
 		ELSE
-			MAXBASE:1 += F+G:1
+			MAXBASE:気力 += F+G:1
 			PRINTFORML %CALLNAME:TARGET%はこの心地よい時間をもっと楽しみたいと思った。
 			PRINTFORML %CALLNAME:TARGET%の気力の最大値が{F+G:1}上がりました。
 		ENDIF

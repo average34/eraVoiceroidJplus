@@ -22,7 +22,7 @@ RETURN 1
 PRINTL 吸血
 
 ;ベースは針。成功判定は主に足コキから。
-;TFLAG:65とEXP:56、EXP:56を使用します
+;TFLAG:65とEXP:吸血経験、EXP:吸血経験を使用します
 
 ;-------------------------------------------------
 ;実行できるかの判定
@@ -38,8 +38,8 @@ CALL TRAIN_MESSAGE_B
 ;実行決定
 ;-------------------------------------------------
 
-LOSEBASE:0 += 20
-LOSEBASE:1 += 150
+LOSEBASE:体力 += 20
+LOSEBASE:気力 += 150
 
 SOURCE:14 = 1500
 
@@ -67,13 +67,13 @@ ELSE
 ENDIF
 
 ;吸血経験を見る
-IF EXP:56 < EXPLV:1
+IF EXP:吸血経験 < EXPLV:1
 	TIMES SOURCE:14 , 2.50
 	TIMES SOURCE:11 , 0.00
-ELSEIF EXP:56 < EXPLV:2
+ELSEIF EXP:吸血経験 < EXPLV:2
 	TIMES SOURCE:14 , 1.00
 	TIMES SOURCE:11 , 1.00
-ELSEIF EXP:56 < EXPLV:3
+ELSEIF EXP:吸血経験 < EXPLV:3
 	TIMES SOURCE:14 , 0.25
 	TIMES SOURCE:11 , 10.0
 ELSE
@@ -148,22 +148,22 @@ TFLAG:37 += A / 2
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +2
-	EXP:40 += 2
-	EXP:PLAYER:40 += 2
+	EXP:レズ経験 += 2
+	EXP:PLAYER:レズ経験 += 2
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +2
-	EXP:41 += 2
-	EXP:PLAYER:41 += 2
+	EXP:ＢＬ経験 += 2
+	EXP:PLAYER:ＢＬ経験 += 2
 ENDIF
 
 
-EXP:PLAYER:57 += 1
+EXP:PLAYER:被吸血経験 += 1
 
-EXP:56 += 1
+EXP:吸血経験 += 1
 PRINTFORML %EXPNAME:56%+1
 
-EXP:PLAYER:50 += 5
+EXP:PLAYER:異常経験 += 5
 PRINTFORML %CALLNAME:PLAYER%の%EXPNAME:50%+5
 
 IF ASSIPLAY
@@ -178,7 +178,7 @@ RETURN 1
 @TRAIN_MESSAGE_COM151
 PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の首筋に鋭く尖った犬歯を突き立てた…
 PRINTFORM 傷口から溢れた血を%CALLNAME:TARGET%は
-IF EXP:56 >= EXPLV:2
+IF EXP:吸血経験 >= EXPLV:2
 	PRINTFORM 恍惚とした表情で
 ELSE
 	PRINTFORM 恐る恐る
@@ -312,7 +312,7 @@ IF CFLAG:2 >= 1500
 ENDIF
 
 ;吸血経験
-IF EXP:56 == 0
+IF EXP:吸血経験 == 0
 	A -= 15
 ENDIF
 
@@ -493,7 +493,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;吸血経験
-	IF EXP:56 == 0
+	IF EXP:吸血経験 == 0
 		PRINT  - 
 		PRINTFORM %EXPNAME:56%無し
 		PRINTV '(,15,')

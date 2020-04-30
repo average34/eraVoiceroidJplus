@@ -162,7 +162,7 @@ Z = 0
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
 IF ABL:レズっ気 >= 3 && TALENT:81 == 0
 	F = ABL:レズっ気 * 3
-	IF EXP:50 < F
+	IF EXP:異常経験 < F
 		;異常経験が不足
 		I |= 2
 		J |= 2
@@ -175,7 +175,7 @@ SIF JUEL:5 < A
 SIF JUEL:6 < C
 	I |= 1
 ;レズ経験が必要
-SIF EXP:40 < B
+SIF EXP:レズ経験 < B
 	I |= 2
 
 IF I == 0
@@ -187,7 +187,7 @@ IF D > 0
 	SIF JUEL:0 < D
 		J |= 1
 	;レズ経験が必要
-	SIF EXP:40 < B
+	SIF EXP:レズ経験 < B
 		J |= 2
 	
 	IF J == 0

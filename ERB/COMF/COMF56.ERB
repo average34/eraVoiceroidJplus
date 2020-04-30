@@ -20,13 +20,13 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, MASTER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, MASTER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:1 += 40
-LOSEBASE:1 += 220
+LOSEBASE:気力 += 40
+LOSEBASE:気力 += 220
 
 SOURCE:3 = 1500
 SOURCE:14 = 800
@@ -75,14 +75,14 @@ ELSE
 ENDIF
 
 ;助手が処女
-IF TALENT:ASSI:0 == 1
+IF TALENT:ASSI:処女 == 1
 	TIMES SOURCE:13 , 20.00
 	TIMES SOURCE:14 , 3.00
-	TALENT:ASSI:0 = 0
+	TALENT:ASSI:処女 = 0
 
 	PRINTL ＜助手が処女＞
 
-	EXP:50 += 3
+	EXP:異常経験 += 3
 	PRINTFORML %EXPNAME:50%＋３
 
 	IF ABL:親密 < 2
@@ -90,7 +90,7 @@ IF TALENT:ASSI:0 == 1
 		ABL:親密 = 2
 	ENDIF
 ENDIF
-EXP:ASSI:0 += 1
+EXP:ASSI:Ｖ経験 += 1
 
 
 ;主導権をチェック
@@ -144,8 +144,8 @@ TFLAG:37 += A / 2
 CALL SAMEN_CHECK
 
 ;汎用処理に移行
-;S = BASE:MASTER:2
-;EJAC = MAXBASE:MASTER:2
+;S = BASE:MASTER:射精
+;EJAC = MAXBASE:MASTER:射精
 
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -186,29 +186,29 @@ ENDIF
 ;IF E == 2
 ;	TIMES SOURCE:10 , 1.50
 ;
-;	EXP:MASTER:3 += 2
-;	EXP:20 += 1
+;	EXP:MASTER:射精経験 += 2
+;	EXP:精液経験 += 1
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋１
 	;精液汚れ
 ;	STAIN:MASTER:2 |= 4
 
-;	BASE:MASTER:2 -= EJAC*2
-;	SIF BASE:MASTER:2 >= EJAC
-;		BASE:MASTER:2 = EJAC-1
+;	BASE:MASTER:射精 -= EJAC*2
+;	SIF BASE:MASTER:射精 >= EJAC
+;		BASE:MASTER:射精 = EJAC-1
 
 	;助手を犯すで射精したフラグ
 ;	TFLAG:7 = 2
 ;通常の射精
 ;ELSEIF E == 1
-;	EXP:MASTER:3 += 1
+;	EXP:MASTER:射精経験 += 1
 ;	PRINTL 射精
 	;精液汚れ
 ;	STAIN:MASTER:2 |= 4
 
-;	BASE:MASTER:2 -= EJAC
-;	SIF BASE:MASTER:2 >= EJAC
-;		BASE:MASTER:2 = EJAC-1
+;	BASE:MASTER:射精 -= EJAC
+;	SIF BASE:MASTER:射精 >= EJAC
+;		BASE:MASTER:射精 = EJAC-1
 
 	;助手を犯すで射精したフラグ
 ;	TFLAG:7 = 1
@@ -224,12 +224,12 @@ IF TALENT:MASTER:122 == 0 && TALENT:ASSI:122 == 0
 	PRINTS EXPNAME:40
 	PRINT +10
 	PRINTFORML (%CALLNAME:ASSI%) 
-	EXP:ASSI:40 += 10
+	EXP:ASSI:レズ経験 += 10
 ELSEIF TALENT:MASTER:122 == 1 && TALENT:ASSI:122 == 1
 	PRINTS EXPNAME:41
 	PRINT +10
 	PRINTFORML (%CALLNAME:ASSI%) 
-	EXP:ASSI:41 += 10
+	EXP:ASSI:ＢＬ経験 += 10
 ENDIF
 
 TFLAG:100 = 1
@@ -298,7 +298,7 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;助手が処女
-IF EXP:ASSI:0 == 0
+IF EXP:ASSI:Ｖ経験 == 0
 	A -= 15
 ENDIF
 
@@ -408,7 +408,7 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;助手が処女
-	IF EXP:ASSI:0 == 0
+	IF EXP:ASSI:Ｖ経験 == 0
 		PRINT  - 
 		PRINT 助手が処女
 		PRINTV '(,15,')

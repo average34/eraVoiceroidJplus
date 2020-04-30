@@ -24,7 +24,7 @@ WAIT
 ;恋慕、非処女による調教後性交渉チェック
 
 ;体力余って、[恋慕]がないとダメ
-SIF BASE:0 < 500 || TALENT:TARGET:85 == 0 || TFLAG:301
+SIF BASE:体力 < 500 || TALENT:TARGET:85 == 0 || TFLAG:301
 	RETURN 0
 ;カットフラグが立っていたらリターン
 SIF CFLAG:98 & 1
@@ -34,10 +34,10 @@ SIF CFLAG:98 & 1
 TFLAG:15 = 0
 
 ;ターゲットに挿入
-SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:0 == 0 && TALENT:122 == 0
+SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:処女 == 0 && TALENT:122 == 0
 	TFLAG:15 |= 1
 ;マスターに挿入
-SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:0 == 0
+SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:処女 == 0
 	TFLAG:15 |= 2
 ;両方出来るならランダムで決定
 SIF TFLAG:15 == 3
@@ -136,24 +136,24 @@ IF S > 0
 	;ターゲットが挿入されるならV経験が付く
 	IF TFLAG:15 & 1
 		PRINTFORML %EXPNAME:0%＋{S}
-		EXP:0 += S
+		EXP:Ｖ経験 += S
 	ENDIF
 	;精液経験が付くか
 	IF TALENT:MASTER:121 || TALENT:MASTER:122
 		PRINTFORML %EXPNAME:20%＋{S*5}
-		EXP:20 += S * 5
+		EXP:精液経験 += S * 5
 	ENDIF
 	PRINTFORML %EXPNAME:2%＋{S}
-	EXP:2 += S
+	EXP:絶頂経験 += S
 	;射精経験
 	IF TALENT:122 || TALENT:121
 		PRINTFORML %EXPNAME:3%＋{S}
-		EXP:3 += S
+		EXP:射精経験 += S
 	ENDIF
 	;レズ経験
 	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
-		EXP:40 += S * 20
-		EXP:MASTER:40 += S * 20
+		EXP:レズ経験 += S * 20
+		EXP:MASTER:レズ経験 += S * 20
 		PRINTFORML %EXPNAME:40%＋{S*20}
 	ENDIF
 	
@@ -304,7 +304,7 @@ IF TALENT:75
 ENDIF
 
 ;体力が500未満だと半分になる
-IF BASE:0 <= 500
+IF BASE:体力 <= 500
 	A /= 2
 	;Aが6回以上だったら5回以下にする
 	SIF A > 6
@@ -352,8 +352,8 @@ IF A > 0 && (C >= B)
 	PRINTFORML %PALAMNAME:0%の珠＋{A:1*500}
 	PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 	PRINTFORMW %PALAMNAME:5%の珠＋{A:1*250}
-	EXP:10 += A
-	EXP:2 += A / 5
+	EXP:自慰経験 += A
+	EXP:絶頂経験 += A / 5
 	GOTJUEL:0 += A:1*500
 	GOTJUEL:4 += A:1*100
 	GOTJUEL:5 += A:1*250
@@ -390,9 +390,9 @@ ELSEIF A > 0 && (B > C)
 	PRINTFORML %PALAMNAME:2%の珠＋{A:1*500}
 	PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 	PRINTFORMW %PALAMNAME:5%の珠＋{A:1*250}
-	EXP:10 += A
-	EXP:1 += A
-	EXP:2 += A / 5
+	EXP:自慰経験 += A
+	EXP:Ａ経験 += A
+	EXP:絶頂経験 += A / 5
 	GOTJUEL:2 += A:1*500
 	GOTJUEL:4 += A:1*100
 	GOTJUEL:5 += A:1*250
@@ -434,7 +434,7 @@ SIF ABL:レズ中毒 == 0 && ABL:ASSI:レズ中毒 == 0
 	RETURN 0
 
 ;体力必要
-SIF BASE:0 < 500 || TFLAG:301
+SIF BASE:体力 < 500 || TFLAG:301
 	RETURN 0
 
 VARSET N, 0
@@ -506,9 +506,9 @@ SIF N*100*ABL:親密/500 > 0
 PRINTFORML %PALAMNAME:0%の珠＋{N:1*100*ABL:親密}
 PRINTFORML %PALAMNAME:5%の珠＋{N:1*200}
 
-EXP:40 += N*20
-EXP:ASSI:40 += N*20
-EXP:2 += N*100*ABL:親密/500
+EXP:レズ経験 += N*20
+EXP:ASSI:レズ経験 += N*20
+EXP:絶頂経験 += N*100*ABL:親密/500
 
 GOTJUEL:0 += N:1*100*ABL:親密
 GOTJUEL:5 += N:1*200
@@ -517,7 +517,7 @@ IF TALENT:ASSI:121
 	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
 	PRINTFORML %PALAMNAME:7%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
 
-	EXP:20 += N
+	EXP:精液経験 += N
 	GOTJUEL:6 += N:1*100*(ABL:技巧+ABL:奉仕精神)
 	GOTJUEL:7 += N:1*100*(ABL:技巧+ABL:奉仕精神)
 ELSE
@@ -533,13 +533,13 @@ IF TALENT:ASSI:83
 		PRINTFORML %PALAMNAME:9%の珠＋{N:1*100*ABL:マゾっ気}
 
 	GOTJUEL:9 += N:1*100*ABL:マゾっ気
-	EXP:30 += N
+	EXP:苦痛快楽経験 += N
 ENDIF
 IF TALENT:121
 	PRINTFORML %EXPNAME:3%＋{N}
 	PRINTFORML %PALAMNAME:8%の珠＋{N:1*100}
 
-	EXP:3 += N
+	EXP:射精経験 += N
 	GOTJUEL:8 += N:1*100
 ENDIF
 IF TALENT:121 && TALENT:ASSI:121 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 3
@@ -559,10 +559,10 @@ IF TALENT:121 && TALENT:ASSI:121 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >=
 	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100}
 	PRINTFORML %PALAMNAME:8%の珠＋{N:1*100}
 
-	EXP:3 += N
-	EXP:20 += N
-	EXP:21 += N
-	EXP:22 += N
+	EXP:射精経験 += N
+	EXP:精液経験 += N
+	EXP:奉仕快楽経験 += N
+	EXP:フェラ経験 += N
 	GOTJUEL:5 += N:1*100
 	GOTJUEL:6 += N:1*100
 	GOTJUEL:8 += N:1*100
@@ -577,7 +577,7 @@ RETURN 0
 SIF CFLAG:98 & 8
 	RETURN 0
 ;反発感情あり、夜でない、体力５００以下の場合はだめ
-SIF MARK:TARGET:3 >= 1 || TIME == 0 || BASE:0 < 500
+SIF MARK:TARGET:3 >= 1 || TIME == 0 || BASE:体力 < 500
 	RETURN 0
 IF (MARK:TARGET:2 >= 1 && CFLAG:2 >= 500) || (TALENT:TARGET:217 == 1 && CFLAG:2 >= 200)
 	S = 10
@@ -632,7 +632,7 @@ RETURN 0
 @SELF_CHECK2
 
 ;恋慕で体力が500以上有って夜じゃなきゃダメ
-SIF TALENT:TARGET:85 == 0 || BASE:0 < 500 || TIME == 0
+SIF TALENT:TARGET:85 == 0 || BASE:体力 < 500 || TIME == 0
 	RETURN 0
 
 ;夜這いをランダムにしてみる
@@ -681,16 +681,16 @@ ELSEIF A == 7
 ENDIF
 
 ;通常の夜這い
-;IF TALENT:TARGET:0 == 0 && (ABL:欲望 * 3 + ABL:Ｖ感覚 * 2 + ABL:親密 + ABL:奉仕精神) > 50 && TALENT:76 == 1
+;IF TALENT:TARGET:処女 == 0 && (ABL:欲望 * 3 + ABL:Ｖ感覚 * 2 + ABL:親密 + ABL:奉仕精神) > 50 && TALENT:76 == 1
 @SELF_YOBAI
 ;TFLAG:15を借りますよ
 TFLAG:15 = 0
 
 ;ターゲットに挿入
-SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:0 == 0
+SIF (TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:処女 == 0
 	TFLAG:15 |= 1
 ;マスターに挿入
-SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:0 == 0
+SIF (TALENT:121 || TALENT:122) && TALENT:MASTER:処女 == 0
 	TFLAG:15 |= 2
 ;両方出来るならランダムで決定
 SIF TFLAG:15 == 3
@@ -769,24 +769,24 @@ IF S > 0
 	;ターゲットが挿入されるならV経験が付く
 	IF TFLAG:15 & 1
 		PRINTFORML %EXPNAME:0%＋{S}
-		EXP:0 += S
+		EXP:Ｖ経験 += S
 	ENDIF
 	;精液経験が付くか
 	IF TALENT:MASTER:121 || TALENT:MASTER:122
 		PRINTFORML %EXPNAME:20%＋{S*5}
-		EXP:20 += S * 5
+		EXP:精液経験 += S * 5
 	ENDIF
 	PRINTFORML %EXPNAME:2%＋{S}
-	EXP:2 += S
+	EXP:絶頂経験 += S
 	;射精経験
 	IF TALENT:122 || TALENT:121
 		PRINTFORML %EXPNAME:3%＋{S}
-		EXP:3 += S
+		EXP:射精経験 += S
 	ENDIF
 	;レズ経験
 	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
-		EXP:40 += S * 20
-		EXP:MASTER:40 += S * 20
+		EXP:レズ経験 += S * 20
+		EXP:MASTER:レズ経験 += S * 20
 		PRINTFORML %EXPNAME:40%＋{S*20}
 	ENDIF
 	
@@ -908,8 +908,8 @@ IF S > 0
 	PRINTFORML %EXPNAME:23%＋{S}
 	PRINTFORML %EXPNAME:96%＋{S*2}
 	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
-		EXP:40 += S * 10
-		EXP:MASTER:40 += S * 10
+		EXP:レズ経験 += S * 10
+		EXP:MASTER:レズ経験 += S * 10
 		PRINTFORML %EXPNAME:40%＋{S*10}
 	ENDIF
 	PRINTFORML %PALAMNAME:4%の珠＋{S:1*400}
@@ -918,8 +918,8 @@ IF S > 0
 	
 	CFLAG:2 += S*5
 	CFLAG:MASTER:2 += S
-	EXP:23 += S
-	EXP:96 += S*2
+	EXP:愛情経験 += S
+	EXP:キス経験 += S*2
 	GOTJUEL:4 += S:1*400
 	GOTJUEL:7 += S:1*200
 	GOTJUEL:8 += S:1*200
@@ -1009,15 +1009,15 @@ IF S > 0
 	S:1 = LOCAL:1
 	PRINTFORML %EXPNAME:23%＋{S}
 	IF (TALENT:MASTER:122 == 0) && (TALENT:122 == 0)
-		EXP:40 += S * 2
-		EXP:MASTER:40 += S * 2
+		EXP:レズ経験 += S * 2
+		EXP:MASTER:レズ経験 += S * 2
 		PRINTFORML %EXPNAME:40%＋{S*2}
 	ENDIF
 	PRINTFORML %PALAMNAME:4%の珠＋{S:1*400}
 	PRINTFORMW %PALAMNAME:8%の珠＋{S:1*300}
 	CFLAG:2 += S*5
 	CFLAG:MASTER:2 += S
-	EXP:23 += S
+	EXP:愛情経験 += S
 	GOTJUEL:4 += S:1*400
 	GOTJUEL:8 += S:1*300
 	IF (CFLAG:99 & 1) == 0

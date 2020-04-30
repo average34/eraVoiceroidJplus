@@ -55,7 +55,7 @@ IF TALENT:88 == 0
 	PRINTL
 	PRINT 　　　　　 
 	LOCAL += SPOILER_PRINT_FLAG("好感度10000以上 ", CFLAG:2 >= 10000)
-	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より増やしてない ", (EXP:50 - CFLAG:22) <= 0, 1)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より増やしてない ", (EXP:異常経験 - CFLAG:22) <= 0, 1)
 	IF LOCAL >= 7
 		CALLF SPOILER_PRINT_FLAG("(OK)",1)
 	ELSE
@@ -83,8 +83,8 @@ IF TALENT:76 == 0
 	LOCAL = 0
 	PRINT 淫乱条件： 
 	LOCAL += SPOILER_PRINT_FLAG("欲望10以上 ", ABL:欲望 >= 10)
-	LOCAL += SPOILER_PRINT_FLAG("異常経験100以上 ", EXP:50 >= 100)
-	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より10以上増加 ", (EXP:50 - CFLAG:22) >= 10)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験100以上 ", EXP:異常経験 >= 100)
+	LOCAL += SPOILER_PRINT_FLAG("異常経験初期より10以上増加 ", (EXP:異常経験 - CFLAG:22) >= 10)
 	IF LOCAL >= 3
 		CALLF SPOILER_PRINT_FLAG("(OK)",1)
 	ELSE

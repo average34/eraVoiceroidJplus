@@ -32,11 +32,11 @@
 ;汎用的な関数なので、将来的にはすべての調教コマンドの射精チェックをここでやることも可能
 
 ;オーバーフロー対策に、値が大きすぎる場合と、負の場合は調整を加える
-IF BASE:PLAYER:2 > 100000000 || BASE:PLAYER:2 < 0
-	BASE:PLAYER:2 = 100000000
+IF BASE:PLAYER:射精 > 100000000 || BASE:PLAYER:射精 < 0
+	BASE:PLAYER:射精 = 100000000
 ENDIF
-S = BASE:PLAYER:2
-EJAC = MAXBASE:PLAYER:2
+S = BASE:PLAYER:射精
+EJAC = MAXBASE:PLAYER:射精
 
 ;Eに射精量を記録。1:射精　2:大量射精
 ;超大量射精用にTFLAG:302に射精量記録。1:射精　2:大量射精　4:超大量射精
@@ -163,7 +163,7 @@ ELSEIF TFLAG:703 == 13
 ENDIF
 
 ;精液経験追加
-EXP:T:20 += S
+EXP:T:精液経験 += S
 IF T == TARGET
 	PRINTFORML 精液経験＋{S}
 ELSE
@@ -189,12 +189,12 @@ ELSEIF TFLAG:302 == 1
 ENDIF
 
 ;射精経験
-EXP:P:3 += TFLAG:302
+EXP:P:射精経験 += TFLAG:302
 
 ;射精値調整
-BASE:P:2 -= EJAC*TFLAG:302
-SIF BASE:P:2 >= EJAC
-	BASE:P:2 = EJAC-1
+BASE:P:射精 -= EJAC*TFLAG:302
+SIF BASE:P:射精 >= EJAC
+	BASE:P:射精 = EJAC-1
 
 
 ;-------------------------------------------------------------------------

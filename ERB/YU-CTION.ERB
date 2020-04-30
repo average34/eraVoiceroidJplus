@@ -1597,10 +1597,10 @@ IF SELECTCOM == 2
 	;アナル舐め
 	ELSEIF TFLAG:17 == 1
 		PRINTFORM %CALLNAME:TARGET%の
-			SIF EXP:1 <= 10
+			SIF EXP:Ａ経験 <= 10
 			PRINT 硬く閉ざされた
 		PRINT アヌスを丁寧に舐めほぐし
-		SIF EXP:1 >= 100 && PALAM:5 >= PALAMLV:3 && TEQUIP:63 == 0
+		SIF EXP:Ａ経験 >= 100 && PALAM:5 >= PALAMLV:3 && TEQUIP:63 == 0
 			PRINT 、舌先を突き入れて穴の中までかきまわしてやっ
 		PRINTW た…
 	;焦らしから移植
@@ -1614,9 +1614,9 @@ IF SELECTCOM == 2
 		PRINTFORMW 指を思いっきり突き刺すと菊穴をグリグリとこねくりまわした…
 	;逆アナル愛撫
 	ELSEIF TFLAG:17 == 11
-		IF EXP:PLAYER:1 < 5
+		IF EXP:PLAYER:Ａ経験 < 5
 			PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:MASTER%の顔に苦痛の声を漏らすのにも構わず、アナルに指を入れ、弄った…
-		ELSEIF EXP:PLAYER:1 < 20
+		ELSEIF EXP:PLAYER:Ａ経験 < 20
 			PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%のアナルに指を突き入れると、グニグニと動かした。
 			PRINTFORMW そして、%CALLNAME:MASTER%の顔に苦痛と僅かな悦楽の色が浮かぶの見て、妖しく微笑んだ…
 		ELSE
@@ -2062,8 +2062,8 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	SOURCE:12 = 0
 	SOURCE:13 = 0
 	SOURCE:14 = 0
-	EXP:1 -= 1
-	EXP:PLAYER:1 += 1
+	EXP:Ａ経験 -= 1
+	EXP:PLAYER:Ａ経験 += 1
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
@@ -2113,24 +2113,24 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	ENDIF
 
 	;プレイヤーのA経験をみる
-	IF EXP:PLAYER:1 < 5
+	IF EXP:PLAYER:Ａ経験 < 5
 		TIMES B , 0.10
-	ELSEIF EXP:PLAYER:1 < 20
+	ELSEIF EXP:PLAYER:Ａ経験 < 20
 		TIMES B , 0.30
-	ELSEIF EXP:PLAYER:1 < 40
+	ELSEIF EXP:PLAYER:Ａ経験 < 40
 		TIMES B , 1.00
-	ELSEIF EXP:PLAYER:1 < 80
+	ELSEIF EXP:PLAYER:Ａ経験 < 80
 		TIMES B , 2.50
-	ELSEIF EXP:PLAYER:1 < 150
+	ELSEIF EXP:PLAYER:Ａ経験 < 150
 		TIMES B , 4.00
-	ELSEIF EXP:PLAYER:1 < 300
+	ELSEIF EXP:PLAYER:Ａ経験 < 300
 		TIMES B , 7.00
 	ELSE
 		TIMES B , 10.00
 	ENDIF
 
 	SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
-		BASE:PLAYER:2 += B
+		BASE:PLAYER:射精 += B
 
 	SOURCE:8 = 200
 	;ABL:奉仕精神をみる
@@ -2246,13 +2246,13 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 		PRINTS EXPNAME:40
 		PRINTL +4
-		EXP:40 += 4
-		EXP:PLAYER:40 += 4
+		EXP:レズ経験 += 4
+		EXP:PLAYER:レズ経験 += 4
 	ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 		PRINTS EXPNAME:41
 		PRINTL +4
-		EXP:41 += 4
-		EXP:PLAYER:41 += 4
+		EXP:ＢＬ経験 += 4
+		EXP:PLAYER:ＢＬ経験 += 4
 	ENDIF
 
 	TFLAG:100 = 1

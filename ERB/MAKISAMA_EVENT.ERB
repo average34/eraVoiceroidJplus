@@ -101,8 +101,8 @@ A = CHARANUM - 1
 NAME:A = マキ様
 CALLNAME:A = マキ
 
-BASE:A:0 = 2000
-BASE:A:1 = 1750
+BASE:A:体力 = 2000
+BASE:A:気力 = 1750
 
 FOR LOCAL, 0, 600
 	TALENT:A:LOCAL = 0
@@ -128,9 +128,9 @@ ABL:A:撮影素質 = 1
 ABL:A:歌唱素質 = 2
 ABL:A:浪費癖 = 1000
 ABL:A:戦闘素質 = 67
-EXP:A:10 = 50
-EXP:A:40 = 10
-EXP:A:50 = 90
+EXP:A:自慰経験 = 50
+EXP:A:レズ経験 = 10
+EXP:A:異常経験 = 90
 
 CFLAG:A:0 = 1
 CFLAG:A:12 = 400
@@ -235,7 +235,7 @@ ENDIF
 
 ;EVENT_S.ERBの素質取得のところを改変
 ;Ａ経験1以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:1 >= 1 
+IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:Ａ経験 >= 1 
 	IF TALENT:77 == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:85 == 1 || TALENT:76 == 1
@@ -312,7 +312,7 @@ IF CFLAG:0 == 1 && TALENT:216 == 1 && ABL:Ｖ感覚 >= 1
 	ENDIF
 ENDIF
 ;キス経験１以上
-IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:96 >= 1
+IF CFLAG:0 == 1 && TALENT:216 == 1 && EXP:キス経験 >= 1
 	IF TALENT:155 == 0
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		PRINTFORMW %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を抱き寄せ、幾度も口付けを繰り返している…

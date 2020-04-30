@@ -75,8 +75,8 @@ ENDIF
 
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:0 += 0
-LOSEBASE:1 += 50
+LOSEBASE:体力 += 0
+LOSEBASE:気力 += 50
 
 ;固定で獲得するソース、達成感
 SOURCE:5 = 10
@@ -84,7 +84,7 @@ SOURCE:5 = 10
 ;初期化
 L = 0
 ;気力の成長限界(奉仕快楽経験、愛情経験、デート経験、キス経験)
-L:1 = 3000 + (EXP:21 / 3) + (EXP:23 / 2) + EXP:94 + EXP:96
+L:1 = 3000 + (EXP:奉仕快楽経験 / 3) + (EXP:愛情経験 / 2) + EXP:デート経験 + EXP:キス経験
 ;9999は超えない
 SIF L:1 > 9999
 	L:1 = 9999
@@ -94,10 +94,10 @@ IF TFLAG:17 == 0
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*3)+1
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
@@ -118,10 +118,10 @@ ELSEIF TFLAG:17 == 1 && TEQUIP:2 == 2
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*3)
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L+1
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L+1
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
@@ -150,10 +150,10 @@ ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
@@ -165,10 +165,10 @@ ELSEIF TFLAG:17 == 2
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
@@ -180,10 +180,10 @@ ELSEIF TFLAG:17 == 3
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*3)+1
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
@@ -195,10 +195,10 @@ ELSEIF TFLAG:17 == 4
 	IF RAND:L == 0
 		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
-		IF MAXBASE:1 > L:1
-			SIF (MAXBASE:1+L) > L:1
-				L = 9999 - MAXBASE:1
-			MAXBASE:1 += L
+		IF MAXBASE:気力 > L:1
+			SIF (MAXBASE:気力+L) > L:1
+				L = 9999 - MAXBASE:気力
+			MAXBASE:気力 += L
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF

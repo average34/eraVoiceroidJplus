@@ -19,8 +19,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 30
-LOSEBASE:1 += 150
+LOSEBASE:体力 += 30
+LOSEBASE:気力 += 150
 
 SOURCE:14 = 100
 
@@ -109,13 +109,13 @@ SIF TALENT:80
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +4
-	EXP:40 += 4
-	EXP:PLAYER:40 += 4
+	EXP:レズ経験 += 4
+	EXP:PLAYER:レズ経験 += 4
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +4
-	EXP:41 += 4
-	EXP:PLAYER:41 += 4
+	EXP:ＢＬ経験 += 4
+	EXP:PLAYER:ＢＬ経験 += 4
 ENDIF
 
 TFLAG:100 = 1

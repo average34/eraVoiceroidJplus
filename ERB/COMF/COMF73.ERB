@@ -26,8 +26,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 5
-LOSEBASE:1 += 40
+LOSEBASE:体力 += 5
+LOSEBASE:気力 += 40
 
 A = 500
 B = 500
@@ -160,8 +160,8 @@ ENDIF
 
 PRINTL ＜スク水プレイ中＞
 
-LOSEBASE:0 += 0
-LOSEBASE:1 += 20
+LOSEBASE:体力 += 0
+LOSEBASE:気力 += 20
 
 A = 500
 B = 500
@@ -262,13 +262,13 @@ SIF TALENT:131 || TALENT:132
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
-	EXP:PLAYER:40 += 1
+	EXP:レズ経験 += 1
+	EXP:PLAYER:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
-	EXP:PLAYER:41 += 1
+	EXP:ＢＬ経験 += 1
+	EXP:PLAYER:ＢＬ経験 += 1
 ENDIF
 
 SIF ASSIPLAY == 0 && ABL:露出癖 >= 3

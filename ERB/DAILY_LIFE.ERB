@@ -49,7 +49,7 @@ FOR LCOUNT, 0, CHARANUM
 NEXT
 
 ;体力1000以下
-IF BASE:ARG:0 <= 1000
+IF BASE:ARG:体力 <= 1000
 	;吸血鬼 && 昼
 	IF TALENT:ARG:114 && TIME == 0
 		PRINTFORMW 通りすがりにふと%CALLNAME:ARG%の部屋を覗いてみた……
@@ -274,7 +274,7 @@ ELSE
 	;歌の練習
 	CASE 1
 		PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中から歌声が漏れてきた……
-;		IF EXP:ARG:60 >= 100 && RAND:2 == 0
+;		IF EXP:ARG:産卵経験 >= 100 && RAND:2 == 0
 ;			IF TALENT:ARG:25
 ;				PRINTFORMW リズミカルなテンポにつられて、知らず知らず心が躍っていく…
 ;			ELSEIF TALENT:ARG:26
@@ -1367,7 +1367,7 @@ ELSE
 			PRINTFORMW 縄を勝手に持ち出して縛り方の研究をしているらしい
 ;			PRINTFORMW 丸めた布団を人間に見立てて 手際よく縛り上げていく……
 ;			;異常経験
-;			IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;			IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0
 ;				PRINTFORMW 亀甲縛りにした布団に馬乗りになり、スパンキングしながら、恍惚の表情を浮かべている……
 ;			ELSE
 ;				PRINTFORMW あっという間に雁字搦めにされた布団を見下ろしながら、%CALLNAME:ARG%は満足げだ……
@@ -1379,7 +1379,7 @@ ELSE
 				PRINTFORMW オナホールを勝手に持ち出してアナル責めの練習をしているらしい
 				PRINTFORMW アナルバイブをペロリと舐めると オナホールに挿しこんだ……
 ;				;異常経験
-;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;				IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0
 ;					PRINTFORMW 緩急をつけながらアナルバイブを抜き差しする%CALLNAME:ARG%の表情は幸せそのものだ……
 ;				ELSE
 ;					PRINTFORMW 部屋中にいやらしい音を響かせながら 執拗な責めを叩き込んでいる……
@@ -1388,7 +1388,7 @@ ELSE
 				PRINTFORMW オナホールを勝手に持ち出してアナル責めの練習をしているらしい
 				PRINTFORMW 中指をペロリと舐めると オナホールに挿しこんだ……
 ;				;異常経験
-;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;				IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0
 ;					PRINTFORMW %CALLNAME:ARG%は、指に吸い付くヒダの感触を楽しんでいるようだ……
 ;				ELSE
 ;					PRINTFORMW 部屋中にいやらしい音を響かせながら 執拗な責めを叩き込んでいる……
@@ -1400,7 +1400,7 @@ ELSE
 			IF ITEM:10 && RAND:2 == 0
 				PRINTFORMW 鞭を勝手に持ち出して素振りしているらしい
 ;				;異常経験
-;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;				IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0
 ;					PRINTFORMW 風を切る鞭の音に陶酔した表情を浮かべている……
 ;				ELSE
 ;					PRINTFORMW 鞭捌きに納得がいかないのか、手首の捻り方を変えつつ何度も鞭を振るっている……
@@ -1409,7 +1409,7 @@ ELSE
 				PRINTFORMW 部屋を覗くと %CALLNAME:ARG%が握った拳を何度も何度も振り下ろしている
 				PRINTFORMW どうやら鞭振りのイメージトレーニングをしているらしい……
 ;				;異常経験
-;				IF EXP:ARG:50 >= 100 && RAND:2 == 0
+;				IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0
 ;					PRINTFORMW 渾身の一振りが出来たようで、陶酔した表情を浮かべている……
 ;				ELSE
 ;					PRINTFORMW まだまだ研究の余地があるのか、手首の捻り方を変えつつ何度も鞭を振るっている……

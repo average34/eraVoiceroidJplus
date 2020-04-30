@@ -47,9 +47,9 @@ STR:0 = 縁側でくつろぐ
 
 ;気力消費
 IF NO:TARGET == 1
-	LOSEBASE:1 += 30
+	LOSEBASE:気力 += 30
 ELSE
-	LOSEBASE:1 += 50
+	LOSEBASE:気力 += 50
 ENDIF
 
 
@@ -195,9 +195,9 @@ RETURN 1
 ;A:2は気力
 ;------------------------------
 @HEALING_COM325
-BASE:TARGET:0 += A:1
-BASE:TARGET:1 += A:2
-BASE:TARGET:4 += A:1
+BASE:TARGET:体力 += A:1
+BASE:TARGET:気力 += A:2
+BASE:TARGET:耐力 += A:1
 
 
 ;お茶請けなので限界突破はしない
@@ -561,28 +561,28 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 	;縄があれば緊縛経験、異常経験を＋
 	IF ITEM:14
 		A += 1
-		EXP:MASTER:51 += 5
+		EXP:MASTER:緊縛経験 += 5
 	ENDIF
 	;A、絶頂、苦痛快楽、放尿経験、異常経験を＋(A挿入、放尿で1ずつ)
 	A += 2
-	EXP:MASTER:1 += 10
-	EXP:MASTER:2 += 10
-	EXP:MASTER:30 += 50
-	EXP:MASTER:31 += 10
+	EXP:MASTER:Ａ経験 += 10
+	EXP:MASTER:絶頂経験 += 10
+	EXP:MASTER:苦痛快楽経験 += 50
+	EXP:MASTER:放尿経験 += 10
 
 	;霊夢様がふたなり、オトコだと射精
 	IF TALENT:ASSI:121 || TALENT:ASSI:122
-		EXP:ASSI:3 += 20
-		EXP:MASTER:20 += 20
+		EXP:ASSI:射精経験 += 20
+		EXP:MASTER:精液経験 += 20
 	ELSE
-		EXP:ASSI:2 += 10
+		EXP:ASSI:絶頂経験 += 10
 	ENDIF
 	;主人公がふたなり、オトコだと射精
 	IF TALENT:MASTER:121 || TALENT:MASTER:122
-		EXP:MASTER:3 += 20
-		EXP:ASSI:20 += 20
+		EXP:MASTER:射精経験 += 20
+		EXP:ASSI:精液経験 += 20
 	ELSE
-		EXP:MASTER:2 += 10
+		EXP:MASTER:絶頂経験 += 10
 	ENDIF
 
 	;ビデオテープ、カメラがある場合、撮影開始
@@ -593,8 +593,8 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 		A += 1
 		;テープの消費と経験の増加
 		;ITEM:28 -= K
-		EXP:ASSI:91 += K
-		EXP:MASTER:92 += K
+		EXP:ASSI:撮影経験 += K
+		EXP:MASTER:被写経験 += K
 
 		;弱味ゲット(相手は身に覚えがない事なので弱味にはならない)
 ;		IF TALENT:37 == 0
@@ -612,17 +612,17 @@ IF TALENT:ASSI:121 || TALENT:ASSI:122 || TALENT:ASSI:119 || ITEM:4 == 1
 ENDIF
 ;異常経験取得あり
 IF A > 0
-	EXP:MASTER:50 += A
+	EXP:MASTER:異常経験 += A
 ENDIF
 ;;パートナーの蓬莱人を消去
 ;IF TALENT:128
 ;	TALENT:128 = 0
 ;	PRINTL 
-;	EXP:MASTER:50 += 1
+;	EXP:MASTER:異常経験 += 1
 ;	PRINTFORML %EXPNAME:50%+1 (%CALLNAME:TARGET%)
 ;ENDIF
 ;コレが無いとオチがつかないので、所持品関係なし。←気絶させた上での暴挙なので必要ないと判断
-;EXP:TARGET:98 += 1
+;EXP:TARGET:記憶消去経験 += 1
 ;PRINTFORML %EXPNAME:98%＋1 (%CALLNAME:TARGET%)
 
 RETURN 0

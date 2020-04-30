@@ -28,7 +28,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
-IF EXP:0 == 0 && ASSIPLAY
+IF EXP:Ｖ経験 == 0 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
@@ -78,25 +78,25 @@ CALL TRAIN_MESSAGE_B
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 TFLAG:19 = 1
-SIF TALENT:85 && ASSIPLAY == 0 && EXP:0 == 0
+SIF TALENT:85 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0
 	TFLAG:20 = 1
 
 ;-------------------------------------------------
 ;射精ゲージチェック
 ;-------------------------------------------------
 SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
 IF PREVCOM == 34
-	LOSEBASE:0 += 60
-	LOSEBASE:1 += 150
+	LOSEBASE:体力 += 60
+	LOSEBASE:気力 += 150
 	SOURCE:12 = 1300
 ELSE
-	LOSEBASE:0 += 50
-	LOSEBASE:1 += 100
+	LOSEBASE:体力 += 50
+	LOSEBASE:気力 += 100
 	SOURCE:12 = 900
 ENDIF
 
@@ -123,19 +123,19 @@ ENDIF
 
 ;EXP:Ｖ経験をみる
 
-IF EXP:0 < EXPLV:1
+IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 300
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	TIMES SOURCE:1 , 0.60
 	SOURCE:6 = 100
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES SOURCE:1 , 1.00
 	SOURCE:6 = 10
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES SOURCE:1 , 1.20
 	SOURCE:6 = 0
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES SOURCE:1 , 1.30
 	SOURCE:6 = 0
 ELSE
@@ -187,7 +187,7 @@ SIF TALENT:100
 
 ;貞操観念
 IF TALENT:30
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		TIMES SOURCE:14, 5.00
 		SOURCE:15 = 2000
@@ -197,12 +197,12 @@ IF TALENT:30
 	ENDIF
 ;貞操無頓着
 ELSEIF TALENT:31
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		TIMES SOURCE:3 , 0.60
 		SOURCE:15 = 300
 	ENDIF
 ELSE
-	IF EXP:0 == 0
+	IF EXP:Ｖ経験 == 0
 		SOURCE:15 = 3000
 	ENDIF
 ENDIF
@@ -315,7 +315,7 @@ ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
 
-EXP:0 += 1
+EXP:Ｖ経験 += 1
 PRINTL Ｖ経験＋１
 
 ;-------------------------------------------------
@@ -347,7 +347,7 @@ STAIN:PLAYER:2 |= STAIN:3
 
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTFORML %EXPNAME:40%＋4
-	EXP:40 += 4
+	EXP:レズ経験 += 4
 ENDIF
 
 ;IF ASSIPLAY == 0
@@ -364,16 +364,16 @@ RETURN 1
 ;騎乗位
 IF PREVCOM == 34
 	PRINTFORMW %CALLNAME:TARGET%は上体を大きく逸らし、膣内の天井にペニスを擦り付けた…
-	IF EXP:0 <= 30
+	IF EXP:Ｖ経験 <= 30
 		PRINTFORMW %CALLNAME:TARGET%は戸惑いながらもその行為を続けている…
-	ELSEIF EXP:0 >= 31 && EXP:0 <= 50
+	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50
 		PRINTFORMW %CALLNAME:TARGET%は掴んだ快感を追って腰をくねらせている…
-	ELSEIF EXP:0 >= 51 && EXP:0 <= 80
+	ELSEIF EXP:Ｖ経験 >= 51 && EXP:Ｖ経験 <= 80
 		PRINTFORMW %CALLNAME:TARGET%は尻をすぼめ、小刻みに腰をしゃくって嬌声を上げている…
-	ELSEIF EXP:0 >= 81 && EXP:0 <= 120
+	ELSEIF EXP:Ｖ経験 >= 81 && EXP:Ｖ経験 <= 120
 		PRINTFORML %CALLNAME:TARGET%は後ろに手を衝いて、腰をガクガク揺らして快楽を貪っている…
 		PRINTFORMW 反り返ったペニスの先端が、鋭角にＧスポットを抉っている…
-	ELSEIF EXP:0 >= 121
+	ELSEIF EXP:Ｖ経験 >= 121
 		PRINTFORML %CALLNAME:TARGET%は女の急所を、自らの腰の痙攣で思う存分刺激している…
 		PRINTFORMW ぐぽんと重い水音がするたび、鼻に抜けただらしのない声が漏れている…
 	ENDIF
@@ -390,16 +390,16 @@ ELSE
 	;背面座位・乱れ牡丹
 	SIF PREVCOM == 25 || PREVCOM == 88
 		PRINTFORMW %CALLNAME:TARGET%を持ち上げ、揺するように膣内の天井を執拗に刺激した…
-	IF EXP:0 <= 30
+	IF EXP:Ｖ経験 <= 30
 		PRINTFORMW %CALLNAME:TARGET%はむずがるように腰を揺すっている…
-	ELSEIF EXP:0 >= 31 && EXP:0 <= 50
+	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50
 		PRINTFORMW %CALLNAME:TARGET%は口を結んで不慣れな快楽を堪えている…
-	ELSEIF EXP:0 >= 51 && EXP:0 <= 80
+	ELSEIF EXP:Ｖ経験 >= 51 && EXP:Ｖ経験 <= 80
 		PRINTFORMW %CALLNAME:TARGET%は弱点を責められ、あまりの快感に目をぱちぱちさせている…
-	ELSEIF EXP:0 >= 81 && EXP:0 <= 120
+	ELSEIF EXP:Ｖ経験 >= 81 && EXP:Ｖ経験 <= 120
 		PRINTFORMW %CALLNAME:PLAYER%は腰に力を入れ、膣内でビクビクと震わせてやった…
 		PRINTFORMW %CALLNAME:TARGET%は過敏な天井を擦られる感触に熱い吐息を漏らしている…
-	ELSEIF EXP:0 >= 121
+	ELSEIF EXP:Ｖ経験 >= 121
 		PRINTFORML %CALLNAME:TARGET%は喉を鳴らして涎を飲み、足指を丸めて頭を振って悶えている…
 		PRINTFORMW まともに呼吸もできず、口をぱくつかせて声にならない喘ぎを繰り返す…
 	ENDIF

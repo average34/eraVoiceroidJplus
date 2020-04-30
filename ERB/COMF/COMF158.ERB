@@ -44,15 +44,15 @@ STR:0 = 蜘蛛の糸
 ;-------------------------------------------------
 
 ;緊縛経験が高いと消費減少
-IF EXP:51 < EXPLV:3
-	LOSEBASE:0 += 100
-	LOSEBASE:1 += 130
-ELSEIF EXP:51 < EXPLV:4
-	LOSEBASE:0 += 80
-	LOSEBASE:1 += 100
+IF EXP:緊縛経験 < EXPLV:3
+	LOSEBASE:体力 += 100
+	LOSEBASE:気力 += 130
+ELSEIF EXP:緊縛経験 < EXPLV:4
+	LOSEBASE:体力 += 80
+	LOSEBASE:気力 += 100
 ELSE
-	LOSEBASE:0 += 60
-	LOSEBASE:1 += 70
+	LOSEBASE:体力 += 60
+	LOSEBASE:気力 += 70
 ENDIF
 
 A = 250
@@ -117,7 +117,7 @@ SIF TALENT:109
 	TIMES SOURCE:12 , 3.50
 
 UP:10 += B
-EXP:51 += 7
+EXP:緊縛経験 += 7
 PRINTL 緊縛経験＋７
 
 ;縄の着脱
@@ -143,15 +143,15 @@ PRINTL ＜蜘蛛の糸で緊縛中＞
 
 
 ;緊縛経験が高いと消費減少
-IF EXP:51 < EXPLV:3
-	LOSEBASE:0 += 50
-	LOSEBASE:1 += 80
-ELSEIF EXP:51 < EXPLV:4
-	LOSEBASE:0 += 40
-	LOSEBASE:1 += 60
+IF EXP:緊縛経験 < EXPLV:3
+	LOSEBASE:体力 += 50
+	LOSEBASE:気力 += 80
+ELSEIF EXP:緊縛経験 < EXPLV:4
+	LOSEBASE:体力 += 40
+	LOSEBASE:気力 += 60
 ELSE
-	LOSEBASE:0 += 30
-	LOSEBASE:1 += 50
+	LOSEBASE:体力 += 30
+	LOSEBASE:気力 += 50
 ENDIF
 
 
@@ -200,11 +200,11 @@ UP:10 += SOURCE:14
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
+	EXP:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
+	EXP:ＢＬ経験 += 1
 ENDIF
 
 SIF ASSIPLAY == 0 && ABL:マゾっ気 >= 2
@@ -224,5 +224,5 @@ IF TFLAG:68 <= 0
 	STAIN:TARGET:4 |= 1
 ENDIF
 
-EXP:51 += 2
+EXP:緊縛経験 += 2
 PRINTL 緊縛経験＋２

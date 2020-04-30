@@ -50,13 +50,13 @@ CALL TRAIN_MESSAGE_B
 ;射精ゲージチェック（ふたなり・オトコの場合）
 ;-------------------------------------------------
 SIF TALENT:PLAYER:119 || TALENT:PLAYER:122  || TALENT:PLAYER:121
-	BASE:PLAYER:2 += CALC_EJAC(SELECTCOM, PLAYER)
+	BASE:PLAYER:射精 += CALC_EJAC(SELECTCOM, PLAYER)
 
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:0 += 0
-LOSEBASE:1 += 80
+LOSEBASE:体力 += 0
+LOSEBASE:気力 += 80
 
 SOURCE:13 = 1500
 SOURCE:14 = 500
@@ -96,8 +96,8 @@ ELSE
 ENDIF
 
 PRINTFORML %EXPNAME:96%＋１
-EXP:96 += 1
-EXP:PLAYER:96 += 1
+EXP:キス経験 += 1
+EXP:PLAYER:キス経験 += 1
 IF TALENT:PLAYER:151
 	PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
 	TALENT:PLAYER:151 = 0
@@ -160,8 +160,8 @@ TFLAG:37 += A / 2
 ;射精チェック
 ;-------------------------------------------------
 CALL SAMEN_CHECK
-;S = BASE:PLAYER:2
-;EJAC = MAXBASE:PLAYER:2
+;S = BASE:PLAYER:射精
+;EJAC = MAXBASE:PLAYER:射精
 ;
 ;IF  S > EJAC * 2
 ;	E = 2
@@ -216,29 +216,29 @@ ENDIF
 ;	TIMES SOURCE:7 , 2.00
 ;	TIMES SOURCE:5 , 1.50
 ;
-;	EXP:PLAYER:3 += 2
-;	EXP:20 += 1
+;	EXP:PLAYER:射精経験 += 2
+;	EXP:精液経験 += 1
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋１
 ;	;精液汚れ
 ;	STAIN:PLAYER:2 |= 4
 ;
-;	BASE:PLAYER:2 -= EJAC*2
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC*2
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;キスで射精させたフラグ
 ;	TFLAG:4 = 2
 ;;通常の射精
 ;ELSEIF E == 1
-;	EXP:PLAYER:3 += 1
+;	EXP:PLAYER:射精経験 += 1
 ;	PRINTL 射精
 ;	;精液汚れ
 ;	STAIN:PLAYER:2 |= 4
 ;
-;	BASE:PLAYER:2 -= EJAC
-;	SIF BASE:PLAYER:2 >= EJAC
-;		BASE:PLAYER:2 = EJAC-1
+;	BASE:PLAYER:射精 -= EJAC
+;	SIF BASE:PLAYER:射精 >= EJAC
+;		BASE:PLAYER:射精 = EJAC-1
 ;
 ;	;キスで射精させたフラグ
 ;	TFLAG:4 = 1
@@ -253,13 +253,13 @@ STAIN:0 |= S
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +3
-	EXP:40 += 3
-	EXP:PLAYER:40 += 3
+	EXP:レズ経験 += 3
+	EXP:PLAYER:レズ経験 += 3
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +3
-	EXP:41 += 3
-	EXP:PLAYER:41 += 3
+	EXP:ＢＬ経験 += 3
+	EXP:PLAYER:ＢＬ経験 += 3
 ENDIF
 
 ;既成事実２に相当
@@ -273,18 +273,18 @@ RETURN 1
 SOURCE:24 = 100 + (25 * ABL:Ｍ感覚)
 
 ;EXP:キス経験をみる
-IF EXP:96 < EXPLV:1
+IF EXP:キス経験 < EXPLV:1
 	TIMES SOURCE:24 , 1.00
-ELSEIF EXP:96 < EXPLV:2
+ELSEIF EXP:キス経験 < EXPLV:2
 	TIMES SOURCE:14 , 0.95
 	TIMES SOURCE:24 , 1.05
-ELSEIF EXP:96 < EXPLV:3
+ELSEIF EXP:キス経験 < EXPLV:3
 	TIMES SOURCE:14 , 0.90
 	TIMES SOURCE:24 , 1.10
-ELSEIF EXP:96 < EXPLV:4
+ELSEIF EXP:キス経験 < EXPLV:4
 	TIMES SOURCE:14 , 0.85
 	TIMES SOURCE:24 , 1.15
-ELSEIF EXP:96 < EXPLV:5
+ELSEIF EXP:キス経験 < EXPLV:5
 	TIMES SOURCE:14 , 0.80
 	TIMES SOURCE:24 , 1.20
 ELSE

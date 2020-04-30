@@ -4,7 +4,7 @@
 PRINTL 告白する
 STR:0 = 告白する
 CALL TRAIN_MESSAGE_B
-LOSEBASE:1 += 10
+LOSEBASE:気力 += 10
 
 IF TFLAG:45 == 0
 	;主導権が主人公
@@ -68,14 +68,14 @@ IF TFLAG:45 == 0
 	ENDIF
 
 	;デート経験 これも割と大きい
-	IF EXP:94 < 50
+	IF EXP:デート経験 < 50
 		A -= 5
-	ELSEIF EXP:94 < 100
+	ELSEIF EXP:デート経験 < 100
 		A += 5
-	ELSEIF EXP:94 < 500
-		A += EXP:94 / 10
+	ELSEIF EXP:デート経験 < 500
+		A += EXP:デート経験 / 10
 	ELSE
-		A += EXP:94 / 7
+		A += EXP:デート経験 / 7
 	ENDIF
 
 	;判定成功
@@ -92,8 +92,8 @@ IF TFLAG:45 == 0
 		IF TALENT:151
 			TALENT:151 = 0
 			PRINTFORML %EXPNAME:96%＋１
-			EXP:96 += 1
-			EXP:PLAYER:96 += 1
+			EXP:キス経験 += 1
+			EXP:PLAYER:キス経験 += 1
 			IF TALENT:PLAYER:151
 				PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
 				TALENT:PLAYER:151 = 0
@@ -190,14 +190,14 @@ ELSE
 	ENDIF
 
 	;デート経験 これも割と大きい
-	IF EXP:94 < 50
+	IF EXP:デート経験 < 50
 		A -= 5
-	ELSEIF EXP:94 < 100
+	ELSEIF EXP:デート経験 < 100
 		A += 5
-	ELSEIF EXP:94 < 500
-		A += EXP:94 / 10
+	ELSEIF EXP:デート経験 < 500
+		A += EXP:デート経験 / 10
 	ELSE
-		A += EXP:94 / 7
+		A += EXP:デート経験 / 7
 	ENDIF
 
 	;判定成功
@@ -214,8 +214,8 @@ ELSE
 		IF TALENT:151
 			TALENT:151 = 0
 			PRINTFORML %EXPNAME:96%＋１
-			EXP:96 += 1
-			EXP:PLAYER:96 += 1
+			EXP:キス経験 += 1
+			EXP:PLAYER:キス経験 += 1
 			IF TALENT:PLAYER:151
 				PRINTFORMW %CALLNAME:PLAYER%は【キス未経験】を失いました
 				TALENT:PLAYER:151 = 0

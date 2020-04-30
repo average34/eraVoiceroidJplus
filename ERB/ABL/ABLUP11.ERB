@@ -103,7 +103,7 @@ I = 0
 ;能力アップ可能なら1にする
 Z = 0
 
-IF EXP:50 < F
+IF EXP:異常経験 < F
 	;異常経験が不足
 	I |= 2
 ENDIF
@@ -120,7 +120,7 @@ SIF JUEL:5 < A
 SIF JUEL:6 < B
 	I |= 1
 ;精液経験が必要
-SIF EXP:20 < C
+SIF EXP:精液経験 < C
 	I |= 2
 
 IF I == 0
@@ -188,7 +188,7 @@ ELSE
 ENDIF
 
 ;倍の経験を持っているなら必要数軽減
-IF EXP:20 >= C * 2
+IF EXP:精液経験 >= C * 2
 	A = A / 3
 	B = B / 3
 ENDIF

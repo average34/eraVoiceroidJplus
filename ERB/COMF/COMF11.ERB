@@ -26,8 +26,8 @@ CALL TRAIN_MESSAGE_B
 ;-------------------------------------------------
 ;実行決定
 ;-------------------------------------------------
-LOSEBASE:0 += 30
-LOSEBASE:1 += 100
+LOSEBASE:体力 += 30
+LOSEBASE:気力 += 100
 
 ;ABL:Ｖ感覚をみる
 IF ABL:Ｖ感覚 == 0
@@ -45,22 +45,22 @@ ELSE
 ENDIF
 
 ;EXP:Ｖ経験をみる
-IF EXP:0 < EXPLV:1
+IF EXP:Ｖ経験 < EXPLV:1
 	TIMES SOURCE:1 , 0.20
 	SOURCE:6 = 5500
 
-	EXP:50 += 1
+	EXP:異常経験 += 1
 	PRINTFORML %EXPNAME:50%＋１
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	TIMES SOURCE:1 , 0.60
 	SOURCE:6 = 300
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES SOURCE:1 , 1.00
 	SOURCE:6 = 50
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES SOURCE:1 , 1.20
 	SOURCE:6 = 10
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES SOURCE:1 , 1.40
 	SOURCE:6 = 0
 ELSE
@@ -119,7 +119,7 @@ SIF TALENT:100
 SIF TALENT:PLAYER:58
 	TIMES SOURCE:1 , 1.20
 
-EXP:0 += 1
+EXP:Ｖ経験 += 1
 PRINTL Ｖ経験＋１
 
 ;バイブの着脱
@@ -198,19 +198,19 @@ IF TEQUIP:90
 ELSE
 	IF TEQUIP:11
 		PRINTFORML %CALLNAME:TARGET%から蠢くバイブをゆっくりと引き抜いた。
-		IF EXP:0 >= 201 && TALENT:85
+		IF EXP:Ｖ経験 >= 201 && TALENT:85
 			PRINTFORM %CALLNAME:TARGET%は、膣内の喪失感に耐えかねて涙と涎をこぼし
-		ELSEIF EXP:0 >= 151 && EXP:0 <= 200 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 151 && EXP:Ｖ経験 <= 200 && TALENT:85
 			PRINTFORM %CALLNAME:TARGET%の膣内に溜まっていた粘液が掻き出されて滴り、水溜りを作っ
-		ELSEIF EXP:0 >= 121 && EXP:0 <= 150 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 121 && EXP:Ｖ経験 <= 150 && TALENT:85
 			PRINTFORM バイブが抜かれた%CALLNAME:TARGET%の肉襞からボタボタと愛液が滴っ
-		ELSEIF EXP:0 >= 71 && EXP:0 <= 120 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 71 && EXP:Ｖ経験 <= 120 && TALENT:85
 			PRINTFORM %CALLNAME:TARGET%はもじもじと股を擦り合わせて%CALLNAME:PLAYER%の方を見
-		ELSEIF EXP:0 >= 41 && EXP:0 <= 70 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 41 && EXP:Ｖ経験 <= 70 && TALENT:85
 			PRINTFORM %CALLNAME:TARGET%は熱のこもった吐息を吐い
-		ELSEIF EXP:0 >= 21
+		ELSEIF EXP:Ｖ経験 >= 21
 			PRINTFORM %CALLNAME:TARGET%はゆるんだ膣口をひくつかせ
-		ELSEIF EXP:0 >= 1 && EXP:0 <= 20
+		ELSEIF EXP:Ｖ経験 >= 1 && EXP:Ｖ経験 <= 20
 			PRINTFORM %CALLNAME:TARGET%はホッとしたような表情をし
 		ENDIF
 		PRINTW ている…
@@ -228,30 +228,30 @@ ELSE
 		PRINTL バイブの先端をあてがい馴染ませていく…
 
 		PRINTFORM %CALLNAME:TARGET%は
-		IF TALENT:0 && TALENT:85 && TALENT:76
+		IF TALENT:処女 && TALENT:85 && TALENT:76
 			PRINT 自分が処女である事を忘れているかのような笑みを見せ
-		ELSEIF TALENT:0 && TALENT:85
+		ELSEIF TALENT:処女 && TALENT:85
 			PRINTFORM 少し寂しそうな目で%CALLNAME:PLAYER%を見
-		ELSEIF TALENT:0 && TALENT:76
+		ELSEIF TALENT:処女 && TALENT:76
 			PRINT 処女である事もお構いなしに、腰を揺らしておねだりをし
-		ELSEIF TALENT:0 && TALENT:27
+		ELSEIF TALENT:処女 && TALENT:27
 			PRINT 何かを諦めた表情で目にうっすら涙を浮かべ
-		ELSEIF TALENT:0
+		ELSEIF TALENT:処女
 			PRINT ガタガタと震え、喪失の恐怖に怯え
 
-		ELSEIF EXP:0 >= 201 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 201 && TALENT:85
 			PRINT 挿入への期待だけでガクガクと腰を震わせてイきそうになっ
-		ELSEIF EXP:0 >= 151 && EXP:0 <= 200 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 151 && EXP:Ｖ経験 <= 200 && TALENT:85
 			PRINTFORM とろけきった目で%CALLNAME:PLAYER%を見つめ、自分から陰唇を擦りつけ
-		ELSEIF EXP:0 >= 121 && EXP:0 <= 150 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 121 && EXP:Ｖ経験 <= 150 && TALENT:85
 			PRINT 恍惚とした表情で待ちきれないように腰をくねらせ
-		ELSEIF EXP:0 >= 71 && EXP:0 <= 120 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 71 && EXP:Ｖ経験 <= 120 && TALENT:85
 			PRINTFORM もの欲しそうに目を潤ませ%CALLNAME:PLAYER%の方を見
-		ELSEIF EXP:0 >= 41 && EXP:0 <= 70 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 41 && EXP:Ｖ経験 <= 70 && TALENT:85
 			PRINT バイブの擦れる感触に陶酔しきった吐息をつい
-		ELSEIF EXP:0 >= 1 && EXP:0 <= 40 && TALENT:85
+		ELSEIF EXP:Ｖ経験 >= 1 && EXP:Ｖ経験 <= 40 && TALENT:85
 			PRINT バイブの擦れる感触に身をよじらせ愛液を滲ませて
-		ELSEIF EXP:0 >= 1
+		ELSEIF EXP:Ｖ経験 >= 1
 			PRINT バイブの擦れる感触に肉襞をひくつかせ
 		ENDIF
 		PRINTW ている…
@@ -277,8 +277,8 @@ ELSE
 	PRINTL ＜バイブ挿入中＞
 ENDIF
 
-LOSEBASE:0 += 10
-LOSEBASE:1 += 50
+LOSEBASE:体力 += 10
+LOSEBASE:気力 += 50
 
 ;ABL:Ｖ感覚をみる
 IF ABL:Ｖ感覚 == 0
@@ -297,16 +297,16 @@ ENDIF
 
 ;EXP:Ｖ経験をみる
 ;処女はありえない
-IF EXP:0 < EXPLV:2
+IF EXP:Ｖ経験 < EXPLV:2
 	TIMES A , 0.60
 	B = 150
-ELSEIF EXP:0 < EXPLV:3
+ELSEIF EXP:Ｖ経験 < EXPLV:3
 	TIMES A , 1.00
 	B = 20
-ELSEIF EXP:0 < EXPLV:4
+ELSEIF EXP:Ｖ経験 < EXPLV:4
 	TIMES A , 1.20
 	B = 0
-ELSEIF EXP:0 < EXPLV:5
+ELSEIF EXP:Ｖ経験 < EXPLV:5
 	TIMES A , 1.40
 	B = 0
 ELSE
@@ -375,23 +375,23 @@ SOURCE:6 += B
 
 ;自慰実行時は経験＋１
 IF SELECTCOM == 3
-	EXP:0 += 3
+	EXP:Ｖ経験 += 3
 	PRINTL Ｖ経験＋３
 ELSE
-	EXP:0 += 2
+	EXP:Ｖ経験 += 2
 	PRINTL Ｖ経験＋２
 ENDIF
 
 IF TALENT:122 == 0 && TALENT:PLAYER:122 == 0
 	PRINTS EXPNAME:40
 	PRINTL +1
-	EXP:40 += 1
-	EXP:PLAYER:40 += 1
+	EXP:レズ経験 += 1
+	EXP:PLAYER:レズ経験 += 1
 ELSEIF TALENT:122 == 1 && TALENT:PLAYER:122 == 1
 	PRINTS EXPNAME:41
 	PRINTL +1
-	EXP:41 += 1
-	EXP:PLAYER:41 += 1
+	EXP:ＢＬ経験 += 1
+	EXP:PLAYER:ＢＬ経験 += 1
 ENDIF
 
 SIF TEQUIP:90
@@ -475,9 +475,9 @@ IF TALENT:85 && ASSIPLAY == 0
 ENDIF
 
 ;処女
-IF TALENT:0
+IF TALENT:処女
 	A -= 20
-ELSEIF EXP:0 < EXPLV:2
+ELSEIF EXP:Ｖ経験 < EXPLV:2
 	A -= 5
 ENDIF
 
@@ -616,12 +616,12 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;処女
-	IF TALENT:0
+	IF TALENT:処女
 		PRINT  - 
 		PRINTS TALENTNAME:0
 		PRINTV '(,20,')
 		S = 1
-	ELSEIF EXP:0 < EXPLV:2
+	ELSEIF EXP:Ｖ経験 < EXPLV:2
 		PRINT  - 
 		PRINTS EXPNAME:0
 		PRINT 不足

@@ -47,7 +47,7 @@ SIF RESULT == 0
 STR:0 = 羽繕いしてもらう
 CALL TRAIN_MESSAGE_B
 
-LOSEBASE:1 += 70
+LOSEBASE:気力 += 70
 
 ;固定で獲得するソース
 SOURCE:18 = 0
@@ -134,7 +134,7 @@ ELSEIF TFLAG:18 == 0
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 3
+		EXP:愛情経験 += 3
 		PRINTFORML %EXPNAME:23%+3
 	ENDIF
 ELSE
@@ -146,10 +146,10 @@ ELSE
 	TFLAG:37 += 5 + A
 	;愛情経験追加
 	IF TALENT:85 || TALENT:153
-		EXP:23 += 9
+		EXP:愛情経験 += 9
 		PRINTFORML %EXPNAME:23%+9
 	ELSE
-		EXP:23 += 3
+		EXP:愛情経験 += 3
 		PRINTFORML %EXPNAME:23%+3
 	ENDIF
 ENDIF
