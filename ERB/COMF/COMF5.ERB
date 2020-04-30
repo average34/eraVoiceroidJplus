@@ -15,24 +15,24 @@ SOURCE:8 = 20
 SOURCE:12 = 100
 
 ;ABL:Ｂ感覚をみる
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	SOURCE:17 = 20
 	SOURCE:3 = 50
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	SOURCE:17 = 100
 	SOURCE:3 = 100
-ELSEIF ABL:14 == 2
+ELSEIF ABL:Ｂ感覚 == 2
 	SOURCE:17 = 500
 	SOURCE:3 = 160
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	SOURCE:17 = 1200
 	SOURCE:3 = 200
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	SOURCE:17 = 2000
 	SOURCE:3 = 230
 ELSE
-	SOURCE:17 = 800 + (ABL:14 * 400)
-	SOURCE:3 = 200 + (ABL:14 * 10)
+	SOURCE:17 = 800 + (ABL:Ｂ感覚 * 400)
+	SOURCE:3 = 200 + (ABL:Ｂ感覚 * 10)
 ENDIF
 
 ;調教者が［幼児退行］
@@ -90,34 +90,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -135,7 +135,7 @@ TFLAG:37 += A
 ;［Ｂ感度］３以下では発生しない
 ;［母乳体質］無しかつ［小柄体系］で［貧乳］無しかつ［オトコ］無し
 ;触手調教は発生しない
-SIF ABL:TARGET:14 <= 3 || TEQUIP:90
+SIF ABL:TARGET:Ｂ感覚 <= 3 || TEQUIP:90
 	RETURN 1
 IF TALENT:130 == 0 && (TALENT:100 == 0 || TALENT:109 == 0 ) && TALENT:122 == 0 
 	CALL YOUJI

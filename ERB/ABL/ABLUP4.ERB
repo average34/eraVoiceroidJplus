@@ -12,7 +12,7 @@ SIF TALENT:122
 	RETURN 0
 
 DRAWLINE
-IF ABL:4 >= 9999
+IF ABL:Ｖ感覚 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -60,7 +60,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:4 += 1
+	ABL:Ｖ感覚 += 1
 
 IF RESULT == 0
 	JUEL:1 -= A
@@ -70,7 +70,7 @@ ENDIF
 
 PRINTS ABLNAME:4
 PRINT のレベルが
-PRINTV ABL:4
+PRINTV ABL:Ｖ感覚
 PRINTW になりました。
 
 
@@ -79,7 +79,7 @@ PRINTW になりました。
 ;V感覚が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP4
-IF ABL:4 >= 9999 || TALENT:122
+IF ABL:Ｖ感覚 >= 9999 || TALENT:122
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -112,19 +112,19 @@ ENDIF
 ;V感覚を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP4
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	A = 1
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	A = 50
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	A = 600
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	A = 7000
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	A = 45000
 	;一線越えない
 	IF TALENT:27
@@ -133,7 +133,7 @@ ELSEIF ABL:4 == 4
 ELSE
 	A = 45000
 	
-	A = A * (ABL:4 - 3)
+	A = A * (ABL:Ｖ感覚 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30

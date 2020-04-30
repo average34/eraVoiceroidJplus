@@ -56,7 +56,7 @@ SIF A < 0
 	A = 0
 SIF A > 5
 	A = 5
-SIF ABL:7 < A
+SIF ABL:露出癖 < A
 	RETURN 0
 ;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
 SIF ITEM:45 == 0 && NOITEM == 0
@@ -78,32 +78,32 @@ A = 0
 S = 0
 
 ;ABL:欲望
-SIF ABL:1
-	A += ABL:1
+SIF ABL:欲望
+	A += ABL:欲望
 ;ABL:露出癖
-IF ABL:7
-	IF ABL:7 <= 20
-		A += ABL:7
-	ELSEIF ABL:7 <= 40
-		A += 20 + ABL:7 / 4
-	ELSEIF ABL:7 <= 60
-		A += 35 + ABL:7 / 12
-	ELSEIF ABL:7 <= 80
-		A += 40 + ABL:7 / 16
+IF ABL:露出癖
+	IF ABL:露出癖 <= 20
+		A += ABL:露出癖
+	ELSEIF ABL:露出癖 <= 40
+		A += 20 + ABL:露出癖 / 4
+	ELSEIF ABL:露出癖 <= 60
+		A += 35 + ABL:露出癖 / 12
+	ELSEIF ABL:露出癖 <= 80
+		A += 40 + ABL:露出癖 / 16
 	ELSE
-		A += 45 + ABL:7 / 20
+		A += 45 + ABL:露出癖 / 20
 	ENDIF
 ENDIF
 ;ABL:歌唱技能
-IF ABL:92
-	IF ABL:92 <= 5
-		A += ABL:92 * 5
-	ELSEIF ABL:92 <= 10
-		A += 30 + ABL:92 / 3
-	ELSEIF ABL:92 <= 20
-		A += 40 + ABL:92 / 6
+IF ABL:歌唱技能
+	IF ABL:歌唱技能 <= 5
+		A += ABL:歌唱技能 * 5
+	ELSEIF ABL:歌唱技能 <= 10
+		A += 30 + ABL:歌唱技能 / 3
+	ELSEIF ABL:歌唱技能 <= 20
+		A += 40 + ABL:歌唱技能 / 6
 	ELSE
-		A += 50 + ABL:92 / 9
+		A += 50 + ABL:歌唱技能 / 9
 	ENDIF
 ENDIF
 ;MARK:快楽依存
@@ -200,23 +200,23 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	C += 8
 ENDIF
 ;ABL:露出癖をみる
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	SOURCE:21 += 0
 	C += 0
 	TIMES A, 1.00
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	SOURCE:21 += 50
 	C += 1
 	TIMES A, 1.20
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	SOURCE:21 += 100
 	C += 2
 	TIMES A, 1.40
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	SOURCE:21 += 200
 	C += 3
 	TIMES A, 1.60
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	SOURCE:21 += 400
 	C += 4
 	TIMES A, 2.00
@@ -226,19 +226,19 @@ ELSE
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
-IF ABL:92 == 0
+IF ABL:歌唱技能 == 0
 	C += 0
 	TIMES A , 0.80
-ELSEIF ABL:92 == 1
+ELSEIF ABL:歌唱技能 == 1
 	C += 1
 	TIMES A , 1.00
-ELSEIF ABL:92 == 2
+ELSEIF ABL:歌唱技能 == 2
 	C += 2
 	TIMES A , 1.30
-ELSEIF ABL:92 == 3
+ELSEIF ABL:歌唱技能 == 3
 	C += 3
 	TIMES A , 1.60
-ELSEIF ABL:92 == 4
+ELSEIF ABL:歌唱技能 == 4
 	C += 4
 	TIMES A , 2.00
 ELSE
@@ -317,7 +317,7 @@ CALL TRAIN_MESSAGE_B
 
 IF C > 60
 	T = 1 + EXP:93
-	T = (ABL:92 * 90) + (ABL:92 * RAND:20) + (RAND:T * 10)
+	T = (ABL:歌唱技能 * 90) + (ABL:歌唱技能 * RAND:20) + (RAND:T * 10)
 	;クリア前はリミットを加える
 	IF (FLAG:28 & 1) != 0
 		SIF T >= 20000
@@ -378,19 +378,19 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.20
 ENDIF
 ;ABL:露出癖をみる
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	SOURCE:21 += 0
 	TIMES A, 1.00
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	SOURCE:21 += 50
 	TIMES A, 1.20
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	SOURCE:21 += 100
 	TIMES A, 1.40
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	SOURCE:21 += 200
 	TIMES A, 1.60
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	SOURCE:21 += 400
 	TIMES A, 2.00
 ELSE
@@ -398,15 +398,15 @@ ELSE
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
-IF ABL:92 == 0
+IF ABL:歌唱技能 == 0
 	TIMES A , 0.80
-ELSEIF ABL:92 == 1
+ELSEIF ABL:歌唱技能 == 1
 	TIMES A , 1.00
-ELSEIF ABL:92 == 2
+ELSEIF ABL:歌唱技能 == 2
 	TIMES A , 1.30
-ELSEIF ABL:92 == 3
+ELSEIF ABL:歌唱技能 == 3
 	TIMES A , 1.60
-ELSEIF ABL:92 == 4
+ELSEIF ABL:歌唱技能 == 4
 	TIMES A , 2.00
 ELSE
 	TIMES A , 3.00

@@ -198,33 +198,33 @@ TIMES SOURCE:13 , 1.80
 IF MAXBASE:PLAYER:7 != 0
 	B = 0
 	;ABL:技巧をみる
-	IF ABL:2 == 0
+	IF ABL:技巧 == 0
 		B = 500
-	ELSEIF ABL:2 == 1
+	ELSEIF ABL:技巧 == 1
 		B = 600
-	ELSEIF ABL:2 == 2
+	ELSEIF ABL:技巧 == 2
 		B = 800
-	ELSEIF ABL:2 == 3
+	ELSEIF ABL:技巧 == 3
 		B = 1000
-	ELSEIF ABL:2 == 4
+	ELSEIF ABL:技巧 == 4
 		B = 1400
 	ELSE
 		B = 2000
 	ENDIF
 
 	;ABL:従順をみる
-	IF ABL:0 == 0
+	IF ABL:親密 == 0
 		TIMES B , 0.80
-	ELSEIF ABL:0 == 1
+	ELSEIF ABL:親密 == 1
 		TIMES B , 0.90
-	ELSEIF ABL:0 == 2
+	ELSEIF ABL:親密 == 2
 		TIMES B , 1.00
-	ELSEIF ABL:0 == 3
+	ELSEIF ABL:親密 == 3
 		TIMES B , 1.10
-	ELSEIF ABL:0 == 4
+	ELSEIF ABL:親密 == 4
 		TIMES B , 1.20
 	ELSE
-		B = B * (ABL:0 * 5 + 105) / 100
+		B = B * (ABL:親密 * 5 + 105) / 100
 	ENDIF
 
 	;PALAM:欲情をみる
@@ -457,42 +457,42 @@ CALL SOURCE_M_COM108
 SOURCE:24 += M
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:4 += 200
 	 A = 100
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:4 += 300
 	A = 200
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:4 += 400
 	A = 400
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:4 += 500
 	A = 600
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:4 += 600
 	A = 800
 ELSE
-	SOURCE:4 += 300 + (ABL:6 * 100)
-	A = 350 + (ABL:6 * 150)
+	SOURCE:4 += 300 + (ABL:奉仕精神 * 100)
+	A = 350 + (ABL:奉仕精神 * 150)
 ENDIF
 
 ;ABL:技巧をみる
-IF ABL:2 == 0
+IF ABL:技巧 == 0
 	TIMES SOURCE:4 , 0.50
-ELSEIF ABL:2 == 1
+ELSEIF ABL:技巧 == 1
 	TIMES SOURCE:4 , 0.80
-ELSEIF ABL:2 == 2
+ELSEIF ABL:技巧 == 2
 	TIMES SOURCE:4 , 1.00
-ELSEIF ABL:2 == 3
+ELSEIF ABL:技巧 == 3
 	TIMES SOURCE:4 , 1.20
-ELSEIF ABL:2 == 4
+ELSEIF ABL:技巧 == 4
 	TIMES SOURCE:4 , 1.50
 ELSE
 	IF SOURCE:4 < 100000
-		SOURCE:4 = SOURCE:4 * (ABL:2 * 25 + 75) / 100
+		SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
 	ELSEIF SOURCE:4 < 100000000
-		SOURCE:4 = SOURCE:4 / 100 * (ABL:2 * 25 + 75)
+		SOURCE:4 = SOURCE:4 / 100 * (ABL:技巧 * 25 + 75)
 	ENDIF
 ENDIF
 
@@ -532,42 +532,42 @@ CALL SOURCE_M_COM108
 SOURCE:24 += M / 10
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:4 += 200
 	 A = 100
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:4 += 300
 	A = 200
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:4 += 400
 	A = 400
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:4 += 500
 	A = 600
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:4 += 600
 	A = 800
 ELSE
-	SOURCE:4 += 300 + (ABL:6 * 100)
-	A = 350 + (ABL:6 * 150)
+	SOURCE:4 += 300 + (ABL:奉仕精神 * 100)
+	A = 350 + (ABL:奉仕精神 * 150)
 ENDIF
 
 ;ABL:技巧をみる
-IF ABL:2 == 0
+IF ABL:技巧 == 0
 	TIMES SOURCE:4 , 0.50
-ELSEIF ABL:2 == 1
+ELSEIF ABL:技巧 == 1
 	TIMES SOURCE:4 , 0.80
-ELSEIF ABL:2 == 2
+ELSEIF ABL:技巧 == 2
 	TIMES SOURCE:4 , 1.00
-ELSEIF ABL:2 == 3
+ELSEIF ABL:技巧 == 3
 	TIMES SOURCE:4 , 1.20
-ELSEIF ABL:2 == 4
+ELSEIF ABL:技巧 == 4
 	TIMES SOURCE:4 , 1.50
 ELSE
 	IF SOURCE:4 < 100000
-		SOURCE:4 = SOURCE:4 * (ABL:2 * 25 + 75) / 100
+		SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
 	ELSEIF SOURCE:4 < 100000000
-		SOURCE:4 = SOURCE:4 / 100 * (ABL:2 * 25 + 75)
+		SOURCE:4 = SOURCE:4 / 100 * (ABL:技巧 * 25 + 75)
 	ENDIF
 ENDIF
 
@@ -581,51 +581,51 @@ RETURN 1
 ;触手口辱の快Ｍについて
 @SOURCE_M_COM108
 ;ABL:Ｍ感覚をみる
-IF ABL:17 == 0
+IF ABL:Ｍ感覚 == 0
 	M = 10
-ELSEIF ABL:17 == 1
+ELSEIF ABL:Ｍ感覚 == 1
 	M = 50
-ELSEIF ABL:17 == 2
+ELSEIF ABL:Ｍ感覚 == 2
 	M = 200
-ELSEIF ABL:17 == 3
+ELSEIF ABL:Ｍ感覚 == 3
 	M = 500
-ELSEIF ABL:17 == 4
+ELSEIF ABL:Ｍ感覚 == 4
 	M = 1000
 ELSE
-	M = 400 + (ABL:17 * 200)
+	M = 400 + (ABL:Ｍ感覚 * 200)
 ENDIF
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	TIMES M , 0.25
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	TIMES M , 0.33
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	TIMES M , 0.75
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	TIMES M , 1.50
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	TIMES M , 3.00
 ELSE
 	TIMES M , 6.00
 ENDIF
 
 ;ABL:技巧をみる
-IF ABL:2 == 0
+IF ABL:技巧 == 0
 	TIMES M , 0.50
-ELSEIF ABL:2 == 1
+ELSEIF ABL:技巧 == 1
 	TIMES M , 0.80
-ELSEIF ABL:2 == 2
+ELSEIF ABL:技巧 == 2
 	TIMES M , 1.00
-ELSEIF ABL:2 == 3
+ELSEIF ABL:技巧 == 3
 	TIMES M , 1.20
-ELSEIF ABL:2 == 4
+ELSEIF ABL:技巧 == 4
 	TIMES M , 1.50
 ELSE
 	IF M < 100000
-		M = M * (ABL:2 * 5 + 195) / 100
+		M = M * (ABL:技巧 * 5 + 195) / 100
 	ELSEIF M < 100000000
-		M = M / 100 * (ABL:2 * 5 + 195)
+		M = M / 100 * (ABL:技巧 * 5 + 195)
 	ENDIF
 ENDIF
 
@@ -640,7 +640,7 @@ RETURN 1
 
 @SYOKUSYU_MILK
 ;［Ｂ感度］３以上、［母乳体質］無しかつ［小柄体系］で［貧乳］無しかつ［オトコ］無し
-IF ABL:TARGET:14 >= 3 && TALENT:130 == 0 && (TALENT:100 == 0 || TALENT:109 == 0 ) && TALENT:122 == 0 
+IF ABL:TARGET:Ｂ感覚 >= 3 && TALENT:130 == 0 && (TALENT:100 == 0 || TALENT:109 == 0 ) && TALENT:122 == 0 
 	PRINT 触手に乳を吸われるうちに
 	PRINTS NAME:TARGET
 	PRINTW は母乳が出るようになった。
@@ -746,12 +746,12 @@ V = 110
 CALL COM_ORDER
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 3
+IF ABL:欲望
+	A += ABL:欲望 * 3
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 ENDIF
 
 IF MARK:1
@@ -861,19 +861,19 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 3,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 

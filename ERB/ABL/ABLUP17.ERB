@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP17MAIN
 DRAWLINE
-IF ABL:17 >= 9999
+IF ABL:Ｍ感覚 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -58,7 +58,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:17 += 1
+	ABL:Ｍ感覚 += 1
 
 IF RESULT == 0
 	JUEL:18 -= A
@@ -66,7 +66,7 @@ ELSEIF RESULT == 20
 	CALL AUT_M_0
 ENDIF
 
-PRINTFORMW %ABLNAME:17%のレベルが{ABL:17}になりました。
+PRINTFORMW %ABLNAME:17%のレベルが{ABL:Ｍ感覚}になりました。
 
 
 
@@ -74,7 +74,7 @@ PRINTFORMW %ABLNAME:17%のレベルが{ABL:17}になりました。
 ;M感覚が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP17
-IF ABL:17 >= 9999
+IF ABL:Ｍ感覚 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -105,19 +105,19 @@ ENDIF
 ;M感覚を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP17
-IF ABL:17 == 0
+IF ABL:Ｍ感覚 == 0
 	A = 5
-ELSEIF ABL:17 == 1
+ELSEIF ABL:Ｍ感覚 == 1
 	A = 50
-ELSEIF ABL:17 == 2
+ELSEIF ABL:Ｍ感覚 == 2
 	A = 600
-ELSEIF ABL:17 == 3
+ELSEIF ABL:Ｍ感覚 == 3
 	A = 7000
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-ELSEIF ABL:17 == 4
+ELSEIF ABL:Ｍ感覚 == 4
 	A = 45000
 	;一線越えない
 	IF TALENT:27
@@ -126,7 +126,7 @@ ELSEIF ABL:17 == 4
 ELSE
 	A = 45000
 	
-	A = A * (ABL:17 - 3)
+	A = A * (ABL:Ｍ感覚 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30

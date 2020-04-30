@@ -39,29 +39,29 @@ SOURCE:13 = 1800
 SOURCE:14 = 900
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:4 = 420
 	SOURCE:5 = 150
 	SOURCE:8 = 400
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:4 = 500
 	SOURCE:5 = 300
 	SOURCE:8 = 300
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:4 = 580
 	SOURCE:5 = 600
 	SOURCE:8 = 150
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:4 = 660
 	SOURCE:5 = 900
 	SOURCE:8 = 50
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:4 = 740
 	SOURCE:5 = 1500
 	SOURCE:8 = 20
 ELSE
-	SOURCE:4 = 620 + (ABL:6 * 40)
-	SOURCE:5 = 450 + (ABL:6 * 350)
+	SOURCE:4 = 620 + (ABL:奉仕精神 * 40)
+	SOURCE:5 = 450 + (ABL:奉仕精神 * 350)
 	SOURCE:8 = 0
 ENDIF
 
@@ -71,29 +71,29 @@ ENDIF
 IF TEQUIP:45 == 0 && (FLAG:62 & 4194304)
 	LOSEBASE:1 += 10
 
-	IF ABL:15 == 3
+	IF ABL:サドっ気 == 3
 		SOURCE:4 += 50
 		SOURCE:5 += 10
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:4 += 80
 		SOURCE:5 += 30
-	ELSEIF ABL:15 >= 5
+	ELSEIF ABL:サドっ気 >= 5
 		SOURCE:4 += 100
 		SOURCE:5 += 50
 	ENDIF
 
 	;Ｍ感覚について
 	;快Ｍのソース・Ｍ感覚を見る
-	IF ABL:17 == 1
+	IF ABL:Ｍ感覚 == 1
 		SOURCE:24 = 10
-	ELSEIF ABL:17 == 2
+	ELSEIF ABL:Ｍ感覚 == 2
 		SOURCE:24 = 30
-	ELSEIF ABL:17 == 3
+	ELSEIF ABL:Ｍ感覚 == 3
 		SOURCE:24 = 70
-	ELSEIF ABL:17 == 4
+	ELSEIF ABL:Ｍ感覚 == 4
 		SOURCE:24 = 100
-	ELSEIF ABL:17 >= 5
-		SOURCE:24 = 100 +(50 * (ABL:17 - 4))
+	ELSEIF ABL:Ｍ感覚 >= 5
+		SOURCE:24 = 100 +(50 * (ABL:Ｍ感覚 - 4))
 	ENDIF
 
 	;好感度（既成事実で代用）を見る
@@ -110,11 +110,11 @@ IF TEQUIP:45 == 0 && (FLAG:62 & 4194304)
 	ENDIF
 
 	;ABL:精液中毒をみる
-	IF ABL:11 <= 2
+	IF ABL:精液中毒 <= 2
 		TIMES SOURCE:24 , 0.00
-	ELSEIF ABL:11 == 3
+	ELSEIF ABL:精液中毒 == 3
 		TIMES SOURCE:24 , 0.50
-	ELSEIF ABL:11 == 4
+	ELSEIF ABL:精液中毒 == 4
 		TIMES SOURCE:24 , 1.00
 	ELSE
 		TIMES SOURCE:24 , 1.25
@@ -122,18 +122,18 @@ IF TEQUIP:45 == 0 && (FLAG:62 & 4194304)
 ENDIF
 
 ;ABL:Ｂ感覚をみる
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	A = 100
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	A = 200
-ELSEIF ABL:14== 2
+ELSEIF ABL:Ｂ感覚== 2
 	A = 400
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	A = 800
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	A = 1200
 ELSE
-	A = 750 + (ABL:14 * 150)
+	A = 750 + (ABL:Ｂ感覚 * 150)
 ENDIF
 
 IF TALENT:110
@@ -147,24 +147,24 @@ ENDIF
 
 SOURCE:17 += A
 ;ABL:技巧をみる
-IF ABL:2 == 0
+IF ABL:技巧 == 0
 	TIMES SOURCE:4 , 0.50
 	TIMES SOURCE:5 , 0.50
-ELSEIF ABL:2 == 1
+ELSEIF ABL:技巧 == 1
 	TIMES SOURCE:4 , 0.80
 	TIMES SOURCE:5 , 0.80
-ELSEIF ABL:2 == 2
+ELSEIF ABL:技巧 == 2
 	TIMES SOURCE:4 , 1.00
 	TIMES SOURCE:5 , 1.00
-ELSEIF ABL:2 == 3
+ELSEIF ABL:技巧 == 3
 	TIMES SOURCE:4 , 1.20
 	TIMES SOURCE:5 , 1.20
-ELSEIF ABL:2 == 4
+ELSEIF ABL:技巧 == 4
 	TIMES SOURCE:4 , 1.50
 	TIMES SOURCE:5 , 1.50
 ELSE
-	SOURCE:4 = SOURCE:4 * (ABL:2 * 25 + 75) / 100
-	SOURCE:5 = SOURCE:5 * (ABL:2 * 25 + 75) / 100
+	SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
+	SOURCE:5 = SOURCE:5 * (ABL:技巧 * 25 + 75) / 100
 ENDIF
 
 
@@ -172,34 +172,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 800
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 1100
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1400
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1800
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2300
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 350)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 350)
 	ENDIF
 ENDIF
 
@@ -241,31 +241,31 @@ IF E
 	TIMES SOURCE:4 , 3.00
 
 	;ABL:精液中毒をみる
-	IF ABL:11 == 0
+	IF ABL:精液中毒 == 0
 		SOURCE:7 = 0
 		TIMES SOURCE:5 , 2.00
 		TIMES SOURCE:13, 6.00
-	ELSEIF ABL:11 == 1
+	ELSEIF ABL:精液中毒 == 1
 		SOURCE:7 = 500
 		TIMES SOURCE:5 , 3.00
 		TIMES SOURCE:13, 4.50
-	ELSEIF ABL:11 == 2
+	ELSEIF ABL:精液中毒 == 2
 		SOURCE:7 = 1200
 		TIMES SOURCE:5 , 4.00
 		TIMES SOURCE:13, 3.50
-	ELSEIF ABL:11 == 3
+	ELSEIF ABL:精液中毒 == 3
 		SOURCE:7 = 3000
 		TIMES SOURCE:5 , 6.00
 		TIMES SOURCE:13, 3.00
-	ELSEIF ABL:11 == 4
+	ELSEIF ABL:精液中毒 == 4
 		SOURCE:7 = 6000
 		TIMES SOURCE:5 , 9.00
 		TIMES SOURCE:13, 2.00
 	ELSE
-		SOURCE:7 = (ABL:11 * 3000) - 3000
-		SOURCE:5 = SOURCE:5 * (ABL:11 * 300) / 100
-		IF ABL:11 <= 10
-			SOURCE:13 = SOURCE:13 * (200 - ABL:11 * 10) / 100
+		SOURCE:7 = (ABL:精液中毒 * 3000) - 3000
+		SOURCE:5 = SOURCE:5 * (ABL:精液中毒 * 300) / 100
+		IF ABL:精液中毒 <= 10
+			SOURCE:13 = SOURCE:13 * (200 - ABL:精液中毒 * 10) / 100
 		ELSE
 			TIMES SOURCE:13, 1.00
 		ENDIF
@@ -323,7 +323,7 @@ STAIN:0 |= STAIN:PLAYER:2
 STAIN:PLAYER:2 |= STAIN:0
 
 ;奉仕精神ＬＶ２以上、技巧ＬＶ２以上なら汚れをなめ取る
-IF ABL:6 >= 2 && ABL:2 >= 2
+IF ABL:奉仕精神 >= 2 && ABL:技巧 >= 2
 	STAIN:PLAYER:2 = 2
 	SIF E >= 1
 		TFLAG:8 = 1
@@ -372,16 +372,16 @@ S = 0
 CALL COM_ORDER
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 1
+IF ABL:欲望
+	A += ABL:欲望 * 1
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 ENDIF
 ;ABL:精液中毒
-IF ABL:11
-	A += ABL:11 * 3
+IF ABL:精液中毒
+	A += ABL:精液中毒 * 3
 ENDIF
 
 IF MARK:1
@@ -499,27 +499,27 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 1,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 1,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 	;ABL:精液中毒
-	IF ABL:11
+	IF ABL:精液中毒
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:11
-		PRINTV 'LV,ABL:11,'(,ABL:11 * 3,')
+		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 3,')
 		S = 1
 	ENDIF
 

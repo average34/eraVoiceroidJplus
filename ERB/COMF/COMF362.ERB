@@ -26,10 +26,10 @@ SIF TALENT:122
 SIF PALAM:3 < 10000 || PALAM:5 < 10000
 	RETURN 0
 ;欲望6以上が必要
-SIF ABL:1 < 6
+SIF ABL:欲望 < 6
 	RETURN 0
 ;親密10以上or好感度2000以上or恋人が必要
-SIF ABL:0 < 10 && CFLAG:2 < 2000 && TALENT:153 == 0
+SIF ABL:親密 < 10 && CFLAG:2 < 2000 && TALENT:153 == 0
 	RETURN 0
 ;合意が必要
 SIF TALENT:152 == 0
@@ -73,45 +73,45 @@ SOURCE:22 = 200
 
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 = 10
 	SOURCE:3 = 50
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 = 50
 	SOURCE:3 = 100
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 = 200
 	SOURCE:3 = 160
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 = 400
 	SOURCE:3 = 200
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 = 700
 	SOURCE:3 = 230
 ELSE
-	SOURCE:0 = 100 + (ABL:3 * 200)
-	SOURCE:3 = 200 + (ABL:3 * 10)
+	SOURCE:0 = 100 + (ABL:Ｃ感覚 * 200)
+	SOURCE:3 = 200 + (ABL:Ｃ感覚 * 10)
 ENDIF
 
 ;ABL:Ｖ感覚をみる
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	SOURCE:1 = 20
 	SOURCE:13 = 150
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	SOURCE:1 = 50
 	SOURCE:13 = 250
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	SOURCE:1 = 250
 	SOURCE:13 = 400
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	SOURCE:1 = 600
 	SOURCE:13 = 700
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	SOURCE:1 = 1200
 	SOURCE:13 = 1300
 ELSE
-	SOURCE:1 = 300 + (ABL:4 * 300)
-	SOURCE:13 = 250 + (ABL:4 * 350)
+	SOURCE:1 = 300 + (ABL:Ｖ感覚 * 300)
+	SOURCE:13 = 250 + (ABL:Ｖ感覚 * 350)
 ENDIF
 
 ;着衣補正
@@ -224,41 +224,41 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
 ;好感度ランダム変化
 A = RAND:13 + 5
 ;欲望9以上か好感度5000以上でないと好感度が下がる
-IF ABL:1 < 9 && CFLAG:2 < 5000
+IF ABL:欲望 < 9 && CFLAG:2 < 5000
 	A -= 12
 	;恋慕で少し反感
 	IF TALENT:85
@@ -329,18 +329,18 @@ V = 120
 CALL COM_ORDER
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 3
+IF ABL:欲望
+	A += ABL:欲望 * 3
 	S = 1
 ENDIF
 ;ABL:Ｖ感覚
-IF ABL:4
-	A += ABL:4 * 2
+IF ABL:Ｖ感覚
+	A += ABL:Ｖ感覚 * 2
 	S = 1
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 	S = 1
 ENDIF
 
@@ -460,27 +460,27 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 3,')
 		S = 1
 	ENDIF
 	;ABL:Ｖ感覚
-	IF ABL:4
+	IF ABL:Ｖ感覚
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:4
-		PRINTV 'LV,ABL:4,'(,ABL:4 * 2,')
+		PRINTV 'LV,ABL:Ｖ感覚,'(,ABL:Ｖ感覚 * 2,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 

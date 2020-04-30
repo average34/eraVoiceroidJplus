@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP6MAIN
 DRAWLINE
-IF ABL:6 >= 9999
+IF ABL:奉仕精神 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -20,7 +20,7 @@ CALL ISABLUP6
 
 ;従順が奉仕精神＋１レベルでないといけない
 PRINTS ABLNAME:0
-PRINTV ABL:6+1
+PRINTV ABL:奉仕精神+1
 PRINTL LV以上、かつ
 
 ;ＬＶ９から１０、１２から１３に上げるときは異常経験必要（素質：[恋慕]なら無視できる）
@@ -220,7 +220,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:6 += 1
+	ABL:奉仕精神 += 1
 
 IF RESULT == 0
 	JUEL:6 -= A
@@ -242,7 +242,7 @@ ENDIF
 
 PRINTS ABLNAME:6
 PRINT のレベルが
-PRINTV ABL:6
+PRINTV ABL:奉仕精神
 PRINTW になりました。
 
 
@@ -251,7 +251,7 @@ PRINTW になりました。
 ;奉仕精神が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP6
-IF ABL:6 >= 9999
+IF ABL:奉仕精神 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -267,7 +267,7 @@ L = 0
 Z = 0
 
 ;従順が奉仕精神＋１レベルでないといけない
-IF ABL:0 < ABL:6+1
+IF ABL:親密 < ABL:奉仕精神+1
 	;従順が不足
 	I |= 4
 	J |= 4
@@ -352,7 +352,7 @@ ENDIF
 ;奉仕精神を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP6
-IF ABL:6 <= 1
+IF ABL:奉仕精神 <= 1
 	A = 100
 	B = 20
 	C = 100
@@ -360,14 +360,14 @@ IF ABL:6 <= 1
 	E = 1
 	F = 50
 
-	A = A * (ABL:6 + 1)
-	B = B * (ABL:6 + 1)
-	C = C * (ABL:6 + 1)
-	D = D * (ABL:6 + 1)
-	E = E * (ABL:6 + 1)
-	F = F * (ABL:6 + 1)
+	A = A * (ABL:奉仕精神 + 1)
+	B = B * (ABL:奉仕精神 + 1)
+	C = C * (ABL:奉仕精神 + 1)
+	D = D * (ABL:奉仕精神 + 1)
+	E = E * (ABL:奉仕精神 + 1)
+	F = F * (ABL:奉仕精神 + 1)
 
-ELSEIF ABL:6 <= 3
+ELSEIF ABL:奉仕精神 <= 3
 	A = 1200
 	B = 100
 	C = 0
@@ -375,12 +375,12 @@ ELSEIF ABL:6 <= 3
 	E = 3
 	F = 500
 
-	A = A * (ABL:6 - 1)
-	B = B * (ABL:6 - 1)
-	D = D * (ABL:6 - 1)
-	E = E * (ABL:6 - 1)
-	F = F * (ABL:6 - 1)
-ELSEIF ABL:6 <= 5
+	A = A * (ABL:奉仕精神 - 1)
+	B = B * (ABL:奉仕精神 - 1)
+	D = D * (ABL:奉仕精神 - 1)
+	E = E * (ABL:奉仕精神 - 1)
+	F = F * (ABL:奉仕精神 - 1)
+ELSEIF ABL:奉仕精神 <= 5
 	A = 5000
 	B = 600
 	C = 0
@@ -388,12 +388,12 @@ ELSEIF ABL:6 <= 5
 	E = 6
 	F = 5000
 
-	A = A * (ABL:6 - 3)
-	B = B * (ABL:6 - 3)
-	D = D * (ABL:6 - 3)
-	E = E * (ABL:6 - 3)
-	F = F * (ABL:6 - 3)
-ELSEIF ABL:6 <= 8
+	A = A * (ABL:奉仕精神 - 3)
+	B = B * (ABL:奉仕精神 - 3)
+	D = D * (ABL:奉仕精神 - 3)
+	E = E * (ABL:奉仕精神 - 3)
+	F = F * (ABL:奉仕精神 - 3)
+ELSEIF ABL:奉仕精神 <= 8
 	A = 10000
 	B = 2000
 	C = 0
@@ -407,11 +407,11 @@ ELSEIF ABL:6 <= 8
 		TIMES D , 1.10
 	ENDIF
 
-	A = A * (ABL:6 - 5)
-	B = B * (ABL:6 - 5)
-	D = D * (ABL:6 - 5)
-	E = E * (ABL:6 - 5)
-ELSEIF ABL:6 <= 11
+	A = A * (ABL:奉仕精神 - 5)
+	B = B * (ABL:奉仕精神 - 5)
+	D = D * (ABL:奉仕精神 - 5)
+	E = E * (ABL:奉仕精神 - 5)
+ELSEIF ABL:奉仕精神 <= 11
 	A = 30000
 	B = 8000
 	C = 0
@@ -425,10 +425,10 @@ ELSEIF ABL:6 <= 11
 		TIMES D , 1.30
 	ENDIF
 
-	A = A + 10000 * (ABL:6 - 9)
-	B = B + 2000 * (ABL:6 - 9)
-	D = D + 60 * (ABL:6 - 9)
-	E = E + 20 * (ABL:6 - 9)
+	A = A + 10000 * (ABL:奉仕精神 - 9)
+	B = B + 2000 * (ABL:奉仕精神 - 9)
+	D = D + 60 * (ABL:奉仕精神 - 9)
+	E = E + 20 * (ABL:奉仕精神 - 9)
 ELSE
 	A = 30000
 	B = 8000
@@ -437,10 +437,10 @@ ELSE
 	E = 80
 	F = 0
 	
-	A = A * (ABL:6 - 9)
-	B = B * (ABL:6 - 9)
-	D = D * (ABL:6 - 8) / 2
-	E = E * (ABL:6 - 8) / 2
+	A = A * (ABL:奉仕精神 - 9)
+	B = B * (ABL:奉仕精神 - 9)
+	D = D * (ABL:奉仕精神 - 8) / 2
+	E = E * (ABL:奉仕精神 - 8) / 2
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -612,9 +612,9 @@ IF TALENT:87
 ENDIF
 
 ;ＬＶ９から１０、１２から１３に上げるときは異常経験必要（素質：[恋慕]なら無視できる）
-IF ABL:6 == 9 && !TALENT:85
+IF ABL:奉仕精神 == 9 && !TALENT:85
 	G = 1
-ELSEIF ABL:6 == 12 && !TALENT:85
+ELSEIF ABL:奉仕精神 == 12 && !TALENT:85
 	G = 2
 ELSE
 	G = 0

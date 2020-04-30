@@ -68,24 +68,24 @@ SOURCE:18 = 50
 SOURCE:19 = 200
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 10)
-	SOURCE:19 += (ABL:0 * 35)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 80 + (ABL:0 * 10)
-	SOURCE:19 += 200 + (ABL:0 * 40)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 120 + (ABL:0 * 10)
-	SOURCE:19 += 300 + (ABL:0 * 40)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 200 + (ABL:0 * 20)
-	SOURCE:19 += 400 + (ABL:0 * 60)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 300 + (ABL:0 * 20)
-	SOURCE:19 += 500 + (ABL:0 * 60)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 10)
+	SOURCE:19 += (ABL:親密 * 35)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 80 + (ABL:親密 * 10)
+	SOURCE:19 += 200 + (ABL:親密 * 40)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 120 + (ABL:親密 * 10)
+	SOURCE:19 += 300 + (ABL:親密 * 40)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 200 + (ABL:親密 * 20)
+	SOURCE:19 += 400 + (ABL:親密 * 60)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 300 + (ABL:親密 * 20)
+	SOURCE:19 += 500 + (ABL:親密 * 60)
 ELSE
-	SOURCE:18 += 500 + (ABL:0 * 10)
-	SOURCE:19 += 800 + (ABL:0 * 70)
+	SOURCE:18 += 500 + (ABL:親密 * 10)
+	SOURCE:19 += 800 + (ABL:親密 * 70)
 ENDIF
 
 ;好感度をみる
@@ -101,11 +101,11 @@ SIF SOURCE:18 < 0
 
 
 ;ABL:技巧をみる
-SOURCE:19 = SOURCE:19 * (ABL:2 * 3 + 100) / 100
+SOURCE:19 = SOURCE:19 * (ABL:技巧 * 3 + 100) / 100
 
 ;ABL:料理技術をみる
-SOURCE:18 += ABL:90 * 10
-SOURCE:19 = SOURCE:19 * (ABL:90 * 15 + 100) / 100
+SOURCE:18 += ABL:料理技能 * 10
+SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 15 + 100) / 100
 
 ;調合知識を持っていると効果上昇
 IF TALENT:TARGET:55
@@ -116,34 +116,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 100 + (ABL:0 * 20)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 300 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 400 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 500 + (ABL:0 * 60)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 100 + (ABL:親密 * 20)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 300 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 400 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 500 + (ABL:親密 * 60)
 	ELSE
-		SOURCE:21 += 600 + (ABL:0 * 70)
+		SOURCE:21 += 600 + (ABL:親密 * 70)
 	ENDIF
 ELSE
 	;主導権が相手
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 200
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 300
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 400
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 550
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 700
 	ELSE
-		SOURCE:20 = 300 + (ABL:15 * 100)
+		SOURCE:20 = 300 + (ABL:サドっ気 * 100)
 	ENDIF
 ENDIF
 
@@ -226,11 +226,11 @@ ENDIF
 $SOZAI_SEARCH
 
 ;実行者の技巧が1以下かつ相手の技巧が1以下かつ調合知識・禁断の知識をどちらも持っていないかつペンデュラムを持っていないと必ず失敗
-IF ABL:TARGET:2 <= 1 && ABL:PLAYER:2 <= 1 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+IF ABL:TARGET:技巧 <= 1 && ABL:PLAYER:技巧 <= 1 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
 	PRINTFORMW しかし何も見つけることはできなかった
 	TFLAG:18 = -1
 ;実行者と相手の技巧の合計が6以下で双方が調合・禁断の知識を持っていないかつペンデュラムを持っていないと雑草しか手に入らない
-ELSEIF (ABL:TARGET:2 + ABL:PLAYER:2) <= 6 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
+ELSEIF (ABL:TARGET:技巧 + ABL:PLAYER:技巧) <= 6 && TALENT:PLAYER:55 == 0 && TALENT:TARGET:55 == 0 && TALENT:PLAYER:125 == 0 && TALENT:TARGET:125 == 0 && TEQUIP:5 != 2
 	IF T >= 50
 		PRINTFORMW しかし何も見つけることはできなかった
 		TFLAG:18 = -1
@@ -260,7 +260,7 @@ SIF RESULT
 VARSET LOCAL, 0
 
 ;実行者と相手の技巧の合計でアイテム入手数設定。また、相手と自分の調合知識でそれぞれランダム追加
-D = 1 + RAND:2 + RAND:(ABL:TARGET:2 + ABL:PLAYER:2)/6
+D = 1 + RAND:2 + RAND:(ABL:TARGET:技巧 + ABL:PLAYER:技巧)/6
 
 SIF TALENT:PLAYER:55 == 1
 	D += 1
@@ -327,28 +327,28 @@ ENDIF
 ;素材ランク数３つのデート先（主に外界）
 IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 	;実行者の技巧4以上かつ相手の技巧6以上
-	IF ABL:TARGET:2 >= 6 && ABL:PLAYER:2 >= 4
+	IF ABL:TARGET:技巧 >= 6 && ABL:PLAYER:技巧 >= 4
 		;まずLOCAL = 1し、最高ランク条件を満たしていなかった場合　LOCAL = 0にして手に入る素材を変える
 		LOCAL = 1
 		;各デート場所固有の最高ランク条件。こちらまで満たせば最高ランクまで解禁
 		
 		;遊園地　相手が親愛or相愛or恋慕＋親愛15以上
-		IF TEQUIP:2 == 10 && (TALENT:TARGET:88 || TALENT:TARGET:89 || (TALENT:TARGET:85 && ABL:0 >= 15))
+		IF TEQUIP:2 == 10 && (TALENT:TARGET:88 || TALENT:TARGET:89 || (TALENT:TARGET:85 && ABL:親密 >= 15))
 		
 		;水族館 日付が3の倍数
 		ELSEIF TEQUIP:2 == 11 && (DAY:1 % 3 == 0)
 		
 		;動物園 サドっ気orマゾっ気が4以上
-		ELSEIF TEQUIP:2 == 12 && (ABL:TARGET:8 >= 4 || ABL:TARGET:15 >= 4)
+		ELSEIF TEQUIP:2 == 12 && (ABL:TARGET:マゾっ気 >= 4 || ABL:TARGET:サドっ気 >= 4)
 		
 		;繁華街 夜
 		ELSEIF TEQUIP:2 == 13 && TIME == 1
 		
 		;海 自慰中毒or精液中毒orレズ中毒のいずれかが5以上(海＝溺れるのイメージ)
-		ELSEIF TEQUIP:2 == 14 && (ABL:TARGET:10 >= 5 || ABL:TARGET:11 >= 5 || ABL:TARGET:12 >= 5)
+		ELSEIF TEQUIP:2 == 14 && (ABL:TARGET:自慰中毒 >= 5 || ABL:TARGET:精液中毒 >= 5 || ABL:TARGET:レズ中毒 >= 5)
 		
 		;博物館 どちらかの技巧が10以上(習得の珠が博物館で入るから)
-		ELSEIF TEQUIP:2 == 17 && (ABL:TARGET:2 >= 10 || ABL:PLAYER:2 >= 10)
+		ELSEIF TEQUIP:2 == 17 && (ABL:TARGET:技巧 >= 10 || ABL:PLAYER:技巧 >= 10)
 		
 		;遊覧船 ムード80以上
 		ELSEIF TEQUIP:2 == 23 && (TFLAG:37 >= 80)
@@ -409,7 +409,7 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 			ENDIF
 		ENDIF
 	;実行者の技巧3以下もしくは相手の技巧が5以下
-	ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+	ELSEIF ABL:PLAYER:技巧 <= 3 || ABL:TARGET:技巧 <= 5
 		;ランク１まで入手可能
 		IF T <= 59
 			;ランク１
@@ -430,14 +430,14 @@ IF ((TEQUIP:2 >= 10 && TEQUIP:2 <= 23) || (TEQUIP:2 >= 32 && TEQUIP:2 <= 36))
 ;素材ランク数４つのデート先
 ELSE
 	;実行者の技巧5以上かつ相手の技巧8以上かつ調合知識か禁断の知識を実行者と相手のいずれかが持っている
-	IF ABL:TARGET:2 >= 8 && ABL:PLAYER:2 >= 5 && (TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1)
+	IF ABL:TARGET:技巧 >= 8 && ABL:PLAYER:技巧 >= 5 && (TALENT:PLAYER:55 == 1 || TALENT:TARGET:55 == 1 || TALENT:PLAYER:125 == 1 || TALENT:TARGET:125 == 1)
 		;まずLOCAL = 1し、最高ランク条件を満たしていなかった場合　LOCAL = 0にして手に入る素材を変える
 		LOCAL = 1
 		
 		;各デート場所固有の最高ランク条件。こちらまで満たせば最高ランクまで解禁
 		
 		;家 相手の料理技能と金銭感覚がともに4以上(家なので生活の珠関連の条件)
-		IF TEQUIP:2 == 0 && ABL:TARGET:89 >= 4 && ABL:TARGET:90 >= 4
+		IF TEQUIP:2 == 0 && ABL:TARGET:金銭感覚 >= 4 && ABL:TARGET:料理技能 >= 4
 		
 		;街 デート経験400以上(街＝歓楽だけどそれに対応させるのがむずい)
 		ELSEIF TEQUIP:2 == 1 && EXP:TARGET:94 >= 400
@@ -458,25 +458,25 @@ ELSE
 		ELSEIF TEQUIP:2 == 7 && (TIME:5 == 1 || TIME:5 == 5 || TIME:5 == 7 || TIME:5 == 8)
 		
 		;図書館 VBAC感覚の合計が20以上(物知り的なイメージ？もうわからんくなってきたｗ)
-		ELSEIF TEQUIP:2 == 8 && (ABL:TARGET:3 + ABL:TARGET:4 + ABL:TARGET:5 + ABL:TARGET:14) >= 20
+		ELSEIF TEQUIP:2 == 8 && (ABL:TARGET:Ｃ感覚 + ABL:TARGET:Ｖ感覚 + ABL:TARGET:Ａ感覚 + ABL:TARGET:Ｂ感覚) >= 20
 		
 		;白玉楼 欲望11以上（ゆゆさまの食事は始まったばかりだ！）
-		ELSEIF TEQUIP:2 == 9 && ABL:TARGET:1 >= 11
+		ELSEIF TEQUIP:2 == 9 && ABL:TARGET:欲望 >= 11
 		
 		;月の都 実行者か相手が蓬莱人・月光浴・処女・淫乱のいずれかを持っている
 		ELSEIF TEQUIP:2 == 25 && (TALENT:PLAYER:0 == 1 || TALENT:TARGET:0 == 1 || TALENT:PLAYER:76 == 1 || TALENT:TARGET:76 == 1 || TALENT:PLAYER:116 == 1 || TALENT:TARGET:116 == 1 || TALENT:PLAYER:128 == 1 || TALENT:TARGET:128 == 1)
 		
 		;妖怪の山 季節が秋か、実行者か相手のどちらかが妄信か解放を持っているか、露出癖5以上(ゆがんだ信仰or常識に囚われない)
-		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:86 == 1 || TALENT:TARGET:86 == 1 || TALENT:PLAYER:33 == 1 || TALENT:TARGET:33 == 1 || ABL:TARGET:7 >= 5)
+		ELSEIF TEQUIP:2 == 26 && (DAY:2 == 2 || TALENT:PLAYER:86 == 1 || TALENT:TARGET:86 == 1 || TALENT:PLAYER:33 == 1 || TALENT:TARGET:33 == 1 || ABL:TARGET:露出癖 >= 5)
 		
 		;有頂天 実行者か相手がサド・マゾのいずれかを持っている(実行者がサドの場合、相手がマゾっ気3以上が必要)
-		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:79 == 1 || TALENT:TARGET:79 == 1 || TALENT:TARGET:83 == 1 || (TALENT:PLAYER:83 == 1 && ABL:TARGET:8 >= 3))
+		ELSEIF TEQUIP:2 == 27 && (TALENT:PLAYER:79 == 1 || TALENT:TARGET:79 == 1 || TALENT:TARGET:83 == 1 || (TALENT:PLAYER:83 == 1 && ABL:TARGET:マゾっ気 >= 3))
 		
 		;地霊殿 実行者か相手が異常経験3以上
 		ELSEIF TEQUIP:2 == 28 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
 		
 		;間欠泉地下センター どちらかの技巧が10以上
-		ELSEIF TEQUIP:2 == 29 && (ABL:TARGET:2 >= 10 || ABL:PLAYER:2 >= 10)
+		ELSEIF TEQUIP:2 == 29 && (ABL:TARGET:技巧 >= 10 || ABL:PLAYER:技巧 >= 10)
 		
 		;魔法の森 実行者か相手が異常経験3以上(犯罪臭)
 		ELSEIF TEQUIP:2 == 30 && (EXP:PLAYER:50 >= 3 || EXP:TARGET:50 >= 3)
@@ -545,7 +545,7 @@ ELSE
 			ENDIF
 		ENDIF
 	;実行者の技能4以上かつ相手の技巧6以上
-	ELSEIF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6
+	ELSEIF ABL:PLAYER:技巧 >= 4 && ABL:TARGET:技巧 >= 6
 		;ランク２まで入手可能
 		IF T <= 41
 			;ランク２
@@ -566,7 +566,7 @@ ELSE
 			TFLAG:18 = -1
 		ENDIF
 	;実行者の技巧3以下もしくは相手の技巧が5以下
-	ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+	ELSEIF ABL:PLAYER:技巧 <= 3 || ABL:TARGET:技巧 <= 5
 		;ランク１まで入手可能
 		IF T <= 56
 			;ランク１
@@ -702,12 +702,12 @@ ENDIF
 ;カラオケ
 @SOZAI_SEARCH_TEQUIP2_6
 ;実行者の技能4以上かつ相手の技巧6以上かつ歌唱技能7以上
-IF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6 && ABL:TARGET:92 >= 7
+IF ABL:PLAYER:技巧 >= 4 && ABL:TARGET:技巧 >= 6 && ABL:TARGET:歌唱技能 >= 7
 	TFLAG:926 = 1
 	;PRINTFORMW 探索の結果、[電池]を手に入れました
 	TFLAG:17 = 2
 ;実行者の技能4以上かつ相手の技巧6以上
-ELSEIF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6
+ELSEIF ABL:PLAYER:技巧 >= 4 && ABL:TARGET:技巧 >= 6
 	IF T <= 49
 		TFLAG:926 = 1
 		;PRINTFORMW 探索の結果、[電池]を手に入れました
@@ -717,7 +717,7 @@ ELSEIF ABL:PLAYER:2 >= 4 && ABL:TARGET:2 >= 6
 		TFLAG:18 = -1
 	ENDIF
 ;実行者の技巧3以下もしくは相手の技巧が5以下
-ELSEIF ABL:PLAYER:2 <= 3 || ABL:TARGET:2 <= 5
+ELSEIF ABL:PLAYER:技巧 <= 3 || ABL:TARGET:技巧 <= 5
 	IF T <= 9
 		TFLAG:926 = 1
 		;PRINTFORMW 探索の結果、[電池]を手に入れました
@@ -877,13 +877,13 @@ ENDIF
 
 ;ゲームセンター
 @SOZAI_SEARCH_TEQUIP2_15
-T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+T = RAND:(ABL:TARGET:技巧 + ABL:MASTER:技巧)
 MONEY += T * 100
 PRINTFORMW 素材は見つからなかったが、${T * 100}拾った
 
 ;カジノ
 @SOZAI_SEARCH_TEQUIP2_16
-T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+T = RAND:(ABL:TARGET:技巧 + ABL:MASTER:技巧)
 MONEY += T * 100
 PRINTFORMW 素材は見つからなかったが、落ちていたチップを{T}枚拾って換金した
 PRINTFORML 
@@ -908,7 +908,7 @@ ENDIF
 SIF NO:TARGET == 6 || NO:PLAYER == 6
 	T -= 3
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
-IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
 		TFLAG:954 = 1
 		;PRINTFORMW 探索の結果、[豆]を手に入れました
@@ -923,7 +923,7 @@ IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5
 		TFLAG:17 = 0
 	ENDIF
 ;実行者の技巧4以下もしくは相手の技巧が6以下
-ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+ELSEIF ABL:PLAYER:技巧 <= 4 || ABL:TARGET:技巧 <= 6
 	IF T <= 59
 		TFLAG:953 = 1
 		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
@@ -943,7 +943,7 @@ ENDIF
 SIF NO:TARGET == 4 || NO:PLAYER == 4
 	T -= 3
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
-IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
 		TFLAG:955 = 1
 		;PRINTFORMW 探索の結果、[銃弾]を手に入れました
@@ -958,7 +958,7 @@ IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5
 		TFLAG:17 = 0
 	ENDIF
 ;実行者の技巧4以下もしくは相手の技巧が6以下
-ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+ELSEIF ABL:PLAYER:技巧 <= 4 || ABL:TARGET:技巧 <= 6
 	IF T <= 59
 		TFLAG:953 = 1
 		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
@@ -979,7 +979,7 @@ ENDIF
 SIF NO:TARGET == 3 || NO:PLAYER == 3
 	T -= 3
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
-IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
 		TFLAG:956 = 1
 		;PRINTFORMW 探索の結果、[黒い髪]を手に入れました
@@ -994,7 +994,7 @@ IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5
 		TFLAG:17 = 0
 	ENDIF
 ;実行者の技巧4以下もしくは相手の技巧が6以下
-ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+ELSEIF ABL:PLAYER:技巧 <= 4 || ABL:TARGET:技巧 <= 6
 	IF T <= 59
 		TFLAG:953 = 1
 		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
@@ -1014,7 +1014,7 @@ ENDIF
 SIF NO:TARGET == 3 || NO:PLAYER == 3
 	T -= 3
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
-IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
 		TFLAG:957 = 1
 		;PRINTFORMW 探索の結果、[リボン]を手に入れました
@@ -1029,7 +1029,7 @@ IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5
 		TFLAG:17 = 0
 	ENDIF
 ;実行者の技巧4以下もしくは相手の技巧が6以下
-ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+ELSEIF ABL:PLAYER:技巧 <= 4 || ABL:TARGET:技巧 <= 6
 	IF T <= 59
 		TFLAG:953 = 1
 		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
@@ -1047,7 +1047,7 @@ ENDIF
 @SOZAI_SEARCH_TEQUIP2_22
 
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
-IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5 
+IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
 		ITEM:29 += 1
 		PRINTFORMW 探索の結果、[コンドーム]を手に入れました
@@ -1062,7 +1062,7 @@ IF ABL:TARGET:2 >= 7 && ABL:PLAYER:2 >= 5
 		TFLAG:17 = 0
 	ENDIF
 ;実行者の技巧4以下もしくは相手の技巧が6以下
-ELSEIF ABL:PLAYER:2 <= 4 || ABL:TARGET:2 <= 6
+ELSEIF ABL:PLAYER:技巧 <= 4 || ABL:TARGET:技巧 <= 6
 	IF T <= 59
 		TFLAG:953 = 1
 		;PRINTFORMW 探索の結果、[フィルムの切れ端]を手に入れました
@@ -1102,12 +1102,12 @@ ENDIF
 @SOZAI_SEARCH_TEQUIP2_24
 
 ;実行者の技巧4以上かつ相手の技巧6以上だと彼岸花を入手できる可能性がある
-IF T <= 29 && ABL:TARGET:2 >= 6 && ABL:PLAYER:2 >= 4
+IF T <= 29 && ABL:TARGET:技巧 >= 6 && ABL:PLAYER:技巧 >= 4
 	TFLAG:960 = 1
 	;PRINTFORMW 探索の結果、[真っ赤な彼岸花]を手に入れました
 	TFLAG:18 = 1
 ELSEIF T <= 69
-	T = RAND:(ABL:TARGET:2 + ABL:MASTER:2)
+	T = RAND:(ABL:TARGET:技巧 + ABL:MASTER:技巧)
 	MONEY += T * 10
 	PRINTFORMW 素材は見つからなかったが、小銭を${T * 10}拾った
 ELSEIF T <= 89

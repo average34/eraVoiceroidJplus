@@ -124,7 +124,7 @@ PRINTFORML %CALLNAME:MASTER%と%CALLNAME:TARGET%は英気を養った
 $LUNCH_EVALUATE
 PRINTL 
 IF L > 0
-	IF ABL:90 >= 10 && TALENT:153
+	IF ABL:料理技能 >= 10 && TALENT:153
 		JUEL:4 += L * 20
 		JUEL:15 += L * 30
 		PRINTFORML %PALAMNAME:4%の珠＋{L*20}
@@ -138,8 +138,8 @@ IF L > 0
 ENDIF
 PRINTFORML %PALAMNAME:7%の珠＋{Q}
 JUEL:7 += Q
-PRINTFORML %PALAMNAME:16%の珠＋{ABL:TARGET:90 * SQRT( ABL:TARGET:90 ) * R * 20}
-JUEL:16 += ABL:TARGET:90 * SQRT( ABL:TARGET:90 ) * R * 20
+PRINTFORML %PALAMNAME:16%の珠＋{ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20}
+JUEL:16 += ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20
 
 ;恋人持ちかつ食後のイベント発生確定時は愛情経験が入る
 ;また、食後のイベントで押し倒すことを選ぶと奉仕快楽経験が入るようになる
@@ -154,8 +154,8 @@ ENDIF
 
 IF R >= 10
 	LOCAL = 5
-	SIF ABL:TARGET:90 > 99
-		LOCAL = ABL:TARGET:90 / 20
+	SIF ABL:TARGET:料理技能 > 99
+		LOCAL = ABL:TARGET:料理技能 / 20
 	PRINTFORML %EXPNAME:90% ＋{LOCAL}
 	EXP:90 += LOCAL
 ELSEIF R >= 5
@@ -166,7 +166,7 @@ ELSE
 	EXP:90 += 3
 ENDIF
 ;好感度増加（浪費癖/10をマイナスし、Aがマイナスになる場合好感度は増加しない）
-A = RAND:101 + 150 - (ABL:97 / 10)
+A = RAND:101 + 150 - (ABL:浪費癖 / 10)
 IF A > 0
 	CFLAG:2 += A
 	PRINTFORMW 好感度が {A} 増えた
@@ -194,7 +194,7 @@ L = 0
 M = 0
 N = 0
 
-L = (ABL:MASTER:2 * 2 + ABL:MASTER:90 + ABL:TARGET:2 + ABL:TARGET:6 * 2 + ABL:TARGET:90 * 3 + 20) / 6
+L = (ABL:MASTER:技巧 * 2 + ABL:MASTER:料理技能 + ABL:TARGET:技巧 + ABL:TARGET:奉仕精神 * 2 + ABL:TARGET:料理技能 * 3 + 20) / 6
 
 ;献身的
 SIF TALENT:63
@@ -214,11 +214,11 @@ ENDIF
 CALL LUNCH_MENU
 
 ;料理素質で補正をかける
-IF ABL:50 == 2
+IF ABL:料理素質 == 2
 	TIMES L , 1.20
-ELSEIF ABL:50 == 1
+ELSEIF ABL:料理素質 == 1
 	TIMES L , 1.10
-ELSEIF ABL:50 == -1
+ELSEIF ABL:料理素質 == -1
 	TIMES L , 0.90
 ENDIF
 
@@ -235,7 +235,7 @@ SIF TALENT:126
 	TIMES N , 1.30
 
 ;R = 料理の出来栄え
-R = (RAND:100 + ABL:TARGET:90) / 10
+R = (RAND:100 + ABL:TARGET:料理技能) / 10
 SIF R <= 0
 	R = 1
 SIF R >= 10
@@ -247,10 +247,10 @@ SIF TALENT:153
 	TIMES M , 1.30
 
 ;獲得資金増加ボーナス
-IF ABL:MASTER:86 == 1
+IF ABL:MASTER:獲得資金増加 == 1
 	TIMES M , 1.50
-ELSEIF ABL:MASTER:86 > 1
-	M *= ABL:MASTER:86
+ELSEIF ABL:MASTER:獲得資金増加 > 1
+	M *= ABL:MASTER:獲得資金増加
 ENDIF
 
 ;値段が高くなり過ぎないように補正をかける
@@ -271,26 +271,26 @@ SIF M >= 1000000
 	M = 1000000 + (M - 1000000) / 10
 
 ;P:1 = 乱数処理
-IF ABL:90 <= 10
-	P:1 = ABL:90
-ELSEIF ABL:90 <= 20
-	P:1 = 10 + (ABL:90 / 4)
-ELSEIF ABL:90 <= 30
-	P:1 = 15 + (ABL:90 / 6)
-ELSEIF ABL:90 <= 40
-	P:1 = 20 + (ABL:90 / 8)
-ELSEIF ABL:90 <= 50
-	P:1 = 25 + (ABL:90 / 10)
-ELSEIF ABL:90 <= 60
-	P:1 = 30 + (ABL:90 / 12)
-ELSEIF ABL:90 <= 70
-	P:1 = 35 + (ABL:90 / 14)
-ELSEIF ABL:90 <= 80
-	P:1 = 40 + (ABL:90 / 16)
-ELSEIF ABL:90 <= 90
-	P:1 = 45 + (ABL:90 / 18)
+IF ABL:料理技能 <= 10
+	P:1 = ABL:料理技能
+ELSEIF ABL:料理技能 <= 20
+	P:1 = 10 + (ABL:料理技能 / 4)
+ELSEIF ABL:料理技能 <= 30
+	P:1 = 15 + (ABL:料理技能 / 6)
+ELSEIF ABL:料理技能 <= 40
+	P:1 = 20 + (ABL:料理技能 / 8)
+ELSEIF ABL:料理技能 <= 50
+	P:1 = 25 + (ABL:料理技能 / 10)
+ELSEIF ABL:料理技能 <= 60
+	P:1 = 30 + (ABL:料理技能 / 12)
+ELSEIF ABL:料理技能 <= 70
+	P:1 = 35 + (ABL:料理技能 / 14)
+ELSEIF ABL:料理技能 <= 80
+	P:1 = 40 + (ABL:料理技能 / 16)
+ELSEIF ABL:料理技能 <= 90
+	P:1 = 45 + (ABL:料理技能 / 18)
 ELSE
-	P:1 = 50 + (ABL:90 / 20)
+	P:1 = 50 + (ABL:料理技能 / 20)
 ENDIF
 P:1 += RAND:4
 
@@ -304,7 +304,7 @@ ELSEIF R >= 3
 ELSE
 	Q = L * (P:1+1) * 2
 ENDIF
-SIF ABL:90 >= 50 && TALENT:153
+SIF ABL:料理技能 >= 50 && TALENT:153
 	Q *= 3
 
 ;S = 奉仕快楽経験上昇値
@@ -315,7 +315,7 @@ SIF S > 16
 	S = 16
 
 ;親密でL(恭順・好意の珠取得数)を補正
-L = L * ABL:0 / 15
+L = L * ABL:親密 / 15
 ;EXキャラ補正(恋慕有りだと効果UP、恋慕無しだと珠なし)
 IF CFLAG:0 && TALENT:85
 	TIMES L , 1.20
@@ -333,7 +333,7 @@ ENDIF
 ;-------------------------------------------------
 @LUNCH_MENU
 ;K = 料理の種類
-IF K == 0 && ABL:90 >= 7
+IF K == 0 && ABL:料理技能 >= 7
 	;キャラ固有料理
 	N = 300
 ELSEIF K <= 1 || K == 15

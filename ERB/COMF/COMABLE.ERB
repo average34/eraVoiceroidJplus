@@ -104,7 +104,7 @@ SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:3 & 14 && ASSIPLAY
-	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
@@ -135,7 +135,7 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナル愛撫はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -154,7 +154,7 @@ SIF ((FLAG:61 & 1) == 0) && TEQUIP:53
 	RETURN 0
 ;従順3以下・レズっ気3以下のASSIの場合自慰はできない（小悪魔ならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:87 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:87 == 0
 		RETURN 0
 ENDIF
 ;縄使用中は不可
@@ -179,7 +179,7 @@ SIF STAIN:2 & 12 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合フェラはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
 IF STAIN:2 & 12 && ASSIPLAY
-	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
@@ -264,7 +264,7 @@ SIF TALENT:122
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -283,7 +283,7 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;アナルが汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:4 & 14 && ASSIPLAY
-	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
@@ -373,12 +373,12 @@ SIF ITEM:1 == 0 && NOITEM == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合バイブはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合バイブはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -397,7 +397,7 @@ SIF ITEM:2 == 0 && NOITEM == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上かサドじゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:技巧 < 3 && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -435,7 +435,7 @@ SIF ITEM:3 == 0 && NOITEM == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナルバイブはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;浣腸＋アナルプラグ使用中はダメ
@@ -485,7 +485,7 @@ SIF TALENT:121 == 1 || TALENT:122 == 1
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3
+	SIF ABL:ASSI:技巧 < 3
 		RETURN 0
 ENDIF
 ;シャワー中はダメ
@@ -519,7 +519,7 @@ SIF TEQUIP:76
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3
+	SIF ABL:ASSI:技巧 < 3
 		RETURN 0
 ENDIF
 ;シャワー中はダメ
@@ -559,14 +559,14 @@ SIF TEQUIP:15
 SIF TEQUIP:76
 	RETURN 0
 ;Ｂ感度2以下はダメ
-SIF ABL:TARGET:14 <= 2 
+SIF ABL:TARGET:Ｂ感覚 <= 2 
 	RETURN 0
 ;オトコだとダメ
 SIF TALENT:122
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3
+	SIF ABL:ASSI:技巧 < 3
 		RETURN 0
 ENDIF
 ;シャワー中はダメ
@@ -604,7 +604,7 @@ SIF TALENT:121 == 0 && TALENT:122 == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3
+	SIF ABL:ASSI:技巧 < 3
 		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -638,7 +638,7 @@ SIF TEQUIP:16
 	RETURN 0
 ;吸血鬼や動物耳には従順10がないと使用不可（サドならＯＫ）
 IF TALENT:114 || TALENT:124
-SIF ABL:0 < 10 && TALENT:PLAYER:83 == 0
+SIF ABL:親密 < 10 && TALENT:PLAYER:83 == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -724,12 +724,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位はできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -775,12 +775,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位はできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -832,7 +832,7 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;潤滑不足で、従順4以下・レズっ気4以下のASSIの場合アナルセックスはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
@@ -926,12 +926,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位はできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -977,12 +977,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位はできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1035,12 +1035,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合正常位アナルはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1101,12 +1101,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位アナルはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1175,12 +1175,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1241,12 +1241,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -1310,7 +1310,7 @@ SIF TFLAG:44 == 0
 SIF TALENT:122
 	RETURN 0
 ;[巨乳]でなければ技巧7以上、[貧乳]だと技巧10以上必要
-SIF (TALENT:110 == 0 && ABL:2 < 7) || (TALENT:109 && ABL:2 < 10)
+SIF (TALENT:110 == 0 && ABL:技巧 < 7) || (TALENT:109 && ABL:技巧 < 10)
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
 SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0
@@ -1549,7 +1549,7 @@ SIF TFLAG:44 == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合スパンキングはできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1574,7 +1574,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合鞭はできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1605,7 +1605,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;従順5・レズっ気5・サドでないとダメ（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4 || TALENT:ASSI:83 == 0) && TALENT:ASSI:53 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4 || TALENT:ASSI:83 == 0) && TALENT:ASSI:53 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1664,11 +1664,11 @@ SIF TEQUIP:44 && TEQUIP:69 == 0
 SIF ITEM:14 == 0 && NOITEM == 0
 	RETURN 0
 ;調教者の技巧が3無いとできない
-SIF ABL:PLAYER:2 <= 2
+SIF ABL:PLAYER:技巧 <= 2
 	RETURN 0
 ;助手は技巧5でないとダメ
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 4
+	SIF ABL:ASSI:技巧 <= 4
 		RETURN 0
 ENDIF
 ;お医者プレイ中はダメ
@@ -1702,7 +1702,7 @@ SIF ITEM:9 == 0 && NOITEM == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
-	SIF ABL:ASSI:2 < 3
+	SIF ABL:ASSI:技巧 < 3
 		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -1763,7 +1763,7 @@ SIF TEQUIP:61
 SIF EXP:1 < 100 
 	RETURN 0
 ;露出癖、欲望、従順の合計が10ないとできない
-SIF ABL:0 + ABL:1 + ABL:7 < 10 
+SIF ABL:親密 + ABL:欲望 + ABL:露出癖 < 10 
 	RETURN 0
 RETURN 1
 
@@ -1817,7 +1817,7 @@ SIF TEQUIP:61
 SIF EXP:1 < 50
 	RETURN 0
 ;露出癖、欲望、従順の合計が10ないとできない
-SIF ABL:0 + ABL:1 + ABL:7 < 10
+SIF ABL:親密 + ABL:欲望 + ABL:露出癖 < 10
 	RETURN 0
 RETURN 1
 
@@ -2016,7 +2016,7 @@ SIF (FLAG:61 & 1) == 0
 SIF ITEM:18 == 0 && NOITEM == 0
 	RETURN 0
 ;従順10かマゾっ気が3以上ないとダメ
-SIF ABL:0 < 10 && ABL:8 <= 2
+SIF ABL:親密 < 10 && ABL:マゾっ気 <= 2
 	RETURN 0
 ;対象か助手か主人が吸血鬼で、時間が昼かつ曇りでないだとダメ
 SIF (TALENT:114 || TALENT:MASTER:114) && TIME == 0 && TIME:5 != 2
@@ -2071,7 +2071,7 @@ SIF TALENT:149 && (TALENT:MASTER:125 == 0 && TALENT:PLAYER:149 == 0)
 SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;縄使用中か従順が10以上ないとダメ
-SIF TEQUIP:44 == 0 && ABL:0 < 10
+SIF TEQUIP:44 == 0 && ABL:親密 < 10
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2111,7 +2111,7 @@ IF NAME_CSV(NO:PLAYER, 0) != "四季映姫"
 		RETURN 0
 ENDIF
 ;従順が5以上ないとダメ
-SIF ABL:0 < 5
+SIF ABL:親密 < 5
 	RETURN 0
 ;野外プレイ中はダメ
 SIF TEQUIP:54
@@ -2143,13 +2143,13 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:58
 	RETURN 1
 ;従順が5以上ないとダメ
-SIF ABL:0 < 5
+SIF ABL:親密 < 5
 	RETURN 0
 ;対象か助手が動物耳で、従順が9以下だとダメ
-SIF TALENT:124 && ABL:0 < 10
+SIF TALENT:124 && ABL:親密 < 10
 	RETURN 0
 IF ASSI >= 0
-	SIF TALENT:ASSI:124 && ABL:0 < 10
+	SIF TALENT:ASSI:124 && ABL:親密 < 10
 		RETURN 0
 ENDIF
 ;野外プレイ中はダメ
@@ -2185,7 +2185,7 @@ SIF ITEM:19 == 0 && NOITEM == 0
 SIF ASSIPLAY
 	RETURN 0
 ;従順が10以上ないとダメ
-SIF ABL:0 < 10
+SIF ABL:親密 < 10
 	RETURN 0
 ;野外プレイ中はダメ
 SIF TEQUIP:54
@@ -2308,7 +2308,7 @@ SIF TALENT:PLAYER:121 || TALENT:PLAYER:122
 ;欲望3以下の場合貝あわせはできない（小悪魔、相性良好ならＯＫ）
 R = NO:PLAYER
 IF ASSIPLAY
-	SIF ABL:ASSI:1 <= 3 && TALENT:ASSI:87 == 0 && RELATION:R < 150
+	SIF ABL:ASSI:欲望 <= 3 && TALENT:ASSI:87 == 0 && RELATION:R < 150
 		RETURN 0
 ENDIF
 ;小人体型持ちは、双方が調教者と調教対象ならOK
@@ -2397,7 +2397,7 @@ SIF A + ITEM:PBAND < 2
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合二本刺しはできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;主人、対象、助手のいずれかに小人体型持ちがいる場合、主人が禁断の知識を持っていないとダメ
@@ -2405,7 +2405,7 @@ SIF (TALENT:MASTER:149 || TALENT:TARGET:149 || TALENT:ASSI:149) && TALENT:MASTER
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合二本刺しはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;一定のＡ経験が必要
@@ -2527,7 +2527,7 @@ SIF TALENT:MASTER:119 == 0 && TALENT:MASTER:121 == 0 && TALENT:MASTER:122 == 0
 SIF TALENT:MASTER:91 == 0 && TALENT:MASTER:92 == 0
 	RETURN 0
 ;助手が奉仕精神ＬＶ３以上、技巧ＬＶ３以上じゃないとダメ
-SIF ABL:ASSI:2 < 3 || ABL:ASSI:6 < 3
+SIF ABL:ASSI:技巧 < 3 || ABL:ASSI:奉仕精神 < 3
 	RETURN 0
 ;対象か助手が猫舌だとできない
 SIF  TALENT:54 || TALENT:ASSI:54
@@ -2555,7 +2555,7 @@ SIF TFLAG:44 == 0
 ;欲望3以下・レズっ気3以下のASSIの場合シックスナインはできない（小悪魔、相性良好ならＯＫ）
 R = NO:PLAYER
 IF ASSIPLAY
-	SIF (ABL:ASSI:1 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:87 == 0 && RELATION:R < 150
+	SIF (ABL:ASSI:欲望 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:87 == 0 && RELATION:R < 150
 		RETURN 0
 ENDIF
 ;小人体型持ちは、双方が調教者と調教対象ならOK
@@ -2622,10 +2622,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;従順が6未満だとダメ
-SIF ABL:0 < 6
+SIF ABL:親密 < 6
 	RETURN 0
 ;処女の場合、従順10以上または露出癖3以上または淫乱がないとダメ
-SIF TALENT:0 && ABL:0 < 10 && ABL:7 < 3 && TALENT:76 == 0
+SIF TALENT:0 && ABL:親密 < 10 && ABL:露出癖 < 3 && TALENT:76 == 0
 	RETURN 0
 ;縄使用中は不可
 SIF TEQUIP:44
@@ -2678,7 +2678,7 @@ SIF TEQUIP:44
 	RETURN 0
 ;技巧3以下のASSIの場合、うまくサラシを巻けない
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 3
+	SIF ABL:ASSI:技巧 <= 3
 		RETURN 0
 ENDIF
 ;アイテムを持っているか、アイテムなし設定でないとダメ
@@ -2708,7 +2708,7 @@ SIF ITEM:44 == 0 && NOITEM == 0
 SIF TALENT:122
 	RETURN 0
 ;従順が10以上ないとダメ
-SIF ABL:0 < 10
+SIF ABL:親密 < 10
 	RETURN 0
 ;ニプルキャップ装着中はダメ
 SIF TEQUIP:15
@@ -2760,8 +2760,8 @@ SIF TFLAG:44 == 0
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;歌唱素質が3以上ない場合は歌唱技能が2以上ないとダメ
-IF ABL:52 < 3
-	SIF ABL:92 < 2
+IF ABL:歌唱素質 < 3
+	SIF ABL:歌唱技能 < 2
 		RETURN 0
 ENDIF
 ;露出癖が2以下だとダメ。ただし持っている素質によって値が変動
@@ -2789,10 +2789,10 @@ SIF A < 0
 	A = 0
 SIF A > 5
 	A = 5
-SIF ABL:7 < A
+SIF ABL:露出癖 < A
 	RETURN 0
 ;恋慕を持っていないまたは従順が5未満だとダメ
-SIF ABL:7 < 5 && TALENT:85 == 0
+SIF ABL:露出癖 < 5 && TALENT:85 == 0
 	RETURN 0
 ;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
 SIF ITEM:45 == 0 && NOITEM == 0
@@ -2836,13 +2836,13 @@ SIF BASE:1 <= 0
 ;相手を責める場合
 IF CFLAG:15 == 0 || CFLAG:15 == 1
 	;こっちがサド持ちかサドっ気3以上、もしくは相手がマゾっ気3以上が必要
-	SIF TALENT:PLAYER:83 || ABL:PLAYER:15 >= 3 || ABL:8 >= 3
+	SIF TALENT:PLAYER:83 || ABL:PLAYER:サドっ気 >= 3 || ABL:マゾっ気 >= 3
 		RETURN 1
 ENDIF
 ;こっちを責める場合
 IF CFLAG:15 == 0 || CFLAG:15 == 2
 	;相手側がサド持ちかサドっ気3以上、もしくはこっちがマゾっ気3以上が必要
-	SIF TALENT:83 || ABL:15 >= 3 || ABL:PLAYER:8 >= 3
+	SIF TALENT:83 || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
 		RETURN 1
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -2889,7 +2889,7 @@ SIF TEQUIP:45
 SIF TALENT:54
 	RETURN 0
 ;従順、欲望の合計が18以上ないとダメ
-SIF ABL:0 + ABL:1 < 18
+SIF ABL:親密 + ABL:欲望 < 18
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2928,12 +2928,12 @@ SIF TALENT:122
 	RETURN 0
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
 	RETURN 0
 	ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
 IF TALENT:100
-	SIF ABL:0 <= 11 || ABL:8 <= 3
+	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
@@ -2981,12 +2981,12 @@ SIF TEQUIP:46
 	RETURN 0
 ;ASSIの場合、従順3以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
 	RETURN 0
 	ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
 IF TALENT:100
-	SIF ABL:0 <= 11 || ABL:8 <= 3
+	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
@@ -3080,12 +3080,12 @@ IF EXP:0 < 300 || EXP:1 < 300
 	ENDIF
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
-	SIF ABL:ASSI:0 < 4 && TALENT:ASSI:83 == 0
+	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上かつ拡張経験10以上じゃないと実行できない
 IF TALENT:100
-	SIF ABL:0 <= 11 || ABL:8 <= 3 || EXP:53 < 10
+	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3 || EXP:53 < 10
 		RETURN 0
 ENDIF
 ;調教対象が小人体型の場合は主人が禁断の知識持ちじゃないとダメ
@@ -3121,11 +3121,11 @@ SIF TALENT:122
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;主人の技巧が3以下はだめ
-SIF ABL:PLAYER:2 < 3
+SIF ABL:PLAYER:技巧 < 3
 	RETURN 0
 ;乗馬中はダメ
 SIF TEQUIP:41
@@ -3149,7 +3149,7 @@ SIF TEQUIP:22 == 0 && TALENT:57 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
-SIF ABL:0 < 10
+SIF ABL:親密 < 10
 	RETURN 0
 ENDIF
 RETURN 1
@@ -3168,11 +3168,11 @@ SIF TEQUIP:22 == 0 && TALENT:57 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
-SIF ABL:0 < 10
+SIF ABL:親密 < 10
 	RETURN 0
 ENDIF
 ;おもらし癖ありで利尿剤が無いまたはおもらし癖なしかつ従順４以上欲望３以上マゾっ気３以上でないとダメ
-SIF (TALENT:57 == 0 && (ABL:0 <= 3 || ABL:1 <= 2 || ABL:8 <= 2)) || (TALENT:57 && TEQUIP:22 == 1)
+SIF (TALENT:57 == 0 && (ABL:親密 <= 3 || ABL:欲望 <= 2 || ABL:マゾっ気 <= 2)) || (TALENT:57 && TEQUIP:22 == 1)
 	RETURN 0
 RETURN 1
 
@@ -3193,7 +3193,7 @@ SIF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY == 0 && TALENT:
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY
-	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
 		RETURN 0
 ENDIF
 ;調教者が猫舌だとできない
@@ -3239,7 +3239,7 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合乱れ牡丹はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;バイブ挿入中はダメ
@@ -3275,7 +3275,7 @@ SIF TEQUIP:69
 SIF ITEM:30 == 0 && NOITEM == 0
 	RETURN 0
 ;従順が10以上ないとダメ
-SIF ABL:0 < 10
+SIF ABL:親密 < 10
 	RETURN 0
 ;お風呂場プレイ中はダメ
 SIF TEQUIP:58
@@ -3595,12 +3595,12 @@ SIF EXP:0 == 0
 	RETURN 0
 ;従順4以下・レズっ気4以下のASSIの場合クスコはできない（サドならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合クスコはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -3628,7 +3628,7 @@ SIF TALENT:122
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3668,7 +3668,7 @@ SIF TALENT:122
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3723,7 +3723,7 @@ SIF TALENT:56
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3762,7 +3762,7 @@ SIF TALENT:56
 	RETURN 0
 ;技巧3以下のASSIの場合注射できない（針さばきならＯＫ）
 IF ASSIPLAY
-	SIF ABL:ASSI:2 <= 3 && TALENT:ASSI:53 == 0
+	SIF ABL:ASSI:技巧 <= 3 && TALENT:ASSI:53 == 0
 		RETURN 0
 ENDIF
 ;触手だと可
@@ -3923,7 +3923,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順3以上or好感度300以上or恋人が必要(遊んでないでさっさと解決しろ！って言われる)
-SIF ABL:0 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
+SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
 	RETURN 0
 RETURN 1
 
@@ -3940,7 +3940,7 @@ SIF TFLAG:44 == 1
 SIF TEQUIP:2
 	RETURN 0
 ;従順4以上or好感度400以上or恋人が必要(何でそんな事しないといけないの！って言われる)
-SIF ABL:0 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
 	RETURN 0
 RETURN 1
 
@@ -3954,7 +3954,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順4以上or好感度400以上or恋人が必要
-SIF ABL:0 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
+SIF ABL:親密 < 4 && CFLAG:2 < 400 && TALENT:153 == 0
 	RETURN 0
 RETURN 1
 
@@ -3968,7 +3968,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;従順5以上or好感度500以上or恋人が必要
-SIF ABL:0 < 5 && CFLAG:2 < 500 && TALENT:153 == 0
+SIF ABL:親密 < 5 && CFLAG:2 < 500 && TALENT:153 == 0
 	RETURN 0
 RETURN 1
 
@@ -3988,7 +3988,7 @@ SIF TALENT:PLAYER:54
 SIF TALENT:54
 	RETURN 0
 ;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
-SIF ABL:1 < 3 || (ABL:0 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
 	RETURN 0
 RETURN 1
 
@@ -4005,7 +4005,7 @@ SIF TFLAG:44 == 1
 SIF TEQUIP:2 && TALENT:76 == 0
 	RETURN 0
 ;欲望3以上かつ、従順6以上or好感度600以上or恋人が必要
-SIF ABL:1 < 3 || (ABL:0 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
+SIF ABL:欲望 < 3 || (ABL:親密 < 6 && CFLAG:2 < 600 && TALENT:153 == 0)
 	RETURN 0
 RETURN 1
 
@@ -4022,7 +4022,7 @@ SIF TFLAG:44 == 1
 SIF TEQUIP:2 && TALENT:76 == 0
 	RETURN 0
 ;欲望5以上かつ、従順7以上or好感度700以上or恋人が必要
-SIF ABL:1 < 5 || (ABL:0 < 7 && CFLAG:2 < 700 && TALENT:153 == 0)
+SIF ABL:欲望 < 5 || (ABL:親密 < 7 && CFLAG:2 < 700 && TALENT:153 == 0)
 	RETURN 0
 RETURN 1
 

@@ -236,7 +236,7 @@ ELSEIF TFLAG:17 == TARGET
 	ENDIF
 
 	;親密Lv5以上(JはLv99まであるので以上に変更)、既成事実Lv3、反発刻印なし
-	IF A == 0 && ABL:0 >= 5 && MARK:2 == 3 && MARK:3 == 0
+	IF A == 0 && ABL:親密 >= 5 && MARK:2 == 3 && MARK:3 == 0
 		SOURCE:13 = 1000
 		UP:10 += 100
 		A = 1
@@ -245,15 +245,15 @@ ELSEIF TFLAG:17 == TARGET
 	IF A == 0
 		SOURCE:15 = 1000
 		B = 400
-		SIF ABL:0 == 0
+		SIF ABL:親密 == 0
 			TIMES B , 6.0
-		SIF ABL:0 == 1
+		SIF ABL:親密 == 1
 			TIMES B , 5.0
-		SIF ABL:0 == 2
+		SIF ABL:親密 == 2
 			TIMES B , 4.0
-		SIF ABL:0 == 3
+		SIF ABL:親密 == 3
 			TIMES B , 3.0
-		SIF ABL:0 == 4
+		SIF ABL:親密 == 4
 			TIMES B , 2.0
 		SOURCE:15 += B
 		C = 500

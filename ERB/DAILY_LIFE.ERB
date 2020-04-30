@@ -164,7 +164,7 @@ ELSE
 	SIF TALENT:ARG:125
 		LOCALS += "0/"
 	;歌唱技能持ちの時、歌の練習
-	SIF ABL:ARG:92 > 0
+	SIF ABL:ARG:歌唱技能 > 0
 		LOCALS += "1/"
 	;狂気の時、ぶつぶつ言う
 	SIF TALENT:ARG:123
@@ -212,7 +212,7 @@ ELSE
 	SIF TIME == 0 && GROUPMATCH(NO:ARG, 4, 5, 15, 45, 46, 47, 56, 99)
 		LOCALS += "16/"
 	;恥じらいの時、とったビデオを見る
-	SIF TALENT:ARG:35 && ABL:ARG:1 >= 5
+	SIF TALENT:ARG:35 && ABL:ARG:欲望 >= 5
 		LOCALS += "17/"
 	;恥薄いの時…裸でうろつく
 	SIF TALENT:ARG:36
@@ -233,7 +233,7 @@ ELSE
 	SIF TALENT:ARG:26
 		LOCALS += "23/"
 	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
-	SIF ABL:ARG:0 >= 7 && MARK:ARG:3 != 3
+	SIF ABL:ARG:親密 >= 7 && MARK:ARG:3 != 3
 		LOCALS += "24/"
 	;季節ネタ
 	SIF DAY:2 == 3 && GROUPMATCH(TIME:5, 5, 6)
@@ -312,7 +312,7 @@ ELSE
 		IF RAND:2 == 0
 			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%が儀式のようなものをしているのが見えた……
 			PRINTFORMW 魔法陣に向かって巻物を読みながら何か唱えている
-;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
 ;				PRINTFORMW と思ったら爆発した……
 ;				PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
 ;				PRINTFORMW 仕方がないので手当てして別の部屋に寝かせることにした……
@@ -324,7 +324,7 @@ ELSE
 		ELSE
 			PRINTFORMW %CALLNAME:ARG%の部屋の前を通りすがると、中で%CALLNAME:ARG%がタロット占いをしているのが見えた……
 			PRINTFORMW 何事か呟きながら真剣な表情でカードをめくっている……
-;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
 ;				PRINTFORMW 引いたカードの意味をうまく解釈出来ないでいるらしい
 ;				PRINTFORMW 難しい表情のまま、目の前のカードを見つめている……
 ;			ELSE
@@ -337,7 +337,7 @@ ELSE
 		IF RAND:2 == 0
 			PRINTFORMW 台所で、%CALLNAME:ARG%が鍋やフラスコなどを組み合わせて実験をしている……
 ;			PRINTFORMW 鍋の中でぐつぐつと煮えたぎる液体の中にコップから青い液体をたらした……
-;			IF TALENT:ARG:51 || ABL:ARG:2 <= RAND:5
+;			IF TALENT:ARG:51 || ABL:ARG:技巧 <= RAND:5
 ;				IF RAND:2 == 0
 ;					PRINTFORMW と思ったら爆発した
 ;					PRINTFORMW もうもうと立ち上る煙の中から真っ黒の%CALLNAME:ARG%が現れて、%CALLNAME:MASTER%の前でぱったり倒れました
@@ -365,7 +365,7 @@ ELSE
 ;			ENDIF
 		ELSE
 			PRINTFORM 何気なく%CALLNAME:ARG%の部屋を覗くと
-			IF TALENT:ARG:125 || ABL:ARG:2 >= RAND:5
+			IF TALENT:ARG:125 || ABL:ARG:技巧 >= RAND:5
 				IF RAND:2 == 0
 					PRINTFORMW 幾つもの箱が並んでいるのが見える
 					PRINTFORMW イモリだかヤモリだか、その様なものを飼っているらしい……
@@ -720,7 +720,7 @@ ELSE
 			SIF TALENT:ARG:85
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%にウインクしてみせた
 		ENDIF
-;		IF ABL:ARG:2 * 10 > RAND:100
+;		IF ABL:ARG:技巧 * 10 > RAND:100
 ;			PRINTFORM 全身を使った見事な踊りとバランス感覚に
 ;			;キャラの数と感情乏しいを組み合わせた分岐・ちょっと多くなるなあ…
 ;			IF F >= 5
@@ -792,7 +792,7 @@ ELSE
 	CASE 15
 		PRINTFORMW 街で買い込んできた生活物資を倉庫に運ぼうとした丁度そのとき、良いタイミングで%CALLNAME:ARG%が通りかかった
 		IF TALENT:ARG:13
-			IF TALENT:ARG:63 || ABL:ARG:0 >= 7
+			IF TALENT:ARG:63 || ABL:ARG:親密 >= 7
 				PRINTFORMW %CALLNAME:ARG%は山と積まれた荷物を見るとすぐに、自発的に手伝いを申し出てくれた……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
 			ELSE
@@ -803,7 +803,7 @@ ELSE
 			IF TALENT:ARG:85
 				PRINTFORMW %CALLNAME:ARG%はそのまま素通りする勢いだったが、%CALLNAME:MASTER%と目が合うと、少し頬を染めながら手伝いを申し出てくれた……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で あっという間に作業が終わりました……
-			ELSEIF ABL:ARG:0 >= 7
+			ELSEIF ABL:ARG:親密 >= 7
 				PRINTFORMW 素通りする勢いの%CALLNAME:ARG%を慌てて呼び止めて、お手伝いをお願いしました……
 ;				PRINTFORMW %CALLNAME:ARG%がテキパキ働いてくれたお陰で 日が暮れるまでに作業が終わりました……
 			ELSE
@@ -819,7 +819,7 @@ ELSE
 ;		CALL DAILY_LIFE_D
 ;		IF B > 0 && RAND:3 == 0
 ;			PRINTFORMW と、そこに%CALLNAME:B%もやってきてじゃれ付き始めた
-;			IF ABL:ARG:2 >= ABL:B:2
+;			IF ABL:ARG:技巧 >= ABL:B:技巧
 ;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:B%の飛び掛かりを巧みに回避してケタケタ笑っている……
 ;			ELSE
 ;				PRINTFORMW %CALLNAME:ARG%はあっという間に%CALLNAME:B%に捕まってしまった…
@@ -911,7 +911,7 @@ ELSE
 ;			PRINTFORMW %CALLNAME:ARG%はしばらく眺めていたが、%CALLNAME:MASTER%の存在に気が付くと足早にその場を立ち去った……
 ;		ELSEIF TALENT:ARG:11
 ;			PRINTFORMW 頂戴オーラを発していたのでプレゼントしようとしたが、%CALLNAME:ARG%は慌てて拒絶する
-;			IF ABL:ARG:0 >= 7
+;			IF ABL:ARG:親密 >= 7
 ;				PRINTFORMW だが%CALLNAME:ARG%の胸元に小物を押し付けるように差し出すと、何とか受け取ってくれた
 ;				PRINTFORMW その態度とは裏腹に、とても喜んでもらえたようだ……
 ;			ELSE
@@ -955,13 +955,13 @@ ELSE
 			PRINTFORMW \@ TIME == 0 ? 人気のない # 漆黒の闇が支配する \@台所に忍び寄る黒い人影……
 			PRINTFORMW その正体は――%CALLNAME:ARG%だ！
 			;理性の勝利
-			IF ABL:ARG:0 >= (ABL:ARG:1 + RAND:5)
+			IF ABL:ARG:親密 >= (ABL:ARG:欲望 + RAND:5)
 				PRINTFORMW 戸棚の中にオヤツを見つけると、すかさず手を伸ばしかけた
 				PRINTFORMW が、急に神妙な顔つきになった後、くるりと反転して部屋に帰っていった……
 ;				PRINTFORMW 欲望より理性に軍配が上がったらしい……
 			ELSE
 				PRINTFORMW 戸棚の中にオヤツを見つけると、少しも躊躇せず口に放り込み
-				IF ABL:ARG:2 >= RAND:10
+				IF ABL:ARG:技巧 >= RAND:10
 					PRINTFORMW 包み紙を器用に丸めて つまみ食いの痕跡を消してから立ち去っていった……
 				ELSE
 					PRINTFORMW そのまま満足げに立ち去っていった……
@@ -1038,12 +1038,12 @@ ELSE
 		ENDIF
 ;		CALL DAILY_LIFE_E
 ;		PRINTFORMW …………
-;		IF B > 0 && (TALENT:ARG:81 || TALENT:ARG:82 || ABL:ARG:12 >= 5) && (ABL:ARG:1 >= 10 || TALENT:ARG:76) && RAND:4 >= 1
+;		IF B > 0 && (TALENT:ARG:81 || TALENT:ARG:82 || ABL:ARG:レズ中毒 >= 5) && (ABL:ARG:欲望 >= 10 || TALENT:ARG:76) && RAND:4 >= 1
 ;			PRINTFORMW どうも遅い……
 ;			PRINTFORMW 気になって台所に様子を見に行った
 ;			PRINTFORMW ……%CALLNAME:ARG%が%CALLNAME:B%を料理しています……
 ;			PRINTFORMW ひとまず%CALLNAME:ARG%にツッコミを入れておきました
-;		ELSEIF ABL:ARG:90 == 0 || RAND:50 == 0
+;		ELSEIF ABL:ARG:料理技能 == 0 || RAND:50 == 0
 ;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
 ;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
 ;			PRINTFORMW ……！
@@ -1058,7 +1058,7 @@ ELSE
 ;			ELSE
 ;				PRINTFORMW %CALLNAME:ARG%は苦笑いしながら頭を掻いて、薬を取りに行った……
 ;			ENDIF
-;		ELSEIF ABL:ARG:90 <= 4 || RAND:30 == 0
+;		ELSEIF ABL:ARG:料理技能 <= 4 || RAND:30 == 0
 ;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
 ;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
 ;			PRINTFORMW ……！
@@ -1087,7 +1087,7 @@ ELSE
 ;					GOTO INPUT_LOOP_1
 ;				ENDIF
 ;			ENDIF
-;		ELSEIF ABL:ARG:90 <= 9 || RAND:20 == 0
+;		ELSEIF ABL:ARG:料理技能 <= 9 || RAND:20 == 0
 ;			PRINTFORMW %CALLNAME:ARG%が出来た料理を運んできてくれた
 ;			PRINTFORMW %CALLNAME:MASTER%は礼を言って食べ始めた……
 ;			IF RAND:2 == 0
@@ -1339,7 +1339,7 @@ ELSE
 	CASE 27
 		PRINTFORMW ランプ片手に薄暗い館内を見回りしていると、ちょうどトイレから出てきた%CALLNAME:ARG%と鉢合わせになった
 		IF TALENT:ARG:10
-;			IF ABL:ARG:0 >= 7
+;			IF ABL:ARG:親密 >= 7
 ;				PRINTFORMW 暗闇に震えてしがみつく%CALLNAME:ARG%を、部屋までエスコートしました……
 ;			ELSE
 ;				PRINTFORM お化けにでも見えたのだろうか、%CALLNAME:ARG%は声にならない悲鳴を上げると自室の方へ
@@ -1353,7 +1353,7 @@ ELSE
 		ELSEIF TALENT:ARG:12
 ;			IF TALENT:ARG:85
 ;				PRINTFORMW そのまま%CALLNAME:ARG%にも巡回に付き合ってもらいました……
-;			ELSEIF ABL:ARG:0 >= 7
+;			ELSEIF ABL:ARG:親密 >= 7
 				PRINTFORMW 暗闇にも全く動じることのない%CALLNAME:ARG%であったが、念のため部屋までエスコートしました……
 ;			ELSE
 ;				PRINTFORMW %CALLNAME:MASTER%を不審者と勘違いした%CALLNAME:ARG%によって乱暴に取り押さえられ、酷い目に遭いました……

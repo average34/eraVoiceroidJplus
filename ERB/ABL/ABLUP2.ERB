@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP2MAIN
 DRAWLINE
-IF ABL:2 >= 9999
+IF ABL:技巧 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -133,7 +133,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:2 += 1
+	ABL:技巧 += 1
 
 IF RESULT == 0
 	JUEL:7 -= A
@@ -151,7 +151,7 @@ ENDIF
 
 PRINTS ABLNAME:2
 PRINT のレベルが
-PRINTV ABL:2
+PRINTV ABL:技巧
 PRINTW になりました。
 
 
@@ -160,7 +160,7 @@ PRINTW になりました。
 ;技巧が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP2
-IF ABL:2 >= 9999
+IF ABL:技巧 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -216,29 +216,29 @@ ENDIF
 ;技巧を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP2
-IF ABL:2 == 0
+IF ABL:技巧 == 0
 	A = 1
 	B = 1
 	C = 1
-ELSEIF ABL:2 == 1
+ELSEIF ABL:技巧 == 1
 	A = 10
 	B = 10
 	C = 10
-ELSEIF ABL:2 <= 3
+ELSEIF ABL:技巧 <= 3
 	A = 25
 	B = 50
 	C = 50
-	A = A * (ABL:2 - 1)
-	B = B * (ABL:2 - 1)
-	C = C * (ABL:2 - 1)
-ELSEIF ABL:2 <= 5
+	A = A * (ABL:技巧 - 1)
+	B = B * (ABL:技巧 - 1)
+	C = C * (ABL:技巧 - 1)
+ELSEIF ABL:技巧 <= 5
 	A = 200
 	B = 500
 	C = 800
-	A = A * (ABL:2 - 3)
-	B = B * (ABL:2 - 3)
-	C = C * (ABL:2 - 3)
-ELSEIF ABL:2 <= 8
+	A = A * (ABL:技巧 - 3)
+	B = B * (ABL:技巧 - 3)
+	C = C * (ABL:技巧 - 3)
+ELSEIF ABL:技巧 <= 8
 	A = 3000
 	B = 0
 	C = 0
@@ -246,8 +246,8 @@ ELSEIF ABL:2 <= 8
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-	A = A * (ABL:2 - 5)
-ELSEIF ABL:2 <= 11
+	A = A * (ABL:技巧 - 5)
+ELSEIF ABL:技巧 <= 11
 	A = 20000
 	B = 0
 	C = 0
@@ -255,13 +255,13 @@ ELSEIF ABL:2 <= 11
 	IF TALENT:27
 		TIMES A , 1.30
 	ENDIF
-	A = A + 7000 * (ABL:2 - 9)
+	A = A + 7000 * (ABL:技巧 - 9)
 ELSE
 	A = 20000
 	B = 0
 	C = 0
 	
-	A = A * (ABL:2 - 9)
+	A = A * (ABL:技巧 - 9)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30

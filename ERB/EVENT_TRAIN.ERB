@@ -42,7 +42,7 @@ ENDIF
 ;売却や助手化が可能になったか
 SIF TARGET < 0
 	RETURN 0
-IF (ABL:0 >= 10 && ABL:1 >= 8) || (ABL:0 >= 5 && ABL:1 >= 5 && ABL:9 >= 3) || CFLAG:2 >= 1000 || TALENT:152 || TALENT:153
+IF (ABL:親密 >= 10 && ABL:欲望 >= 8) || (ABL:親密 >= 5 && ABL:欲望 >= 5 && ABL:レズっ気 >= 3) || CFLAG:2 >= 1000 || TALENT:152 || TALENT:153
 	IF CFLAG:1 <= 1
 		TFLAG:13 = 31
 		CALL SELF_KOJO
@@ -57,7 +57,7 @@ RETURN 0
 ;;[狐]である
 ;IF TALENT:ASSI:93
 ;	;技巧LV5、Ｃ感覚LV5で処女
-;	IF ABL:ASSI:2 >= 5 && ABL:ASSI:3 >= 5 && TALENT:ASSI:0
+;	IF ABL:ASSI:技巧 >= 5 && ABL:ASSI:Ｃ感覚 >= 5 && TALENT:ASSI:0
 ;		DRAWLINE
 ;		PRINTFORML %NAME:ASSI%は[妖狐]となった。
 ;		DRAWLINE
@@ -69,7 +69,7 @@ RETURN 0
 ;;[不思議な根]である
 ;IF TALENT:ASSI:120
 ;	;Ｃ感覚LV5、精液中毒LV3以上
-;	IF ABL:ASSI:3 >= 5 && ABL:ASSI:11 >= 3
+;	IF ABL:ASSI:Ｃ感覚 >= 5 && ABL:ASSI:精液中毒 >= 3
 ;		DRAWLINE
 ;		TFLAG:13 = 48
 ;		CALL SELF_KOJO
@@ -82,7 +82,7 @@ RETURN 0
 ;;[具現]である
 ;ELSEIF TALENT:ASSI:127
 ;	;欲望LV5かレズっ気LV4以上
-;	IF ABL:ASSI:1 >= 5 || ABL:ASSI:9 >= 4
+;	IF ABL:ASSI:欲望 >= 5 || ABL:ASSI:レズっ気 >= 4
 ;		DRAWLINE
 ;		TFLAG:13 = 48
 ;		CALL SELF_KOJO
@@ -96,7 +96,7 @@ RETURN 0
 ;[幼稚]である
 ;IF TALENT:ASSI:132
 	;欲望が5かつ従順が5
-	;IF ABL:ASSI:1 >= 5 && ABL:ASSI:0 >= 5
+	;IF ABL:ASSI:欲望 >= 5 && ABL:ASSI:親密 >= 5
 		;DRAWLINE
 		;TFLAG:13 = 50
 		;CALL SELF_KOJO

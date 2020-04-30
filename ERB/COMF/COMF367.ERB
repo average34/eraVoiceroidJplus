@@ -11,7 +11,7 @@ SIF ITEM:0 == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;欲望6以上かつ、従順9以上or好感度900以上or恋人が必要
-SIF ABL:1 < 5 || (ABL:0 < 9 && CFLAG:2 < 900 && TALENT:153 == 0)
+SIF ABL:欲望 < 5 || (ABL:親密 < 9 && CFLAG:2 < 900 && TALENT:153 == 0)
 	RETURN 0
 
 RETURN 1
@@ -63,18 +63,18 @@ SOURCE:9 = 50
 SOURCE:18 = 50
 
 ;Ｃ感覚
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 = 100
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 = 200
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 = 400
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 = 800
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 = 1200
 ELSE
-	SOURCE:0 = 750 + (ABL:3 * 150)
+	SOURCE:0 = 750 + (ABL:Ｃ感覚 * 150)
 ENDIF
 
 ;Aは露出、恭順追加のSOURCEと恥情、Bは逸脱等の計算に利用
@@ -94,39 +94,39 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.20
 ENDIF
 ;ABL:露出癖をみる
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	SOURCE:7 += 0
 	TIMES A, 1.00
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	SOURCE:7 += 50
 	TIMES A, 1.20
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	SOURCE:7 += 150
 	TIMES A, 1.40
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	SOURCE:7 += 400
 	TIMES A, 1.60
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	SOURCE:7 += 750
 	TIMES A, 2.00
 ELSE
-	SOURCE:7 += 175 + (ABL:7 * 225)
-	SOURCE:10 += 175 + (ABL:7 * 225)
-	A = A * (ABL:7 * 50 + 50) / 100
+	SOURCE:7 += 175 + (ABL:露出癖 * 225)
+	SOURCE:10 += 175 + (ABL:露出癖 * 225)
+	A = A * (ABL:露出癖 * 50 + 50) / 100
 ENDIF
 ;ABL:マゾっ気をみる
-IF ABL:8 == 0
+IF ABL:マゾっ気 == 0
 	TIMES A , 0.80
-ELSEIF ABL:8 == 1
+ELSEIF ABL:マゾっ気 == 1
 	TIMES A , 1.00
-ELSEIF ABL:8 == 2
+ELSEIF ABL:マゾっ気 == 2
 	TIMES A , 1.30
-ELSEIF ABL:8 == 3
+ELSEIF ABL:マゾっ気 == 3
 	TIMES A , 1.60
-ELSEIF ABL:8 == 4
+ELSEIF ABL:マゾっ気 == 4
 	TIMES A , 2.00
 ELSE
-	A = A * (ABL:8 * 50 + 50) / 100
+	A = A * (ABL:マゾっ気 * 50 + 50) / 100
 ENDIF
 
 ;目立ちたがり
@@ -154,34 +154,34 @@ UP:10 += SOURCE:14/2
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -204,7 +204,7 @@ IF TFLAG:17 == 1
 	A += 2
 ELSEIF TFLAG:17 == 2
 	;家事
-	SOURCE:19 = 500 + (ABL:0 * 100) + (ABL:90 * 100)
+	SOURCE:19 = 500 + (ABL:親密 * 100) + (ABL:料理技能 * 100)
 	;家事経験
 	PRINTFORMW %EXPNAME:90%+1
 	EXP:90 += 1
@@ -299,12 +299,12 @@ IF TALENT:82 && TALENT:PLAYER:122
 ENDIF
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 1
+IF ABL:欲望
+	A += ABL:欲望 * 1
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 2
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 2
 ENDIF
 ;PALAM:欲情
 IF PALAM:5 < PALAMLV:1
@@ -410,19 +410,19 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 1,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 1,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 2,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 2,')
 		S = 1
 	ENDIF
 	;PALAM:欲情
@@ -604,18 +604,18 @@ LOSEBASE:1 += 50
 
 
 ;Ｃ感覚
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 += 100
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 += 200
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 += 450
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 += 800
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 += 1200
 ELSE
-	SOURCE:0 += 750 + (ABL:3 * 150)
+	SOURCE:0 += 750 + (ABL:Ｃ感覚 * 150)
 ENDIF
 
 ;固定で露出追加

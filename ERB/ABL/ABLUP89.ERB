@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP89MAIN
 DRAWLINE
-IF ABL:89 >= 9999
+IF ABL:金銭感覚 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -78,7 +78,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:89 += 1
+	ABL:金銭感覚 += 1
 
 IF RESULT == 0
 	JUEL:16 -= A
@@ -92,7 +92,7 @@ ENDIF
 
 PRINTS ABLNAME:89
 PRINT のレベルが
-PRINTV ABL:89
+PRINTV ABL:金銭感覚
 PRINTW になりました。
 
 
@@ -102,7 +102,7 @@ PRINTW になりました。
 ;-------------------------------------------------
 @ISABLUP89
 ;上限越してるならリターン
-IF ABL:89 >= 9999
+IF ABL:金銭感覚 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -145,29 +145,29 @@ ENDIF
 ;金銭感覚を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP89
-IF ABL:89 == 0
+IF ABL:金銭感覚 == 0
 	A = 1
 	B = 0
 	C = 75
-ELSEIF ABL:89 == 1
+ELSEIF ABL:金銭感覚 == 1
 	A = 50
 	B = 0
 	C = 500
-ELSEIF ABL:89 == 2
+ELSEIF ABL:金銭感覚 == 2
 	A = 600
 	C = 3000
-ELSEIF ABL:89 == 3
+ELSEIF ABL:金銭感覚 == 3
 	A = 5000
 	C = 9000
-ELSEIF ABL:89 == 4
+ELSEIF ABL:金銭感覚 == 4
 	A = 20000
 	C = 24000
 ELSE
 	A = 20000
 	C = 24000
 	
-	A = A * (ABL:89 - 3)
-	C = C * (ABL:89 - 3)
+	A = A * (ABL:金銭感覚 - 3)
+	C = C * (ABL:金銭感覚 - 3)
 ENDIF
 
 ;自制心

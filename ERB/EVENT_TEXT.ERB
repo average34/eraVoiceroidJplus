@@ -69,14 +69,14 @@ ELSEIF SELECTCOM == 2
 
 	IF A < 300
 		PRINTFORM %CALLNAME:TARGET%は悲鳴を上げて体をよじる。
-		IF ABL:5 <= 2
+		IF ABL:Ａ感覚 <= 2
 			PRINTL じっくりと開発していけばいいだろう。
 		ELSE
 			PRINTL 身体の準備が足りなかったようだ。
 		ENDIF
 	ELSEIF A > 299 && A < 1000
 		PRINTFORM %CALLNAME:TARGET%はちいさく身体を揺らした。
-		IF ABL:5 <= 2
+		IF ABL:Ａ感覚 <= 2
 			PRINTL もうすこし開発してやる必要がありそうだ。
 		ELSE
 			PRINTL 快楽を得るにはもう少し身体をほぐしてやってからの方が良いようだ。
@@ -116,7 +116,7 @@ ELSEIF SELECTCOM == 3
 	E = A+B+C+D
 
 	PRINTFORM %CALLNAME:TARGET%は
-	SIF TALENT:35 && ABL:7 <= 3
+	SIF TALENT:35 && ABL:露出癖 <= 3
 		PRINT 羞恥に顔を真っ赤に染め、涙を浮かべて
 	SIF TALENT:100
 	PRINT 小さな身体で
@@ -128,9 +128,9 @@ ELSEIF SELECTCOM == 3
 		PRINT 入っているバイブを手で持ち、
 	SIF TEQUIP:13
 		PRINT 突っ込まれているアナルバイブを持って、
-	SIF ABL:7 == 4
+	SIF ABL:露出癖 == 4
 		PRINT 露出の快楽に酔っている表情を見せながら
-	SIF ABL:7 >= 5
+	SIF ABL:露出癖 >= 5
 		PRINT 完全に見られる快感を覚えてしまったのか、淫蕩な表情を浮かべて自ら愛液を溢れさせ続ける秘所を押し開いて見せながら
 	SIF TEQUIP:53
 		PRINT ビデオカメラに向かって

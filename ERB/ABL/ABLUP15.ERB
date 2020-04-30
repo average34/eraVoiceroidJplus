@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP15MAIN
 DRAWLINE
-IF ABL:15 >= 9999
+IF ABL:サドっ気 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -19,7 +19,7 @@ ENDIF
 CALL ISABLUP15
 
 ;欲望がサドっ気＋１レベルでないといけない
-PRINTFORML %ABLNAME:1%{ABL:15+1}LV以上、かつ
+PRINTFORML %ABLNAME:1%{ABL:サドっ気+1}LV以上、かつ
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[解放]なら無視できる）
 IF F
@@ -132,7 +132,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:15 += 1
+	ABL:サドっ気 += 1
 
 IF RESULT == 0
 	JUEL:5 -= A
@@ -148,7 +148,7 @@ ENDIF
 
 PRINTS ABLNAME:15
 PRINT のレベルが
-PRINTV ABL:15
+PRINTV ABL:サドっ気
 PRINTW になりました。
 
 
@@ -157,7 +157,7 @@ PRINTW になりました。
 ;サドっ気が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP15
-IF ABL:15 >= 9999
+IF ABL:サドっ気 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -173,7 +173,7 @@ J = 0
 Z = 0
 
 ;欲望がサドっ気＋１レベルでないといけない
-IF ABL:1 < ABL:15 + 1
+IF ABL:欲望 < ABL:サドっ気 + 1
 	;欲望が不足
 	I |= 4
 	J |= 4
@@ -224,25 +224,25 @@ ENDIF
 ;サドっ気を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP15
-IF ABL:15 == 0
+IF ABL:サドっ気 == 0
 	A = 200
 	B = 100
 	C = 0
 	D = 100
 	E = 200
-ELSEIF ABL:15 == 1
+ELSEIF ABL:サドっ気 == 1
 	A = 800
 	B = 300
 	C = 0
 	D = 600
 	E = 800
-ELSEIF ABL:15 == 2
+ELSEIF ABL:サドっ気 == 2
 	A = 3000
 	B = 1000
 	C = 0
 	D = 1500
 	E = 3000
-ELSEIF ABL:15 == 3
+ELSEIF ABL:サドっ気 == 3
 	A = 20000
 	B = 8000
 	C = 0
@@ -256,7 +256,7 @@ ELSEIF ABL:15 == 3
 		TIMES D , 1.10
 		TIMES E , 1.10
 	ENDIF
-ELSEIF ABL:15 == 4
+ELSEIF ABL:サドっ気 == 4
 	A = 50000
 	B = 20000
 	C = 0
@@ -277,11 +277,11 @@ ELSE
 	D = 30000
 	E = 50000
 	
-	A = A * (ABL:15 - 3)
-	B = B * (ABL:15 - 3)
-	C = C * (ABL:15 - 3)
-	D = D * (ABL:15 - 3)
-	E = E * (ABL:15 - 3)
+	A = A * (ABL:サドっ気 - 3)
+	B = B * (ABL:サドっ気 - 3)
+	C = C * (ABL:サドっ気 - 3)
+	D = D * (ABL:サドっ気 - 3)
+	E = E * (ABL:サドっ気 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -329,43 +329,43 @@ IF TALENT:76
 ENDIF
 
 ;;マゾであればあげ難い
-;IF ABL:8 >= 30
+;IF ABL:マゾっ気 >= 30
 ;	TIMES A , 7.00
 ;	TIMES B , 7.00
 ;	TIMES C , 7.00
 ;	TIMES D , 7.00
 ;	TIMES E , 7.00
-;ELSEIF ABL:8 >= 10
+;ELSEIF ABL:マゾっ気 >= 10
 ;	TIMES A , 6.00
 ;	TIMES B , 6.00
 ;	TIMES C , 6.00
 ;	TIMES D , 6.00
 ;	TIMES E , 6.00
-;ELSEIF ABL:8 >= 5
+;ELSEIF ABL:マゾっ気 >= 5
 ;	TIMES A , 5.00
 ;	TIMES B , 5.00
 ;	TIMES C , 5.00
 ;	TIMES D , 5.00
 ;	TIMES E , 5.00
-;ELSEIF ABL:8 == 4
+;ELSEIF ABL:マゾっ気 == 4
 ;	TIMES A , 4.00
 ;	TIMES B , 4.00
 ;	TIMES C , 4.00
 ;	TIMES D , 4.00
 ;	TIMES E , 4.00
-;ELSEIF ABL:8 == 3
+;ELSEIF ABL:マゾっ気 == 3
 ;	TIMES A , 3.00
 ;	TIMES B , 3.00
 ;	TIMES C , 3.00
 ;	TIMES D , 3.00
 ;	TIMES E , 3.00
-;ELSEIF ABL:8 == 2
+;ELSEIF ABL:マゾっ気 == 2
 ;	TIMES A , 2.00
 ;	TIMES B , 2.00
 ;	TIMES C , 2.00
 ;	TIMES D , 2.00
 ;	TIMES E , 2.00
-;ELSEIF ABL:8 == 1
+;ELSEIF ABL:マゾっ気 == 1
 ;	TIMES A , 1.50
 ;	TIMES B , 1.50
 ;	TIMES C , 1.50
@@ -374,8 +374,8 @@ ENDIF
 ;ENDIF
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[解放][サド]なら無視できる）
-IF ABL:15 >= 3 && TALENT:33 == 0 && TALENT:83 == 0
-	F = ABL:15 * 3
+IF ABL:サドっ気 >= 3 && TALENT:33 == 0 && TALENT:83 == 0
+	F = ABL:サドっ気 * 3
 ELSE
 	F = 0
 ENDIF

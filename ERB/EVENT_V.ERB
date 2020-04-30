@@ -133,16 +133,16 @@ IF RAND:998 < A
 				TFLAG:21 = 3
 				PRINTL 反発感情LV3を取得
 				;感情乏しいの場合は反発感情による従順ダウンはなし
-				IF ABL:T:0 > 0 && ABL:T:0 <= 6 && TALENT:T:22 == 0
-					ABL:T:0 -= 4
-					SIF ABL:T:0 < 0
-						ABL:T:0 = 0
-					PRINTFORML そして親密がLV{ABL:T:0}に下がった
-				ELSEIF ABL:T:0 > 0 && ABL:T:0 <= 9 && TALENT:T:22 == 0
-					ABL:T:0 -= 2
-					SIF ABL:T:0 < 0
-						ABL:T:0 = 0
-					PRINTFORML そして親密がLV{ABL:T:0}に下がった
+				IF ABL:T:親密 > 0 && ABL:T:親密 <= 6 && TALENT:T:22 == 0
+					ABL:T:親密 -= 4
+					SIF ABL:T:親密 < 0
+						ABL:T:親密 = 0
+					PRINTFORML そして親密がLV{ABL:T:親密}に下がった
+				ELSEIF ABL:T:親密 > 0 && ABL:T:親密 <= 9 && TALENT:T:22 == 0
+					ABL:T:親密 -= 2
+					SIF ABL:T:親密 < 0
+						ABL:T:親密 = 0
+					PRINTFORML そして親密がLV{ABL:T:親密}に下がった
 				ENDIF
 			ENDIF
 		ENDIF

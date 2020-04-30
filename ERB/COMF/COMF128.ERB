@@ -15,7 +15,7 @@ SIF TALENT:0
 	RETURN 0
 ;従順3以下・レズっ気3以下のASSIの場合はできない（酒豪ならＯＫ）
 IF ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:217 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:217 == 0
 		RETURN 0
 ENDIF
 ;バイブ装着中はダメ
@@ -50,24 +50,24 @@ SOURCE:13 = 200
 SOURCE:14 = 1000
 
 ;ABL:Ｖ感覚をみる
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	SOURCE:1 = 15
 	SOURCE:13 += 50
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	SOURCE:1 = 50
 	SOURCE:13 += 70
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	SOURCE:1 = 80
 	SOURCE:13 += 90
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	SOURCE:1 = 100
 	SOURCE:13 += 120
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	SOURCE:1 = 200
 	SOURCE:13 += 400
 ELSE
-	SOURCE:1 = 0 + (ABL:4 * 50)
-	SOURCE:13 += 0 + (ABL:4 * 100)
+	SOURCE:1 = 0 + (ABL:Ｖ感覚 * 50)
+	SOURCE:13 += 0 + (ABL:Ｖ感覚 * 100)
 ENDIF
 
 ;EXP:Ｖ経験をみる
@@ -182,34 +182,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -248,7 +248,7 @@ IF TEQUIP:61
 	PRINT クスコで拡げられた膣内に
 ELSEIF STAIN:3 & 4 && TFLAG:2 > 0
 	PRINT 精液で満たされた膣内に
-ELSEIF ABL:4 >= 4
+ELSEIF ABL:Ｖ感覚 >= 4
 	PRINT 指で押し広げた膣内に
 ELSE
 	PRINT ヒクつく膣内に
@@ -258,7 +258,7 @@ PRINTL
 PRINTFORM %CALLNAME:TARGET%は
 IF TFLAG:47 >= 21
 	PRINTFORM 既に泥酔していた事もあり、呂律の回らない口で悦びの声を上げながら
-ELSEIF ABL:4 >= 5
+ELSEIF ABL:Ｖ感覚 >= 5
 	PRINTFORM 膣内を満たすアルコールの感覚に酔い痴れる様に腰を震わせ、蕩けきった表情で
 ELSE
 	PRINTFORM 膣内を焼かれる様な感覚に悲鳴を上げ、腰をしきりに跳ねさせながら

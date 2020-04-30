@@ -33,20 +33,20 @@ SIF SELECTCOM == 193 ||SELECTCOM == 194 || SELECTCOM == 151
 	B = 1
 
 ;ABL:従順
-IF ABL:0
-	A += ABL:0 * 3
+IF ABL:親密
+	A += ABL:親密 * 3
 ENDIF
 
 ;ターゲット主体コマンド
 IF B
 	;ABL:サドっ気
-	IF ABL:15
-		A += ABL:15*2
+	IF ABL:サドっ気
+		A += ABL:サドっ気*2
 	ENDIF
 ELSE
 	;ABL:マゾっ気
-	IF ABL:8
-		A += ABL:8*2
+	IF ABL:マゾっ気
+		A += ABL:マゾっ気*2
 	ENDIF
 ENDIF
 
@@ -61,12 +61,12 @@ IF TALENT:PLAYER:122 == 0 && TALENT:TARGET:122 == 0
 		A += 5
 	ENDIF
 	;ABL:レズっ気
-	IF ABL:9
-		A += ABL:9*3
+	IF ABL:レズっ気
+		A += ABL:レズっ気*3
 	ENDIF
 	;ABL:レズ中毒
-	IF ABL:12
-		A += ABL:12*3
+	IF ABL:レズ中毒
+		A += ABL:レズ中毒*3
 	ENDIF
 	;TALENT:両刀
 	IF TALENT:81
@@ -242,8 +242,8 @@ IF B
 		A += 3
 	ENDIF
 	;マゾっ気
-	IF ABL:PLAYER:8 >= 3
-		A += ABL:PLAYER:8 / 3
+	IF ABL:PLAYER:マゾっ気 >= 3
+		A += ABL:PLAYER:マゾっ気 / 3
 	ENDIF
 ELSE
 	;サド
@@ -251,8 +251,8 @@ ELSE
 		A += 3
 	ENDIF
 	;サドっ気
-	IF ABL:PLAYER:15 >= 3
-		A += ABL:PLAYER:15 / 3
+	IF ABL:PLAYER:サドっ気 >= 3
+		A += ABL:PLAYER:サドっ気 / 3
 	ENDIF
 ENDIF
 ;狂気の目発動中
@@ -290,29 +290,29 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:従順
-	IF ABL:0
+	IF ABL:親密
 		PRINTS ABLNAME:0
-		PRINTV 'LV,ABL:0,'(,ABL:0 * 3,')
+		PRINTV 'LV,ABL:親密,'(,ABL:親密 * 3,')
 		S = 1
 	ENDIF
 
 	;ターゲット主体コマンド
 	IF B
 		;ABL:サドっ気
-		IF ABL:15
+		IF ABL:サドっ気
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:15
-			PRINTV 'LV,ABL:15,'(,ABL:15*2,')
+			PRINTV 'LV,ABL:サドっ気,'(,ABL:サドっ気*2,')
 			S = 1
 		ENDIF
 	ELSE
 		;ABL:マゾっ気
-		IF ABL:8
+		IF ABL:マゾっ気
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:8
-			PRINTV 'LV,ABL:8,'(,ABL:8*2,')
+			PRINTV 'LV,ABL:マゾっ気,'(,ABL:マゾっ気*2,')
 			S = 1
 		ENDIF
 	ENDIF
@@ -335,19 +335,19 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 			S = 1
 		ENDIF
 		;ABL:レズっ気
-		IF ABL:9
+		IF ABL:レズっ気
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:9
-			PRINTV 'LV,ABL:9,'(,ABL:9*3,')
+			PRINTV 'LV,ABL:レズっ気,'(,ABL:レズっ気*3,')
 			S = 1
 		ENDIF
 		;ABL:レズ中毒
-		IF ABL:12
+		IF ABL:レズ中毒
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:12
-			PRINTV 'LV,ABL:12,'(,ABL:12*3,')
+			PRINTV 'LV,ABL:レズ中毒,'(,ABL:レズ中毒*3,')
 			S = 1
 		ENDIF
 		;TALENT:両刀
@@ -636,11 +636,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 			S = 1
 		ENDIF
 		;マゾっ気
-		IF ABL:PLAYER:8 >= 3
+		IF ABL:PLAYER:マゾっ気 >= 3
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:8
-			PRINTV 'LV,ABL:PLAYER:8,'(,ABL:PLAYER:8 / 3,')
+			PRINTV 'LV,ABL:PLAYER:マゾっ気,'(,ABL:PLAYER:マゾっ気 / 3,')
 			S = 1
 		ENDIF
 	ELSE
@@ -653,11 +653,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 			S = 1
 		ENDIF
 		;サドっ気
-		IF ABL:PLAYER:15 >= 3
+		IF ABL:PLAYER:サドっ気 >= 3
 			SIF S
 				PRINT  + 
 			PRINTS ABLNAME:15
-			PRINTV 'LV,ABL:PLAYER:15,'(,ABL:PLAYER:15 / 3,')
+			PRINTV 'LV,ABL:PLAYER:サドっ気,'(,ABL:PLAYER:サドっ気 / 3,')
 			S = 1
 		ENDIF
 	ENDIF

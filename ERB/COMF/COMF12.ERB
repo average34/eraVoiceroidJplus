@@ -15,18 +15,18 @@ SOURCE:12 = 120
 SOURCE:14 = 400
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 = 2000
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 = 2500
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 = 3000
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 = 3300
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 = 3600
 ELSE
-	SOURCE:0 = 3300 + (ABL:3 * 100)
+	SOURCE:0 = 3300 + (ABL:Ｃ感覚 * 100)
 ENDIF
 
 ;実行者が[淫具知識]を持っているなら効果増
@@ -50,34 +50,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 

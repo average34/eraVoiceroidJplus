@@ -55,33 +55,33 @@ ELSE
 ENDIF
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.20
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.50
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 0.80
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 1.40
 ELSE
-	A = A * (ABL:0 * 7 + 115) / 100
+	A = A * (ABL:親密 * 7 + 115) / 100
 ENDIF
 
 ;ABL:サドっ気をみる
-IF ABL:15 == 0
+IF ABL:サドっ気 == 0
 	TIMES A , 0.80
-ELSEIF ABL:15 == 1
+ELSEIF ABL:サドっ気 == 1
 	TIMES A , 1.00
-ELSEIF ABL:15 == 2
+ELSEIF ABL:サドっ気 == 2
 	TIMES A , 1.30
-ELSEIF ABL:15 == 3
+ELSEIF ABL:サドっ気 == 3
 	TIMES A , 1.60
-ELSEIF ABL:15 == 4
+ELSEIF ABL:サドっ気 == 4
 	TIMES A , 2.00
 ELSE
-	A = A * (ABL:15 * 50 + 50) / 100
+	A = A * (ABL:サドっ気 * 50 + 50) / 100
 ENDIF
 
 ;倒錯的
@@ -152,33 +152,33 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.20
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.50
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 0.80
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 1.40
 ELSE
-	A = A * (ABL:0 * 7 + 115) / 100
+	A = A * (ABL:親密 * 7 + 115) / 100
 ENDIF
 
 ;ABL:サドっ気をみる
-IF ABL:15 == 0
+IF ABL:サドっ気 == 0
 	TIMES A , 0.80
-ELSEIF ABL:15 == 1
+ELSEIF ABL:サドっ気 == 1
 	TIMES A , 1.00
-ELSEIF ABL:15 == 2
+ELSEIF ABL:サドっ気 == 2
 	TIMES A , 1.30
-ELSEIF ABL:15 == 3
+ELSEIF ABL:サドっ気 == 3
 	TIMES A , 1.60
-ELSEIF ABL:15 == 4
+ELSEIF ABL:サドっ気 == 4
 	TIMES A , 2.00
 ELSE
-	A = A * (ABL:8 * 50 + 50) / 100
+	A = A * (ABL:マゾっ気 * 50 + 50) / 100
 ENDIF
 
 ;倒錯的

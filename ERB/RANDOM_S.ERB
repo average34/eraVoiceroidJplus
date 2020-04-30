@@ -365,22 +365,22 @@ REPEAT 4
 		;従順
 		P = RAND:2
 		SIF P > 0
-			ABL:0 += RAND:2
+			ABL:親密 += RAND:2
 	ELSEIF O == 1
 		;欲望
 		P = RAND:3
 		SIF P > 0
-			ABL:1 += RAND:2
+			ABL:欲望 += RAND:2
 	ELSEIF O == 2
 		;技巧
 		P = RAND:4
 		SIF P > 0
-			ABL:2 += 1 + RAND:2
+			ABL:技巧 += 1 + RAND:2
 	ELSEIF O == 3
 		;レズっ気
 		P = RAND:16
 		SIF P > 0
-			ABL:9 += RAND:3
+			ABL:レズっ気 += RAND:3
 	ENDIF
 REND
 ;経験
@@ -724,22 +724,22 @@ REPEAT 4
 		;欲望
 		P = RAND:3
 		SIF P > 0
-			ABL:MASTER:1 += RAND:2
+			ABL:MASTER:欲望 += RAND:2
 	ELSEIF O == 1
 		;技巧
 		P = RAND:4
 		SIF P > 0
-			ABL:MASTER:2 += 1 + RAND:2
+			ABL:MASTER:技巧 += 1 + RAND:2
 	ELSEIF O == 2
 		;レズっ気
 		P = RAND:16
 		SIF P > 0
-			ABL:MASTER:9 += RAND:3
+			ABL:MASTER:レズっ気 += RAND:3
 	ELSEIF O == 3
 		;レズ中毒
 		P = RAND:3
-		SIF P == 0 && ABL:MASTER:9
-			ABL:MASTER:12 += RAND:3
+		SIF P == 0 && ABL:MASTER:レズっ気
+			ABL:MASTER:レズ中毒 += RAND:3
 	ENDIF
 REND
 ;経験

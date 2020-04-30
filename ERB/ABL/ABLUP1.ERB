@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP1MAIN
 DRAWLINE
-IF ABL:1 >= 9999
+IF ABL:欲望 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -99,7 +99,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:1 += 1
+	ABL:欲望 += 1
 
 IF RESULT == 0
 	JUEL:5 -= A
@@ -113,7 +113,7 @@ ENDIF
 
 PRINTS ABLNAME:1
 PRINT のレベルが
-PRINTV ABL:1
+PRINTV ABL:欲望
 PRINTW になりました。
 
 CALL YOKUBO_UP_CHECK
@@ -125,7 +125,7 @@ CALL YOKUBO_UP_CHECK
 ;欲望が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP1
-IF ABL:1 >= 9999
+IF ABL:欲望 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -175,42 +175,42 @@ ENDIF
 ;親密を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP1
-IF ABL:1 <= 1
+IF ABL:欲望 <= 1
 	A = 5
 	B = 3
-	A = A * (ABL:1 + 1)
-	B = B * (ABL:1 + 1)
-ELSEIF ABL:1 <= 3
+	A = A * (ABL:欲望 + 1)
+	B = B * (ABL:欲望 + 1)
+ELSEIF ABL:欲望 <= 3
 	A = 50
 	B = 30
-	A = A * (ABL:1 - 1)
-	B = B * (ABL:1 - 1)
-ELSEIF ABL:1 <= 5
+	A = A * (ABL:欲望 - 1)
+	B = B * (ABL:欲望 - 1)
+ELSEIF ABL:欲望 <= 5
 	A = 1000
 	B = 700
-	A = A * (ABL:1 - 3)
-	B = B * (ABL:1 - 3)
-ELSEIF ABL:1 <= 8
+	A = A * (ABL:欲望 - 3)
+	B = B * (ABL:欲望 - 3)
+ELSEIF ABL:欲望 <= 8
 	A = 8000
 	B = 0
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-	A = A * (ABL:1 - 5)
-ELSEIF ABL:1 <= 11
+	A = A * (ABL:欲望 - 5)
+ELSEIF ABL:欲望 <= 11
 	A = 24000
 	B = 0
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
 	ENDIF
-	A = A + 8000 * (ABL:1 - 9)
+	A = A + 8000 * (ABL:欲望 - 9)
 ELSE
 	A = 24000
 	B = 0
 
-	A = A * (ABL:1 - 9)
+	A = A * (ABL:欲望 - 9)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -224,7 +224,7 @@ IF TALENT:76
 ENDIF
 
 ;ＬＶ１２から１３に上げるときは異常経験必要（素質：[快感に素直][淫乱化]なら無視できる）
-IF ABL:1 == 12 && TALENT:70 == 0 && TALENT:76 == 0
+IF ABL:欲望 == 12 && TALENT:70 == 0 && TALENT:76 == 0
 	C = 1
 ELSE
 	C = 0

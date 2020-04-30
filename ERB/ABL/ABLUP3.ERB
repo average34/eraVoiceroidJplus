@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP3MAIN
 DRAWLINE
-IF ABL:3 >= 9999
+IF ABL:Ｃ感覚 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -57,7 +57,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:3 += 1
+	ABL:Ｃ感覚 += 1
 
 IF RESULT == 0
 	JUEL:0 -= A
@@ -67,7 +67,7 @@ ENDIF
 
 PRINTS ABLNAME:3
 PRINT のレベルが
-PRINTV ABL:3
+PRINTV ABL:Ｃ感覚
 PRINTW になりました。
 
 
@@ -76,7 +76,7 @@ PRINTW になりました。
 ;C感覚が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP3
-IF ABL:3 >= 9999
+IF ABL:Ｃ感覚 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -109,19 +109,19 @@ ENDIF
 ;C感覚を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP3
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	A = 1
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	A = 20
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	A = 400
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	A = 5000
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	A = 20000
 	;一線越えない
 	IF TALENT:27
@@ -130,7 +130,7 @@ ELSEIF ABL:3 == 4
 ELSE
 	A = 20000
 	
-	A = A * (ABL:3 - 3)
+	A = A * (ABL:Ｃ感覚 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30

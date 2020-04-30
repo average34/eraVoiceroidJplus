@@ -33,12 +33,12 @@ CALL COUNTER_EJAC_DAMAGE
 VARSET LOCAL, 0
 ;情愛の計算
 ;親密を見る
-IF ABL:0 > 6
-	LOCAL:3 = 600+50*ABL:0
-ELSEIF ABL:0 > 3
-	LOCAL:3 = 150*ABL:0
+IF ABL:親密 > 6
+	LOCAL:3 = 600+50*ABL:親密
+ELSEIF ABL:親密 > 3
+	LOCAL:3 = 150*ABL:親密
 ELSE
-	LOCAL:3 = 100+100*ABL:0
+	LOCAL:3 = 100+100*ABL:親密
 ENDIF
 ;親愛、恋人時ブースト
 IF TALENT:88 && TALENT:153
@@ -48,19 +48,19 @@ ELSEIF TALENT:88 || TALENT:153
 ENDIF
 ;性行動,達成感の計算
 ;奉仕精神を見る
-IF ABL:6 > 6
-	LOCAL:4 = 600+50*ABL:6
-	LOCAL:5 = 200*ABL:6
-ELSEIF ABL:6 > 3
-	LOCAL:4 = 150*ABL:6
-	LOCAL:5 = 150*ABL:6-200
+IF ABL:奉仕精神 > 6
+	LOCAL:4 = 600+50*ABL:奉仕精神
+	LOCAL:5 = 200*ABL:奉仕精神
+ELSEIF ABL:奉仕精神 > 3
+	LOCAL:4 = 150*ABL:奉仕精神
+	LOCAL:5 = 150*ABL:奉仕精神-200
 ELSE
-	LOCAL:4 = 100+100*ABL:6
-	LOCAL:5 = 50+50*ABL:6
+	LOCAL:4 = 100+100*ABL:奉仕精神
+	LOCAL:5 = 50+50*ABL:奉仕精神
 ENDIF
 ;技巧を見る
-LOCAL:4 *= (50+30*ABL:6)/100
-LOCAL:5 *= (50+30*ABL:6)/100
+LOCAL:4 *= (50+30*ABL:奉仕精神)/100
+LOCAL:5 *= (50+30*ABL:奉仕精神)/100
 ;屈従の計算
 LOCAL:13 = 1500
 
@@ -135,7 +135,7 @@ TFLAG:301 = 1
 
 ;TARGETが主導権を握っている+主人公が素質【虜】を持ってない+TARGETのサドっ気がLv5以上
 ;+精液経験(主人公を射精させた回数として使用）が1000以上もしくはパートナーが主人公を耐力なくなるまでが100以上
-IF TFLAG:45 == 1 && TALENT:MASTER:219 == 0 && ABL:15 >= 5 && (EXP:20 >= 1000 || CFLAG:31 >= 100)
+IF TFLAG:45 == 1 && TALENT:MASTER:219 == 0 && ABL:サドっ気 >= 5 && (EXP:20 >= 1000 || CFLAG:31 >= 100)
 	;逆調教イベント口上の呼び出し
 	TFLAG:300 = 8
 	CALL COUNTER_KOJO

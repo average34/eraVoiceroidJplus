@@ -14,48 +14,48 @@ SELECTCASE ARG:0
 CASE 6
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 50
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 200
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 300
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 400
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 500
 		ELSE
-			B = 350 + (ABL:2 * 50)
+			B = 350 + (ABL:技巧 * 50)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -63,18 +63,18 @@ CASE 6
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -83,49 +83,49 @@ CASE 6
 CASE 20
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -142,18 +142,18 @@ CASE 20
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -162,49 +162,49 @@ CASE 20
 CASE 21
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -221,18 +221,18 @@ CASE 21
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -241,18 +241,18 @@ CASE 21
 CASE 22
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 2700
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 2800
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 2900
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 3100
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 3200
 		ELSE
-			B = 2700 + (ABL:2 * 50)
+			B = 2700 + (ABL:技巧 * 50)
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -269,18 +269,18 @@ CASE 22
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -289,63 +289,63 @@ CASE 22
 CASE 23
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 50
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 300
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 800
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 1500
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 2000
 		ELSE
-			B = 200 + (ABL:2 * 300)
+			B = 200 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+			B = B * (ABL:PLAYER:Ｖ感覚 * 25 + 75) / 100
 		ENDIF
 
 		;助手のEXP:Ｖ経験をみる
@@ -364,18 +364,18 @@ CASE 23
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:3 == 0
+		IF ABL:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:3
+			B = B * ABL:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -384,48 +384,48 @@ CASE 23
 CASE 24
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 700 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 800 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 700 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 800 + ABL:技巧 * 100
 		ELSE
-			B = 800 + ABL:2 * 150
+			B = 800 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 1.30
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.60
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.90
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 2.10
 		ELSE
-			B = B * (ABL:0 * 10 + 120) / 100
+			B = B * (ABL:親密 * 10 + 120) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -442,18 +442,18 @@ CASE 24
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -462,48 +462,48 @@ CASE 24
 CASE 25
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 100
 		ELSE
-			B = 500 + ABL:2 * 150
+			B = 500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -520,18 +520,18 @@ CASE 25
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -540,48 +540,48 @@ CASE 25
 CASE 26
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 1500
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1600
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1800
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 2000
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2400
 		ELSE
-			B = 1500 + (ABL:2 * 300)
+			B = 1500 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -598,18 +598,18 @@ CASE 26
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -618,48 +618,48 @@ CASE 26
 CASE 27
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 2700
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 2800
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 2900
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 3100
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 3200
 		ELSE
-			B = 3050 + (ABL:2 * 50)
+			B = 3050 + (ABL:技巧 * 50)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -676,18 +676,18 @@ CASE 27
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -696,48 +696,48 @@ CASE 27
 CASE 28
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 800
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1000
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1200
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1400
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1600
 		ELSE
-			B = 1300 + (ABL:2 * 100)
+			B = 1300 + (ABL:技巧 * 100)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 1.30
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.60
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.90
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 2.10
 		ELSE
-			B = B * (ABL:0 * 15 + 165) / 100
+			B = B * (ABL:親密 * 15 + 165) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:0 * 5 + 125) / 100
+			B = B * (ABL:親密 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -754,18 +754,18 @@ CASE 28
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -774,48 +774,48 @@ CASE 28
 CASE 29
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 900
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1100
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1300
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1500
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1700
 		ELSE
-			B = 1400 + (ABL:2 * 100)
+			B = 1400 + (ABL:技巧 * 100)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:0 * 5 + 125) / 100
+			B = B * (ABL:親密 * 5 + 125) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -832,18 +832,18 @@ CASE 29
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -852,63 +852,63 @@ CASE 29
 CASE 30
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 200 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 300 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 300 + ABL:2 * 150
-		ELSEIF ABL:2 <= 8
-			B = 500 + ABL:2 * 150
-		ELSEIF ABL:2 <= 11
-			B = 200 + ABL:2 * 200
+		IF ABL:技巧 <= 1
+			B = 200 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 300 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 300 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 8
+			B = 500 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 11
+			B = 200 + ABL:技巧 * 200
 		ELSE
-			B = 500 + ABL:2 * 200
+			B = 500 + ABL:技巧 * 200
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;対象が恋慕さとりだと変化
@@ -921,63 +921,63 @@ CASE 30
 CASE 31
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1000 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1000 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 240
 		ELSE
-			B = 1000 + ABL:2 * 250
+			B = 1000 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -985,18 +985,18 @@ CASE 31
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 		
 		;対象が恋慕さとりだと変化
@@ -1009,63 +1009,63 @@ CASE 31
 CASE 32
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 3
-			B = 900 + ABL:2 * 170
-		ELSEIF ABL:2 <= 5
-			B = 900 + ABL:2 * 200
-		ELSEIF ABL:2 <= 8
-			B = 1200 + ABL:2 * 250
-		ELSEIF ABL:2 <= 11
-			B = 1000 + ABL:2 * 300
+		IF ABL:技巧 <= 1
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 3
+			B = 900 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 5
+			B = 900 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 8
+			B = 1200 + ABL:技巧 * 250
+		ELSEIF ABL:技巧 <= 11
+			B = 1000 + ABL:技巧 * 300
 		ELSE
-			B = 1400 + ABL:2 * 350
+			B = 1400 + ABL:技巧 * 350
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:11 * 5 + 105) / 100
+			B = B * (ABL:精液中毒 * 5 + 105) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -1073,18 +1073,18 @@ CASE 32
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 			TIMES B , 5.00
 		ENDIF
 	ENDIF
@@ -1094,18 +1094,18 @@ CASE 32
 CASE 33
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 250 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 170
-		ELSEIF ABL:2 <= 8
-			B = 600 + ABL:2 * 190
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 250
+		IF ABL:技巧 <= 1
+			B = 250 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 8
+			B = 600 + ABL:技巧 * 190
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 250
 		ELSE
-			B = 700 + ABL:2 * 300
+			B = 700 + ABL:技巧 * 300
 		ENDIF
 
 		;PALAM:潤滑
@@ -1124,48 +1124,48 @@ CASE 33
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1174,18 +1174,18 @@ CASE 33
 CASE 34
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 120
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 8
-			B = 700 + ABL:2 * 180
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 220
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 120
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 8
+			B = 700 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 220
 		ELSE
-			B = 500 + ABL:2 * 350
+			B = 500 + ABL:技巧 * 350
 		ENDIF
 
 		;PALAM:潤滑
@@ -1219,63 +1219,63 @@ CASE 34
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.30
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.70
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 7 + 100) / 100
+			B = B * (ABL:奉仕精神 * 7 + 100) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;EXP:Ｖ経験をみる
@@ -1308,78 +1308,78 @@ CASE 34
 CASE 35
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 3
-			B = 900 + ABL:2 * 170
-		ELSEIF ABL:2 <= 5
-			B = 900 + ABL:2 * 200
-		ELSEIF ABL:2 <= 8
-			B = 1200 + ABL:2 * 250
-		ELSEIF ABL:2 <= 11
-			B = 1000 + ABL:2 * 300
+		IF ABL:技巧 <= 1
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 3
+			B = 900 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 5
+			B = 900 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 8
+			B = 1200 + ABL:技巧 * 250
+		ELSEIF ABL:技巧 <= 11
+			B = 1000 + ABL:技巧 * 300
 		ELSE
-			B = 1400 + ABL:2 * 350
+			B = 1400 + ABL:技巧 * 350
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:11 * 5 + 105) / 100
+			B = B * (ABL:精液中毒 * 5 + 105) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1388,18 +1388,18 @@ CASE 35
 CASE 36
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 1000
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1300
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1700
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 2200
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 3000
 		ELSE
-			B = 750 + (ABL:2 * 750)
+			B = 750 + (ABL:技巧 * 750)
 		ENDIF
 
 		;PALAM:潤滑
@@ -1433,63 +1433,63 @@ CASE 36
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.30
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.70
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 15 + 105) / 100
+			B = B * (ABL:奉仕精神 * 15 + 105) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;EXP:Ａ経験をみる
@@ -1514,75 +1514,75 @@ CASE 36
 CASE 37
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 350
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 700
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1300
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1800
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2600
 		ELSE
 			B = 3500
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
 			TIMES B , 1.30
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
 			TIMES B , 2.40
 		ENDIF
 
 		;プレイヤーのABL:マゾっ気をみる
-		IF ABL:PLAYER:8 == 0
+		IF ABL:PLAYER:マゾっ気 == 0
 			TIMES B , 0.90
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 1.10
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 1.30
 		ELSE
 			TIMES B , 1.40
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
 			TIMES B , 5.00
@@ -1594,18 +1594,18 @@ CASE 37
 CASE 38
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 250 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 170
-		ELSEIF ABL:2 <= 8
-			B = 600 + ABL:2 * 190
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 250
+		IF ABL:技巧 <= 1
+			B = 250 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 8
+			B = 600 + ABL:技巧 * 190
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 250
 		ELSE
-			B = 700 + ABL:2 * 300
+			B = 700 + ABL:技巧 * 300
 		ENDIF
 
 		;PALAM:潤滑
@@ -1624,48 +1624,48 @@ CASE 38
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1674,63 +1674,63 @@ CASE 38
 CASE 39
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 500 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 500 + ABL:2 * 150
-		ELSEIF ABL:2 <= 8
-			B = 800 + ABL:2 * 150
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 200
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 500 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 500 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 8
+			B = 800 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 200
 		ELSE
-			B = 800 + ABL:2 * 200
+			B = 800 + ABL:技巧 * 200
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1739,63 +1739,63 @@ CASE 39
 CASE 56
 	IF ARG:1 == MASTER
 		;ABL:技巧をみる
-		IF ABL:ASSI:2 == 0
+		IF ABL:ASSI:技巧 == 0
 			B = 50
-		ELSEIF ABL:ASSI:2 == 1
+		ELSEIF ABL:ASSI:技巧 == 1
 			B = 300
-		ELSEIF ABL:ASSI:2 == 2
+		ELSEIF ABL:ASSI:技巧 == 2
 			B = 800
-		ELSEIF ABL:ASSI:2 == 3
+		ELSEIF ABL:ASSI:技巧 == 3
 			B = 1500
-		ELSEIF ABL:ASSI:2 == 4
+		ELSEIF ABL:ASSI:技巧 == 4
 			B = 2000
 		ELSE
-			B = 200 + (ABL:ASSI:2 * 600)
+			B = 200 + (ABL:ASSI:技巧 * 600)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:ASSI:0 == 0
+		IF ABL:ASSI:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:ASSI:0 == 1
+		ELSEIF ABL:ASSI:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:ASSI:0 == 2
+		ELSEIF ABL:ASSI:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:ASSI:0 == 3
+		ELSEIF ABL:ASSI:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:ASSI:0 == 4
+		ELSEIF ABL:ASSI:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:ASSI:0 * 5 + 105) / 100
+			B = B * (ABL:ASSI:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:ASSI:6 == 0
+		IF ABL:ASSI:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:ASSI:6 == 1
+		ELSEIF ABL:ASSI:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:ASSI:6 == 2
+		ELSEIF ABL:ASSI:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:ASSI:6 == 3
+		ELSEIF ABL:ASSI:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:ASSI:6 == 4
+		ELSEIF ABL:ASSI:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:ASSI:6 * 30 + 90) / 100
+			B = B * (ABL:ASSI:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:ASSI:4 == 0
+		IF ABL:ASSI:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:ASSI:4 == 1
+		ELSEIF ABL:ASSI:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:ASSI:4 == 2
+		ELSEIF ABL:ASSI:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:ASSI:4 == 3
+		ELSEIF ABL:ASSI:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:ASSI:4 == 4
+		ELSEIF ABL:ASSI:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:ASSI:4 * 25 + 75) / 100
+			B = B * (ABL:ASSI:Ｖ感覚 * 25 + 75) / 100
 		ENDIF
 
 		;助手のEXP:Ｖ経験をみる
@@ -1814,18 +1814,18 @@ CASE 56
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:MASTER:3 == 0
+		IF ABL:MASTER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:MASTER:3 == 1
+		ELSEIF ABL:MASTER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:MASTER:3 == 2
+		ELSEIF ABL:MASTER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:MASTER:3 == 3
+		ELSEIF ABL:MASTER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:MASTER:3 == 4
+		ELSEIF ABL:MASTER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:MASTER:3
+			B = B * ABL:MASTER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1834,48 +1834,48 @@ CASE 56
 CASE 60
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 50
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 200
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 300
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 400
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 500
 		ELSE
-			B = 350 + (ABL:2 * 50)
+			B = 350 + (ABL:技巧 * 50)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -1883,18 +1883,18 @@ CASE 60
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1903,48 +1903,48 @@ CASE 60
 CASE 61
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 100
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 500
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 900
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1200
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1500
 		ELSE
-			B = 750 + (ABL:2 * 250)
+			B = 750 + (ABL:技巧 * 250)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -1952,18 +1952,18 @@ CASE 61
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -1972,18 +1972,18 @@ CASE 61
 CASE 62
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 250 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 170
-		ELSEIF ABL:2 <= 8
-			B = 600 + ABL:2 * 190
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 250
+		IF ABL:技巧 <= 1
+			B = 250 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 8
+			B = 600 + ABL:技巧 * 190
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 250
 		ELSE
-			B = 700 + ABL:2 * 300
+			B = 700 + ABL:技巧 * 300
 		ENDIF
 
 		;PALAM:潤滑
@@ -2002,48 +2002,48 @@ CASE 62
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2052,18 +2052,18 @@ CASE 62
 CASE 64
 	IF ARG:1 == MASTER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 2700
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 2800
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 2900
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 3100
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 3200
 		ELSE
-			B = 2700 + (ABL:2 * 50)
+			B = 2700 + (ABL:技巧 * 50)
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -2080,48 +2080,48 @@ CASE 64
 		ENDIF
 	ELSEIF ARG:1 == ASSI
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 1500
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 1600
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 1800
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 2000
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 2400
 		ELSE
-			B = 600 + (ABL:2 * 200)
+			B = 600 + (ABL:技巧 * 200)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -2143,63 +2143,63 @@ CASE 64
 CASE 65
 	IF ARG:1 == TARGET
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 50
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 300
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 800
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 1500
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 2000
 		ELSE
-			B = 200 + (ABL:2 * 300)
+			B = 200 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:ASSI:4 == 0
+		IF ABL:ASSI:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:ASSI:4 == 1
+		ELSEIF ABL:ASSI:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:ASSI:4 == 2
+		ELSEIF ABL:ASSI:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:ASSI:4 == 3
+		ELSEIF ABL:ASSI:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:ASSI:4 == 4
+		ELSEIF ABL:ASSI:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:ASSI:4 * 25 + 75) / 100
+			B = B * (ABL:ASSI:Ｖ感覚 * 25 + 75) / 100
 		ENDIF
 
 		;助手のEXP:Ｖ経験をみる
@@ -2218,18 +2218,18 @@ CASE 65
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:3 == 0
+		IF ABL:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:3
+			B = B * ABL:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2237,63 +2237,63 @@ CASE 65
 ;-------------------------------------------------
 CASE 66
 	;ABL:技巧をみる
-	IF ABL:2 <= 1
-		B = 400 + ABL:2 * 130
-	ELSEIF ABL:2 <= 3
-		B = 600 + ABL:2 * 150
-	ELSEIF ABL:2 <= 5
-		B = 600 + ABL:2 * 180
-	ELSEIF ABL:2 <= 8
-		B = 1000 + ABL:2 * 200
-	ELSEIF ABL:2 <= 11
-		B = 400 + ABL:2 * 240
+	IF ABL:技巧 <= 1
+		B = 400 + ABL:技巧 * 130
+	ELSEIF ABL:技巧 <= 3
+		B = 600 + ABL:技巧 * 150
+	ELSEIF ABL:技巧 <= 5
+		B = 600 + ABL:技巧 * 180
+	ELSEIF ABL:技巧 <= 8
+		B = 1000 + ABL:技巧 * 200
+	ELSEIF ABL:技巧 <= 11
+		B = 400 + ABL:技巧 * 240
 	ELSE
-		B = 1000 + ABL:2 * 250
+		B = 1000 + ABL:技巧 * 250
 	ENDIF
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
+	IF ABL:親密 <= 1
 		TIMES B , 0.80
-	ELSEIF ABL:0 <= 3
+	ELSEIF ABL:親密 <= 3
 		TIMES B , 0.90
-	ELSEIF ABL:0 <= 5
+	ELSEIF ABL:親密 <= 5
 		TIMES B , 1.00
-	ELSEIF ABL:0 <= 8
+	ELSEIF ABL:親密 <= 8
 		TIMES B , 1.10
-	ELSEIF ABL:0 <= 11
+	ELSEIF ABL:親密 <= 11
 		TIMES B , 1.20
 	ELSE
-		B = B * (ABL:0 * 2 + 105) / 100
+		B = B * (ABL:親密 * 2 + 105) / 100
 	ENDIF
 
 	;ABL:奉仕精神をみる
-	IF ABL:6 <= 1
+	IF ABL:奉仕精神 <= 1
 		TIMES B , 0.50
-	ELSEIF ABL:6 <= 3
+	ELSEIF ABL:奉仕精神 <= 3
 		TIMES B , 0.80
-	ELSEIF ABL:6 <= 5
+	ELSEIF ABL:奉仕精神 <= 5
 		TIMES B , 1.20
-	ELSEIF ABL:6 <= 8
+	ELSEIF ABL:奉仕精神 <= 8
 		TIMES B , 1.50
-	ELSEIF ABL:6 <= 11
+	ELSEIF ABL:奉仕精神 <= 11
 		TIMES B , 1.80
 	ELSE
-		B = B * (ABL:6 * 10 + 90) / 100
+		B = B * (ABL:奉仕精神 * 10 + 90) / 100
 	ENDIF
 
 	;ABL:精液中毒をみる
-	IF ABL:11 == 0
+	IF ABL:精液中毒 == 0
 		TIMES B , 1.00
-	ELSEIF ABL:11 == 1
+	ELSEIF ABL:精液中毒 == 1
 		TIMES B , 1.20
-	ELSEIF ABL:11 == 2
+	ELSEIF ABL:精液中毒 == 2
 		TIMES B , 1.30
-	ELSEIF ABL:11 == 3
+	ELSEIF ABL:精液中毒 == 3
 		TIMES B , 1.50
-	ELSEIF ABL:11 == 4
+	ELSEIF ABL:精液中毒 == 4
 		TIMES B , 1.70
 	ELSE
-		B = B * (ABL:11 * 15 + 125) / 100
+		B = B * (ABL:精液中毒 * 15 + 125) / 100
 	ENDIF
 	
 	;TALENT:舌使いをみる
@@ -2302,33 +2302,33 @@ CASE 66
 	
 	IF ARG:1 == MASTER
 		;主人のABL:Ｃ感覚をみる
-		IF ABL:MASTER:3 == 0
+		IF ABL:MASTER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:MASTER:3 == 1
+		ELSEIF ABL:MASTER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:MASTER:3 == 2
+		ELSEIF ABL:MASTER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:MASTER:3 == 3
+		ELSEIF ABL:MASTER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:MASTER:3 == 4
+		ELSEIF ABL:MASTER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:MASTER:3
+			B = B * ABL:MASTER:Ｃ感覚
 		ENDIF
 	ELSEIF ARG:1 == ASSI
 		;助手のABL:Ｃ感覚をみる
-		IF ABL:ASSI:3 == 0
+		IF ABL:ASSI:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:ASSI:3 == 1
+		ELSEIF ABL:ASSI:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:ASSI:3 == 2
+		ELSEIF ABL:ASSI:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:ASSI:3 == 3
+		ELSEIF ABL:ASSI:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:ASSI:3 == 4
+		ELSEIF ABL:ASSI:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:ASSI:3
+			B = B * ABL:ASSI:Ｃ感覚
 		ENDIF
 	ELSE
 		B = 0
@@ -2339,63 +2339,63 @@ CASE 66
 CASE 68
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1000 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1000 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 240
 		ELSE
-			B = 1000 + ABL:2 * 250
+			B = 1000 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -2403,14 +2403,14 @@ CASE 68
 			TIMES B , 2.00
 
 		;助手のABL:技巧をみる
-		IF ABL:ASSI:2 <= 5
+		IF ABL:ASSI:技巧 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:ASSI:2 <= 8
+		ELSEIF ABL:ASSI:技巧 <= 8
 			TIMES B , 1.20
-		ELSEIF ABL:ASSI:2 <= 11
+		ELSEIF ABL:ASSI:技巧 <= 11
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:ASSI:2 * 7 + 100) / 100
+			B = B * (ABL:ASSI:技巧 * 7 + 100) / 100
 		ENDIF
 
 		;助手のTALENT:舌使いをみる
@@ -2418,18 +2418,18 @@ CASE 68
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:MASTER:3 == 0
+		IF ABL:MASTER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:MASTER:3 == 1
+		ELSEIF ABL:MASTER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:MASTER:3 == 2
+		ELSEIF ABL:MASTER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:MASTER:3 == 3
+		ELSEIF ABL:MASTER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:MASTER:3 == 4
+		ELSEIF ABL:MASTER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:MASTER:3
+			B = B * ABL:MASTER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2438,63 +2438,63 @@ CASE 68
 CASE 69
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 500 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 700 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 700 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1100 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 500 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 700 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 700 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1100 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 240
 		ELSE
-			B = 1100 + ABL:2 * 250
+			B = 1100 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -2502,18 +2502,18 @@ CASE 69
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2522,63 +2522,63 @@ CASE 69
 CASE 80
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1000 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1000 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 240
 		ELSE
-			B = 1000 + ABL:2 * 250
+			B = 1000 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -2586,18 +2586,18 @@ CASE 80
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2606,48 +2606,48 @@ CASE 80
 CASE 88
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 700 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 800 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 700 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 800 + ABL:技巧 * 100
 		ELSE
-			B = 800 + ABL:2 * 150
+			B = 800 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -2664,18 +2664,18 @@ CASE 88
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2684,48 +2684,48 @@ CASE 88
 CASE 90
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 50
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 100
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 200
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 400
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 800
 		ELSE
-			B = 400 + (ABL:2 * 240)
+			B = 400 + (ABL:技巧 * 240)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.40
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.60
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.80
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 7 + 115) / 100
+			B = B * (ABL:親密 * 7 + 115) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;TALENT:献身的、サド、小悪魔をみる
@@ -2733,33 +2733,33 @@ CASE 90
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ａ感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:4
+			B = B * ABL:PLAYER:Ｖ感覚
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;プレイヤーのEXP:Ａ経験をみる
@@ -2779,48 +2779,48 @@ CASE 90
 CASE 93
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 100
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 300
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 500
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 800
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1200
 		ELSE
-			B = 600 + (ABL:2 * 200)
+			B = 600 + (ABL:技巧 * 200)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -2828,18 +2828,18 @@ CASE 93
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2848,48 +2848,48 @@ CASE 93
 CASE 120
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -2906,18 +2906,18 @@ CASE 120
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -2926,48 +2926,48 @@ CASE 120
 CASE 121
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -2984,18 +2984,18 @@ CASE 121
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3004,48 +3004,48 @@ CASE 121
 CASE 122
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 700 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 700 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 800 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 700 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 700 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 800 + ABL:技巧 * 100
 		ELSE
-			B = 800 + ABL:2 * 150
+			B = 800 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 1.30
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.60
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.90
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 2.10
 		ELSE
-			B = B * (ABL:0 * 10 + 120) / 100
+			B = B * (ABL:親密 * 10 + 120) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -3062,18 +3062,18 @@ CASE 122
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3082,48 +3082,48 @@ CASE 122
 CASE 123
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 100
 		ELSE
-			B = 500 + ABL:2 * 150
+			B = 500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -3140,18 +3140,18 @@ CASE 123
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3160,48 +3160,48 @@ CASE 123
 CASE 124
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -3218,33 +3218,33 @@ CASE 124
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.30
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.70
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 7 + 100) / 100
+			B = B * (ABL:奉仕精神 * 7 + 100) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3253,61 +3253,61 @@ CASE 124
 CASE 140
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 6
-			B = 300 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 300 + ABL:2 * 150
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 150
-		ELSEIF ABL:2 <= 16
-			B = 200 + ABL:2 * 200
+		IF ABL:技巧 <= 6
+			B = 300 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 300 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 16
+			B = 200 + ABL:技巧 * 200
 		ELSE
-			B = 500 + ABL:2 * 200
+			B = 500 + ABL:技巧 * 200
 		ENDIF
 
 		;ABL:親密をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 6
+		ELSEIF ABL:親密 <= 6
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 9
+		ELSEIF ABL:親密 <= 9
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 14
+		ELSEIF ABL:親密 <= 14
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3316,61 +3316,61 @@ CASE 140
 CASE 146
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 8
-			B = 300 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 300 + ABL:2 * 150
-		ELSEIF ABL:2 <= 16
-			B = 500 + ABL:2 * 150
-		ELSEIF ABL:2 <= 21
-			B = 200 + ABL:2 * 200
+		IF ABL:技巧 <= 8
+			B = 300 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 300 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 16
+			B = 500 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 21
+			B = 200 + ABL:技巧 * 200
 		ELSE
-			B = 500 + ABL:2 * 200
+			B = 500 + ABL:技巧 * 200
 		ENDIF
 
 		;ABL:親密をみる
-		IF ABL:0 <= 7
+		IF ABL:親密 <= 7
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 9
+		ELSEIF ABL:親密 <= 9
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 14
+		ELSEIF ABL:親密 <= 14
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 16
+		ELSEIF ABL:親密 <= 16
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 7
+		IF ABL:奉仕精神 <= 7
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 9
+		ELSEIF ABL:奉仕精神 <= 9
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.10
-		ELSEIF ABL:6 <= 14
+		ELSEIF ABL:奉仕精神 <= 14
 			TIMES B , 1.30
-		ELSEIF ABL:6 <= 16
+		ELSEIF ABL:奉仕精神 <= 16
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 8 + 90) / 100
+			B = B * (ABL:奉仕精神 * 8 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3379,63 +3379,63 @@ CASE 146
 CASE 152
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 1500
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1600
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1800
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 2000
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2400
 		ELSE
-			B = 1500 + (ABL:2 * 300)
+			B = 1500 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3444,60 +3444,60 @@ CASE 152
 CASE 160
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 450
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1000
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1600
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 2200
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2700
 		ELSE
 			B = 3200
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
 			TIMES B , 1.30
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
 			TIMES B , 2.40
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
 			TIMES B , 5.00
@@ -3509,82 +3509,82 @@ CASE 160
 CASE 185
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 25
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 100
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 150
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 200
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 250
 		ELSE
-			B = 200 + (ABL:2 * 50)
+			B = 200 + (ABL:技巧 * 50)
 		ENDIF
 
 		;ABL:親密をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.10
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.25
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 30 + 70) / 100
+			B = B * (ABL:奉仕精神 * 30 + 70) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.75
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 2.00
 		ELSE
-			B = B * (ABL:11 * 30 + 70) / 100
+			B = B * (ABL:精液中毒 * 30 + 70) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる(精液中毒Lv1以上の場合)
-		SIF TALENT:52 && ABL:11 >= 1
+		SIF TALENT:52 && ABL:精液中毒 >= 1
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3593,60 +3593,60 @@ CASE 185
 CASE 193
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 40
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 250
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 600
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1300
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1700
 		ELSE
 			B = 2800
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
 			TIMES B , 1.30
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
 			TIMES B , 2.40
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
 			TIMES B , 2.00
@@ -3668,15 +3668,15 @@ CASE 193
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:3 == 0
+		IF ABL:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
 			TIMES B , 5.00
@@ -3688,60 +3688,60 @@ CASE 193
 CASE 194
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 50
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 300
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 800
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 1500
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2000
 		ELSE
 			B = 3200
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
 			TIMES B , 1.30
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
 			TIMES B , 2.40
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
 			TIMES B , 2.00
@@ -3763,15 +3763,15 @@ CASE 194
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:3 == 0
+		IF ABL:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
 			TIMES B , 5.00
@@ -3783,63 +3783,63 @@ CASE 194
 CASE 195
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 50
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 300
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 800
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 1500
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 2000
 		ELSE
-			B = 200 + (ABL:2 * 300)
+			B = 200 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;助手のABL:V感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+			B = B * (ABL:PLAYER:Ｖ感覚 * 25 + 75) / 100
 		ENDIF
 
 		;助手のEXP:Ｖ経験をみる
@@ -3858,18 +3858,18 @@ CASE 195
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:3 == 0
+		IF ABL:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:3
+			B = B * ABL:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -3878,63 +3878,63 @@ CASE 195
 CASE 204
 	IF ARG:1 == TARGET
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
+		IF ABL:技巧 <= 1
 			B = 50
-		ELSEIF ABL:2 <= 3
+		ELSEIF ABL:技巧 <= 3
 			B = 300
-		ELSEIF ABL:2 <= 5
+		ELSEIF ABL:技巧 <= 5
 			B = 800
-		ELSEIF ABL:2 <= 8
+		ELSEIF ABL:技巧 <= 8
 			B = 1500
-		ELSEIF ABL:2 <= 11
+		ELSEIF ABL:技巧 <= 11
 			B = 2000
 		ELSE
-			B = 200 + (ABL:2 * 300)
+			B = 200 + (ABL:技巧 * 300)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:A感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 1.20
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:PLAYER:4 * 25 + 75) / 100
+			B = B * (ABL:PLAYER:Ｖ感覚 * 25 + 75) / 100
 		ENDIF
 
 		;プレイヤーのEXP:A経験をみる
@@ -3953,93 +3953,93 @@ CASE 204
 		ENDIF
 
 		;ABL:Ｃ感覚をみる
-		IF ABL:TARGET:3 == 0
+		IF ABL:TARGET:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:3 == 1
+		ELSEIF ABL:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:3 == 2
+		ELSEIF ABL:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:3 == 3
+		ELSEIF ABL:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:3 == 4
+		ELSEIF ABL:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:3
+			B = B * ABL:Ｃ感覚
 		ENDIF
 	ELSEIF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 100
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 300
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 500
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 800
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1200
 		ELSE
-			B = 600 + (ABL:2 * 200)
+			B = 600 + (ABL:技巧 * 200)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 == 0
+		IF ABL:奉仕精神 == 0
 			TIMES B , 0.50
-		ELSEIF ABL:6 == 1
+		ELSEIF ABL:奉仕精神 == 1
 			TIMES B , 0.80
-		ELSEIF ABL:6 == 2
+		ELSEIF ABL:奉仕精神 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:6 == 3
+		ELSEIF ABL:奉仕精神 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:6 == 4
+		ELSEIF ABL:奉仕精神 == 4
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 30 + 90) / 100
+			B = B * (ABL:奉仕精神 * 30 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ａ感覚をみる
-		IF ABL:PLAYER:4 == 0
+		IF ABL:PLAYER:Ｖ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:4 == 1
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:4 == 2
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:4 == 3
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:4 == 4
+		ELSEIF ABL:PLAYER:Ｖ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:4
+			B = B * ABL:PLAYER:Ｖ感覚
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4047,34 +4047,34 @@ CASE 204
 ;-------------------------------------------------
 CASE 205
 	IF ARG:1 == PLAYER
-		;調教者のABL:2(技巧)をみる
-		IF ABL:PLAYER:2 <= 1
-			B = 200 + ABL:PLAYER:2 * 200
-		ELSEIF ABL:PLAYER:2 <= 3
-			B = 300 + ABL:PLAYER:2 * 200
-		ELSEIF ABL:PLAYER:2 <= 5
-			B = 300 + ABL:PLAYER:2 * 300
-		ELSEIF ABL:PLAYER:2 <= 8
-			B = 500 + ABL:PLAYER:2 * 300
-		ELSEIF ABL:PLAYER:2 <= 11
-			B = 200 + ABL:PLAYER:2 * 400
+		;調教者のABL:技巧(技巧)をみる
+		IF ABL:PLAYER:技巧 <= 1
+			B = 200 + ABL:PLAYER:技巧 * 200
+		ELSEIF ABL:PLAYER:技巧 <= 3
+			B = 300 + ABL:PLAYER:技巧 * 200
+		ELSEIF ABL:PLAYER:技巧 <= 5
+			B = 300 + ABL:PLAYER:技巧 * 300
+		ELSEIF ABL:PLAYER:技巧 <= 8
+			B = 500 + ABL:PLAYER:技巧 * 300
+		ELSEIF ABL:PLAYER:技巧 <= 11
+			B = 200 + ABL:PLAYER:技巧 * 400
 		ELSE
-			B = 500 + ABL:PLAYER:2 * 400
+			B = 500 + ABL:PLAYER:技巧 * 400
 		ENDIF
 
-		;プレイヤーのABL:3(Ｃ感覚)をみる
-		IF ABL:PLAYER:3 == 0
+		;プレイヤーのABL:Ｃ感覚(Ｃ感覚)をみる
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;Ｃ感覚の上げられない主人かつオトコの場合、倍率ドン(ということにしておく＆それでも10000には届かないんだぜウフフ)
@@ -4095,48 +4095,48 @@ CASE 205
 CASE 255
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 500
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 600
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 700
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 900
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 1200
 		ELSE
-			B = 500 + (ABL:2 * 200)
+			B = 500 + (ABL:技巧 * 200)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲情をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -4153,18 +4153,18 @@ CASE 255
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4173,48 +4173,48 @@ CASE 255
 CASE 256
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 == 0
+		IF ABL:技巧 == 0
 			B = 1500
-		ELSEIF ABL:2 == 1
+		ELSEIF ABL:技巧 == 1
 			B = 1600
-		ELSEIF ABL:2 == 2
+		ELSEIF ABL:技巧 == 2
 			B = 1800
-		ELSEIF ABL:2 == 3
+		ELSEIF ABL:技巧 == 3
 			B = 2000
-		ELSEIF ABL:2 == 4
+		ELSEIF ABL:技巧 == 4
 			B = 2400
 		ELSE
-			B = 1000 + (ABL:2 * 400)
+			B = 1000 + (ABL:技巧 * 400)
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 5 + 105) / 100
+			B = B * (ABL:親密 * 5 + 105) / 100
 		ENDIF
 
 		;ABL:欲情をみる
-		IF ABL:1 == 0
+		IF ABL:欲望 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:1 == 1
+		ELSEIF ABL:欲望 == 1
 			TIMES B , 1.10
-		ELSEIF ABL:1 == 2
+		ELSEIF ABL:欲望 == 2
 			TIMES B , 1.20
-		ELSEIF ABL:1 == 3
+		ELSEIF ABL:欲望 == 3
 			TIMES B , 1.30
-		ELSEIF ABL:1 == 4
+		ELSEIF ABL:欲望 == 4
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 5 + 125) / 100
+			B = B * (ABL:欲望 * 5 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -4231,18 +4231,18 @@ CASE 256
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4251,49 +4251,49 @@ CASE 256
 CASE 363
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -4310,18 +4310,18 @@ CASE 363
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4330,49 +4330,49 @@ CASE 363
 CASE 365
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -4389,18 +4389,18 @@ CASE 365
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4409,18 +4409,18 @@ CASE 365
 CASE 366
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 120
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 8
-			B = 700 + ABL:2 * 180
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 220
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 120
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 8
+			B = 700 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 220
 		ELSE
-			B = 500 + ABL:2 * 350
+			B = 500 + ABL:技巧 * 350
 		ENDIF
 
 
@@ -4455,63 +4455,63 @@ CASE 366
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.30
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.70
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.50
 		ELSE
-			B = B * (ABL:6 * 7 + 100) / 100
+			B = B * (ABL:奉仕精神 * 7 + 100) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;EXP:Ｖ経験をみる
@@ -4544,48 +4544,48 @@ CASE 366
 CASE 368
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 1400 + ABL:2 * 50
-		ELSEIF ABL:2 <= 3
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 8
-			B = 1400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 11
-			B = 1500 + ABL:2 * 100
+		IF ABL:技巧 <= 1
+			B = 1400 + ABL:技巧 * 50
+		ELSEIF ABL:技巧 <= 3
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 8
+			B = 1400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 11
+			B = 1500 + ABL:技巧 * 100
 		ELSE
-			B = 1500 + ABL:2 * 150
+			B = 1500 + ABL:技巧 * 150
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:欲望をみる
-		IF ABL:1 <= 1
+		IF ABL:欲望 <= 1
 			TIMES B , 1.00
-		ELSEIF ABL:1 <= 3
+		ELSEIF ABL:欲望 <= 3
 			TIMES B , 1.10
-		ELSEIF ABL:1 <= 5
+		ELSEIF ABL:欲望 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:1 <= 8
+		ELSEIF ABL:欲望 <= 8
 			TIMES B , 1.30
-		ELSEIF ABL:1 <= 11
+		ELSEIF ABL:欲望 <= 11
 			TIMES B , 1.40
 		ELSE
-			B = B * (ABL:1 * 2 + 125) / 100
+			B = B * (ABL:欲望 * 2 + 125) / 100
 		ENDIF
 
 		;PALAM:潤滑をみる
@@ -4602,18 +4602,18 @@ CASE 368
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4622,78 +4622,78 @@ CASE 368
 CASE 370
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 3
-			B = 900 + ABL:2 * 170
-		ELSEIF ABL:2 <= 5
-			B = 900 + ABL:2 * 200
-		ELSEIF ABL:2 <= 8
-			B = 1200 + ABL:2 * 250
-		ELSEIF ABL:2 <= 11
-			B = 1000 + ABL:2 * 300
+		IF ABL:技巧 <= 1
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 3
+			B = 900 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 5
+			B = 900 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 8
+			B = 1200 + ABL:技巧 * 250
+		ELSEIF ABL:技巧 <= 11
+			B = 1000 + ABL:技巧 * 300
 		ELSE
-			B = 1400 + ABL:2 * 350
+			B = 1400 + ABL:技巧 * 350
 		ENDIF
 
 		;ABL:親密をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 0.80
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 0.90
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.10
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:11 * 5 + 105) / 100
+			B = B * (ABL:精液中毒 * 5 + 105) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 
 		;着衣補正
@@ -4708,63 +4708,63 @@ CASE 370
 CASE 373
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1000 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1000 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 240
 		ELSE
-			B = 1000 + ABL:2 * 250
+			B = 1000 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -4772,18 +4772,18 @@ CASE 373
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:MASTER:3 == 0
+		IF ABL:MASTER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:MASTER:3 == 1
+		ELSEIF ABL:MASTER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:MASTER:3 == 2
+		ELSEIF ABL:MASTER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:MASTER:3 == 3
+		ELSEIF ABL:MASTER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:MASTER:3 == 4
+		ELSEIF ABL:MASTER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:MASTER:3
+			B = B * ABL:MASTER:Ｃ感覚
 		ENDIF
 		
 		;対象が恋慕さとりだと変化
@@ -4806,63 +4806,63 @@ SELECTCASE ARG:0
 CASE 31
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 200 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 300 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 300 + ABL:2 * 150
-		ELSEIF ABL:2 <= 8
-			B = 500 + ABL:2 * 150
-		ELSEIF ABL:2 <= 11
-			B = 200 + ABL:2 * 200
+		IF ABL:技巧 <= 1
+			B = 200 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 300 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 300 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 8
+			B = 500 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 11
+			B = 200 + ABL:技巧 * 200
 		ELSE
-			B = 500 + ABL:2 * 200
+			B = 500 + ABL:技巧 * 200
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4871,63 +4871,63 @@ CASE 31
 CASE 33
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 400 + ABL:2 * 130
-		ELSEIF ABL:2 <= 3
-			B = 600 + ABL:2 * 150
-		ELSEIF ABL:2 <= 5
-			B = 600 + ABL:2 * 180
-		ELSEIF ABL:2 <= 8
-			B = 1000 + ABL:2 * 200
-		ELSEIF ABL:2 <= 11
-			B = 400 + ABL:2 * 240
+		IF ABL:技巧 <= 1
+			B = 400 + ABL:技巧 * 130
+		ELSEIF ABL:技巧 <= 3
+			B = 600 + ABL:技巧 * 150
+		ELSEIF ABL:技巧 <= 5
+			B = 600 + ABL:技巧 * 180
+		ELSEIF ABL:技巧 <= 8
+			B = 1000 + ABL:技巧 * 200
+		ELSEIF ABL:技巧 <= 11
+			B = 400 + ABL:技巧 * 240
 		ELSE
-			B = 1000 + ABL:2 * 250
+			B = 1000 + ABL:技巧 * 250
 		ENDIF
 
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 
 		;ABL:精液中毒をみる
-		IF ABL:11 == 0
+		IF ABL:精液中毒 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:11 == 1
+		ELSEIF ABL:精液中毒 == 1
 			TIMES B , 1.20
-		ELSEIF ABL:11 == 2
+		ELSEIF ABL:精液中毒 == 2
 			TIMES B , 1.30
-		ELSEIF ABL:11 == 3
+		ELSEIF ABL:精液中毒 == 3
 			TIMES B , 1.50
-		ELSEIF ABL:11 == 4
+		ELSEIF ABL:精液中毒 == 4
 			TIMES B , 1.70
 		ELSE
-			B = B * (ABL:11 * 15 + 125) / 100
+			B = B * (ABL:精液中毒 * 15 + 125) / 100
 		ENDIF
 
 		;TALENT:舌使いをみる
@@ -4935,18 +4935,18 @@ CASE 33
 			TIMES B , 2.00
 
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ;-------------------------------------------------
@@ -4955,18 +4955,18 @@ CASE 33
 CASE 40
 	IF ARG:1 == PLAYER
 		;ABL:技巧をみる
-		IF ABL:2 <= 1
-			B = 250 + ABL:2 * 100
-		ELSEIF ABL:2 <= 3
-			B = 400 + ABL:2 * 100
-		ELSEIF ABL:2 <= 5
-			B = 400 + ABL:2 * 170
-		ELSEIF ABL:2 <= 8
-			B = 600 + ABL:2 * 190
-		ELSEIF ABL:2 <= 11
-			B = 500 + ABL:2 * 250
+		IF ABL:技巧 <= 1
+			B = 250 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 3
+			B = 400 + ABL:技巧 * 100
+		ELSEIF ABL:技巧 <= 5
+			B = 400 + ABL:技巧 * 170
+		ELSEIF ABL:技巧 <= 8
+			B = 600 + ABL:技巧 * 190
+		ELSEIF ABL:技巧 <= 11
+			B = 500 + ABL:技巧 * 250
 		ELSE
-			B = 700 + ABL:2 * 300
+			B = 700 + ABL:技巧 * 300
 		ENDIF
 		
 		;PALAM:潤滑
@@ -4985,48 +4985,48 @@ CASE 40
 		ENDIF
 		
 		;ABL:従順をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			TIMES B , 0.80
-		ELSEIF ABL:0 <= 3
+		ELSEIF ABL:親密 <= 3
 			TIMES B , 0.90
-		ELSEIF ABL:0 <= 5
+		ELSEIF ABL:親密 <= 5
 			TIMES B , 1.00
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			TIMES B , 1.10
-		ELSEIF ABL:0 <= 11
+		ELSEIF ABL:親密 <= 11
 			TIMES B , 1.20
 		ELSE
-			B = B * (ABL:0 * 2 + 105) / 100
+			B = B * (ABL:親密 * 2 + 105) / 100
 		ENDIF
 		
 		;ABL:奉仕精神をみる
-		IF ABL:6 <= 1
+		IF ABL:奉仕精神 <= 1
 			TIMES B , 0.50
-		ELSEIF ABL:6 <= 3
+		ELSEIF ABL:奉仕精神 <= 3
 			TIMES B , 0.80
-		ELSEIF ABL:6 <= 5
+		ELSEIF ABL:奉仕精神 <= 5
 			TIMES B , 1.20
-		ELSEIF ABL:6 <= 8
+		ELSEIF ABL:奉仕精神 <= 8
 			TIMES B , 1.50
-		ELSEIF ABL:6 <= 11
+		ELSEIF ABL:奉仕精神 <= 11
 			TIMES B , 1.80
 		ELSE
-			B = B * (ABL:6 * 10 + 90) / 100
+			B = B * (ABL:奉仕精神 * 10 + 90) / 100
 		ENDIF
 		
 		;プレイヤーのABL:Ｃ感覚をみる
-		IF ABL:PLAYER:3 == 0
+		IF ABL:PLAYER:Ｃ感覚 == 0
 			TIMES B , 1.00
-		ELSEIF ABL:PLAYER:3 == 1
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 1
 			TIMES B , 1.50
-		ELSEIF ABL:PLAYER:3 == 2
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 2
 			TIMES B , 2.00
-		ELSEIF ABL:PLAYER:3 == 3
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 3
 			TIMES B , 2.50
-		ELSEIF ABL:PLAYER:3 == 4
+		ELSEIF ABL:PLAYER:Ｃ感覚 == 4
 			TIMES B , 3.50
 		ELSE
-			B = B * ABL:PLAYER:3
+			B = B * ABL:PLAYER:Ｃ感覚
 		ENDIF
 	ENDIF
 ENDSELECT

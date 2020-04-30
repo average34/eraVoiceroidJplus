@@ -100,23 +100,23 @@ SOURCE:14 = 500
 SOURCE:8 = Y*40 + 100
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:4 = 420
 	SOURCE:5 = 150
 	TIMES SOURCE:8 , 4.00
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:4 = 500
 	SOURCE:5 = 300
 	TIMES SOURCE:8 , 2.50
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:4 = 580
 	SOURCE:5 = 600
 	TIMES SOURCE:8 , 1.50
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:4 = 660
 	SOURCE:5 = 900
 	TIMES SOURCE:8 , 1.00
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:4 = 740
 	SOURCE:5 = 1500
 	TIMES SOURCE:8 , 0.50
@@ -130,34 +130,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 800
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 1100
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1400
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1800
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2300
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 350)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 350)
 	ENDIF
 ENDIF
 
@@ -196,16 +196,16 @@ ENDIF
 PRINTFORMW の使用済みコンドームを手渡した……
 
 ;恋慕で精液中毒LV3以上でマスターの精液
-IF TALENT:85 && (CFLAG:108 == 1) && ABL:TARGET:11 >= 3
+IF TALENT:85 && (CFLAG:108 == 1) && ABL:TARGET:精液中毒 >= 3
 	PRINTFORMW %CALLNAME:TARGET%は嬉しそうに精液を口に流し込み、コンドームに残った残滓を必死に舐め取っている…
 ;精液中毒5以上
-ELSEIF ABL:TARGET:11 >= 5
+ELSEIF ABL:TARGET:精液中毒 >= 5
 	PRINTFORMW %CALLNAME:TARGET%はコンドームを裏返し、名残惜しそうに残り汁までもしゃぶっている…
 ;精液中毒3以上
-ELSEIF ABL:TARGET:11 >= 3
+ELSEIF ABL:TARGET:精液中毒 >= 3
 	PRINTFORMW %CALLNAME:TARGET%は恍惚とした顔で、口に含んだゴム臭い精液を味わっている…
 ;精液中毒1以上
-ELSEIF ABL:TARGET:11 >= 1
+ELSEIF ABL:TARGET:精液中毒 >= 1
 	;恋慕でマスターの精液
 	IF TALENT:85 && (CFLAG:108 == 1)
 		PRINTFORMW %CALLNAME:TARGET%は微かに頬を赤らめながら、精液を飲み下した…
@@ -234,16 +234,16 @@ V = 85
 CALL COM_ORDER
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 1
+IF ABL:欲望
+	A += ABL:欲望 * 1
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 ENDIF
 ;ABL:精液中毒
-IF ABL:11
-	A += ABL:11 * 3
+IF ABL:精液中毒
+	A += ABL:精液中毒 * 3
 ENDIF
 
 IF MARK:1
@@ -362,27 +362,27 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 1,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 1,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 	;ABL:精液中毒
-	IF ABL:11
+	IF ABL:精液中毒
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:11
-		PRINTV 'LV,ABL:11,'(,ABL:11 * 3,')
+		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 3,')
 		S = 1
 	ENDIF
 

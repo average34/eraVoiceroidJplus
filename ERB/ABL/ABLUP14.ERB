@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP14MAIN
 DRAWLINE
-IF ABL:14 >= 9999
+IF ABL:Ｂ感覚 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -57,7 +57,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:14 += 1
+	ABL:Ｂ感覚 += 1
 
 IF RESULT == 0
 	JUEL:14 -= A
@@ -67,7 +67,7 @@ ENDIF
 
 PRINTS ABLNAME:14
 PRINT のレベルが
-PRINTV ABL:14
+PRINTV ABL:Ｂ感覚
 PRINTW になりました。
 
 
@@ -76,7 +76,7 @@ PRINTW になりました。
 ;B感覚が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP14
-IF ABL:14 >= 9999
+IF ABL:Ｂ感覚 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -109,19 +109,19 @@ ENDIF
 ;B感覚を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP14
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	A = 1
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	A = 20
-ELSEIF ABL:14 == 2
+ELSEIF ABL:Ｂ感覚 == 2
 	A = 400
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	A = 5000
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.10
 	ENDIF
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	A = 20000
 	;一線越えない
 	IF TALENT:27
@@ -130,7 +130,7 @@ ELSEIF ABL:14 == 4
 ELSE
 	A = 20000
 	
-	A = A * (ABL:14 - 3)
+	A = A * (ABL:Ｂ感覚 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30

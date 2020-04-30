@@ -474,7 +474,7 @@ SKIPDISP 0
 
 ;胸愛撫選択時に快Bソース無い場合(背面座位の快Bソースを参考）
 IF SOURCE:17 == 0 && ARG:1 == 3
-	SOURCE:17 += (ABL:PLAYER:2 * 100) * 2 + (ABL:14 * 30)
+	SOURCE:17 += (ABL:PLAYER:技巧 * 100) * 2 + (ABL:Ｂ感覚 * 30)
 ENDIF
 
 SELECTCASE ARG:1
@@ -514,24 +514,24 @@ SOURCE:18 = 100
 SOURCE:9 = 50
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 20)
-	SOURCE:9 += (ABL:0 * 10)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 200 + (ABL:0 * 40)
-	SOURCE:9 += 100 + (ABL:0 * 15)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 500 + (ABL:0 * 50)
-	SOURCE:9 += 200 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 700 + (ABL:0 * 80)
-	SOURCE:9 += 300 + (ABL:0 * 30)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 1200 + (ABL:0 * 100)
-	SOURCE:9 += 400 + (ABL:0 * 35)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 20)
+	SOURCE:9 += (ABL:親密 * 10)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 200 + (ABL:親密 * 40)
+	SOURCE:9 += 100 + (ABL:親密 * 15)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 500 + (ABL:親密 * 50)
+	SOURCE:9 += 200 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 700 + (ABL:親密 * 80)
+	SOURCE:9 += 300 + (ABL:親密 * 30)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 1200 + (ABL:親密 * 100)
+	SOURCE:9 += 400 + (ABL:親密 * 35)
 ELSE
-	SOURCE:18 += 2000 + (ABL:0 * 130)
-	SOURCE:9 += 800 + (ABL:0 * 40)
+	SOURCE:18 += 2000 + (ABL:親密 * 130)
+	SOURCE:9 += 800 + (ABL:親密 * 40)
 ENDIF
 
 ;好感度をみる
@@ -549,34 +549,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -1375,7 +1375,7 @@ PRINTFORML %CALLNAME:PLAYER%の指を咥えて舐め回している…
 @PASSIVE_MESSAGE_19
 A = RAND:2
 PRINTFORM %CALLNAME:TARGET%は指を数本%CALLNAME:PLAYER%の口元へ差し込
-IF (ABL:15 >= 5 || TALENT:83) && A == 0
+IF (ABL:サドっ気 >= 5 || TALENT:83) && A == 0
 	PRINTFORML み、
 	PRINTFORML 激しく指を突き立て、頬の壁を指の腹で蹂躙した…
 ELSEIF TALENT:85 && TALENT:152

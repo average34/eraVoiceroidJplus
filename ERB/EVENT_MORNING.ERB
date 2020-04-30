@@ -135,7 +135,7 @@ SIF MARK:3 > 0
 	RETURN 0
 ;パイズリで起こされる
 ;欲望8以上奉仕精神8以上精液中毒1以上で発生、奉仕精神と精液中毒で回数判定
-IF ABL:1 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:85
+IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122) && TALENT:TARGET:85
 	IF ABL:奉仕精神 + ABL:精液中毒 < 6
 		A = 1
 	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 12
@@ -377,7 +377,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:85 || TALENT:TARGE
 			CFLAG:99 = LOCAL:100
 			RETURN 1
 		ENDIF
-	ELSEIF TALENT:MASTER:オトコ == 0 && TALENT:オトコ == 0 && ABL:12 > 0 && (CFLAG:97 & 4) == 0
+	ELSEIF TALENT:MASTER:オトコ == 0 && TALENT:オトコ == 0 && ABL:レズ中毒 > 0 && (CFLAG:97 & 4) == 0
 		IF ABL:欲望 + ABL:奉仕精神 < 6
 			A = 1
 		ELSEIF ABL:欲望 + ABL:奉仕精神 < 12
@@ -489,14 +489,14 @@ SIF TALENT:オトコ
 VARSET A, 0
 IF ITEM:19 == 1 && TALENT:89
 	IF (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:0 == 0 && EXP:Ｖ経験> 0 && TALENT:MASTER:154 == 0 && TALENT:TARGET:152 && (CFLAG:97 & 8) == 0
-		IF ABL:奉仕精神 + ABL:7 < 12
+		IF ABL:奉仕精神 + ABL:露出癖 < 12
 			A = 1
-		ELSEIF ABL:奉仕精神 + ABL:7 < 18
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 18
 			A = 2
-		ELSEIF ABL:奉仕精神 + ABL:7 < 24
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 24
 			A = 3
-		ELSEIF ABL:奉仕精神 + ABL:7 >= 24
-			A = 2 + (ABL:奉仕精神 / 6) + (ABL:7 / 6)
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 >= 24
+			A = 2 + (ABL:奉仕精神 / 6) + (ABL:露出癖 / 6)
 		ENDIF
 	
 		;男嫌い
@@ -587,14 +587,14 @@ IF ITEM:19 == 1 && TALENT:89
 			RETURN 1
 		ENDIF
 	ELSEIF TALENT:オトコ == 0 && (CFLAG:97 & 16) == 0
-		IF ABL:奉仕精神 + ABL:7 < 12
+		IF ABL:奉仕精神 + ABL:露出癖 < 12
 			A = 1
-		ELSEIF ABL:奉仕精神 + ABL:7 < 18
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 18
 			A = 2
-		ELSEIF ABL:奉仕精神 + ABL:7 < 24
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 < 24
 			A = 3
-		ELSEIF ABL:奉仕精神 + ABL:7 >= 24
-			A = 2 + (ABL:奉仕精神 / 6) + (ABL:7 / 6)
+		ELSEIF ABL:奉仕精神 + ABL:露出癖 >= 24
+			A = 2 + (ABL:奉仕精神 / 6) + (ABL:露出癖 / 6)
 		ENDIF
 	
 		;男嫌い
@@ -714,13 +714,13 @@ SIF CFLAG:97 & 32
 	RETURN 0
 ;キスで起こされる
 ;親密6奉仕精神6以上で発生、親密と奉仕精神で回数判定
-IF ABL:奉仕精神 >= 6 && ABL:0 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
-	IF ABL:奉仕精神 + ABL:0 < 12
+IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:85 && TALENT:TARGET:151 == 0
+	IF ABL:奉仕精神 + ABL:親密 < 12
 		A = 1
-	ELSEIF ABL:奉仕精神 + ABL:0 < 18
+	ELSEIF ABL:奉仕精神 + ABL:親密 < 18
 		A = 2
-	ELSEIF ABL:奉仕精神 + ABL:0 >= 18
-		A = (ABL:奉仕精神 / 6) + (ABL:0 / 6)
+	ELSEIF ABL:奉仕精神 + ABL:親密 >= 18
+		A = (ABL:奉仕精神 / 6) + (ABL:親密 / 6)
 	ENDIF
 
 	;男嫌い
@@ -811,21 +811,21 @@ SIF TALENT:MASTER:オトコ
 SIF (TALENT:119 || TALENT:121 || TALENT:オトコ) == 0
 	RETURN 0
 
-IF ABL:欲望 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
+IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 	A = RAND:2
 	;セックス
 	IF TALENT:MASTER:0 == 0 && A && TALENT:154 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
 		;朝から凄いなぁ……
-		IF ABL:欲望 + ABL:15 < 5
+		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
-		ELSEIF ABL:欲望 + ABL:15 < 10
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 10
 			B = 2
-		ELSEIF ABL:欲望 + ABL:15 < 15
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 15
 			B = 3
-		ELSEIF ABL:欲望 + ABL:15 < 20
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 20
 			B = 4
-		ELSEIF ABL:欲望 + ABL:15 >= 20
-			B = 3 + (ABL:欲望 / 6) + (ABL:15 / 3)
+		ELSEIF ABL:欲望 + ABL:サドっ気 >= 20
+			B = 3 + (ABL:欲望 / 6) + (ABL:サドっ気 / 3)
 		ENDIF
 		
 		;両刀
@@ -908,16 +908,16 @@ IF ABL:欲望 >= 8 && ABL:15 >= 4 && (TALENT:85 || TALENT:TARGET:76)
 	;パイズリ
 	IF (A == 0 || TALENT:MASTER:0 || CFLAG:97 & 64) && (CFLAG:97 & 128) == 0
 		;朝から凄いなぁ……
-		IF ABL:欲望 + ABL:15 < 5
+		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
-		ELSEIF ABL:欲望 + ABL:15 < 10
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 10
 			B = 2
-		ELSEIF ABL:欲望 + ABL:15 < 15
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 15
 			B = 3
-		ELSEIF ABL:欲望 + ABL:15 < 20
+		ELSEIF ABL:欲望 + ABL:サドっ気 < 20
 			B = 4
-		ELSEIF ABL:欲望 + ABL:15 >= 20
-			B = 3 + (ABL:欲望 / 6) + (ABL:15 / 3)
+		ELSEIF ABL:欲望 + ABL:サドっ気 >= 20
+			B = 3 + (ABL:欲望 / 6) + (ABL:サドっ気 / 3)
 		ENDIF
 		
 		;両刀
@@ -1125,17 +1125,17 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:85 || TALENT:TARGET:76)
 		ENDIF
 	ENDIF
 	;クンニ判定
-	IF ABL:12 >= 1 && TALENT:MASTER:オトコ == 0 && (CFLAG:97 & 512) == 0
-		IF ABL:12 == 1
+	IF ABL:レズ中毒 >= 1 && TALENT:MASTER:オトコ == 0 && (CFLAG:97 & 512) == 0
+		IF ABL:レズ中毒 == 1
 			A = 1
-		ELSEIF ABL:12 == 2
+		ELSEIF ABL:レズ中毒 == 2
 			A = 2
-		ELSEIF ABL:12 == 3
+		ELSEIF ABL:レズ中毒 == 3
 			A = 3
-		ELSEIF ABL:12 == 4
+		ELSEIF ABL:レズ中毒 == 4
 			A = 4
-		ELSEIF ABL:12 >= 5
-			A = 3 + (ABL:12 / 2)
+		ELSEIF ABL:レズ中毒 >= 5
+			A = 3 + (ABL:レズ中毒 / 2)
 		ENDIF
 		
 		;猫舌だとダメ
@@ -1221,17 +1221,17 @@ SIF CFLAG:97 & 1024
 	RETURN 0
 ;起きたら隣で寝てる
 ;[恋慕]かつ親密LV6以上で発生
-IF ABL:0 >= 6 && TALENT:85
-	IF ABL:0 == 1
+IF ABL:親密 >= 6 && TALENT:85
+	IF ABL:親密 == 1
 		A = 2
-	ELSEIF ABL:0 == 2
+	ELSEIF ABL:親密 == 2
 		A = 3
-	ELSEIF ABL:0 == 3
+	ELSEIF ABL:親密 == 3
 		A = 4
-	ELSEIF ABL:0 == 4
+	ELSEIF ABL:親密 == 4
 		A = 5
-	ELSEIF ABL:0 >= 5
-		A = 4 + (ABL:0 / 2)
+	ELSEIF ABL:親密 >= 5
+		A = 4 + (ABL:親密 / 2)
 	ENDIF
 
 	;男嫌い
@@ -1293,17 +1293,17 @@ ENDIF
 @EVENT_NEWDAY_NEGAO
 ;起きたら見られてた
 ;[恋慕]かつ親密LV6以上で発生
-IF ABL:0 >= 6 && TALENT:85 && (CFLAG:97 & 4096) == 0
-	IF ABL:0 == 1
+IF ABL:親密 >= 6 && TALENT:85 && (CFLAG:97 & 4096) == 0
+	IF ABL:親密 == 1
 		B = 2
-	ELSEIF ABL:0 == 2
+	ELSEIF ABL:親密 == 2
 		B = 3
-	ELSEIF ABL:0 == 3
+	ELSEIF ABL:親密 == 3
 		B = 4
-	ELSEIF ABL:0 == 4
+	ELSEIF ABL:親密 == 4
 		B = 5
-	ELSEIF ABL:0 >= 5
-		B = 4 + (ABL:0 / 2)
+	ELSEIF ABL:親密 >= 5
+		B = 4 + (ABL:親密 / 2)
 	ENDIF
 	
 	;男嫌い
@@ -1387,16 +1387,16 @@ SIF CFLAG:97 & 8192
 ;反発感情LV3以上で発生
 IF MARK:3 >= 3
 	B = MARK:3 * MARK:3
-	IF ABL:15 == 1
+	IF ABL:サドっ気 == 1
 		B += 1
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		B += 2
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		B = 3
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		B = 4
-	ELSEIF ABL:15 >= 5
-		B = 3 + (ABL:15 / 2)
+	ELSEIF ABL:サドっ気 >= 5
+		B = 3 + (ABL:サドっ気 / 2)
 	ENDIF
 
 	;反抗的

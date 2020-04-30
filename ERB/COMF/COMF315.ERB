@@ -40,7 +40,7 @@ ENDIF
 
 TFLAG:17 = 0
 ;親密6以上or好感度600以上なら実行判定を行い、強化版とする
-IF ABL:0 >= 6 || CFLAG:2 >= 600
+IF ABL:親密 >= 6 || CFLAG:2 >= 600
 
 	A:1 = 0
 	A:3 = 0
@@ -49,27 +49,27 @@ IF ABL:0 >= 6 || CFLAG:2 >= 600
 	; パートナー能力値による実行値算出
 	;----------------------------------
 	;ABL:親密
-	IF ABL:0 != 0
+	IF ABL:親密 != 0
 		SIF A:3 != 0
 			PRINT  + 
-		A:1 += ABL:0 * 3
-		PRINTFORM %ABLNAME:0%LV{ABL:0}({ABL:0 * 3})
+		A:1 += ABL:親密 * 3
+		PRINTFORM %ABLNAME:0%LV{ABL:親密}({ABL:親密 * 3})
 		A:3 = 1
 	ENDIF
 	;ABL:欲望
-	IF ABL:1 != 0
+	IF ABL:欲望 != 0
 		SIF A:3 != 0
 			PRINT  + 
-		A:1 += ABL:1 * 2
-		PRINTFORM %ABLNAME:1%LV{ABL:1}({ABL:1 * 2})
+		A:1 += ABL:欲望 * 2
+		PRINTFORM %ABLNAME:1%LV{ABL:欲望}({ABL:欲望 * 2})
 		A:3 = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6 != 0
+	IF ABL:奉仕精神 != 0
 		SIF A:3 != 0
 			PRINT  + 
-		A:1 += ABL:6
-		PRINTFORM %ABLNAME:6%LV{ABL:6}({ABL:6})
+		A:1 += ABL:奉仕精神
+		PRINTFORM %ABLNAME:6%LV{ABL:奉仕精神}({ABL:奉仕精神})
 		A:3 = 1
 	ENDIF
 	;反発感情
@@ -295,11 +295,11 @@ IF ABL:0 >= 6 || CFLAG:2 >= 600
 	; 実行者素質による合意値補正
 	;----------------------------------
 	;ABL:技巧
-	IF ABL:PLAYER:2 != 0
+	IF ABL:PLAYER:技巧 != 0
 		SIF A:3 != 0
 			PRINT  + 
-		A:1 += ABL:PLAYER:2
-		PRINTFORM %ABLNAME:2%LV{ABL:PLAYER:2}({ABL:PLAYER:2})
+		A:1 += ABL:PLAYER:技巧
+		PRINTFORM %ABLNAME:2%LV{ABL:PLAYER:技巧}({ABL:PLAYER:技巧})
 		A:3 = 1
 	ENDIF
 	;サド
@@ -529,24 +529,24 @@ LOSEBASE:1 += 60
 SOURCE:18 = 10
 
 ;ABL:親密をみる
-IF ABL:0 <= 1
-	SOURCE:18 += 60 + (ABL:0 * 10)
-ELSEIF ABL:0 <= 2
-	SOURCE:18 += 150 + (ABL:0 * 40)
-ELSEIF ABL:0 <= 4
-	SOURCE:18 += 400 + (ABL:0 * 50)
-ELSEIF ABL:0 <= 6
-	SOURCE:18 += 600 + (ABL:0 * 60)
-	SOURCE:9 += 300 + (ABL:0 * 40)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 750 + (ABL:0 * 70)
-	SOURCE:9 += 450 + (ABL:0 * 40)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 900 + (ABL:0 * 80)
-	SOURCE:9 += 600 + (ABL:0 * 40)
+IF ABL:親密 <= 1
+	SOURCE:18 += 60 + (ABL:親密 * 10)
+ELSEIF ABL:親密 <= 2
+	SOURCE:18 += 150 + (ABL:親密 * 40)
+ELSEIF ABL:親密 <= 4
+	SOURCE:18 += 400 + (ABL:親密 * 50)
+ELSEIF ABL:親密 <= 6
+	SOURCE:18 += 600 + (ABL:親密 * 60)
+	SOURCE:9 += 300 + (ABL:親密 * 40)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 750 + (ABL:親密 * 70)
+	SOURCE:9 += 450 + (ABL:親密 * 40)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 900 + (ABL:親密 * 80)
+	SOURCE:9 += 600 + (ABL:親密 * 40)
 ELSE
-	SOURCE:18 += 1400 + (ABL:0 * 50)
-	SOURCE:9 += 1000 + (ABL:0 * 30)
+	SOURCE:18 += 1400 + (ABL:親密 * 50)
+	SOURCE:9 += 1000 + (ABL:親密 * 30)
 ENDIF
 
 ;好感度をみる
@@ -564,34 +564,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:親密をみる
-	IF ABL:0 <= 1
+	IF ABL:親密 <= 1
 		SOURCE:21 = 100
-	ELSEIF ABL:0 <= 3
+	ELSEIF ABL:親密 <= 3
 		SOURCE:21 = 200
-	ELSEIF ABL:0 <= 5
+	ELSEIF ABL:親密 <= 5
 		SOURCE:21 = 350
-	ELSEIF ABL:0 <= 7
+	ELSEIF ABL:親密 <= 7
 		SOURCE:21 = 500
-	ELSEIF ABL:0 <= 8
+	ELSEIF ABL:親密 <= 8
 		SOURCE:21 = 700
 	ELSE
-		SOURCE:21 = 1000 + (ABL:0 * 100)
+		SOURCE:21 = 1000 + (ABL:親密 * 100)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;欲望ををみる
-	IF ABL:1 == 0
+	IF ABL:欲望 == 0
 		SOURCE:20 = 350
-	ELSEIF ABL:1 <= 2
+	ELSEIF ABL:欲望 <= 2
 		SOURCE:20 = 400
-	ELSEIF ABL:1 <= 4
+	ELSEIF ABL:欲望 <= 4
 		SOURCE:20 = 600
-	ELSEIF ABL:1 <= 6
+	ELSEIF ABL:欲望 <= 6
 		SOURCE:20 = 800
-	ELSEIF ABL:1 <= 8
+	ELSEIF ABL:欲望 <= 8
 		SOURCE:20 = 1000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:1 * 90)
+		SOURCE:20 = 1000 + (ABL:欲望 * 90)
 	ENDIF
 ENDIF
 
@@ -606,12 +606,12 @@ IF TFLAG:17 != 0
 	TIMES SOURCE:21 , 1.50
 	A:1 += 2
 
-	SOURCE:11 += 200 * ABL:1 * TFLAG:17
+	SOURCE:11 += 200 * ABL:欲望 * TFLAG:17
 	
 	;淫乱の場合、くっつくだけで発情する
 	IF TALENT:76 != 0
-		SOURCE:3  = 50 * ABL:6 * TFLAG:17
-		SOURCE:10 = 300 * ABL:PLAYER:2 * TFLAG:17
+		SOURCE:3  = 50 * ABL:奉仕精神 * TFLAG:17
+		SOURCE:10 = 300 * ABL:PLAYER:技巧 * TFLAG:17
 		TIMES SOURCE:11 , 1.20
 	ENDIF
 
@@ -631,9 +631,9 @@ IF TFLAG:17 != 0
 ENDIF
 
 ;親密が低いと好感度低下
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	A:1 -= 2
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	A:1 -= 1
 ENDIF
 ;好感度が低いと好感度低下

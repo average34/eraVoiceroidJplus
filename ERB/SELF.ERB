@@ -8,7 +8,7 @@ SIF TALENT:152 && TFLAG:44 && TALENT:MASTER:154 == 0
 ;[キス魔]などの淫系素質チェック
 CALL AFTER_TALENT_CHECK
 ;恋慕持ちか、極端に欲望が高いと自慰をする可能性アリ
-SIF TALENT:85 || ABL:1 >= 10
+SIF TALENT:85 || ABL:欲望 >= 10
 	CALL AFTER_S_CHECK
 ;レズプレイチェック
 CALL AFTER_L_CHECK
@@ -67,14 +67,14 @@ ELSEIF ABL:A >= 5
 ENDIF
 
 ;欲望と奉仕精神によるボーナス
-IF ABL:1 == 4 && ABL:6 >= 4 && PALAM:5 >= PALAMLV:4
+IF ABL:欲望 == 4 && ABL:奉仕精神 >= 4 && PALAM:5 >= PALAMLV:4
 	S += 1
-ELSEIF ABL:1 >= 5 && ABL:6 >= 4 && PALAM:5 >= PALAMLV:4
-	S += ABL:1 / 2
+ELSEIF ABL:欲望 >= 5 && ABL:奉仕精神 >= 4 && PALAM:5 >= PALAMLV:4
+	S += ABL:欲望 / 2
 ENDIF
 
 ;C/V感覚が充分にあれば、欲望ＬＶ３でもSに+1する
-IF ABL:1 >= 3 && ABL:A >= 3 && PALAM:5 >= PALAMLV:3
+IF ABL:欲望 >= 3 && ABL:A >= 3 && PALAM:5 >= PALAMLV:3
 	S += 1
 ENDIF
 
@@ -190,7 +190,7 @@ IF S > 0
 	ENDIF
 	GOTJUEL:4 += S:1*100
 	GOTJUEL:5 += S:1*250
-	IF ABL:0+ABL:4+ABL:6 >= 13 && TALENT:153 && (CFLAG:99 & 1) == 0
+	IF ABL:親密+ABL:Ｖ感覚+ABL:奉仕精神 >= 13 && TALENT:153 && (CFLAG:99 & 1) == 0
 		PRINTFORM 我に返り、痴態を省みて赤面する%CALLNAME:TARGET%に苦笑いしながらそっとキスをすると、
 		IF TIME == 1
 			PRINTFORML お休みを告げて部屋を出た
@@ -213,29 +213,29 @@ VARSET A, 0
 VARSET B, 0
 VARSET C, 0
 
-IF ABL:10 == 1
+IF ABL:自慰中毒 == 1
 	A = 1
-ELSEIF ABL:10 == 2
+ELSEIF ABL:自慰中毒 == 2
 	A = 2
-ELSEIF ABL:10 == 3
+ELSEIF ABL:自慰中毒 == 3
 	A = 4
-ELSEIF ABL:10 == 4
+ELSEIF ABL:自慰中毒 == 4
 	A = 6
-ELSEIF ABL:10 >= 5
-	A = (ABL:10 * 2) - 1
+ELSEIF ABL:自慰中毒 >= 5
+	A = (ABL:自慰中毒 * 2) - 1
 ENDIF
 
-IF ABL:1 == 4 && ABL:3 >= 4 && PALAM:5 >= PALAMLV:4
+IF ABL:欲望 == 4 && ABL:Ｃ感覚 >= 4 && PALAM:5 >= PALAMLV:4
 	A += 1
-ELSEIF ABL:1 >= 5 && ABL:3 >= 4 && PALAM:5 >= PALAMLV:4
-	A += ABL:1 / 2
+ELSEIF ABL:欲望 >= 5 && ABL:Ｃ感覚 >= 4 && PALAM:5 >= PALAMLV:4
+	A += ABL:欲望 / 2
 ENDIF
 
 ;自慰しやすい
 IF TALENT:60
 	A *= 2
 	;欲望ＬＶ３でもAに+1する
-	SIF ABL:1 >= 3 && ABL:3 >= 3 && PALAM:5 >= PALAMLV:3
+	SIF ABL:欲望 >= 3 && ABL:Ｃ感覚 >= 3 && PALAM:5 >= PALAMLV:3
 		A += 1
 ENDIF
 
@@ -260,30 +260,30 @@ ENDIF
 
 ;自慰、アナニー判定。ポイントが同じ場合は自慰優先(Ｃ感覚が０の場合はアナニーのみ)
 ;Ａ感覚見る
-IF ABL:5 == 1
+IF ABL:Ａ感覚 == 1
 	B += 1
-ELSEIF ABL:5 == 2
+ELSEIF ABL:Ａ感覚 == 2
 	B += 2
-ELSEIF ABL:5 == 3
+ELSEIF ABL:Ａ感覚 == 3
 	B += 3
-ELSEIF ABL:5 == 4
+ELSEIF ABL:Ａ感覚 == 4
 	B += 4
-ELSEIF ABL:5 >= 5
-	B += ABL:5
+ELSEIF ABL:Ａ感覚 >= 5
+	B += ABL:Ａ感覚
 ENDIF
 ;Ｃ感覚見る
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	C = 0
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	C += 1
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	C += 2
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	C += 3
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	C += 4
-ELSEIF ABL:3 >= 5
-	C += ABL:3
+ELSEIF ABL:Ｃ感覚 >= 5
+	C += ABL:Ｃ感覚
 ENDIF
 
 ;調教時にＡ快楽、Ｃ快楽をより稼いだほうに+1
@@ -397,14 +397,14 @@ ELSEIF A > 0 && (B > C)
 	GOTJUEL:4 += A:1*100
 	GOTJUEL:5 += A:1*250
 	
-	IF ABL:0 + ABL:7 * 3 + ABL:8 * 3 >= 30 && TIME == 0 && TALENT:152
+	IF ABL:親密 + ABL:露出癖 * 3 + ABL:マゾっ気 * 3 >= 30 && TIME == 0 && TALENT:152
 		SIF (CFLAG:99 & 1) == 0
 			PRINTFORML そのことを%NAME:TARGET%は報告してきた。
 		PRINTFORML %PALAMNAME:8%の珠＋{A:1*200}
 		GOTJUEL:8 += A:1*200
 	ENDIF
 	
-	IF (ABL:0 >= 10 || ABL:1 >= 10) && TALENT:85 && (CFLAG:99 & 1) == 0
+	IF (ABL:親密 >= 10 || ABL:欲望 >= 10) && TALENT:85 && (CFLAG:99 & 1) == 0
 		PRINTFORML しかし何度自分を慰めてみても、%CALLNAME:MASTER%への欲望は満たされなかった。
 	ENDIF
 	;カットフラグを戻す
@@ -426,11 +426,11 @@ SIF TALENT:122 || TALENT:ASSI:122
 	RETURN 0
 
 ;一定能力必要
-SIF ABL:9 < 2 || ABL:3 < 3 || ABL:0 < 2 || ABL:1 < 5
+SIF ABL:レズっ気 < 2 || ABL:Ｃ感覚 < 3 || ABL:親密 < 2 || ABL:欲望 < 5
 	RETURN 0
 
 ;レズ中毒必要
-SIF ABL:12 == 0 && ABL:ASSI:12 == 0
+SIF ABL:レズ中毒 == 0 && ABL:ASSI:レズ中毒 == 0
 	RETURN 0
 
 ;体力必要
@@ -439,27 +439,27 @@ SIF BASE:0 < 500 || TFLAG:301
 
 VARSET N, 0
 
-IF ABL:12 == 1
+IF ABL:レズ中毒 == 1
 	N += 1
-ELSEIF ABL:12 == 2
+ELSEIF ABL:レズ中毒 == 2
 	N += 2
-ELSEIF ABL:12 == 3
+ELSEIF ABL:レズ中毒 == 3
 	N += 3
-ELSEIF ABL:12 == 4
+ELSEIF ABL:レズ中毒 == 4
 	N += 5
-ELSEIF ABL:12 >= 5
-	N += 2 + ABL:12
+ELSEIF ABL:レズ中毒 >= 5
+	N += 2 + ABL:レズ中毒
 ENDIF
-IF ABL:ASSI:12 == 1
+IF ABL:ASSI:レズ中毒 == 1
 	N += 1
-ELSEIF ABL:ASSI:12 == 2
+ELSEIF ABL:ASSI:レズ中毒 == 2
 	N += 2
-ELSEIF ABL:ASSI:12 == 3
+ELSEIF ABL:ASSI:レズ中毒 == 3
 	N += 5
-ELSEIF ABL:ASSI:12 == 4
+ELSEIF ABL:ASSI:レズ中毒 == 4
 	N += 8
-ELSEIF ABL:ASSI:12 >= 5
-	N += 3 + (ABL:ASSI:12 * 2)
+ELSEIF ABL:ASSI:レズ中毒 >= 5
+	N += 3 + (ABL:ASSI:レズ中毒 * 2)
 ENDIF
 
 R = NO:ASSI
@@ -501,38 +501,38 @@ N = LOCAL
 N:1 = LOCAL:1
 
 PRINTFORML %EXPNAME:40%＋{N*20}
-SIF N*100*ABL:0/500 > 0
-	PRINTFORML %EXPNAME:2%＋{N*100*ABL:0/500}
-PRINTFORML %PALAMNAME:0%の珠＋{N:1*100*ABL:0}
+SIF N*100*ABL:親密/500 > 0
+	PRINTFORML %EXPNAME:2%＋{N*100*ABL:親密/500}
+PRINTFORML %PALAMNAME:0%の珠＋{N:1*100*ABL:親密}
 PRINTFORML %PALAMNAME:5%の珠＋{N:1*200}
 
 EXP:40 += N*20
 EXP:ASSI:40 += N*20
-EXP:2 += N*100*ABL:0/500
+EXP:2 += N*100*ABL:親密/500
 
-GOTJUEL:0 += N:1*100*ABL:0
+GOTJUEL:0 += N:1*100*ABL:親密
 GOTJUEL:5 += N:1*200
 IF TALENT:ASSI:121
 	PRINTFORML %EXPNAME:20%＋{N}
-	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100*(ABL:2+ABL:6)}
-	PRINTFORML %PALAMNAME:7%の珠＋{N:1*100*(ABL:2+ABL:6)}
+	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
+	PRINTFORML %PALAMNAME:7%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
 
 	EXP:20 += N
-	GOTJUEL:6 += N:1*100*(ABL:2+ABL:6)
-	GOTJUEL:7 += N:1*100*(ABL:2+ABL:6)
+	GOTJUEL:6 += N:1*100*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:7 += N:1*100*(ABL:技巧+ABL:奉仕精神)
 ELSE
-	PRINTFORML %PALAMNAME:6%の珠＋{N:1*50*(ABL:2+ABL:6)}
-	PRINTFORML %PALAMNAME:7%の珠＋{N:1*50*(ABL:2+ABL:6)}
+	PRINTFORML %PALAMNAME:6%の珠＋{N:1*50*(ABL:技巧+ABL:奉仕精神)}
+	PRINTFORML %PALAMNAME:7%の珠＋{N:1*50*(ABL:技巧+ABL:奉仕精神)}
 
-	GOTJUEL:6 += N:1*50*(ABL:2+ABL:6)
-	GOTJUEL:7 += N:1*50*(ABL:2+ABL:6)
+	GOTJUEL:6 += N:1*50*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:7 += N:1*50*(ABL:技巧+ABL:奉仕精神)
 ENDIF
 IF TALENT:ASSI:83
 	PRINTFORML %EXPNAME:30%＋{N}
-	SIF N*100*ABL:8 > 0
-		PRINTFORML %PALAMNAME:9%の珠＋{N:1*100*ABL:8}
+	SIF N*100*ABL:マゾっ気 > 0
+		PRINTFORML %PALAMNAME:9%の珠＋{N:1*100*ABL:マゾっ気}
 
-	GOTJUEL:9 += N:1*100*ABL:8
+	GOTJUEL:9 += N:1*100*ABL:マゾっ気
 	EXP:30 += N
 ENDIF
 IF TALENT:121
@@ -542,7 +542,7 @@ IF TALENT:121
 	EXP:3 += N
 	GOTJUEL:8 += N:1*100
 ENDIF
-IF TALENT:121 && TALENT:ASSI:121 && ABL:6 >= 8 && ABL:11 >= 3
+IF TALENT:121 && TALENT:ASSI:121 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 3
 	IF (CFLAG:99 & 1) == 0
 		PRINTFORML %NAME:ASSI%と%NAME:TARGET%は
 		IF TIME == 0
@@ -637,11 +637,11 @@ SIF TALENT:TARGET:85 == 0 || BASE:0 < 500 || TIME == 0
 
 ;夜這いをランダムにしてみる
 A = 0
-SIF (ABL:1 * 3 + ABL:4 * 2 + ABL:0 + ABL:6) > 50 && TALENT:76 == 1 && (CFLAG:98 & 16) == 0
+SIF (ABL:欲望 * 3 + ABL:Ｖ感覚 * 2 + ABL:親密 + ABL:奉仕精神) > 50 && TALENT:76 == 1 && (CFLAG:98 & 16) == 0
 	A |= 1
-SIF ABL:1 * 3 + ABL:0 + ABL:6 >= 25 && TALENT:151 == 0 && (CFLAG:98 & 32) == 0
+SIF ABL:欲望 * 3 + ABL:親密 + ABL:奉仕精神 >= 25 && TALENT:151 == 0 && (CFLAG:98 & 32) == 0
 	A |= 2
-SIF ABL:0 * 3 + ABL:6 >= 20 && (CFLAG:98 & 64) == 0
+SIF ABL:親密 * 3 + ABL:奉仕精神 >= 20 && (CFLAG:98 & 64) == 0
 	A |= 4
 
 IF A == 0
@@ -681,7 +681,7 @@ ELSEIF A == 7
 ENDIF
 
 ;通常の夜這い
-;IF TALENT:TARGET:0 == 0 && (ABL:1 * 3 + ABL:4 * 2 + ABL:0 + ABL:6) > 50 && TALENT:76 == 1
+;IF TALENT:TARGET:0 == 0 && (ABL:欲望 * 3 + ABL:Ｖ感覚 * 2 + ABL:親密 + ABL:奉仕精神) > 50 && TALENT:76 == 1
 @SELF_YOBAI
 ;TFLAG:15を借りますよ
 TFLAG:15 = 0
@@ -843,10 +843,10 @@ ENDIF
 S = 0
 
 ;M感覚
-IF ABL:17 == 4
+IF ABL:Ｍ感覚 == 4
 	S = 2
-ELSEIF ABL:17 >= 5
-	S = ABL:17 - 1
+ELSEIF ABL:Ｍ感覚 >= 5
+	S = ABL:Ｍ感覚 - 1
 ENDIF
 ;恋慕あり
 SIF TALENT:TARGET:85
@@ -946,12 +946,12 @@ ENDIF
 S = 0
 
 ;親密
-IF ABL:0 < 8
+IF ABL:親密 < 8
 	S = 0
-ELSEIF ABL:0 < 15
+ELSEIF ABL:親密 < 15
 	S = 1
 ELSE
-	S = ABL:0 - 13
+	S = ABL:親密 - 13
 ENDIF
 
 ;恋慕あり

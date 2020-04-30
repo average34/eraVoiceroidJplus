@@ -24,19 +24,19 @@ ELSE
 ENDIF
 
 ;ABL:露出癖
-IF ABL:92 < 1
+IF ABL:歌唱技能 < 1
 	L += 1
-ELSEIF ABL:7 < 9
-	L += ABL:7
+ELSEIF ABL:露出癖 < 9
+	L += ABL:露出癖
 ELSE
 	L += 10
 ENDIF
 
 ;ABL:歌唱技能
-IF ABL:92 < 1
+IF ABL:歌唱技能 < 1
 	L += 1
-ELSEIF ABL:92 < 15
-	L += ABL:92 + 1
+ELSEIF ABL:歌唱技能 < 15
+	L += ABL:歌唱技能 + 1
 ELSE
 	L += 15
 ENDIF
@@ -85,19 +85,19 @@ ELSE
 ENDIF
 
 ;歌唱素質によって難易度変化
-SIF ABL:52 >= 3
+SIF ABL:歌唱素質 >= 3
 	P -= 5
 IF ASSI > 0
 	;助手の歌唱素質によって難易度低下
-	IF ABL:52 >= 3
+	IF ABL:歌唱素質 >= 3
 		P -= 3
 	;助手が鼓舞持ちまたは歌唱技能Lv20以上だと難易度低下
-	ELSEIF TALENT:ASSI:118 || ABL:ASSI:92 >= 20
+	ELSEIF TALENT:ASSI:118 || ABL:ASSI:歌唱技能 >= 20
 		P -= 2
 	ENDIF
 ENDIF
 ;歌苦手
-SIF ABL:52 <= -2
+SIF ABL:歌唱素質 <= -2
 	P += 3
 
 IF L < P
@@ -124,34 +124,34 @@ N = 10
 P = 0
 
 ;ABL:歌唱技能をみる
-IF ABL:92 == 0
+IF ABL:歌唱技能 == 0
 	L = 1
-ELSEIF ABL:92 < 10
-	L = ABL:92
-ELSEIF ABL:92 <= 20
-	L = 5 + (ABL:92 / 2)
-ELSEIF ABL:92 <= 40
-	L = 15 + (ABL:92 / 5)
-ELSEIF ABL:92 <= 64
-	L = 23 + (ABL:92 / 8)
-ELSEIF ABL:92 <= 90
-	L = 31 + (ABL:92 / 10)
+ELSEIF ABL:歌唱技能 < 10
+	L = ABL:歌唱技能
+ELSEIF ABL:歌唱技能 <= 20
+	L = 5 + (ABL:歌唱技能 / 2)
+ELSEIF ABL:歌唱技能 <= 40
+	L = 15 + (ABL:歌唱技能 / 5)
+ELSEIF ABL:歌唱技能 <= 64
+	L = 23 + (ABL:歌唱技能 / 8)
+ELSEIF ABL:歌唱技能 <= 90
+	L = 31 + (ABL:歌唱技能 / 10)
 ELSE
-	L = 40 + (ABL:92 / 20)
+	L = 40 + (ABL:歌唱技能 / 20)
 ENDIF
 
 ;ABL:露出癖をみる
-IF ABL:7 <= 5
+IF ABL:露出癖 <= 5
 	TIMES L , 0.70
-ELSEIF ABL:7 < 10
+ELSEIF ABL:露出癖 < 10
 	TIMES L , 0.90
-ELSEIF ABL:7 < 20
+ELSEIF ABL:露出癖 < 20
 	TIMES L , 1.00
-ELSEIF ABL:7 < 30
+ELSEIF ABL:露出癖 < 30
 	TIMES L , 1.10
-ELSEIF ABL:7 < 40
+ELSEIF ABL:露出癖 < 40
 	TIMES L , 1.30
-ELSEIF ABL:7 < 50
+ELSEIF ABL:露出癖 < 50
 	TIMES L , 1.40
 ELSE
 	TIMES L , 1.50
@@ -222,7 +222,7 @@ CALL SELF_KOJO
 SIF (CFLAG:99 & 1) == 0 && FLAG:6
 	PRINTFORMW 部屋に戻った%CALLNAME:MASTER%は泣いている%CALLNAME:TARGET%の頭を抱き寄せるとそっと撫でてやった……
 PRINTL 　
-P = ABL:92
+P = ABL:歌唱技能
 SIF P > 6
 	P = 5
 O = (P + RAND:6) / 2
@@ -231,8 +231,8 @@ SIF O <= 1
 JUEL:4 += L * 20
 PRINTFORML %PALAMNAME:4%の珠+{L*20}
 IF P > 0
-	JUEL:7 += L * P * (ABL:92 / 4 + 1)
-	PRINTFORML %PALAMNAME:7%の珠+{L * P * (ABL:92 / 4 + 1)}
+	JUEL:7 += L * P * (ABL:歌唱技能 / 4 + 1)
+	PRINTFORML %PALAMNAME:7%の珠+{L * P * (ABL:歌唱技能 / 4 + 1)}
 ENDIF
 JUEL:8 += N * (P+15)
 PRINTFORML %PALAMNAME:8%の珠+{N * (P+15)}
@@ -267,36 +267,36 @@ N = 0
 P = 0
 
 ;ABL:歌唱技能
-SIF ABL:92 < 5
+SIF ABL:歌唱技能 < 5
 	K = RAND:21
 
 ;ABL:歌唱技能
-IF ABL:92 <= 10
-	L += ABL:92
-ELSEIF ABL:92 <= 20
-	L += 20 + ABL:92 / 2
-ELSEIF ABL:92 <= 40
-	L += 30 + ABL:92 / 4
-ELSEIF ABL:92 <= 60
-	L += 40 + ABL:92 / 6
-ELSEIF ABL:92 <= 80
-	L += 50 + ABL:92 / 8
+IF ABL:歌唱技能 <= 10
+	L += ABL:歌唱技能
+ELSEIF ABL:歌唱技能 <= 20
+	L += 20 + ABL:歌唱技能 / 2
+ELSEIF ABL:歌唱技能 <= 40
+	L += 30 + ABL:歌唱技能 / 4
+ELSEIF ABL:歌唱技能 <= 60
+	L += 40 + ABL:歌唱技能 / 6
+ELSEIF ABL:歌唱技能 <= 80
+	L += 50 + ABL:歌唱技能 / 8
 ELSE
-	L += 60 + ABL:92 / 10
+	L += 60 + ABL:歌唱技能 / 10
 ENDIF
 
 ;ABL:露出癖をみる
-IF ABL:7 <= 5
+IF ABL:露出癖 <= 5
 	TIMES L , 0.70
-ELSEIF ABL:7 < 10
+ELSEIF ABL:露出癖 < 10
 	TIMES L , 0.90
-ELSEIF ABL:7 < 20
+ELSEIF ABL:露出癖 < 20
 	TIMES L , 1.00
-ELSEIF ABL:7 < 30
+ELSEIF ABL:露出癖 < 30
 	TIMES L , 1.10
-ELSEIF ABL:7 < 40
+ELSEIF ABL:露出癖 < 40
 	TIMES L , 1.30
-ELSEIF ABL:7 < 50
+ELSEIF ABL:露出癖 < 50
 	TIMES L , 1.40
 ELSE
 	TIMES L , 1.50
@@ -336,23 +336,23 @@ SIF TALENT:85
 ;クリア後なら技能補正で安定させる
 IF (FLAG:28 & 1) != 0
 	;K = 歌の種類
-	IF K == 0 || ABL:92 >= 5
+	IF K == 0 || ABL:歌唱技能 >= 5
 		;キャラの持ち歌
 		N += 100
 	ELSEIF K == 1 || K == 2
-		N += 90 + ABL:92 / 10
+		N += 90 + ABL:歌唱技能 / 10
 	ELSEIF K >= 3 && K < 6
-		N += 70 + ABL:92 / 8
+		N += 70 + ABL:歌唱技能 / 8
 	ELSEIF K >= 6 && K < 10
-		N += 50 + ABL:92 / 6
+		N += 50 + ABL:歌唱技能 / 6
 	ELSEIF K >= 10 && K < 15
-		N += 30 + ABL:92 / 4
+		N += 30 + ABL:歌唱技能 / 4
 	ELSE
-		N += 10 + ABL:92 / 2
+		N += 10 + ABL:歌唱技能 / 2
 	ENDIF
 ELSE
 	;K = 歌の種類
-	IF K == 0 && ABL:92 >= 5
+	IF K == 0 && ABL:歌唱技能 >= 5
 		;キャラの持ち歌
 		N += 100
 	ELSEIF K == 1 || K == 2
@@ -393,7 +393,7 @@ TFLAG:13 = 17
 CALL SELF_MAEKOJO
 
 ;キャラ固有の持ち歌
-SIF K == 0 && ABL:92 >= 5
+SIF K == 0 && ABL:歌唱技能 >= 5
 	CALL SP_SONG_CONCERT
 SIF N <= 0
 	N = 0
@@ -410,7 +410,7 @@ IF (CFLAG:99 & 1) == 0 && FLAG:6
 	PRINTW      !
 	PRINTL 　
 	PRINTFORM %CALLNAME:TARGET%
-	IF K == 0 && ABL:92 >= 5
+	IF K == 0 && ABL:歌唱技能 >= 5
 		PRINTFORM が披露したとっておきの持ち歌%TSTR:1%
 	ELSE
 		PRINT のライブ
@@ -443,26 +443,26 @@ ENDIF
 ;TFLAG:13 = 17
 H = 1
 CALL SELF_KOJO
-IF ABL:92 <= 10
-	P = ABL:92
-ELSEIF ABL:92 <= 20
-	P = 10 + (ABL:92 / 4)
-ELSEIF ABL:92 <= 30
-	P = 15 + (ABL:92 / 6)
-ELSEIF ABL:92 <= 40
-	P = 20 + (ABL:92 / 8)
-ELSEIF ABL:92 <= 50
-	P = 25 + (ABL:92 / 10)
-ELSEIF ABL:92 <= 60
-	P = 30 + (ABL:92 / 12)
-ELSEIF ABL:92 <= 70
-	P = 35 + (ABL:92 / 14)
-ELSEIF ABL:92 <= 80
-	P = 40 + (ABL:92 / 16)
-ELSEIF ABL:92 <= 90
-	P = 45 + (ABL:92 / 18)
+IF ABL:歌唱技能 <= 10
+	P = ABL:歌唱技能
+ELSEIF ABL:歌唱技能 <= 20
+	P = 10 + (ABL:歌唱技能 / 4)
+ELSEIF ABL:歌唱技能 <= 30
+	P = 15 + (ABL:歌唱技能 / 6)
+ELSEIF ABL:歌唱技能 <= 40
+	P = 20 + (ABL:歌唱技能 / 8)
+ELSEIF ABL:歌唱技能 <= 50
+	P = 25 + (ABL:歌唱技能 / 10)
+ELSEIF ABL:歌唱技能 <= 60
+	P = 30 + (ABL:歌唱技能 / 12)
+ELSEIF ABL:歌唱技能 <= 70
+	P = 35 + (ABL:歌唱技能 / 14)
+ELSEIF ABL:歌唱技能 <= 80
+	P = 40 + (ABL:歌唱技能 / 16)
+ELSEIF ABL:歌唱技能 <= 90
+	P = 45 + (ABL:歌唱技能 / 18)
 ELSE
-	P = 50 + (ABL:92 / 20)
+	P = 50 + (ABL:歌唱技能 / 20)
 ENDIF
 O = 5 + RAND:16
 JUEL:4 += L * 10
@@ -471,13 +471,13 @@ JUEL:7 += L * O
 PRINTFORML %PALAMNAME:7%の珠+{L * O}
 JUEL:8 += N * (P+5) / 5
 PRINTFORML %PALAMNAME:8%の珠+{N * (P+5) / 5}
-IF ABL:92 <= 5
+IF ABL:歌唱技能 <= 5
 	O = 2
-ELSEIF ABL:92 <= 30
+ELSEIF ABL:歌唱技能 <= 30
 	O = P / 2
-ELSEIF ABL:92 <= 50
+ELSEIF ABL:歌唱技能 <= 50
 	O = P / 3
-ELSEIF ABL:92 <= 70
+ELSEIF ABL:歌唱技能 <= 70
 	O = P / 4
 ELSE
 	O = P / 5
@@ -537,15 +537,15 @@ RETURN 1
 ;------------------------------------------
 @SINGER_BONUS
 ;歌唱素質で補正をかける
-SIF ABL:52 == 3
+SIF ABL:歌唱素質 == 3
 	TIMES N , 1.50
-SIF ABL:52 == 2
+SIF ABL:歌唱素質 == 2
 	TIMES N , 1.25
-SIF ABL:52 == 1
+SIF ABL:歌唱素質 == 1
 	TIMES N , 1.10
-SIF ABL:52 == -1
+SIF ABL:歌唱素質 == -1
 	TIMES N , 0.90
-SIF ABL:52 == -2
+SIF ABL:歌唱素質 == -2
 	TIMES N , 0.80
 RETURN 0
 

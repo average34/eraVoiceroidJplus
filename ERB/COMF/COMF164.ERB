@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 SIF NO:PLAYER != 5 && NO:PLAYER != 10 && NO:PLAYER != 12
 	RETURN 0
 ;技巧2以上じゃないと使えない
-SIF ABL:PLAYER:2 < 2
+SIF ABL:PLAYER:技巧 < 2
 	RETURN 0
 RETURN 1
 
@@ -78,19 +78,19 @@ IF W == 0
 	ENDIF
 
 	;ABL:マゾっ気をみる
-	IF ABL:8 == 0
+	IF ABL:マゾっ気 == 0
 		TIMES A, 0.50
 		SOURCE:7 = 40
-	ELSEIF ABL:8 == 1
+	ELSEIF ABL:マゾっ気 == 1
 		TIMES A, 0.75
 		SOURCE:7 = 80
-	ELSEIF ABL:8 == 2
+	ELSEIF ABL:マゾっ気 == 2
 		TIMES A, 1.00
 		SOURCE:7 = 160
-	ELSEIF ABL:8 == 3
+	ELSEIF ABL:マゾっ気 == 3
 		TIMES A, 1.20
 		SOURCE:7 = 320
-	ELSEIF ABL:8 == 4
+	ELSEIF ABL:マゾっ気 == 4
 		TIMES A, 1.50
 		SOURCE:7 = 650
 	ELSE
@@ -133,19 +133,19 @@ IF W == 0
 ELSEIF W == 1 || W == 2
 	;筆クリ責め
 	;ABL:Ｃ感覚をみる
-	IF ABL:3 == 0
+	IF ABL:Ｃ感覚 == 0
 		SOURCE:0 = 50
 		SOURCE:3 = 50
-	ELSEIF ABL:3 == 1
+	ELSEIF ABL:Ｃ感覚 == 1
 		SOURCE:0 = 100
 		SOURCE:3 = 100
-	ELSEIF ABL:3 == 2
+	ELSEIF ABL:Ｃ感覚 == 2
 		SOURCE:0 = 500
 		SOURCE:3 = 150
-	ELSEIF ABL:3 == 3
+	ELSEIF ABL:Ｃ感覚 == 3
 		SOURCE:0 = 1500
 		SOURCE:3 = 250
-	ELSEIF ABL:3 == 4
+	ELSEIF ABL:Ｃ感覚 == 4
 		SOURCE:0 = 2500
 		SOURCE:3 = 400
 	ELSE
@@ -162,19 +162,19 @@ ELSEIF W == 1 || W == 2
 ELSEIF W == 3 || W == 4
 	;筆バスト責め
 	;ABL:Ｂ感覚をみる
-	IF ABL:14 == 0
+	IF ABL:Ｂ感覚 == 0
 		SOURCE:3 = 50
 		SOURCE:17 = 50
-	ELSEIF ABL:14 == 1
+	ELSEIF ABL:Ｂ感覚 == 1
 		SOURCE:3 = 100
 		SOURCE:17 = 100
-	ELSEIF ABL:14 == 2
+	ELSEIF ABL:Ｂ感覚 == 2
 		SOURCE:3 = 150
 		SOURCE:17 = 200
-	ELSEIF ABL:14 == 3
+	ELSEIF ABL:Ｂ感覚 == 3
 		SOURCE:3 = 250
 		SOURCE:17 = 600
-	ELSEIF ABL:14 == 4
+	ELSEIF ABL:Ｂ感覚 == 4
 		SOURCE:3 = 400
 		SOURCE:17 = 1500
 	ELSE
@@ -197,19 +197,19 @@ ELSEIF W == 3 || W == 4
 ELSE
 	;筆アナル責め
 	;ABL:Ａ感覚をみる
-	IF ABL:5 == 0
+	IF ABL:Ａ感覚 == 0
 		SOURCE:2 = 20
 		A = 150
-	ELSEIF ABL:5 == 1
+	ELSEIF ABL:Ａ感覚 == 1
 		SOURCE:2 = 80
 		A = 250
-	ELSEIF ABL:5 == 2
+	ELSEIF ABL:Ａ感覚 == 2
 		SOURCE:2 = 240
 		A = 400
-	ELSEIF ABL:5 == 3
+	ELSEIF ABL:Ａ感覚 == 3
 		SOURCE:2 = 500
 		A = 650
-	ELSEIF ABL:5 == 4
+	ELSEIF ABL:Ａ感覚 == 4
 		SOURCE:2 = 1400
 		A = 1000
 	ELSE

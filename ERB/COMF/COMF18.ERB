@@ -30,33 +30,33 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:3 = 0
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:3 = 20
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:3 = 40
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:3 = 70
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:3 = 110
 ELSE
-	SOURCE:3 = 50 + (ABL:6 * 20)
+	SOURCE:3 = 50 + (ABL:奉仕精神 * 20)
 ENDIF
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES SOURCE:5 , 0.80
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES SOURCE:5 , 0.90
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES SOURCE:5 , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES SOURCE:5 , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES SOURCE:5 , 1.20
 ELSE
-	SOURCE:5 = SOURCE:5 * (ABL:0 * 5 + 105) / 100
+	SOURCE:5 = SOURCE:5 * (ABL:親密 * 5 + 105) / 100
 ENDIF
 
 ;吸血鬼の場合
@@ -111,34 +111,34 @@ PALAM:12 /= 2
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -191,33 +191,33 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	SOURCE:3 += 0
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	SOURCE:3 += 20
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	SOURCE:3 += 40
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	SOURCE:3 += 70
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	SOURCE:3 += 110
 ELSE
-	SOURCE:3 += 50 + (ABL:6 * 20)
+	SOURCE:3 += 50 + (ABL:奉仕精神 * 20)
 ENDIF
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.80
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.90
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 1.20
 ELSE
-	A = A * (ABL:0 * 5 + 105) / 100
+	A = A * (ABL:親密 * 5 + 105) / 100
 ENDIF
 
 SOURCE:5 += A

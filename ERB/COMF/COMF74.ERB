@@ -10,14 +10,14 @@ A = 0
 S = 0
 
 ;ABL:欲望
-SIF ABL:1
-	A += ABL:1
+SIF ABL:欲望
+	A += ABL:欲望
 ;ABL:露出癖
-SIF ABL:7
-	A += ABL:7 * 2
+SIF ABL:露出癖
+	A += ABL:露出癖 * 2
 ;ABL:歌唱技能
-SIF ABL:92
-	A += ABL:92 * 3
+SIF ABL:歌唱技能
+	A += ABL:歌唱技能 * 3
 
 SIF MARK:1
 	A += MARK:1 * 2
@@ -120,27 +120,27 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	C += 8
 ENDIF
 ;ABL:露出癖をみる
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	SOURCE:7 += 0
 	SOURCE:10 += 0
 	C += 0
 	TIMES A, 1.00
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	SOURCE:7 += 50
 	SOURCE:10 += 50
 	C += 1
 	TIMES A, 1.20
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	SOURCE:7 += 100
 	SOURCE:10 += 100
 	C += 2
 	TIMES A, 1.40
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	SOURCE:7 += 200
 	SOURCE:10 += 200
 	C += 3
 	TIMES A, 1.60
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	SOURCE:7 += 400
 	SOURCE:10 += 400
 	C += 4
@@ -152,19 +152,19 @@ ELSE
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
-IF ABL:92 == 0
+IF ABL:歌唱技能 == 0
 	C += 0
 	TIMES A , 0.80
-ELSEIF ABL:92 == 1
+ELSEIF ABL:歌唱技能 == 1
 	C += 1
 	TIMES A , 1.00
-ELSEIF ABL:92 == 2
+ELSEIF ABL:歌唱技能 == 2
 	C += 2
 	TIMES A , 1.30
-ELSEIF ABL:92 == 3
+ELSEIF ABL:歌唱技能 == 3
 	C += 3
 	TIMES A , 1.60
-ELSEIF ABL:92 == 4
+ELSEIF ABL:歌唱技能 == 4
 	C += 4
 	TIMES A , 2.00
 ELSE
@@ -314,23 +314,23 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.20
 ENDIF
 ;ABL:露出癖をみる
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	SOURCE:7 += 0
 	SOURCE:10 += 0
 	TIMES A, 1.00
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	SOURCE:7 += 50
 	SOURCE:10 += 50
 	TIMES A, 1.20
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	SOURCE:7 += 100
 	SOURCE:10 += 100
 	TIMES A, 1.40
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	SOURCE:7 += 200
 	SOURCE:10 += 200
 	TIMES A, 1.60
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	SOURCE:7 += 400
 	SOURCE:10 += 400
 	TIMES A, 2.00
@@ -340,15 +340,15 @@ ELSE
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
-IF ABL:92 == 0
+IF ABL:歌唱技能 == 0
 	TIMES A , 0.80
-ELSEIF ABL:92 == 1
+ELSEIF ABL:歌唱技能 == 1
 	TIMES A , 1.00
-ELSEIF ABL:92 == 2
+ELSEIF ABL:歌唱技能 == 2
 	TIMES A , 1.30
-ELSEIF ABL:92 == 3
+ELSEIF ABL:歌唱技能 == 3
 	TIMES A , 1.60
-ELSEIF ABL:92 == 4
+ELSEIF ABL:歌唱技能 == 4
 	TIMES A , 2.00
 ELSE
 	TIMES A , 3.00
@@ -443,15 +443,15 @@ O = 0
 
 IF M > 6
 ;Ａ感覚をみる
-	IF ABL:5 == 0
+	IF ABL:Ａ感覚 == 0
 		A = 40
-	ELSEIF ABL:5 == 1
+	ELSEIF ABL:Ａ感覚 == 1
 		A = 60
-	ELSEIF ABL:5 == 2
+	ELSEIF ABL:Ａ感覚 == 2
 		A = 90
-	ELSEIF ABL:5 == 3
+	ELSEIF ABL:Ａ感覚 == 3
 		A = 130
-	ELSEIF ABL:5 == 4
+	ELSEIF ABL:Ａ感覚 == 4
 		A = 180
 	ELSE
 		A = 240
@@ -461,15 +461,15 @@ IF M > 6
 ENDIF
 
 ;Ｂ感覚をみる
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	B = 50
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	B = 80
-ELSEIF ABL:14 == 2
+ELSEIF ABL:Ｂ感覚 == 2
 	B = 160
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	B = 240
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	B = 320
 ELSE
 	B = 480
@@ -477,15 +477,15 @@ ENDIF
 B *= N
 
 ;Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	C = 100
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	C = 130
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	C = 170
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	C = 250
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	C = 360
 ELSE
 	C = 500
@@ -496,15 +496,15 @@ IF M < 10
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
 	TFLAG:19 = 1
 ;Ｖ感覚をみる
-	IF ABL:4 == 0
+	IF ABL:Ｖ感覚 == 0
 		V = 100
-	ELSEIF ABL:4 == 1
+	ELSEIF ABL:Ｖ感覚 == 1
 		V = 120
-	ELSEIF ABL:4 == 2
+	ELSEIF ABL:Ｖ感覚 == 2
 		V = 150
-	ELSEIF ABL:4 == 3
+	ELSEIF ABL:Ｖ感覚 == 3
 		V = 180
-	ELSEIF ABL:4 == 4
+	ELSEIF ABL:Ｖ感覚 == 4
 		V = 200
 	ELSE
 		V = 250

@@ -275,30 +275,30 @@ ELSEIF RESULT == 101
 	SIF TFLAG:18 > -1
 		SOURCE:5 += 150
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 5)
-		SOURCE:19 += (ABL:0 * 20)
-		SOURCE:5 += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 50 + (ABL:0 * 5)
-		SOURCE:19 += 100 + (ABL:0 * 30)
-		SOURCE:5 += 100 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 100 + (ABL:0 * 5)
-		SOURCE:19 += 200 + (ABL:0 * 30)
-		SOURCE:5 += 150 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 150 + (ABL:0 * 10)
-		SOURCE:19 += 250 + (ABL:0 * 40)
-		SOURCE:5 += 200 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 200 + (ABL:0 * 10)
-		SOURCE:19 += 300 + (ABL:0 * 50)
-		SOURCE:5 += 300 + (ABL:0 * 50)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 5)
+		SOURCE:19 += (ABL:親密 * 20)
+		SOURCE:5 += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 50 + (ABL:親密 * 5)
+		SOURCE:19 += 100 + (ABL:親密 * 30)
+		SOURCE:5 += 100 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 100 + (ABL:親密 * 5)
+		SOURCE:19 += 200 + (ABL:親密 * 30)
+		SOURCE:5 += 150 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 150 + (ABL:親密 * 10)
+		SOURCE:19 += 250 + (ABL:親密 * 40)
+		SOURCE:5 += 200 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 200 + (ABL:親密 * 10)
+		SOURCE:19 += 300 + (ABL:親密 * 50)
+		SOURCE:5 += 300 + (ABL:親密 * 50)
 	ELSE
-		SOURCE:18 += 300 + (ABL:0 * 10)
-		SOURCE:19 += 400 + (ABL:0 * 60)
-		SOURCE:5 += 500 + (ABL:0 * 60)
+		SOURCE:18 += 300 + (ABL:親密 * 10)
+		SOURCE:19 += 400 + (ABL:親密 * 60)
+		SOURCE:5 += 500 + (ABL:親密 * 60)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 300
@@ -312,12 +312,12 @@ ELSEIF RESULT == 101
 		SOURCE:18 = 0
 
 	;ABL:技巧をみる
-	SOURCE:19 = SOURCE:19 * (ABL:2 * 5 + 100) / 100
-	SOURCE:5 = SOURCE:5 * (ABL:2 * 5 + 100) / 100
+	SOURCE:19 = SOURCE:19 * (ABL:技巧 * 5 + 100) / 100
+	SOURCE:5 = SOURCE:5 * (ABL:技巧 * 5 + 100) / 100
 	;ABL:料理技術をみる
-	SOURCE:18 += ABL:90 * 10
-	SOURCE:19 = SOURCE:19 * (ABL:90 * 10 + 100) / 100
-	SOURCE:5 = SOURCE:5 * (ABL:90 * 20 + 100) / 100
+	SOURCE:18 += ABL:料理技能 * 10
+	SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 10 + 100) / 100
+	SOURCE:5 = SOURCE:5 * (ABL:料理技能 * 20 + 100) / 100
 	;調合知識を持っていると効果上昇
 	IF TALENT:TARGET:55
 		TIMES SOURCE:19 , 2.00
@@ -327,34 +327,34 @@ ELSEIF RESULT == 101
 	IF TFLAG:45 == 0
 	;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 <= 1
-			SOURCE:21 += 100 + (ABL:0 * 20)
-		ELSEIF ABL:0 <= 3
-			SOURCE:21 += 200 + (ABL:0 * 30)
-		ELSEIF ABL:0 <= 5
-			SOURCE:21 += 300 + (ABL:0 * 40)
-		ELSEIF ABL:0 <= 8
-			SOURCE:21 += 400 + (ABL:0 * 50)
-		ELSEIF ABL:0 <= 11
-			SOURCE:21 += 500 + (ABL:0 * 60)
+		IF ABL:親密 <= 1
+			SOURCE:21 += 100 + (ABL:親密 * 20)
+		ELSEIF ABL:親密 <= 3
+			SOURCE:21 += 200 + (ABL:親密 * 30)
+		ELSEIF ABL:親密 <= 5
+			SOURCE:21 += 300 + (ABL:親密 * 40)
+		ELSEIF ABL:親密 <= 8
+			SOURCE:21 += 400 + (ABL:親密 * 50)
+		ELSEIF ABL:親密 <= 11
+			SOURCE:21 += 500 + (ABL:親密 * 60)
 		ELSE
-			SOURCE:21 += 600 + (ABL:0 * 70)
+			SOURCE:21 += 600 + (ABL:親密 * 70)
 		ENDIF
 	ELSE
 	;主導権が相手
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			SOURCE:20 += 200
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			SOURCE:20 += 300
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			SOURCE:20 += 400
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			SOURCE:20 += 550
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			SOURCE:20 += 700
 		ELSE
-			SOURCE:20 += 300 + (ABL:15 * 100)
+			SOURCE:20 += 300 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 
@@ -1956,8 +1956,8 @@ CASE 1
 ;売却
 CASE -1
 	A = 1000
-	SIF ABL:TARGET:90 >= 1
-		A += (1500 * ABL:TARGET:90)
+	SIF ABL:TARGET:料理技能 >= 1
+		A += (1500 * ABL:TARGET:料理技能)
 	M += A
 	CALL COM310_SELL
 ENDSELECT
@@ -3489,18 +3489,18 @@ CASE 1
 		;固定で獲得するソース
 		C = 200
 		;ABL:従順をみる
-		IF ABL:0 <= 1
-			C += (ABL:0 * 60)
-		ELSEIF ABL:0 <= 3
-			C += 200 + (ABL:0 * 60)
-		ELSEIF ABL:0 <= 5
-			C += 500 + (ABL:0 * 60)
-		ELSEIF ABL:0 <= 8
-			C += 750 + (ABL:0 * 75)
-		ELSEIF ABL:0 <= 11
-			C += 1000 + (ABL:0 * 75)
+		IF ABL:親密 <= 1
+			C += (ABL:親密 * 60)
+		ELSEIF ABL:親密 <= 3
+			C += 200 + (ABL:親密 * 60)
+		ELSEIF ABL:親密 <= 5
+			C += 500 + (ABL:親密 * 60)
+		ELSEIF ABL:親密 <= 8
+			C += 750 + (ABL:親密 * 75)
+		ELSEIF ABL:親密 <= 11
+			C += 1000 + (ABL:親密 * 75)
 		ELSE
-			C += 2000 + (ABL:0 * 30)
+			C += 2000 + (ABL:親密 * 30)
 		ENDIF
 
 		;好感度をみる
@@ -3518,34 +3518,34 @@ CASE 1
 		IF TFLAG:45 == 0
 			;主導権が主人公側
 			;ABL:従順をみる
-			IF ABL:0 == 0
+			IF ABL:親密 == 0
 				D = 200
-			ELSEIF ABL:0 == 1
+			ELSEIF ABL:親密 == 1
 				D = 300
-			ELSEIF ABL:0 == 2
+			ELSEIF ABL:親密 == 2
 				D = 400
-			ELSEIF ABL:0 == 3
+			ELSEIF ABL:親密 == 3
 				D = 500
-			ELSEIF ABL:0 == 4
+			ELSEIF ABL:親密 == 4
 				D = 600
 			ELSE
-				D = 500 + (ABL:0 * 50)
+				D = 500 + (ABL:親密 * 50)
 			ENDIF
 		ELSE
 			;主導権が相手側
 			;ABL:サドっ気をみる
-			IF ABL:15 == 0
+			IF ABL:サドっ気 == 0
 				E = 300
-			ELSEIF ABL:15 == 1
+			ELSEIF ABL:サドっ気 == 1
 				E = 400
-			ELSEIF ABL:15 == 2
+			ELSEIF ABL:サドっ気 == 2
 				E = 500
-			ELSEIF ABL:15 == 3
+			ELSEIF ABL:サドっ気 == 3
 				E = 600
-			ELSEIF ABL:15 == 4
+			ELSEIF ABL:サドっ気 == 4
 				E = 700
 			ELSE
-				E = 300 + (ABL:15 * 100)
+				E = 300 + (ABL:サドっ気 * 100)
 			ENDIF
 		ENDIF
 		;このプレゼントは好感度が一定値以下でも効果減少しない
@@ -3700,24 +3700,24 @@ CASE 1
 		F = 0
 		
 		;ABL:従順をみる
-		IF ABL:0 <= 1
-			C += (ABL:0 * 70)
-			D += (ABL:0 * 20)
-		ELSEIF ABL:0 <= 3
-			C += 200 + (ABL:0 * 75)
-			D += 100 + (ABL:0 * 20)
-		ELSEIF ABL:0 <= 5
-			C += 500 + (ABL:0 * 75)
-			D += 200 + (ABL:0 * 20)
-		ELSEIF ABL:0 <= 8
-			C += 700 + (ABL:0 * 85)
-			D += 300 + (ABL:0 * 30)
-		ELSEIF ABL:0 <= 11
-			C += 1200 + (ABL:0 * 90)
-			D += 400 + (ABL:0 * 30)
+		IF ABL:親密 <= 1
+			C += (ABL:親密 * 70)
+			D += (ABL:親密 * 20)
+		ELSEIF ABL:親密 <= 3
+			C += 200 + (ABL:親密 * 75)
+			D += 100 + (ABL:親密 * 20)
+		ELSEIF ABL:親密 <= 5
+			C += 500 + (ABL:親密 * 75)
+			D += 200 + (ABL:親密 * 20)
+		ELSEIF ABL:親密 <= 8
+			C += 700 + (ABL:親密 * 85)
+			D += 300 + (ABL:親密 * 30)
+		ELSEIF ABL:親密 <= 11
+			C += 1200 + (ABL:親密 * 90)
+			D += 400 + (ABL:親密 * 30)
 		ELSE
-			C += 2000 + (ABL:0 * 45)
-			D += 800 + (ABL:0 * 15)
+			C += 2000 + (ABL:親密 * 45)
+			D += 800 + (ABL:親密 * 15)
 		ENDIF
 		
 		;好感度をみる
@@ -3735,34 +3735,34 @@ CASE 1
 		IF TFLAG:45 == 0
 			;主導権が主人公側
 			;ABL:従順をみる
-			IF ABL:0 <= 1
-				E += 300 + (ABL:0 * 50)
-			ELSEIF ABL:0 <= 3
-				E += 600 + (ABL:0 * 100)
-			ELSEIF ABL:0 <= 5
-				E += 800 + (ABL:0 * 120)
-			ELSEIF ABL:0 <= 8
-				E += 1000 + (ABL:0 * 140)
-			ELSEIF ABL:0 <= 11
-				E += 1200 + (ABL:0 * 160)
+			IF ABL:親密 <= 1
+				E += 300 + (ABL:親密 * 50)
+			ELSEIF ABL:親密 <= 3
+				E += 600 + (ABL:親密 * 100)
+			ELSEIF ABL:親密 <= 5
+				E += 800 + (ABL:親密 * 120)
+			ELSEIF ABL:親密 <= 8
+				E += 1000 + (ABL:親密 * 140)
+			ELSEIF ABL:親密 <= 11
+				E += 1200 + (ABL:親密 * 160)
 			ELSE
-				E += 1500 + (ABL:0 * 180)
+				E += 1500 + (ABL:親密 * 180)
 			ENDIF
 		ELSE
 			;主導権が相手側
 			;ABL:サドっ気をみる
-			IF ABL:15 == 0
+			IF ABL:サドっ気 == 0
 				F = 600
-			ELSEIF ABL:15 == 1
+			ELSEIF ABL:サドっ気 == 1
 				F = 900
-			ELSEIF ABL:15 == 2
+			ELSEIF ABL:サドっ気 == 2
 				F = 1200
-			ELSEIF ABL:15 == 3
+			ELSEIF ABL:サドっ気 == 3
 				F = 1600
-			ELSEIF ABL:15 == 4
+			ELSEIF ABL:サドっ気 == 4
 				F = 2000
 			ELSE
-				F = 1000 + (ABL:15 * 300)
+				F = 1000 + (ABL:サドっ気 * 300)
 			ENDIF
 		ENDIF
 		;ここで戻して加算
@@ -4462,9 +4462,9 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	PRINTFORMW %CALLNAME:TARGET%の戦闘素質が5下がった
-	ABL:98 -= 5
-	SIF ABL:98 < 0
-		ABL:98 = 0
+	ABL:戦闘素質 -= 5
+	SIF ABL:戦闘素質 < 0
+		ABL:戦闘素質 = 0
 ;売却
 CASE -1
 	M += 1500
@@ -5480,24 +5480,24 @@ CASE 1
 	SOURCE:19 += 100
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 100)
-		SOURCE:19 += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 300 + (ABL:0 * 100)
-		SOURCE:19 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 750 + (ABL:0 * 100)
-		SOURCE:19 += 400 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 1000 + (ABL:0 * 120)
-		SOURCE:19 += 600 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 1500 + (ABL:0 * 120)
-		SOURCE:19 += 800 + (ABL:0 * 40)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 100)
+		SOURCE:19 += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 300 + (ABL:親密 * 100)
+		SOURCE:19 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 750 + (ABL:親密 * 100)
+		SOURCE:19 += 400 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 1000 + (ABL:親密 * 120)
+		SOURCE:19 += 600 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 1500 + (ABL:親密 * 120)
+		SOURCE:19 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3000 + (ABL:0 * 60)
-		SOURCE:19 += 1800 + (ABL:0 * 20)
+		SOURCE:18 += 3000 + (ABL:親密 * 60)
+		SOURCE:19 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
@@ -5563,24 +5563,24 @@ CASE 1
 	SOURCE:19 += 100
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 110)
-		SOURCE:19 += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 300 + (ABL:0 * 110)
-		SOURCE:19 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 750 + (ABL:0 * 110)
-		SOURCE:19 += 400 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 1000 + (ABL:0 * 140)
-		SOURCE:19 += 600 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 1500 + (ABL:0 * 140)
-		SOURCE:19 += 800 + (ABL:0 * 40)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 110)
+		SOURCE:19 += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 300 + (ABL:親密 * 110)
+		SOURCE:19 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 750 + (ABL:親密 * 110)
+		SOURCE:19 += 400 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 1000 + (ABL:親密 * 140)
+		SOURCE:19 += 600 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 1500 + (ABL:親密 * 140)
+		SOURCE:19 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3000 + (ABL:0 * 65)
-		SOURCE:19 += 1800 + (ABL:0 * 20)
+		SOURCE:18 += 3000 + (ABL:親密 * 65)
+		SOURCE:19 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
@@ -5646,24 +5646,24 @@ CASE 1
 	SOURCE:19 += 100
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 110)
-		SOURCE:19 += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 400 + (ABL:0 * 110)
-		SOURCE:19 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 850 + (ABL:0 * 110)
-		SOURCE:19 += 400 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 1200 + (ABL:0 * 140)
-		SOURCE:19 += 600 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 1800 + (ABL:0 * 140)
-		SOURCE:19 += 800 + (ABL:0 * 40)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 110)
+		SOURCE:19 += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 400 + (ABL:親密 * 110)
+		SOURCE:19 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 850 + (ABL:親密 * 110)
+		SOURCE:19 += 400 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 1200 + (ABL:親密 * 140)
+		SOURCE:19 += 600 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 1800 + (ABL:親密 * 140)
+		SOURCE:19 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3500 + (ABL:0 * 65)
-		SOURCE:19 += 1800 + (ABL:0 * 20)
+		SOURCE:18 += 3500 + (ABL:親密 * 65)
+		SOURCE:19 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
@@ -5729,24 +5729,24 @@ CASE 1
 	SOURCE:19 += 100
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 110)
-		SOURCE:19 += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 400 + (ABL:0 * 120)
-		SOURCE:19 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 850 + (ABL:0 * 120)
-		SOURCE:19 += 400 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 1200 + (ABL:0 * 150)
-		SOURCE:19 += 600 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 1800 + (ABL:0 * 150)
-		SOURCE:19 += 800 + (ABL:0 * 40)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 110)
+		SOURCE:19 += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 400 + (ABL:親密 * 120)
+		SOURCE:19 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 850 + (ABL:親密 * 120)
+		SOURCE:19 += 400 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 1200 + (ABL:親密 * 150)
+		SOURCE:19 += 600 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 1800 + (ABL:親密 * 150)
+		SOURCE:19 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3500 + (ABL:0 * 70)
-		SOURCE:19 += 1800 + (ABL:0 * 20)
+		SOURCE:18 += 3500 + (ABL:親密 * 70)
+		SOURCE:19 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
@@ -6083,18 +6083,18 @@ CASE 1
 	SOURCE:18 = 400
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 70)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 200 + (ABL:0 * 70)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 500 + (ABL:0 * 70)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 750 + (ABL:0 * 85)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 1000 + (ABL:0 * 85)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 200 + (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 500 + (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 750 + (ABL:親密 * 85)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 1000 + (ABL:親密 * 85)
 	ELSE
-		SOURCE:18 += 2000 + (ABL:0 * 40)
+		SOURCE:18 += 2000 + (ABL:親密 * 40)
 	ENDIF
 	
 	;好感度をみる
@@ -6250,7 +6250,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘技能＋{U}
 	PRINTFORMW [蝶の妖刀]は砕け散った…
-	ABL:TARGET:88 += U
+	ABL:TARGET:戦闘技能 += U
 ;売却
 CASE -1
 	M += 100000
@@ -6277,7 +6277,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘素質＋{U}
 	PRINTFORMW [獅子王]はそのまま静かに砕け散った…
-	ABL:TARGET:98 += U
+	ABL:TARGET:戦闘素質 += U
 ;売却
 CASE -1
 	M += 120000
@@ -6516,18 +6516,18 @@ CASE 1
 	A = 200
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		A += (ABL:0 * 80)
-	ELSEIF ABL:0 <= 3
-		A += 200 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 5
-		A += 500 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 8
-		A += 750 + (ABL:0 * 90)
-	ELSEIF ABL:0 <= 11
-		A += 1000 + (ABL:0 * 90)
+	IF ABL:親密 <= 1
+		A += (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 3
+		A += 200 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 5
+		A += 500 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 8
+		A += 750 + (ABL:親密 * 90)
+	ELSEIF ABL:親密 <= 11
+		A += 1000 + (ABL:親密 * 90)
 	ELSE
-		A += 2000 + (ABL:0 * 40)
+		A += 2000 + (ABL:親密 * 40)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -6543,34 +6543,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			C += 250
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			C += 350
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			C += 450
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			C += 550
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			C += 650
 		ELSE
-			C += 550 + (ABL:0 * 50)
+			C += 550 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			B += 350
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			B += 450
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			B += 550
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			B += 650
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			B += 750
 		ELSE
-			B = 350 + (ABL:15 * 100)
+			B = 350 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	;付加価値追加
@@ -6660,18 +6660,18 @@ CASE 1
 	A = 200
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		A += (ABL:0 * 70)
-	ELSEIF ABL:0 <= 3
-		A += 200 + (ABL:0 * 70)
-	ELSEIF ABL:0 <= 5
-		A += 500 + (ABL:0 * 70)
-	ELSEIF ABL:0 <= 8
-		A += 750 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 11
-		A += 1000 + (ABL:0 * 80)
+	IF ABL:親密 <= 1
+		A += (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 3
+		A += 200 + (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 5
+		A += 500 + (ABL:親密 * 70)
+	ELSEIF ABL:親密 <= 8
+		A += 750 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 11
+		A += 1000 + (ABL:親密 * 80)
 	ELSE
-		A += 2000 + (ABL:0 * 35)
+		A += 2000 + (ABL:親密 * 35)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -6687,34 +6687,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			C += 200
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			C += 300
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			C += 400
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			C += 500
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			C += 600
 		ELSE
-			C += 500 + (ABL:0 * 50)
+			C += 500 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			B += 300
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			B += 400
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			B += 500
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			B += 600
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			B += 700
 		ELSE
-			B += 300 + (ABL:15 * 100)
+			B += 300 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	;付加価値
@@ -6804,18 +6804,18 @@ CASE 1
 	A = 200
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		A += (ABL:0 * 85)
-	ELSEIF ABL:0 <= 3
-		A += 250 + (ABL:0 * 85)
-	ELSEIF ABL:0 <= 5
-		A += 550 + (ABL:0 * 85)
-	ELSEIF ABL:0 <= 8
-		A += 800 + (ABL:0 * 95)
-	ELSEIF ABL:0 <= 11
-		A += 1100 + (ABL:0 * 95)
+	IF ABL:親密 <= 1
+		A += (ABL:親密 * 85)
+	ELSEIF ABL:親密 <= 3
+		A += 250 + (ABL:親密 * 85)
+	ELSEIF ABL:親密 <= 5
+		A += 550 + (ABL:親密 * 85)
+	ELSEIF ABL:親密 <= 8
+		A += 800 + (ABL:親密 * 95)
+	ELSEIF ABL:親密 <= 11
+		A += 1100 + (ABL:親密 * 95)
 	ELSE
-		A += 2100 + (ABL:0 * 45)
+		A += 2100 + (ABL:親密 * 45)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -6831,34 +6831,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			C += 300
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			C += 400
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			C += 500
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			C += 600
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			C += 700
 		ELSE
-			C += 600 + (ABL:0 * 50)
+			C += 600 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			B += 400
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			B += 500
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			B += 600
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			B += 700
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			B += 800
 		ELSE
-			B += 400 + (ABL:15 * 100)
+			B += 400 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	
@@ -6948,7 +6948,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	U += 2
 	PRINTFORMW 戦闘技能＋{U}
-	ABL:TARGET:88 += U
+	ABL:TARGET:戦闘技能 += U
 ;売却
 CASE -1
 	M += 40000
@@ -7978,24 +7978,24 @@ CASE 1
 		SOURCE:18 += 1000
 		SOURCE:19 += 500
 		;ABL:従順をみる
-		IF ABL:0 <= 1
-			SOURCE:18 += (ABL:0 * 100)
-			SOURCE:19 += (ABL:0 * 30)
-		ELSEIF ABL:0 <= 3
-			SOURCE:18 += 300 + (ABL:0 * 100)
-			SOURCE:19 += 200 + (ABL:0 * 30)
-		ELSEIF ABL:0 <= 5
-			SOURCE:18 += 750 + (ABL:0 * 100)
-			SOURCE:19 += 400 + (ABL:0 * 30)
-		ELSEIF ABL:0 <= 8
-			SOURCE:18 += 1000 + (ABL:0 * 120)
-			SOURCE:19 += 600 + (ABL:0 * 40)
-		ELSEIF ABL:0 <= 11
-			SOURCE:18 += 1500 + (ABL:0 * 120)
-			SOURCE:19 += 800 + (ABL:0 * 40)
+		IF ABL:親密 <= 1
+			SOURCE:18 += (ABL:親密 * 100)
+			SOURCE:19 += (ABL:親密 * 30)
+		ELSEIF ABL:親密 <= 3
+			SOURCE:18 += 300 + (ABL:親密 * 100)
+			SOURCE:19 += 200 + (ABL:親密 * 30)
+		ELSEIF ABL:親密 <= 5
+			SOURCE:18 += 750 + (ABL:親密 * 100)
+			SOURCE:19 += 400 + (ABL:親密 * 30)
+		ELSEIF ABL:親密 <= 8
+			SOURCE:18 += 1000 + (ABL:親密 * 120)
+			SOURCE:19 += 600 + (ABL:親密 * 40)
+		ELSEIF ABL:親密 <= 11
+			SOURCE:18 += 1500 + (ABL:親密 * 120)
+			SOURCE:19 += 800 + (ABL:親密 * 40)
 		ELSE
-			SOURCE:18 += 3000 + (ABL:0 * 60)
-			SOURCE:19 += 1800 + (ABL:0 * 20)
+			SOURCE:18 += 3000 + (ABL:親密 * 60)
+			SOURCE:19 += 1800 + (ABL:親密 * 20)
 		ENDIF
 		;ほろ酔い値＋
 		;酒豪もちの場合効果上昇
@@ -8023,7 +8023,7 @@ CASE 1
 		CASE 2
 			;一定確率で金銭感覚の上昇
 			IF !RAND:5
-				ABL:89 += 1
+				ABL:金銭感覚 += 1
 			ELSE
 				S += 1000
 				SOURCE:19 += S
@@ -8641,18 +8641,18 @@ CASE 1
 	C = 400
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		C += (ABL:0 * 80)
-	ELSEIF ABL:0 <= 3
-		C += 200 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 5
-		C += 500 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 8
-		C += 750 + (ABL:0 * 90)
-	ELSEIF ABL:0 <= 11
-		C += 1000 + (ABL:0 * 90)
+	IF ABL:親密 <= 1
+		C += (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 3
+		C += 200 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 5
+		C += 500 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 8
+		C += 750 + (ABL:親密 * 90)
+	ELSEIF ABL:親密 <= 11
+		C += 1000 + (ABL:親密 * 90)
 	ELSE
-		C += 2000 + (ABL:0 * 40)
+		C += 2000 + (ABL:親密 * 40)
 	ENDIF
 
 	;好感度をみる
@@ -8670,34 +8670,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			E = 250
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			E = 350
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			E = 500
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			E = 600
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			E = 800
 		ELSE
-			E = 700 + (ABL:0 * 50)
+			E = 700 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			D = 350
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			D = 450
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			D = 600
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			D = 700
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			D = 800
 		ELSE
-			D = 400 + (ABL:15 * 100)
+			D = 400 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 
@@ -8791,11 +8791,11 @@ CASE 1
 		S += A
 	REND
 	;親密をみる
-	IF ABL:0 <= 3
+	IF ABL:親密 <= 3
 		S /= 100
-	ELSEIF ABL:0 <= 6
+	ELSEIF ABL:親密 <= 6
 		S /= 10
-	ELSEIF ABL:0 <= 9
+	ELSEIF ABL:親密 <= 9
 		S /= 5
 	ENDIF
 	;恋人ないと半減
@@ -9051,18 +9051,18 @@ CASE 1
 	SOURCE:14 += 70
 
 	;ABL:Ｃ感覚をみる
-	IF ABL:3 == 0
+	IF ABL:Ｃ感覚 == 0
 		SOURCE:0 = 200
-	ELSEIF ABL:3 == 1
+	ELSEIF ABL:Ｃ感覚 == 1
 		SOURCE:0 = 400
-	ELSEIF ABL:3 == 2
+	ELSEIF ABL:Ｃ感覚 == 2
 		SOURCE:0 = 900
-	ELSEIF ABL:3 == 3
+	ELSEIF ABL:Ｃ感覚 == 3
 		SOURCE:0 = 1600
-	ELSEIF ABL:3 == 4
+	ELSEIF ABL:Ｃ感覚 == 4
 		SOURCE:0 = 2400
 	ELSE
-		SOURCE:0 = 1500 + (ABL:3 * 300)
+		SOURCE:0 = 1500 + (ABL:Ｃ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
 	IF TALENT:152 == 0
@@ -9169,7 +9169,7 @@ CASE 1
 	
 	PRINTFORMW 戦闘素質＋1
 	PRINTFORMW 戦闘経験＋{U}
-	ABL:TARGET:98 += 1
+	ABL:TARGET:戦闘素質 += 1
 	EXP:95 += U
 ;売却
 CASE -1
@@ -9281,9 +9281,9 @@ CASE 1
 		PRINTFORMW 異常経験-1
 		EXP:TARGET:50 -= 1
 	ENDIF
-	IF ABL:TARGET:2 > 0
+	IF ABL:TARGET:技巧 > 0
 		PRINTFORMW 技巧Lv-1
-		ABL:TARGET:2 -= 1
+		ABL:TARGET:技巧 -= 1
 	ENDIF
 ;売却
 CASE -1
@@ -9383,7 +9383,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	S += 100
-	ABL:TARGET:1 += 1
+	ABL:TARGET:欲望 += 1
 	PRINTFORML 異常経験+{S}
 	PRINTFORM 欲望Lv+1
 	EXP:TARGET:50 += S
@@ -9394,10 +9394,10 @@ CASE 1
 		MARK:TARGET:3 = 3
 		PRINTFORMW 親密Lv-3
 		;eramakerだと負数の比較が出来ない場合が多いので0になる場合は直接0を代入
-		IF ABL:TARGET:0 < 3
-			ABL:TARGET:0 = 0
+		IF ABL:TARGET:親密 < 3
+			ABL:TARGET:親密 = 0
 		ELSE
-			ABL:TARGET:0 -= 3
+			ABL:TARGET:親密 -= 3
 		ENDIF
 	ELSE
 		PRINTFORMW 　
@@ -9484,18 +9484,18 @@ CASE 1
 	C = 600
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		C += (ABL:0 * 80)
-	ELSEIF ABL:0 <= 3
-		C += 200 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 5
-		C += 500 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 8
-		C += 750 + (ABL:0 * 90)
-	ELSEIF ABL:0 <= 11
-		C += 1000 + (ABL:0 * 90)
+	IF ABL:親密 <= 1
+		C += (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 3
+		C += 200 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 5
+		C += 500 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 8
+		C += 750 + (ABL:親密 * 90)
+	ELSEIF ABL:親密 <= 11
+		C += 1000 + (ABL:親密 * 90)
 	ELSE
-		C += 2000 + (ABL:0 * 40)
+		C += 2000 + (ABL:親密 * 40)
 	ENDIF
 	
 	;好感度をみる
@@ -9513,34 +9513,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			E = 350
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			E = 450
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			E = 600
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			E = 700
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			E = 900
 		ELSE
-			E = 900 + (ABL:0 * 50)
+			E = 900 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			D = 450
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			D = 550
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			D = 700
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			D = 800
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			D = 900
 		ELSE
-			D = 500 + (ABL:15 * 100)
+			D = 500 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	
@@ -9621,18 +9621,18 @@ CASE 1
 	SOURCE:14 += 70
 
 	;ABL:Ｂ感覚をみる
-	IF ABL:14 == 0
+	IF ABL:Ｂ感覚 == 0
 		SOURCE:17 = 150
-	ELSEIF ABL:14 == 1
+	ELSEIF ABL:Ｂ感覚 == 1
 		SOURCE:17 = 360
-	ELSEIF ABL:14 == 2
+	ELSEIF ABL:Ｂ感覚 == 2
 		SOURCE:17 = 840
-	ELSEIF ABL:14 == 3
+	ELSEIF ABL:Ｂ感覚 == 3
 		SOURCE:17 = 1500
-	ELSEIF ABL:14 == 4
+	ELSEIF ABL:Ｂ感覚 == 4
 		SOURCE:17 = 2200
 	ELSE
-		SOURCE:17 = 2200 + (ABL:14 * 300)
+		SOURCE:17 = 2200 + (ABL:Ｂ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
 	IF TALENT:152 == 0
@@ -9708,29 +9708,29 @@ CASE 1
 	A += S
 	B += U
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		A += (ABL:0 * 100)
-		B += (ABL:0 * 30)
-	ELSEIF ABL:0 <= 3
-		A += 300 + (ABL:0 * 100)
-		B += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		A += 750 + (ABL:0 * 100)
-		B += 400 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 8
-		A += 1000 + (ABL:0 * 120)
-		B += 600 + (ABL:0 * 40)
-	ELSEIF ABL:0 <= 11
-		A += 1500 + (ABL:0 * 120)
-		B += 800 + (ABL:0 * 40)
+	IF ABL:親密 <= 1
+		A += (ABL:親密 * 100)
+		B += (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 3
+		A += 300 + (ABL:親密 * 100)
+		B += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		A += 750 + (ABL:親密 * 100)
+		B += 400 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 8
+		A += 1000 + (ABL:親密 * 120)
+		B += 600 + (ABL:親密 * 40)
+	ELSEIF ABL:親密 <= 11
+		A += 1500 + (ABL:親密 * 120)
+		B += 800 + (ABL:親密 * 40)
 	ELSE
-		A += 3000 + (ABL:0 * 60)
-		B += 1800 + (ABL:0 * 20)
+		A += 3000 + (ABL:親密 * 60)
+		B += 1800 + (ABL:親密 * 20)
 	ENDIF
 	;ABL:金銭感覚をみる
-	B = B * (ABL:89 * 5 + 100) / 100
+	B = B * (ABL:金銭感覚 * 5 + 100) / 100
 	;ABL:料理技術をみる
-	B = B * (ABL:90 * 7 + 100) / 100
+	B = B * (ABL:料理技能 * 7 + 100) / 100
 	;好感度をみる
 	IF CFLAG:2 <= 500
 		A += CFLAG:2
@@ -9746,34 +9746,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			D = 400
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			D = 600
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			D = 800
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			D = 1000
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			D = 1200
 		ELSE
-			D = 1000 + (ABL:0 * 100)
+			D = 1000 + (ABL:親密 * 100)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			C = 500
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			C = 700
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			C = 900
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			C = 1100
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			C = 1300
 		ELSE
-			C = 1000 + (ABL:15 * 150)
+			C = 1000 + (ABL:サドっ気 * 150)
 		ENDIF
 	ENDIF
 	;好感度はカット
@@ -9856,7 +9856,7 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	;料理技能Lv6以上の時
-	IF ABL:90 > 5
+	IF ABL:料理技能 > 5
 		TFLAG:91 = 1
 	;それ以外（料理技能Lv5以下）
 	;海水を持っている（歓楽ソース＋500）
@@ -9871,7 +9871,7 @@ CASE 1
 	SELECTCASE TFLAG:91
 	;料理技能Lv6以上の時
 	CASE 1
-		A = ABL:90 * 25
+		A = ABL:料理技能 * 25
 		S += A
 		;猫、食物ボーナス
 		CALL TYOGO_BONUS
@@ -10073,14 +10073,14 @@ CASE 1
 	;既成事実が2以上の時、係数を下げる
 	SIF MARK:2 > 1
 		A -= MARK:2 - 1
-	LIMIT U +(ABL:0 * A),1,150
+	LIMIT U +(ABL:親密 * A),1,150
 	B = RESULT
 	PRINTFORML 好感度+{B}
 	CFLAG:2 += B
 	
 	;既成事実が2以上の時、情愛ソースが付く
 	IF MARK:2 > 1
-		SOURCE:3 += MARK:2 * ABL:0 * 5 + S
+		SOURCE:3 += MARK:2 * ABL:親密 * 5 + S
 	ENDIF
 ;売却
 CASE -1
@@ -10156,18 +10156,18 @@ CASE 1
 	C = 200
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		C += (ABL:0 * 60)
-	ELSEIF ABL:0 <= 3
-		C += 200 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 5
-		C += 500 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 8
-		C += 750 + (ABL:0 * 75)
-	ELSEIF ABL:0 <= 11
-		C += 1000 + (ABL:0 * 75)
+	IF ABL:親密 <= 1
+		C += (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 3
+		C += 200 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 5
+		C += 500 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 8
+		C += 750 + (ABL:親密 * 75)
+	ELSEIF ABL:親密 <= 11
+		C += 1000 + (ABL:親密 * 75)
 	ELSE
-		C += 2000 + (ABL:0 * 30)
+		C += 2000 + (ABL:親密 * 30)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -10183,34 +10183,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			E = 200
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			E = 300
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			E = 400
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			E = 500
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			E = 600
 		ELSE
-			E = 500 + (ABL:0 * 50)
+			E = 500 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			D = 300
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			D = 400
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			D = 500
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			D = 600
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			D = 700
 		ELSE
-			D = 300 + (ABL:15 * 100)
+			D = 300 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	
@@ -10324,17 +10324,17 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;9999が限界値と想定
-	IF ABL:2 < 9999
+	IF ABL:技巧 < 9999
 		PRINTFORML %CALLNAME:TARGET%の技巧が1上がった
-		ABL:2 += 1
+		ABL:技巧 += 1
 	ENDIF
-	IF ABL:89 > 0
+	IF ABL:金銭感覚 > 0
 		PRINTFORML %CALLNAME:TARGET%の金銭感覚がマヒし、1下がった
-		ABL:89 -= 1
+		ABL:金銭感覚 -= 1
 	ENDIF
-	IF ABL:97 < 9999
+	IF ABL:浪費癖 < 9999
 		PRINTFORML %CALLNAME:TARGET%の浪費癖が酷くなった気がした…
-		ABL:97 += 1
+		ABL:浪費癖 += 1
 	ENDIF
 ;売却
 CASE -1
@@ -10555,18 +10555,18 @@ CASE 1
 	A = 200
 
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		A += (ABL:0 * 60)
-	ELSEIF ABL:0 <= 3
-		A += 200 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 5
-		A += 500 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 8
-		A += 750 + (ABL:0 * 75)
-	ELSEIF ABL:0 <= 11
-		A += 1000 + (ABL:0 * 75)
+	IF ABL:親密 <= 1
+		A += (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 3
+		A += 200 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 5
+		A += 500 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 8
+		A += 750 + (ABL:親密 * 75)
+	ELSEIF ABL:親密 <= 11
+		A += 1000 + (ABL:親密 * 75)
 	ELSE
-		A += 2000 + (ABL:0 * 30)
+		A += 2000 + (ABL:親密 * 30)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -10582,34 +10582,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 == 0
+		IF ABL:親密 == 0
 			C += 200
-		ELSEIF ABL:0 == 1
+		ELSEIF ABL:親密 == 1
 			C += 300
-		ELSEIF ABL:0 == 2
+		ELSEIF ABL:親密 == 2
 			C += 400
-		ELSEIF ABL:0 == 3
+		ELSEIF ABL:親密 == 3
 			C += 500
-		ELSEIF ABL:0 == 4
+		ELSEIF ABL:親密 == 4
 			C += 600
 		ELSE
-			C += 500 + (ABL:0 * 50)
+			C += 500 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			B += 300
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			B += 400
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			B += 500
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			B += 600
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			B += 700
 		ELSE
-			B = 300 + (ABL:15 * 100)
+			B = 300 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 	;付加価値追加
@@ -10783,24 +10783,24 @@ CASE 1
 	C = 300
 	
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		C += (ABL:0 * 70)
-		D += (ABL:0 * 20)
-	ELSEIF ABL:0 <= 3
-		C += 200 + (ABL:0 * 75)
-		D += 100 + (ABL:0 * 20)
-	ELSEIF ABL:0 <= 5
-		C += 500 + (ABL:0 * 75)
-		D += 200 + (ABL:0 * 20)
-	ELSEIF ABL:0 <= 8
-		C += 700 + (ABL:0 * 85)
-		D += 300 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 11
-		C += 1200 + (ABL:0 * 90)
-		D += 400 + (ABL:0 * 30)
+	IF ABL:親密 <= 1
+		C += (ABL:親密 * 70)
+		D += (ABL:親密 * 20)
+	ELSEIF ABL:親密 <= 3
+		C += 200 + (ABL:親密 * 75)
+		D += 100 + (ABL:親密 * 20)
+	ELSEIF ABL:親密 <= 5
+		C += 500 + (ABL:親密 * 75)
+		D += 200 + (ABL:親密 * 20)
+	ELSEIF ABL:親密 <= 8
+		C += 700 + (ABL:親密 * 85)
+		D += 300 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 11
+		C += 1200 + (ABL:親密 * 90)
+		D += 400 + (ABL:親密 * 30)
 	ELSE
-		C += 2000 + (ABL:0 * 45)
-		D += 800 + (ABL:0 * 15)
+		C += 2000 + (ABL:親密 * 45)
+		D += 800 + (ABL:親密 * 15)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 500
@@ -10816,34 +10816,34 @@ CASE 1
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:従順をみる
-		IF ABL:0 <= 1
-			E += 300 + (ABL:0 * 50)
-		ELSEIF ABL:0 <= 3
-			E += 600 + (ABL:0 * 100)
-		ELSEIF ABL:0 <= 5
-			E += 800 + (ABL:0 * 120)
-		ELSEIF ABL:0 <= 8
-			E += 1000 + (ABL:0 * 140)
-		ELSEIF ABL:0 <= 11
-			E += 1200 + (ABL:0 * 160)
+		IF ABL:親密 <= 1
+			E += 300 + (ABL:親密 * 50)
+		ELSEIF ABL:親密 <= 3
+			E += 600 + (ABL:親密 * 100)
+		ELSEIF ABL:親密 <= 5
+			E += 800 + (ABL:親密 * 120)
+		ELSEIF ABL:親密 <= 8
+			E += 1000 + (ABL:親密 * 140)
+		ELSEIF ABL:親密 <= 11
+			E += 1200 + (ABL:親密 * 160)
 		ELSE
-			E += 1500 + (ABL:0 * 180)
+			E += 1500 + (ABL:親密 * 180)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:サドっ気をみる
-		IF ABL:15 == 0
+		IF ABL:サドっ気 == 0
 			F = 600
-		ELSEIF ABL:15 == 1
+		ELSEIF ABL:サドっ気 == 1
 			F = 900
-		ELSEIF ABL:15 == 2
+		ELSEIF ABL:サドっ気 == 2
 			F = 1200
-		ELSEIF ABL:15 == 3
+		ELSEIF ABL:サドっ気 == 3
 			F = 1600
-		ELSEIF ABL:15 == 4
+		ELSEIF ABL:サドっ気 == 4
 			F = 2000
 		ELSE
-			F = 1000 + (ABL:15 * 300)
+			F = 1000 + (ABL:サドっ気 * 300)
 		ENDIF
 	ENDIF
 	;ここで戻して加算
@@ -10928,7 +10928,7 @@ CASE 1
 			A -= 1
 	REND
 	;計算
-	S += (ABL:2 + ABL:89 + ABL:90) * A
+	S += (ABL:技巧 + ABL:金銭感覚 + ABL:料理技能) * A
 	
 	SOURCE:19 += S
 	PRINTFORML 家事経験＋{U}
@@ -10978,7 +10978,7 @@ CASE 1
 	ENDIF
 	PRINTFORML 
 	PRINTFORM 0～
-	A = ABL:1
+	A = ABL:欲望
 	A += 1
 	PRINTFORM {A}
 	PRINTFORML の数値を入力してください
@@ -11171,9 +11171,9 @@ CASE 1
 		PRINTFORMW %CALLNAME:TARGET%の異常経験が1つ身体から消え去った
 		EXP:TARGET:50 -= 1
 		;技巧下げる
-		IF ABL:TARGET:2 > 0
+		IF ABL:TARGET:技巧 > 0
 			PRINTFORMW 技巧Lvが1下がった
-			ABL:TARGET:2 -= 1
+			ABL:TARGET:技巧 -= 1
 		ENDIF
 	;浄化の健忘薬（無効）
 	CASE -9
@@ -11746,19 +11746,19 @@ ENDSELECT
 A = RAND:7 + 5
 B = 200
 ;ABL:従順をみる
-SELECTCASE ABL:0
+SELECTCASE ABL:親密
 	CASE 0,1
-		B += (ABL:0 * 60)
+		B += (ABL:親密 * 60)
 	CASE 2,3
-		B += 200 + (ABL:0 * 60)
+		B += 200 + (ABL:親密 * 60)
 	CASE 4,5
-		B += 500 + (ABL:0 * 60)
+		B += 500 + (ABL:親密 * 60)
 	CASE 6,7,8
-		B += 750 + (ABL:0 * 75)
+		B += 750 + (ABL:親密 * 75)
 	CASE IS <= 11
-		B += 1000 + (ABL:0 * 75)
+		B += 1000 + (ABL:親密 * 75)
 	CASEELSE
-		B += 2000 + (ABL:0 * 30)
+		B += 2000 + (ABL:親密 * 30)
 ENDSELECT
 ;好感度をみる
 IF CFLAG:2 <= 500
@@ -11772,7 +11772,7 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	SELECTCASE ABL:0
+	SELECTCASE ABL:親密
 		CASE 0
 			D = 200
 		CASE 1
@@ -11784,12 +11784,12 @@ IF TFLAG:45 == 0
 		CASE 4
 			D = 600
 		CASEELSE
-			D = 500 + (ABL:0 * 50)
+			D = 500 + (ABL:親密 * 50)
 	ENDSELECT
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	SELECTCASE ABL:15
+	SELECTCASE ABL:サドっ気
 		CASE 0
 			C = 300
 		CASE 1
@@ -11801,7 +11801,7 @@ ELSE
 		CASE 4
 			C = 700
 		CASEELSE
-			C = 300 + (ABL:15 * 100)
+			C = 300 + (ABL:サドっ気 * 100)
 	ENDSELECT
 ENDIF
 A += U
@@ -12340,18 +12340,18 @@ CASE 1
 			ENDIF
 			
 			;ABL:Ｃ感覚をみる
-			IF ABL:3 == 0
+			IF ABL:Ｃ感覚 == 0
 				SOURCE:0 += 200
-			ELSEIF ABL:3 == 1
+			ELSEIF ABL:Ｃ感覚 == 1
 				SOURCE:0 += 400
-			ELSEIF ABL:3 == 2
+			ELSEIF ABL:Ｃ感覚 == 2
 				SOURCE:0 += 900
-			ELSEIF ABL:3 == 3
+			ELSEIF ABL:Ｃ感覚 == 3
 				SOURCE:0 += 1600
-			ELSEIF ABL:3 == 4
+			ELSEIF ABL:Ｃ感覚 == 4
 				SOURCE:0 += 2400
 			ELSE
-				SOURCE:0 += 1500 + (ABL:3 * 300)
+				SOURCE:0 += 1500 + (ABL:Ｃ感覚 * 300)
 			ENDIF
 			;付加価値を見る
 			SOURCE:0 *= (S + U + 100) / 100
@@ -12631,8 +12631,8 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	CALL TRAIN_MESSAGE_B
-	SOURCE:2 += 175 + (ABL:5 * 100)
-	SOURCE:13 = 150 + (ABL:5 * 100)
+	SOURCE:2 += 175 + (ABL:Ａ感覚 * 100)
+	SOURCE:13 = 150 + (ABL:Ａ感覚 * 100)
 	SOURCE:12 = 250
 	SOURCE:14 = 400
 	;EXP:Ａ経験をみる
@@ -12667,18 +12667,18 @@ CASE 1
 		TIMES SOURCE:13, 1.60
 	ENDIF
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 150 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 300 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 400 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 500 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 600 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 150 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 300 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 400 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 500 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 600 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 750 + (ABL:0 * 180)
+		SOURCE:21 += 750 + (ABL:親密 * 180)
 	ENDIF
 	;Ａ敏感、鈍感をみる
 	;快Ａ自体のチェックは後でまとめてやる
@@ -12766,18 +12766,18 @@ CASE 1
 		EXP:55 += 1
 		
 		;ABL:Ｂ感覚をみる
-		IF ABL:14 == 0
+		IF ABL:Ｂ感覚 == 0
 			SOURCE:17 = 50
-		ELSEIF ABL:14 == 1
+		ELSEIF ABL:Ｂ感覚 == 1
 			SOURCE:17 = 100
-		ELSEIF ABL:14 == 2
+		ELSEIF ABL:Ｂ感覚 == 2
 			SOURCE:17 = 250
-		ELSEIF ABL:14 == 3
+		ELSEIF ABL:Ｂ感覚 == 3
 			SOURCE:17 = 600
-		ELSEIF ABL:14 == 4
+		ELSEIF ABL:Ｂ感覚 == 4
 			SOURCE:17 = 1000
 		ELSE
-			SOURCE:17 = 400 + (ABL:14 * 200)
+			SOURCE:17 = 400 + (ABL:Ｂ感覚 * 200)
 		ENDIF
 		;5回目から絶頂してない場合触手がちょっとやる気出す
 		IF LOCAL:0 > 4 && LOCAL:10 == 0
@@ -15092,7 +15092,7 @@ VARSET LOCAL, 0
 VARSET TSTR, ""
 
 ;対象者の技巧が3以下の時、66％で悪要素が付くそれ以外も１％でつく
-IF (ABL:TARGET:2 <= 3 && RAND:3 >= 1) || RAND:99 == 0
+IF (ABL:TARGET:技巧 <= 3 && RAND:3 >= 1) || RAND:99 == 0
 	K = RAND:8
 	IF K == 0
 		TSTR:3 = 作りが荒い
@@ -15146,7 +15146,7 @@ IF (ABL:TARGET:2 <= 3 && RAND:3 >= 1) || RAND:99 == 0
 ENDIF
 
 ;技巧が7以上だと80%で素材依存の付加価値が発生
-IF ABL:TARGET:2 >= 7 && RAND:5 >= 1
+IF ABL:TARGET:技巧 >= 7 && RAND:5 >= 1
 	CALL TSUIKA_KOKA_NO_1
 	;TSUIKA_KOKA_NO_1でI代入済
 	;雑草、薬草、どんぐり、りんご、アオカビ
@@ -15263,7 +15263,7 @@ IF ABL:TARGET:2 >= 7 && RAND:5 >= 1
 ENDIF
 
 ;技巧が10以上だと75%で実行相手の技能依存の付加価値が発生
-IF ABL:TARGET:2 >= 10 && RAND:4 >= 1
+IF ABL:TARGET:技巧 >= 10 && RAND:4 >= 1
 	CALL TSUIKA_KOKA_NO_2
 	;Iにパートナーが所持している素質から１つ選択して代入済
 	;淫乱系(VBAC・淫乱のみ)素質
@@ -15742,7 +15742,7 @@ IF ABL:TARGET:2 >= 10 && RAND:4 >= 1
 ENDIF
 
 ;(技巧-10)/10の確率でキャラ特有の付加価値が発生
-IF RAND:10 <= (ABL:TARGET:2 - 10)
+IF RAND:10 <= (ABL:TARGET:技巧 - 10)
 	;あなた
 	;おふざけで作ったけどまさか本当にJで「あなた」を調教してる人はいない…よな…？
 	IF NO:TARGET == 0

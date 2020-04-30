@@ -12,7 +12,7 @@ SIF TALENT:122
 	RETURN 0
 
 DRAWLINE
-IF ABL:12 >= 9999
+IF ABL:レズ中毒 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -27,7 +27,7 @@ IF F
 ENDIF
 
 ;奉仕精神が必要
-PRINTFORML %ABLNAME:6%{ABL:12 + 1}LV以上、かつ
+PRINTFORML %ABLNAME:6%{ABL:レズ中毒 + 1}LV以上、かつ
 
 PRINTFORM [0] - %PALAMNAME:0%の珠×{B}、%PALAMNAME:5%の珠×{A}、%PALAMNAME:6%の珠×{A}、%EXPNAME:40%{C}以上……
 
@@ -75,7 +75,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:12 += 1
+	ABL:レズ中毒 += 1
 
 IF RESULT == 0
 	JUEL:0 -= B
@@ -87,7 +87,7 @@ ENDIF
 
 PRINTS ABLNAME:12
 PRINT のレベルが
-PRINTV ABL:12
+PRINTV ABL:レズ中毒
 PRINTW になりました。
 
 
@@ -96,7 +96,7 @@ PRINTW になりました。
 ;レズ中毒が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP12
-IF ABL:12 >= 9999 || TALENT:122
+IF ABL:レズ中毒 >= 9999 || TALENT:122
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -115,7 +115,7 @@ IF EXP:50 < F
 ENDIF
 
 ;奉仕精神が必要
-IF ABL:6 < ABL:12 + 1
+IF ABL:奉仕精神 < ABL:レズ中毒 + 1
 	I |= 4
 	J |= 4
 ENDIF
@@ -149,19 +149,19 @@ ENDIF
 ;レズ中毒を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP12
-IF ABL:12 == 0
+IF ABL:レズ中毒 == 0
 	A = 3000
 	B = 10000
 	C = 1000
-ELSEIF ABL:12 == 1
+ELSEIF ABL:レズ中毒 == 1
 	A = 8000
 	B = 25000
 	C = 1500
-ELSEIF ABL:12 == 2
+ELSEIF ABL:レズ中毒 == 2
 	A = 15000
 	B = 50000
 	C = 2500
-ELSEIF ABL:12 == 3
+ELSEIF ABL:レズ中毒 == 3
 	A = 30000
 	B = 100000
 	C = 5000
@@ -171,7 +171,7 @@ ELSEIF ABL:12 == 3
 		TIMES B , 1.10
 		TIMES C , 1.10
 	ENDIF
-ELSEIF ABL:12 == 4
+ELSEIF ABL:レズ中毒 == 4
 	A = 55000
 	B = 300000
 	C = 8000
@@ -186,15 +186,15 @@ ELSE
 	B = 300000
 	C = 8000
 	
-	LOCAL:1 = ABL:9
+	LOCAL:1 = ABL:レズっ気
 	SIF LOCAL:1 <= 0
 		LOCAL:1 = 1
-	;ABL:9はレズっ気
-	LOCAL = ( LOCAL:1-ABL:12 )*100 / LOCAL:1
+	;ABL:レズっ気はレズっ気
+	LOCAL = ( LOCAL:1-ABL:レズ中毒 )*100 / LOCAL:1
 	
-	A = A * (ABL:12 - 3)
-	B = B * (ABL:12 - 3)*(100 - LOCAL)/100
-	C = C * (ABL:12 - 2) / 2
+	A = A * (ABL:レズ中毒 - 3)
+	B = B * (ABL:レズ中毒 - 3)*(100 - LOCAL)/100
+	C = C * (ABL:レズ中毒 - 2) / 2
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -236,8 +236,8 @@ SIF TALENT:75
 	TIMES B , 0.50
 
 ;ＬＶ２以降に上げるときは異常経験必要（素質：[両刀][中毒しやすい]なら無視できる）
-IF ABL:12 >= 2 && TALENT:81 == 0 && TALENT:72 == 0
-	F = ABL:12 * 5
+IF ABL:レズ中毒 >= 2 && TALENT:81 == 0 && TALENT:72 == 0
+	F = ABL:レズ中毒 * 5
 ELSE
 	F = 0
 ENDIF

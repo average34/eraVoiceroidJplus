@@ -857,7 +857,7 @@ ENDIF
 ;	IF RESULT == 0
 ;		PRINTFORMW ―%NAME:TARGET%を処女に変更します―
 ;		TALENT:TARGET:0 = 1
-;		ABL:TARGET:4 = 0
+;		ABL:TARGET:Ｖ感覚 = 0
 ;		EXP:TARGET:0 = 0
 ;	ELSEIF RESULT == 1
 ;		PRINTFORMW ―通常の素質で開始します―
@@ -3114,7 +3114,7 @@ IF SELECTCOM == 315
 	;二回目以降
 	ELSE
 		;強化版(親密6&好感度600以上)
-		IF ABL:0 >= 6 || CFLAG:2 >= 600
+		IF ABL:親密 >= 6 || CFLAG:2 >= 600
 			;親愛または相愛がある
 			IF (TALENT:親愛 || TALENT:TARGET:相愛) && (CFLAG:545 < 4 || FLAG:キャラ口上の表示頻度 == 2)
 				PRINTFORMW 
@@ -5633,7 +5633,7 @@ IF SELECTCOM == 3 && TEQUIP:18 == 0 && TEQUIP:53
 	;二回目以降
 	ELSE
 		;恋慕+自慰中毒Lv5以上
-		IF TALENT:恋慕 && ABL:10 > 4 && (CFLAG:460 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:自慰中毒 > 4 && (CFLAG:460 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:460 = 5
 		;恋慕または恋人
@@ -5660,7 +5660,7 @@ IF SELECTCOM == 3 && TEQUIP:18 && TEQUIP:53
 	;二回目以降
 	ELSE
 		;恋慕+自慰中毒Lv5以上
-		IF TALENT:恋慕 && ABL:10 > 4 && (CFLAG:461 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:自慰中毒 > 4 && (CFLAG:461 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:461 = 5
 		;恋慕または恋人
@@ -5966,7 +5966,7 @@ IF SELECTCOM == 44 && TEQUIP:44 && TFLAG:17 == 1
 	;二回目以降
 	ELSE
 		;恋慕+マゾっ気Lv5以上
-		IF TALENT:恋慕 && ABL:8 > 4 && (CFLAG:473 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:マゾっ気 > 4 && (CFLAG:473 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:473 = 5
 		;恋慕または恋人
@@ -5988,7 +5988,7 @@ ELSEIF SELECTCOM == 44 && TEQUIP:PLAYER:44 && TFLAG:17 == 2
 	;二回目以降
 	ELSE
 		;恋慕+サドっ気Lv5以上
-		IF TALENT:恋慕 && ABL:15 > 4 && (CFLAG:473 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:サドっ気 > 4 && (CFLAG:473 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:473 = 5
 		;恋慕または恋人
@@ -6009,7 +6009,7 @@ ENDIF
 ;相手から外す
 IF SELECTCOM == 44 && TEQUIP:44 == 0 && TFLAG:17 == 1
 	;恋慕+マゾっ気Lv5以上
-	IF TALENT:恋慕 && ABL:8 > 4 && (CFLAG:474 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:マゾっ気 > 4 && (CFLAG:474 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:474 = 5
 	;恋慕
@@ -6024,7 +6024,7 @@ IF SELECTCOM == 44 && TEQUIP:44 == 0 && TFLAG:17 == 1
 ;主人公から外す
 ELSEIF SELECTCOM == 44 && TEQUIP:PLAYER:44 == 0 && TFLAG:17 == 2
 	;恋慕+サドっ気Lv5以上
-	IF TALENT:恋慕 && ABL:15 > 4 && (CFLAG:474 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:サドっ気 > 4 && (CFLAG:474 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:474 = 5
 	;恋慕または恋人
@@ -6050,7 +6050,7 @@ IF SELECTCOM == 45 && TEQUIP:45 && TFLAG:17 == 1
 	;二回目以降
 	ELSE
 		;恋慕+マゾっ気Lv5以上
-		IF TALENT:恋慕 && ABL:8 > 4 && (CFLAG:475 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:マゾっ気 > 4 && (CFLAG:475 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:475 = 5
 		;恋慕または恋人
@@ -6071,7 +6071,7 @@ ELSEIF SELECTCOM == 45 && TEQUIP:PLAYER:45 && TFLAG:17 == 2
 		CFLAG:475 = 1
 	ELSE
 		;恋慕+サドっ気Lv5以上
-		IF TALENT:恋慕 && ABL:15 > 4 && (CFLAG:475 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:サドっ気 > 4 && (CFLAG:475 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:475 = 5
 		;恋慕または恋人
@@ -6092,7 +6092,7 @@ ENDIF
 ;相手から外す
 IF SELECTCOM == 45 && TEQUIP:45 == 0 && TFLAG:17 == 1
 	;恋慕+マゾっ気Lv5以上
-	IF TALENT:恋慕 && ABL:8 > 4 && (CFLAG:476 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:マゾっ気 > 4 && (CFLAG:476 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:476 = 5
 	;恋慕
@@ -6107,7 +6107,7 @@ IF SELECTCOM == 45 && TEQUIP:45 == 0 && TFLAG:17 == 1
 ;主人公から外す
 ELSEIF SELECTCOM == 45 && TEQUIP:PLAYER:45 == 0 && TFLAG:17 == 2
 	;恋慕+サドっ気Lv5以上
-	IF TALENT:恋慕 && ABL:15 > 4 && (CFLAG:476 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:サドっ気 > 4 && (CFLAG:476 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:476 = 5
 	;恋慕
@@ -6126,7 +6126,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 46 && TEQUIP:46
 	;恋慕+A感覚Lv5以上+マゾっ気Lv5以上
-	IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:8 > 4 && (CFLAG:477 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:マゾっ気 > 4 && (CFLAG:477 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:477 = 5
 	;恋慕
@@ -6145,7 +6145,7 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 46 && TEQUIP:46 == 0
 	;恋慕+A感覚Lv5以上+マゾっ気Lv5以上
-	IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:8 > 4 && (CFLAG:478 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+	IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:マゾっ気 > 4 && (CFLAG:478 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 		PRINTFORMW 
 		CFLAG:478 = 5
 	;恋慕
@@ -6282,7 +6282,7 @@ IF SELECTCOM == 81
 	;二回目以降
 	ELSE
 		;恋慕+V感覚Lv10以上+マゾッ気Lv5以上
-		IF TALENT:恋慕 && ABL:Ｖ感覚 > 9 && ABL:8 > 4 && (CFLAG:484 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:Ｖ感覚 > 9 && ABL:マゾっ気 > 4 && (CFLAG:484 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:484 = 5
 		;恋慕または恋人
@@ -6308,7 +6308,7 @@ IF SELECTCOM == 82
 	;二回目以降
 	ELSE
 		;恋慕+A感覚Lv10以上+マゾッ気Lv5以上
-		IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:8 > 4 && (CFLAG:485 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:Ａ感覚 > 4 && ABL:マゾっ気 > 4 && (CFLAG:485 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:485 = 5
 		;恋慕または恋人
@@ -6334,7 +6334,7 @@ IF SELECTCOM == 83
 	;二回目以降
 	ELSE
 		;恋慕+V感覚Lv10以上+A感覚Lv10以上+マゾッ気Lv5以上
-		IF TALENT:恋慕 && ABL:Ｖ感覚 > 9 && ABL:Ａ感覚 > 9 && ABL:8 > 4 && (CFLAG:486 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:Ｖ感覚 > 9 && ABL:Ａ感覚 > 9 && ABL:マゾっ気 > 4 && (CFLAG:486 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:486 = 5
 		;恋慕または恋人
@@ -7170,7 +7170,7 @@ ENDIF
 ;-------------------------------------------------
 ;強制放尿 CFLAG:491
 ;-------------------------------------------------
-IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:0 >= 4 && ABL:1 >= 3 && ABL:8 >= 3) || (TALENT:57 && TEQUIP:22 == 0)
+IF SELECTCOM == 85 && (TALENT:57 == 0 && ABL:親密 >= 4 && ABL:欲望 >= 3 && ABL:マゾっ気 >= 3) || (TALENT:57 && TEQUIP:22 == 0)
 	;初めて
 	IF CFLAG:491 == 0
 		PRINTFORMW 
@@ -7288,7 +7288,7 @@ IF SELECTCOM == 70
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:8 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:496 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:496 = 5
 		;恋慕または恋人
@@ -8160,7 +8160,7 @@ IF SELECTCOM == 181 && TFLAG:17 == 1 && TEQUIP:PLAYER:85
 	;非処女
 	ELSE
 		;恋慕+奉仕精神Lv5以上
-		IF TALENT:恋慕 && ABL:15 > 4 && (CFLAG:500 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && ABL:サドっ気 > 4 && (CFLAG:500 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:500 = 5
 		;恋慕または恋人
@@ -8429,7 +8429,7 @@ IF SELECTCOM == 186 && (TFLAG:17 == MASTER)
 	;二回目以降
 	ELSE
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
-		IF TALENT:恋慕 && (TALENT:79 || ABL:8 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
+		IF TALENT:恋慕 && (TALENT:79 || ABL:マゾっ気 > 4) && (CFLAG:509 < 5 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:509 = 5
 		;恋慕または恋人
@@ -8734,7 +8734,7 @@ IF TFLAG:16 > 0
 	;恋慕
 	IF TALENT:恋慕 && (CFLAG:367 <= 2 || FLAG:キャラ口上の表示頻度 == 2)
 		;奉仕精神Lv5＆サドっ気Lv5以上
-		IF ABL:奉仕精神 > 4 && ABL:15 > 4
+		IF ABL:奉仕精神 > 4 && ABL:サドっ気 > 4
 		ELSE
 			PRINTFORMW 
 		ENDIF
@@ -8742,7 +8742,7 @@ IF TFLAG:16 > 0
 	;それ以外
 	ELSEIF CFLAG:367 <= 0 || FLAG:キャラ口上の表示頻度 == 2
 		;奉仕精神Lv5＆サドっ気Lv5以上
-		IF ABL:奉仕精神 > 4 && ABL:15 > 4
+		IF ABL:奉仕精神 > 4 && ABL:サドっ気 > 4
 			PRINTFORMW
 		ELSE
 			PRINTFORMW 

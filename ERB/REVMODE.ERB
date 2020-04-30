@@ -1132,7 +1132,7 @@ SKIPDISP 0
 
 ;胸愛撫選択時に快Bソース無い場合(背面座位の快Bソースを参考）
 IF SOURCE:17 == 0 && ARG:1 == 3
-	SOURCE:17 += (ABL:PLAYER:2 * 100) * 2 + (ABL:14 * 30)
+	SOURCE:17 += (ABL:PLAYER:技巧 * 100) * 2 + (ABL:Ｂ感覚 * 30)
 ENDIF
 
 SELECTCASE ARG:1

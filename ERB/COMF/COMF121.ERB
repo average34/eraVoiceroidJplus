@@ -31,12 +31,12 @@ SIF TALENT:PLAYER:119 == 0 && TALENT:PLAYER:121 == 0 && TALENT:PLAYER:122 == 0 &
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合後背位はできない（サドならＯＫ）
 IF EXP:0 == 0 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 4 || ABL:ASSI:9 <= 4) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位はできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
-	SIF (ABL:ASSI:0 <= 3 || ABL:ASSI:9 <= 3) && TALENT:ASSI:83 == 0
+	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:83 == 0
 		RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -97,24 +97,24 @@ SIF FLAG:62 & 4194304
 	CALL SOURCE_M_COM121
 
 ;ABL:Ｖ感覚をみる
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	SOURCE:1 = 30
 	SOURCE:3 = 50
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	SOURCE:1 = 125
 	SOURCE:3 = 150
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	SOURCE:1 = 300
 	SOURCE:3 = 250
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	SOURCE:1 = 700
 	SOURCE:3 = 350
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	SOURCE:1 = 1200
 	SOURCE:3 = 600
 ELSE
-	SOURCE:1 = 700 + (ABL:4 * 220)
-	SOURCE:3 = 225 + (ABL:4 * 125)
+	SOURCE:1 = 700 + (ABL:Ｖ感覚 * 220)
+	SOURCE:3 = 225 + (ABL:Ｖ感覚 * 125)
 ENDIF
 
 ;EXP:Ｖ経験をみる
@@ -212,29 +212,29 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;ABL:親密をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES SOURCE:1 , 0.50
 	TIMES SOURCE:3 , 0.60
 	TIMES SOURCE:15 , 2.00
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES SOURCE:1 , 0.80
 	TIMES SOURCE:3 , 0.80
 	TIMES SOURCE:15 , 1.50
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES SOURCE:1 , 1.00
 	TIMES SOURCE:3 , 1.00
 	TIMES SOURCE:15 , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES SOURCE:1 , 1.30
 	TIMES SOURCE:3 , 1.20
 	TIMES SOURCE:15 , 0.80
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES SOURCE:1 , 1.60
 	TIMES SOURCE:3 , 1.40
 	TIMES SOURCE:15 , 0.60
 ELSE
-	SOURCE:1 = SOURCE:1 * (ABL:0 * 20 + 100) / 100
-	SOURCE:3 = SOURCE:3 * (ABL:0 * 10 + 110) / 100
+	SOURCE:1 = SOURCE:1 * (ABL:親密 * 20 + 100) / 100
+	SOURCE:3 = SOURCE:3 * (ABL:親密 * 10 + 110) / 100
 	TIMES SOURCE:15 , 0.30
 ENDIF
 
@@ -243,34 +243,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -363,27 +363,27 @@ LOCAL:13 += 100
 LOCAL:14 += 10
 
 ;ABL:Ｍ感覚をみる
-IF ABL:17 == 0
+IF ABL:Ｍ感覚 == 0
 	LOCAL:24 += 5
-ELSEIF ABL:17 == 1
+ELSEIF ABL:Ｍ感覚 == 1
 	LOCAL:24 += 20
-ELSEIF ABL:17 == 2
+ELSEIF ABL:Ｍ感覚 == 2
 	LOCAL:24 += 100
-ELSEIF ABL:17 == 3
+ELSEIF ABL:Ｍ感覚 == 3
 	LOCAL:24 += 250
-ELSEIF ABL:17 == 4
+ELSEIF ABL:Ｍ感覚 == 4
 	LOCAL:24 += 400
 ELSE
-	LOCAL:24 += 150 + (ABL:17 * 100)
+	LOCAL:24 += 150 + (ABL:Ｍ感覚 * 100)
 ENDIF
 
 ;PLAYERの技巧を見る
-SIF ABL:PLAYER:2 >= 2
-	LOCAL:24 = LOCAL:24 * (100 + (ABL:PLAYER:2 / 2)) / 100
+SIF ABL:PLAYER:技巧 >= 2
+	LOCAL:24 = LOCAL:24 * (100 + (ABL:PLAYER:技巧 / 2)) / 100
 
 ;技巧を見る
-SIF ABL:TARGET:2 >= 2
-	LOCAL:24 = LOCAL:24 * (100 + (ABL:TARGET:2 / 2)) / 100
+SIF ABL:TARGET:技巧 >= 2
+	LOCAL:24 = LOCAL:24 * (100 + (ABL:TARGET:技巧 / 2)) / 100
 
 ;EXP:キス経験をみる
 IF EXP:96 < 1
@@ -430,7 +430,7 @@ ELSE
 ENDIF
 
 ;ABL:親密をみる
-LOCAL:24 = LOCAL:24 * (85 + ABL:0) / 100
+LOCAL:24 = LOCAL:24 * (85 + ABL:親密) / 100
 
 ;TALENT:恋慕をみる
 SIF TALENT:85
@@ -474,20 +474,20 @@ V = 170
 CALL COM_ORDER
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 3
+IF ABL:欲望
+	A += ABL:欲望 * 3
 ENDIF
 ;ABL:Ｖ感覚
-IF ABL:4
-	A += ABL:4 * 2
+IF ABL:Ｖ感覚
+	A += ABL:Ｖ感覚 * 2
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 ENDIF
 ;ABL:精液中毒
-IF ABL:11
-	A += ABL:11 * 1
+IF ABL:精液中毒
+	A += ABL:精液中毒 * 1
 ENDIF
 
 IF MARK:1
@@ -644,35 +644,35 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 3,')
 		S = 1
 	ENDIF
 	;ABL:Ｖ感覚
-	IF ABL:4
+	IF ABL:Ｖ感覚
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:4
-		PRINTV 'LV,ABL:4,'(,ABL:4 * 2,')
+		PRINTV 'LV,ABL:Ｖ感覚,'(,ABL:Ｖ感覚 * 2,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 	;ABL:精液中毒
-	IF ABL:11
+	IF ABL:精液中毒
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:11
-		PRINTV 'LV,ABL:11,'(,ABL:11 * 1,')
+		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 1,')
 		S = 1
 	ENDIF
 

@@ -57,10 +57,10 @@ IF TARGET >= 0
 	ENDIF
 
 	;反発感情３があり、かつ[幼稚]である時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が５以上になる
-	IF TALENT:TARGET:132 && MARK:3 == 3 && ABL:TARGET:1 >= 5 && ABL:TARGET:0 >= 5 && ABL:TARGET:8 >= 5 && EXP:TARGET:50 >= 5
+	IF TALENT:TARGET:132 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:50 >= 5
 		CALL EVENT_YOUJI
 	;反発感情３があり、かつ[幼稚]でなく、蓬莱人がない時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が７以上に加え露出５とおもらし癖がつく
-	ELSEIF TALENT:TARGET:128 == 0 && TALENT:TARGET:132 == 0 && MARK:3 == 3 && ABL:TARGET:1 >= 5 && ABL:TARGET:0 >= 5 && ABL:TARGET:8 >= 5 && ABL:TARGET:7 >= 5 && EXP:TARGET:50 >= 7 && TALENT:57 == 1
+	ELSEIF TALENT:TARGET:128 == 0 && TALENT:TARGET:132 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:50 >= 7 && TALENT:57 == 1
 		CALL EVENT_YOUJI
 	ENDIF
 ENDIF
@@ -76,7 +76,7 @@ IF FLAG:5 == 10
 		ELSE
 			CFLAG:COUNT:18 += 1
 			;制限日数をオーバーした場合
-			IF (CFLAG:COUNT:18 >= (10 + ABL:MASTER:84 * 2) * (TALENT:COUNT:150 * 5 + 10) / 10 - CFLAG:COUNT:20 / 10) && CFLAG:COUNT:17 == 0
+			IF (CFLAG:COUNT:18 >= (10 + ABL:MASTER:霧無効化能力強化 * 2) * (TALENT:COUNT:150 * 5 + 10) / 10 - CFLAG:COUNT:20 / 10) && CFLAG:COUNT:17 == 0
 				;!!!
 				;暫定メッセージ。とりあえず必要最小限だけ
 				CFLAG:COUNT:17 = 1
@@ -115,7 +115,7 @@ A = 0
 REPEAT CHARANUM
 	IF COUNT == 0
 		CONTINUE
-	ELSEIF (CFLAG:COUNT:19 >= 5 + ABL:MASTER:85 || (CFLAG:COUNT:17 && CFLAG:COUNT:2 < 0)) && A == 0
+	ELSEIF (CFLAG:COUNT:19 >= 5 + ABL:MASTER:霧浄化能力強化 || (CFLAG:COUNT:17 && CFLAG:COUNT:2 < 0)) && A == 0
 		PRINTFORMW %CALLNAME:COUNT%は完全に霧に飲み込まれてしまった…
 		;【パートナー】引継ぎ
 		IF TALENT:COUNT:150
@@ -242,14 +242,14 @@ ELSE
 	PRINTFORML %CALLNAME:TARGET%の膣は%CALLNAME:ASSI%の拳でかき回された。
 ENDIF
 PRINTFORML 　
-IF ABL:4 == 1
-ELSEIF ABL:4 == 2
+IF ABL:Ｖ感覚 == 1
+ELSEIF ABL:Ｖ感覚 == 2
 	PRINTFORML %CALLNAME:TARGET%の膣はぽっかり口を開いている
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	PRINTFORML %CALLNAME:TARGET%の膣は拡がったままなかなか戻らない
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	PRINTFORML %CALLNAME:TARGET%の性器からは肉ビラがはみ出し、ぽっかり開いた膣口のおくには子宮口が見えている。
-ELSEIF ABL:4 >= 5
+ELSEIF ABL:Ｖ感覚 >= 5
 	PRINTFORML %CALLNAME:TARGET%は、自分の膣口を指で拡げ、恍惚としている。
 ENDIF
 
@@ -271,15 +271,15 @@ ELSE
 	PRINTFORML %CALLNAME:TARGET%の肛門は%CALLNAME:ASSI%の拳でかき回された。
 ENDIF
 PRINTFORML 　
-IF ABL:5 == 1
-ELSEIF ABL:5 == 2
+IF ABL:Ａ感覚 == 1
+ELSEIF ABL:Ａ感覚 == 2
 	PRINTFORML %CALLNAME:TARGET%の肛門はぽっかり口を開いている
-ELSEIF ABL:5 == 3
+ELSEIF ABL:Ａ感覚 == 3
 	PRINTFORML %CALLNAME:TARGET%の肛門は拡がったままなかなか戻らない
-ELSEIF ABL:5 == 4
+ELSEIF ABL:Ａ感覚 == 4
 	PRINTFORML %CALLNAME:TARGET%の肛門からは肉ビラがはみ出し、
 	PRINTFORML 腸の中が丸見えになっている。
-ELSEIF ABL:5 >= 5
+ELSEIF ABL:Ａ感覚 >= 5
 	PRINTFORML %CALLNAME:TARGET%は、自分の肛門を指で拡げ、恍惚としている。
 ENDIF
 
@@ -302,11 +302,11 @@ ELSE
 	PRINTFORML %CALLNAME:TARGET%の膣と肛門は%CALLNAME:ASSI%の拳でかき回された。
 ENDIF
 PRINTFORML 　
-IF ABL:4 <= 3 || ABL:5 <= 3
-ELSEIF ABL:4 <= 4 || ABL:5 <= 4
+IF ABL:Ｖ感覚 <= 3 || ABL:Ａ感覚 <= 3
+ELSEIF ABL:Ｖ感覚 <= 4 || ABL:Ａ感覚 <= 4
 	PRINTFORML %CALLNAME:TARGET%は両足を広げぐったりしている。
 	PRINTFORML 拡がりきった膣口と肛門からは粘液が垂れ流しだ。
-ELSEIF ABL:4 >= 5 && ABL:5 >= 5
+ELSEIF ABL:Ｖ感覚 >= 5 && ABL:Ａ感覚 >= 5
 	PRINTFORML %CALLNAME:TARGET%は余韻を味わっている。
 	PRINTFORML 両手の指が、すっかり拡がって中身を曝している、膣口と肛門の周りを撫で回している。
 ENDIF
@@ -359,15 +359,15 @@ ENDIF
 
 @LAY_EGG
 ;ABL:Ｖ感覚をみる
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	B = 75
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	B = 150
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	B = 300
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	B = 600
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	B = 1200
 ELSE
 	B = 1800

@@ -318,12 +318,12 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 		CALL COM_ORDER
 
 		;ABL:欲望
-		IF ABL:1
-			A += ABL:1 * 4
+		IF ABL:欲望
+			A += ABL:欲望 * 4
 		ENDIF
 		;ABL:奉仕精神
-		IF ABL:6
-			A += ABL:6 * 3
+		IF ABL:奉仕精神
+			A += ABL:奉仕精神 * 3
 		ENDIF
 		;男嫌い
 		IF TALENT:82 && TALENT:PLAYER:122
@@ -400,19 +400,19 @@ ELSEIF RESULT == 850 && TFLAG:44 == 0 && TFLAG:34 == 0
 
 		IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 			;ABL:欲望
-			IF ABL:1
+			IF ABL:欲望
 				SIF S
 					PRINT  + 
 				PRINTS ABLNAME:1
-				PRINTV 'LV,ABL:1,'(,ABL:1 * 4,')
+				PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 4,')
 				S = 1
 			ENDIF
 			;ABL:奉仕精神
-			IF ABL:6
+			IF ABL:奉仕精神
 				SIF S
 					PRINT  + 
 				PRINTS ABLNAME:6
-				PRINTV 'LV,ABL:6,'(,ABL:6 * 3,')
+				PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 3,')
 				S = 1
 			ENDIF
 			;男嫌い
@@ -606,9 +606,9 @@ ELSEIF RESULT == 851 && (FLAG:23 & 8) && TFLAG:34 == 0
 		PRINTFORML %CALLNAME:TARGET%に握らせています
 	ENDIF
 	PRINTL [0] - 成り行きに任せる
-	SIF ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
 		PRINTL [1] - 自分で握る
-	SIF ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
 		PRINTFORML [2] - %CALLNAME:TARGET%に握らせる
 	SIF TALENT:恋慕 && TALENT:恋人
 		PRINTFORML [3] - 完全に%CALLNAME:TARGET%に握らせる
@@ -616,10 +616,10 @@ ELSEIF RESULT == 851 && (FLAG:23 & 8) && TFLAG:34 == 0
 	INPUT
 	IF RESULT == 0
 		CFLAG:15 = 0
-	ELSEIF RESULT == 1 && (ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
+	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
 		CFLAG:15 = 1
 		TFLAG:45 = 0
-	ELSEIF RESULT == 2 && (ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
+	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
 		CFLAG:15 = 2
 		TFLAG:45 = 1
 	ELSEIF RESULT == 3 && (TALENT:恋慕 && TALENT:恋人)
@@ -677,7 +677,7 @@ ELSEIF RESULT == 998 && TALENT:MASTER:998
 	RETURN 1
 ELSEIF RESULT == 999
 	;襲われ判定
-	IF ASSIPLAY == 0 && (ABL:1 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
+	IF ASSIPLAY == 0 && (ABL:欲望 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
 		CALL PUSH_OVER
 		SIF RESULT
 			RETURN 1

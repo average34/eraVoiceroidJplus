@@ -18,18 +18,18 @@ SOURCE:12 = 120
 SOURCE:14 = 70
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 = 200
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 = 400
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 = 900
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 = 1600
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 = 2400
 ELSE
-	SOURCE:0 = 1500 + (ABL:3 * 300)
+	SOURCE:0 = 1500 + (ABL:Ｃ感覚 * 300)
 ENDIF
 
 ;実行者が[淫具知識]を持っているなら効果増
@@ -96,18 +96,18 @@ LOSEBASE:0 += 5
 LOSEBASE:1 += 20
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	A = 40
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	A = 120
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	A = 250
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	A = 450
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	A = 600
 ELSE
-	A = 375 + (ABL:3 * 75)
+	A = 375 + (ABL:Ｃ感覚 * 75)
 ENDIF
 
 ;PALAM:欲情をみる
@@ -124,18 +124,18 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.80
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.90
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 1.20
 ELSE
-	A = A * (ABL:0 * 5 + 105) / 100
+	A = A * (ABL:親密 * 5 + 105) / 100
 ENDIF
 
 ;実行者が[淫具知識]を持っているなら効果増

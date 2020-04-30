@@ -191,7 +191,7 @@ IF NO:MASTER == 0
 ENDIF
 
 SIF TALENT:MASTER:122 == 0
-	ABL:MASTER:9 = 3
+	ABL:MASTER:レズっ気 = 3
 
 ;主人公のキャラID設定
 CFLAG:MASTER:81 = 1
@@ -314,9 +314,9 @@ IF (FLAG:23 & 8) == 0
 	;主導権を毎回設定
 	PRINTL 今回はどちらが主導権を握りますか？
 	PRINTL [0] - 成り行きに任せる
-	SIF ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153
 		PRINTL [1] - 自分で握る
-	SIF ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
+	SIF ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153
 		PRINTFORML [2] - %CALLNAME:TARGET%に握らせる
 
 	INPUT
@@ -324,12 +324,12 @@ IF (FLAG:23 & 8) == 0
 		RESTART
 	ELSEIF RESULT == 0
 		CFLAG:15 = 0
-	ELSEIF RESULT == 1 && (ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
+	ELSEIF RESULT == 1 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:13 || TALENT:14 || TALENT:17 || TALENT:153)
 		CFLAG:15 = 1
 		TFLAG:45 = 0
 	ELSEIF RESULT == 1
 		RESTART
-	ELSEIF RESULT == 2 && (ABL:0 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
+	ELSEIF RESULT == 2 && (ABL:親密 >= 3 || CFLAG:2 >= 300 || TALENT:83 || TALENT:153)
 		CFLAG:15 = 2
 		TFLAG:45 = 1
 	ELSEIF RESULT == 2
@@ -401,16 +401,16 @@ IF BASE:0 <= 0 && TALENT:128
 		TFLAG:21 = 2
 		PRINTL 反発感情LV2を取得
 		;感情乏しいの場合は反発感情による従順ダウンはなし
-		IF ABL:0 > 0 && ABL:0 <= 3 && TALENT:22 == 0
-			ABL:0 -= 2
-			SIF ABL:0 < 0
-				ABL:0 = 0
-			PRINTFORML そして親密がLV{ABL:0}に下がった
-		ELSEIF ABL:0 <= 6 && TALENT:22 == 0
-			ABL:0 -= 2
-			SIF ABL:0 < 0
-				ABL:0 = 0
-			PRINTFORML そして親密がLV{ABL:0}に下がった
+		IF ABL:親密 > 0 && ABL:親密 <= 3 && TALENT:22 == 0
+			ABL:親密 -= 2
+			SIF ABL:親密 < 0
+				ABL:親密 = 0
+			PRINTFORML そして親密がLV{ABL:親密}に下がった
+		ELSEIF ABL:親密 <= 6 && TALENT:22 == 0
+			ABL:親密 -= 2
+			SIF ABL:親密 < 0
+				ABL:親密 = 0
+			PRINTFORML そして親密がLV{ABL:親密}に下がった
 		ELSE
 			WAIT
 		ENDIF
@@ -425,22 +425,22 @@ ELSEIF BASE:0 <= 0
 		TFLAG:21 = 3
 		PRINTL 反発感情LV3を取得
 		;感情乏しいの場合は反発感情による従順ダウンはなし
-		IF ABL:0 > 0 && ABL:0 <= 6 && TALENT:22 == 0
-			ABL:0 -= 4
-			SIF ABL:0 < 0
-				ABL:0 = 0
-			PRINTFORML そして親密がLV{ABL:0}に下がった
-		ELSEIF ABL:0 > 0 && ABL:0 <= 9 && TALENT:22 == 0
-			ABL:0 -= 2
-			SIF ABL:0 < 0
-				ABL:0 = 0
-			PRINTFORML そして親密がLV{ABL:0}に下がった
+		IF ABL:親密 > 0 && ABL:親密 <= 6 && TALENT:22 == 0
+			ABL:親密 -= 4
+			SIF ABL:親密 < 0
+				ABL:親密 = 0
+			PRINTFORML そして親密がLV{ABL:親密}に下がった
+		ELSEIF ABL:親密 > 0 && ABL:親密 <= 9 && TALENT:22 == 0
+			ABL:親密 -= 2
+			SIF ABL:親密 < 0
+				ABL:親密 = 0
+			PRINTFORML そして親密がLV{ABL:親密}に下がった
 		ENDIF
 	ENDIF
 
 	PRINTFORMW （%CALLNAME:TARGET%は疲れ果てて気絶してしまった。%CALLNAME:MASTER%は%CALLNAME:TARGET%を寝床まで運び、一旦別れました）
-	IF ABL:0 > 0 && TALENT:153 == 0
-		ABL:0 -= 1
+	IF ABL:親密 > 0 && TALENT:153 == 0
+		ABL:親密 -= 1
 		PRINTFORML %CALLNAME:TARGET%の親密が１下がった
 	ENDIF
 	BEGIN AFTERTRAIN
@@ -452,7 +452,7 @@ ELSEIF TFLAG:44 == 0 && BASE:1 <= 300 && CFLAG:27
 	BEGIN AFTERTRAIN
 ELSEIF TFLAG:44 == 0 && BASE:1 <= 0
 	;襲われ判定
-	;IF ASSIPLAY == 0 && (ABL:1 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
+	;IF ASSIPLAY == 0 && (ABL:欲望 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
 	;	CALL PUSH_OVER
 	;	SIF RESULT
 	;		RETURN 1
@@ -701,42 +701,42 @@ REPEAT CHARANUM
 	ENDIF
 
 	;維持費算出
-	IF ABL:COUNT:97 == 0
+	IF ABL:COUNT:浪費癖 == 0
 		;浪費癖未設定＝Lv50相当
 		C = 2000
 		;戦闘技能レベルによって増加
-		C += ABL:COUNT:88 * 100
+		C += ABL:COUNT:戦闘技能 * 100
 	ELSE
-		IF ABL:COUNT:97 < 30
+		IF ABL:COUNT:浪費癖 < 30
 			;安い
-			C = ABL:COUNT:97 * 5
+			C = ABL:COUNT:浪費癖 * 5
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 40
-		ELSEIF ABL:COUNT:97 < 50
+			C += ABL:COUNT:戦闘技能 * 40
+		ELSEIF ABL:COUNT:浪費癖 < 50
 			;普通
-			C = ABL:COUNT:97 * 20
+			C = ABL:COUNT:浪費癖 * 20
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 75
-		ELSEIF ABL:COUNT:97 < 75
+			C += ABL:COUNT:戦闘技能 * 75
+		ELSEIF ABL:COUNT:浪費癖 < 75
 			;高い
-			C = ABL:COUNT:97 * 40
+			C = ABL:COUNT:浪費癖 * 40
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 100
-		ELSEIF ABL:COUNT:97 < 90
+			C += ABL:COUNT:戦闘技能 * 100
+		ELSEIF ABL:COUNT:浪費癖 < 90
 			;非常に高い
-			C = ABL:COUNT:97 * 60
+			C = ABL:COUNT:浪費癖 * 60
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 150
-		ELSEIF ABL:COUNT:97 < 100
+			C += ABL:COUNT:戦闘技能 * 150
+		ELSEIF ABL:COUNT:浪費癖 < 100
 			;詐欺のように高い
-			C = ABL:COUNT:97 * 100
+			C = ABL:COUNT:浪費癖 * 100
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 200
+			C += ABL:COUNT:戦闘技能 * 200
 		ELSE
 			;破滅
-			C = ABL:COUNT:97 * 400
+			C = ABL:COUNT:浪費癖 * 400
 			;戦闘技能レベルによって増加
-			C += ABL:COUNT:88 * 10000
+			C += ABL:COUNT:戦闘技能 * 10000
 		ENDIF
 	ENDIF
 
@@ -781,14 +781,14 @@ REPEAT CHARANUM
 	;回復処理
 	;料理技能で回復量増加
 	IF A < 1000000
-		A = A * (100 + ABL:COUNT:90 * 3) / 100
+		A = A * (100 + ABL:COUNT:料理技能 * 3) / 100
 	ELSE
-		A = A / 100 * (100 + ABL:COUNT:90 * 3)
+		A = A / 100 * (100 + ABL:COUNT:料理技能 * 3)
 	ENDIF
 	IF B < 1000000
-		B = B * (100 + ABL:COUNT:90 * 3) / 100
+		B = B * (100 + ABL:COUNT:料理技能 * 3) / 100
 	ELSE
-		B = B / 100 * (100 + ABL:COUNT:90 * 3)
+		B = B / 100 * (100 + ABL:COUNT:料理技能 * 3)
 	ENDIF
 	BASE:COUNT:0 += A
 	SIF BASE:COUNT:0 > MAXBASE:COUNT:0
@@ -802,15 +802,15 @@ REPEAT CHARANUM
 	BASE:COUNT:5 = MAXBASE:COUNT:5
 
 	;金銭感覚による維持費軽減
-	IF ABL:COUNT:89 == 0
+	IF ABL:COUNT:金銭感覚 == 0
 		;何もしない
-	ELSEIF ABL:COUNT:89 <= 5
-		C = C * (100 - ABL:COUNT:89 * 7) / 100
-	ELSEIF ABL:COUNT:89 <= 10
-		C = C * (65 - (ABL:COUNT:89 - 5) * 3) / 100
-	ELSEIF ABL:COUNT:89 <= 100
-		C = C * (50 - (ABL:COUNT:89 - 10) / 2) / 100
-	ELSEIF ABL:COUNT:89 > 100
+	ELSEIF ABL:COUNT:金銭感覚 <= 5
+		C = C * (100 - ABL:COUNT:金銭感覚 * 7) / 100
+	ELSEIF ABL:COUNT:金銭感覚 <= 10
+		C = C * (65 - (ABL:COUNT:金銭感覚 - 5) * 3) / 100
+	ELSEIF ABL:COUNT:金銭感覚 <= 100
+		C = C * (50 - (ABL:COUNT:金銭感覚 - 10) / 2) / 100
+	ELSEIF ABL:COUNT:金銭感覚 > 100
 		C = C / 100
 	ENDIF
 	
@@ -894,28 +894,28 @@ CALL KOJO_TAIKI_CHECK
 
 ;パートナーの金銭感覚による全体維持費の軽減
 IF TARGET >= 0
-	IF ABL:TARGET:89 == 0
+	IF ABL:TARGET:金銭感覚 == 0
 		;何もしない
-	ELSEIF ABL:TARGET:89 <= 5
-		LOCAL:0 = LOCAL:0 * (100 - ABL:TARGET:89 * 5) / 100
-	ELSEIF ABL:TARGET:89 <= 10
-		LOCAL:0 = LOCAL:0 * (75 - (ABL:TARGET:89 - 5) * 2) / 100
-	ELSEIF ABL:TARGET:89 <= 100
-		LOCAL:0 = LOCAL:0 * (65 - (ABL:TARGET:89 - 10) / 2) / 100
-	ELSEIF ABL:TARGET:89 > 100
+	ELSEIF ABL:TARGET:金銭感覚 <= 5
+		LOCAL:0 = LOCAL:0 * (100 - ABL:TARGET:金銭感覚 * 5) / 100
+	ELSEIF ABL:TARGET:金銭感覚 <= 10
+		LOCAL:0 = LOCAL:0 * (75 - (ABL:TARGET:金銭感覚 - 5) * 2) / 100
+	ELSEIF ABL:TARGET:金銭感覚 <= 100
+		LOCAL:0 = LOCAL:0 * (65 - (ABL:TARGET:金銭感覚 - 10) / 2) / 100
+	ELSEIF ABL:TARGET:金銭感覚 > 100
 		LOCAL:0 = LOCAL:0 / 100
 	ENDIF
 ENDIF
 
 ;生活費軽減
-SIF ABL:MASTER:82 >= 1
-	LOCAL:0 = LOCAL:0 * (100 - ABL:MASTER:82) / 100
+SIF ABL:MASTER:生活費軽減 >= 1
+	LOCAL:0 = LOCAL:0 * (100 - ABL:MASTER:生活費軽減) / 100
 
 ;獲得資金増加ボーナス
-IF ABL:MASTER:86 == 1
+IF ABL:MASTER:獲得資金増加 == 1
 	TIMES LOCAL:1 , 1.50
-ELSEIF ABL:MASTER:86 > 1
-	LOCAL:1 *= ABL:MASTER:86
+ELSEIF ABL:MASTER:獲得資金増加 > 1
+	LOCAL:1 *= ABL:MASTER:獲得資金増加
 ENDIF
 
 ;アクセサリ関係
@@ -1358,10 +1358,10 @@ ENDIF
 IF FLAG:63 == 19
 	FOR LOCAL, 0, CHARANUM
 		;あなたの97,浪費癖 98,戦闘素質を設定なし（0）から50に変更
-		SIF NO:LOCAL == 0 && ABL:LOCAL:97 == 0
-			ABL:LOCAL:97 = 50
-		SIF NO:LOCAL == 0 && ABL:LOCAL:98 == 0
-			ABL:LOCAL:98 = 50
+		SIF NO:LOCAL == 0 && ABL:LOCAL:浪費癖 == 0
+			ABL:LOCAL:浪費癖 = 50
+		SIF NO:LOCAL == 0 && ABL:LOCAL:戦闘素質 == 0
+			ABL:LOCAL:戦闘素質 = 50
 	NEXT
 	FLAG:63 = 20
 ENDIF

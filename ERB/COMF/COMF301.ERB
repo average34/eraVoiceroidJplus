@@ -27,18 +27,18 @@ LOSEBASE:1 += 50
 SOURCE:18 = 200
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 60)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 200 + (ABL:0 * 60)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 500 + (ABL:0 * 60)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 750 + (ABL:0 * 75)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 1000 + (ABL:0 * 75)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 60)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 200 + (ABL:親密 * 60)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 500 + (ABL:親密 * 60)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 750 + (ABL:親密 * 75)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 1000 + (ABL:親密 * 75)
 ELSE
-	SOURCE:18 += 2000 + (ABL:0 * 30)
+	SOURCE:18 += 2000 + (ABL:親密 * 30)
 ENDIF
 
 ;好感度をみる
@@ -56,34 +56,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 == 0
+	IF ABL:親密 == 0
 		SOURCE:21 = 200
-	ELSEIF ABL:0 == 1
+	ELSEIF ABL:親密 == 1
 		SOURCE:21 = 300
-	ELSEIF ABL:0 == 2
+	ELSEIF ABL:親密 == 2
 		SOURCE:21 = 400
-	ELSEIF ABL:0 == 3
+	ELSEIF ABL:親密 == 3
 		SOURCE:21 = 500
-	ELSEIF ABL:0 == 4
+	ELSEIF ABL:親密 == 4
 		SOURCE:21 = 600
 	ELSE
-		SOURCE:21 = 500 + (ABL:0 * 50)
+		SOURCE:21 = 500 + (ABL:親密 * 50)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 300
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 400
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 500
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 700
 	ELSE
-		SOURCE:20 = 300 + (ABL:15 * 100)
+		SOURCE:20 = 300 + (ABL:サドっ気 * 100)
 	ENDIF
 ENDIF
 

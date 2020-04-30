@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP91MAIN
 DRAWLINE
-IF ABL:91 >= 9999
+IF ABL:撮影技能 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -19,7 +19,7 @@ ENDIF
 CALL ISABLUP91
 
 PRINTFORM [0] - %PALAMNAME:7%の珠×{A}
-;IF ABL:91 >= 2
+;IF ABL:撮影技能 >= 2
 	PRINTFORM 、%EXPNAME:91%{B}
 ;ENDIF
 PRINT 以上……
@@ -34,7 +34,7 @@ ENDIF
 PRINTL 
 
 PRINTFORM [20] - %PALAMNAME:7%の珠
-;IF ABL:91 >= 2
+;IF ABL:撮影技能 >= 2
 	PRINTFORM 
 ;ENDIF
 PRINT で限界まであげる……
@@ -66,7 +66,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:91 += 1
+	ABL:撮影技能 += 1
 
 IF RESULT == 0
 	JUEL:7 -= A
@@ -76,7 +76,7 @@ ENDIF
 
 PRINTS ABLNAME:91
 PRINT のレベルが
-PRINTV ABL:91
+PRINTV ABL:撮影技能
 PRINTW になりました。
 
 
@@ -86,7 +86,7 @@ PRINTW になりました。
 ;-------------------------------------------------
 @ISABLUP91
 ;上限越してるならリターン
-IF ABL:91 >= 9999
+IF ABL:撮影技能 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -122,25 +122,25 @@ ENDIF
 ;撮影技能を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP91
-IF ABL:91 == 0
+IF ABL:撮影技能 == 0
 	A = 1
 	B = 5
-ELSEIF ABL:91 == 1
+ELSEIF ABL:撮影技能 == 1
 	A = 25
 	B = 10
 	SIF EXP:91 >= EXPLV:3
 		A = 15
-ELSEIF ABL:91 == 2
+ELSEIF ABL:撮影技能 == 2
 	A = 200
 	B = 20
 	SIF EXP:91 >= EXPLV:4
 		A = 150
-ELSEIF ABL:91 == 3
+ELSEIF ABL:撮影技能 == 3
 	A = 3000
 	B = 40
 	SIF EXP:91 >= EXPLV:5
 		A = 1500
-ELSEIF ABL:91 == 4
+ELSEIF ABL:撮影技能 == 4
 	A = 20000
 	B = 80
 	SIF EXP:91 >= EXPLV:5
@@ -149,8 +149,8 @@ ELSE
 	A = 20000
 	B = 80
 	
-	A = A * (ABL:91 - 3)
-	B = B * (ABL:91 - 2) / 2
+	A = A * (ABL:撮影技能 - 3)
+	B = B * (ABL:撮影技能 - 2) / 2
 ENDIF
 
 ;習得早い
@@ -167,10 +167,10 @@ ENDIF
 
 
 ;撮影素質で補正をかける
-IF ABL:51 == 2
+IF ABL:撮影素質 == 2
 	TIMES A , 0.80
 	TIMES B , 0.80
-ELSEIF ABL:51 == 1
+ELSEIF ABL:撮影素質 == 1
 	TIMES A , 0.90
 	TIMES B , 0.90
 ENDIF

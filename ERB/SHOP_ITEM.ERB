@@ -171,7 +171,7 @@ ITEMSALES:85 = 0
 ;赤い首輪（奴隷エンド条件はここで処理）
 ITEMSALES:86 = 0
 IF TARGET > 0 && ASSI < 0 && FLAG:5 != 9 && ITEM:85 == 0 && ITEM:86 == 0
-	SIF TALENT:76 && TALENT:85 && TALENT:89 == 0 && TALENT:180 == 0 && CFLAG:2 >= 2500 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:0+ABL:1+ABL:6 >= 15) && (ABL:2+ABL:8+ABL:11 >= 13) && (EXP:0+EXP:1 >= 200) && EXP:11 >= 150 && EXP:22 >= 150 && EXP:40 < 500
+	SIF TALENT:76 && TALENT:85 && TALENT:89 == 0 && TALENT:180 == 0 && CFLAG:2 >= 2500 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:親密+ABL:欲望+ABL:奉仕精神 >= 15) && (ABL:技巧+ABL:マゾっ気+ABL:精液中毒 >= 13) && (EXP:0+EXP:1 >= 200) && EXP:11 >= 150 && EXP:22 >= 150 && EXP:40 < 500
 		ITEMSALES:86 = 1
 ENDIF
 
@@ -180,7 +180,7 @@ ITEMSALES:87 = 0
 IF TARGET > 0 && ASSI < 0 && FLAG:1 < 9
 	IF TALENT:MASTER:122 && EXP:40 >= 1500
 		ITEMSALES:87 = 0
-	ELSEIF TALENT:76 && TALENT:85 && TALENT:89 == 0 && TALENT:180 == 0 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:0+ABL:1 >= 8) && (ABL:2+ABL:6 >= 7) && (ABL:8 >= 2 && ABL:10 >= 2 && ABL:11 >= 2) && (EXP:0+EXP:1 >= 100) && EXP:11 >= 50 && EXP:22 >= 50
+	ELSEIF TALENT:76 && TALENT:85 && TALENT:89 == 0 && TALENT:180 == 0 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:親密+ABL:欲望 >= 8) && (ABL:技巧+ABL:奉仕精神 >= 7) && (ABL:マゾっ気 >= 2 && ABL:自慰中毒 >= 2 && ABL:精液中毒 >= 2) && (EXP:0+EXP:1 >= 100) && EXP:11 >= 50 && EXP:22 >= 50
 		ITEMSALES:87 = 1
 	ENDIF
 ENDIF
@@ -229,12 +229,12 @@ SIF F && P
 
 ;技巧
 ITEMSALES:60 = 0
-SIF ABL:MASTER:2 < 9999
+SIF ABL:MASTER:技巧 < 9999
 	ITEMSALES:60 = 1
 
 ;撮影技能
 ITEMSALES:61 = 0
-SIF ITEM:6 && ABL:MASTER:91 < 9999
+SIF ITEM:6 && ABL:MASTER:撮影技能 < 9999
 	ITEMSALES:61 = 1
 ;編集機材
 ITEMSALES:59 = 0
@@ -284,13 +284,13 @@ IF BOUGHT == 99
 ENDIF
 
 ;素質アイテム【技巧Lv】
-IF BOUGHT == 60 && ABL:MASTER:2 < 9999
+IF BOUGHT == 60 && ABL:MASTER:技巧 < 9999
 	;計算しやすいようにシステムでまず引かれる金額を戻しておき、購入した場合引くようにする
 	MONEY += 5000
 	
 	A = 5000
-	IF ABL:MASTER:2 >= 6
-		B = (ABL:MASTER:2 - 2) * (ABL:MASTER:2 - 5) / 2
+	IF ABL:MASTER:技巧 >= 6
+		B = (ABL:MASTER:技巧 - 2) * (ABL:MASTER:技巧 - 5) / 2
 	ELSE
 		B = 1
 	ENDIF
@@ -303,13 +303,13 @@ IF BOUGHT == 60 && ABL:MASTER:2 < 9999
 		ITEMSALES:BOUGHT = 1
 		RETURN 0
 	ELSE
-		PRINTFORML ＜今の技巧Lv：{ABL:MASTER:2}＞
+		PRINTFORML ＜今の技巧Lv：{ABL:MASTER:技巧}＞
 		PRINTFORML 次のLvになるためには【技巧Lv】が{B}個必要です(合計費用 ${C})
 		PRINTFORML 購入しますか？
 		PRINTL [0] はい
 		PRINTL [1] いいえ
 		CALL ABL2_CHECK
-		PRINTFORML [2] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:2)+K}までLvUP　使用金額:${M}）
+		PRINTFORML [2] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:技巧)+K}までLvUP　使用金額:${M}）
 	ENDIF
 	
 	$INPUT_LOOP
@@ -317,18 +317,18 @@ IF BOUGHT == 60 && ABL:MASTER:2 < 9999
 	
 	IF RESULT == 0
 		MONEY -= C
-		ABL:MASTER:2 += 1
-		PRINTFORMW ＜%NAME:MASTER%の技巧Lvが1つ上がった　今の技巧Lv：{ABL:MASTER:2}＞
-		SIF ABL:MASTER:2 < 9999
+		ABL:MASTER:技巧 += 1
+		PRINTFORMW ＜%NAME:MASTER%の技巧Lvが1つ上がった　今の技巧Lv：{ABL:MASTER:技巧}＞
+		SIF ABL:MASTER:技巧 < 9999
 			ITEMSALES:BOUGHT = 1
 	ELSEIF RESULT == 1
 		ITEMSALES:BOUGHT = 1
 		RETURN 0
 	ELSEIF RESULT == 2
 		MONEY -= M
-		ABL:MASTER:2 += K
-		PRINTFORMW ＜%NAME:MASTER%の技巧Lvが{K}上がった　今の技巧Lv：{ABL:MASTER:2}＞
-		SIF ABL:MASTER:2 < 9999
+		ABL:MASTER:技巧 += K
+		PRINTFORMW ＜%NAME:MASTER%の技巧Lvが{K}上がった　今の技巧Lv：{ABL:MASTER:技巧}＞
+		SIF ABL:MASTER:技巧 < 9999
 			ITEMSALES:BOUGHT = 1
 	ELSE
 		PRINTFORML 正しい値を入力してください
@@ -337,13 +337,13 @@ IF BOUGHT == 60 && ABL:MASTER:2 < 9999
 	RETURN 1
 ENDIF
 ;主人専用能力アップアイテム【撮影技能】
-IF BOUGHT == 61 && ABL:MASTER:91 < 9999
+IF BOUGHT == 61 && ABL:MASTER:撮影技能 < 9999
 	;計算しやすいようにシステムでまず引かれる金額を戻しておき、購入した場合引くようにする
 	MONEY += 30000
 	
 	A = 30000
-	IF ABL:MASTER:91 >= 9
-		B = (ABL:MASTER:91 - 2) * (ABL:MASTER:91 - 5) / 12
+	IF ABL:MASTER:撮影技能 >= 9
+		B = (ABL:MASTER:撮影技能 - 2) * (ABL:MASTER:撮影技能 - 5) / 12
 	ELSE
 		B = 1
 	ENDIF
@@ -356,13 +356,13 @@ IF BOUGHT == 61 && ABL:MASTER:91 < 9999
 		ITEMSALES:BOUGHT = 1
 		RETURN 0
 	ELSE
-		PRINTFORML ＜今の撮影技能Lv：{ABL:MASTER:91}＞
+		PRINTFORML ＜今の撮影技能Lv：{ABL:MASTER:撮影技能}＞
 		PRINTFORML 次のLvになるためには【撮影技能】が{B}個必要です(合計費用 ${C})
 		PRINTFORML 購入しますか？
 		PRINTL [0] はい
 		PRINTL [1] いいえ
 		CALL ABL91_CHECK
-		PRINTFORML [2] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:91)+K}までLvUP　使用金額:${M}）
+		PRINTFORML [2] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:撮影技能)+K}までLvUP　使用金額:${M}）
 	ENDIF
 	
 	$INPUT_LOOP_ASA
@@ -370,18 +370,18 @@ IF BOUGHT == 61 && ABL:MASTER:91 < 9999
 	
 	IF RESULT == 0
 		MONEY -= C
-		ABL:MASTER:91 += 1
-		PRINTFORMW ＜%NAME:MASTER%の撮影技能Lvが1つ上がった　今の撮影技能Lv：{ABL:MASTER:91}＞
-		SIF ABL:MASTER:91 < 9999
+		ABL:MASTER:撮影技能 += 1
+		PRINTFORMW ＜%NAME:MASTER%の撮影技能Lvが1つ上がった　今の撮影技能Lv：{ABL:MASTER:撮影技能}＞
+		SIF ABL:MASTER:撮影技能 < 9999
 			ITEMSALES:BOUGHT = 1
 	ELSEIF RESULT == 1
 		ITEMSALES:BOUGHT = 1
 		RETURN 0
 	ELSEIF RESULT == 2
 		MONEY -= M
-		ABL:MASTER:91 += K
-		PRINTFORMW ＜%NAME:MASTER%の撮影技能Lvが{K}上がった　今の撮影技能Lv：{ABL:MASTER:91}＞
-		SIF ABL:MASTER:91 < 9999
+		ABL:MASTER:撮影技能 += K
+		PRINTFORMW ＜%NAME:MASTER%の撮影技能Lvが{K}上がった　今の撮影技能Lv：{ABL:MASTER:撮影技能}＞
+		SIF ABL:MASTER:撮影技能 < 9999
 			ITEMSALES:BOUGHT = 1
 	ELSE
 		PRINTFORML 正しい値を入力してください
@@ -449,12 +449,12 @@ SIF BOUGHT == 70 || BOUGHT == 71 || BOUGHT == 72 || BOUGHT == 73 || BOUGHT == 74
 VARSET LOCAL, 0
 VARSET K, 0
 VARSET M, 0
-LOCAL:1 = ABL:MASTER:2
-LOCAL:2 = 9999 - ABL:MASTER:2
+LOCAL:1 = ABL:MASTER:技巧
+LOCAL:2 = 9999 - ABL:MASTER:技巧
 
 FOR LOCAL, 0, LOCAL:2
-	IF ABL:MASTER:2 >= 6
-		B = (ABL:MASTER:2 - 2) * (ABL:MASTER:2 - 5) / 2
+	IF ABL:MASTER:技巧 >= 6
+		B = (ABL:MASTER:技巧 - 2) * (ABL:MASTER:技巧 - 5) / 2
 	ELSE
 		B = 1
 	ENDIF
@@ -463,10 +463,10 @@ FOR LOCAL, 0, LOCAL:2
 		BREAK
 	M += LOCAL:3
 	K += 1
-	ABL:MASTER:2 += 1
+	ABL:MASTER:技巧 += 1
 NEXT
 
-ABL:MASTER:2 = LOCAL:1
+ABL:MASTER:技巧 = LOCAL:1
 
 ;---------------------------------------------------------
 ;撮影技能必要金額チェック
@@ -475,12 +475,12 @@ ABL:MASTER:2 = LOCAL:1
 VARSET LOCAL, 0
 VARSET K, 0
 VARSET M, 0
-LOCAL:1 = ABL:MASTER:91
-LOCAL:2 = 9999 - ABL:MASTER:91
+LOCAL:1 = ABL:MASTER:撮影技能
+LOCAL:2 = 9999 - ABL:MASTER:撮影技能
 
 FOR LOCAL, 0, LOCAL:2
-	IF ABL:MASTER:91 >= 9
-		B = (ABL:MASTER:91 - 2) * (ABL:MASTER:91 - 5) / 12
+	IF ABL:MASTER:撮影技能 >= 9
+		B = (ABL:MASTER:撮影技能 - 2) * (ABL:MASTER:撮影技能 - 5) / 12
 	ELSE
 		B = 1
 	ENDIF
@@ -489,10 +489,10 @@ FOR LOCAL, 0, LOCAL:2
 		BREAK
 	M += LOCAL:3
 	K += 1
-	ABL:MASTER:91 += 1
+	ABL:MASTER:撮影技能 += 1
 NEXT
 
-ABL:MASTER:91 = LOCAL:1
+ABL:MASTER:撮影技能 = LOCAL:1
 
 ;---------------------------------------------------------
 ;複数個所持可能なアイテムについて、同時購入個数を選択
@@ -968,10 +968,10 @@ IF BOUGHT == 98
 	EXP:TARGET:91 = EXP:R:91
 	EXP:TARGET:92 = EXP:R:92
 	EXP:TARGET:93 = EXP:R:93
-	ABL:TARGET:3 = ABL:R:3
-	ABL:TARGET:4 = ABL:R:4
-	ABL:TARGET:5 = ABL:R:5
-	ABL:TARGET:14 = ABL:R:14
+	ABL:TARGET:Ｃ感覚 = ABL:R:Ｃ感覚
+	ABL:TARGET:Ｖ感覚 = ABL:R:Ｖ感覚
+	ABL:TARGET:Ａ感覚 = ABL:R:Ａ感覚
+	ABL:TARGET:Ｂ感覚 = ABL:R:Ｂ感覚
 	
 	BASE:TARGET:0 = BASE:R:0
 	MAXBASE:TARGET:0 = MAXBASE:R:0

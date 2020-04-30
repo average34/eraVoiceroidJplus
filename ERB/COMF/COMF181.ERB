@@ -116,20 +116,20 @@ RETURN 0
 IF TFLAG:17 == 1
 	IF TEQUIP:PLAYER:85 == 0
 		;奉仕精神が5以上
-		IF ABL:6 >= 5
+		IF ABL:奉仕精神 >= 5
 			PRINTFORMW %CALLNAME:TARGET%はコンドームを咥え、口を使って%CALLNAME:PLAYER%のペニスに優しくかぶせた……
 		;奉仕精神が3以上
-		ELSEIF ABL:6 > 2
+		ELSEIF ABL:奉仕精神 > 2
 			PRINTFORMW %CALLNAME:TARGET%は、コンドームを躊躇いもなく手で%CALLNAME:PLAYER%のペニスに優しくかぶせた……
 		;奉仕精神が1以上
-		ELSEIF ABL:6 > 0
+		ELSEIF ABL:奉仕精神 > 0
 			PRINTFORMW %CALLNAME:TARGET%は、コンドームを%CALLNAME:PLAYER%のペニスにぎこちない手つきでかぶせた……
 		ELSE
 			PRINTFORMW %CALLNAME:PLAYER%はコンドームをペニスにかぶせた……
 		ENDIF
 	ELSE
 		;奉仕精神が3以上
-		IF ABL:6 > 2
+		IF ABL:奉仕精神 > 2
 			PRINTFORMW %CALLNAME:PLAYER%のコンドームを%CALLNAME:TARGET%に外して貰った
 		ELSE
 			PRINTFORMW %CALLNAME:PLAYER%はコンドームを外した
@@ -138,11 +138,11 @@ IF TFLAG:17 == 1
 ELSEIF TFLAG:17 == 2
 	IF TEQUIP:85 == 0
 		IF ASSIPLAY
-			IF ABL:PLAYER:6 >= 5
+			IF ABL:PLAYER:奉仕精神 >= 5
 				PRINTFORMW %CALLNAME:PLAYER%はコンドームを咥え、口を使って%CALLNAME:TARGET%のペニスに優しくかぶせた……
-			ELSEIF ABL:PLAYER:6 > 2
+			ELSEIF ABL:PLAYER:奉仕精神 > 2
 				PRINTFORMW %CALLNAME:PLAYER%は、コンドームを躊躇いもなく手で%CALLNAME:TARGET%のペニスに優しくかぶせた……
-			ELSEIF ABL:PLAYER:6 > 0
+			ELSEIF ABL:PLAYER:奉仕精神 > 0
 				PRINTFORMW %CALLNAME:PLAYER%は、コンドームを%CALLNAME:TARGET%のペニスにぎこちない手つきでかぶせた……
 			ELSE
 				PRINTFORMW %CALLNAME:TARGET%はコンドームをペニスにかぶせた……
@@ -152,7 +152,7 @@ ELSEIF TFLAG:17 == 2
 		ENDIF
 	ELSE
 		;奉仕精神が3以上
-		IF ABL:6 > 2
+		IF ABL:奉仕精神 > 2
 			PRINTFORMW %CALLNAME:TARGET%のコンドームを%CALLNAME:PLAYER%に外して貰った
 		ELSE
 			PRINTFORMW %CALLNAME:TARGET%はコンドームを外した

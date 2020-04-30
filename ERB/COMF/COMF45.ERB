@@ -64,18 +64,18 @@ ELSE
 ENDIF
 
 ;ABL:マゾっ気をみる
-IF ABL:8 == 0
+IF ABL:マゾっ気 == 0
 	A = 40
-ELSEIF ABL:8 == 1
+ELSEIF ABL:マゾっ気 == 1
 	A = 120
-ELSEIF ABL:8 == 2
+ELSEIF ABL:マゾっ気 == 2
 	A = 250
-ELSEIF ABL:8 == 3
+ELSEIF ABL:マゾっ気 == 3
 	A = 450
-ELSEIF ABL:8 == 4
+ELSEIF ABL:マゾっ気 == 4
 	A = 600
 ELSE
-	A = 375 + (ABL:8 * 75)
+	A = 375 + (ABL:マゾっ気 * 75)
 ENDIF
 
 ;PALAM:欲情をみる

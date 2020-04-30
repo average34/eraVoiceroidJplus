@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP7MAIN
 DRAWLINE
-IF ABL:7 >= 9999
+IF ABL:露出癖 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -19,7 +19,7 @@ ENDIF
 CALL ISABLUP7
 
 ;欲望が露出癖＋１レベルでないといけない
-PRINTFORML %ABLNAME:1%{ABL:7+1}LV以上、かつ
+PRINTFORML %ABLNAME:1%{ABL:露出癖+1}LV以上、かつ
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
 IF F
@@ -27,7 +27,7 @@ IF F
 ENDIF
 
 PRINTFORM [0] - %PALAMNAME:8%の珠×{A}
-IF ABL:7 < 2
+IF ABL:露出癖 < 2
 	PRINTFORM 、%EXPNAME:2%{1}以上
 ELSE
 	PRINTFORM 、%EXPNAME:11%{1}以上
@@ -80,7 +80,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:7 += 1
+	ABL:露出癖 += 1
 
 IF RESULT == 0
 	JUEL:8 -= A
@@ -90,7 +90,7 @@ ENDIF
 
 PRINTS ABLNAME:7
 PRINT のレベルが
-PRINTV ABL:7
+PRINTV ABL:露出癖
 PRINTW になりました。
 
 
@@ -99,7 +99,7 @@ PRINTW になりました。
 ;露出癖が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP7
-IF ABL:7 >= 9999
+IF ABL:露出癖 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -114,7 +114,7 @@ K = 0
 Z = 0
 
 ;欲望が露出癖＋１レベルでないといけない
-IF ABL:1 < ABL:7+1
+IF ABL:欲望 < ABL:露出癖+1
 	;欲望が不足
 	I |= 4
 ENDIF
@@ -128,7 +128,7 @@ ENDIF
 ;恥情の珠で上げる
 SIF JUEL:8 < A
 	I |= 1
-IF ABL:7 < 2
+IF ABL:露出癖 < 2
 	;絶頂経験が必要
 	SIF EXP:2 == 0
 		I |= 2
@@ -155,18 +155,18 @@ ENDIF
 ;露出癖を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP7
-IF ABL:7 == 0
+IF ABL:露出癖 == 0
 	A = 100
-ELSEIF ABL:7 == 1
+ELSEIF ABL:露出癖 == 1
 	A = 1000
-ELSEIF ABL:7 == 2
+ELSEIF ABL:露出癖 == 2
 	A = 5000
-ELSEIF ABL:7 == 3
+ELSEIF ABL:露出癖 == 3
 	A = 15000
 	;一線越えない
 	SIF TALENT:27
 		TIMES A , 1.10
-ELSEIF ABL:7 == 4
+ELSEIF ABL:露出癖 == 4
 	A = 35000
 	;一線越えない
 	SIF TALENT:27
@@ -174,7 +174,7 @@ ELSEIF ABL:7 == 4
 ELSE
 	A = 35000
 	
-	A = A * (ABL:7 - 3)
+	A = A * (ABL:露出癖 - 3)
 	;一線越えない
 	SIF TALENT:27
 		TIMES A , 1.30
@@ -196,8 +196,8 @@ IF TALENT:79
 ENDIF
 
 ;ＬＶ３から上げるときは異常経験必要（素質：[目立ちたがり]なら無視できる）
-IF ABL:7 >= 3 && TALENT:28 == 0
-	F = ABL:7 * 3
+IF ABL:露出癖 >= 3 && TALENT:28 == 0
+	F = ABL:露出癖 * 3
 ELSE
 	F = 0
 ENDIF

@@ -92,18 +92,18 @@ ELSE
 ENDIF
 
 ;ABL:サドっ気をみる
-IF ABL:15 == 0
+IF ABL:サドっ気 == 0
 	A = 40
-ELSEIF ABL:15 == 1
+ELSEIF ABL:サドっ気 == 1
 	A = 120
-ELSEIF ABL:15 == 2
+ELSEIF ABL:サドっ気 == 2
 	A = 250
-ELSEIF ABL:15 == 3
+ELSEIF ABL:サドっ気 == 3
 	A = 450
-ELSEIF ABL:15 == 4
+ELSEIF ABL:サドっ気 == 4
 	A = 600
 ELSE
-	A = 375 + (ABL:15 * 75)
+	A = 375 + (ABL:サドっ気 * 75)
 ENDIF
 
 ;PALAM:欲情をみる

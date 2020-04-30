@@ -84,15 +84,15 @@ ELSE
 	TEQUIP:78 = 1
 	IF F > 0
 		;ABL:Ｖ感覚をみる
-		IF ABL:4 == 0
+		IF ABL:Ｖ感覚 == 0
 			SOURCE:1 = 50
-		ELSEIF ABL:4 == 1
+		ELSEIF ABL:Ｖ感覚 == 1
 			SOURCE:1 = 200
-		ELSEIF ABL:4 == 2
+		ELSEIF ABL:Ｖ感覚 == 2
 			SOURCE:1 = 400
-		ELSEIF ABL:4 == 3
+		ELSEIF ABL:Ｖ感覚 == 3
 			SOURCE:1 = 800
-		ELSEIF ABL:4 == 4
+		ELSEIF ABL:Ｖ感覚 == 4
 			SOURCE:1 = 1200
 		ELSE
 			SOURCE:1 = 1600
@@ -122,19 +122,19 @@ ELSE
 	ENDIF
 	IF R > 0
 		;ABL:Ａ感覚をみる
-		IF ABL:5 == 0
+		IF ABL:Ａ感覚 == 0
 			SOURCE:2 = 50
 			SOURCE:13 = 200
-		ELSEIF ABL:5 == 1
+		ELSEIF ABL:Ａ感覚 == 1
 			SOURCE:2 = 200
 			SOURCE:13 = 600
-		ELSEIF ABL:5 == 2
+		ELSEIF ABL:Ａ感覚 == 2
 			SOURCE:2 = 400
 			SOURCE:13 = 1000
-		ELSEIF ABL:5 == 3
+		ELSEIF ABL:Ａ感覚 == 3
 			SOURCE:2 = 800
 			SOURCE:13 = 1400
-		ELSEIF ABL:5 == 4
+		ELSEIF ABL:Ａ感覚 == 4
 			SOURCE:2 = 1200
 			SOURCE:13 = 1800
 		ELSE
@@ -201,29 +201,29 @@ ELSE
 		TIMES A , 0.60
 	ENDIF
 	;ABL:Ｃ感覚をみる
-	IF ABL:3 == 0
+	IF ABL:Ｃ感覚 == 0
 		SOURCE:0 = 30
-	ELSEIF ABL:3 == 1
+	ELSEIF ABL:Ｃ感覚 == 1
 		SOURCE:0 = 150
-	ELSEIF ABL:3 == 2
+	ELSEIF ABL:Ｃ感覚 == 2
 		SOURCE:0 = 600
-	ELSEIF ABL:3 == 3
+	ELSEIF ABL:Ｃ感覚 == 3
 		SOURCE:0 = 1200
-	ELSEIF ABL:3 == 4
+	ELSEIF ABL:Ｃ感覚 == 4
 		SOURCE:0 = 1800
 	ELSE
 		SOURCE:0 = 2500
 	ENDIF
 	;ABL:Ｂ感覚をみる
-	IF ABL:14 == 0
+	IF ABL:Ｂ感覚 == 0
 		SOURCE:17 = 20
-	ELSEIF ABL:14 == 1
+	ELSEIF ABL:Ｂ感覚 == 1
 		SOURCE:17 = 100
-	ELSEIF ABL:14 == 2
+	ELSEIF ABL:Ｂ感覚 == 2
 		SOURCE:17 = 500
-	ELSEIF ABL:14 == 3
+	ELSEIF ABL:Ｂ感覚 == 3
 		SOURCE:17 = 1000
-	ELSEIF ABL:14 == 4
+	ELSEIF ABL:Ｂ感覚 == 4
 		SOURCE:17 = 1500
 	ELSE
 		SOURCE:17 = 2000
@@ -301,15 +301,15 @@ IF F > 0 || TFLAG:75 == 1
 	;V経験を伴うコマンドのフラグ(処女膜再生対応)
 	TFLAG:19 = 1
 	;ABL:Ｖ感覚をみる
-	IF ABL:4 == 0
+	IF ABL:Ｖ感覚 == 0
 		B = 20
-	ELSEIF ABL:4 == 1
+	ELSEIF ABL:Ｖ感覚 == 1
 		B = 40
-	ELSEIF ABL:4 == 2
+	ELSEIF ABL:Ｖ感覚 == 2
 		B = 80
-	ELSEIF ABL:4 == 3
+	ELSEIF ABL:Ｖ感覚 == 3
 		B = 160
-	ELSEIF ABL:4 == 4
+	ELSEIF ABL:Ｖ感覚 == 4
 		B = 320
 	ELSE
 		B = 640
@@ -322,15 +322,15 @@ IF F > 0 || TFLAG:75 == 1
 ENDIF
 IF R > 0 || TFLAG:76 == 1
 	;ABL:Ａ感覚をみる
-	IF ABL:5 == 0
+	IF ABL:Ａ感覚 == 0
 		C = 15
-	ELSEIF ABL:5 == 1
+	ELSEIF ABL:Ａ感覚 == 1
 		C = 30
-	ELSEIF ABL:5 == 2
+	ELSEIF ABL:Ａ感覚 == 2
 		C = 60
-	ELSEIF ABL:5 == 3
+	ELSEIF ABL:Ａ感覚 == 3
 		C = 120
-	ELSEIF ABL:5 == 4
+	ELSEIF ABL:Ａ感覚 == 4
 		C = 240
 	ELSE
 		C = 600
@@ -344,29 +344,29 @@ IF R > 0 || TFLAG:76 == 1
 ENDIF
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 += 30
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 += 50
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 += 100
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 += 200
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 += 400
 ELSE
 	SOURCE:0 += 800
 ENDIF
 ;ABL:Ｂ感覚をみる
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	SOURCE:17 += 20
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	SOURCE:17 += 40
-ELSEIF ABL:14 == 2
+ELSEIF ABL:Ｂ感覚 == 2
 	SOURCE:17 += 80
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	SOURCE:17 += 160
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	SOURCE:17 += 320
 ELSE
 	SOURCE:17 += 640

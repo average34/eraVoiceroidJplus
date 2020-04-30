@@ -1568,7 +1568,7 @@ IF SELECTCOM == 315
 	;二回目以降
 	ELSE
 		;強化版(親密6&好感度600以上)
-		IF ABL:0 >= 6 || CFLAG:2 >= 600
+		IF ABL:親密 >= 6 || CFLAG:2 >= 600
 			;親愛または相愛がある
 			IF (TALENT:親愛 || TALENT:TARGET:相愛) && (CFLAG:545 < 4 || FLAG:キャラ口上の表示頻度 == 2)
 				PRINTFORMW 

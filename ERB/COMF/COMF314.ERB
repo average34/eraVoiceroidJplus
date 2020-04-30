@@ -40,30 +40,30 @@ LOSEBASE:1 += 50
 ;炬燵を出す
 IF TEQUIP:7 == 0
 	;ABL:親密をみる
-	IF ABL:0 <= 1
-		SOURCE:18 += (ABL:0 * 60)
-	ELSEIF ABL:0 <= 3
-		SOURCE:18 += 50 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 5
-		SOURCE:18 += 250 + (ABL:0 * 60)
-	ELSEIF ABL:0 <= 8
-		SOURCE:18 += 300 + (ABL:0 * 75)
-	ELSEIF ABL:0 <= 11
-		SOURCE:18 += 400 + (ABL:0 * 75)
+	IF ABL:親密 <= 1
+		SOURCE:18 += (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:18 += 50 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:18 += 250 + (ABL:親密 * 60)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:18 += 300 + (ABL:親密 * 75)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:18 += 400 + (ABL:親密 * 75)
 	ELSE
-		SOURCE:18 += 1000 + (ABL:0 * 30)
+		SOURCE:18 += 1000 + (ABL:親密 * 30)
 	ENDIF
 
 	;ABL:奉仕精神をみる
-	IF ABL:6 == 0
+	IF ABL:奉仕精神 == 0
 		TIMES SOURCE:18 , 0.80
-	ELSEIF ABL:6 == 1
+	ELSEIF ABL:奉仕精神 == 1
 		TIMES SOURCE:18 , 0.90
-	ELSEIF ABL:6 == 2
+	ELSEIF ABL:奉仕精神 == 2
 		TIMES SOURCE:18 , 1.00
-	ELSEIF ABL:6 == 3
+	ELSEIF ABL:奉仕精神 == 3
 		TIMES SOURCE:18 , 1.10
-	ELSEIF ABL:6 == 4
+	ELSEIF ABL:奉仕精神 == 4
 		TIMES SOURCE:18 , 1.20
 	ELSE
 		TIMES SOURCE:18 , 1.30
@@ -73,34 +73,34 @@ IF TEQUIP:7 == 0
 	IF TFLAG:45 == 0
 		;主導権が主人公側
 		;ABL:親密をみる
-		IF ABL:0 <= 1
+		IF ABL:親密 <= 1
 			SOURCE:21 = 100
-		ELSEIF ABL:0 <= 2
+		ELSEIF ABL:親密 <= 2
 			SOURCE:21 = 150
-		ELSEIF ABL:0 <= 4
+		ELSEIF ABL:親密 <= 4
 			SOURCE:21 = 200
-		ELSEIF ABL:0 <= 6
+		ELSEIF ABL:親密 <= 6
 			SOURCE:21 = 250
-		ELSEIF ABL:0 <= 8
+		ELSEIF ABL:親密 <= 8
 			SOURCE:21 = 500
 		ELSE
-			SOURCE:21 = 250 + (ABL:0 * 50)
+			SOURCE:21 = 250 + (ABL:親密 * 50)
 		ENDIF
 	ELSE
 		;主導権が相手側
 		;ABL:奉仕精神をみる
-		IF ABL:4 == 0
+		IF ABL:Ｖ感覚 == 0
 			SOURCE:20 = 100
-		ELSEIF ABL:4 <= 1
+		ELSEIF ABL:Ｖ感覚 <= 1
 			SOURCE:20 = 200
-		ELSEIF ABL:4 <= 3
+		ELSEIF ABL:Ｖ感覚 <= 3
 			SOURCE:20 = 300
-		ELSEIF ABL:4 <= 5
+		ELSEIF ABL:Ｖ感覚 <= 5
 			SOURCE:20 = 400
-		ELSEIF ABL:4 <= 7
+		ELSEIF ABL:Ｖ感覚 <= 7
 			SOURCE:20 = 500
 		ELSE
-			SOURCE:20 = 100 + (ABL:4 * 100)
+			SOURCE:20 = 100 + (ABL:Ｖ感覚 * 100)
 		ENDIF
 	ENDIF
 
@@ -226,18 +226,18 @@ IF NO:TARGET == 5 || NO:TARGET == 12
 	LOSEBASE:1 += 100
 
 	;ABL:マゾっ気をみる
-	IF ABL:8 == 0
+	IF ABL:マゾっ気 == 0
 		A:1 = 40
-	ELSEIF ABL:8 <= 1
+	ELSEIF ABL:マゾっ気 <= 1
 		A:1 = 120
-	ELSEIF ABL:8 <= 2
+	ELSEIF ABL:マゾっ気 <= 2
 		A:1 = 300
-	ELSEIF ABL:8 <= 3
+	ELSEIF ABL:マゾっ気 <= 3
 		A:1 = 500
-	ELSEIF ABL:8 <= 4
+	ELSEIF ABL:マゾっ気 <= 4
 		A:1 = 650
 	ELSE
-		A:1 = 350 + (ABL:4 * 100)
+		A:1 = 350 + (ABL:Ｖ感覚 * 100)
 	ENDIF
 
 	;熱に弱い娘は痛みと不安を追加(にとり、夢美が居ても強化しない)
@@ -245,18 +245,18 @@ IF NO:TARGET == 5 || NO:TARGET == 12
 	SOURCE:23 += A:1
 ELSE
 	;ABL:親密をみる
-	IF ABL:0 == 0
+	IF ABL:親密 == 0
 		A:1 = 40
-	ELSEIF ABL:0 <= 1
+	ELSEIF ABL:親密 <= 1
 		A:1 = 120
-	ELSEIF ABL:0 <= 2
+	ELSEIF ABL:親密 <= 2
 		A:1 = 300
-	ELSEIF ABL:0 <= 3
+	ELSEIF ABL:親密 <= 3
 		A:1 = 500
-	ELSEIF ABL:0 <= 4
+	ELSEIF ABL:親密 <= 4
 		A:1 = 650
 	ELSE
-		A:1 = 350 + (ABL:4 * 100)
+		A:1 = 350 + (ABL:Ｖ感覚 * 100)
 	ENDIF
 	
 	B = 0
@@ -309,7 +309,7 @@ ENDIF
 
 ;恋慕且つ恋人
 IF TALENT:85 && TALENT:153 && ASSIPLAY == 0
-	SOURCE:9 = (RAND:5+1) * ABL:0 + 500
+	SOURCE:9 = (RAND:5+1) * ABL:親密 + 500
 
 	;猫舌なら効果アップ(猫科ボーナス)
 	SIF TALENT:TARGET:54

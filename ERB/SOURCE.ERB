@@ -277,37 +277,37 @@ ENDIF
 D = UP:9/16
 
 ;プレイヤーのサドっ気が高すぎる場合の軽減措置
-IF ABL:PLAYER:15 > 15
-	D = D * 50000 / (ABL:PLAYER:15 * 5 + 125) / (ABL:PLAYER:15 * 10 + 100)
+IF ABL:PLAYER:サドっ気 > 15
+	D = D * 50000 / (ABL:PLAYER:サドっ気 * 5 + 125) / (ABL:PLAYER:サドっ気 * 10 + 100)
 ENDIF
 
 ;ABL:マゾっ気をみる
-IF ABL:8 == 0
+IF ABL:マゾっ気 == 0
 	TIMES D , 1.00
-ELSEIF ABL:8 == 1
+ELSEIF ABL:マゾっ気 == 1
 	TIMES D , 0.95
-ELSEIF ABL:8 == 2
+ELSEIF ABL:マゾっ気 == 2
 	TIMES D , 0.90
-ELSEIF ABL:8 == 3
+ELSEIF ABL:マゾっ気 == 3
 	TIMES D , 0.80
-ELSEIF ABL:8 == 4
+ELSEIF ABL:マゾっ気 == 4
 	TIMES D , 0.65
 ELSE
-	IF ABL:8 <= 10
+	IF ABL:マゾっ気 <= 10
 		IF D < 100000
-			D = D * (75 - ABL:8 * 5) / 100
+			D = D * (75 - ABL:マゾっ気 * 5) / 100
 		ELSEIF D < 100000000
-			D = D / 100 * (75 - ABL:8 * 5)
+			D = D / 100 * (75 - ABL:マゾっ気 * 5)
 		ENDIF
-	ELSEIF ABL:8 <= 25
+	ELSEIF ABL:マゾっ気 <= 25
 		IF D < 100000
-			D = D * (30 - ABL:8) / 100
+			D = D * (30 - ABL:マゾっ気) / 100
 		ELSEIF D < 100000000
-			D = D / 100 * (30 - ABL:8)
+			D = D / 100 * (30 - ABL:マゾっ気)
 		ENDIF
-	ELSEIF ABL:8 <= 50
+	ELSEIF ABL:マゾっ気 <= 50
 		TIMES D , 0.05
-	ELSEIF ABL:8 <= 98
+	ELSEIF ABL:マゾっ気 <= 98
 		TIMES D , 0.02
 	ELSE
 		TIMES D , 0.01
@@ -1092,10 +1092,10 @@ IF C
 	SOURCE:12 += 500 * C
 	SOURCE:13 += 200 * C
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
-	IF ABL:3 > 5 && ABL:3 <= 15
-		LOSEBASE:0 += 25 - ABL:3
-		LOSEBASE:1 += 13 - (ABL:3 / 2)
-	ELSEIF ABL:3 > 15
+	IF ABL:Ｃ感覚 > 5 && ABL:Ｃ感覚 <= 15
+		LOSEBASE:0 += 25 - ABL:Ｃ感覚
+		LOSEBASE:1 += 13 - (ABL:Ｃ感覚 / 2)
+	ELSEIF ABL:Ｃ感覚 > 15
 		LOSEBASE:0 += 10
 		LOSEBASE:1 += 5
 	ELSE
@@ -1115,10 +1115,10 @@ IF V
 	SOURCE:11 += 800 * V
 	SOURCE:16 += 500 * V
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
-	IF ABL:4 > 5 && ABL:4 <= 15
-		LOSEBASE:0 += 50 - (ABL:4 * 2)
-		LOSEBASE:1 += 25 - ABL:4
-	ELSEIF ABL:4 > 15
+	IF ABL:Ｖ感覚 > 5 && ABL:Ｖ感覚 <= 15
+		LOSEBASE:0 += 50 - (ABL:Ｖ感覚 * 2)
+		LOSEBASE:1 += 25 - ABL:Ｖ感覚
+	ELSEIF ABL:Ｖ感覚 > 15
 		LOSEBASE:0 += 20
 		LOSEBASE:1 += 10
 	ELSE
@@ -1142,10 +1142,10 @@ IF A
 	SOURCE:11 += 3500 * A
 	SOURCE:16 += 1500 * A
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
-	IF ABL:5 > 5 && ABL:5 <= 15
-		LOSEBASE:0 += 75 - (ABL:5 * 3)
-		LOSEBASE:1 += 38 - (ABL:5 * 3 / 2)
-	ELSEIF ABL:5 > 15
+	IF ABL:Ａ感覚 > 5 && ABL:Ａ感覚 <= 15
+		LOSEBASE:0 += 75 - (ABL:Ａ感覚 * 3)
+		LOSEBASE:1 += 38 - (ABL:Ａ感覚 * 3 / 2)
+	ELSEIF ABL:Ａ感覚 > 15
 		LOSEBASE:0 += 30
 		LOSEBASE:1 += 15
 	ELSE
@@ -1161,10 +1161,10 @@ IF B
 	SOURCE:12 += 500 * B
 	SOURCE:13 += 200 * B
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
-	IF ABL:14 > 5 && ABL:14 <= 15
-		LOSEBASE:0 += 25 - ABL:14
-		LOSEBASE:1 += 13 - (ABL:14 / 2)
-	ELSEIF ABL:14 > 15
+	IF ABL:Ｂ感覚 > 5 && ABL:Ｂ感覚 <= 15
+		LOSEBASE:0 += 25 - ABL:Ｂ感覚
+		LOSEBASE:1 += 13 - (ABL:Ｂ感覚 / 2)
+	ELSEIF ABL:Ｂ感覚 > 15
 		LOSEBASE:0 += 10
 		LOSEBASE:1 += 5
 	ELSE
@@ -1182,10 +1182,10 @@ IF M
 	SOURCE:3 += 500 * M
 	SOURCE:13 += 200 * M
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
-	IF ABL:17 > 5 && ABL:17 <= 15
-		LOSEBASE:0 += 25 - ABL:17
-		LOSEBASE:1 += 13 - (ABL:17 / 2)
-	ELSEIF ABL:17 > 15
+	IF ABL:Ｍ感覚 > 5 && ABL:Ｍ感覚 <= 15
+		LOSEBASE:0 += 25 - ABL:Ｍ感覚
+		LOSEBASE:1 += 13 - (ABL:Ｍ感覚 / 2)
+	ELSEIF ABL:Ｍ感覚 > 15
 		LOSEBASE:0 += 10
 		LOSEBASE:1 += 5
 	ELSE
@@ -1256,8 +1256,8 @@ SIF LOCAL:22 == 4
 ;EX最強五重絶頂
 SIF LOCAL:22 == 5
 	L = 5000
-IF ABL:1 < L
-	ABL:1 = L
+IF ABL:欲望 < L
+	ABL:欲望 = L
 	PRINTFORML そして%ABLNAME:1%がLV{L}になった
 	;欲望の上昇による[抑圧][抵抗]の消滅をチェック
 	CALL YOKUBO_UP_CHECK
@@ -1370,21 +1370,21 @@ ENDIF
 B = SOURCE:0
 
 ;ABL:欲望をみる
-SIF ABL:1 == 0
+SIF ABL:欲望 == 0
 	TIMES B , 0.10
-SIF ABL:1 == 1
+SIF ABL:欲望 == 1
 	TIMES B , 0.15
-SIF ABL:1 == 2
+SIF ABL:欲望 == 2
 	TIMES B , 0.20
-SIF ABL:1 == 3
+SIF ABL:欲望 == 3
 	TIMES B , 0.25
-SIF ABL:1 == 4
+SIF ABL:欲望 == 4
 	TIMES B , 0.30
-IF ABL:1 >= 5
+IF ABL:欲望 >= 5
 	IF B < 100000
-		B = B * (ABL:1 * 5 + 15) / 100
+		B = B * (ABL:欲望 * 5 + 15) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 5 + 15)
+		B = B / 100 * (ABL:欲望 * 5 + 15)
 	ENDIF
 ENDIF
 
@@ -1392,17 +1392,17 @@ ENDIF
 IF TALENT:32 || TALENT:34 || TALENT:71
 	C = SOURCE:0 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES C , 1.00
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES C , 0.85
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES C , 0.70
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES C , 0.40
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES C , 0.30
-	SIF ABL:1 >= 5
+	SIF ABL:欲望 >= 5
 		TIMES C , 0.10
 ELSE
 	C = 0
@@ -1455,21 +1455,21 @@ ENDIF
 B = SOURCE:1
 
 ;ABL:欲望をみる
-SIF ABL:1 == 0
+SIF ABL:欲望 == 0
 	TIMES B , 0.10
-SIF ABL:1 == 1
+SIF ABL:欲望 == 1
 	TIMES B , 0.15
-SIF ABL:1 == 2
+SIF ABL:欲望 == 2
 	TIMES B , 0.20
-SIF ABL:1 == 3
+SIF ABL:欲望 == 3
 	TIMES B , 0.25
-SIF ABL:1 == 4
+SIF ABL:欲望 == 4
 	TIMES B , 0.30
-IF ABL:1 >= 5
+IF ABL:欲望 >= 5
 	IF B < 100000
-		B = B * (ABL:1 * 5 + 15) / 100
+		B = B * (ABL:欲望 * 5 + 15) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 5 + 15)
+		B = B / 100 * (ABL:欲望 * 5 + 15)
 	ENDIF
 ENDIF
 
@@ -1477,17 +1477,17 @@ ENDIF
 IF TALENT:32 || TALENT:34 || TALENT:71
 	C = SOURCE:1 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES C , 1.00
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES C , 0.85
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES C , 0.70
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES C , 0.40
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES C , 0.30
-	SIF ABL:1 >= 5
+	SIF ABL:欲望 >= 5
 		TIMES C , 0.10
 ELSE
 	C = 0
@@ -1545,23 +1545,23 @@ ENDIF
 B = SOURCE:2
 
 ;ABL:欲望をみる
-SIF ABL:1 == 0
+SIF ABL:欲望 == 0
 	TIMES B , 0.05
-SIF ABL:1 == 1
+SIF ABL:欲望 == 1
 	TIMES B , 0.10
-SIF ABL:1 == 2
+SIF ABL:欲望 == 2
 	TIMES B , 0.40
-SIF ABL:1 == 3
+SIF ABL:欲望 == 3
 	TIMES B , 0.80
-SIF ABL:1 == 4
+SIF ABL:欲望 == 4
 	TIMES B , 1.20
-IF ABL:1 >= 5
+IF ABL:欲望 >= 5
 	IF B < 100000
-		B = B * (ABL:1 * 30 + 30) / 100
+		B = B * (ABL:欲望 * 30 + 30) / 100
 	ELSEIF B < 10000000
-		B = B / 100 * (ABL:1 * 30 + 30)
+		B = B / 100 * (ABL:欲望 * 30 + 30)
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 15 + 30)
+		B = B / 100 * (ABL:欲望 * 15 + 30)
 	ENDIF
 ENDIF
 
@@ -1569,17 +1569,17 @@ ENDIF
 IF TALENT:32 || TALENT:34 || TALENT:71
 	C = SOURCE:2 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES C , 1.00
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES C , 0.85
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES C , 0.70
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES C , 0.40
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES C , 0.30
-	SIF ABL:1 >= 5
+	SIF ABL:欲望 >= 5
 		TIMES C , 0.10
 ELSE
 	C = 0
@@ -1626,21 +1626,21 @@ ENDIF
 B = SOURCE:17
 
 ;ABL:欲望をみる
-SIF ABL:1 == 0
+SIF ABL:欲望 == 0
 	TIMES B , 0.10
-SIF ABL:1 == 1
+SIF ABL:欲望 == 1
 	TIMES B , 0.15
-SIF ABL:1 == 2
+SIF ABL:欲望 == 2
 	TIMES B , 0.20
-SIF ABL:1 == 3
+SIF ABL:欲望 == 3
 	TIMES B , 0.25
-SIF ABL:1 == 4
+SIF ABL:欲望 == 4
 	TIMES B , 0.30
-IF ABL:1 >= 5
+IF ABL:欲望 >= 5
 	IF B < 100000
-		B = B * (ABL:1 * 5 + 15) / 100
+		B = B * (ABL:欲望 * 5 + 15) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 5 + 15)
+		B = B / 100 * (ABL:欲望 * 5 + 15)
 	ENDIF
 ENDIF
 
@@ -1648,17 +1648,17 @@ ENDIF
 IF TALENT:32 || TALENT:34 || TALENT:71
 	C = SOURCE:17 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES C , 1.00
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES C , 0.85
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES C , 0.70
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES C , 0.40
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES C , 0.30
-	SIF ABL:1 >= 5
+	SIF ABL:欲望 >= 5
 		TIMES C , 0.10
 ELSE
 	C = 0
@@ -1708,21 +1708,21 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 
 ;ABL:欲望をみる
-SIF ABL:1 == 0
+SIF ABL:欲望 == 0
 	TIMES B , 0.10
-SIF ABL:1 == 1
+SIF ABL:欲望 == 1
 	TIMES B , 0.15
-SIF ABL:1 == 2
+SIF ABL:欲望 == 2
 	TIMES B , 0.20
-SIF ABL:1 == 3
+SIF ABL:欲望 == 3
 	TIMES B , 0.25
-SIF ABL:1 == 4
+SIF ABL:欲望 == 4
 	TIMES B , 0.30
-IF ABL:1 >= 5
+IF ABL:欲望 >= 5
 	IF B < 100000
-		B = B * (ABL:1 * 5 + 15) / 100
+		B = B * (ABL:欲望 * 5 + 15) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 5 + 15)
+		B = B / 100 * (ABL:欲望 * 5 + 15)
 	ENDIF
 ENDIF
 
@@ -1730,17 +1730,17 @@ ENDIF
 IF TALENT:32 || TALENT:34 || TALENT:71
 	C = SOURCE:24 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES C , 1.00
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES C , 0.85
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES C , 0.70
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES C , 0.40
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES C , 0.30
-	SIF ABL:1 >= 5
+	SIF ABL:欲望 >= 5
 		TIMES C , 0.10
 ELSE
 	C = 0
@@ -1775,41 +1775,41 @@ UP:13 += C
 A = SOURCE:3
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES A , 0.10
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES A , 0.25
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES A , 0.40
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES A , 0.60
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES A , 0.80
 ELSE
 	IF A < 100000
-		A = A * (ABL:0 * 5 + 50) / 100
+		A = A * (ABL:親密 * 5 + 50) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:0 * 5 + 50)
+		A = A / 100 * (ABL:親密 * 5 + 50)
 	ENDIF
 ENDIF
 
 B = SOURCE:3
 
-IF ABL:1 <= 1
+IF ABL:欲望 <= 1
 	TIMES B , 0.00
-ELSEIF ABL:1 <= 3
+ELSEIF ABL:欲望 <= 3
 	TIMES B , 0.05
-ELSEIF ABL:1 <= 5
+ELSEIF ABL:欲望 <= 5
 	TIMES B , 0.10
-ELSEIF ABL:1 <= 8
+ELSEIF ABL:欲望 <= 8
 	TIMES B , 0.20
-ELSEIF ABL:1 <= 11
+ELSEIF ABL:欲望 <= 11
 	TIMES B , 0.30
 ELSE
 	IF B < 100000
-		B = B * (ABL:1 * 3 + 15) / 100
+		B = B * (ABL:欲望 * 3 + 15) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 3 + 15)
+		B = B / 100 * (ABL:欲望 * 3 + 15)
 	ENDIF
 ENDIF
 
@@ -1823,21 +1823,21 @@ UP:5 += B
 A = SOURCE:4
 
 ;ABL:奉仕精神をみる
-IF ABL:6 <= 1
+IF ABL:奉仕精神 <= 1
 	TIMES A , 0.60
-ELSEIF ABL:6 <= 3
+ELSEIF ABL:奉仕精神 <= 3
 	TIMES A , 0.80
-ELSEIF ABL:6 <= 5
+ELSEIF ABL:奉仕精神 <= 5
 	TIMES A , 1.00
-ELSEIF ABL:6 <= 8
+ELSEIF ABL:奉仕精神 <= 8
 	TIMES A , 1.20
-ELSEIF ABL:6 <= 11
+ELSEIF ABL:奉仕精神 <= 11
 	TIMES A , 1.40
 ELSE
 	IF A < 100000
-		A = A * (ABL:6 * 10 + 95) / 100
+		A = A * (ABL:奉仕精神 * 10 + 95) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:6 * 10 + 95)
+		A = A / 100 * (ABL:奉仕精神 * 10 + 95)
 	ENDIF
 ENDIF
 
@@ -1845,22 +1845,22 @@ ENDIF
 IF TALENT:32 || TALENT:34
 	B = SOURCE:4 / 5
 	;ABL:奉仕精神をみる
-	IF ABL:6 <= 1
+	IF ABL:奉仕精神 <= 1
 		TIMES B , 1.80
-	ELSEIF ABL:6 <= 3
+	ELSEIF ABL:奉仕精神 <= 3
 		TIMES B , 1.30
-	ELSEIF ABL:6 <= 5
+	ELSEIF ABL:奉仕精神 <= 5
 		TIMES B , 0.90
-	ELSEIF ABL:6 <= 8
+	ELSEIF ABL:奉仕精神 <= 8
 		TIMES B , 0.70
-	ELSEIF ABL:6 <= 11
+	ELSEIF ABL:奉仕精神 <= 11
 		TIMES B , 0.50
 	ELSE
-		IF ABL:6 <= 27
+		IF ABL:奉仕精神 <= 27
 			IF B < 100000
-				B = B * (55 - ABL:6 * 2) / 100
+				B = B * (55 - ABL:奉仕精神 * 2) / 100
 			ELSEIF B < 100000000
-				B = B / 100 * (55 - ABL:6 * 2)
+				B = B / 100 * (55 - ABL:奉仕精神 * 2)
 			ENDIF
 		ELSE
 			TIMES B , 0.01
@@ -1880,40 +1880,40 @@ UP:13 += B
 A = SOURCE:5
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES A , 0.50
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES A , 0.80
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES A , 1.00
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES A , 1.20
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES A , 1.40
 ELSE
 	IF A < 100000
-		A = A * (ABL:0 * 5 + 110) / 100
+		A = A * (ABL:親密 * 5 + 110) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:0 * 5 + 110)
+		A = A / 100 * (ABL:親密 * 5 + 110)
 	ENDIF
 ENDIF
 
 ;ABL:奉仕精神をみる
-IF ABL:6 <= 1
+IF ABL:奉仕精神 <= 1
 	TIMES A , 0.00
-ELSEIF ABL:6 <= 3
+ELSEIF ABL:奉仕精神 <= 3
 	TIMES A , 0.40
-ELSEIF ABL:6 <= 5
+ELSEIF ABL:奉仕精神 <= 5
 	TIMES A , 0.80
-ELSEIF ABL:6 <= 8
+ELSEIF ABL:奉仕精神 <= 8
 	TIMES A , 1.20
-ELSEIF ABL:6 <= 11
+ELSEIF ABL:奉仕精神 <= 11
 	TIMES A , 1.60
 ELSE
 	IF A < 100000
-		A = A * (ABL:6 * 10 + 100) / 100
+		A = A * (ABL:奉仕精神 * 10 + 100) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:6 * 10 + 100)
+		A = A / 100 * (ABL:奉仕精神 * 10 + 100)
 	ENDIF
 ENDIF
 
@@ -1928,22 +1928,22 @@ A = SOURCE:6
 B = SOURCE:6
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES B , 0.80
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES B , 0.70
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES B , 0.55
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES B , 0.45
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES B , 0.35
 ELSE
-	IF ABL:0 < 25
+	IF ABL:親密 < 25
 		IF B < 100000
-			B = B * (50 - ABL:0 * 2) / 100
+			B = B * (50 - ABL:親密 * 2) / 100
 		ELSEIF B < 100000000
-			B = B / 100 * (50 - ABL:0 * 2)
+			B = B / 100 * (50 - ABL:親密 * 2)
 		ENDIF
 	ELSE
 		TIMES B , 0.01
@@ -1952,15 +1952,15 @@ ENDIF
 
 C = SOURCE:6
 
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES C , 0.80
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES C , 0.60
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES C , 0.50
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES C , 0.40
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES C , 0.20
 ELSE
 	TIMES C , 0.05
@@ -1968,32 +1968,32 @@ ENDIF
 
 D = SOURCE:6
 
-IF ABL:8 == 0
+IF ABL:マゾっ気 == 0
 	TIMES C , 1.00
 	TIMES D , 0.00
 ENDIF
-IF ABL:8 == 1
+IF ABL:マゾっ気 == 1
 	TIMES C , 0.80
 	TIMES D , 0.10
 ENDIF
-IF ABL:8 == 2
+IF ABL:マゾっ気 == 2
 	TIMES C , 0.50
 	TIMES D , 0.20
 ENDIF
-IF ABL:8 == 3
+IF ABL:マゾっ気 == 3
 	TIMES C , 0.30
 	TIMES D , 0.30
 ENDIF
-IF ABL:8 == 4
+IF ABL:マゾっ気 == 4
 	TIMES C , 0.10
 	TIMES D , 0.45
 ENDIF
-IF ABL:8 >= 5
+IF ABL:マゾっ気 >= 5
 	TIMES C , 0.05
 	IF D < 100000
-		D = D * (ABL:8 * 10 + 10) / 100
+		D = D * (ABL:マゾっ気 * 10 + 10) / 100
 	ELSEIF D < 100000000
-		D = D / 100 * (ABL:8 * 10 + 10)
+		D = D / 100 * (ABL:マゾっ気 * 10 + 10)
 	ENDIF
 ENDIF
 
@@ -2018,17 +2018,17 @@ ENDIF
 IF TALENT:PLAYER:83
 	TIMES D , 2.50
 ENDIF
-IF ABL:PLAYER:15 > 0
+IF ABL:PLAYER:サドっ気 > 0
 	IF D < 100000
-		D = D * (ABL:PLAYER:15 * 10 + 100) / 100
+		D = D * (ABL:PLAYER:サドっ気 * 10 + 100) / 100
 	ELSEIF D < 100000000
-		D = D / 100 * (ABL:PLAYER:15 * 10 + 100)
+		D = D / 100 * (ABL:PLAYER:サドっ気 * 10 + 100)
 	ENDIF
 ENDIF
 
 ;プレイヤーのサドっ気が高すぎる場合の軽減措置
-IF ABL:PLAYER:15 > 15
-	C = C * 15 / ABL:PLAYER:15
+IF ABL:PLAYER:サドっ気 > 15
+	C = C * 15 / ABL:PLAYER:サドっ気
 ENDIF
 
 UP:9 += A
@@ -2045,31 +2045,31 @@ UP:5 += D
 A = SOURCE:7
 B = SOURCE:7
 
-IF ABL:1 <= 1
+IF ABL:欲望 <= 1
 	TIMES A , 0.10
 	TIMES B , 0.20
-ELSEIF ABL:1 <= 3
+ELSEIF ABL:欲望 <= 3
 	TIMES A , 0.15
 	TIMES B , 0.30
-ELSEIF ABL:1 <= 5
+ELSEIF ABL:欲望 <= 5
 	TIMES A , 0.20
 	TIMES B , 0.40
-ELSEIF ABL:1 <= 8
+ELSEIF ABL:欲望 <= 8
 	TIMES A , 0.25
 	TIMES B , 0.50
-ELSEIF ABL:1 <= 11
+ELSEIF ABL:欲望 <= 11
 	TIMES A , 0.30
 	TIMES B , 0.60
 ELSE
 	IF A < 100000
-		A = A * (ABL:1 + 25) / 100
+		A = A * (ABL:欲望 + 25) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:1 + 25)
+		A = A / 100 * (ABL:欲望 + 25)
 	ENDIF
 	IF B < 100000
-		B = B * (ABL:1 * 2 + 45) / 100
+		B = B * (ABL:欲望 * 2 + 45) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:1 * 2 + 45)
+		B = B / 100 * (ABL:欲望 * 2 + 45)
 	ENDIF
 ENDIF
 
@@ -2089,19 +2089,19 @@ UP:5 += B
 A = SOURCE:8
 B = SOURCE:8
 
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES A , 0.60
 	TIMES B , 1.00
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES A , 0.40
 	TIMES B , 0.80
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES A , 0.25
 	TIMES B , 0.60
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES A , 0.10
 	TIMES B , 0.30
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES A , 0.00
 	TIMES B , 0.10
 ELSE
@@ -2126,41 +2126,41 @@ A = SOURCE:9
 C = SOURCE:9
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.01
 	TIMES C , 1.50
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.05
 	TIMES C , 1.20
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 0.10
 	TIMES C , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 0.50
 	TIMES C , 0.70
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 0.80
 	TIMES C , 0.55
-ELSEIF ABL:0 == 5
+ELSEIF ABL:親密 == 5
 	TIMES A , 1.00
 	TIMES C , 0.40
-ELSEIF ABL:0 == 6
+ELSEIF ABL:親密 == 6
 	TIMES A , 1.10
 	TIMES C , 0.30
-ELSEIF ABL:0 == 7
+ELSEIF ABL:親密 == 7
 	TIMES A , 1.20
 	TIMES C , 0.20
-ELSEIF ABL:0 == 8
+ELSEIF ABL:親密 == 8
 	TIMES A , 1.30
 	TIMES C , 0.10
-ELSEIF ABL:0 == 9
+ELSEIF ABL:親密 == 9
 	TIMES A , 1.40
 	TIMES C , 0.05
-ELSEIF ABL:0 >= 10
+ELSEIF ABL:親密 >= 10
 	IF A < 100000
-		A = A * (ABL:0 * 5 + 100) / 100
+		A = A * (ABL:親密 * 5 + 100) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:0 * 5 + 100)
+		A = A / 100 * (ABL:親密 * 5 + 100)
 	ENDIF
 	TIMES C , 0.00
 ENDIF
@@ -2264,21 +2264,21 @@ SOURCE:12 += (UP:3-SOURCE:10) / 2
 A = SOURCE:12
 
 ;ABL:露出癖をみる
-SIF ABL:7 == 0
+SIF ABL:露出癖 == 0
 	TIMES A , 0.00
-SIF ABL:7 == 1
+SIF ABL:露出癖 == 1
 	TIMES A , 0.10
-SIF ABL:7 == 2
+SIF ABL:露出癖 == 2
 	TIMES A , 0.20
-SIF ABL:7 == 3
+SIF ABL:露出癖 == 3
 	TIMES A , 0.40
-SIF ABL:7 == 4
+SIF ABL:露出癖 == 4
 	TIMES A , 0.60
-IF ABL:7 >= 5
+IF ABL:露出癖 >= 5
 	IF A < 100000
-		A = A * (ABL:7 * 10 + 30) / 100
+		A = A * (ABL:露出癖 * 10 + 30) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:7 * 10 + 30)
+		A = A / 100 * (ABL:露出癖 * 10 + 30)
 	ENDIF
 ENDIF
 
@@ -2316,32 +2316,32 @@ ENDIF
 C = SOURCE:12
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES C , 0.50
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES C , 0.30
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES C , 0.15
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES C , 0.05
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES C , 0.00
 ELSE
 	TIMES C , 0.00
 ENDIF
 
 ;ABL:露出癖をみる
-SIF ABL:7 == 0
+SIF ABL:露出癖 == 0
 	TIMES C , 1.00
-SIF ABL:7 == 1
+SIF ABL:露出癖 == 1
 	TIMES C , 0.90
-SIF ABL:7 == 2
+SIF ABL:露出癖 == 2
 	TIMES C , 0.70
-SIF ABL:7 == 3
+SIF ABL:露出癖 == 3
 	TIMES C , 0.50
-SIF ABL:7 == 4
+SIF ABL:露出癖 == 4
 	TIMES C , 0.30
-SIF ABL:7 >= 5
+SIF ABL:露出癖 >= 5
 	TIMES C , 0.10
 
 ;マゾ
@@ -2364,27 +2364,27 @@ A = SOURCE:13
 B = SOURCE:13
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES A , 0.12
 	TIMES B , 0.50
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES A , 0.10
 	TIMES B , 0.80
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES A , 0.05
 	TIMES B , 1.00
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES A , 0.02
 	TIMES B , 1.10
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES A , 0.00
 	TIMES B , 1.20
 ELSE
 	TIMES A , 0.00
 	IF B < 100000
-		B = B * (ABL:0 * 2 + 105) / 100
+		B = B * (ABL:親密 * 2 + 105) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:0 * 2 + 105)
+		B = B / 100 * (ABL:親密 * 2 + 105)
 	ENDIF
 ENDIF
 
@@ -2404,30 +2404,30 @@ SIF TALENT:24
 A = SOURCE:14
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	TIMES A , 1.00
-ELSEIF ABL:0 <= 3
+ELSEIF ABL:親密 <= 3
 	TIMES A , 0.80
-ELSEIF ABL:0 <= 5
+ELSEIF ABL:親密 <= 5
 	TIMES A , 0.70
-ELSEIF ABL:0 <= 8
+ELSEIF ABL:親密 <= 8
 	TIMES A , 0.40
-ELSEIF ABL:0 <= 11
+ELSEIF ABL:親密 <= 11
 	TIMES A , 0.20
 ELSE
 	TIMES A , 0.00
 ENDIF
 
 ;ABL:欲望をみる
-IF ABL:1 <= 1
+IF ABL:欲望 <= 1
 	TIMES A , 0.90
-ELSEIF ABL:1 <= 3
+ELSEIF ABL:欲望 <= 3
 	TIMES A , 0.70
-ELSEIF ABL:1 <= 5
+ELSEIF ABL:欲望 <= 5
 	TIMES A , 0.50
-ELSEIF ABL:1 <= 8
+ELSEIF ABL:欲望 <= 8
 	TIMES A , 0.30
-ELSEIF ABL:1 <= 11
+ELSEIF ABL:欲望 <= 11
 	TIMES A , 0.10
 ELSE
 	TIMES A , 0.00
@@ -2481,16 +2481,16 @@ ENDIF
 
 ;ABL:従順をみる
 IF A < 100000
-	A = A * (ABL:0 * 5 + 100) / 100
+	A = A * (ABL:親密 * 5 + 100) / 100
 ELSEIF A < 100000000
-	A = A / 100 * (ABL:0 * 5 + 100)
+	A = A / 100 * (ABL:親密 * 5 + 100)
 ENDIF
 
 ;ABL:欲望をみる
 IF A < 100000
-	A = A * (ABL:1 * 5 + 100) / 100
+	A = A * (ABL:欲望 * 5 + 100) / 100
 ELSEIF A < 100000000
-	A = A / 100 * (ABL:1 * 5 + 100)
+	A = A / 100 * (ABL:欲望 * 5 + 100)
 ENDIF
 
 ;好感度を見る
@@ -2536,39 +2536,39 @@ A = SOURCE:19
 B = SOURCE:19
 
 ;ABL:奉仕精神をみる
-IF ABL:6 == 0
+IF ABL:奉仕精神 == 0
 	TIMES A , 0.30
 	TIMES B , 0.80
-ELSEIF ABL:6 == 1
+ELSEIF ABL:奉仕精神 == 1
 	TIMES A , 0.50
 	TIMES B , 0.90
-ELSEIF ABL:6 == 2
+ELSEIF ABL:奉仕精神 == 2
 	TIMES A , 0.70
 	TIMES B , 1.00
-ELSEIF ABL:6 == 3
+ELSEIF ABL:奉仕精神 == 3
 	TIMES A , 0.80
 	TIMES B , 1.10
-ELSEIF ABL:6 == 4
+ELSEIF ABL:奉仕精神 == 4
 	TIMES A , 0.90
 	TIMES B , 1.20
-ELSEIF ABL:6 >= 5
+ELSEIF ABL:奉仕精神 >= 5
 	IF A < 100000
-		A = A * (ABL:6 * 10 + 50) / 100
+		A = A * (ABL:奉仕精神 * 10 + 50) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:6 * 10 + 50)
+		A = A / 100 * (ABL:奉仕精神 * 10 + 50)
 	ENDIF
 	IF B < 100000
-		B = B * (ABL:6 * 5 + 100) / 100
+		B = B * (ABL:奉仕精神 * 5 + 100) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:6 * 5 + 100)
+		B = B / 100 * (ABL:奉仕精神 * 5 + 100)
 	ENDIF
 ENDIF
 
 ;ABL:技巧を見る
 IF B < 100000
-	B = B * (ABL:2 * 10 + 100) / 100
+	B = B * (ABL:技巧 * 10 + 100) / 100
 ELSEIF B < 100000000
-	B = B / 100 * (ABL:2 * 10 + 100)
+	B = B / 100 * (ABL:技巧 * 10 + 100)
 ENDIF
 
 UP:7 += A
@@ -2588,69 +2588,69 @@ IF R > 0
 	;強気なキャラ
 	B = SOURCE:20 / 4
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES B , 0.10
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES B , 0.15
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES B , 0.20
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES B , 0.25
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES B , 0.30
-	IF ABL:1 >= 5
+	IF ABL:欲望 >= 5
 		IF B < 100000
-			B = B * (ABL:1 * 5 + 15) / 100
+			B = B * (ABL:欲望 * 5 + 15) / 100
 		ELSEIF B < 100000000
-			B = B / 100 * (ABL:1 * 5 + 15)
+			B = B / 100 * (ABL:欲望 * 5 + 15)
 		ENDIF
 	ENDIF
 	;ABL:サドっ気をみる
 	IF B < 100000
-		B = B * (ABL:15 * 30 + 100) / 100
+		B = B * (ABL:サドっ気 * 30 + 100) / 100
 	ELSEIF B < 100000000
-		B = B / 100 * (ABL:15 * 30 + 100)
+		B = B / 100 * (ABL:サドっ気 * 30 + 100)
 	ENDIF
 ELSE
 	;弱気なキャラ
 	C = SOURCE:20 / 2
 	;ABL:従順をみる
-	SIF ABL:0 == 0
+	SIF ABL:親密 == 0
 		TIMES C , 0.10
-	SIF ABL:0 == 1
+	SIF ABL:親密 == 1
 		TIMES C , 0.15
-	SIF ABL:0 == 2
+	SIF ABL:親密 == 2
 		TIMES C , 0.20
-	SIF ABL:0 == 3
+	SIF ABL:親密 == 3
 		TIMES C , 0.25
-	SIF ABL:0 == 4
+	SIF ABL:親密 == 4
 		TIMES C , 0.30
-	IF ABL:0 >= 5
+	IF ABL:親密 >= 5
 		IF C < 100000
-			C = C * (ABL:0 * 5 + 15) / 100
+			C = C * (ABL:親密 * 5 + 15) / 100
 		ELSEIF B < 100000000
-			C = C / 100 * (ABL:0 * 5 + 15)
+			C = C / 100 * (ABL:親密 * 5 + 15)
 		ENDIF
 	ENDIF
 ENDIF
 
 A = SOURCE:20
 ;ABL:サドっ気をみる
-IF ABL:15 == 0
+IF ABL:サドっ気 == 0
 	TIMES A , 0.70
-ELSEIF ABL:15 == 1
+ELSEIF ABL:サドっ気 == 1
 	TIMES A , 1.00
-ELSEIF ABL:15 == 2
+ELSEIF ABL:サドっ気 == 2
 	TIMES A , 1.30
-ELSEIF ABL:15 == 3
+ELSEIF ABL:サドっ気 == 3
 	TIMES A , 1.70
-ELSEIF ABL:15 == 4
+ELSEIF ABL:サドっ気 == 4
 	TIMES A , 2.00
-ELSEIF ABL:15 >= 5
+ELSEIF ABL:サドっ気 >= 5
 	IF A < 100000
-		A = A * (ABL:15 * 15 + 175) / 100
+		A = A * (ABL:サドっ気 * 15 + 175) / 100
 	ELSEIF A < 100000000
-		A = A / 100 * (ABL:15 * 15 + 175)
+		A = A / 100 * (ABL:サドっ気 * 15 + 175)
 	ENDIF
 ENDIF
 
@@ -2672,42 +2672,42 @@ IF R > 0
 	;強気なキャラ
 	B = SOURCE:21 / 3
 	;ABL:欲望をみる
-	SIF ABL:1 == 0
+	SIF ABL:欲望 == 0
 		TIMES B , 0.30
-	SIF ABL:1 == 1
+	SIF ABL:欲望 == 1
 		TIMES B , 0.35
-	SIF ABL:1 == 2
+	SIF ABL:欲望 == 2
 		TIMES B , 0.40
-	SIF ABL:1 == 3
+	SIF ABL:欲望 == 3
 		TIMES B , 0.45
-	SIF ABL:1 == 4
+	SIF ABL:欲望 == 4
 		TIMES B , 0.50
-	IF ABL:1 >= 5
+	IF ABL:欲望 >= 5
 		IF B < 100000
-			B = B * (ABL:1 * 10 + 10) / 100
+			B = B * (ABL:欲望 * 10 + 10) / 100
 		ELSEIF B < 100000000
-			B = B / 100 * (ABL:1 * 10 + 10)
+			B = B / 100 * (ABL:欲望 * 10 + 10)
 		ENDIF
 	ENDIF
 ELSE
 	;弱気なキャラ
 	C = SOURCE:21 / 2
 	;ABL:奉仕精神をみる
-	SIF ABL:6 == 0
+	SIF ABL:奉仕精神 == 0
 		TIMES C , 0.30
-	SIF ABL:6 == 1
+	SIF ABL:奉仕精神 == 1
 		TIMES C , 0.35
-	SIF ABL:6 == 2
+	SIF ABL:奉仕精神 == 2
 		TIMES C , 0.40
-	SIF ABL:6 == 3
+	SIF ABL:奉仕精神 == 3
 		TIMES C , 0.45
-	SIF ABL:6 == 4
+	SIF ABL:奉仕精神 == 4
 		TIMES C , 0.50
-	IF ABL:6 >= 5
+	IF ABL:奉仕精神 >= 5
 		IF C < 100000
-			C = C * (ABL:6 * 10 + 10) / 100
+			C = C * (ABL:奉仕精神 * 10 + 10) / 100
 		ELSEIF B < 100000000
-			C = C / 100 * (ABL:6 * 10 + 10)
+			C = C / 100 * (ABL:奉仕精神 * 10 + 10)
 		ENDIF
 	ENDIF
 ENDIF
@@ -2715,9 +2715,9 @@ ENDIF
 A = SOURCE:21
 ;ABL:従順をみる
 IF A < 100000
-	A = A * (ABL:0 * 10 + 70) / 100
+	A = A * (ABL:親密 * 10 + 70) / 100
 ELSEIF A < 100000000
-	A = A / 100 * (ABL:0 * 10 + 70)
+	A = A / 100 * (ABL:親密 * 10 + 70)
 ENDIF
 
 UP:15 += A
@@ -2732,22 +2732,22 @@ A = SOURCE:22
 B = SOURCE:22
 
 ;ABL:従順をみる
-SIF ABL:0 == 0
+SIF ABL:親密 == 0
 	TIMES B , 0.80
-SIF ABL:0 == 1
+SIF ABL:親密 == 1
 	TIMES B , 0.70
-SIF ABL:0 == 2
+SIF ABL:親密 == 2
 	TIMES B , 0.55
-SIF ABL:0 == 3
+SIF ABL:親密 == 3
 	TIMES B , 0.45
-SIF ABL:0 == 4
+SIF ABL:親密 == 4
 	TIMES B , 0.35
-IF ABL:0 >= 5
-	IF ABL:0 <= 10
+IF ABL:親密 >= 5
+	IF ABL:親密 <= 10
 		IF B < 100000
-			B = B * (50 - ABL:0 * 5) / 100
+			B = B * (50 - ABL:親密 * 5) / 100
 		ELSEIF B < 100000000
-			B = B / 100 * (50 - ABL:0 * 5)
+			B = B / 100 * (50 - ABL:親密 * 5)
 		ENDIF
 	ELSE
 		TIMES B , 0.01
@@ -2822,22 +2822,22 @@ ENDIF
 
 
 ;ABL:従順をみる
-SIF ABL:0 == 0
+SIF ABL:親密 == 0
 	TIMES B , 0.80
-SIF ABL:0 == 1
+SIF ABL:親密 == 1
 	TIMES B , 0.70
-SIF ABL:0 == 2
+SIF ABL:親密 == 2
 	TIMES B , 0.55
-SIF ABL:0 == 3
+SIF ABL:親密 == 3
 	TIMES B , 0.45
-SIF ABL:0 == 4
+SIF ABL:親密 == 4
 	TIMES B , 0.35
-IF ABL:0 >= 5
-	IF ABL:0 <= 10
+IF ABL:親密 >= 5
+	IF ABL:親密 <= 10
 		IF B < 100000
-			B = B * (50 - ABL:0 * 5) / 100
+			B = B * (50 - ABL:親密 * 5) / 100
 		ELSEIF B < 100000000
-			B = B / 100 * (50 - ABL:0 * 5)
+			B = B / 100 * (50 - ABL:親密 * 5)
 		ENDIF
 	ELSE
 		TIMES B , 0.01

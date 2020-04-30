@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP0MAIN
 DRAWLINE
-IF ABL:0 >= 9999
+IF ABL:親密 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -208,7 +208,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:0 += 1
+	ABL:親密 += 1
 
 IF RESULT == 0
 	JUEL:15 -= E
@@ -238,7 +238,7 @@ ENDIF
 
 PRINTS ABLNAME:0
 PRINT のレベルが
-PRINTV ABL:0
+PRINTV ABL:親密
 PRINTW になりました。
 
 CALL JUJUN_UP_CHECK
@@ -249,7 +249,7 @@ CALL JUJUN_UP_CHECK
 ;親密が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP0
-IF ABL:0 >= 9999
+IF ABL:親密 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -337,7 +337,7 @@ ENDIF
 ;親密を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP0
-IF ABL:0 <= 1
+IF ABL:親密 <= 1
 	IF TALENT:10 == 0
 		A = 10
 	ELSE
@@ -348,12 +348,12 @@ IF ABL:0 <= 1
 	D = 200
 	E = 5
 
-	A = A * (ABL:0 + 1)
-	B = B * (ABL:0 + 1)
-	C = C * (ABL:0 + 1)
-	D = D * (ABL:0 + 1)
-	E = E * (ABL:0 + 1)
-ELSEIF ABL:0 <= 3
+	A = A * (ABL:親密 + 1)
+	B = B * (ABL:親密 + 1)
+	C = C * (ABL:親密 + 1)
+	D = D * (ABL:親密 + 1)
+	E = E * (ABL:親密 + 1)
+ELSEIF ABL:親密 <= 3
 	IF TALENT:10 == 0
 		A = 150
 	ELSE
@@ -364,12 +364,12 @@ ELSEIF ABL:0 <= 3
 	D = 1200
 	E = 100
 
-	A = A * (ABL:0 - 1)
-	B = B * (ABL:0 - 1)
-	C = C * (ABL:0 - 1)
-	D = D * (ABL:0 - 1)
-	E = E * (ABL:0 - 1)
-ELSEIF ABL:0 <= 5
+	A = A * (ABL:親密 - 1)
+	B = B * (ABL:親密 - 1)
+	C = C * (ABL:親密 - 1)
+	D = D * (ABL:親密 - 1)
+	E = E * (ABL:親密 - 1)
+ELSEIF ABL:親密 <= 5
 	IF TALENT:10 == 0
 		A = 1000
 	ELSE
@@ -380,12 +380,12 @@ ELSEIF ABL:0 <= 5
 	D = 3000
 	E = 1000
 
-	A = A * (ABL:0 - 3)
-	B = B * (ABL:0 - 3)
-	C = C * (ABL:0 - 3)
-	D = D * (ABL:0 - 3)
-	E = E * (ABL:0 - 3)
-ELSEIF ABL:0 <= 8
+	A = A * (ABL:親密 - 3)
+	B = B * (ABL:親密 - 3)
+	C = C * (ABL:親密 - 3)
+	D = D * (ABL:親密 - 3)
+	E = E * (ABL:親密 - 3)
+ELSEIF ABL:親密 <= 8
 	IF TALENT:10 == 0
 		A = 3000
 	ELSE
@@ -401,10 +401,10 @@ ELSEIF ABL:0 <= 8
 		TIMES B , 1.10
 		TIMES E , 1.10
 	ENDIF
-	A = A * (ABL:0 - 5)
-	B = B * (ABL:0 - 5)
-	E = E * (ABL:0 - 5)
-ELSEIF ABL:0 <= 11
+	A = A * (ABL:親密 - 5)
+	B = B * (ABL:親密 - 5)
+	E = E * (ABL:親密 - 5)
+ELSEIF ABL:親密 <= 11
 	IF TALENT:10 == 0
 		A = 8000
 	ELSE
@@ -421,12 +421,12 @@ ELSEIF ABL:0 <= 11
 		TIMES E , 1.30
 	ENDIF
 	IF TALENT:10 == 0
-		A = A + 2000 * (ABL:0 - 9)
+		A = A + 2000 * (ABL:親密 - 9)
 	ELSE
-		A = A + 1000 * (ABL:0 - 9)
+		A = A + 1000 * (ABL:親密 - 9)
 	ENDIF
-	B = B + 5000 * (ABL:0 - 9)
-	E = E + 8000 * (ABL:0 - 9)
+	B = B + 5000 * (ABL:親密 - 9)
+	E = E + 8000 * (ABL:親密 - 9)
 ELSE
 	IF TALENT:10 == 0
 		A = 8000
@@ -438,9 +438,9 @@ ELSE
 	D = 0
 	E = 25000
 	
-	A = A * (ABL:0 - 9)
-	B = B * (ABL:0 - 9)
-	E = E * (ABL:0 - 9)
+	A = A * (ABL:親密 - 9)
+	B = B * (ABL:親密 - 9)
+	E = E * (ABL:親密 - 9)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -495,7 +495,7 @@ ENDIF
 
 
 ;ＬＶ１２から１３に上げるときは異常経験必要（素質：[臆病][素直][妄信][淫乱化][恋慕]なら無視できる）
-IF ABL:0 == 12 && TALENT:10 == 0 && TALENT:13 == 0 && TALENT:86 == 0 && TALENT:76 == 0 && TALENT:85 == 0
+IF ABL:親密 == 12 && TALENT:10 == 0 && TALENT:13 == 0 && TALENT:86 == 0 && TALENT:76 == 0 && TALENT:85 == 0
 	F = 1
 ELSE
 	F = 0

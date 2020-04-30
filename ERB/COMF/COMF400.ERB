@@ -15,7 +15,7 @@ IF ASSI > 0
 		RETURN 0
 ENDIF
 ;親密10以上、技巧5以上、奉仕精神5以上
-SIF ABL:0 < 10 || ABL:2 <5 || ABL:6 < 5
+SIF ABL:親密 < 10 || ABL:技巧 <5 || ABL:奉仕精神 < 5
 	RETURN 0
 RETURN 1
 

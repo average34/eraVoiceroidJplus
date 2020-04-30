@@ -92,7 +92,7 @@ SIF L:1 > 9999
 IF TFLAG:17 == 0
 	L = 3 - TFLAG:18
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*3)+1
+		L = RAND:L+(ABL:親密*3)+1
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -116,7 +116,7 @@ ELSEIF TFLAG:17 == 1 && TEQUIP:2 == 2
 			L -= 1
 	ENDIF
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*3)
+		L = RAND:L+(ABL:親密*3)
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -148,7 +148,7 @@ ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 	SIF E != 0
 		L -= 1
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*2)+1
+		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -163,7 +163,7 @@ ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 ELSEIF TFLAG:17 == 2
 	L = 3 - TFLAG:18
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*2)+1
+		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -178,7 +178,7 @@ ELSEIF TFLAG:17 == 2
 ELSEIF TFLAG:17 == 3
 	L = 3 - TFLAG:18
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*3)+1
+		L = RAND:L+(ABL:親密*3)+1
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -193,7 +193,7 @@ ELSEIF TFLAG:17 == 3
 ELSEIF TFLAG:17 == 4
 	L = 5 - TFLAG:18
 	IF RAND:L == 0
-		L = RAND:L+(ABL:0*2)+1
+		L = RAND:L+(ABL:親密*2)+1
 		;成長限界と比較
 		IF MAXBASE:1 > L:1
 			SIF (MAXBASE:1+L) > L:1
@@ -227,9 +227,9 @@ SIF (NO:TARGET == 1 || NO:TARGET == 42) && TFLAG:17 <= 1
 A:1 = RAND:5 + 1
 
 ;親密が低いと好感度低下
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	A:1 -= 2
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	A:1 -= 1
 ENDIF
 ;好感度が低いと好感度低下

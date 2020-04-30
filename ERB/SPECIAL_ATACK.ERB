@@ -341,14 +341,14 @@ NEXT
 
 R = RAND:5
 IF T == TARGET
-	SIF ABL:1 >= 10
+	SIF ABL:欲望 >= 10
 		R += 1
-	SIF ABL:9 >= 3
+	SIF ABL:レズっ気 >= 3
 		R += 1
 ELSEIF T == MASTER
-	SIF ABL:MASTER:2 >= 8
+	SIF ABL:MASTER:技巧 >= 8
 		R += 1
-	SIF ABL:MASTER:2 >= 4
+	SIF ABL:MASTER:技巧 >= 4
 		R += 1
 ENDIF
 IF R == 0
@@ -402,14 +402,14 @@ NEXT
 
 R = RAND:3
 IF T == TARGET
-	SIF ABL:1 >= 10
+	SIF ABL:欲望 >= 10
 		R += 1
-	SIF ABL:9 >= 3
+	SIF ABL:レズっ気 >= 3
 		R += 1
 ELSEIF T == MASTER
-	SIF ABL:MASTER:2 >= 10
+	SIF ABL:MASTER:技巧 >= 10
 		R += 1
-	SIF ABL:MASTER:2 >= 5
+	SIF ABL:MASTER:技巧 >= 5
 		R += 1
 ENDIF
 
@@ -471,14 +471,14 @@ NEXT
 
 R = RAND:3
 IF T == TARGET
-	SIF ABL:1 >= 10
+	SIF ABL:欲望 >= 10
 		R += 1
-	SIF ABL:9 >= 3
+	SIF ABL:レズっ気 >= 3
 		R += 1
 ELSEIF T == MASTER
-	SIF ABL:MASTER:2 >= 12
+	SIF ABL:MASTER:技巧 >= 12
 		R += 1
-	SIF ABL:MASTER:2 >= 8
+	SIF ABL:MASTER:技巧 >= 8
 		R += 1
 ENDIF
 

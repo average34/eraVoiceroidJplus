@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP90MAIN
 DRAWLINE
-IF ABL:90 >= 9999
+IF ABL:料理技能 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -19,7 +19,7 @@ ENDIF
 CALL ISABLUP90
 
 PRINTFORM [0] - %PALAMNAME:16%の珠×{A}
-IF ABL:90 >= 2
+IF ABL:料理技能 >= 2
 	PRINTFORM 、%EXPNAME:90%{B}
 ENDIF
 PRINT 以上……
@@ -34,7 +34,7 @@ ENDIF
 PRINTL 
 
 PRINTFORM [1] - %PALAMNAME:7%の珠×{C}
-IF ABL:90 >= 2
+IF ABL:料理技能 >= 2
 	PRINTFORM 、%EXPNAME:90%{B}
 ENDIF
 PRINT 以上……
@@ -49,7 +49,7 @@ ENDIF
 PRINTL 
 
 PRINTFORM [20] - %PALAMNAME:16%の珠
-IF ABL:90 >= 2
+IF ABL:料理技能 >= 2
 	PRINTFORM 
 ENDIF
 PRINT で限界まであげる……
@@ -64,7 +64,7 @@ ENDIF
 PRINTL 
 
 PRINTFORM [21] - %PALAMNAME:7%の珠
-IF ABL:90 >= 2
+IF ABL:料理技能 >= 2
 	PRINTFORM 
 ENDIF
 PRINT で限界まであげる……
@@ -102,7 +102,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:90 += 1
+	ABL:料理技能 += 1
 
 IF RESULT == 0
 	JUEL:16 -= A
@@ -116,7 +116,7 @@ ENDIF
 
 PRINTS ABLNAME:90
 PRINT のレベルが
-PRINTV ABL:90
+PRINTV ABL:料理技能
 PRINTW になりました。
 
 
@@ -125,7 +125,7 @@ PRINTW になりました。
 ;料理技能が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP90
-IF ABL:90 >= 9999
+IF ABL:料理技能 >= 9999
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -173,11 +173,11 @@ ENDIF
 ;料理技能を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP90
-IF ABL:90 == 0
+IF ABL:料理技能 == 0
 	A = 1
 	B = 0
 	C = 75
-ELSEIF ABL:90 == 1
+ELSEIF ABL:料理技能 == 1
 	A = 50
 	B = 0
 	C = 500
@@ -185,7 +185,7 @@ ELSEIF ABL:90 == 1
 		A = 20
 		C = 250
 	ENDIF
-ELSEIF ABL:90 == 2
+ELSEIF ABL:料理技能 == 2
 	A = 600
 	B = 25
 	C = 3000
@@ -193,7 +193,7 @@ ELSEIF ABL:90 == 2
 		A = 300
 		C = 1500
 	ENDIF
-ELSEIF ABL:90 == 3
+ELSEIF ABL:料理技能 == 3
 	A = 5000
 	B = 50
 	C = 9000
@@ -201,7 +201,7 @@ ELSEIF ABL:90 == 3
 		A = 2500
 		C = 4500
 	ENDIF
-ELSEIF ABL:90 == 4
+ELSEIF ABL:料理技能 == 4
 	A = 20000
 	B = 100
 	C = 24000
@@ -214,9 +214,9 @@ ELSE
 	B = 100
 	C = 24000
 	
-	A = A * (ABL:90 - 3)
-	B = B * (ABL:90 - 2) / 2
-	C = C * (ABL:90 - 3)
+	A = A * (ABL:料理技能 - 3)
+	B = B * (ABL:料理技能 - 2) / 2
+	C = C * (ABL:料理技能 - 3)
 ENDIF
 
 ;習得早い

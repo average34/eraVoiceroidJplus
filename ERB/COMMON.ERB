@@ -50,10 +50,10 @@ R = I - R
 A = CFLAG:T:12
 
 ;ABL:マゾっ気による影響
-A -= ABL:T:8 * 5
+A -= ABL:T:マゾっ気 * 5
 
 ;ABL:サドっ気による影響
-A += ABL:T:15 * 5
+A += ABL:T:サドっ気 * 5
 
 ;臆病　主人公側に片寄りやすい
 IF TALENT:T:10
@@ -308,19 +308,19 @@ ENDIF
 CALL GET_BATTLE_POWER_LIMIT
 
 ;素質の無いキャラほど、好感度の影響を大きくする。愛だよ、愛
-IF ABL:T:98 == 0
+IF ABL:T:戦闘素質 == 0
 	;素質未設定はLv50とみなす＝倍率３倍
 	TIMES P , 3.00
-ELSEIF ABL:T:98 <= 10
+ELSEIF ABL:T:戦闘素質 <= 10
 	;最弱
 	TIMES P , 10.00
-ELSEIF ABL:T:98 <= 20
+ELSEIF ABL:T:戦闘素質 <= 20
 	;最弱クラス
 	TIMES P , 7.00
-ELSEIF ABL:T:98 <= 30
+ELSEIF ABL:T:戦闘素質 <= 30
 	;弱い方
 	TIMES P , 5.00
-ELSEIF ABL:T:98 <= 50
+ELSEIF ABL:T:戦闘素質 <= 50
 	;弱い方
 	TIMES P , 3.00
 ENDIF
@@ -328,40 +328,40 @@ ENDIF
 CALL GET_BATTLE_POWER_LIMIT
 
 ;戦闘技能レベル
-IF ABL:T:88 <= 1
-	P += 50 + 50 * ABL:T:88
-ELSEIF ABL:T:88 <= 3
-	P += 100 + 75 * ABL:T:88
-ELSEIF ABL:T:88 <= 5
-	P += 300 + 100 * ABL:T:88
-ELSEIF ABL:T:88 <= 8
-	P += 500 + 120 * ABL:T:88
-ELSEIF ABL:T:88 <= 11
-	P += 800 + 150 * ABL:T:88
-ELSEIF ABL:T:88 <= 25
-	P += 800 + 200 * ABL:T:88
+IF ABL:T:戦闘技能 <= 1
+	P += 50 + 50 * ABL:T:戦闘技能
+ELSEIF ABL:T:戦闘技能 <= 3
+	P += 100 + 75 * ABL:T:戦闘技能
+ELSEIF ABL:T:戦闘技能 <= 5
+	P += 300 + 100 * ABL:T:戦闘技能
+ELSEIF ABL:T:戦闘技能 <= 8
+	P += 500 + 120 * ABL:T:戦闘技能
+ELSEIF ABL:T:戦闘技能 <= 11
+	P += 800 + 150 * ABL:T:戦闘技能
+ELSEIF ABL:T:戦闘技能 <= 25
+	P += 800 + 200 * ABL:T:戦闘技能
 ELSE
-	P += 1000 + 300 * ABL:T:88
+	P += 1000 + 300 * ABL:T:戦闘技能
 ENDIF
 
 CALL GET_BATTLE_POWER_LIMIT
 
 ;戦闘素質
-IF ABL:T:98 == 0
+IF ABL:T:戦闘素質 == 0
 	;素質未設定はLv50とみなす＝倍率55/25倍
 	P = P * 55 / 25
-ELSEIF ABL:T:98 <= 20
+ELSEIF ABL:T:戦闘素質 <= 20
 	;最弱クラス
-	P = P * (ABL:T:98 + 10) / 30
-ELSEIF ABL:T:98 <= 50
+	P = P * (ABL:T:戦闘素質 + 10) / 30
+ELSEIF ABL:T:戦闘素質 <= 50
 	;弱い方
-	P = P * (ABL:T:98 + 5) / 25
-ELSEIF ABL:T:98 < 80
+	P = P * (ABL:T:戦闘素質 + 5) / 25
+ELSEIF ABL:T:戦闘素質 < 80
 	;強い方
-	P = P * ABL:T:98 / 20
+	P = P * ABL:T:戦闘素質 / 20
 ELSE
 	;最強クラス
-	P = P * ABL:T:98 / 15
+	P = P * ABL:T:戦闘素質 / 15
 ENDIF
 
 CALL GET_BATTLE_POWER_LIMIT
@@ -463,41 +463,41 @@ CALL GET_BATTLE_POWER_LIMIT
 
 ;戦闘技能レベルによる倍率
 IF P < 1000000
-	IF ABL:T:88 <= 1
-		P = P * (ABL:T:88 * 10 + 50) / 100
-	ELSEIF ABL:T:88 <= 3
-		P = P * (ABL:T:88 * 10 + 50) / 100
-	ELSEIF ABL:T:88 <= 5
-		P = P * (ABL:T:88 * 7 + 60) / 100
-	ELSEIF ABL:T:88 <= 8
-		P = P * (ABL:T:88 * 5 + 70) / 100
-	ELSEIF ABL:T:88 <= 11
-		P = P * (ABL:T:88 * 4 + 80) / 100
-	ELSEIF ABL:T:88 <= 25
-		P = P * (ABL:T:88 * 4 + 90) / 100
+	IF ABL:T:戦闘技能 <= 1
+		P = P * (ABL:T:戦闘技能 * 10 + 50) / 100
+	ELSEIF ABL:T:戦闘技能 <= 3
+		P = P * (ABL:T:戦闘技能 * 10 + 50) / 100
+	ELSEIF ABL:T:戦闘技能 <= 5
+		P = P * (ABL:T:戦闘技能 * 7 + 60) / 100
+	ELSEIF ABL:T:戦闘技能 <= 8
+		P = P * (ABL:T:戦闘技能 * 5 + 70) / 100
+	ELSEIF ABL:T:戦闘技能 <= 11
+		P = P * (ABL:T:戦闘技能 * 4 + 80) / 100
+	ELSEIF ABL:T:戦闘技能 <= 25
+		P = P * (ABL:T:戦闘技能 * 4 + 90) / 100
 	ELSE
-		P = P * (ABL:T:88 * 5 + 70) / 100
+		P = P * (ABL:T:戦闘技能 * 5 + 70) / 100
 	ENDIF
 ELSE
 	P /= 200
-	IF ABL:T:88 <= 1
-		P = P * (ABL:T:88 * 20 + 100)
-	ELSEIF ABL:T:88 <= 3
-		P = P * (ABL:T:88 * 20 + 100)
-	ELSEIF ABL:T:88 <= 5
-		P = P * (ABL:T:88 * 14 + 120)
-	ELSEIF ABL:T:88 <= 8
-		P = P * (ABL:T:88 * 10 + 140)
-	ELSEIF ABL:T:88 <= 11
-		P = P * (ABL:T:88 * 8 + 160)
-	ELSEIF ABL:T:88 <= 25
-		P = P * (ABL:T:88 * 8 + 180)
-	ELSEIF ABL:T:88 <= 100
-		P = P * (ABL:T:88 * 6 + 230)
-	ELSEIF ABL:T:88 <= 1000
-		P = P * (ABL:T:88 * 4 + 430)
+	IF ABL:T:戦闘技能 <= 1
+		P = P * (ABL:T:戦闘技能 * 20 + 100)
+	ELSEIF ABL:T:戦闘技能 <= 3
+		P = P * (ABL:T:戦闘技能 * 20 + 100)
+	ELSEIF ABL:T:戦闘技能 <= 5
+		P = P * (ABL:T:戦闘技能 * 14 + 120)
+	ELSEIF ABL:T:戦闘技能 <= 8
+		P = P * (ABL:T:戦闘技能 * 10 + 140)
+	ELSEIF ABL:T:戦闘技能 <= 11
+		P = P * (ABL:T:戦闘技能 * 8 + 160)
+	ELSEIF ABL:T:戦闘技能 <= 25
+		P = P * (ABL:T:戦闘技能 * 8 + 180)
+	ELSEIF ABL:T:戦闘技能 <= 100
+		P = P * (ABL:T:戦闘技能 * 6 + 230)
+	ELSEIF ABL:T:戦闘技能 <= 1000
+		P = P * (ABL:T:戦闘技能 * 4 + 430)
 	ELSE
-		P = P * (ABL:T:88 + 3430)
+		P = P * (ABL:T:戦闘技能 + 3430)
 	ENDIF
 ENDIF
 
@@ -533,14 +533,14 @@ CALL GET_BATTLE_POWER
 LOCAL = P
 
 ;戦闘能力強化
-IF ABL:MASTER:87 >= 1
-	IF 999999999999999999 / ABL:MASTER:87 < LOCAL
+IF ABL:MASTER:戦闘能力強化 >= 1
+	IF 999999999999999999 / ABL:MASTER:戦闘能力強化 < LOCAL
 		LOCAL = 999999999999999999
 	ELSE
-		IF ABL:MASTER:87 == 1
+		IF ABL:MASTER:戦闘能力強化 == 1
 			TIMES LOCAL , 1.50
 		ELSE
-			LOCAL *= ABL:MASTER:87
+			LOCAL *= ABL:MASTER:戦闘能力強化
 		ENDIF
 	ENDIF
 ENDIF
@@ -571,60 +571,60 @@ P = 0
 Q = 0
 
 ;戦闘技能レベル
-IF ABL:T:88 <= 1
-	P += 2000 + 2000 * ABL:T:88
+IF ABL:T:戦闘技能 <= 1
+	P += 2000 + 2000 * ABL:T:戦闘技能
 	Q = 5
-	IF EXP:T:95 >= (20 + 20 * ABL:T:88)
+	IF EXP:T:95 >= (20 + 20 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (15 + 15 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (15 + 15 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
-ELSEIF ABL:T:88 <= 3
-	P += 4000 * ABL:T:88
+ELSEIF ABL:T:戦闘技能 <= 3
+	P += 4000 * ABL:T:戦闘技能
 	Q = 6
-	IF EXP:T:95 >= (35 * ABL:T:88)
+	IF EXP:T:95 >= (35 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (25 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (25 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
-ELSEIF ABL:T:88 <= 5
-	P += 8000 * ABL:T:88
+ELSEIF ABL:T:戦闘技能 <= 5
+	P += 8000 * ABL:T:戦闘技能
 	Q = 7
-	IF EXP:T:95 >= (50 * ABL:T:88)
+	IF EXP:T:95 >= (50 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (35 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (35 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
-ELSEIF ABL:T:88 <= 8
-	P += 12000 * ABL:T:88
+ELSEIF ABL:T:戦闘技能 <= 8
+	P += 12000 * ABL:T:戦闘技能
 	Q = 8
-	IF EXP:T:95 >= (65 * ABL:T:88)
+	IF EXP:T:95 >= (65 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (45 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (45 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
-ELSEIF ABL:T:88 <= 11
-	P += 18000 * ABL:T:88
+ELSEIF ABL:T:戦闘技能 <= 11
+	P += 18000 * ABL:T:戦闘技能
 	Q = 9
-	IF EXP:T:95 >= (80 * ABL:T:88)
+	IF EXP:T:95 >= (80 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (55 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (55 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
-ELSEIF ABL:T:88 <= 25
-	P += 30000 * ABL:T:88
+ELSEIF ABL:T:戦闘技能 <= 25
+	P += 30000 * ABL:T:戦闘技能
 	Q = 10
-	IF EXP:T:95 >= (90 * ABL:T:88)
+	IF EXP:T:95 >= (90 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (65 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (65 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ELSE
-	P += 50000 * ABL:T:88
+	P += 50000 * ABL:T:戦闘技能
 	Q = 12
-	IF EXP:T:95 >= (100 * ABL:T:88)
+	IF EXP:T:95 >= (100 * ABL:T:戦闘技能)
 		P /= 2
-	ELSEIF EXP:T:95 >= (80 * ABL:T:88)
+	ELSEIF EXP:T:95 >= (80 * ABL:T:戦闘技能)
 		P = P * 3 / 4
 	ENDIF
 ENDIF
@@ -646,14 +646,14 @@ ELSE
 ENDIF
 
 ;戦闘素質で割引
-IF ABL:T:98 == 0
+IF ABL:T:戦闘素質 == 0
 	;Lv0＝未設定はLv50扱い＝１倍
-ELSEIF ABL:T:98 <= 20
+ELSEIF ABL:T:戦闘素質 <= 20
 	;最弱級キャラは半額
 	TIMES P , 0.50
-ELSEIF ABL:T:98 <= 50
+ELSEIF ABL:T:戦闘素質 <= 50
 	;弱め～普通のキャラは１倍
-ELSEIF ABL:T:98 < 80
+ELSEIF ABL:T:戦闘素質 < 80
 	;強めのキャラは1.5倍
 	TIMES P , 1.50
 ELSE
@@ -669,44 +669,44 @@ RETURN 1
 
 @BATTLE_PRICE_I
 ;使うお金が$11以上になるまで一気にレベルを上げる
-LOCAL = ABL:T:88
+LOCAL = ABL:T:戦闘技能
 M = 0
 K = 0
-L = 9999 - ABL:T:88
+L = 9999 - ABL:T:戦闘技能
 REPEAT L
 	M += P
 	K += 1
-	ABL:T:88 += 1
+	ABL:T:戦闘技能 += 1
 	CALL GET_BATTLE_PRICE
 	SIF P > 10
 		BREAK
 REND
 
-ABL:T:88 = LOCAL
+ABL:T:戦闘技能 = LOCAL
 
 RETURN 1
 
 @BATTLE_PRICE_G
 ;お金の限界までレベルを上げる
-LOCAL = ABL:T:88
+LOCAL = ABL:T:戦闘技能
 M = 0
 K = 0
-L = 9999 - ABL:T:88
+L = 9999 - ABL:T:戦闘技能
 REPEAT L
 	M += P
 	K += 1
-	ABL:T:88 += 1
+	ABL:T:戦闘技能 += 1
 	CALL GET_BATTLE_PRICE
 	SIF M + P > MONEY
 		BREAK
 REND
 
-ABL:T:88 = LOCAL
+ABL:T:戦闘技能 = LOCAL
 
 RETURN 1
 
 @BATTLE_PRICE_4(ARG)
-LOCAL = ABL:T:88
+LOCAL = ABL:T:戦闘技能
 ;決めたレベルまで上げる
 M = 0
 K = 0
@@ -714,11 +714,11 @@ L = RESULT
 REPEAT L
 	M += P
 	K += 1
-	ABL:T:88 += 1
+	ABL:T:戦闘技能 += 1
 	CALL GET_BATTLE_PRICE
 REND
 
-ABL:T:88 = LOCAL
+ABL:T:戦闘技能 = LOCAL
 
 RETURN 1
 
@@ -728,8 +728,8 @@ RETURN 1
 
 ADDCHARA T
 A = CHARANUM - 1
-S = ABL:A:98
-S:1 = ABL:A:97
+S = ABL:A:戦闘素質
+S:1 = ABL:A:浪費癖
 S:2 = CFLAG:A:12
 DELCHARA A
 ;レベル0＝未設定はレベル50扱い
@@ -870,7 +870,7 @@ RETURN 1
 ;COM_ORDERと違って詳細は表示しない。あくまで隠しコマンド用
 
 ;従順
-A = ABL:0 * 5
+A = ABL:親密 * 5
 
 ;PALAM:恭順
 IF PALAM:4 < PALAMLV:1
@@ -967,7 +967,7 @@ RETURN 1
 ;コマンド成功率の基準値をAに入れて返す
 
 ;従順
-A = ABL:0 * 5
+A = ABL:親密 * 5
 
 ;PALAM:恭順
 IF PALAM:4 < PALAMLV:1
@@ -1161,7 +1161,7 @@ SIF TALENT:A:130 == 0
 ;初期好感度を決定
 CFLAG:A:2 = RAND:50 - 40
 ;初期戦闘技術を決定
-ABL:A:88 += FLAG:24 / 2
+ABL:A:戦闘技能 += FLAG:24 / 2
 ;仲間になった日
 CFLAG:A:75 = DAY:1
 CFLAG:A:76 = DAY:2
@@ -1254,7 +1254,7 @@ ENDIF
 ;押し倒され判定
 ;-------------------------------------------------
 @PUSH_OVER
-;IF ASSIPLAY == 0 && (ABL:1 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
+;IF ASSIPLAY == 0 && (ABL:欲望 >= 7 || PALAM:3 >= 3000 || PALAM:5 >= 3000 || CFLAG:2 >= 10000)
 ;この条件で呼び出されているため、助手プレイ中は押し倒されない
 ;また、欲望Lv7以上、潤滑3000以上、欲情3000以上、好感度10000以上のどれかを満たす必要あり
 
@@ -1392,8 +1392,8 @@ A = 0
 CALL GET_JUN_VALUE
 
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 4
+IF ABL:欲望
+	A += ABL:欲望 * 4
 ENDIF
 
 ;PALAM:潤滑
@@ -1407,8 +1407,8 @@ IF PALAM:5 >= 3000
 ENDIF
 
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 3
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 3
 ENDIF
 ;男嫌い
 IF TALENT:82 && TALENT:PLAYER:122
@@ -1549,8 +1549,8 @@ VARSET A, 0
 
 PRINTL 
 PRINTFORML 好きな特殊能力を身に付けることが出来ます。選んでください
-IF ABL:MASTER:81 < 99
-	PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:81 + 1}
+IF ABL:MASTER:好感度ボーナス < 99
+	PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス + 1}
 	A:0 = 1
 ENDIF
 IF TALENT:MASTER:113 == 0
@@ -1561,20 +1561,20 @@ IF TALENT:MASTER:202 == 0
 	PRINTFORML [  2] 脱衣制限解除
 	A:2 = 1
 ENDIF
-IF ABL:MASTER:82 < 99
-	PRINTFORML [  3] 生活費軽減 Lv{ABL:MASTER:82 + 1}
+IF ABL:MASTER:生活費軽減 < 99
+	PRINTFORML [  3] 生活費軽減 Lv{ABL:MASTER:生活費軽減 + 1}
 	A:3 = 1
 ENDIF
-IF ABL:MASTER:83 < 99
-	PRINTFORML [  4] 戦闘経験ボーナス Lv{ABL:MASTER:83 + 1}
+IF ABL:MASTER:戦闘経験ボーナス < 99
+	PRINTFORML [  4] 戦闘経験ボーナス Lv{ABL:MASTER:戦闘経験ボーナス + 1}
 	A:4 = 1
 ENDIF
-IF ABL:MASTER:84 < 99 && FLAG:5 == 10
-	PRINTFORML [  5] 霧無効化能力強化 Lv{ABL:MASTER:84 + 1}
+IF ABL:MASTER:霧無効化能力強化 < 99 && FLAG:5 == 10
+	PRINTFORML [  5] 霧無効化能力強化 Lv{ABL:MASTER:霧無効化能力強化 + 1}
 	A:5 = 1
 ENDIF
-IF ABL:MASTER:85 < 99 && FLAG:5 == 10
-	PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:85 + 1}
+IF ABL:MASTER:霧浄化能力強化 < 99 && FLAG:5 == 10
+	PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化 + 1}
 	A:6 = 1
 ENDIF
 IF TALENT:MASTER:203 == 0 && FLAG:5 == 10
@@ -1593,12 +1593,12 @@ IF TALENT:MASTER:206 == 0 && FLAG:5 == 10
 	PRINTFORML [ 10] 淫乱ボーナス強化
 	A:10 = 1
 ENDIF
-IF ABL:MASTER:86 < 99
-	PRINTFORML [ 11] 獲得資金増加 Lv{ABL:MASTER:86 + 1}
+IF ABL:MASTER:獲得資金増加 < 99
+	PRINTFORML [ 11] 獲得資金増加 Lv{ABL:MASTER:獲得資金増加 + 1}
 	A:11 = 1
 ENDIF
-IF ABL:MASTER:87 < 99
-	PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:87 + 1}
+IF ABL:MASTER:戦闘能力強化 < 99
+	PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化 + 1}
 	A:12 = 1
 ENDIF
 IF TALENT:MASTER:207 == 0
@@ -1635,19 +1635,19 @@ ELSEIF A:RESULT == 0
 	PRINTFORML 正しい値を入力してください
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 0
-	PRINTFORML コマンド実行時の好感度上昇量が+{ABL:MASTER:81 + 1}されます
+	PRINTFORML コマンド実行時の好感度上昇量が+{ABL:MASTER:好感度ボーナス + 1}されます
 ELSEIF RESULT == 1
 	PRINTFORML コマンド実行時のムード上昇量が+1されます
 ELSEIF RESULT == 2
 	PRINTFORML 「服を脱がせる」が必ず成功するようになり、戦闘中は最初から服を脱ぐようになります
 ELSEIF RESULT == 3
-	PRINTFORML 生活費が{ABL:MASTER:82 + 1}％引きになります
+	PRINTFORML 生活費が{ABL:MASTER:生活費軽減 + 1}％引きになります
 ELSEIF RESULT == 4
-	PRINTFORML Stage攻略の際に得られる戦闘経験が+{ABL:MASTER:83 + 1}されます
+	PRINTFORML Stage攻略の際に得られる戦闘経験が+{ABL:MASTER:戦闘経験ボーナス + 1}されます
 ELSEIF RESULT == 5
-	PRINTFORML 仲間が霧に飲まれかけるまでの期限が約{(ABL:MASTER:84 + 1) * 2}日伸びます
+	PRINTFORML 仲間が霧に飲まれかけるまでの期限が約{(ABL:MASTER:霧無効化能力強化 + 1) * 2}日伸びます
 ELSEIF RESULT == 6
-	PRINTFORML 仲間が霧に飲まれかけても大丈夫な回数が{ABL:MASTER:85 + 1}回増えます
+	PRINTFORML 仲間が霧に飲まれかけても大丈夫な回数が{ABL:MASTER:霧浄化能力強化 + 1}回増えます
 ELSEIF RESULT == 7
 	PRINTFORML 恋人の人数に応じて得られる戦闘能力ボーナスが1.5倍になります
 ELSEIF RESULT == 8
@@ -1657,16 +1657,16 @@ ELSEIF RESULT == 9
 ELSEIF RESULT == 10
 	PRINTFORML 淫乱の人数に応じて得られる耐力・魔力ボーナスが3倍になります
 ELSEIF RESULT == 11
-	IF ABL:MASTER:86 == 0
+	IF ABL:MASTER:獲得資金増加 == 0
 		PRINTFORML アルバイトやモンスター退治で得られる資金が1.5倍になります
 	ELSE
-		PRINTFORML アルバイトやモンスター退治で得られる資金が{ABL:MASTER:86 + 1}倍になります
+		PRINTFORML アルバイトやモンスター退治で得られる資金が{ABL:MASTER:獲得資金増加 + 1}倍になります
 	ENDIF
 ELSEIF RESULT == 12
-	IF ABL:MASTER:82 == 0
+	IF ABL:MASTER:生活費軽減 == 0
 		PRINTFORML %CALLNAME:MASTER%の戦闘能力が1.5倍になります
 	ELSE
-		PRINTFORML %CALLNAME:MASTER%の戦闘能力が{ABL:MASTER:87 + 1}倍になります
+		PRINTFORML %CALLNAME:MASTER%の戦闘能力が{ABL:MASTER:戦闘能力強化 + 1}倍になります
 	ENDIF
 ELSEIF RESULT == 13
 	PRINTFORML 撤退が一部の例外を除いて必ず成功します
@@ -1696,8 +1696,8 @@ IF (RESULT < 0 || RESULT > 1)
 ELSEIF RESULT == 1
 	RESTART
 ELSEIF B == 0
-	ABL:MASTER:81 += 1
-	PRINTFORMW 好感度ボーナス Lv{ABL:MASTER:81} を取得しました
+	ABL:MASTER:好感度ボーナス += 1
+	PRINTFORMW 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス} を取得しました
 ELSEIF B == 1
 	TALENT:MASTER:113 = 1
 	PRINTFORMW 【魅力】を取得しました
@@ -1705,17 +1705,17 @@ ELSEIF B == 2
 	TALENT:MASTER:202 = 1
 	PRINTFORMW 脱衣制限解除 を取得しました
 ELSEIF B == 3
-	ABL:MASTER:82 += 1
-	PRINTFORMW 生活費軽減 Lv{ABL:MASTER:82} を取得しました
+	ABL:MASTER:生活費軽減 += 1
+	PRINTFORMW 生活費軽減 Lv{ABL:MASTER:生活費軽減} を取得しました
 ELSEIF B == 4
-	ABL:MASTER:83 += 1
-	PRINTFORMW 戦闘経験ボーナス Lv{ABL:MASTER:83} を取得しました
+	ABL:MASTER:戦闘経験ボーナス += 1
+	PRINTFORMW 戦闘経験ボーナス Lv{ABL:MASTER:戦闘経験ボーナス} を取得しました
 ELSEIF B == 5
-	ABL:MASTER:84 += 1
-	PRINTFORMW 霧無効化能力強化 Lv{ABL:MASTER:84} を取得しました
+	ABL:MASTER:霧無効化能力強化 += 1
+	PRINTFORMW 霧無効化能力強化 Lv{ABL:MASTER:霧無効化能力強化} を取得しました
 ELSEIF B == 6
-	ABL:MASTER:85 += 1
-	PRINTFORMW 霧浄化能力強化 Lv{ABL:MASTER:85} を取得しました
+	ABL:MASTER:霧浄化能力強化 += 1
+	PRINTFORMW 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化} を取得しました
 ELSEIF B == 7
 	TALENT:MASTER:203 = 1
 	PRINTFORMW 恋人ボーナス強化 を取得しました
@@ -1729,11 +1729,11 @@ ELSEIF B == 10
 	TALENT:MASTER:206 = 1
 	PRINTFORMW 淫乱ボーナス強化 を取得しました
 ELSEIF B == 11
-	ABL:MASTER:86 += 1
-	PRINTFORMW 獲得資金増加 Lv{ABL:MASTER:86} を取得しました
+	ABL:MASTER:獲得資金増加 += 1
+	PRINTFORMW 獲得資金増加 Lv{ABL:MASTER:獲得資金増加} を取得しました
 ELSEIF B == 12
-	ABL:MASTER:87 += 1
-	PRINTFORMW 戦闘能力強化 Lv{ABL:MASTER:87} を取得しました
+	ABL:MASTER:戦闘能力強化 += 1
+	PRINTFORMW 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化} を取得しました
 ELSEIF B == 13
 	TALENT:MASTER:207 = 1
 	PRINTFORMW 逃走能力強化 を取得しました
@@ -1762,8 +1762,8 @@ RETURN 0
 VARSET A, 0
 VARSET LOCAL, 0
 
-IF ABL:MASTER:81 < 99
-	;PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:81 + 1}
+IF ABL:MASTER:好感度ボーナス < 99
+	;PRINTFORML [  0] 好感度ボーナス Lv{ABL:MASTER:好感度ボーナス + 1}
 	A:0 = 1
 ENDIF
 IF TALENT:MASTER:113 == 0
@@ -1774,20 +1774,20 @@ IF TALENT:MASTER:202 == 0
 	;PRINTFORML [  2] 脱衣制限解除
 	A:2 = 1
 ENDIF
-IF ABL:MASTER:82 < 99
-	;PRINTFORML [  3] 生活費軽減 Lv{ABL:MASTER:82 + 1}
+IF ABL:MASTER:生活費軽減 < 99
+	;PRINTFORML [  3] 生活費軽減 Lv{ABL:MASTER:生活費軽減 + 1}
 	A:3 = 1
 ENDIF
-IF ABL:MASTER:83 < 99
-	;PRINTFORML [  4] 戦闘経験ボーナス Lv{ABL:MASTER:83 + 1}
+IF ABL:MASTER:戦闘経験ボーナス < 99
+	;PRINTFORML [  4] 戦闘経験ボーナス Lv{ABL:MASTER:戦闘経験ボーナス + 1}
 	A:4 = 1
 ENDIF
-IF ABL:MASTER:84 < 99 && FLAG:5 == 10
-	;PRINTFORML [  5] 霧無効化能力強化 Lv{ABL:MASTER:84 + 1}
+IF ABL:MASTER:霧無効化能力強化 < 99 && FLAG:5 == 10
+	;PRINTFORML [  5] 霧無効化能力強化 Lv{ABL:MASTER:霧無効化能力強化 + 1}
 	A:5 = 1
 ENDIF
-IF ABL:MASTER:85 < 99 && FLAG:5 == 10
-	;PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:85 + 1}
+IF ABL:MASTER:霧浄化能力強化 < 99 && FLAG:5 == 10
+	;PRINTFORML [  6] 霧浄化能力強化 Lv{ABL:MASTER:霧浄化能力強化 + 1}
 	A:6 = 1
 ENDIF
 IF TALENT:MASTER:203 == 0 && FLAG:5 == 10
@@ -1806,12 +1806,12 @@ IF TALENT:MASTER:206 == 0 && FLAG:5 == 10
 	;PRINTFORML [ 10] 淫乱ボーナス強化
 	A:10 = 1
 ENDIF
-IF ABL:MASTER:86 < 99
-	;PRINTFORML [ 11] 獲得資金増加 Lv{ABL:MASTER:86 + 1}
+IF ABL:MASTER:獲得資金増加 < 99
+	;PRINTFORML [ 11] 獲得資金増加 Lv{ABL:MASTER:獲得資金増加 + 1}
 	A:11 = 1
 ENDIF
-IF ABL:MASTER:87 < 99
-	;PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:87 + 1}
+IF ABL:MASTER:戦闘能力強化 < 99
+	;PRINTFORML [ 12] 戦闘能力強化 Lv{ABL:MASTER:戦闘能力強化 + 1}
 	A:12 = 1
 ENDIF
 IF TALENT:MASTER:207 == 0

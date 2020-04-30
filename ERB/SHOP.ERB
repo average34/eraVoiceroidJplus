@@ -256,7 +256,7 @@ REPEAT 30
 		PRINTLC [118] - キャラソート      
 	ELSEIF COUNT == 16 && (CHARANUM - T) > 2
 		PRINTLC [119] - キャラ検索        
-	ELSEIF COUNT == 17 && TARGET > 0 && ITEM:45 > 0 && TFLAG:79 == 0 && ABL:7 >= 4 && (TALENT:85 || ABL:0 >= 5)
+	ELSEIF COUNT == 17 && TARGET > 0 && ITEM:45 > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:85 || ABL:親密 >= 5)
 		PRINTLC [130] - 野外ライブを開く  
 	ELSEIF COUNT == 18 && TALENT:MASTER:212
 		CONTINUE
@@ -326,7 +326,7 @@ ELSEIF RESULT == 102 && TARGET >= 0
 	RETURN 1
 ;戦闘訓練
 ELSEIF RESULT == 103 && TARGET >= 0 && MONEY > 0
-	IF ABL:TARGET:88 >= 9999
+	IF ABL:TARGET:戦闘技能 >= 9999
 		PRINTFORMW これ以上レベルは上がりません
 	ELSE
 		T = TARGET
@@ -334,18 +334,18 @@ ELSEIF RESULT == 103 && TARGET >= 0 && MONEY > 0
 		IF MONEY < P
 			PRINTFORMW 次のレベルになるには${P}が必要です。お金が足りません。
 		ELSE
-			LOCAL = ABL:TARGET:88
-			PRINTFORML 次のレベルになるには${P}が必要です。レベルを上げますか？（現在のLv：{(ABL:TARGET:88)}）
+			LOCAL = ABL:TARGET:戦闘技能
+			PRINTFORML 次のレベルになるには${P}が必要です。レベルを上げますか？（現在のLv：{(ABL:TARGET:戦闘技能)}）
 			PRINTL [0] はい
 			PRINTL [1] いいえ
 			IF P == 10
 				CALL BATTLE_PRICE_I
-				PRINTFORML [2] $10(最低価格)で上がる分だけレベルを上げる（Lv：{(ABL:TARGET:88)+K}までLvUP　使用金額:${M}）
+				PRINTFORML [2] $10(最低価格)で上がる分だけレベルを上げる（Lv：{(ABL:TARGET:戦闘技能)+K}までLvUP　使用金額:${M}）
 			ENDIF
 			T = TARGET
 			CALL GET_BATTLE_PRICE
 			CALL BATTLE_PRICE_G
-			PRINTFORML [3] お金が無くなるまでレベルを上げる（Lv：{(ABL:TARGET:88)+K}までLvUP　使用金額:${M}）
+			PRINTFORML [3] お金が無くなるまでレベルを上げる（Lv：{(ABL:TARGET:戦闘技能)+K}までLvUP　使用金額:${M}）
 			PRINTFORML [4] 選択してレベルを上げる
 			
 			T = TARGET
@@ -363,25 +363,25 @@ ELSEIF RESULT == 103 && TARGET >= 0 && MONEY > 0
 				MONEY -= P
 				TFLAG:600 = 20
 				CALL KOJO_JUN
-				ABL:TARGET:88 += 1
-				PRINTFORMW ＜%NAME:TARGET%の戦闘技能レベルが1つ上がった　今のLv：{ABL:TARGET:88}＞
+				ABL:TARGET:戦闘技能 += 1
+				PRINTFORMW ＜%NAME:TARGET%の戦闘技能レベルが1つ上がった　今のLv：{ABL:TARGET:戦闘技能}＞
 			ELSEIF RESULT == 1
 				RETURN 1
 			ELSEIF RESULT == 2
 				CALL BATTLE_PRICE_I
-				ABL:T:88 += K
+				ABL:T:戦闘技能 += K
 				MONEY -= M
 				TFLAG:600 = 20
 				CALL KOJO_JUN
-				PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:88}＞
+				PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:戦闘技能}＞
 				PRINTFORMW ＜使用金額:${M}＞
 			ELSEIF RESULT == 3
 				CALL BATTLE_PRICE_G
-				ABL:T:88 += K
+				ABL:T:戦闘技能 += K
 				MONEY -= M
 				TFLAG:600 = 20
 				CALL KOJO_JUN
-				PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:88}＞
+				PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:戦闘技能}＞
 				PRINTFORMW ＜使用金額:${M}＞
 			ELSEIF RESULT == 4
 				PRINTFORML 何レベル上げますか(1-{K}、-1でレベルを上げずに戻る)
@@ -395,11 +395,11 @@ ELSEIF RESULT == 103 && TARGET >= 0 && MONEY > 0
 					GOTO INPUT_LOOP_BP2
 				ELSE
 					CALL BATTLE_PRICE_4, RESULT
-					ABL:T:88 += K
+					ABL:T:戦闘技能 += K
 					MONEY -= M
 					TFLAG:600 = 20
 					CALL KOJO_JUN
-					PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:88}＞
+					PRINTFORML ＜%NAME:TARGET%の戦闘技能レベルが{K}上がった　今のLv：{ABL:TARGET:戦闘技能}＞
 					PRINTFORMW ＜使用金額:${M}＞
 				ENDIF
 			ELSE
@@ -501,7 +501,7 @@ ELSEIF RESULT == 119 && (CHARANUM - T) > 2
 
 ELSEIF RESULT == 130
 	IF TARGET > 0
-		IF ITEM:45 > 0 && TFLAG:79 == 0 && ABL:7 >= 4 && (TALENT:85 || ABL:0 >= 5)
+		IF ITEM:45 > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:85 || ABL:親密 >= 5)
 			CALL CONCERT
 			RETURN 1
 		ENDIF
@@ -728,20 +728,20 @@ REPEAT CHARANUM
 	ELSE
 		PRINT [未経験]　
 	ENDIF
-	IF ABL:COUNT:2 < 10
-		PRINTFORM %ABLNAME:2%Lv{ABL:COUNT:2}  
+	IF ABL:COUNT:技巧 < 10
+		PRINTFORM %ABLNAME:2%Lv{ABL:COUNT:技巧}  
 	ELSE
-		PRINTFORM %ABLNAME:2%Lv{ABL:COUNT:2} 
+		PRINTFORM %ABLNAME:2%Lv{ABL:COUNT:技巧} 
 	ENDIF
-	IF ABL:COUNT:9 < 10
-		PRINTFORM %ABLNAME:9%Lv{ABL:COUNT:9}  
+	IF ABL:COUNT:レズっ気 < 10
+		PRINTFORM %ABLNAME:9%Lv{ABL:COUNT:レズっ気}  
 	ELSE
-		PRINTFORM %ABLNAME:9%Lv{ABL:COUNT:9} 
+		PRINTFORM %ABLNAME:9%Lv{ABL:COUNT:レズっ気} 
 	ENDIF
-	IF ABL:COUNT:12 < 10
-		PRINTFORM %ABLNAME:12%Lv{ABL:COUNT:12}  
+	IF ABL:COUNT:レズ中毒 < 10
+		PRINTFORM %ABLNAME:12%Lv{ABL:COUNT:レズ中毒}  
 	ELSE
-		PRINTFORM %ABLNAME:12%Lv{ABL:COUNT:12} 
+		PRINTFORM %ABLNAME:12%Lv{ABL:COUNT:レズ中毒} 
 	ENDIF
 	SIF TALENT:COUNT:81
 		PRINT 両刀
@@ -971,7 +971,7 @@ ELSE
 				ENDIF
 			;恋愛系能力表示
 			CASE 1
-				PRINTFORM     親密：{ABL:T:0, 4, LEFT}  欲望：{ABL:T:1, 4, LEFT}  技巧：{ABL:T:2, 4, LEFT}  奉仕精神：{ABL:T:6, 4, LEFT}  
+				PRINTFORM     親密：{ABL:T:親密, 4, LEFT}  欲望：{ABL:T:欲望, 4, LEFT}  技巧：{ABL:T:技巧, 4, LEFT}  奉仕精神：{ABL:T:奉仕精神, 4, LEFT}  
 				SIF ((FLAG:23 & 1p26) == 0) && FLAG:2 != 1
 					PRINTFORM 好感度：{CFLAG:T:2}
 				PRINTFORML 
@@ -1711,7 +1711,7 @@ ABL:MASTER:ARG = LOCAL:1
 ;主人公の能力を上げる（戦闘技能）
 ;-------------------------------------------------
 @ABLUP_MASTER_88
-IF ABL:MASTER:88 >= 9999
+IF ABL:MASTER:戦闘技能 >= 9999
 	PRINTFORMW これ以上レベルは上がりません
 ELSE
 	T = MASTER
@@ -1719,18 +1719,18 @@ ELSE
 	IF MONEY < P
 		PRINTFORMW 次のレベルになるには${P}が必要です。お金が足りません。
 	ELSE
-		LOCAL = ABL:MASTER:88
-		PRINTFORML 次のレベルになるには${P}が必要です。レベルを上げますか？（現在のLv：{(ABL:MASTER:88)}）
+		LOCAL = ABL:MASTER:戦闘技能
+		PRINTFORML 次のレベルになるには${P}が必要です。レベルを上げますか？（現在のLv：{(ABL:MASTER:戦闘技能)}）
 		PRINTL [0] はい
 		PRINTL [1] いいえ
 		IF P == 10
 			CALL BATTLE_PRICE_I
-			PRINTFORML [2] $10(最低価格)で上がる分だけレベルを上げる（Lv：{(ABL:MASTER:88)+K}までLvUP　使用金額:${M}）
+			PRINTFORML [2] $10(最低価格)で上がる分だけレベルを上げる（Lv：{(ABL:MASTER:戦闘技能)+K}までLvUP　使用金額:${M}）
 		ENDIF
 		T = MASTER
 		CALL GET_BATTLE_PRICE
 		CALL BATTLE_PRICE_G
-		PRINTFORML [3] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:88)+K}までLvUP　使用金額:${M}）
+		PRINTFORML [3] お金が無くなるまでレベルを上げる（Lv：{(ABL:MASTER:戦闘技能)+K}までLvUP　使用金額:${M}）
 		PRINTFORML [4] 選択してレベルを上げる
 		
 		T = MASTER
@@ -1746,21 +1746,21 @@ ELSE
 
 		IF RESULT == 0
 			MONEY -= P
-			ABL:MASTER:88 += 1
-			PRINTFORMW ＜%NAME:MASTER%の戦闘技能レベルが1つ上がった　今のLv：{ABL:MASTER:88}＞
+			ABL:MASTER:戦闘技能 += 1
+			PRINTFORMW ＜%NAME:MASTER%の戦闘技能レベルが1つ上がった　今のLv：{ABL:MASTER:戦闘技能}＞
 		ELSEIF RESULT == 1
 			RETURN 1
 		ELSEIF RESULT == 2
 			CALL BATTLE_PRICE_I
-			ABL:T:88 += K
+			ABL:T:戦闘技能 += K
 			MONEY -= M
-			PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:88}＞
+			PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:戦闘技能}＞
 			PRINTFORMW ＜使用金額:${M}＞
 		ELSEIF RESULT == 3
 			CALL BATTLE_PRICE_G
-			ABL:T:88 += K
+			ABL:T:戦闘技能 += K
 			MONEY -= M
-			PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:88}＞
+			PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:戦闘技能}＞
 			PRINTFORMW ＜使用金額:${M}＞
 		ELSEIF RESULT == 4
 			PRINTFORML 何レベル上げますか(1-{K}、-1でレベルを上げずに戻る)
@@ -1774,9 +1774,9 @@ ELSE
 				GOTO INPUT_LOOP_BP2
 			ELSE
 				CALL BATTLE_PRICE_4, RESULT
-				ABL:T:88 += K
+				ABL:T:戦闘技能 += K
 				MONEY -= M
-				PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:88}＞
+				PRINTFORML ＜%NAME:MASTER%の戦闘技能レベルが{K}上がった　今のLv：{ABL:MASTER:戦闘技能}＞
 				PRINTFORMW ＜使用金額:${M}＞
 			ENDIF
 		ELSE
@@ -1874,11 +1874,11 @@ I = 0
 J = 0
 K = 0
 IF TARGET >= 0
-	SIF BASE:MASTER:4 > 300 && BASE:TARGET:0 > 200 && (ABL:0 >= 5 || CFLAG:2 >= 500 || TALENT:153)
+	SIF BASE:MASTER:4 > 300 && BASE:TARGET:0 > 200 && (ABL:親密 >= 5 || CFLAG:2 >= 500 || TALENT:153)
 		I = 1
-	SIF BASE:MASTER:4 > 400 && BASE:TARGET:0 > 500 && ABL:90 >= 5 && (ABL:0 >= 10 || CFLAG:2 >= 1000 || TALENT:153)
+	SIF BASE:MASTER:4 > 400 && BASE:TARGET:0 > 500 && ABL:料理技能 >= 5 && (ABL:親密 >= 10 || CFLAG:2 >= 1000 || TALENT:153)
 		J = 1
-	SIF ABL:6 >= 5 && ABL:90 >= 5 && (ABL:0 >= 10 || CFLAG:2 >= 1000 || TALENT:153)
+	SIF ABL:奉仕精神 >= 5 && ABL:料理技能 >= 5 && (ABL:親密 >= 10 || CFLAG:2 >= 1000 || TALENT:153)
 		K = 1
 ENDIF
 
@@ -1923,7 +1923,7 @@ IF RESULT == 0
 	ELSE
 		TFLAG:17 = 5
 	ENDIF
-	IF RAND:20 <= ABL:MASTER:90
+	IF RAND:20 <= ABL:MASTER:料理技能
 		TFLAG:17 = 6
 	ENDIF
 	TFLAG:600 = 16
@@ -1949,7 +1949,7 @@ IF RESULT == 0
 		RETURN 1
 	ENDIF
 
-	P = (ABL:MASTER:2 + 10) * (RAND:11 + 15)
+	P = (ABL:MASTER:技巧 + 10) * (RAND:11 + 15)
 	PRINTFORM %CALLNAME:MASTER%は
 	IF TFLAG:17 == 1
 		P *= 50
@@ -1971,10 +1971,10 @@ IF RESULT == 0
 	ENDIF
 
 	;獲得資金増加ボーナス
-	IF ABL:MASTER:86 == 1
+	IF ABL:MASTER:獲得資金増加 == 1
 		TIMES P , 1.50
-	ELSEIF ABL:MASTER:86 > 1
-		P *= ABL:MASTER:86
+	ELSEIF ABL:MASTER:獲得資金増加 > 1
+		P *= ABL:MASTER:獲得資金増加
 	ENDIF
 	
 	PRINTFORMW ${P}の収入を得た
@@ -2004,7 +2004,7 @@ ELSEIF RESULT == 1 && I == 1
 	B = 0
 	SIF CFLAG:MASTER:24 == NO:TARGET
 		B = 1
-	P = (ABL:MASTER:2 * 2 + ABL:TARGET:2 + ABL:TARGET:6 * 2 + B + 15) * (RAND:5 + 8)
+	P = (ABL:MASTER:技巧 * 2 + ABL:TARGET:技巧 + ABL:TARGET:奉仕精神 * 2 + B + 15) * (RAND:5 + 8)
 	PRINTFORM %CALLNAME:MASTER%と%CALLNAME:TARGET%は２人で
 	IF TFLAG:17 == 1
 		P *= 60
@@ -2026,10 +2026,10 @@ ELSEIF RESULT == 1 && I == 1
 	ENDIF
 
 	;獲得資金増加ボーナス
-	IF ABL:MASTER:86 == 1
+	IF ABL:MASTER:獲得資金増加 == 1
 		TIMES P , 1.50
-	ELSEIF ABL:MASTER:86 > 1
-		P *= ABL:MASTER:86
+	ELSEIF ABL:MASTER:獲得資金増加 > 1
+		P *= ABL:MASTER:獲得資金増加
 	ENDIF
 	
 	PRINTFORML ${P}の収入を得た

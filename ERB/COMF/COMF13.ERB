@@ -30,24 +30,24 @@ LOSEBASE:0 += 60
 LOSEBASE:1 += 150
 
 ;ABL:Ａ感覚をみる
-IF ABL:5 == 0
+IF ABL:Ａ感覚 == 0
 	SOURCE:2 = 80
 	SOURCE:13 = 300
-ELSEIF ABL:5 == 1
+ELSEIF ABL:Ａ感覚 == 1
 	SOURCE:2 = 250
 	SOURCE:13 = 800
-ELSEIF ABL:5 == 2
+ELSEIF ABL:Ａ感覚 == 2
 	SOURCE:2 = 600
 	SOURCE:13 = 1400
-ELSEIF ABL:5 == 3
+ELSEIF ABL:Ａ感覚 == 3
 	SOURCE:2 = 1000
 	SOURCE:13 = 1800
-ELSEIF ABL:5 == 4
+ELSEIF ABL:Ａ感覚 == 4
 	SOURCE:2 = 1300
 	SOURCE:13 = 2100
 ELSE
-	SOURCE:2 = 700 + (ABL:5 * 200)
-	SOURCE:13 = 1650 + (ABL:5 * 150)
+	SOURCE:2 = 700 + (ABL:Ａ感覚 * 200)
+	SOURCE:13 = 1650 + (ABL:Ａ感覚 * 150)
 ENDIF
 
 ;EXP:Ａ経験をみる
@@ -94,21 +94,21 @@ GETPALAMLV PALAM:5, 36
 SOURCE:2 = SOURCE:2 * (8 + RESULT) / 10
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES SOURCE:2 , 0.80
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES SOURCE:2 , 0.90
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES SOURCE:2 , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES SOURCE:2 , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES SOURCE:2 , 1.20
 ELSE
 	IF SOURCE:2 < 100000
-		SOURCE:2 = SOURCE:2 * (ABL:0 * 5 + 105) / 100
+		SOURCE:2 = SOURCE:2 * (ABL:親密 * 5 + 105) / 100
 	ELSEIF SOURCE:2 < 100000000
-		SOURCE:2 = SOURCE:2 / 100 * (ABL:0 * 5 + 105)
+		SOURCE:2 = SOURCE:2 / 100 * (ABL:親密 * 5 + 105)
 	ENDIF
 ENDIF
 
@@ -161,34 +161,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -277,24 +277,24 @@ LOSEBASE:0 += 30
 LOSEBASE:1 += 80
 
 ;ABL:Ａ感覚をみる
-IF ABL:5 == 0
+IF ABL:Ａ感覚 == 0
 	A = 40
 	B = 300
-ELSEIF ABL:5 == 1
+ELSEIF ABL:Ａ感覚 == 1
 	A = 120
 	B = 800
-ELSEIF ABL:5 == 2
+ELSEIF ABL:Ａ感覚 == 2
 	A = 300
 	B = 1400
-ELSEIF ABL:5 == 3
+ELSEIF ABL:Ａ感覚 == 3
 	A = 500
 	B = 1800
-ELSEIF ABL:5 == 4
+ELSEIF ABL:Ａ感覚 == 4
 	A = 650
 	B = 2100
 ELSE
-	A = 350 + (ABL:5 * 100)
-	B = 1650 + (ABL:5 * 150)
+	A = 350 + (ABL:Ａ感覚 * 100)
+	B = 1650 + (ABL:Ａ感覚 * 150)
 ENDIF
 
 ;EXP:Ａ経験をみる
@@ -341,18 +341,18 @@ GETPALAMLV PALAM:5, 36
 A = A * (8 + RESULT) / 10
 
 ;ABL:従順をみる
-IF ABL:0 == 0
+IF ABL:親密 == 0
 	TIMES A , 0.80
-ELSEIF ABL:0 == 1
+ELSEIF ABL:親密 == 1
 	TIMES A , 0.90
-ELSEIF ABL:0 == 2
+ELSEIF ABL:親密 == 2
 	TIMES A , 1.00
-ELSEIF ABL:0 == 3
+ELSEIF ABL:親密 == 3
 	TIMES A , 1.10
-ELSEIF ABL:0 == 4
+ELSEIF ABL:親密 == 4
 	TIMES A , 1.20
 ELSE
-	A = A * (ABL:0 * 5 + 105) / 100
+	A = A * (ABL:親密 * 5 + 105) / 100
 ENDIF
 
 ;実行者が[淫具知識]を持っているなら効果増
@@ -425,20 +425,20 @@ ENDIF
 ;(従順が高いと命令に従いやすいなど)
 CALL COM_ORDER
 ;ABL:欲望
-IF ABL:1
-	A += ABL:1 * 3
+IF ABL:欲望
+	A += ABL:欲望 * 3
 ENDIF
 ;ABL:A感覚
-IF ABL:5
-	A += ABL:5 * 2
+IF ABL:Ａ感覚
+	A += ABL:Ａ感覚 * 2
 ENDIF
 ;ABL:奉仕精神
-IF ABL:6
-	A += ABL:6 * 4
+IF ABL:奉仕精神
+	A += ABL:奉仕精神 * 4
 ENDIF
 ;ABL:精液中毒
-IF ABL:11
-	A += ABL:11 * 1
+IF ABL:精液中毒
+	A += ABL:精液中毒 * 1
 ENDIF
 IF MARK:1
 	A += MARK:1 * 3
@@ -522,35 +522,35 @@ ENDIF
 
 IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	;ABL:欲望
-	IF ABL:1
+	IF ABL:欲望
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:1
-		PRINTV 'LV,ABL:1,'(,ABL:1 * 3,')
+		PRINTV 'LV,ABL:欲望,'(,ABL:欲望 * 3,')
 		S = 1
 	ENDIF
 	;ABL:A感覚
-	IF ABL:5
+	IF ABL:Ａ感覚
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:5
-		PRINTV 'LV,ABL:5,'(,ABL:5 * 2,')
+		PRINTV 'LV,ABL:Ａ感覚,'(,ABL:Ａ感覚 * 2,')
 		S = 1
 	ENDIF
 	;ABL:奉仕精神
-	IF ABL:6
+	IF ABL:奉仕精神
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:6
-		PRINTV 'LV,ABL:6,'(,ABL:6 * 4,')
+		PRINTV 'LV,ABL:奉仕精神,'(,ABL:奉仕精神 * 4,')
 		S = 1
 	ENDIF
 	;ABL:精液中毒
-	IF ABL:11
+	IF ABL:精液中毒
 		SIF S
 			PRINT  + 
 		PRINTS ABLNAME:11
-		PRINTV 'LV,ABL:11,'(,ABL:11 * 1,')
+		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 1,')
 		S = 1
 	ENDIF
 	IF MARK:1

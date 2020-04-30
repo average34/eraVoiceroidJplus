@@ -30,13 +30,13 @@ RETURN 1
 ;基本は0～50
 G = RAND:50
 ;技巧*10
-G += ABL:COUNT:2 * 10
+G += ABL:COUNT:技巧 * 10
 ;奉仕精神*5
-G += ABL:COUNT:6 * 5
+G += ABL:COUNT:奉仕精神 * 5
 
 ;ナンバー参照からABL参照へ
 ;探索素質を見る
-G += ABL:COUNT:53 * 10
+G += ABL:COUNT:探索素質 * 10
 
 ;好感度に応じたボーナス
 IF CFLAG:COUNT:2 < 100
@@ -612,7 +612,7 @@ ELSEIF RESULT == 26
 		PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:526%を飲ませました
 		PRINTFORMW 一時的に魔性のテクニックを得ました
 		TEQUIP:40 |= 4096
-		ABL:2 += 10
+		ABL:技巧 += 10
 		ITEM:526 -= 1
 	ENDIF
 ELSEIF RESULT == 27

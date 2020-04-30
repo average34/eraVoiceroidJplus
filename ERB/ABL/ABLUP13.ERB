@@ -9,7 +9,7 @@ SIF TALENT:122 == 0
 	RETURN 0
 
 DRAWLINE
-IF ABL:13 >= 9999
+IF ABL:ＢＬっ気 >= 9999
 	PRINTW 既にMAXです。
 	RETURN 0
 ENDIF
@@ -120,7 +120,7 @@ ELSEIF RESULT == 100
 ENDIF
 
 SIF RESULT < 20
-	ABL:13 += 1
+	ABL:ＢＬっ気 += 1
 
 IF RESULT == 0
 	JUEL:5 -= A
@@ -135,7 +135,7 @@ ENDIF
 
 PRINTS ABLNAME:13
 PRINT のレベルが
-PRINTV ABL:13
+PRINTV ABL:ＢＬっ気
 PRINTW になりました。
 
 
@@ -144,7 +144,7 @@ PRINTW になりました。
 ;ＢＬっ気が上げられるかチェック
 ;-------------------------------------------------
 @ISABLUP13
-IF ABL:13 >= 9999 || !TALENT:122
+IF ABL:ＢＬっ気 >= 9999 || !TALENT:122
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -158,8 +158,8 @@ J = 0
 Z = 0
 
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
-IF ABL:13 >= 3 && TALENT:81 == 0
-	F = ABL:13 * 3
+IF ABL:ＢＬっ気 >= 3 && TALENT:81 == 0
+	F = ABL:ＢＬっ気 * 3
 	IF EXP:50 < F
 		;異常経験が不足
 		I |= 2
@@ -205,22 +205,22 @@ ENDIF
 ;ＢＬっ気を上げるのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP13
-IF ABL:13 == 0
+IF ABL:ＢＬっ気 == 0
 	A = 200
 	B = 50
 	C = 0
 	D = 1000
-ELSEIF ABL:13 == 1
+ELSEIF ABL:ＢＬっ気 == 1
 	A = 1000
 	B = 200
 	C = 0
 	D = 5000
-ELSEIF ABL:13 == 2
+ELSEIF ABL:ＢＬっ気 == 2
 	A = 3000
 	B = 500
 	C = 1000
 	D = 0
-ELSEIF ABL:13 == 3
+ELSEIF ABL:ＢＬっ気 == 3
 	A = 8000
 	B = 1000
 	C = 2000
@@ -231,7 +231,7 @@ ELSEIF ABL:13 == 3
 		TIMES B , 1.10
 		TIMES C , 1.10
 	ENDIF
-ELSEIF ABL:13 == 4
+ELSEIF ABL:ＢＬっ気 == 4
 	A = 20000
 	B = 2000
 	C = 5000
@@ -248,9 +248,9 @@ ELSE
 	C = 5000
 	D = 0
 	
-	A = A * (ABL:13 - 3)
-	B = B * (ABL:13 - 2) / 2
-	C = C * (ABL:13 - 3)
+	A = A * (ABL:ＢＬっ気 - 3)
+	B = B * (ABL:ＢＬっ気 - 2) / 2
+	C = C * (ABL:ＢＬっ気 - 3)
 	;一線越えない
 	IF TALENT:27
 		TIMES A , 1.30
@@ -276,9 +276,9 @@ IF TALENT:80
 ENDIF
 
 ;ＬＶ３から４、４から５に上げるときは異常経験必要（素質：[両刀]なら無視できる）
-;IF ABL:13 >= 3 && TALENT:81 == 0
-IF ABL:13 >= 3
-	F = ABL:13 * 3
+;IF ABL:ＢＬっ気 >= 3 && TALENT:81 == 0
+IF ABL:ＢＬっ気 >= 3
+	F = ABL:ＢＬっ気 * 3
 ELSE
 	F = 0
 ENDIF

@@ -1727,11 +1727,11 @@ IF TARGET >= 0
 		PRINTFORML [3] 愛撫する
 		LOCAL:3 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:1 > (5 + A:1 * 2) && (LOCAL:104 == 1 || V:4 == 1)
+	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:欲望 > (5 + A:1 * 2) && (LOCAL:104 == 1 || V:4 == 1)
 		PRINTFORML [4] 霧の効果を吸い出す
 		LOCAL:4 = 1
 	ENDIF
-	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:1 > (8 + A:1 * 3) && V:4 == 1
+	IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:欲望 > (8 + A:1 * 3) && V:4 == 1
 		PRINTFORML [5] 絡み合う
 		LOCAL:5 = 1
 	ENDIF
@@ -1849,11 +1849,11 @@ IF (TALENT:MASTER:202 || FLAG:24 > 3) && (LOCAL:103 == 1 || V:5 == 1)
 	PRINTFORML [3] 愛撫する
 	LOCAL:3 = 1
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:2 > (3 + A:1 * 2) && (LOCAL:104 == 1 || V:5 == 1)
+IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:技巧 > (3 + A:1 * 2) && (LOCAL:104 == 1 || V:5 == 1)
 	PRINTFORML [4] 霧の効果を吸い出す
 	LOCAL:4 = 1
 ENDIF
-IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:2 > (5 + A:1 * 2) && V:5 == 1
+IF (TALENT:MASTER:202 || FLAG:24 > 3) && ABL:MASTER:技巧 > (5 + A:1 * 2) && V:5 == 1
 	PRINTFORML [5] 絡み合う
 	LOCAL:5 = 1
 ENDIF
@@ -2636,8 +2636,8 @@ ENDIF
 ;---------------------------------------------------------
 @BATTLE_COMMON_EM
 ;戦闘経験の補正と取得
-SIF ABL:MASTER:83 > 0
-	X += ABL:MASTER:83
+SIF ABL:MASTER:戦闘経験ボーナス > 0
+	X += ABL:MASTER:戦闘経験ボーナス
 PRINTFORML %EXPNAME:95%+{X}
 SIF TARGET >= 0
 	EXP:95 += X
@@ -2649,9 +2649,9 @@ SIF ASSI >= 0
 
 ;報酬の補正
 ;獲得資金増加ボーナス
-IF ABL:MASTER:86 == 1
+IF ABL:MASTER:獲得資金増加 == 1
 	TIMES M , 1.50
-ELSEIF ABL:MASTER:86 > 1
-	M *= ABL:MASTER:86
+ELSEIF ABL:MASTER:獲得資金増加 > 1
+	M *= ABL:MASTER:獲得資金増加
 ENDIF
 

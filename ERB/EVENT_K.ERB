@@ -466,21 +466,21 @@ ENDIF
 ;どれくらい感じてるかチェック
 ;ソースに対応した感覚が2以上なら1、4以上なら2。高い方を優先
 IF A
-	SIF SOURCE:0 && ABL:3 > 1
+	SIF SOURCE:0 && ABL:Ｃ感覚 > 1
 		C = 1
-	SIF SOURCE:0 && ABL:3 > 3
+	SIF SOURCE:0 && ABL:Ｃ感覚 > 3
 		C = 2
-	SIF SOURCE:1 && ABL:4 > 1 && C == 0
+	SIF SOURCE:1 && ABL:Ｖ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:1 && ABL:4 > 3
+	SIF SOURCE:1 && ABL:Ｖ感覚 > 3
 		C = 2
-	SIF SOURCE:2 && ABL:5 > 1 && C == 0
+	SIF SOURCE:2 && ABL:Ａ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:2 && ABL:5 > 3
+	SIF SOURCE:2 && ABL:Ａ感覚 > 3
 		C = 2
-	SIF SOURCE:17 && ABL:14 > 1 && C == 0
+	SIF SOURCE:17 && ABL:Ｂ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:17 && ABL:14 > 3
+	SIF SOURCE:17 && ABL:Ｂ感覚 > 3
 		C = 2
 	;感じていない口上へ
 	IF C == 0

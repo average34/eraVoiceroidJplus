@@ -89,10 +89,10 @@ ELSE
 	;相手が行きたいデート先を決定しLOCALに保存
 	CALL PARTNER_SELECT_DATE
 	;本体で設定した各キャラ好みのデート先を1/5の確率で出るように
-	SIF RAND:5 == 0 && ABL:0 >= 10
+	SIF RAND:5 == 0 && ABL:親密 >= 10
 		CALL PARTNER_DATE_PLACE
 	;好みのデート先を1/5の確率で出るように
-	SIF CFLAG:777 && RAND:5 == 0 && FLAG:8 != CFLAG:777 && ABL:0 >= 10
+	SIF CFLAG:777 && RAND:5 == 0 && FLAG:8 != CFLAG:777 && ABL:親密 >= 10
 		TEQUIP:2 = CFLAG:777
 	CALL PLACE_NAME
 	LOCAL = TEQUIP:2
@@ -217,24 +217,24 @@ SOURCE:18 = 100
 SOURCE:9 = 50
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 20)
-	SOURCE:9 += (ABL:0 * 10)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 200 + (ABL:0 * 40)
-	SOURCE:9 += 100 + (ABL:0 * 15)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 500 + (ABL:0 * 50)
-	SOURCE:9 += 200 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 700 + (ABL:0 * 80)
-	SOURCE:9 += 300 + (ABL:0 * 30)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 1200 + (ABL:0 * 100)
-	SOURCE:9 += 400 + (ABL:0 * 35)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 20)
+	SOURCE:9 += (ABL:親密 * 10)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 200 + (ABL:親密 * 40)
+	SOURCE:9 += 100 + (ABL:親密 * 15)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 500 + (ABL:親密 * 50)
+	SOURCE:9 += 200 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 700 + (ABL:親密 * 80)
+	SOURCE:9 += 300 + (ABL:親密 * 30)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 1200 + (ABL:親密 * 100)
+	SOURCE:9 += 400 + (ABL:親密 * 35)
 ELSE
-	SOURCE:18 += 2000 + (ABL:0 * 130)
-	SOURCE:9 += 800 + (ABL:0 * 40)
+	SOURCE:18 += 2000 + (ABL:親密 * 130)
+	SOURCE:9 += 800 + (ABL:親密 * 40)
 ENDIF
 
 ;好感度をみる
@@ -252,34 +252,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -651,12 +651,12 @@ REPEAT 43
 	IF (COUNT == 6 || COUNT == 9 || COUNT == 19 || COUNT == 36 || COUNT == 38 || COUNT == 39 || COUNT == 42 || COUNT == 43) && SELECTCOM == 323
 
 		;温泉
-		IF COUNT == 6 && (TALENT:153 || (ABL:0 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
+		IF COUNT == 6 && (TALENT:153 || (ABL:親密 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
 		
 		
 		;キャラ固有デート先(1)
 		;東北邸の場合はクリア後でないとだめ
-		ELSEIF COUNT == 19 && ABL:0 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+		ELSEIF COUNT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
 		
 		;カジノ
 		ELSEIF COUNT == 36 && MONEY >= 5500
@@ -671,7 +671,7 @@ REPEAT 43
 		ELSEIF COUNT == 42 && (MONEY > 10000 || ( FLAG:8 && MONEY > 7000))
 		
 		;キャラ固有デート先(2)
-		ELSEIF COUNT == 43 && (ABL:0 >= 10)
+		ELSEIF COUNT == 43 && (ABL:親密 >= 10)
 		
 		;条件を満たしていないと表示しない
 		ELSE
@@ -740,13 +740,13 @@ ELSEIF TSTR:RESULT == ""
 ELSEIF (RESULT == 6 || RESULT == 9 || RESULT == 19 || RESULT == 36 || RESULT == 38 || RESULT == 39 || RESULT == 42 || RESULT == 43) && SELECTCOM == 323
 	;条件のあるデート先はここで判定
 	;温泉
-	IF RESULT == 6 && (TALENT:153 || (ABL:0 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
+	IF RESULT == 6 && (TALENT:153 || (ABL:親密 >= 10 && ((TALENT:122 == 0 && TALENT:MASTER:122 == 0) || (TALENT:122 && TALENT:MASTER:122))))
 		TEQUIP:2 = 7
 	ELSEIF RESULT == 6 
 		PRINTFORML %CALLNAME:TARGET%は一緒に温泉に入るのを恥ずかしがっているようです
 		GOTO INPUT_LOOP0
 	;キャラ固有デート先(1)
-	ELSEIF RESULT == 19 && ABL:0 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+	ELSEIF RESULT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
 			TEQUIP:2 = 37
 			
 	ELSEIF RESULT == 19 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
@@ -781,7 +781,7 @@ ELSEIF (RESULT == 6 || RESULT == 9 || RESULT == 19 || RESULT == 36 || RESULT == 
 		PRINTL お金が足りません
 		GOTO INPUT_LOOP0
 	;キャラ固有デート先(2)
-	ELSEIF RESULT == 43 && ABL:0 >= 10
+	ELSEIF RESULT == 43 && ABL:親密 >= 10
 		TEQUIP:2 = 36
 	ELSEIF RESULT == 43
 		PRINTFORML %CALLNAME:TARGET%の親密が不足しています
@@ -815,7 +815,7 @@ ELSEIF RESULT == 39
 ELSEIF (RESULT >= 40 && RESULT <= 43)
 ;牧場、教会、スポーツ観戦
 	TEQUIP:2 = RESULT - 7
-	ELSEIF RESULT == 19 && ABL:0 >= 10
+	ELSEIF RESULT == 19 && ABL:親密 >= 10
 ELSE
 	GOTO INPUT_LOOP0
 ENDIF
@@ -1041,24 +1041,24 @@ B = 100
 C = 50
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	B += (ABL:0 * 20)
-	C += (ABL:0 * 10)
-ELSEIF ABL:0 <= 3
-	B += 200 + (ABL:0 * 40)
-	C += 100 + (ABL:0 * 15)
-ELSEIF ABL:0 <= 5
-	B += 500 + (ABL:0 * 50)
-	C += 200 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 8
-	B += 700 + (ABL:0 * 80)
-	C += 300 + (ABL:0 * 30)
-ELSEIF ABL:0 <= 11
-	B += 1200 + (ABL:0 * 100)
-	C += 400 + (ABL:0 * 35)
+IF ABL:親密 <= 1
+	B += (ABL:親密 * 20)
+	C += (ABL:親密 * 10)
+ELSEIF ABL:親密 <= 3
+	B += 200 + (ABL:親密 * 40)
+	C += 100 + (ABL:親密 * 15)
+ELSEIF ABL:親密 <= 5
+	B += 500 + (ABL:親密 * 50)
+	C += 200 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 8
+	B += 700 + (ABL:親密 * 80)
+	C += 300 + (ABL:親密 * 30)
+ELSEIF ABL:親密 <= 11
+	B += 1200 + (ABL:親密 * 100)
+	C += 400 + (ABL:親密 * 35)
 ELSE
-	B += 2000 + (ABL:0 * 130)
-	C += 800 + (ABL:0 * 40)
+	B += 2000 + (ABL:親密 * 130)
+	C += 800 + (ABL:親密 * 40)
 ENDIF
 
 ;好感度をみる
@@ -1074,34 +1074,34 @@ ENDIF
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		E += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		E += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		E += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		E += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		E += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		E += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		E += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		E += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		E += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		E += 1200 + (ABL:親密 * 160)
 	ELSE
-		E += 1500 + (ABL:0 * 180)
+		E += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		D = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		D = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		D = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		D = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		D = 2000
 	ELSE
-		D = 1000 + (ABL:15 * 300)
+		D = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -1202,9 +1202,9 @@ ELSEIF TEQUIP:2 == 6
 	IF TFLAG:44
 		SOURCE:9 += RAND:301 + 200
 	ELSE
-		IF ABL:92 >= 5
-			PRINTFORML %EXPNAME:93%＋{ABL:92 / 5 +1}
-			EXP:93 += ABL:92 / 5 + 1
+		IF ABL:歌唱技能 >= 5
+			PRINTFORML %EXPNAME:93%＋{ABL:歌唱技能 / 5 +1}
+			EXP:93 += ABL:歌唱技能 / 5 + 1
 		ELSE
 			;歌唱経験に＋1
 			PRINTFORML %EXPNAME:93%＋1
@@ -1243,12 +1243,12 @@ ELSEIF TEQUIP:2 == 7
 ELSEIF TEQUIP:2 == 8
 	;習得増加
 	UP:7 += 200
-	REPEAT ABL:2 + 1
+	REPEAT ABL:技巧 + 1
 		UP:7 += RAND:101
 	REND
 	;秋は更にUP
 	IF DAY:2 == 2
-		REPEAT ABL:2 + 1
+		REPEAT ABL:技巧 + 1
 			UP:7 += RAND:51
 		REND
 	ENDIF
@@ -1299,7 +1299,7 @@ ELSEIF TEQUIP:2 == 15
 ELSEIF TEQUIP:2 == 16
 	;習得増加
 	UP:7 += 100
-	REPEAT ABL:2 + 1
+	REPEAT ABL:技巧 + 1
 		UP:7 += RAND:51
 	REND
 	IF TFLAG:44 == 0
@@ -1338,12 +1338,12 @@ ELSEIF TEQUIP:2 == 16
 ELSEIF TEQUIP:2 == 17
 	;習得増加
 	UP:7 += 100
-	REPEAT ABL:2 + 1
+	REPEAT ABL:技巧 + 1
 		UP:7 += RAND:51
 	REND
 	;秋は更にUP
 	IF DAY:2 == 2
-		REPEAT ABL:2 + 1
+		REPEAT ABL:技巧 + 1
 			UP:7 += RAND:26
 		REND
 	ENDIF
@@ -1455,7 +1455,7 @@ ELSEIF TEQUIP:2 == 30
 ELSEIF TEQUIP:2 == 31
 	;習得増加
 	UP:7 += 50
-	REPEAT ABL:2 + 1
+	REPEAT ABL:技巧 + 1
 		UP:7 += RAND:51
 	REND
 ;魔界
@@ -1472,7 +1472,7 @@ ELSEIF TEQUIP:2 == 33
 ELSEIF TEQUIP:2 == 34
 	;習得増加(やぶ牧師だから命蓮寺より低い？)
 	UP:7 += 30
-	REPEAT ABL:2 + 1
+	REPEAT ABL:技巧 + 1
 		UP:7 += RAND:11
 	REND
 ;スポーツ観戦
@@ -1517,7 +1517,7 @@ IF TFLAG:62 >= 5
 	R = RAND:19 + 1
 	IF R <= 9
 		;温泉は恋人以上じゃないと行けない
-		SIF R == 7 && (TALENT:153 == 0 || (ABL:0 < 10 && ((TALENT:122 == 0 && TALENT:PLAYER:122) || (TALENT:122 && TALENT:PLAYER:122 == 0))))
+		SIF R == 7 && (TALENT:153 == 0 || (ABL:親密 < 10 && ((TALENT:122 == 0 && TALENT:PLAYER:122) || (TALENT:122 && TALENT:PLAYER:122 == 0))))
 			GOTO DATE_LOOP6
 		TEQUIP:2 = R
 	ELSEIF R >= 10 && R <= 18
@@ -1564,7 +1564,7 @@ TFLAG:33 = 1
 
 ;告白判定
 ;最低でも従順5、好感度1000が必要
-IF ABL:0 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
+IF ABL:親密 >= 5 && CFLAG:2 >= 1000 && TALENT:153 == 0 && ASSIPLAY == 0
 	A = 0
 	;目標難易度は190
 	V = 190
@@ -1694,7 +1694,7 @@ ENDIF
 
 ;ファーストキス判定
 ;最低でも従順4、好感度400が必要
-IF ABL:0 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALENT:153 == 0
+IF ABL:親密 >= 4 && CFLAG:2 >= 400 && TALENT:151 == 1 && ASSIPLAY == 0 && TALENT:153 == 0
 	A = 0
 	;目標難易度は70
 	V = 70
@@ -2082,7 +2082,7 @@ ENDIF
 #FUNCTION
 
 ;従順が10以上無いとだめ
-IF ABL:TARGET:0 < 10
+IF ABL:TARGET:親密 < 10
 	RETURNF 0
 ;そもそも主人公が東北邸の人だとだめ
 ELSEIF NO:MASTER == 5 || NO:MASTER == 10 || NO:MASTER == 12

@@ -231,32 +231,32 @@ B:1 = 1
 B:2 = 1
 ;[3] 自給自足
 ;ゆかり様には親密30以上ないと自給自足を指示できない
-SIF TALENT:A:201 == 0 || ABL:A:0 >= 30 || A == MASTER
+SIF TALENT:A:201 == 0 || ABL:A:親密 >= 30 || A == MASTER
 	B:3 = 1
 ;[4] 連携を確認する
-SIF A != MASTER && (ABL:A:0 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
+SIF A != MASTER && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
 	B:4 = 1
 ;[5] 家事
 ;ゆかり様には親密20以上ないと指示できない
-SIF A != MASTER && (TALENT:A:201 == 0 && (ABL:A:0 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153) || ABL:A:0 >= 20)
+SIF A != MASTER && (TALENT:A:201 == 0 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153) || ABL:A:親密 >= 20)
 	B:5 = 1
 ;[6] モンスター退治
-SIF A != MASTER && A != TARGET && A != ASSI && BASE:A:4 >= 500 && (ABL:A:0 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
+SIF A != MASTER && A != TARGET && A != ASSI && BASE:A:4 >= 500 && (ABL:A:親密 >= 5 || CFLAG:A:2 >= 500 || TALENT:A:153)
 	B:6 = 1
 ;[7] イチャイチャする
 SIF A != MASTER && TALENT:A:153
 	B:7 = 1
 ;[8] 朝フェラ
-SIF TALENT:A:54 == 0 && A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:0 >= 10 || ABL:A:1 >= 10 || ABL:A:6 >= 10 || ABL:A:11 >= 1) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
+SIF TALENT:A:54 == 0 && A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:奉仕精神 >= 10 || ABL:A:精液中毒 >= 1) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
 	B:8 = 1
 ;[9] 自慰
-SIF A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:0 >= 10 || ABL:A:1 >= 10 || ABL:A:10 >= 1)
+SIF A != MASTER && (TALENT:A:152 || TALENT:A:153) && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:自慰中毒 >= 1)
 	B:9 = 1
 ;[10] レズ行為
-SIF A != MASTER && ABL:A:1 >= 5 && ABL:A:9 >= 3 && (ABL:A:0 >= 10 || ABL:A:1 >= 10 || ABL:A:9 >= 10 || ABL:A:12 >= 1) && TALENT:MASTER:122 == 0 && TALENT:A:122 == 0
+SIF A != MASTER && ABL:A:欲望 >= 5 && ABL:A:レズっ気 >= 3 && (ABL:A:親密 >= 10 || ABL:A:欲望 >= 10 || ABL:A:レズっ気 >= 10 || ABL:A:レズ中毒 >= 1) && TALENT:MASTER:122 == 0 && TALENT:A:122 == 0
 	B:10 = 1
 ;[11] 性行為
-SIF A != MASTER && TALENT:MASTER:154 == 0 && TALENT:A:88 && TALENT:A:0 == 0 && (ABL:A:0 + ABL:A:1 + ABL:A:4 + ABL:A:6 >= 55) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
+SIF A != MASTER && TALENT:MASTER:154 == 0 && TALENT:A:88 && TALENT:A:0 == 0 && (ABL:A:親密 + ABL:A:欲望 + ABL:A:Ｖ感覚 + ABL:A:奉仕精神 >= 55) && (TALENT:MASTER:119 || TALENT:MASTER:121 || TALENT:MASTER:122)
 	B:11 = 1
 ;[12] 宝探し
 B:12 = 1
@@ -343,7 +343,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		TIMES A , 0.10
 		TIMES B , 0.10
 		TIMES C , 0.10
-		LOCAL = (ABL:COUNT:2 * ABL:COUNT:6 + 5) * (RAND:10 + 5) / 10
+		LOCAL = (ABL:COUNT:技巧 * ABL:COUNT:奉仕精神 + 5) * (RAND:10 + 5) / 10
 		JUEL:COUNT:16 += LOCAL
 		CALL TURNEND_COM_PRINT, "JUEL", 16, LOCAL
 		;実行したコマンドを保存
@@ -367,10 +367,10 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		TIMES A , 0.80
 		TIMES B , 0.80
 		C /= 2
-		LOCAL = SQRT(ABL:COUNT:6 + ABL:COUNT:90) + RAND:6 / 2 + 1
+		LOCAL = SQRT(ABL:COUNT:奉仕精神 + ABL:COUNT:料理技能) + RAND:6 / 2 + 1
 		EXP:COUNT:90 += LOCAL
 		CALL TURNEND_COM_PRINT, "EXP", 90, LOCAL
-		LOCAL = (ABL:COUNT:6 * SQRT(ABL:COUNT:6) * (ABL:COUNT:90 * 2 + ABL:COUNT:2) / 3 + 5) * (RAND:10 + 5) / 10
+		LOCAL = (ABL:COUNT:奉仕精神 * SQRT(ABL:COUNT:奉仕精神) * (ABL:COUNT:料理技能 * 2 + ABL:COUNT:技巧) / 3 + 5) * (RAND:10 + 5) / 10
 		JUEL:COUNT:16 += LOCAL
 		CALL TURNEND_COM_PRINT, "JUEL", 16, LOCAL
 		LOCAL = RAND:6 + 5
@@ -423,7 +423,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 	ELSEIF CFLAG:COUNT:13 == 7 && H == 1
 		;イチャイチャする
 		C *= 3
-		LOCAL = (ABL:COUNT:0 + 5) * (ABL:COUNT:6 + 3) * (RAND:10 + 10) / 10
+		LOCAL = (ABL:COUNT:親密 + 5) * (ABL:COUNT:奉仕精神 + 3) * (RAND:10 + 10) / 10
 		JUEL:COUNT:15 += LOCAL
 		CALL TURNEND_COM_PRINT, "JUEL", 15, LOCAL
 		LOCAL = RAND:51 + 50
@@ -442,16 +442,16 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		BASE:MASTER:4 -= MAXBASE:MASTER:4 / 200
 
 		G = 0
-		IF ABL:COUNT:11 == 1
+		IF ABL:COUNT:精液中毒 == 1
 			G = 1
-		ELSEIF ABL:COUNT:11 == 2
+		ELSEIF ABL:COUNT:精液中毒 == 2
 			G = 2
-		ELSEIF ABL:COUNT:11 == 3
+		ELSEIF ABL:COUNT:精液中毒 == 3
 			G = 3
-		ELSEIF ABL:COUNT:11 == 4
+		ELSEIF ABL:COUNT:精液中毒 == 4
 			G = 4
-		ELSEIF ABL:COUNT:11 >= 5
-			G = 3 + ABL:COUNT:11 / 2
+		ELSEIF ABL:COUNT:精液中毒 >= 5
+			G = 3 + ABL:COUNT:精液中毒 / 2
 		ENDIF
 
 		;汚臭鈍感
@@ -508,32 +508,32 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 
 		G = 0
 
-		IF ABL:COUNT:10 == 1
+		IF ABL:COUNT:自慰中毒 == 1
 			G = 1
-		ELSEIF ABL:COUNT:10 == 2
+		ELSEIF ABL:COUNT:自慰中毒 == 2
 			G = 2
-		ELSEIF ABL:COUNT:10 == 3
+		ELSEIF ABL:COUNT:自慰中毒 == 3
 			G = 4
-		ELSEIF ABL:COUNT:10 == 4
+		ELSEIF ABL:COUNT:自慰中毒 == 4
 			G = 6
-		ELSEIF ABL:COUNT:10 >= 5
-			G = (ABL:COUNT:10 * 2) - 1
+		ELSEIF ABL:COUNT:自慰中毒 >= 5
+			G = (ABL:COUNT:自慰中毒 * 2) - 1
 		ENDIF
 
 		;言われてやってるので普段より多い
 		G += 1
 
-		IF ABL:COUNT:1 == 4 && ABL:COUNT:3 >= 4
+		IF ABL:COUNT:欲望 == 4 && ABL:COUNT:Ｃ感覚 >= 4
 			G += 1
-		ELSEIF ABL:COUNT:1 >= 5 && ABL:COUNT:3 >= 4
-			G += ABL:COUNT:1
+		ELSEIF ABL:COUNT:欲望 >= 5 && ABL:COUNT:Ｃ感覚 >= 4
+			G += ABL:COUNT:欲望
 		ENDIF
 		
 		;自慰しやすい
 		IF TALENT:COUNT:60
 			G *= 2
 			;欲望ＬＶ３でもGに+1する
-			SIF ABL:COUNT:1 >= 3 && ABL:COUNT:3 >= 3
+			SIF ABL:COUNT:欲望 >= 3 && ABL:COUNT:Ｃ感覚 >= 3
 				G += 1
 		ENDIF
 		
@@ -561,7 +561,7 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 		JUEL:COUNT:5 += G*250
 		CALL TURNEND_COM_PRINT, "JUEL", 5, G*250
 		
-		IF ABL:COUNT:0+ABL:COUNT:7+ABL:COUNT:8 >= 10
+		IF ABL:COUNT:親密+ABL:COUNT:露出癖+ABL:COUNT:マゾっ気 >= 10
 			JUEL:COUNT:8 += G*200
 			CALL TURNEND_COM_PRINT, "JUEL", 8, G*200
 		ENDIF
@@ -576,16 +576,16 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 
 		N = 0
 
-		IF ABL:COUNT:12 == 1
+		IF ABL:COUNT:レズ中毒 == 1
 			N += 1
-		ELSEIF ABL:COUNT:12 == 2
+		ELSEIF ABL:COUNT:レズ中毒 == 2
 			N += 2
-		ELSEIF ABL:COUNT:12 == 3
+		ELSEIF ABL:COUNT:レズ中毒 == 3
 			N += 3
-		ELSEIF ABL:COUNT:12 == 4
+		ELSEIF ABL:COUNT:レズ中毒 == 4
 			N += 5
-		ELSEIF ABL:COUNT:12 >= 5
-			N += 2 + ABL:COUNT:12
+		ELSEIF ABL:COUNT:レズ中毒 >= 5
+			N += 2 + ABL:COUNT:レズ中毒
 		ENDIF
 		G = RAND:100 + 1
 		IF G <= 30
@@ -606,13 +606,13 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 
 		EXP:COUNT:40 += N*20
 		CALL TURNEND_COM_PRINT, "EXP", 40, N*20
-		EXP:COUNT:2 += N*100*ABL:COUNT:0/500
-		CALL TURNEND_COM_PRINT, "EXP", 2, N*100*ABL:COUNT:0/500
+		EXP:COUNT:2 += N*100*ABL:COUNT:親密/500
+		CALL TURNEND_COM_PRINT, "EXP", 2, N*100*ABL:COUNT:親密/500
 		
-		JUEL:COUNT:6 += N*75*(ABL:COUNT:2+ABL:COUNT:6)
-		CALL TURNEND_COM_PRINT, "JUEL", 6, N*75*(ABL:COUNT:2+ABL:COUNT:6)
-		JUEL:COUNT:7 += N*75*(ABL:COUNT:2+ABL:COUNT:6)
-		CALL TURNEND_COM_PRINT, "JUEL", 7, N*75*(ABL:COUNT:2+ABL:COUNT:6)
+		JUEL:COUNT:6 += N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
+		CALL TURNEND_COM_PRINT, "JUEL", 6, N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
+		JUEL:COUNT:7 += N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
+		CALL TURNEND_COM_PRINT, "JUEL", 7, N*75*(ABL:COUNT:技巧+ABL:COUNT:奉仕精神)
 		IF TALENT:COUNT:121
 			EXP:COUNT:3 += N
 			CALL TURNEND_COM_PRINT, "EXP", 3, N
@@ -633,27 +633,27 @@ IF COUNT != MASTER && CFLAG:COUNT:17 == 0
 
 		S = 1
 		;V感覚
-		IF ABL:COUNT:4 == 1
+		IF ABL:COUNT:Ｖ感覚 == 1
 			S += 1
-		ELSEIF ABL:COUNT:4 == 2
+		ELSEIF ABL:COUNT:Ｖ感覚 == 2
 			S += 2
-		ELSEIF ABL:COUNT:4 == 3
+		ELSEIF ABL:COUNT:Ｖ感覚 == 3
 			S += 2
-		ELSEIF ABL:COUNT:4 == 4
+		ELSEIF ABL:COUNT:Ｖ感覚 == 4
 			S += 3
-		ELSEIF ABL:COUNT:4 >= 5
-			S += 1 + (ABL:COUNT:4 * 3/4)
+		ELSEIF ABL:COUNT:Ｖ感覚 >= 5
+			S += 1 + (ABL:COUNT:Ｖ感覚 * 3/4)
 		ENDIF
 		
 		;欲望と奉仕精神によるボーナス
-		IF ABL:COUNT:1 == 4 && ABL:COUNT:6 >= 4
+		IF ABL:COUNT:欲望 == 4 && ABL:COUNT:奉仕精神 >= 4
 			S += 1
-		ELSEIF ABL:COUNT:1 >= 5 && ABL:COUNT:6 >= 4
-			S += ABL:COUNT:1
+		ELSEIF ABL:COUNT:欲望 >= 5 && ABL:COUNT:奉仕精神 >= 4
+			S += ABL:COUNT:欲望
 		ENDIF
 		
 		;V感覚が充分にあれば、欲望ＬＶ３でもSに+1する
-		IF ABL:COUNT:1 >= 3 && ABL:COUNT:4 >= 3
+		IF ABL:COUNT:欲望 >= 3 && ABL:COUNT:Ｖ感覚 >= 3
 			S += 1
 		ENDIF
 		

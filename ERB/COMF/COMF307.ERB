@@ -11,7 +11,7 @@ SIF TFLAG:44 == 1
 SIF ITEM:51 == 0 && NOITEM == 0
 	RETURN 0
 ;親密3以上or好感度300以上or恋人が必要
-SIF ABL:0 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
+SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:153 == 0
 	RETURN 0
 RETURN 1
 
@@ -98,23 +98,23 @@ SOURCE:18 = 0
 SOURCE:9 = 200
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 20)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 100 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 200 + (ABL:0 * 25)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 300 + (ABL:0 * 25)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 500 + (ABL:0 * 30)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 100 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 200 + (ABL:親密 * 25)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 300 + (ABL:親密 * 25)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 500 + (ABL:親密 * 30)
 ELSE
-	SOURCE:18 += 1000 + (ABL:0 * 25)
+	SOURCE:18 += 1000 + (ABL:親密 * 25)
 ENDIF
 
 ;プレイヤーの技巧を見る
 ;櫛補正で+3する
-A = ABL:PLAYER:2 + 3
+A = ABL:PLAYER:技巧 + 3
 IF A <= 1
 	SOURCE:16 = (A * 65)
 ELSEIF A <= 3
@@ -144,34 +144,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 100 + (ABL:0 * 20)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 200 + (ABL:0 * 30)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 500 + (ABL:0 * 80)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 800 + (ABL:0 * 100)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 100 + (ABL:親密 * 20)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 200 + (ABL:親密 * 30)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 500 + (ABL:親密 * 80)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 800 + (ABL:親密 * 100)
 	ELSE
-		SOURCE:21 += 1000 + (ABL:0 * 120)
+		SOURCE:21 += 1000 + (ABL:親密 * 120)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 800
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 1000
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1500
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 2000
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2500
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 400)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 400)
 	ENDIF
 ENDIF
 

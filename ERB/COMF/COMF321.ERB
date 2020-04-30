@@ -46,24 +46,24 @@ SOURCE:18 = 300
 SOURCE:9 = 0
 
 ;ABL:従順をみる
-IF ABL:0 <= 1
-	SOURCE:18 += (ABL:0 * 70)
-	SOURCE:9 += (ABL:0 * 20)
-ELSEIF ABL:0 <= 3
-	SOURCE:18 += 200 + (ABL:0 * 75)
-	SOURCE:9 += 100 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 5
-	SOURCE:18 += 500 + (ABL:0 * 75)
-	SOURCE:9 += 200 + (ABL:0 * 20)
-ELSEIF ABL:0 <= 8
-	SOURCE:18 += 700 + (ABL:0 * 85)
-	SOURCE:9 += 300 + (ABL:0 * 30)
-ELSEIF ABL:0 <= 11
-	SOURCE:18 += 1200 + (ABL:0 * 90)
-	SOURCE:9 += 400 + (ABL:0 * 30)
+IF ABL:親密 <= 1
+	SOURCE:18 += (ABL:親密 * 70)
+	SOURCE:9 += (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 3
+	SOURCE:18 += 200 + (ABL:親密 * 75)
+	SOURCE:9 += 100 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 5
+	SOURCE:18 += 500 + (ABL:親密 * 75)
+	SOURCE:9 += 200 + (ABL:親密 * 20)
+ELSEIF ABL:親密 <= 8
+	SOURCE:18 += 700 + (ABL:親密 * 85)
+	SOURCE:9 += 300 + (ABL:親密 * 30)
+ELSEIF ABL:親密 <= 11
+	SOURCE:18 += 1200 + (ABL:親密 * 90)
+	SOURCE:9 += 400 + (ABL:親密 * 30)
 ELSE
-	SOURCE:18 += 2000 + (ABL:0 * 45)
-	SOURCE:9 += 800 + (ABL:0 * 15)
+	SOURCE:18 += 2000 + (ABL:親密 * 45)
+	SOURCE:9 += 800 + (ABL:親密 * 15)
 ENDIF
 
 ;好感度をみる
@@ -81,34 +81,34 @@ SIF SOURCE:18 < 0
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
-	IF ABL:0 <= 1
-		SOURCE:21 += 300 + (ABL:0 * 50)
-	ELSEIF ABL:0 <= 3
-		SOURCE:21 += 600 + (ABL:0 * 100)
-	ELSEIF ABL:0 <= 5
-		SOURCE:21 += 800 + (ABL:0 * 120)
-	ELSEIF ABL:0 <= 8
-		SOURCE:21 += 1000 + (ABL:0 * 140)
-	ELSEIF ABL:0 <= 11
-		SOURCE:21 += 1200 + (ABL:0 * 160)
+	IF ABL:親密 <= 1
+		SOURCE:21 += 300 + (ABL:親密 * 50)
+	ELSEIF ABL:親密 <= 3
+		SOURCE:21 += 600 + (ABL:親密 * 100)
+	ELSEIF ABL:親密 <= 5
+		SOURCE:21 += 800 + (ABL:親密 * 120)
+	ELSEIF ABL:親密 <= 8
+		SOURCE:21 += 1000 + (ABL:親密 * 140)
+	ELSEIF ABL:親密 <= 11
+		SOURCE:21 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:0 * 180)
+		SOURCE:21 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
-	IF ABL:15 == 0
+	IF ABL:サドっ気 == 0
 		SOURCE:20 = 600
-	ELSEIF ABL:15 == 1
+	ELSEIF ABL:サドっ気 == 1
 		SOURCE:20 = 900
-	ELSEIF ABL:15 == 2
+	ELSEIF ABL:サドっ気 == 2
 		SOURCE:20 = 1200
-	ELSEIF ABL:15 == 3
+	ELSEIF ABL:サドっ気 == 3
 		SOURCE:20 = 1600
-	ELSEIF ABL:15 == 4
+	ELSEIF ABL:サドっ気 == 4
 		SOURCE:20 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:15 * 300)
+		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 

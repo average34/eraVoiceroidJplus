@@ -15,11 +15,11 @@ SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:64 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で親密3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
 IF STAIN:3 & 14 && ASSIPLAY
-	SIF ABL:ASSI:0 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
+	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:62 && TALENT:ASSI:64 == 0
 		RETURN 0
 ENDIF
 ;欲望5以上かつ、親密7以上or好感度700以上or恋人or恋慕が必要
-SIF ABL:1 < 5 || (ABL:0 < 7 && CFLAG:2 < 700 && TALENT:153 == 0 && TALENT:85 == 0)
+SIF ABL:欲望 < 5 || (ABL:親密 < 7 && CFLAG:2 < 700 && TALENT:153 == 0 && TALENT:85 == 0)
 	RETURN 0
 ;小柄体型の場合、巨乳以外だとダメ
 SIF TALENT:100 && TALENT:110 == 0
@@ -28,7 +28,7 @@ SIF TALENT:100 && TALENT:110 == 0
 SIF TALENT:122
 	RETURN 0
 ;バイブまたは焼芋挿入中のときは技巧が4以上ないとダメ
-SIF (TEQUIP:11 || TEQUIP:71) && ABL:PLAYER:2 < 4
+SIF (TEQUIP:11 || TEQUIP:71) && ABL:PLAYER:技巧 < 4
 	RETURN 0
 ;縄で緊縛中はダメ
 SIF TEQUIP:44
@@ -82,18 +82,18 @@ IF W == 0
 	;胸の場合液体が減る
 	SOURCE:10 = 900
 	;ABL:Ｂ感覚をみる
-	IF ABL:14 == 0
+	IF ABL:Ｂ感覚 == 0
 		SOURCE:17 = 70
-	ELSEIF ABL:14 == 1
+	ELSEIF ABL:Ｂ感覚 == 1
 		SOURCE:17 = 180
-	ELSEIF ABL:14 == 2
+	ELSEIF ABL:Ｂ感覚 == 2
 		SOURCE:17 = 750
-	ELSEIF ABL:14 == 3
+	ELSEIF ABL:Ｂ感覚 == 3
 		SOURCE:17 = 1600
-	ELSEIF ABL:14 == 4
+	ELSEIF ABL:Ｂ感覚 == 4
 		SOURCE:17 = 2800
 	ELSE
-		SOURCE:17 = 900 + (ABL:14 * 450)
+		SOURCE:17 = 900 + (ABL:Ｂ感覚 * 450)
 	ENDIF
 	
 	;Ｂ敏感、鈍感をみる
@@ -107,18 +107,18 @@ IF W == 0
 ELSE
 	SOURCE:10 = 2000
 	;ABL:Ｃ感覚をみる
-	IF ABL:3 == 0
+	IF ABL:Ｃ感覚 == 0
 		SOURCE:0 = 100
-	ELSEIF ABL:3 == 1
+	ELSEIF ABL:Ｃ感覚 == 1
 		SOURCE:0 = 180
-	ELSEIF ABL:3 == 2
+	ELSEIF ABL:Ｃ感覚 == 2
 		SOURCE:0 = 750
-	ELSEIF ABL:3 == 3
+	ELSEIF ABL:Ｃ感覚 == 3
 		SOURCE:0 = 1600
-	ELSEIF ABL:3 == 4
+	ELSEIF ABL:Ｃ感覚 == 4
 		SOURCE:0 = 2600
 	ELSE
-		SOURCE:0 = 1000 + (ABL:3 * 470)
+		SOURCE:0 = 1000 + (ABL:Ｃ感覚 * 470)
 	ENDIF
 	
 	;Ｃ敏感、鈍感をみる

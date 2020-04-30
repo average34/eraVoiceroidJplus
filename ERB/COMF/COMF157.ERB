@@ -14,13 +14,13 @@ SIF 1
 SIF TFLAG:67 >= 4
 	RETURN 0
 ;対象が～感覚を1つも持っていないならダメ
-SIF ABL:3 == 0 && ABL:4 == 0 && ABL:5 == 0 && ABL:14 == 0
+SIF ABL:Ｃ感覚 == 0 && ABL:Ｖ感覚 == 0 && ABL:Ａ感覚 == 0 && ABL:Ｂ感覚 == 0
 	RETURN 0
 ;対象がふたなりかオトコならダメ(そのうち解除するかも)
 SIF TALENT:121 && TALENT:122
 	RETURN 0
 ;調教者の技巧が3無いとできない
-SIF ABL:PLAYER:2 <= 2
+SIF ABL:PLAYER:技巧 <= 2
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -83,21 +83,21 @@ SOURCE:14 = 800
 
 TFLAG:67 += 1
 
-IF ABL:3 > 0
+IF ABL:Ｃ感覚 > 0
 	O = 1
-	SIF ABL:3 > 3
+	SIF ABL:Ｃ感覚 > 3
 		O += 1
-ELSEIF ABL:4 > 0
+ELSEIF ABL:Ｖ感覚 > 0
 	P = 1
-	SIF ABL:4 > 3
+	SIF ABL:Ｖ感覚 > 3
 		P += 1
-ELSEIF ABL:5 > 0
+ELSEIF ABL:Ａ感覚 > 0
 	Q = 1
-	SIF ABL:5 > 3
+	SIF ABL:Ａ感覚 > 3
 		Q += 1
-ELSEIF ABL:14 > 0
+ELSEIF ABL:Ｂ感覚 > 0
 	R = 1
-	SIF ABL:14 > 3
+	SIF ABL:Ｂ感覚 > 3
 		R += 1
 ELSE
 	S = 1
@@ -105,23 +105,23 @@ ENDIF
 
 SIF P > 0 || Q > 0
 	SOURCE:6 = 600
-SIF ABL:14 > 0
+SIF ABL:Ｂ感覚 > 0
 	SOURCE:13 = 500
 
 
 ;ABL:Ｃ感覚をみる
-IF ABL:3 == 0
+IF ABL:Ｃ感覚 == 0
 	SOURCE:0 = 0
-ELSEIF ABL:3 == 1
+ELSEIF ABL:Ｃ感覚 == 1
 	SOURCE:0 = 100
 	SOURCE:3 += 60
-ELSEIF ABL:3 == 2
+ELSEIF ABL:Ｃ感覚 == 2
 	SOURCE:0 = 500
 	SOURCE:3 += 120
-ELSEIF ABL:3 == 3
+ELSEIF ABL:Ｃ感覚 == 3
 	SOURCE:0 = 1100
 	SOURCE:3 += 240
-ELSEIF ABL:3 == 4
+ELSEIF ABL:Ｃ感覚 == 4
 	SOURCE:0 = 1900
 	SOURCE:3 += 360
 ELSE
@@ -130,18 +130,18 @@ ELSE
 ENDIF
 
 ;ABL:Ｖ感覚をみる
-IF ABL:4 == 0
+IF ABL:Ｖ感覚 == 0
 	SOURCE:1 = 0
-ELSEIF ABL:4 == 1
+ELSEIF ABL:Ｖ感覚 == 1
 	SOURCE:1 = 50
 	SOURCE:13 += 100
-ELSEIF ABL:4 == 2
+ELSEIF ABL:Ｖ感覚 == 2
 	SOURCE:1 = 200
 	SOURCE:13 += 150
-ELSEIF ABL:4 == 3
+ELSEIF ABL:Ｖ感覚 == 3
 	SOURCE:1 = 600
 	SOURCE:13 += 300
-ELSEIF ABL:4 == 4
+ELSEIF ABL:Ｖ感覚 == 4
 	SOURCE:1 = 1200
 	SOURCE:13 += 600
 ELSE
@@ -150,18 +150,18 @@ ELSE
 ENDIF
 
 ;ABL:Ａ感覚をみる
-IF ABL:5 == 0
+IF ABL:Ａ感覚 == 0
 	SOURCE:2 = 0
-ELSEIF ABL:5 == 1
+ELSEIF ABL:Ａ感覚 == 1
 	SOURCE:2 = 75
 	SOURCE:13 += 100
-ELSEIF ABL:5 == 2
+ELSEIF ABL:Ａ感覚 == 2
 	SOURCE:2 = 150
 	SOURCE:13 += 250
-ELSEIF ABL:5 == 3
+ELSEIF ABL:Ａ感覚 == 3
 	SOURCE:2 = 400
 	SOURCE:13 += 500
-ELSEIF ABL:5 == 4
+ELSEIF ABL:Ａ感覚 == 4
 	SOURCE:2 = 800
 	SOURCE:13 += 800
 ELSE
@@ -170,18 +170,18 @@ ELSE
 ENDIF
 
 ;ABL:Ｂ感覚をみる
-IF ABL:14 == 0
+IF ABL:Ｂ感覚 == 0
 	SOURCE:17 = 0
-ELSEIF ABL:14 == 1
+ELSEIF ABL:Ｂ感覚 == 1
 	SOURCE:17 = 100
 	SOURCE:3 += 50
-ELSEIF ABL:14 == 2
+ELSEIF ABL:Ｂ感覚 == 2
 	SOURCE:17 = 400
 	SOURCE:3 += 100
-ELSEIF ABL:14 == 3
+ELSEIF ABL:Ｂ感覚 == 3
 	SOURCE:17 = 1000
 	SOURCE:3 += 200
-ELSEIF ABL:14 == 4
+ELSEIF ABL:Ｂ感覚 == 4
 	SOURCE:17 = 1700
 	SOURCE:3 += 320
 ELSE
