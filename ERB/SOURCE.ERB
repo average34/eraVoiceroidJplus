@@ -183,40 +183,40 @@ R = NO:PLAYER
 IF RELATION:R != 0
 	;PRINTFORML ＜相性{RELATION:R/100}.{RELATION:R%100}倍＞
 
-	IF UP:4 < 500000
-		UP:4 = UP:4 * RELATION:R / 100
-	ELSEIF UP:4 < 100000000
-		UP:4 = UP:4 / 100 * RELATION:R
+	IF UP:恭順 < 500000
+		UP:恭順 = UP:恭順 * RELATION:R / 100
+	ELSEIF UP:恭順 < 100000000
+		UP:恭順 = UP:恭順 / 100 * RELATION:R
 	ENDIF
-	IF UP:5 < 500000
-		UP:5 = UP:5 * RELATION:R / 100
-	ELSEIF UP:5 < 100000000
-		UP:5 = UP:5 / 100 * RELATION:R
+	IF UP:欲情 < 500000
+		UP:欲情 = UP:欲情 * RELATION:R / 100
+	ELSEIF UP:欲情 < 100000000
+		UP:欲情 = UP:欲情 / 100 * RELATION:R
 	ENDIF
-	IF UP:7 < 500000
-		UP:7 = UP:7 * RELATION:R / 100
-	ELSEIF UP:7 < 100000000
-		UP:7 = UP:7 / 100 * RELATION:R
+	IF UP:習得 < 500000
+		UP:習得 = UP:習得 * RELATION:R / 100
+	ELSEIF UP:習得 < 100000000
+		UP:習得 = UP:習得 / 100 * RELATION:R
 	ENDIF
-	IF UP:11 < 500000
-		UP:11 = UP:11 * 100 / RELATION:R
-	ELSEIF UP:11 < 100000000
-		UP:11 = UP:11 / RELATION:R * 100
+	IF UP:反感 < 500000
+		UP:反感 = UP:反感 * 100 / RELATION:R
+	ELSEIF UP:反感 < 100000000
+		UP:反感 = UP:反感 / RELATION:R * 100
 	ENDIF
-	IF UP:12 < 500000
-		UP:12 = UP:12 * 100 / RELATION:R
-	ELSEIF UP:12 < 100000000
-		UP:12 = UP:12 / RELATION:R * 100
+	IF UP:不快 < 500000
+		UP:不快 = UP:不快 * 100 / RELATION:R
+	ELSEIF UP:不快 < 100000000
+		UP:不快 = UP:不快 / RELATION:R * 100
 	ENDIF
-	IF UP:13 < 500000
-		UP:13 = UP:13 * 100 / RELATION:R
-	ELSEIF UP:13 < 100000000
-		UP:13 = UP:13 / RELATION:R * 100
+	IF UP:抑鬱 < 500000
+		UP:抑鬱 = UP:抑鬱 * 100 / RELATION:R
+	ELSEIF UP:抑鬱 < 100000000
+		UP:抑鬱 = UP:抑鬱 / RELATION:R * 100
 	ENDIF
-	IF UP:15 < 500000
-		UP:15 = UP:15 * RELATION:R / 100
-	ELSEIF UP:15 < 100000000
-		UP:15 = UP:15 / 100 * RELATION:R
+	IF UP:好意 < 500000
+		UP:好意 = UP:好意 * RELATION:R / 100
+	ELSEIF UP:好意 < 100000000
+		UP:好意 = UP:好意 / 100 * RELATION:R
 	ENDIF
 
 ENDIF
@@ -226,17 +226,17 @@ ENDIF
 ;-------------------------------------------------
 ;一部の連続実行前提コマンドは除外させる
 IF SELECTCOM == PREVCOM && SELECTCOM != 303
-	;UP:0,1,2,14,18は絶頂に絡むので先に処理してある
+	;UP:快Ｃ,1,2,14,18は絶頂に絡むので先に処理してある
 	;PRINTL ＜同一コマンド連続実行＞
-	UP:4 /= 2
-	UP:5 /= 2
-	UP:6 /= 2
-	UP:7 /= 2
-	UP:8 /= 2
-	UP:10 /= 2
-	UP:15 /= 2
-	UP:16 /= 2
-	UP:17 /= 2
+	UP:恭順 /= 2
+	UP:欲情 /= 2
+	UP:屈服 /= 2
+	UP:習得 /= 2
+	UP:恥情 /= 2
+	UP:恐怖 /= 2
+	UP:好意 /= 2
+	UP:生活 /= 2
+	UP:優越 /= 2
 	;ムード減少。1割減
 	TIMES TFLAG:37 , 0.90
 ENDIF
@@ -256,16 +256,16 @@ ENDIF
 ;-------------------------------------------------
 IF BASE:気力 <= 0
 	;PRINTL ★気力０★
-	;UP:0,1,2,14,18は絶頂に絡むので先に処理してある
-	UP:3 /= 2
-	UP:4 /= 2
-	UP:5 /= 2
-	UP:7 /= 2
-	UP:9 /= 2
-	UP:13 /= 2
-	UP:15 /= 2
-	UP:16 /= 2
-	UP:17 /= 2
+	;UP:快Ｃ,1,2,14,18は絶頂に絡むので先に処理してある
+	UP:潤滑 /= 2
+	UP:恭順 /= 2
+	UP:欲情 /= 2
+	UP:習得 /= 2
+	UP:苦痛 /= 2
+	UP:抑鬱 /= 2
+	UP:好意 /= 2
+	UP:生活 /= 2
+	UP:優越 /= 2
 
 	LOSEBASE:体力 *= 2
 	LOSEBASE:体力 += 80
@@ -274,7 +274,7 @@ ENDIF
 ;-------------------------------------------------
 ;苦痛からくる体力・気力の減少
 ;-------------------------------------------------
-D = UP:9/16
+D = UP:苦痛/16
 
 ;プレイヤーのサドっ気が高すぎる場合の軽減措置
 IF ABL:PLAYER:サドっ気 > 15
@@ -776,7 +776,7 @@ SIF TEQUIP:23 > 0
 ;愛液処理
 ;-------------------------------------------------
 @LOVE_JUICE
-A = UP:0 + UP:1 + UP:2 + UP:17
+A = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:優越
 SIF UP:24 > 1000
 	A += UP:24 / 1000
 ;快Ｃ＋快Ｖ＋快Ａ＋快Ｂが合わせて100以上上昇ならその20%の液体のソースが加わる（オトコはダメ）
@@ -1355,15 +1355,15 @@ SIF TALENT:Ｃ敏感
 A = SOURCE:快Ｃ
 
 ;PALAM:欲情をみる
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES A , 0.50
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES A , 0.70
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES A , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES A , 1.30
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES A , 1.80
 ENDIF
 
@@ -1418,13 +1418,13 @@ IF TALENT:淫核
 	D = (A+B)/2
 ENDIF
 
-UP:0 += A
-UP:5 += B
-UP:13 += C
+UP:快Ｃ += A
+UP:欲情 += B
+UP:抑鬱 += C
 IF D
-	UP:3 += D
+	UP:潤滑 += D
 	D = (A+B)/3
-	UP:7 += D
+	UP:習得 += D
 ENDIF
 
 ;-------------------------------------------------
@@ -1440,15 +1440,15 @@ SIF TALENT:Ｖ敏感
 A = SOURCE:快Ｖ
 
 ;PALAM:欲情をみる
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES A , 0.30
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES A , 0.50
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES A , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES A , 1.50
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES A , 2.00
 ENDIF
 
@@ -1509,12 +1509,12 @@ IF TALENT:淫壷
 	D = (A+B)/3
 ENDIF
 
-UP:1 += A
-UP:4 += B
-UP:5 += B
-UP:13 += C
+UP:快Ｖ += A
+UP:恭順 += B
+UP:欲情 += B
+UP:抑鬱 += C
 SIF D
-	UP:3 += D
+	UP:潤滑 += D
 
 ;-------------------------------------------------
 ;快Ａのソース
@@ -1530,15 +1530,15 @@ A = SOURCE:快Ａ
 
 ;PALAM:欲情をみる
 ;快ＡはあまりPALAM:欲情では差が出ない
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES A , 0.60
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES A , 0.80
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES A , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES A , 1.20
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES A , 1.40
 ENDIF
 
@@ -1593,10 +1593,10 @@ IF TALENT:尻穴狂い
 ENDIF
 
 
-UP:2 += A
-UP:6 += B
-UP:5 += B
-UP:13 += C
+UP:快Ａ += A
+UP:屈服 += B
+UP:欲情 += B
+UP:抑鬱 += C
 
 ;-------------------------------------------------
 ;快Ｂのソース
@@ -1611,15 +1611,15 @@ SIF TALENT:Ｂ敏感
 A = SOURCE:快Ｂ
 
 ;PALAM:欲情をみる
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES A , 0.50
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES A , 0.70
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES A , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES A , 1.30
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES A , 1.80
 ENDIF
 
@@ -1671,9 +1671,9 @@ IF TALENT:淫乳
 	TIMES C , 0.50
 ENDIF
 
-UP:14 += A
-UP:5 += B
-UP:13 += C
+UP:快Ｂ += A
+UP:欲情 += B
+UP:抑鬱 += C
 
 ;-------------------------------------------------
 ;快Ｍのソース
@@ -1695,15 +1695,15 @@ A = SOURCE:快Ｍ
 B = A
 
 ;PALAM:欲情をみる・欲情による変動が少ない
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES A , 0.80
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES A , 0.90
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES A , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES A , 1.10
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES A , 1.20
 ENDIF
 
@@ -1760,10 +1760,10 @@ IF TALENT:キス魔
 	TIMES C , 0.50
 ENDIF
 
-UP:18 += A
-UP:4 += B
-UP:5 += B
-UP:13 += C
+UP:快Ｍ += A
+UP:恭順 += B
+UP:欲情 += B
+UP:抑鬱 += C
 
 ;=============================================================================
 ;ソース計算(快楽以外)
@@ -1813,8 +1813,8 @@ ELSE
 	ENDIF
 ENDIF
 
-UP:4 += A
-UP:5 += B
+UP:恭順 += A
+UP:欲情 += B
 
 ;-------------------------------------------------
 ;性行動のソース
@@ -1870,8 +1870,8 @@ ELSE
 	B = 0
 ENDIF
 
-UP:7 += A
-UP:13 += B
+UP:習得 += A
+UP:抑鬱 += B
 
 ;-------------------------------------------------
 ;達成のソース
@@ -1917,7 +1917,7 @@ ELSE
 	ENDIF
 ENDIF
 
-UP:4 += A
+UP:恭順 += A
 
 ;-------------------------------------------------
 ;痛覚のソース
@@ -2031,10 +2031,10 @@ IF ABL:PLAYER:サドっ気 > 15
 	C = C * 15 / ABL:PLAYER:サドっ気
 ENDIF
 
-UP:9 += A
-UP:10 += B
-UP:11 += C
-UP:5 += D
+UP:苦痛 += A
+UP:恐怖 += B
+UP:反感 += C
+UP:欲情 += D
 ;マゾっ気があるとPALAM:欲情も上がる
 ;そのとき調教者が【サド】だと効果的
 
@@ -2079,8 +2079,8 @@ IF TALENT:マゾ
 	TIMES B , 1.50
 ENDIF
 
-UP:4 += A
-UP:5 += B
+UP:恭順 += A
+UP:欲情 += B
 
 ;-------------------------------------------------
 ;不潔のソース
@@ -2109,8 +2109,8 @@ ELSE
 	TIMES B , 0.00
 ENDIF
 
-UP:11 += A
-UP:12 += B
+UP:反感 += A
+UP:不快 += B
 
 ;-------------------------------------------------
 ;接触のソース
@@ -2226,8 +2226,8 @@ SIF TIME:5 == 5 || TIME:5 == 6
 SIF TIME:5 == 8
 	TIMES C , 0.20
 
-UP:4 += A
-UP:11 += C
+UP:恭順 += A
+UP:反感 += C
 
 
 ;-------------------------------------------------
@@ -2236,7 +2236,7 @@ UP:11 += C
 @CALC_SOURCE10
 A = SOURCE:液体追加
 
-UP:3 += A
+UP:潤滑 += A
 
 ;-------------------------------------------------
 ;欲情追加のソース
@@ -2244,7 +2244,7 @@ UP:3 += A
 @CALC_SOURCE11
 A = SOURCE:欲情追加
 
-UP:5 += A
+UP:欲情 += A
 
 
 ;-------------------------------------------------
@@ -2259,7 +2259,7 @@ SIF TALENT:恥薄い
 
 ;潤滑アップの50％を露出のソースに加える
 ;ただし液体追加のソースのぶんは引く
-SOURCE:露出 += (UP:3-SOURCE:液体追加) / 2
+SOURCE:露出 += (UP:潤滑-SOURCE:液体追加) / 2
 
 A = SOURCE:露出
 
@@ -2288,27 +2288,27 @@ B = SOURCE:露出
 ;恥ずかしさを感じれば感じるほどあまり恥ずかしくなくなる
 ;言葉責めは逆
 IF SELECTCOM == 75
-	IF PALAM:8 < PALAMLV:1
+	IF PALAM:恥情 < PALAMLV:1
 		TIMES B , 1.00
-	ELSEIF PALAM:8 < PALAMLV:2
+	ELSEIF PALAM:恥情 < PALAMLV:2
 		TIMES B , 1.10
-	ELSEIF PALAM:8 < PALAMLV:3
+	ELSEIF PALAM:恥情 < PALAMLV:3
 		TIMES B , 1.30
-	ELSEIF PALAM:8 < PALAMLV:4
+	ELSEIF PALAM:恥情 < PALAMLV:4
 		TIMES B , 1.50
-	ELSEIF PALAM:8 >= PALAMLV:4
+	ELSEIF PALAM:恥情 >= PALAMLV:4
 		TIMES B , 1.70
 	ENDIF
 ELSE
-	IF PALAM:8 < PALAMLV:1
+	IF PALAM:恥情 < PALAMLV:1
 		TIMES B , 1.00
-	ELSEIF PALAM:8 < PALAMLV:2
+	ELSEIF PALAM:恥情 < PALAMLV:2
 		TIMES B , 0.90
-	ELSEIF PALAM:8 < PALAMLV:3
+	ELSEIF PALAM:恥情 < PALAMLV:3
 		TIMES B , 0.70
-	ELSEIF PALAM:8 < PALAMLV:4
+	ELSEIF PALAM:恥情 < PALAMLV:4
 		TIMES B , 0.50
-	ELSEIF PALAM:8 >= PALAMLV:4
+	ELSEIF PALAM:恥情 >= PALAMLV:4
 		TIMES B , 0.30
 	ENDIF
 ENDIF
@@ -2351,10 +2351,10 @@ IF TALENT:マゾ
 	TIMES C , 0.50
 ENDIF
 
-UP:5 += A
-UP:8 += B
+UP:欲情 += A
+UP:恥情 += B
 
-UP:11 += C
+UP:反感 += C
 
 ;-------------------------------------------------
 ;屈従のソース
@@ -2388,8 +2388,8 @@ ELSE
 	ENDIF
 ENDIF
 
-UP:13 += A
-UP:6 += B
+UP:抑鬱 += A
+UP:屈服 += B
 
 ;-------------------------------------------------
 ;逸脱のソース
@@ -2437,7 +2437,7 @@ ENDIF
 SIF TALENT:マゾ
 	TIMES A , 0.50
 
-UP:11 += A
+UP:反感 += A
 
 ;-------------------------------------------------
 ;反感追加のソース
@@ -2445,7 +2445,7 @@ UP:11 += A
 @CALC_SOURCE15
 A = SOURCE:反感追加
 
-UP:11 += A
+UP:反感 += A
 
 ;-------------------------------------------------
 ;恭順追加のソース
@@ -2453,7 +2453,7 @@ UP:11 += A
 @CALC_SOURCE16
 A = SOURCE:恭順追加
 
-UP:4 += A
+UP:恭順 += A
 
 ;-------------------------------------------------
 ;歓楽のソース
@@ -2526,7 +2526,7 @@ ELSE
 	ENDIF
 ENDIF
 
-UP:15 += A
+UP:好意 += A
 
 ;-------------------------------------------------
 ;家務のソース
@@ -2571,8 +2571,8 @@ ELSEIF B < 100000000
 	B = B / 100 * (ABL:技巧 * 10 + 100)
 ENDIF
 
-UP:7 += A
-UP:16 += B
+UP:習得 += A
+UP:生活 += B
 
 ;-------------------------------------------------
 ;征服のソース
@@ -2654,9 +2654,9 @@ ELSEIF ABL:サドっ気 >= 5
 	ENDIF
 ENDIF
 
-UP:17 += A
-UP:5 += B
-UP:8 += C
+UP:優越 += A
+UP:欲情 += B
+UP:恥情 += C
 
 ;-------------------------------------------------
 ;受動のソース
@@ -2720,9 +2720,9 @@ ELSEIF A < 100000000
 	A = A / 100 * (ABL:親密 * 10 + 70)
 ENDIF
 
-UP:15 += A
-UP:6 += B
-UP:4 += C
+UP:好意 += A
+UP:屈服 += B
+UP:恭順 += C
 
 ;-------------------------------------------------
 ;懐疑のソース
@@ -2787,8 +2787,8 @@ ELSEIF CFLAG:2 > 5000
 	TIMES B , 0.00
 ENDIF
 
-UP:10 += A
-UP:12 += B
+UP:恐怖 += A
+UP:不快 += B
 
 ;-------------------------------------------------
 ;不安のソース
@@ -2888,6 +2888,6 @@ ELSEIF CFLAG:2 > 1000000
 	TIMES B , 0.00
 ENDIF
 
-UP:10 += A
-UP:11 += B
+UP:恐怖 += A
+UP:反感 += B
 

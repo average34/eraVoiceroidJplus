@@ -69,7 +69,7 @@ SIF RESULT < 20
 	ABL:歌唱技能 += 1
 
 IF RESULT == 0
-	JUEL:7 -= A
+	JUEL:習得 -= A
 ELSEIF RESULT == 20
 	CALL AUT_KASHOU_0
 ENDIF
@@ -100,7 +100,7 @@ I = 0
 Z = 0
 
 ;習得の珠で上げる
-SIF JUEL:7 < A
+SIF JUEL:習得 < A
 	I |= 1
 SIF EXP:歌唱経験 < B
 	I |= 2

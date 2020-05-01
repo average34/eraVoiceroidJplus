@@ -319,7 +319,7 @@ IF TFLAG:45
 		ENDIF
 	ENDIF
 	;淫乱かつ精液中毒9以上かつ欲情3000万以上or欲情30000000以上)
-	IF TALENT:淫乱 && (ABL:精液中毒 >= 9) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && (ABL:精液中毒 >= 9) && (PALAM:欲情 >= 30000000)
 		PRINTFORML %CALLNAME:MASTER%のペニスを乱暴に引っぱり出すと
 	ELSE
 		;技巧10以上
@@ -328,13 +328,13 @@ IF TFLAG:45
 		PRINTFORML %CALLNAME:MASTER%のペニスを露出させると
 	ENDIF
 	;キス魔かつ欲情500万以下
-	SIF TALENT:キス魔 && PALAM:5 < 5000000
+	SIF TALENT:キス魔 && PALAM:欲情 < 5000000
 		PRINT 先端に一度キスをしてから、
 	;淫乱又は精液中毒7以上かつ欲情3000万以上
-	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:5 >= 30000000
+	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:欲情 >= 30000000
 		PRINT 呼吸も荒く、余裕の無い表情で
 	;淫乱又は精液中毒5以上かつ欲情100万以上
-	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && PALAM:5 >= 1000000
+	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && PALAM:欲情 >= 1000000
 		PRINT 上気した表情で、
 	;サド又は小悪魔又はサドっ気5以上
 	ELSEIF TALENT:サド || TALENT:小悪魔 || ABL:サドっ気 >= 5
@@ -350,7 +350,7 @@ IF TFLAG:45
 	IF TALENT:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 	;精液中毒5以上かつ欲情500万以上
-	ELSEIF ABL:精液中毒 >= 5 && PALAM:5 >= 5000000
+	ELSEIF ABL:精液中毒 >= 5 && PALAM:欲情 >= 5000000
 		PRINTL 貪るようにしゃぶりついた…
 	;技巧12以上
 	ELSEIF ABL:技巧 >= 12
@@ -364,7 +364,7 @@ IF TFLAG:45
 	ENDIF
 ELSE
 	;淫乱かつ精液中毒9以上かつ欲情3000万以上
-	IF TALENT:淫乱 && ABL:精液中毒 >= 9 && PALAM:5 >= 30000000
+	IF TALENT:淫乱 && ABL:精液中毒 >= 9 && PALAM:欲情 >= 30000000
 		PRINT 甘えておねだりする
 	;淫乱又は精液中毒5以上
 	ELSEIF TALENT:淫乱 || ABL:精液中毒 >= 5
@@ -374,14 +374,14 @@ ELSE
 	ENDIF
 	PRINTFORML %CALLNAME:TARGET%の前にペニスを露出させると
 	;淫乱又は精液中毒7以上かつ欲情3000万以上…現状オトコ無しだから大丈夫…だよね←あなたが居ます
-	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:5 > 30000000
+	IF (TALENT:淫乱 || ABL:精液中毒 >= 7) && PALAM:欲情 > 30000000
 		IF TALENT:オトコ
 			PRINT 熱に浮かされる様に、
 		ELSE
 			PRINT 発情した雌の顔で、
 		ENDIF
 	;淫乱又は精液中毒5以上かつ欲情100万以上
-	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && (PALAM:5 >= 1000000)
+	ELSEIF (TALENT:淫乱 || ABL:精液中毒 >= 5) && (PALAM:欲情 >= 1000000)
 		PRINT うっとりとした表情で、
 	ELSEIF TALENT:マゾ || (TALENT:臆病 && ABL:マゾっ気 >= 3) || ABL:マゾっ気 >= 5
 		PRINTFORML 媚びるような上目遣いで%CALLNAME:MASTER%を見つめながら
@@ -393,13 +393,13 @@ ELSE
 		PRINT 一瞬躊躇うような仕草を見せがらも、
 	ENDIF
 	;キス魔かつ欲情500万以下
-	SIF TALENT:キス魔 && (PALAM:5 < 5000000)
+	SIF TALENT:キス魔 && (PALAM:欲情 < 5000000)
 		PRINT 先端に一度キスをしてから、
 	;猫舌
 	IF TALENT:猫舌
 		PRINT 舌の裏側を使って丁寧に舐め回した…
 	;精液中毒5以上かつ欲情500万以上
-	ELSEIF ABL:精液中毒 >= 5 && (PALAM:5 >= 5000000)
+	ELSEIF ABL:精液中毒 >= 5 && (PALAM:欲情 >= 5000000)
 		PRINTL 夢中でしゃぶりついた…
 	;技巧12以上
 	ELSEIF ABL:技巧 >= 12
@@ -443,15 +443,15 @@ ENDIF
 
 
 ;PALAM:欲情
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	L = 0
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	L = 1
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	L = 2
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	L = 3
-ELSEIF PALAM:5 < PALAMLV:5
+ELSEIF PALAM:欲情 < PALAMLV:5
 	L = 4
 ELSE
 	L = 5
@@ -572,15 +572,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 
 	;PALAM:欲情
-	IF PALAM:5 < PALAMLV:1
+	IF PALAM:欲情 < PALAMLV:1
 		L = 0
-	ELSEIF PALAM:5 < PALAMLV:2
+	ELSEIF PALAM:欲情 < PALAMLV:2
 		L = 1
-	ELSEIF PALAM:5 < PALAMLV:3
+	ELSEIF PALAM:欲情 < PALAMLV:3
 		L = 2
-	ELSEIF PALAM:5 < PALAMLV:4
+	ELSEIF PALAM:欲情 < PALAMLV:4
 		L = 3
-	ELSEIF PALAM:5 < PALAMLV:5
+	ELSEIF PALAM:欲情 < PALAMLV:5
 		L = 4
 	ELSE
 		L = 5

@@ -68,9 +68,9 @@ ENDIF
 MARK:反発感情 -= 1
 
 IF RESULT == 0
-	JUEL:6 -= A
+	JUEL:屈服 -= A
 ELSEIF RESULT == 1
-	JUEL:15 -= C
+	JUEL:好意 -= C
 ENDIF
 
 PRINTS MARKNAME:3
@@ -112,10 +112,10 @@ IF MARK:反発感情 > MARK:既成事実
 ENDIF
 
 ;屈服の珠で減らす
-SIF JUEL:6 < A
+SIF JUEL:屈服 < A
 	I |= 1
 ;好意の珠で減らす
-SIF JUEL:15 < C
+SIF JUEL:好意 < C
 	J |= 1
 
 IF I == 0

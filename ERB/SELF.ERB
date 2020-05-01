@@ -67,14 +67,14 @@ ELSEIF ABL:A >= 5
 ENDIF
 
 ;欲望と奉仕精神によるボーナス
-IF ABL:欲望 == 4 && ABL:奉仕精神 >= 4 && PALAM:5 >= PALAMLV:4
+IF ABL:欲望 == 4 && ABL:奉仕精神 >= 4 && PALAM:欲情 >= PALAMLV:4
 	S += 1
-ELSEIF ABL:欲望 >= 5 && ABL:奉仕精神 >= 4 && PALAM:5 >= PALAMLV:4
+ELSEIF ABL:欲望 >= 5 && ABL:奉仕精神 >= 4 && PALAM:欲情 >= PALAMLV:4
 	S += ABL:欲望 / 2
 ENDIF
 
 ;C/V感覚が充分にあれば、欲望ＬＶ３でもSに+1する
-IF ABL:欲望 >= 3 && ABL:A >= 3 && PALAM:5 >= PALAMLV:3
+IF ABL:欲望 >= 3 && ABL:A >= 3 && PALAM:欲情 >= PALAMLV:3
 	S += 1
 ENDIF
 
@@ -160,17 +160,17 @@ IF S > 0
 	;ターゲットが挿入されるときはV
 	IF TFLAG:15 & 1
 		PRINTFORML %PALAMNAME:1%の珠＋{S:1*200}
-		GOTJUEL:1 += S:1*200
+		GOTJUEL:快Ｖ += S:1*200
 	;ターゲットが挿入する時はC
 	ELSEIF TFLAG:15 & 2
 		PRINTFORML %PALAMNAME:0%の珠＋{S:1*200}
-		GOTJUEL:0 += S:1*200
+		GOTJUEL:快Ｃ += S:1*200
 	;非挿入の時はBC
 	ELSE
 		PRINTFORML %PALAMNAME:0%の珠＋{S:1*150}
-		GOTJUEL:0 += S:1*150
+		GOTJUEL:快Ｃ += S:1*150
 		PRINTFORML %PALAMNAME:14%の珠＋{S:1*100}
-		GOTJUEL:14 += S:1*100
+		GOTJUEL:快Ｂ += S:1*100
 	ENDIF
 	PRINTFORML %PALAMNAME:4%の珠＋{S:1*100}
 	PRINTFORML %PALAMNAME:5%の珠＋{S:1*250}
@@ -181,15 +181,15 @@ IF S > 0
 		;ターゲットが挿入し、強気だと優越の珠
 		IF TFLAG:15 & 2 && R > 0
 			PRINTFORML %PALAMNAME:17%の珠＋{S:1*100}
-			GOTJUEL:17 += S:1*100
+			GOTJUEL:優越 += S:1*100
 		;そうでなければ恥情の珠
 		ELSE
 			PRINTFORML %PALAMNAME:8%の珠＋{S:1*100}
-			GOTJUEL:8 += S:1*100
+			GOTJUEL:恥情 += S:1*100
 		ENDIF
 	ENDIF
-	GOTJUEL:4 += S:1*100
-	GOTJUEL:5 += S:1*250
+	GOTJUEL:恭順 += S:1*100
+	GOTJUEL:欲情 += S:1*250
 	IF ABL:親密+ABL:Ｖ感覚+ABL:奉仕精神 >= 13 && TALENT:恋人 && (CFLAG:99 & 1) == 0
 		PRINTFORM 我に返り、痴態を省みて赤面する%CALLNAME:TARGET%に苦笑いしながらそっとキスをすると、
 		IF TIME == 1
@@ -225,9 +225,9 @@ ELSEIF ABL:自慰中毒 >= 5
 	A = (ABL:自慰中毒 * 2) - 1
 ENDIF
 
-IF ABL:欲望 == 4 && ABL:Ｃ感覚 >= 4 && PALAM:5 >= PALAMLV:4
+IF ABL:欲望 == 4 && ABL:Ｃ感覚 >= 4 && PALAM:欲情 >= PALAMLV:4
 	A += 1
-ELSEIF ABL:欲望 >= 5 && ABL:Ｃ感覚 >= 4 && PALAM:5 >= PALAMLV:4
+ELSEIF ABL:欲望 >= 5 && ABL:Ｃ感覚 >= 4 && PALAM:欲情 >= PALAMLV:4
 	A += ABL:欲望 / 2
 ENDIF
 
@@ -235,7 +235,7 @@ ENDIF
 IF TALENT:自慰しやすい
 	A *= 2
 	;欲望ＬＶ３でもAに+1する
-	SIF ABL:欲望 >= 3 && ABL:Ｃ感覚 >= 3 && PALAM:5 >= PALAMLV:3
+	SIF ABL:欲望 >= 3 && ABL:Ｃ感覚 >= 3 && PALAM:欲情 >= PALAMLV:3
 		A += 1
 ENDIF
 
@@ -287,9 +287,9 @@ ELSEIF ABL:Ｃ感覚 >= 5
 ENDIF
 
 ;調教時にＡ快楽、Ｃ快楽をより稼いだほうに+1
-IF PALAM:2 > PALAM:0
+IF PALAM:快Ａ > PALAM:快Ｃ
 	B += 1
-ELSEIF PALAM:0 > PALAM:2
+ELSEIF PALAM:快Ｃ > PALAM:快Ａ
 	C += 1
 ENDIF
 
@@ -354,9 +354,9 @@ IF A > 0 && (C >= B)
 	PRINTFORMW %PALAMNAME:5%の珠＋{A:1*250}
 	EXP:自慰経験 += A
 	EXP:絶頂経験 += A / 5
-	GOTJUEL:0 += A:1*500
-	GOTJUEL:4 += A:1*100
-	GOTJUEL:5 += A:1*250
+	GOTJUEL:快Ｃ += A:1*500
+	GOTJUEL:恭順 += A:1*100
+	GOTJUEL:欲情 += A:1*250
 
 	;カットフラグを戻す
 	CFLAG:99 = LOCAL:100
@@ -393,15 +393,15 @@ ELSEIF A > 0 && (B > C)
 	EXP:自慰経験 += A
 	EXP:Ａ経験 += A
 	EXP:絶頂経験 += A / 5
-	GOTJUEL:2 += A:1*500
-	GOTJUEL:4 += A:1*100
-	GOTJUEL:5 += A:1*250
+	GOTJUEL:快Ａ += A:1*500
+	GOTJUEL:恭順 += A:1*100
+	GOTJUEL:欲情 += A:1*250
 	
 	IF ABL:親密 + ABL:露出癖 * 3 + ABL:マゾっ気 * 3 >= 30 && TIME == 0 && TALENT:合意
 		SIF (CFLAG:99 & 1) == 0
 			PRINTFORML そのことを%NAME:TARGET%は報告してきた。
 		PRINTFORML %PALAMNAME:8%の珠＋{A:1*200}
-		GOTJUEL:8 += A:1*200
+		GOTJUEL:恥情 += A:1*200
 	ENDIF
 	
 	IF (ABL:親密 >= 10 || ABL:欲望 >= 10) && TALENT:恋慕 && (CFLAG:99 & 1) == 0
@@ -510,29 +510,29 @@ EXP:レズ経験 += N*20
 EXP:ASSI:レズ経験 += N*20
 EXP:絶頂経験 += N*100*ABL:親密/500
 
-GOTJUEL:0 += N:1*100*ABL:親密
-GOTJUEL:5 += N:1*200
+GOTJUEL:快Ｃ += N:1*100*ABL:親密
+GOTJUEL:欲情 += N:1*200
 IF TALENT:ASSI:ふたなり
 	PRINTFORML %EXPNAME:20%＋{N}
 	PRINTFORML %PALAMNAME:6%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
 	PRINTFORML %PALAMNAME:7%の珠＋{N:1*100*(ABL:技巧+ABL:奉仕精神)}
 
 	EXP:精液経験 += N
-	GOTJUEL:6 += N:1*100*(ABL:技巧+ABL:奉仕精神)
-	GOTJUEL:7 += N:1*100*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:屈服 += N:1*100*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:習得 += N:1*100*(ABL:技巧+ABL:奉仕精神)
 ELSE
 	PRINTFORML %PALAMNAME:6%の珠＋{N:1*50*(ABL:技巧+ABL:奉仕精神)}
 	PRINTFORML %PALAMNAME:7%の珠＋{N:1*50*(ABL:技巧+ABL:奉仕精神)}
 
-	GOTJUEL:6 += N:1*50*(ABL:技巧+ABL:奉仕精神)
-	GOTJUEL:7 += N:1*50*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:屈服 += N:1*50*(ABL:技巧+ABL:奉仕精神)
+	GOTJUEL:習得 += N:1*50*(ABL:技巧+ABL:奉仕精神)
 ENDIF
 IF TALENT:ASSI:サド
 	PRINTFORML %EXPNAME:30%＋{N}
 	SIF N*100*ABL:マゾっ気 > 0
 		PRINTFORML %PALAMNAME:9%の珠＋{N:1*100*ABL:マゾっ気}
 
-	GOTJUEL:9 += N:1*100*ABL:マゾっ気
+	GOTJUEL:苦痛 += N:1*100*ABL:マゾっ気
 	EXP:苦痛快楽経験 += N
 ENDIF
 IF TALENT:ふたなり
@@ -540,7 +540,7 @@ IF TALENT:ふたなり
 	PRINTFORML %PALAMNAME:8%の珠＋{N:1*100}
 
 	EXP:射精経験 += N
-	GOTJUEL:8 += N:1*100
+	GOTJUEL:恥情 += N:1*100
 ENDIF
 IF TALENT:ふたなり && TALENT:ASSI:ふたなり && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 3
 	IF (CFLAG:99 & 1) == 0
@@ -563,9 +563,9 @@ IF TALENT:ふたなり && TALENT:ASSI:ふたなり && ABL:奉仕精神 >= 8 && A
 	EXP:精液経験 += N
 	EXP:奉仕快楽経験 += N
 	EXP:フェラ経験 += N
-	GOTJUEL:5 += N:1*100
-	GOTJUEL:6 += N:1*100
-	GOTJUEL:8 += N:1*100
+	GOTJUEL:欲情 += N:1*100
+	GOTJUEL:屈服 += N:1*100
+	GOTJUEL:恥情 += N:1*100
 ENDIF
 ;カットフラグを戻す
 CFLAG:99 = LOCAL:100
@@ -793,17 +793,17 @@ IF S > 0
 	;ターゲットが挿入されるときはV
 	IF TFLAG:15 & 1
 		PRINTFORML %PALAMNAME:1%の珠＋{S:1*200}
-		GOTJUEL:1 += S:1*200
+		GOTJUEL:快Ｖ += S:1*200
 	;ターゲットが挿入する時はC
 	ELSEIF TFLAG:15 & 2
 		PRINTFORML %PALAMNAME:0%の珠＋{S:1*200}
-		GOTJUEL:0 += S:1*200
+		GOTJUEL:快Ｃ += S:1*200
 	;非挿入の時はBC
 	ELSE
 		PRINTFORML %PALAMNAME:0%の珠＋{S:1*150}
-		GOTJUEL:0 += S:1*150
+		GOTJUEL:快Ｃ += S:1*150
 		PRINTFORML %PALAMNAME:14%の珠＋{S:1*100}
-		GOTJUEL:14 += S:1*100
+		GOTJUEL:快Ｂ += S:1*100
 	ENDIF
 	PRINTFORML %PALAMNAME:4%の珠＋{S:1*100}
 	PRINTFORML %PALAMNAME:5%の珠＋{S:1*250}
@@ -814,15 +814,15 @@ IF S > 0
 		;ターゲットが挿入し、強気だと優越の珠
 		IF TFLAG:15 & 2 && R > 0
 			PRINTFORML %PALAMNAME:17%の珠＋{S:1*100}
-			GOTJUEL:17 += S:1*100
+			GOTJUEL:優越 += S:1*100
 		;そうでなければ恥情の珠
 		ELSE
 			PRINTFORML %PALAMNAME:8%の珠＋{S:1*100}
-			GOTJUEL:8 += S:1*100
+			GOTJUEL:恥情 += S:1*100
 		ENDIF
 	ENDIF
-	GOTJUEL:4 += S:1*100
-	GOTJUEL:5 += S:1*250
+	GOTJUEL:恭順 += S:1*100
+	GOTJUEL:欲情 += S:1*250
 	IF (CFLAG:99 & 1) == 0
 		PRINTFORM %CALLNAME:TARGET%の
 		PRINTV S
@@ -920,13 +920,13 @@ IF S > 0
 	CFLAG:MASTER:2 += S
 	EXP:愛情経験 += S
 	EXP:キス経験 += S*2
-	GOTJUEL:4 += S:1*400
-	GOTJUEL:7 += S:1*200
-	GOTJUEL:8 += S:1*200
+	GOTJUEL:恭順 += S:1*400
+	GOTJUEL:習得 += S:1*200
+	GOTJUEL:恥情 += S:1*200
 	;Ｍ感覚を設定している場合快Ｍの珠取得
 	IF FLAG:62 & 4194304
 		PRINTFORMW %PALAMNAME:18%の珠＋{S:1*200}
-		GOTJUEL:18 += S:1*200
+		GOTJUEL:快Ｍ += S:1*200
 	ENDIF
 	IF (CFLAG:99 & 1) == 0
 		PRINTFORML {S*5}分もの密かな行為を終え、唇に残る感触を思い出しながら
@@ -1018,8 +1018,8 @@ IF S > 0
 	CFLAG:2 += S*5
 	CFLAG:MASTER:2 += S
 	EXP:愛情経験 += S
-	GOTJUEL:4 += S:1*400
-	GOTJUEL:8 += S:1*300
+	GOTJUEL:恭順 += S:1*400
+	GOTJUEL:恥情 += S:1*300
 	IF (CFLAG:99 & 1) == 0
 		IF TALENT:親愛 || TALENT:相愛
 			PRINTFORML {S*5}分ほど%CALLNAME:TARGET%は%CALLNAME:MASTER%を眺めていたが、

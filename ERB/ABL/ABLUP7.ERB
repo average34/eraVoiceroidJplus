@@ -83,7 +83,7 @@ SIF RESULT < 20
 	ABL:露出癖 += 1
 
 IF RESULT == 0
-	JUEL:8 -= A
+	JUEL:恥情 -= A
 ELSEIF RESULT == 20
 	CALL AUT_ROSHITU_0
 ENDIF
@@ -126,7 +126,7 @@ IF EXP:異常経験 < F
 ENDIF
 
 ;恥情の珠で上げる
-SIF JUEL:8 < A
+SIF JUEL:恥情 < A
 	I |= 1
 IF ABL:露出癖 < 2
 	;絶頂経験が必要

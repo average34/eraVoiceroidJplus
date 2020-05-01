@@ -228,13 +228,13 @@ SIF P > 6
 O = (P + RAND:6) / 2
 SIF O <= 1
 	O = 1
-JUEL:4 += L * 20
+JUEL:恭順 += L * 20
 PRINTFORML %PALAMNAME:4%の珠+{L*20}
 IF P > 0
-	JUEL:7 += L * P * (ABL:歌唱技能 / 4 + 1)
+	JUEL:習得 += L * P * (ABL:歌唱技能 / 4 + 1)
 	PRINTFORML %PALAMNAME:7%の珠+{L * P * (ABL:歌唱技能 / 4 + 1)}
 ENDIF
-JUEL:8 += N * (P+15)
+JUEL:恥情 += N * (P+15)
 PRINTFORML %PALAMNAME:8%の珠+{N * (P+15)}
 EXP:歌唱経験 += O
 PRINTFORML %EXPNAME:93% +{O}
@@ -465,11 +465,11 @@ ELSE
 	P = 50 + (ABL:歌唱技能 / 20)
 ENDIF
 O = 5 + RAND:16
-JUEL:4 += L * 10
+JUEL:恭順 += L * 10
 PRINTFORML %PALAMNAME:4%の珠+{L*10}
-JUEL:7 += L * O
+JUEL:習得 += L * O
 PRINTFORML %PALAMNAME:7%の珠+{L * O}
-JUEL:8 += N * (P+5) / 5
+JUEL:恥情 += N * (P+5) / 5
 PRINTFORML %PALAMNAME:8%の珠+{N * (P+5) / 5}
 IF ABL:歌唱技能 <= 5
 	O = 2

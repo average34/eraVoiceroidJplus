@@ -136,7 +136,7 @@ REPEAT 9999 - ABL:親密
 	ENDIF
 	LOCAL += 1
 	ABL:親密 += 1
-	JUEL:15 -= E
+	JUEL:好意 -= E
 REND
 CALL PRINT_AUT_ABLUP(0, 15, -1, -1, LOCAL)
 ;恐怖
@@ -149,7 +149,7 @@ REPEAT 9999 - ABL:親密
 	ENDIF
 	LOCAL += 1
 	ABL:親密 += 1
-	JUEL:10 -= A
+	JUEL:恐怖 -= A
 REND
 CALL PRINT_AUT_ABLUP(0, 10, -1, -1, LOCAL)
 ;恭順
@@ -162,7 +162,7 @@ REPEAT 9999 - ABL:親密
 	ENDIF
 	LOCAL += 1
 	ABL:親密 += 1
-	JUEL:4 -= B
+	JUEL:恭順 -= B
 REND
 CALL PRINT_AUT_ABLUP(0, 4, -1, -1, LOCAL)
 ;欲情
@@ -177,7 +177,7 @@ REPEAT 9999 - ABL:親密
 	ENDIF
 	LOCAL += 1
 	ABL:親密 += 1
-	JUEL:5 -= C
+	JUEL:欲情 -= C
 REND
 CALL PRINT_AUT_ABLUP(0, 5, -1, -1, LOCAL)
 ;屈服
@@ -192,7 +192,7 @@ REPEAT 9999 - ABL:親密
 	ENDIF
 	LOCAL += 1
 	ABL:親密 += 1
-	JUEL:6 -= D
+	JUEL:屈服 -= D
 REND
 CALL PRINT_AUT_ABLUP(0, 6, -1, -1, LOCAL)
 ;○欲望
@@ -206,7 +206,7 @@ CALL ISABLUP1
 	ENDIF
 	LOCAL += 1
 	ABL:欲望 += 1
-	JUEL:5 -= A
+	JUEL:欲情 -= A
 REND
 CALL PRINT_AUT_ABLUP(1, 5, -1, -1, LOCAL)
 ;優越
@@ -221,7 +221,7 @@ CALL ISABLUP1
 	ENDIF
 	LOCAL += 1
 	ABL:欲望 += 1
-	JUEL:17 -= B
+	JUEL:優越 -= B
 REND
 CALL PRINT_AUT_ABLUP(1, 17, -1, -1, LOCAL)
 ;○技巧
@@ -235,7 +235,7 @@ CALL ISABLUP2
 	ENDIF
 	LOCAL += 1
 	ABL:技巧 += 1
-	JUEL:7 -= A
+	JUEL:習得 -= A
 REND
 CALL PRINT_AUT_ABLUP(2, 7, -1, -1, LOCAL)
 ;好意
@@ -248,7 +248,7 @@ CALL ISABLUP2
 	ENDIF
 	LOCAL += 1
 	ABL:技巧 += 1
-	JUEL:15 -= B
+	JUEL:好意 -= B
 REND
 CALL PRINT_AUT_ABLUP(2, 15, -1, -1, LOCAL)
 ;優越
@@ -261,7 +261,7 @@ CALL ISABLUP2
 	ENDIF
 	LOCAL += 1
 	ABL:技巧 += 1
-	JUEL:17 -= C
+	JUEL:優越 -= C
 REND
 CALL PRINT_AUT_ABLUP(2, 17, -1, -1, LOCAL)
 ;○C
@@ -274,7 +274,7 @@ CALL ISABLUP3
 	ENDIF
 	LOCAL += 1
 	ABL:Ｃ感覚 += 1
-	JUEL:0 -= A
+	JUEL:快Ｃ -= A
 REND
 CALL PRINT_AUT_ABLUP(3, 0, -1, -1, LOCAL)
 ;○V
@@ -287,7 +287,7 @@ CALL ISABLUP4
 	ENDIF
 	LOCAL += 1
 	ABL:Ｖ感覚 += 1
-	JUEL:1 -= A
+	JUEL:快Ｖ -= A
 REND
 CALL PRINT_AUT_ABLUP(4, 1, -1, -1, LOCAL)
 ;○A
@@ -300,7 +300,7 @@ CALL ISABLUP5
 	ENDIF
 	LOCAL += 1
 	ABL:Ａ感覚 += 1
-	JUEL:2 -= A
+	JUEL:快Ａ -= A
 REND
 CALL PRINT_AUT_ABLUP(5, 2, -1, -1, LOCAL)
 ;○B
@@ -313,7 +313,7 @@ CALL ISABLUP14
 	ENDIF
 	LOCAL += 1
 	ABL:Ｂ感覚 += 1
-	JUEL:14 -= A
+	JUEL:快Ｂ -= A
 REND
 CALL PRINT_AUT_ABLUP(14, 14, -1, -1, LOCAL)
 ;○M
@@ -326,7 +326,7 @@ CALL ISABLUP17
 	ENDIF
 	LOCAL += 1
 	ABL:Ｍ感覚 += 1
-	JUEL:18 -= A
+	JUEL:快Ｍ -= A
 REND
 CALL PRINT_AUT_ABLUP(17, 18, -1, -1, LOCAL)
 ;○奉仕
@@ -340,7 +340,7 @@ CALL ISABLUP6
 	ENDIF
 	LOCAL += 1
 	ABL:奉仕精神 += 1
-	JUEL:6 -= A
+	JUEL:屈服 -= A
 REND
 CALL PRINT_AUT_ABLUP(6, 6, -1, -1, LOCAL)
 ;恭順
@@ -353,7 +353,7 @@ CALL ISABLUP6
 	ENDIF
 	LOCAL += 1
 	ABL:奉仕精神 += 1
-	JUEL:4 -= B
+	JUEL:恭順 -= B
 REND
 CALL PRINT_AUT_ABLUP(6, 4, -1, -1, LOCAL)
 ;習得
@@ -366,7 +366,7 @@ CALL ISABLUP6
 	ENDIF
 	LOCAL += 1
 	ABL:奉仕精神 += 1
-	JUEL:7 -= C
+	JUEL:習得 -= C
 REND
 CALL PRINT_AUT_ABLUP(6, 7, -1, -1, LOCAL)
 ;好意
@@ -379,7 +379,7 @@ CALL ISABLUP6
 	ENDIF
 	LOCAL += 1
 	ABL:奉仕精神 += 1
-	JUEL:15 -= F
+	JUEL:好意 -= F
 REND
 CALL PRINT_AUT_ABLUP(6, 15, -1, -1, LOCAL)
 ;○露出
@@ -392,7 +392,7 @@ CALL ISABLUP7
 	ENDIF
 	LOCAL += 1
 	ABL:露出癖 += 1
-	JUEL:8 -= A
+	JUEL:恥情 -= A
 REND
 CALL PRINT_AUT_ABLUP(7, 8, -1, -1, LOCAL)
 ;○マゾ
@@ -406,8 +406,8 @@ CALL ISABLUP8
 	ENDIF
 	LOCAL += 1
 	ABL:マゾっ気 += 1
-	JUEL:9 -= A
-	JUEL:5 -= B
+	JUEL:苦痛 -= A
+	JUEL:欲情 -= B
 REND
 CALL PRINT_AUT_ABLUP(8, 9, 5, -1, LOCAL)
 ;苦痛＋屈服
@@ -420,8 +420,8 @@ CALL ISABLUP8
 	ENDIF
 	LOCAL += 1
 	ABL:マゾっ気 += 1
-	JUEL:9 -= D
-	JUEL:6 -= E
+	JUEL:苦痛 -= D
+	JUEL:屈服 -= E
 REND
 CALL PRINT_AUT_ABLUP(8, 9, 6, -1, LOCAL)
 ;恐怖＋欲情
@@ -434,8 +434,8 @@ CALL ISABLUP8
 	ENDIF
 	LOCAL += 1
 	ABL:マゾっ気 += 1
-	JUEL:10 -= A
-	JUEL:5 -= B
+	JUEL:恐怖 -= A
+	JUEL:欲情 -= B
 REND
 CALL PRINT_AUT_ABLUP(8, 10, 5, -1, LOCAL)
 ;恥情＋恭順
@@ -448,8 +448,8 @@ CALL ISABLUP8
 	ENDIF
 	LOCAL += 1
 	ABL:マゾっ気 += 1
-	JUEL:8 -= D
-	JUEL:4 -= E
+	JUEL:恥情 -= D
+	JUEL:恭順 -= E
 REND
 CALL PRINT_AUT_ABLUP(8, 8, 4, -1, LOCAL)
 ;○サド
@@ -463,8 +463,8 @@ CALL ISABLUP15
 	ENDIF
 	LOCAL += 1
 	ABL:サドっ気 += 1
-	JUEL:5 -= A
-	JUEL:7 -= B
+	JUEL:欲情 -= A
+	JUEL:習得 -= B
 REND
 CALL PRINT_AUT_ABLUP(15, 5, 7, -1, LOCAL)
 ;欲情＋優越
@@ -477,8 +477,8 @@ CALL ISABLUP15
 	ENDIF
 	LOCAL += 1
 	ABL:サドっ気 += 1
-	JUEL:5 -= D
-	JUEL:17 -= E
+	JUEL:欲情 -= D
+	JUEL:優越 -= E
 REND
 CALL PRINT_AUT_ABLUP(15, 5, 17, -1, LOCAL)
 ;○自慰
@@ -492,9 +492,9 @@ CALL ISABLUP10
 	ENDIF
 	LOCAL += 1
 	ABL:自慰中毒 += 1
-	JUEL:5 -= A
-	JUEL:0 -= B
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｃ -= B
+	JUEL:恥情 -= C
 REND
 CALL PRINT_AUT_ABLUP(10, 5, 0, 8, LOCAL)
 ;A自慰
@@ -507,9 +507,9 @@ CALL ISABLUP10
 	ENDIF
 	LOCAL += 1
 	ABL:自慰中毒 += 1
-	JUEL:5 -= A
-	JUEL:2 -= F
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ａ -= F
+	JUEL:恥情 -= C
 REND
 CALL PRINT_AUT_ABLUP(10, 5, 2, 8, LOCAL)
 
@@ -524,9 +524,9 @@ CALL ISABLUP10
 	ENDIF
 	LOCAL++
 	ABL:自慰中毒 += 1
-	JUEL:5 -= A
-	JUEL:1 -= R
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｖ -= R
+	JUEL:恥情 -= C
 REND
 CALL PRINT_AUT_ABLUP(10, 5, 1, 8, LOCAL)
 
@@ -540,9 +540,9 @@ CALL ISABLUP10
 	ENDIF
 	LOCAL++
 	ABL:自慰中毒 += 1
-	JUEL:5 -= A
-	JUEL:14 -= S
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｂ -= S
+	JUEL:恥情 -= C
 REND
 CALL PRINT_AUT_ABLUP(10, 5, 14, 8, LOCAL)
 
@@ -557,8 +557,8 @@ CALL ISABLUP11
 	ENDIF
 	LOCAL += 1
 	ABL:精液中毒 += 1
-	JUEL:5 -= A
-	JUEL:6 -= B
+	JUEL:欲情 -= A
+	JUEL:屈服 -= B
 REND
 CALL PRINT_AUT_ABLUP(11, 5, 6, -1, LOCAL)
 ;○レズ気
@@ -571,8 +571,8 @@ CALL ISABLUP9
 	ENDIF
 	LOCAL += 1
 	ABL:レズっ気 += 1
-	JUEL:5 -= A
-	JUEL:6 -= C
+	JUEL:欲情 -= A
+	JUEL:屈服 -= C
 REND
 CALL PRINT_AUT_ABLUP(9, 5, 6, -1, LOCAL)
 ;
@@ -585,7 +585,7 @@ CALL ISABLUP9
 	ENDIF
 	LOCAL += 1
 	ABL:レズっ気 += 1
-	JUEL:0 -= D
+	JUEL:快Ｃ -= D
 REND
 CALL PRINT_AUT_ABLUP(9, 0, -1, -1, LOCAL)
 ;○レズ中毒
@@ -598,9 +598,9 @@ CALL ISABLUP12
 	ENDIF
 	LOCAL += 1
 	ABL:レズ中毒 += 1
-	JUEL:0 -= B
-	JUEL:5 -= A
-	JUEL:6 -= A
+	JUEL:快Ｃ -= B
+	JUEL:欲情 -= A
+	JUEL:屈服 -= A
 REND
 CALL PRINT_AUT_ABLUP(12, 0, 5, 6, LOCAL)
 ;○BL
@@ -613,8 +613,8 @@ CALL ISABLUP13
 	ENDIF
 	LOCAL += 1
 	ABL:ＢＬっ気 += 1
-	JUEL:5 -= A
-	JUEL:6 -= C
+	JUEL:欲情 -= A
+	JUEL:屈服 -= C
 REND
 CALL PRINT_AUT_ABLUP(13, 5, 6, -1, LOCAL)
 ;
@@ -627,7 +627,7 @@ CALL ISABLUP13
 	ENDIF
 	LOCAL += 1
 	ABL:ＢＬっ気 += 1
-	JUEL:0 -= D
+	JUEL:快Ｃ -= D
 REND
 CALL PRINT_AUT_ABLUP(13, 0, -1, -1, LOCAL)
 ;○金銭
@@ -640,7 +640,7 @@ CALL ISABLUP89
 	ENDIF
 	LOCAL += 1
 	ABL:金銭感覚 += 1
-	JUEL:16 -= A
+	JUEL:生活 -= A
 REND
 CALL PRINT_AUT_ABLUP(89, 16, -1, -1, LOCAL)
 ;
@@ -653,7 +653,7 @@ CALL ISABLUP89
 	ENDIF
 	LOCAL += 1
 	ABL:金銭感覚 += 1
-	JUEL:7 -= C
+	JUEL:習得 -= C
 REND
 CALL PRINT_AUT_ABLUP(89, 7, -1, -1, LOCAL)
 ;○料理
@@ -666,7 +666,7 @@ CALL ISABLUP90
 	ENDIF
 	LOCAL += 1
 	ABL:料理技能 += 1
-	JUEL:16 -= A
+	JUEL:生活 -= A
 REND
 CALL PRINT_AUT_ABLUP(90, 16, -1, -1, LOCAL)
 ;
@@ -679,7 +679,7 @@ CALL ISABLUP90
 	ENDIF
 	LOCAL += 1
 	ABL:料理技能 += 1
-	JUEL:7 -= C
+	JUEL:習得 -= C
 REND
 CALL PRINT_AUT_ABLUP(90, 7, -1, -1, LOCAL)
 ;○撮影
@@ -692,7 +692,7 @@ CALL ISABLUP91
 	ENDIF
 	LOCAL += 1
 	ABL:撮影技能 += 1
-	JUEL:7 -= A
+	JUEL:習得 -= A
 REND
 CALL PRINT_AUT_ABLUP(91, 7, -1, -1, LOCAL)
 ;○歌唱
@@ -705,7 +705,7 @@ CALL ISABLUP92
 	ENDIF
 	LOCAL += 1
 	ABL:歌唱技能 += 1
-	JUEL:7 -= A
+	JUEL:習得 -= A
 REND
 CALL PRINT_AUT_ABLUP(92, 7, -1, -1, LOCAL)
 

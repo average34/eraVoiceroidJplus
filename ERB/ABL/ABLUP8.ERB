@@ -228,17 +228,17 @@ SIF RESULT < 20
 	ABL:マゾっ気 += 1
 
 IF RESULT == 0
-	JUEL:9 -= A
-	JUEL:5 -= B
+	JUEL:苦痛 -= A
+	JUEL:欲情 -= B
 ELSEIF RESULT == 1
-	JUEL:9 -= D
-	JUEL:6 -= E
+	JUEL:苦痛 -= D
+	JUEL:屈服 -= E
 ELSEIF RESULT == 2
-	JUEL:10 -= A
-	JUEL:5 -= B
+	JUEL:恐怖 -= A
+	JUEL:欲情 -= B
 ELSEIF RESULT == 3
-	JUEL:8 -= D
-	JUEL:4 -= E
+	JUEL:恥情 -= D
+	JUEL:恭順 -= E
 ELSEIF RESULT == 20
 	CALL AUT_MAZO_0
 ELSEIF RESULT == 21
@@ -295,10 +295,10 @@ ENDIF
 
 IF B > 0
 	;苦痛の珠で上げる
-	SIF JUEL:9 < A
+	SIF JUEL:苦痛 < A
 		I |= 1
 	;欲情の珠で上げる
-	SIF JUEL:5 < B
+	SIF JUEL:欲情 < B
 		I |= 1
 	;苦痛快楽経験が必要な場合
 	SIF EXP:苦痛快楽経験 < C
@@ -311,10 +311,10 @@ ENDIF
 
 IF D > 0
 	;苦痛の珠で上げる
-	SIF JUEL:9 < D
+	SIF JUEL:苦痛 < D
 		J |= 1
 	;屈服の珠で上げる
-	SIF JUEL:6 < E
+	SIF JUEL:屈服 < E
 		J |= 1
 	;この場合苦痛快楽経験が必要なことあり
 	SIF EXP:苦痛快楽経験 < C
@@ -328,10 +328,10 @@ IF D > 0
 	ENDIF
 	
 	;恥情の珠で上げる
-	SIF JUEL:8 < D
+	SIF JUEL:恥情 < D
 		L |= 1
 	;恭順の珠で上げる
-	SIF JUEL:4 < E
+	SIF JUEL:恭順 < E
 		L |= 1
 	;この場合絶頂経験が１以上必要
 	SIF EXP:絶頂経験 < 1
@@ -344,10 +344,10 @@ ENDIF
 
 IF B > 0
 	;恐怖の珠で上げる
-	SIF JUEL:10 < A
+	SIF JUEL:恐怖 < A
 		K |= 1
 	;欲情の珠で上げる
-	SIF JUEL:5 < B
+	SIF JUEL:欲情 < B
 		K |= 1
 
 	IF K == 0

@@ -102,9 +102,9 @@ SIF RESULT < 20
 	ABL:欲望 += 1
 
 IF RESULT == 0
-	JUEL:5 -= A
+	JUEL:欲情 -= A
 ELSEIF RESULT == 1
-	JUEL:17 -= B
+	JUEL:優越 -= B
 ELSEIF RESULT == 20
 	CALL AUT_YOKUBOU_0
 ELSEIF RESULT == 21
@@ -146,7 +146,7 @@ IF C && EXP:異常経験 < 5
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	I |= 1
 
 IF I == 0
@@ -155,7 +155,7 @@ ENDIF
 
 IF B > 0
 	;優越の珠で上げる
-	SIF JUEL:17 < B
+	SIF JUEL:優越 < B
 		J |= 1
 
 	IF J == 0

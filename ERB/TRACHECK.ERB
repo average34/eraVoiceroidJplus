@@ -6,17 +6,17 @@ SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
 	RETURN 0
 
 ;オーバーフローチェック。
-;本来の処理はA = UP:0 + UP:1 + UP:2 + UP:14
-IF UP:0 / 10 >= 10000000
+;本来の処理はA = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ
+IF UP:快Ｃ / 10 >= 10000000
 	A = 100000000
-ELSEIF UP:0 / 10 + UP:1 / 10 >= 10000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 >= 10000000
 	A = 100000000
-ELSEIF UP:0 / 10 + UP:1 / 10 + UP:2 / 10 >= 10000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 + UP:快Ａ / 10 >= 10000000
 	A = 100000000
-ELSEIF UP:0 / 10 + UP:1 / 10 + UP:2 / 10 + UP:14 / 10>= 10000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 + UP:快Ａ / 10 + UP:快Ｂ / 10>= 10000000
 	A = 100000000
 ELSE
-	A = UP:0 + UP:1 + UP:2 + UP:14 +UP:18
+	A = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ +UP:快Ｍ
 ENDIF
 
 ;自制心
@@ -191,17 +191,17 @@ SIF TALENT:母乳体質 == 0
 	RETURN 0
 
 ;オーバーフローチェック。
-;本来の処理はA = UP:0 / 5 + UP:1 / 5 + UP:2 / 5 + UP:14 * 3
-IF UP:0 / 10 >= 1000000
+;本来の処理はA = UP:快Ｃ / 5 + UP:快Ｖ / 5 + UP:快Ａ / 5 + UP:快Ｂ * 3
+IF UP:快Ｃ / 10 >= 1000000
 	A = 10000000
-ELSEIF UP:0 / 10 + UP:1 / 10 >= 1000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 >= 1000000
 	A = 10000000
-ELSEIF UP:0 / 10 + UP:1 / 10 + UP:2 / 10 >= 1000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 + UP:快Ａ / 10 >= 1000000
 	A = 10000000
-ELSEIF UP:0 / 10 + UP:1 / 10 + UP:2 / 10 + UP:14 / 10>= 1000000
+ELSEIF UP:快Ｃ / 10 + UP:快Ｖ / 10 + UP:快Ａ / 10 + UP:快Ｂ / 10>= 1000000
 	A = 10000000
 ELSE
-	A = UP:0 / 5 + UP:1 / 5 + UP:2 / 5 + UP:14 * 3 +UP:18 / 5
+	A = UP:快Ｃ / 5 + UP:快Ｖ / 5 + UP:快Ａ / 5 + UP:快Ｂ * 3 +UP:快Ｍ / 5
 ENDIF
 
 ;自制心
@@ -840,52 +840,52 @@ ENDIF
 @UP_TALENT_CVA_CHECK
 ;媚薬
 IF TEQUIP:21 && TFLAG:201 != 1
-	TIMES UP:0 , 2.00
-	TIMES UP:1 , 2.00
-	TIMES UP:2 , 2.00
-	TIMES UP:14 , 2.00
-	TIMES UP:18 , 2.00
+	TIMES UP:快Ｃ , 2.00
+	TIMES UP:快Ｖ , 2.00
+	TIMES UP:快Ａ , 2.00
+	TIMES UP:快Ｂ , 2.00
+	TIMES UP:快Ｍ , 2.00
 ENDIF
 
 ;利尿剤
 IF TEQUIP:22 && TFLAG:201 != 1
-	TIMES UP:0 , 0.70
-	TIMES UP:1 , 0.70
-	TIMES UP:2 , 0.70
-	TIMES UP:14 , 0.70
-	TIMES UP:18 , 0.70
+	TIMES UP:快Ｃ , 0.70
+	TIMES UP:快Ｖ , 0.70
+	TIMES UP:快Ａ , 0.70
+	TIMES UP:快Ｂ , 0.70
+	TIMES UP:快Ｍ , 0.70
 ENDIF
 
 ;自制心
 IF TALENT:自制心 && TFLAG:201 != 1
-	TIMES UP:0 , 0.30
-	TIMES UP:1 , 0.50
-	TIMES UP:2 , 0.70
-	TIMES UP:14 , 0.30
-	TIMES UP:18 , 0.30
+	TIMES UP:快Ｃ , 0.30
+	TIMES UP:快Ｖ , 0.50
+	TIMES UP:快Ａ , 0.70
+	TIMES UP:快Ｂ , 0.30
+	TIMES UP:快Ｍ , 0.30
 ENDIF
 
 ;オトコ
 IF TALENT:オトコ && TFLAG:201 != 1
-	TIMES UP:2 , 1.30
+	TIMES UP:快Ａ , 1.30
 ENDIF
 
 ;Lunatic
 IF TALENT:170 && TFLAG:201 != 1
-	TIMES UP:0 , 0.40
-	TIMES UP:1 , 0.40
-	TIMES UP:2 , 0.40
-	TIMES UP:14 , 0.40
-	TIMES UP:18 , 0.40
+	TIMES UP:快Ｃ , 0.40
+	TIMES UP:快Ｖ , 0.40
+	TIMES UP:快Ａ , 0.40
+	TIMES UP:快Ｂ , 0.40
+	TIMES UP:快Ｍ , 0.40
 ENDIF
 
 ;淫蟲
 IF TEQUIP:92 == 1 && TFLAG:201 != 1
-	TIMES UP:0 , 2.00
-	TIMES UP:1 , 2.00
-	TIMES UP:2 , 2.00
-	TIMES UP:14 , 2.00
-	TIMES UP:18 , 2.00
+	TIMES UP:快Ｃ , 2.00
+	TIMES UP:快Ｖ , 2.00
+	TIMES UP:快Ａ , 2.00
+	TIMES UP:快Ｂ , 2.00
+	TIMES UP:快Ｍ , 2.00
 ENDIF
 
 
@@ -896,358 +896,358 @@ ENDIF
 
 ;媚薬
 IF TEQUIP:21
-	TIMES UP:4 , 1.20
-	TIMES UP:5 , 2.00
-	TIMES UP:6 , 1.20
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.50
+	TIMES UP:恭順 , 1.20
+	TIMES UP:欲情 , 2.00
+	TIMES UP:屈服 , 1.20
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.50
 ENDIF
 
 ;荊
 IF TEQUIP:72 == 1
-	TIMES UP:9 , 2.00
-	TIMES UP:10 , 2.00
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.50
+	TIMES UP:苦痛 , 2.00
+	TIMES UP:恐怖 , 2.00
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.50
 ENDIF
 
 ;蜘蛛糸
 IF TEQUIP:73 == 1
-	TIMES UP:8 , 1.70
-	TIMES UP:9 , 0.80
-	TIMES UP:10 , 2.00
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.50
+	TIMES UP:恥情 , 1.70
+	TIMES UP:苦痛 , 0.80
+	TIMES UP:恐怖 , 2.00
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.50
 ENDIF
 
 ;淫蟲
 IF TEQUIP:92 == 1
-	TIMES UP:5 , 2.00
-	TIMES UP:6 , 1.20
-	TIMES UP:10 , 2.00
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.50
+	TIMES UP:欲情 , 2.00
+	TIMES UP:屈服 , 1.20
+	TIMES UP:恐怖 , 2.00
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.50
 ENDIF
 
 
 ;利尿剤
 IF TEQUIP:22
-	TIMES UP:4 , 0.80
-	TIMES UP:5 , 0.80
-	TIMES UP:6 , 1.50
-	TIMES UP:11 , 1.50
-	TIMES UP:12 , 1.20
-	TIMES UP:13 , 1.50
+	TIMES UP:恭順 , 0.80
+	TIMES UP:欲情 , 0.80
+	TIMES UP:屈服 , 1.50
+	TIMES UP:反感 , 1.50
+	TIMES UP:不快 , 1.20
+	TIMES UP:抑鬱 , 1.50
 ENDIF
 
 ;臆病
 IF TALENT:臆病
-	TIMES UP:10 , 2.00
-	TIMES UP:11 , 0.50
-	TIMES UP:13 , 0.25
+	TIMES UP:恐怖 , 2.00
+	TIMES UP:反感 , 0.50
+	TIMES UP:抑鬱 , 0.25
 ENDIF
 ;反抗的
 IF TALENT:反抗的
-	TIMES UP:4 , 0.25
-	TIMES UP:5 , 0.50
-	TIMES UP:11 , 1.50
-	TIMES UP:15 , 0.50
-	TIMES UP:17 , 1.10
+	TIMES UP:恭順 , 0.25
+	TIMES UP:欲情 , 0.50
+	TIMES UP:反感 , 1.50
+	TIMES UP:好意 , 0.50
+	TIMES UP:優越 , 1.10
 ENDIF
 ;気丈
 IF TALENT:気丈
-	TIMES UP:4 , 0.30
-	TIMES UP:5 , 0.75
-	TIMES UP:10 , 0.80
-	TIMES UP:11 , 2.00
-	TIMES UP:13 , 2.00
-	TIMES UP:15 , 0.80
+	TIMES UP:恭順 , 0.30
+	TIMES UP:欲情 , 0.75
+	TIMES UP:恐怖 , 0.80
+	TIMES UP:反感 , 2.00
+	TIMES UP:抑鬱 , 2.00
+	TIMES UP:好意 , 0.80
 ENDIF
 ;素直
 IF TALENT:素直
-	SIF UP:4 < 999999999
-		TIMES UP:4 , 2.00
-	TIMES UP:11 , 0.60
-	SIF UP:15 < 999999999
-		TIMES UP:15 , 1.50
+	SIF UP:恭順 < 999999999
+		TIMES UP:恭順 , 2.00
+	TIMES UP:反感 , 0.60
+	SIF UP:好意 < 999999999
+		TIMES UP:好意 , 1.50
 ENDIF
 ;大人しい
 IF TALENT:大人しい
-	TIMES UP:11 , 0.30
+	TIMES UP:反感 , 0.30
 ENDIF
 ;プライド高い
 IF TALENT:プライド高い
-	TIMES UP:6 , 0.50
-	TIMES UP:10 , 0.60
-	TIMES UP:11 , 1.20
-	TIMES UP:17 , 1.50
+	TIMES UP:屈服 , 0.50
+	TIMES UP:恐怖 , 0.60
+	TIMES UP:反感 , 1.20
+	TIMES UP:優越 , 1.50
 ENDIF
 ;プライド低い
 IF TALENT:プライド低い
-	TIMES UP:6 , 2.00
-	TIMES UP:10 , 1.50
-	TIMES UP:11 , 0.80
-	TIMES UP:17 , 0.80
+	TIMES UP:屈服 , 2.00
+	TIMES UP:恐怖 , 1.50
+	TIMES UP:反感 , 0.80
+	TIMES UP:優越 , 0.80
 ENDIF
 
 ;無関心
 IF TALENT:無関心
-	TIMES UP:4 , 0.50
-	TIMES UP:5 , 0.50
-	TIMES UP:6 , 0.50
-	TIMES UP:10 , 0.80
-	TIMES UP:11 , 0.80
-	TIMES UP:15 , 0.70
-	TIMES UP:16 , 0.70
+	TIMES UP:恭順 , 0.50
+	TIMES UP:欲情 , 0.50
+	TIMES UP:屈服 , 0.50
+	TIMES UP:恐怖 , 0.80
+	TIMES UP:反感 , 0.80
+	TIMES UP:好意 , 0.70
+	TIMES UP:生活 , 0.70
 ENDIF
 ;感情乏しい
 IF TALENT:感情乏しい
-	TIMES UP:4 , 0.60
-	TIMES UP:5 , 0.60
-	TIMES UP:6 , 0.60
-	TIMES UP:8 , 0.60
-	TIMES UP:10 , 0.60
-	TIMES UP:11 , 0.60
-	TIMES UP:12 , 0.60
-	TIMES UP:13 , 0.60
-	TIMES UP:15 , 0.80
-	TIMES UP:16 , 0.80
+	TIMES UP:恭順 , 0.60
+	TIMES UP:欲情 , 0.60
+	TIMES UP:屈服 , 0.60
+	TIMES UP:恥情 , 0.60
+	TIMES UP:恐怖 , 0.60
+	TIMES UP:反感 , 0.60
+	TIMES UP:不快 , 0.60
+	TIMES UP:抑鬱 , 0.60
+	TIMES UP:好意 , 0.80
+	TIMES UP:生活 , 0.80
 ENDIF
 ;好奇心
 IF TALENT:好奇心
-	TIMES UP:7 , 1.20
+	TIMES UP:習得 , 1.20
 ENDIF
 ;保守的
 IF TALENT:保守的
-	TIMES UP:7 , 0.80
+	TIMES UP:習得 , 0.80
 ENDIF
 ;楽観的
 IF TALENT:楽観的
-	TIMES UP:13 , 0.30
+	TIMES UP:抑鬱 , 0.30
 ENDIF
 ;悲観的
 IF TALENT:悲観的
-	TIMES UP:13 , 2.50
+	TIMES UP:抑鬱 , 2.50
 ENDIF
 
 ;抑圧
 IF TALENT:抑圧
-	TIMES UP:5 , 0.50
-	TIMES UP:11 , 2.00
-	TIMES UP:13 , 1.50
+	TIMES UP:欲情 , 0.50
+	TIMES UP:反感 , 2.00
+	TIMES UP:抑鬱 , 1.50
 ENDIF
 ;解放
 IF TALENT:解放
-	TIMES UP:5 , 2.00
-	TIMES UP:6 , 2.00
+	TIMES UP:欲情 , 2.00
+	TIMES UP:屈服 , 2.00
 ENDIF
 ;抵抗
 IF TALENT:抵抗
-	TIMES UP:5 , 0.50
-	TIMES UP:11 , 2.00
+	TIMES UP:欲情 , 0.50
+	TIMES UP:反感 , 2.00
 ENDIF
 
 ;痛みに弱い
 IF TALENT:痛みに弱い
-	TIMES UP:10 , 2.00
-	TIMES UP:11 , 1.50
+	TIMES UP:恐怖 , 2.00
+	TIMES UP:反感 , 1.50
 ENDIF
 ;痛みに強い
 IF TALENT:痛みに強い
-	TIMES UP:10 , 0.50
-	TIMES UP:11 , 0.75
+	TIMES UP:恐怖 , 0.50
+	TIMES UP:反感 , 0.75
 ENDIF
 
 ;習得早い
 IF TALENT:習得早い
-	TIMES UP:7 , 2.00
-	TIMES UP:16 , 1.50
+	TIMES UP:習得 , 2.00
+	TIMES UP:生活 , 1.50
 ENDIF
 ;習得遅い
 IF TALENT:習得遅い
-	TIMES UP:7 , 0.50
-	TIMES UP:16 , 0.50
+	TIMES UP:習得 , 0.50
+	TIMES UP:生活 , 0.50
 ENDIF
 
 ;献身的
 IF TALENT:献身的
-	TIMES UP:6 , 2.00
-	TIMES UP:16 , 1.20
+	TIMES UP:屈服 , 2.00
+	TIMES UP:生活 , 1.20
 ENDIF
 
 ;快感に素直
 SIF TALENT:快感に素直
-	TIMES UP:5 , 2.00
+	TIMES UP:欲情 , 2.00
 ;快感の否定
 SIF TALENT:快感の否定
-	TIMES UP:5 , 0.50
+	TIMES UP:欲情 , 0.50
 
 ;サド
 IF TALENT:サド
-	TIMES UP:17 , 2.00
+	TIMES UP:優越 , 2.00
 ENDIF
 
 ;小悪魔
 IF TALENT:小悪魔
-	TIMES UP:17 , 1.50
+	TIMES UP:優越 , 1.50
 ENDIF
 
 ;恋慕
 IF TALENT:恋慕 && ASSIPLAY == 0
-	TIMES UP:6 , 1.50
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.75
-	SIF UP:15 < 999999999
-		TIMES UP:15 , 1.20
-	TIMES UP:16 , 1.50
+	TIMES UP:屈服 , 1.50
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.75
+	SIF UP:好意 < 999999999
+		TIMES UP:好意 , 1.20
+	TIMES UP:生活 , 1.50
 ENDIF
 
 ;親愛
 IF TALENT:親愛 && ASSIPLAY == 0
-	SIF UP:4 < 999999999
-		TIMES UP:4 , 2.00
-	TIMES UP:6 , 3.00
-	TIMES UP:11 , 0.20
-	TIMES UP:12 , 0.20
-	TIMES UP:13 , 0.20
-	SIF UP:15 < 999999999
-		TIMES UP:15 , 2.00
-	TIMES UP:16 , 2.50
+	SIF UP:恭順 < 999999999
+		TIMES UP:恭順 , 2.00
+	TIMES UP:屈服 , 3.00
+	TIMES UP:反感 , 0.20
+	TIMES UP:不快 , 0.20
+	TIMES UP:抑鬱 , 0.20
+	SIF UP:好意 < 999999999
+		TIMES UP:好意 , 2.00
+	TIMES UP:生活 , 2.50
 ENDIF
 
 ;恋人
 IF TALENT:恋人 && ASSIPLAY == 0
-	TIMES UP:6 , 1.50
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.75
-	SIF UP:15 < 999999999
-		TIMES UP:15 , 1.30
-	TIMES UP:16 , 1.50
+	TIMES UP:屈服 , 1.50
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.75
+	SIF UP:好意 < 999999999
+		TIMES UP:好意 , 1.30
+	TIMES UP:生活 , 1.50
 ENDIF
 
 
 ;妄信
 IF TALENT:妄信
-	TIMES UP:6 , 1.20
-	TIMES UP:11 , 0.95
+	TIMES UP:屈服 , 1.20
+	TIMES UP:反感 , 0.95
 ENDIF
 
 ;相愛
 IF TALENT:相愛
-	TIMES UP:11 , 0.50
-	TIMES UP:12 , 0.50
-	TIMES UP:13 , 0.50
+	TIMES UP:反感 , 0.50
+	TIMES UP:不快 , 0.50
+	TIMES UP:抑鬱 , 0.50
 ENDIF
 
 
 ;服従
 IF TALENT:服従
-	TIMES UP:6 , 2.00
-	TIMES UP:11 , 0.50
+	TIMES UP:屈服 , 2.00
+	TIMES UP:反感 , 0.50
 ENDIF
 ;烙印
 IF TALENT:烙印
-	TIMES UP:6 , 2.00
-	TIMES UP:8 , 2.00
-	TIMES UP:11 , 0.30
-	TIMES UP:12 , 0.30
+	TIMES UP:屈服 , 2.00
+	TIMES UP:恥情 , 2.00
+	TIMES UP:反感 , 0.30
+	TIMES UP:不快 , 0.30
 ENDIF
 ;隷属
 IF TALENT:隷属
-	SIF UP:4 < 999999999
-		TIMES UP:4 , 1.80
-	TIMES UP:6 , 2.50
-	TIMES UP:11 , 0.25
-	TIMES UP:12 , 0.25
-	TIMES UP:13 , 0.20
+	SIF UP:恭順 < 999999999
+		TIMES UP:恭順 , 1.80
+	TIMES UP:屈服 , 2.50
+	TIMES UP:反感 , 0.25
+	TIMES UP:不快 , 0.25
+	TIMES UP:抑鬱 , 0.20
 ENDIF
 
 
 ;妖狐
 SIF TALENT:PLAYER:妖狐
-	TIMES UP:8 , 2.50
+	TIMES UP:恥情 , 2.50
 
 ;成功判定
 IF TFLAG:18 == -1
-	TIMES UP:11 , 1.30
-	TIMES UP:12 , 1.30
-	TIMES UP:13 , 1.30
-	TIMES UP:15 , 0.80
+	TIMES UP:反感 , 1.30
+	TIMES UP:不快 , 1.30
+	TIMES UP:抑鬱 , 1.30
+	TIMES UP:好意 , 0.80
 ELSEIF TFLAG:18 == 1
-	TIMES UP:11 , 0.10
-	TIMES UP:12 , 0.10
-	TIMES UP:13 , 0.10
-	SIF UP:4 < 999999999
-		TIMES UP:4 , 1.50
-	TIMES UP:5 , 3.00
-	SIF UP:15 < 999999999
-		TIMES UP:15 , 1.50
-	TIMES UP:16 , 1.50
-	TIMES UP:17 , 1.75
+	TIMES UP:反感 , 0.10
+	TIMES UP:不快 , 0.10
+	TIMES UP:抑鬱 , 0.10
+	SIF UP:恭順 < 999999999
+		TIMES UP:恭順 , 1.50
+	TIMES UP:欲情 , 3.00
+	SIF UP:好意 < 999999999
+		TIMES UP:好意 , 1.50
+	TIMES UP:生活 , 1.50
+	TIMES UP:優越 , 1.75
 ENDIF
 
 ;Lunaticモード
 IF FLAG:5 == 3 || FLAG:5 == 4 || FLAG:5 == 10
-	TIMES UP:4 , 0.90
-	TIMES UP:5 , 0.90
-	TIMES UP:6 , 0.90
-	TIMES UP:10 , 0.90
-	TIMES UP:11 , 1.20
-	TIMES UP:12 , 1.20
-	TIMES UP:13 , 1.20
-	TIMES UP:15 , 0.90
-	TIMES UP:16 , 0.90
-	TIMES UP:17 , 0.90
+	TIMES UP:恭順 , 0.90
+	TIMES UP:欲情 , 0.90
+	TIMES UP:屈服 , 0.90
+	TIMES UP:恐怖 , 0.90
+	TIMES UP:反感 , 1.20
+	TIMES UP:不快 , 1.20
+	TIMES UP:抑鬱 , 1.20
+	TIMES UP:好意 , 0.90
+	TIMES UP:生活 , 0.90
+	TIMES UP:優越 , 0.90
 ENDIF
 
 ;反発感情
 IF MARK:反発感情 == 3
-	TIMES UP:4 , 0.10
-	TIMES UP:15 , 0.33
-	TIMES UP:17 , 2.00
+	TIMES UP:恭順 , 0.10
+	TIMES UP:好意 , 0.33
+	TIMES UP:優越 , 2.00
 ELSEIF MARK:反発感情 == 2
-	TIMES UP:4 , 0.40
-	TIMES UP:15 , 0.66
-	TIMES UP:17 , 1.70
+	TIMES UP:恭順 , 0.40
+	TIMES UP:好意 , 0.66
+	TIMES UP:優越 , 1.70
 ELSEIF MARK:反発感情 == 1
-	TIMES UP:4 , 0.70
-	TIMES UP:15 , 0.80
-	TIMES UP:17 , 1.50
+	TIMES UP:恭順 , 0.70
+	TIMES UP:好意 , 0.80
+	TIMES UP:優越 , 1.50
 ENDIF
 
 
 ;異常経験(＝淫乱度合とみなす)による、抑鬱の軽減
 ;でもゆかり様だけはなかなか軽減しない
 IF EXP:異常経験 <= 0
-	TIMES UP:13 , 1.30
+	TIMES UP:抑鬱 , 1.30
 ELSEIF EXP:異常経験 < (10 + TALENT:eraVoiceroidJも支配する程度の能力 * 255)
-	TIMES UP:13 , 1.10
+	TIMES UP:抑鬱 , 1.10
 ELSEIF EXP:異常経験 < (50 + TALENT:eraVoiceroidJも支配する程度の能力 * 500)
-	TIMES UP:13 , 0.90
+	TIMES UP:抑鬱 , 0.90
 ELSEIF EXP:異常経験 < (100 + TALENT:eraVoiceroidJも支配する程度の能力 * 1000)
-	TIMES UP:13 , 0.70
+	TIMES UP:抑鬱 , 0.70
 ELSEIF EXP:異常経験 < (200 + TALENT:eraVoiceroidJも支配する程度の能力 * 2000)
-	TIMES UP:13 , 0.40
+	TIMES UP:抑鬱 , 0.40
 ELSEIF EXP:異常経験 < (400 + TALENT:eraVoiceroidJも支配する程度の能力 * 4000)
-	TIMES UP:13 , 0.10
+	TIMES UP:抑鬱 , 0.10
 ELSEIF EXP:異常経験 < (700 + TALENT:eraVoiceroidJも支配する程度の能力 * 7000)
-	TIMES UP:13 , 0.01
+	TIMES UP:抑鬱 , 0.01
 ELSEIF EXP:異常経験 < (1500 + TALENT:eraVoiceroidJも支配する程度の能力 * 15000)
-	TIMES UP:13 , 0.001
+	TIMES UP:抑鬱 , 0.001
 ELSE
-	TIMES UP:13 , 0.0001
+	TIMES UP:抑鬱 , 0.0001
 ENDIF
 
 ;調教者の技巧による反感と不快の軽減処理
-IF ABL:PLAYER:技巧 >= 10 && ABL:PLAYER:技巧 <= 99 && (UP:0 + UP:1 + UP:2 + UP:14 + UP:18) > 0
-	UP:11 = UP:11 * (110 - ABL:PLAYER:技巧) / 100
-	UP:12 = UP:12 * (110 - ABL:PLAYER:技巧) / 100
-ELSEIF ABL:PLAYER:技巧 >= 100 && ABL:PLAYER:技巧 <= 999 && (UP:0 + UP:1 + UP:2 + UP:14 + UP:18) > 0
-	UP:11 = UP:11 * (1100 - ABL:PLAYER:技巧) / 10000
-	UP:12 = UP:12 * (1100 - ABL:PLAYER:技巧) / 10000
-ELSEIF ABL:PLAYER:技巧 >= 1000 && (UP:0 + UP:1 + UP:2 + UP:14 + UP:18) > 0
-	UP:11 = UP:11 / 100
-	UP:12 = UP:12 / 100
+IF ABL:PLAYER:技巧 >= 10 && ABL:PLAYER:技巧 <= 99 && (UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ + UP:快Ｍ) > 0
+	UP:反感 = UP:反感 * (110 - ABL:PLAYER:技巧) / 100
+	UP:不快 = UP:不快 * (110 - ABL:PLAYER:技巧) / 100
+ELSEIF ABL:PLAYER:技巧 >= 100 && ABL:PLAYER:技巧 <= 999 && (UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ + UP:快Ｍ) > 0
+	UP:反感 = UP:反感 * (1100 - ABL:PLAYER:技巧) / 10000
+	UP:不快 = UP:不快 * (1100 - ABL:PLAYER:技巧) / 10000
+ELSEIF ABL:PLAYER:技巧 >= 1000 && (UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ + UP:快Ｍ) > 0
+	UP:反感 = UP:反感 / 100
+	UP:不快 = UP:不快 / 100
 ENDIF
 
 ;-------------------------------------------------
@@ -1261,7 +1261,7 @@ ENDIF
 ;反発感情
 ;-------------------------------------------------
 VARSET LOCAL, 0
-A = UP:11 + UP:12
+A = UP:反感 + UP:不快
 IF A >= 500 && A < 1200 && MARK:4 <= 0 && TFLAG:150 == 0
 	LOCAL = 1
 ELSEIF A >= 1200 && A < 3000 && MARK:4 <= 1 && TFLAG:150 == 0
@@ -1309,13 +1309,13 @@ TFLAG:150 = 0
 ;苦痛依存
 ;-------------------------------------------------
 VARSET LOCAL, 0
-IF UP:9 >= 500 && UP:9 < 1500 && MARK:苦痛依存 <= 0
+IF UP:苦痛 >= 500 && UP:苦痛 < 1500 && MARK:苦痛依存 <= 0
 	LOCAL = 1
 	LOCAL:1 = 1
-ELSEIF UP:9 >= 1500 && UP:9 < 3000 && MARK:苦痛依存 <= 1
+ELSEIF UP:苦痛 >= 1500 && UP:苦痛 < 3000 && MARK:苦痛依存 <= 1
 	LOCAL = 2
 	LOCAL:1 = 3
-ELSEIF UP:9 >= 3000 && MARK:苦痛依存 <= 2
+ELSEIF UP:苦痛 >= 3000 && MARK:苦痛依存 <= 2
 	LOCAL = 3
 	LOCAL:1 = 5
 ENDIF
@@ -1353,7 +1353,7 @@ SIF LOCAL > 0
 ;快楽依存
 ;-------------------------------------------------
 VARSET LOCAL, 0
-A = UP:0 + UP:1 + UP:2 + UP:14 + UP:18
+A = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ + UP:快Ｍ
 
 IF A >= 500 && A < 1500 && MARK:快楽依存 <= 0
 	LOCAL = 1
@@ -1443,7 +1443,7 @@ IF ABL:欲望 >= 6 && (TALENT:抑圧 || TALENT:抵抗)
 	PRINTL を失った
 	
 	PRINTW 否定の珠が半分になった
-	JUEL:100 /= 2
+	JUEL:否定 /= 2
 
 	TFLAG:25 = 1
 ENDIF
@@ -1465,18 +1465,18 @@ ENDIF
 ;-------------------------------------------------
 @EXP_GOT_CHECK
 
-A = UP:0 + UP:1 + UP:2 + UP:14 +UP:18
+A = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ +UP:快Ｍ
 
 ;奉仕系である、奉仕快楽のチェック
 E = 0
 
-IF UP:7 < 100
+IF UP:習得 < 100
 	A = 0
-ELSEIF UP:7 < 300
+ELSEIF UP:習得 < 300
 	A *= 1
-ELSEIF UP:7 < 700
+ELSEIF UP:習得 < 700
 	A *= 2
-ELSEIF UP:7 < 1500
+ELSEIF UP:習得 < 1500
 	A *= 3
 ELSE
 	A *= 4
@@ -1485,36 +1485,36 @@ ENDIF
 IF TFLAG:100
 	IF A >= 1000000
 		E = 64
-		TIMES UP:11 , 0.55
-		TIMES UP:12 , 0.10
+		TIMES UP:反感 , 0.55
+		TIMES UP:不快 , 0.10
 	ELSEIF A >= 200000
 		E = 32
-		TIMES UP:11 , 0.60
-		TIMES UP:12 , 0.20
+		TIMES UP:反感 , 0.60
+		TIMES UP:不快 , 0.20
 	ELSEIF A >= 12000
 		E = 16
-		TIMES UP:11 , 0.65
-		TIMES UP:12 , 0.30
+		TIMES UP:反感 , 0.65
+		TIMES UP:不快 , 0.30
 	ELSEIF A >= 8000
 		E = 12
-		TIMES UP:11 , 0.70
-		TIMES UP:12 , 0.40
+		TIMES UP:反感 , 0.70
+		TIMES UP:不快 , 0.40
 	ELSEIF A >= 5000
 		E = 8
-		TIMES UP:11 , 0.75
-		TIMES UP:12 , 0.50
+		TIMES UP:反感 , 0.75
+		TIMES UP:不快 , 0.50
 	ELSEIF A >= 3000
 		E = 4
-		TIMES UP:11 , 0.80
-		TIMES UP:12 , 0.60
+		TIMES UP:反感 , 0.80
+		TIMES UP:不快 , 0.60
 	ELSEIF A >= 2000
 		E = 2
-		TIMES UP:11 , 0.85
-		TIMES UP:12 , 0.70
+		TIMES UP:反感 , 0.85
+		TIMES UP:不快 , 0.70
 	ELSEIF A >= 1000
 		E = 1
-		TIMES UP:11 , 0.90
-		TIMES UP:12 , 0.80
+		TIMES UP:反感 , 0.90
+		TIMES UP:不快 , 0.80
 	ENDIF
 	
 	IF E
@@ -1526,34 +1526,34 @@ IF TFLAG:100
 ENDIF
 
 ;苦痛快楽のチェック
-A = UP:0 + UP:1 + UP:2 + UP:14 + UP:18
+A = UP:快Ｃ + UP:快Ｖ + UP:快Ａ + UP:快Ｂ + UP:快Ｍ
 
 E = 0
 
-IF A >= 12000 && UP:9 >= 8000
+IF A >= 12000 && UP:苦痛 >= 8000
 	E = 64
-	TIMES UP:11 , 0.55
-ELSEIF A >= 6000 && UP:9 >= 4000
+	TIMES UP:反感 , 0.55
+ELSEIF A >= 6000 && UP:苦痛 >= 4000
 	E = 32
-	TIMES UP:11 , 0.60
-ELSEIF A >= 3000 && UP:9 >= 2000
+	TIMES UP:反感 , 0.60
+ELSEIF A >= 3000 && UP:苦痛 >= 2000
 	E = 16
-	TIMES UP:11 , 0.65
-ELSEIF A >= 2500 && UP:9 >= 1500
+	TIMES UP:反感 , 0.65
+ELSEIF A >= 2500 && UP:苦痛 >= 1500
 	E = 12
-	TIMES UP:11 , 0.70
-ELSEIF A >= 1500 && UP:9 >= 1000
+	TIMES UP:反感 , 0.70
+ELSEIF A >= 1500 && UP:苦痛 >= 1000
 	E = 8
-	TIMES UP:11 , 0.75
-ELSEIF A >= 1000 && UP:9 >= 500
+	TIMES UP:反感 , 0.75
+ELSEIF A >= 1000 && UP:苦痛 >= 500
 	E = 4
-	TIMES UP:11 , 0.80
-ELSEIF A >= 600 && UP:9 >= 300
+	TIMES UP:反感 , 0.80
+ELSEIF A >= 600 && UP:苦痛 >= 300
 	E = 2
-	TIMES UP:11 , 0.85
-ELSEIF A >= 300 && UP:9 >= 100
+	TIMES UP:反感 , 0.85
+ELSEIF A >= 300 && UP:苦痛 >= 100
 	E = 1
-	TIMES UP:11 , 0.90
+	TIMES UP:反感 , 0.90
 ENDIF
 IF E
 	PRINT 苦痛快楽経験+
@@ -1563,51 +1563,51 @@ IF E
 ENDIF
 
 
-A = UP:2
+A = UP:快Ａ
 
 ;アナル系である、Ａ快楽のチェック
 E = 0
 
 IF A >= 1000000
 	E = 64
-	TIMES UP:11 , 0.75
-	TIMES UP:12 , 0.85
-	TIMES UP:6 , 1.30
+	TIMES UP:反感 , 0.75
+	TIMES UP:不快 , 0.85
+	TIMES UP:屈服 , 1.30
 ELSEIF A >= 200000
 	E = 32
-	TIMES UP:11 , 0.80
-	TIMES UP:12 , 0.85
-	TIMES UP:6 , 1.25
+	TIMES UP:反感 , 0.80
+	TIMES UP:不快 , 0.85
+	TIMES UP:屈服 , 1.25
 ELSEIF A >= 12000
 	E = 16
-	TIMES UP:11 , 0.80
-	TIMES UP:12 , 0.90
-	TIMES UP:6 , 1.20
+	TIMES UP:反感 , 0.80
+	TIMES UP:不快 , 0.90
+	TIMES UP:屈服 , 1.20
 ELSEIF A >= 8000
 	E = 12
-	TIMES UP:11 , 0.85
-	TIMES UP:12 , 0.90
-	TIMES UP:6 , 1.15
+	TIMES UP:反感 , 0.85
+	TIMES UP:不快 , 0.90
+	TIMES UP:屈服 , 1.15
 ELSEIF A >= 5000
 	E = 8
-	TIMES UP:11 , 0.85
-	TIMES UP:12 , 0.95
-	TIMES UP:6 , 1.10
+	TIMES UP:反感 , 0.85
+	TIMES UP:不快 , 0.95
+	TIMES UP:屈服 , 1.10
 ELSEIF A >= 3000
 	E = 4
-	TIMES UP:11 , 0.90
-	TIMES UP:12 , 0.95
-	TIMES UP:6 , 1.05
+	TIMES UP:反感 , 0.90
+	TIMES UP:不快 , 0.95
+	TIMES UP:屈服 , 1.05
 ELSEIF A >= 2000
 	E = 2
-	TIMES UP:11 , 0.90
-	TIMES UP:12 , 1.00
-	TIMES UP:6 , 1.00
+	TIMES UP:反感 , 0.90
+	TIMES UP:不快 , 1.00
+	TIMES UP:屈服 , 1.00
 ELSEIF A >= 1000
 	E = 1
-	TIMES UP:11 , 0.95
-	TIMES UP:12 , 1.00
-	TIMES UP:6 , 1.00
+	TIMES UP:反感 , 0.95
+	TIMES UP:不快 , 1.00
+	TIMES UP:屈服 , 1.00
 ENDIF
 IF E
 	PRINT Ａ快楽経験+

@@ -136,11 +136,11 @@ SIF RESULT < 20
 	ABL:技巧 += 1
 
 IF RESULT == 0
-	JUEL:7 -= A
+	JUEL:習得 -= A
 ELSEIF RESULT == 1
-	JUEL:15 -= B
+	JUEL:好意 -= B
 ELSEIF RESULT == 2
-	JUEL:17 -= C
+	JUEL:優越 -= C
 ELSEIF RESULT == 20
 	CALL AUT_GIKOU_0
 ELSEIF RESULT == 21
@@ -176,7 +176,7 @@ Z = 0
 
 
 ;習得の珠で上げる
-SIF JUEL:7 < A
+SIF JUEL:習得 < A
 	I |= 1
 
 IF I == 0
@@ -185,7 +185,7 @@ ENDIF
 
 IF B > 0
 	;好意の珠で上げる
-	SIF JUEL:15 < B
+	SIF JUEL:好意 < B
 		J |= 1
 
 	IF J == 0
@@ -195,7 +195,7 @@ ENDIF
 
 IF C > 0
 	;優越の珠で上げる
-	SIF JUEL:17 < C
+	SIF JUEL:優越 < C
 		K |= 1
 
 	IF K == 0

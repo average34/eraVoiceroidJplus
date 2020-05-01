@@ -217,17 +217,17 @@ IF RAND:3 < A
 	;ターゲットが挿入されるときはV
 	IF TFLAG:15 & 1
 		PRINTFORML %PALAMNAME:1%の珠+{S*200}
-		JUEL:1 += S*200
+		JUEL:快Ｖ += S*200
 	;ターゲットが挿入する時はC
 	ELSEIF TFLAG:15 & 2
 		PRINTFORML %PALAMNAME:0%の珠+{S*200}
-		JUEL:0 += S*200
+		JUEL:快Ｃ += S*200
 	;非挿入の時はBC
 	ELSE
 		PRINTFORML %PALAMNAME:0%の珠+{S*150}
-		JUEL:0 += S*150
+		JUEL:快Ｃ += S*150
 		PRINTFORML %PALAMNAME:14%の珠+{S*100}
-		JUEL:14 += S*100
+		JUEL:快Ｂ += S*100
 	ENDIF
 	PRINTFORML %PALAMNAME:4%の珠+{S*100}
 	PRINTFORML %PALAMNAME:5%の珠+{S*300}
@@ -237,14 +237,14 @@ IF RAND:3 < A
 	;強気だと優越の珠
 	IF R > 0
 		PRINTFORML %PALAMNAME:17%の珠+{S*100}
-		JUEL:17 += S*200
+		JUEL:優越 += S*200
 	;そうでなければ恥情の珠
 	ELSE
 		PRINTFORML %PALAMNAME:8%の珠+{S*100}
-		JUEL:8 += S*200
+		JUEL:恥情 += S*200
 	ENDIF
-	JUEL:4 += S*100
-	JUEL:5 += S*300
+	JUEL:恭順 += S*100
+	JUEL:欲情 += S*300
 	WAIT
 	IF ABL:親密+ABL:Ｖ感覚+ABL:奉仕精神 >= 13 && FLAG:6 && (CFLAG:99 & 1) == 0
 		PRINTFORMW やがて%CALLNAME:MASTER%と%CALLNAME:TARGET%はどちらからとも無く体を離し、互いに微笑みあった
@@ -294,9 +294,9 @@ ELSE
 		PRINTFORML %PALAMNAME:4%の珠+{S*50}
 		PRINTFORMW %PALAMNAME:5%の珠+{S*100}
 		EXP:自慰経験 += S
-		JUEL:0 += S*100
-		JUEL:4 += S*50
-		JUEL:5 += S*100
+		JUEL:快Ｃ += S*100
+		JUEL:恭順 += S*50
+		JUEL:欲情 += S*100
 		
 		;カットフラグを戻す
 		CFLAG:99 = LOCAL:100
@@ -334,17 +334,17 @@ CALL GETEXP_L_EXERCISE
 ;ターゲットが挿入されるときはV
 IF TFLAG:15 & 1
 	PRINTFORML %PALAMNAME:1%の珠+{S*200}
-	JUEL:1 += S*200
+	JUEL:快Ｖ += S*200
 ;ターゲットが挿入する時はC
 ELSEIF TFLAG:15 & 2
 	PRINTFORML %PALAMNAME:0%の珠+{S*200}
-	JUEL:0 += S*200
+	JUEL:快Ｃ += S*200
 ;非挿入の時はBC
 ELSE
 	PRINTFORML %PALAMNAME:0%の珠+{S*150}
-	JUEL:0 += S*150
+	JUEL:快Ｃ += S*150
 	PRINTFORML %PALAMNAME:14%の珠+{S*100}
-	JUEL:14 += S*100
+	JUEL:快Ｂ += S*100
 ENDIF
 PRINTFORML %PALAMNAME:4%の珠+{S*100}
 PRINTFORML %PALAMNAME:5%の珠+{S*300}
@@ -355,15 +355,15 @@ IF TALENT:オトコ || TALENT:ふたなり
 	;ターゲットが挿入し、強気だと優越の珠
 	IF TFLAG:15 & 2 && R > 0
 		PRINTFORML %PALAMNAME:17%の珠+{S*100}
-		JUEL:17 += S*100
+		JUEL:優越 += S*100
 	;そうでなければ恥情の珠
 	ELSE
 		PRINTFORML %PALAMNAME:8%の珠+{S*100}
-		JUEL:8 += S*100
+		JUEL:恥情 += S*100
 	ENDIF
 ENDIF
-JUEL:4 += S*100
-JUEL:5 += S*300
+JUEL:恭順 += S*100
+JUEL:欲情 += S*300
 WAIT
 IF ABL:親密+ABL:Ｖ感覚+ABL:奉仕精神 >= 13 && FLAG:6 && (CFLAG:99 & 1) == 0
 	PRINTFORMW やがて%CALLNAME:MASTER%と%CALLNAME:TARGET%はどちらからとも無く体を離し、互いに微笑みあった

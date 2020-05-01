@@ -60,7 +60,7 @@ SIF RESULT < 20
 	ABL:Ａ感覚 += 1
 
 IF RESULT == 0
-	JUEL:2 -= A
+	JUEL:快Ａ -= A
 ELSEIF RESULT == 20
 	CALL AUT_A_0
 ENDIF
@@ -89,7 +89,7 @@ I = 0
 Z = 0
 
 ;快Ａの珠で上げる
-SIF JUEL:2 < A
+SIF JUEL:快Ａ < A
 	I |= 1
 
 IF I == 0

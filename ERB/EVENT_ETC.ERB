@@ -433,10 +433,10 @@ IF TALENT:妊娠
 	EXP:Ｖ経験 += 5
 	EXP:Ｖ拡張経験 += 1
 	EXP:産卵経験 += 1
-	JUEL:1 += B
-	JUEL:6 += (B+C)/2
-	JUEL:9 += C
-	JUEL:10 += B/3
+	JUEL:快Ｖ += B
+	JUEL:屈服 += (B+C)/2
+	JUEL:苦痛 += C
+	JUEL:恐怖 += B/3
 	PRINTFORML %PALAMNAME:1%＋{B}
 	PRINTFORML %PALAMNAME:6%＋{(B+C)/2}
 	PRINTFORML %PALAMNAME:9%＋{C}
@@ -461,10 +461,10 @@ ELSE
 	TFLAG:13 = 16
 	CALL SELF_KOJO
 	PRINTFORMW 卵を産み終わった%NAME:TARGET%のお腹は元の大きさに戻った
-	JUEL:1 += B
-	JUEL:6 += (B+C)/2
-	JUEL:9 += C
-	JUEL:10 += (B/3)*D
+	JUEL:快Ｖ += B
+	JUEL:屈服 += (B+C)/2
+	JUEL:苦痛 += C
+	JUEL:恐怖 += (B/3)*D
 	PRINTFORML %PALAMNAME:1%＋{B}
 	PRINTFORML %PALAMNAME:6%＋{(B+C)/2}
 	PRINTFORML %PALAMNAME:9%＋{C}

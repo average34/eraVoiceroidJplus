@@ -60,7 +60,7 @@ SIF RESULT < 20
 	ABL:Ｃ感覚 += 1
 
 IF RESULT == 0
-	JUEL:0 -= A
+	JUEL:快Ｃ -= A
 ELSEIF RESULT == 20
 	CALL AUT_C_0
 ENDIF
@@ -90,7 +90,7 @@ I = 0
 Z = 0
 
 ;快Ｃの珠で上げる
-SIF JUEL:0 < A
+SIF JUEL:快Ｃ < A
 	I |= 1
 
 IF I == 0

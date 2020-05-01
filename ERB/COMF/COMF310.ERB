@@ -2681,7 +2681,7 @@ CASE 1
 	PRINTFORML 
 	S += 15000
 	PRINTFORMW 潤滑＋{S}
-	PALAM:3 += S
+	PALAM:潤滑 += S
 ;売却
 CASE -1
 	M += 4500
@@ -4817,10 +4817,10 @@ CASE 1
 	U += 10
 	PRINTFORMW マイナス要素が消え去りました
 	PRINTFORMW 好感度+{U}
-	PALAM:11 = 0
-	PALAM:12 = 0
-	PALAM:13 = 0
-	JUEL:100 = 0
+	PALAM:反感 = 0
+	PALAM:不快 = 0
+	PALAM:抑鬱 = 0
+	JUEL:否定 = 0
 	MARK:反発感情 = 0
 	CFLAG:TARGET:2 += U
 ;売却
@@ -5904,7 +5904,7 @@ CASE 1
 	ELSE
 		S += 200
 		PRINTFORMW 抑鬱+{S}
-		PALAM:TARGET:13 += S
+		PALAM:TARGET:抑鬱 += S
 	ENDIF
 ;売却
 CASE -1
@@ -5943,7 +5943,7 @@ CASE 1
 	ELSE
 		S += 350
 		PRINTFORMW 抑鬱+{S}
-		PALAM:TARGET:13 += S
+		PALAM:TARGET:抑鬱 += S
 	ENDIF
 ;売却
 CASE -1
@@ -5978,7 +5978,7 @@ CASE 1
 	ELSE
 		S += 800
 		PRINTFORMW 抑鬱+{S}
-		PALAM:TARGET:13 += S
+		PALAM:TARGET:抑鬱 += S
 	ENDIF
 ;売却
 CASE -1
@@ -6015,7 +6015,7 @@ CASE 1
 	;雛以外抑鬱上昇
 	IF NO:TARGET != 39
 		PRINTFORMW 抑鬱{A}
-		PALAM:TARGET:13 += A
+		PALAM:TARGET:抑鬱 += A
 	ENDIF
 	PRINTFORMW 好感度{B}
 	BASE:TARGET:体力 += S
@@ -6054,7 +6054,7 @@ CASE 1
 	;雛以外抑鬱上昇
 	IF NO:TARGET != 39
 		PRINTFORMW 抑鬱+{B}
-		PALAM:TARGET:13 += B
+		PALAM:TARGET:抑鬱 += B
 	ELSE
 		CLEARLINE 1
 	ENDIF
@@ -6170,10 +6170,10 @@ CASE 1
 	
 	PRINTFORML 反感、不快、抑鬱が消え去りました
 	PRINTFORMW 好感度+{U}
-	PALAM:11 = 0
-	PALAM:12 = 0
-	PALAM:13 = 0
-	JUEL:100 = 0
+	PALAM:反感 = 0
+	PALAM:不快 = 0
+	PALAM:抑鬱 = 0
+	JUEL:否定 = 0
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -6974,7 +6974,7 @@ CASE 1
 		A = 0
 	S += CFLAG:TARGET:2
 	SOURCE:欲情追加 += S
-	PALAM:12 += A
+	PALAM:不快 += A
 ;売却
 CASE -1
 	M += 2000
@@ -7844,7 +7844,7 @@ CASE 1
 		SIF TALENT:A:恥じらい || TALENT:A:倒錯的 || TALENT:MASTER:謎の魅力
 			S *= 2
 		PRINTFORMW 恥情の珠+{S}
-		JUEL:A:8 += S
+		JUEL:A:恥情 += S
 	;成功（弱味得る）
 	CASE 1, 4
 		PRINTFORML %CALLNAME:A%の[弱味]を得た
@@ -7853,7 +7853,7 @@ CASE 1
 		TALENT:A:弱味 = 1
 		;好感度下げる
 		TFLAG:30 -= 300
-		JUEL:A:100 += 1000
+		JUEL:A:否定 += 1000
 		EXP:A:被写経験 += 1
 		;ムードも下げる
 		TFLAG:37 = 0
@@ -7861,7 +7861,7 @@ CASE 1
 	CASE 2, 5
 		PRINTFORMW 否定の珠+500
 		TFLAG:30 -= 150
-		JUEL:A:100 += 500
+		JUEL:A:否定 += 500
 		;ムードは0
 		TFLAG:37 = 0
 	ENDSELECT
@@ -7898,16 +7898,16 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;恭順、欲情、屈服、恥情、恐怖、反感、不快、抑鬱、好意、優越を1.3倍
-	TIMES PALAM:4 , 1.30
-	TIMES PALAM:5 , 1.30
-	TIMES PALAM:6 , 1.30
-	TIMES PALAM:8 , 1.30
-	TIMES PALAM:10 , 1.30
-	TIMES PALAM:11 , 1.30
-	TIMES PALAM:12 , 1.30
-	TIMES PALAM:13 , 1.30
-	TIMES PALAM:15 , 1.30
-	TIMES PALAM:17 , 1.30
+	TIMES PALAM:恭順 , 1.30
+	TIMES PALAM:欲情 , 1.30
+	TIMES PALAM:屈服 , 1.30
+	TIMES PALAM:恥情 , 1.30
+	TIMES PALAM:恐怖 , 1.30
+	TIMES PALAM:反感 , 1.30
+	TIMES PALAM:不快 , 1.30
+	TIMES PALAM:抑鬱 , 1.30
+	TIMES PALAM:好意 , 1.30
+	TIMES PALAM:優越 , 1.30
 	U += RAND:8 + 1
 	CFLAG:TARGET:2 += U
 ;売却
@@ -9112,10 +9112,10 @@ CASE 1
 	S += 150
 	PRINTFORMW 否定の珠-{S}
 	;eramakerだと負数の比較が出来ない場合が多いので0になる場合は直接0を代入
-	IF JUEL:100 < S
-		JUEL:100 = 0
+	IF JUEL:否定 < S
+		JUEL:否定 = 0
 	ELSE
-		JUEL:100 -= S
+		JUEL:否定 -= S
 	ENDIF
 ;売却
 CASE -1
@@ -11155,7 +11155,7 @@ CASE 1
 		S += 200
 		S += RAND:300
 		PRINTFORML 抑鬱+{S}
-		PALAM:TARGET:13 += S
+		PALAM:TARGET:抑鬱 += S
 	;けもみみそうる
 	CASE 8
 		PRINTFORMW なんと%CALLNAME:TARGET%に動物耳が生えた！！
@@ -11304,9 +11304,9 @@ CASE 1
 		BASE:耐力 += 891
 	ELSE
 		S += 666
-		PALAM:11 += S
-		PALAM:12 += S
-		PALAM:13 += S
+		PALAM:反感 += S
+		PALAM:不快 += S
+		PALAM:抑鬱 += S
 		CFLAG:2 -= S / 10
 	ENDIF
 ;売却
@@ -12363,7 +12363,7 @@ CASE 1
 				TIMES SOURCE:快Ｃ, 1.20
 			;快楽
 			CALL CALC_SOURCE0
-			A = UP:0
+			A = UP:快Ｃ
 			;液体追加
 			IF A > 100 && TALENT:オトコ == 0
 				A /= 5
@@ -12443,7 +12443,7 @@ SELECTCASE TFLAG:94
 CASE 0
 	SIF A > 1
 		PRINTFORM %CALLNAME:PLAYER%は装填を終え、
-	PRINTFORMW \@ PALAM:5 >= PALAMLV:3 ? ぬらつく # \@下着の上から[リボルバーローター]を押し当てた…
+	PRINTFORMW \@ PALAM:欲情 >= PALAMLV:3 ? ぬらつく # \@下着の上から[リボルバーローター]を押し当てた…
 CASE 1
 	;時々反応を返します
 	IF A < 2
@@ -12463,7 +12463,7 @@ CASE 1
 			PRINTFORM %CALLNAME:PLAYER%は腰を掴むと
 		ENDIF
 	ENDIF
-	IF PALAM:3 >= 10000
+	IF PALAM:潤滑 >= 10000
 		PRINT 愛液で濡れ透いた下着の上からヒクつく
 		;ふたなり
 		IF TALENT:ふたなり
@@ -12474,7 +12474,7 @@ CASE 1
 			PRINT クリトリスに
 		ENDIF
 		PRINTW ローターを丹念に押し当てた…
-	ELSEIF PALAM:5 >= PALAMLV:3
+	ELSEIF PALAM:欲情 >= PALAMLV:3
 		PRINTW ぬらつく下着の上からローターを丹念に押し当てた…
 	ELSE
 		PRINTW 下着の上から震えるローターを押し当てた…
@@ -12602,7 +12602,7 @@ CASE 1
 	;いやらしい
 	CASE 1
 		CLEARLINE 1
-		PALAM:5 += 10000
+		PALAM:欲情 += 10000
 		TEQUIP:86 = 1
 	ENDSELECT
 ;売却
@@ -12656,13 +12656,13 @@ CASE 1
 		SOURCE:痛み = 100
 	ENDIF
 	;PALAM:欲情をみる
-	IF PALAM:5 < PALAMLV:3
+	IF PALAM:欲情 < PALAMLV:3
 		TIMES SOURCE:快Ａ , 1.00
 		TIMES SOURCE:屈従, 1.00
-	ELSEIF PALAM:5 < PALAMLV:4
+	ELSEIF PALAM:欲情 < PALAMLV:4
 		TIMES SOURCE:快Ａ , 1.30
 		TIMES SOURCE:屈従, 1.30
-	ELSEIF PALAM:5 >= PALAMLV:4
+	ELSEIF PALAM:欲情 >= PALAMLV:4
 		TIMES SOURCE:快Ａ , 1.60
 		TIMES SOURCE:屈従, 1.60
 	ENDIF
@@ -12707,8 +12707,8 @@ CASE 1
 	;痛覚ソース変換
 	CALL CALC_SOURCE6
 	;苦痛を潤滑に変える
-	UP:3 += UP:9
-	UP:9 = 0
+	UP:潤滑 += UP:苦痛
+	UP:苦痛 = 0
 	SOURCE:痛み = 0
 ;売却
 CASE -1
@@ -12749,7 +12749,7 @@ CASE 1
 	TFLAG:94 = 0
 	CALL TRAIN_MESSAGE_B
 	
-	LOCAL:11 = PALAM:10
+	LOCAL:11 = PALAM:恐怖
 	FOR LOCAL, 0, 10
 		SOURCE:快Ｃ = 0
 		IF LOCAL > 0
@@ -12804,25 +12804,25 @@ CASE 1
 		SOURCE:快Ｂ *= (LOCAL:4 + LOCAL:6 + 1)
 		
 		;触手経験による恐怖パラ
-		UP:10 += 60
+		UP:恐怖 += 60
 		IF EXP:触手経験 < EXPLV:1
-			TIMES UP:10 , 1.80
+			TIMES UP:恐怖 , 1.80
 		ELSEIF EXP:触手経験 < EXPLV:2
-			TIMES UP:10 , 1.75
+			TIMES UP:恐怖 , 1.75
 		ELSEIF EXP:触手経験 < EXPLV:3
-			TIMES UP:10 , 1.60
+			TIMES UP:恐怖 , 1.60
 		ELSEIF EXP:触手経験 < EXPLV:4
-			TIMES UP:10 , 0.90
+			TIMES UP:恐怖 , 0.90
 		ELSEIF EXP:触手経験 < EXPLV:5
-			TIMES UP:10 , 0.80
+			TIMES UP:恐怖 , 0.80
 		ELSE
-			TIMES UP:10 , 0.70
+			TIMES UP:恐怖 , 0.70
 		ENDIF
-		UP:10 *= 10
+		UP:恐怖 *= 10
 
 		;B快
 		CALL CALC_SOURCE17
-		A = UP:14
+		A = UP:快Ｂ
 		;液体追加
 		IF A > 100 && TALENT:オトコ == 0
 			A /= 5
@@ -12946,10 +12946,10 @@ CASE 3
 			PRINTFORM 触手の貪るような乳房への蹂躙に、
 		ENDIF
 		;恐怖が欲情を上回る
-		IF UP:10 > UP:5
+		IF UP:恐怖 > UP:欲情
 			PRINTFORM 悲鳴を上げながら
 		;欲情が恐怖の2倍以内
-		ELSEIF UP:10 > UP:5 / 2
+		ELSEIF UP:恐怖 > UP:欲情 / 2
 			PRINTFORM 喘ぎ声を何度も上げながら
 		;欲情が恐怖の倍以上
 		ELSE
@@ -12999,7 +12999,7 @@ CASE 4
 	IF A:10 > 2
 		PRINT 、
 		;恐怖が10000以上貯まる
-		SIF (PALAM:10 - A:11) >= 10000
+		SIF (PALAM:恐怖 - A:11) >= 10000
 			PRINT 涙と
 		PRINTFORM 汗と愛液で全身を濡らした
 	ELSE
@@ -13040,27 +13040,27 @@ CASE 1
 	K = U + S + 100
 	CFLAG:TARGET:2 += K
 	PRINTFORMW 好感度+{K}
-	PALAM:0 = 9999
-	PALAM:1 = 9999
-	PALAM:2 = 9999
-	PALAM:14 = 9999
+	PALAM:快Ｃ = 9999
+	PALAM:快Ｖ = 9999
+	PALAM:快Ａ = 9999
+	PALAM:快Ｂ = 9999
 	;コンフィグでＭ感覚追加されていたら快Ｍも9999
 	SIF (FLAG:62 & 4194304)
-		PALAM:18 = 9999
-	PALAM:3 += 10000
-	PALAM:4 += 10000
-	PALAM:5 += 10000
-	PALAM:6 += 10000
-	PALAM:7 += 10000
-	PALAM:8 += 10000
-	PALAM:9 += 3000
-	PALAM:10 += 3000
-	PALAM:11 = 0
-	PALAM:12 = 0
-	PALAM:13 = 0
-	PALAM:15 += 100000
-	PALAM:16 += 100000
-	PALAM:17 += 10000
+		PALAM:快Ｍ = 9999
+	PALAM:潤滑 += 10000
+	PALAM:恭順 += 10000
+	PALAM:欲情 += 10000
+	PALAM:屈服 += 10000
+	PALAM:習得 += 10000
+	PALAM:恥情 += 10000
+	PALAM:苦痛 += 3000
+	PALAM:恐怖 += 3000
+	PALAM:反感 = 0
+	PALAM:不快 = 0
+	PALAM:抑鬱 = 0
+	PALAM:好意 += 100000
+	PALAM:生活 += 100000
+	PALAM:優越 += 10000
 	TFLAG:37 += 100
 ;売却
 CASE -1

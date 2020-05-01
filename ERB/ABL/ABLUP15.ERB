@@ -135,11 +135,11 @@ SIF RESULT < 20
 	ABL:サドっ気 += 1
 
 IF RESULT == 0
-	JUEL:5 -= A
-	JUEL:7 -= B
+	JUEL:欲情 -= A
+	JUEL:習得 -= B
 ELSEIF RESULT == 1
-	JUEL:5 -= D
-	JUEL:17 -= E
+	JUEL:欲情 -= D
+	JUEL:優越 -= E
 ELSEIF RESULT == 20
 	CALL AUT_SADO_0
 ELSEIF RESULT == 21
@@ -188,10 +188,10 @@ ENDIF
 
 IF B > 0
 	;欲情の珠で上げる
-	SIF JUEL:5 < A
+	SIF JUEL:欲情 < A
 		I |= 1
 	;習得の珠で上げる
-	SIF JUEL:7 < B
+	SIF JUEL:習得 < B
 		I |= 1
 
 	IF I == 0
@@ -201,10 +201,10 @@ ENDIF
 
 IF D > 0
 	;欲情の珠で上げる
-	SIF JUEL:5 < D
+	SIF JUEL:欲情 < D
 		J |= 1
 	;優越の珠で上げる
-	SIF JUEL:17 < E
+	SIF JUEL:優越 < E
 		J |= 1
 
 	IF J == 0

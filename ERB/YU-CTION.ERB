@@ -1600,7 +1600,7 @@ IF SELECTCOM == 2
 			SIF EXP:Ａ経験 <= 10
 			PRINT 硬く閉ざされた
 		PRINT アヌスを丁寧に舐めほぐし
-		SIF EXP:Ａ経験 >= 100 && PALAM:5 >= PALAMLV:3 && TEQUIP:63 == 0
+		SIF EXP:Ａ経験 >= 100 && PALAM:欲情 >= PALAMLV:3 && TEQUIP:63 == 0
 			PRINT 、舌先を突き入れて穴の中までかきまわしてやっ
 		PRINTW た…
 	;焦らしから移植
@@ -1635,7 +1635,7 @@ IF SELECTCOM == 5
 	ELSEIF TFLAG:17 == 1
 		IF TALENT:母乳体質
 			PRINTFORM %CALLNAME:TARGET%の
-			SIF PALAM:5 > PALAMLV:3
+			SIF PALAM:欲情 > PALAMLV:3
 				PRINT 期待に震える
 			IF TALENT:小柄体型 && TALENT:貧乳
 				PRINT 僅かに膨らみが感じられる程度の
@@ -1646,7 +1646,7 @@ IF SELECTCOM == 5
 			ENDIF
 			IF TEQUIP:63
 				PRINTFORMW 胸を下からそっと揉み上げた…
-			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:恋慕
+			ELSEIF PALAM:欲情 > PALAMLV:3 && TALENT:恋慕
 				PRINTW 胸を強く搾り上げてやると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
 				IF TALENT:貧乳
@@ -1660,14 +1660,14 @@ IF SELECTCOM == 5
 					PRINT 母乳が滴る
 				PRINTL 胸を強調するように突き出し、
 				PRINTW より強い刺激を求めた…
-			ELSEIF PALAM:5 > PALAMLV:3
+			ELSEIF PALAM:欲情 > PALAMLV:3
 				PRINTW 胸を強く搾り上げた…
 			ELSE
 				PRINTW 胸を搾り上げた…
 			ENDIF
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%の
-			SIF PALAM:5 > PALAMLV:3
+			SIF PALAM:欲情 > PALAMLV:3
 				PRINT 期待に震える
 			IF TALENT:小柄体型 && TALENT:貧乳
 				PRINT 僅かに膨らみが感じられる程度の
@@ -1676,14 +1676,14 @@ IF SELECTCOM == 5
 			ELSEIF TALENT:巨乳
 				PRINT 手から溢れそうなほどの
 			ENDIF
-			IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
+			IF PALAM:欲情 > PALAMLV:3 && TALENT:恋慕
 				PRINTL 胸を優しく撫でてやると、
 				PRINTFORMW %CALLNAME:TARGET%は少し恥ずかしそうにしながら胸を突き出すようにして激しい愛撫を求めた…
 			ELSEIF TALENT:140
 				PRINTW 胸を優しく撫でるように触れた…
 			ELSEIF TEQUIP:63
 				PRINTFORMW 胸を下からそっと揉み上げた…
-			ELSEIF PALAM:5 > PALAMLV:3 && TALENT:恋慕
+			ELSEIF PALAM:欲情 > PALAMLV:3 && TALENT:恋慕
 				PRINTW 胸を強く揉みしだいてやると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
 				IF TALENT:貧乳
@@ -1695,7 +1695,7 @@ IF SELECTCOM == 5
 					PRINT 母乳が滴る
 				PRINTL 胸を強調するように突き出し、
 				PRINTW より強い愛撫を求めた…
-			ELSEIF PALAM:5 > PALAMLV:3
+			ELSEIF PALAM:欲情 > PALAMLV:3
 				PRINTW 胸を強く揉みしだいた…
 			ELSE
 				PRINTW 胸を揉みしだいた…
@@ -1710,7 +1710,7 @@ IF SELECTCOM == 5
 		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
-		IF PALAM:5 > PALAMLV:3
+		IF PALAM:欲情 > PALAMLV:3
 			PRINT 胸の先端の、
 			PRINTW すっかり硬くなった突起をつまみあげた…
 		ELSE
@@ -1728,7 +1728,7 @@ IF SELECTCOM == 5
 			PRINT 手から溢れそうなほどの
 		ENDIF
 		PRINT 胸の先端の、
-		IF PALAM:5 > PALAMLV:3
+		IF PALAM:欲情 > PALAMLV:3
 			PRINT すっかり硬くなった突起
 		ELSE
 			PRINT まだ柔らかい突起
@@ -1751,7 +1751,7 @@ IF SELECTCOM == 5
 			PRINT 手から溢れそうなほどの
 		ENDIF
 		IF RAND:2 == 0
-			IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
+			IF PALAM:欲情 > PALAMLV:3 && TALENT:恋慕
 				PRINTL 期待に震える胸の先端を
 				PRINTW 強く赤子のように吸い上げると、
 				PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
@@ -1764,20 +1764,20 @@ IF SELECTCOM == 5
 					PRINT 母乳が滴る
 				PRINTFORML 胸を強調するように突き出し、
 				PRINTFORMW %CALLNAME:PLAYER%の顔に押し付けた…
-			ELSEIF PALAM:5 > PALAMLV:3
+			ELSEIF PALAM:欲情 > PALAMLV:3
 				PRINTW 胸の先端の、すっかり硬くなった突起を吸いあげた…
 			ELSE
 				PRINTW 胸の先端の、まだ柔らかい突起を吸いあげた…
 			ENDIF
 		ELSE
 			IF TALENT:母乳体質
-				IF PALAM:5 > PALAMLV:3
+				IF PALAM:欲情 > PALAMLV:3
 					PRINTW 先端の、勃起しきった突起から母乳を吸い出そうとした…
 				ELSE
 					PRINTW 先端から母乳を吸い出そうとした…
 				ENDIF
 			ELSE
-				IF PALAM:5 > PALAMLV:3
+				IF PALAM:欲情 > PALAMLV:3
 					PRINTW 先端の、勃起しきった突起を甘噛みしつつ吸い上げた…
 				ELSE
 					PRINTW 先端を口内でねぶった…
@@ -1793,7 +1793,7 @@ IF SELECTCOM == 5
 		ELSEIF TALENT:巨乳
 			PRINT 手から溢れそうなほどの
 		ENDIF
-		IF PALAM:5 > PALAMLV:3 && TALENT:恋慕
+		IF PALAM:欲情 > PALAMLV:3 && TALENT:恋慕
 			PRINTL 胸を絞り込むようにしながら
 			PRINTW その先端を強く吸い上げると、
 			PRINTFORM %CALLNAME:TARGET%は嬌声をあげながらも
@@ -1807,7 +1807,7 @@ IF SELECTCOM == 5
 				PRINT の谷間
 			PRINTFORML に%CALLNAME:PLAYER%の頭を寄せ、
 			PRINTFORMW 快感で力が入ってしまうのか強く抱きしめ圧迫した…
-		ELSEIF PALAM:5 > PALAMLV:3 && TALENT:淫乱
+		ELSEIF PALAM:欲情 > PALAMLV:3 && TALENT:淫乱
 			PRINTW 胸を絞り込むようにしながらその先端を強く吸い上げると、
 			PRINTFORM %CALLNAME:TARGET%は嬌声をあげて
 			IF TALENT:貧乳
@@ -1928,7 +1928,7 @@ IF SELECTCOM == 24
 			PRINTFORMW 立ち上がって、腰を揺すり始めた…
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%の
-			SIF PALAM:3 >= PALAMLV:4
+			SIF PALAM:潤滑 >= PALAMLV:4
 				PRINT 濡れそぼった
 			IF TALENT:小柄体型
 				PRINT 幼いワレメ
@@ -1967,7 +1967,7 @@ IF SELECTCOM == 25
 			PRINTFORML 立ち上がり、腰を揺さぶり始めた…
 		ELSE
 			PRINTFORM %CALLNAME:TARGET%の、
-			SIF PALAM:3 >= PALAMLV:4
+			SIF PALAM:潤滑 >= PALAMLV:4
 				PRINT 濡れそぼった
 			IF TALENT:小柄体型
 				PRINT 幼いワレメ

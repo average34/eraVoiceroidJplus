@@ -304,15 +304,15 @@ B = 500
 C = 500
 
 ;PALAM:欲情をみる
-IF PALAM:5 < PALAMLV:1
+IF PALAM:欲情 < PALAMLV:1
 	TIMES C , 0.80
-ELSEIF PALAM:5 < PALAMLV:2
+ELSEIF PALAM:欲情 < PALAMLV:2
 	TIMES C , 0.90
-ELSEIF PALAM:5 < PALAMLV:3
+ELSEIF PALAM:欲情 < PALAMLV:3
 	TIMES C , 1.00
-ELSEIF PALAM:5 < PALAMLV:4
+ELSEIF PALAM:欲情 < PALAMLV:4
 	TIMES C , 1.10
-ELSEIF PALAM:5 >= PALAMLV:4
+ELSEIF PALAM:欲情 >= PALAMLV:4
 	TIMES C , 1.20
 ENDIF
 
@@ -443,7 +443,7 @@ ELSEIF TEQUIP:65 == 5
 	TIMES C , 0.80
 	;貧乳だと恥かしい
 	SIF TALENT:貧乳
-		UP:8 += A/8
+		UP:恥情 += A/8
 	;巨乳だと痛い
 	SIF TALENT:巨乳
 		SOURCE:痛み = 100
@@ -454,7 +454,7 @@ ELSEIF TEQUIP:65 == 6
 		;濡れると透ける
 		TIMES A , 3.00
 		TIMES C , 0.40
-	ELSEIF PALAM:3 > PALAMLV:3 || (DAY:2 == 1 && (TIME:5 == 3 || TIME:5 == 4|| TIME:5 == 7))
+	ELSEIF PALAM:潤滑 > PALAMLV:3 || (DAY:2 == 1 && (TIME:5 == 3 || TIME:5 == 4|| TIME:5 == 7))
 		PRINTFORML %CALLNAME:TARGET%の水着は少し透けている…
 		;湿気が強いor濡れると湿って透ける
 		TIMES A , 2.50
@@ -466,7 +466,7 @@ ELSEIF TEQUIP:65 == 6
 	ENDIF
 	;貧乳だと恥かしい
 	SIF TALENT:貧乳
-		UP:8 += A/8
+		UP:恥情 += A/8
 	;巨乳だと痛い
 	SIF TALENT:巨乳
 		SOURCE:痛み = 100
@@ -498,7 +498,7 @@ ELSEIF TEQUIP:65 == 10
 	SOURCE:征服 += A/2
 	;貧乳だと恥かしい
 	SIF TALENT:貧乳
-		UP:8 += A/8
+		UP:恥情 += A/8
 ELSEIF TEQUIP:65 == 11
 	;PRINTL ＜コスプレ中[浴衣]＞
 	;露出度低
@@ -603,7 +603,7 @@ ELSEIF TEQUIP:65 == 21
 		TIMES A , 1.20
 	;貧乳だと恥かしい
 	SIF TALENT:貧乳
-		UP:8 += A/8
+		UP:恥情 += A/8
 ELSEIF TEQUIP:65 == 22
 	;PRINTL ＜コスプレ中[裸Yシャツ]＞
 	IF TEQUIP:58 ||(TEQUIP:54 && (TIME:5 == 3 || TIME:5 == 4 || TIME:5 == 5 || TIME:5 == 7 || TIME:5 == 8))

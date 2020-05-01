@@ -211,15 +211,15 @@ SIF RESULT < 20
 	ABL:親密 += 1
 
 IF RESULT == 0
-	JUEL:15 -= E
+	JUEL:好意 -= E
 ELSEIF RESULT == 1
-	JUEL:10 -= A
+	JUEL:恐怖 -= A
 ELSEIF RESULT == 2
-	JUEL:4 -= B
+	JUEL:恭順 -= B
 ELSEIF RESULT == 3
-	JUEL:5 -= C
+	JUEL:欲情 -= C
 ELSEIF RESULT == 4
-	JUEL:6 -= D
+	JUEL:屈服 -= D
 ;//////////////////////////
 ELSEIF RESULT == 20
 	CALL AUT_SHINMITU_0
@@ -282,7 +282,7 @@ IF F && EXP:異常経験 == 0
 ENDIF
 
 ;好意の珠で上げる
-SIF JUEL:15 < E
+SIF JUEL:好意 < E
 	M |= 1
 
 IF M == 0
@@ -290,7 +290,7 @@ IF M == 0
 ENDIF
 
 ;恐怖の珠で上げる
-SIF JUEL:10 < A
+SIF JUEL:恐怖 < A
 	I |= 1
 
 IF I == 0
@@ -298,7 +298,7 @@ IF I == 0
 ENDIF
 
 ;恭順の珠で上げる
-SIF JUEL:4 < B
+SIF JUEL:恭順 < B
 	J |= 1
 
 IF J == 0
@@ -307,7 +307,7 @@ ENDIF
 
 IF C > 0
 	;欲情の珠で上げる
-	SIF JUEL:5 < C
+	SIF JUEL:欲情 < C
 		K |= 1
 
 	IF K == 0
@@ -317,7 +317,7 @@ ENDIF
 
 IF D > 0
 	;屈服の珠で上げる
-	SIF JUEL:6 < D
+	SIF JUEL:屈服 < D
 		L |= 1
 
 	IF L == 0

@@ -74,8 +74,8 @@ SIF RESULT < 20
 	ABL:精液中毒 += 1
 
 IF RESULT == 0
-	JUEL:5 -= A
-	JUEL:6 -= B
+	JUEL:欲情 -= A
+	JUEL:屈服 -= B
 ELSEIF RESULT == 20
 	CALL AUT_SEIEKI_0
 ENDIF
@@ -114,10 +114,10 @@ IF ABL:奉仕精神 < ABL:精液中毒 + 1
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	I |= 1
 ;充実の珠で上げる
-SIF JUEL:6 < B
+SIF JUEL:屈服 < B
 	I |= 1
 ;精液経験が必要
 SIF EXP:精液経験 < C

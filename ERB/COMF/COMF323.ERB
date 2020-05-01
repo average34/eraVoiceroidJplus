@@ -1242,14 +1242,14 @@ ELSEIF TEQUIP:2 == 7
 ;図書館
 ELSEIF TEQUIP:2 == 8
 	;習得増加
-	UP:7 += 200
+	UP:習得 += 200
 	REPEAT ABL:技巧 + 1
-		UP:7 += RAND:101
+		UP:習得 += RAND:101
 	REND
 	;秋は更にUP
 	IF DAY:2 == 2
 		REPEAT ABL:技巧 + 1
-			UP:7 += RAND:51
+			UP:習得 += RAND:51
 		REND
 	ENDIF
 ;遊園地
@@ -1298,9 +1298,9 @@ ELSEIF TEQUIP:2 == 15
 ;カジノ
 ELSEIF TEQUIP:2 == 16
 	;習得増加
-	UP:7 += 100
+	UP:習得 += 100
 	REPEAT ABL:技巧 + 1
-		UP:7 += RAND:51
+		UP:習得 += RAND:51
 	REND
 	IF TFLAG:44 == 0
 		;賭博選択時以外は自動変動
@@ -1337,14 +1337,14 @@ ELSEIF TEQUIP:2 == 16
 ;博物館
 ELSEIF TEQUIP:2 == 17
 	;習得増加
-	UP:7 += 100
+	UP:習得 += 100
 	REPEAT ABL:技巧 + 1
-		UP:7 += RAND:51
+		UP:習得 += RAND:51
 	REND
 	;秋は更にUP
 	IF DAY:2 == 2
 		REPEAT ABL:技巧 + 1
-			UP:7 += RAND:26
+			UP:習得 += RAND:26
 		REND
 	ENDIF
 	;接触のソースに+0～10
@@ -1454,9 +1454,9 @@ ELSEIF TEQUIP:2 == 30
 ;命蓮寺
 ELSEIF TEQUIP:2 == 31
 	;習得増加
-	UP:7 += 50
+	UP:習得 += 50
 	REPEAT ABL:技巧 + 1
-		UP:7 += RAND:51
+		UP:習得 += RAND:51
 	REND
 ;魔界
 ELSEIF TEQUIP:2 == 32
@@ -1471,9 +1471,9 @@ ELSEIF TEQUIP:2 == 33
 ;教会
 ELSEIF TEQUIP:2 == 34
 	;習得増加(やぶ牧師だから命蓮寺より低い？)
-	UP:7 += 30
+	UP:習得 += 30
 	REPEAT ABL:技巧 + 1
-		UP:7 += RAND:11
+		UP:習得 += RAND:11
 	REND
 ;スポーツ観戦
 ELSEIF TEQUIP:2 == 35

@@ -223,13 +223,13 @@ SIF RESULT < 20
 	ABL:奉仕精神 += 1
 
 IF RESULT == 0
-	JUEL:6 -= A
+	JUEL:屈服 -= A
 ELSEIF RESULT == 1
-	JUEL:4 -= B
+	JUEL:恭順 -= B
 ELSEIF RESULT == 2
-	JUEL:7 -= C
+	JUEL:習得 -= C
 ELSEIF RESULT == 3
-	JUEL:15 -= F
+	JUEL:好意 -= F
 ELSEIF RESULT == 20
 	CALL AUT_HOUSHI_0
 ELSEIF RESULT == 21
@@ -291,7 +291,7 @@ ELSEIF G == 2 && EXP:異常経験 < 2
 ENDIF
 
 ;屈服の珠で上げる
-SIF JUEL:6 < A
+SIF JUEL:屈服 < A
 	I |= 1
 ;絶頂経験が必要な場合
 SIF EXP:絶頂経験 < E
@@ -306,7 +306,7 @@ ENDIF
 
 IF B > 0
 	;恭順の珠で上げる
-	SIF JUEL:4 < B
+	SIF JUEL:恭順 < B
 		J |= 1
 	;この場合奉仕快楽経験またはデート経験が必要なことあり
 	SIF EXP:奉仕快楽経験 < D && EXP:デート経験 < D
@@ -319,7 +319,7 @@ ENDIF
 
 IF C > 0
 	;習得の珠で上げる
-	SIF JUEL:7 < C
+	SIF JUEL:習得 < C
 		K |= 1
 	;この場合絶頂経験が１以上必要
 	SIF EXP:絶頂経験 < 1
@@ -332,7 +332,7 @@ ENDIF
 
 IF F > 0
 	;好意の珠で上げる
-	SIF JUEL:15 < F
+	SIF JUEL:好意 < F
 		L |= 1
 
 	IF L == 0

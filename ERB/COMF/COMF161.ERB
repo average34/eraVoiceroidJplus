@@ -76,17 +76,17 @@ ELSEIF A == 0 && CFLAG:10 > 0
 	SIF BASE:体力 > 10
 		BASE:体力 = 10
 ELSEIF A >= 1 && A < 4
-	PALAM:4 += 5000
-	PALAM:6 += 5000
+	PALAM:恭順 += 5000
+	PALAM:屈服 += 5000
 ELSEIF A >= 4 && A < 8
-	PALAM:3 += 5000
-	PALAM:5 += 5000
-	PALAM:8 += 5000
+	PALAM:潤滑 += 5000
+	PALAM:欲情 += 5000
+	PALAM:恥情 += 5000
 ELSEIF A >= 8 && A < 12
-	PALAM:10 += 5000
+	PALAM:恐怖 += 5000
 ELSE
-	PALAM:9 += 5000
-	PALAM:12 += 5000
+	PALAM:苦痛 += 5000
+	PALAM:不快 += 5000
 ENDIF
 
 CFLAG:10 += 10 + RAND:11

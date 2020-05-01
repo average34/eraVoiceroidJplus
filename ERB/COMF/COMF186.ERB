@@ -238,7 +238,7 @@ ELSEIF TFLAG:17 == TARGET
 	;親密Lv5以上(JはLv99まであるので以上に変更)、既成事実Lv3、反発刻印なし
 	IF A == 0 && ABL:親密 >= 5 && MARK:既成事実 == 3 && MARK:反発感情 == 0
 		SOURCE:屈従 = 1000
-		UP:10 += 100
+		UP:恐怖 += 100
 		A = 1
 	ENDIF
 
@@ -264,7 +264,7 @@ ELSEIF TFLAG:17 == TARGET
 		SIF MARK:反発感情 == 2
 			TIMES E , 2.0
 		SOURCE:反感追加 += C
-		UP:10 += 1000
+		UP:恐怖 += 1000
 	ELSE
 		SOURCE:液体追加 = 1500
 	ENDIF

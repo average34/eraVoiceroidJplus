@@ -123,10 +123,10 @@ SIF RESULT < 20
 	ABL:ＢＬっ気 += 1
 
 IF RESULT == 0
-	JUEL:5 -= A
-	JUEL:6 -= C
+	JUEL:欲情 -= A
+	JUEL:屈服 -= C
 ELSEIF RESULT == 1
-	JUEL:0 -= D
+	JUEL:快Ｃ -= D
 ELSEIF RESULT == 20
 	CALL AUT_BLKKE_0
 ELSEIF RESULT == 21
@@ -167,10 +167,10 @@ IF ABL:ＢＬっ気 >= 3 && TALENT:両刀 == 0
 	ENDIF
 ENDIF
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	I |= 1
 ;屈服の珠で上げる
-SIF JUEL:6 < C
+SIF JUEL:屈服 < C
 	I |= 1
 ;レズ経験が必要
 SIF EXP:ＢＬ経験 < B
@@ -182,7 +182,7 @@ ENDIF
 
 IF D > 0
 	;快Ｃの珠で上げる
-	SIF JUEL:0 < D
+	SIF JUEL:快Ｃ < D
 		J |= 1
 	;レズ経験が必要
 	SIF EXP:ＢＬ経験 < B

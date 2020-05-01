@@ -192,21 +192,21 @@ SIF RESULT < 20
 	ABL:自慰中毒 += 1
 
 IF RESULT == 0
-	JUEL:5 -= A
-	JUEL:0 -= B
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｃ -= B
+	JUEL:恥情 -= C
 ELSEIF RESULT == 1
-	JUEL:5 -= A
-	JUEL:2 -= F
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ａ -= F
+	JUEL:恥情 -= C
 ELSEIF RESULT == 2
-	JUEL:5 -= A
-	JUEL:1 -= R
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｖ -= R
+	JUEL:恥情 -= C
 ELSEIF RESULT == 3
-	JUEL:5 -= A
-	JUEL:14 -= S
-	JUEL:8 -= C
+	JUEL:欲情 -= A
+	JUEL:快Ｂ -= S
+	JUEL:恥情 -= C
 ELSEIF RESULT == 20
 	CALL AUT_JII_0
 ELSEIF RESULT == 21
@@ -266,13 +266,13 @@ IF ABL:Ｃ感覚 < G:0
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	I |= 1
 ;快Ｃの珠で上げる
-SIF JUEL:0 < B
+SIF JUEL:快Ｃ < B
 	I |= 1
 ;恥情の珠で上げる
-SIF JUEL:8 < C
+SIF JUEL:恥情 < C
 	I |= 1
 ;自慰経験または強制自慰経験が必要
 SIF EXP:自慰経験 < D && EXP:強制自慰経験 < E
@@ -288,13 +288,13 @@ IF ABL:Ａ感覚 < G:1
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	J |= 1
 ;快Ａの珠で上げる
-SIF JUEL:2 < F
+SIF JUEL:快Ａ < F
 	J |= 1
 ;恥情の珠で上げる
-SIF JUEL:8 < C
+SIF JUEL:恥情 < C
 	J |= 1
 ;自慰経験または強制自慰経験が必要
 SIF EXP:自慰経験 < D && EXP:強制自慰経験 < E
@@ -310,13 +310,13 @@ IF ABL:Ｖ感覚 < G:2
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	M |= 1
 ;快Ｖの珠で上げる
-SIF JUEL:1 < R
+SIF JUEL:快Ｖ < R
 	M |= 1
 ;恥情の珠で上げる
-SIF JUEL:8 < C
+SIF JUEL:恥情 < C
 	M |= 1
 ;自慰経験が必要
 SIF EXP:自慰経験 < D
@@ -332,13 +332,13 @@ IF ABL:Ｂ感覚 < G:3
 ENDIF
 
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	P |= 1
 ;快Ｂの珠で上げる
-SIF JUEL:14 < S
+SIF JUEL:快Ｂ < S
 	P |= 1
 ;恥情の珠で上げる
-SIF JUEL:8 < C
+SIF JUEL:恥情 < C
 	P |= 1
 ;自慰経験が必要
 SIF EXP:自慰経験 < D

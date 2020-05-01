@@ -23,7 +23,7 @@ SIF (TEQUIP:2 && (TEQUIP:2 == 22) == 0) && TALENT:淫乱 == 0
 SIF TEQUIP:20
 	RETURN 0
 ;欲情10000以上が必要
-SIF PALAM:5 < PALAMLV:4
+SIF PALAM:欲情 < PALAMLV:4
 	RETURN 0
 ;欲望10以上or露出癖2以上が必要
 SIF ABL:欲望 < 10 && ABL:露出癖 < 2
@@ -225,7 +225,7 @@ IF TFLAG:45
 		ENDIF
 	ENDIF
 	;淫乱かつC感覚10以上かつ欲情3000万以上
-	IF TALENT:淫乱 && (ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && (ABL:Ｃ感覚 >= 10) && (PALAM:欲情 >= 30000000)
 		PRINTFORML 待ちきれない様子で%CALLNAME:PLAYER%の前にペニスを露出させると
 	ELSE
 		PRINTFORML %CALLNAME:PLAYER%の前にペニスを露出させると
@@ -271,7 +271,7 @@ IF TFLAG:45
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は
 	;淫乱かつC感覚10以上かつ欲情3000万以上
-	IF TALENT:淫乱 && ( ABL:Ｃ感覚 >= 10) && (PALAM:5 >= 30000000)
+	IF TALENT:淫乱 && ( ABL:Ｃ感覚 >= 10) && (PALAM:欲情 >= 30000000)
 		PRINT 甘えておねだりする
 	;淫乱又はC感覚6以上
 	ELSEIF TALENT:淫乱 || ABL:Ｃ感覚 >= 6

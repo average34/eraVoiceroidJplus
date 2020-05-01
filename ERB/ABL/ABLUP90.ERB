@@ -105,9 +105,9 @@ SIF RESULT < 20
 	ABL:料理技能 += 1
 
 IF RESULT == 0
-	JUEL:16 -= A
+	JUEL:生活 -= A
 ELSEIF RESULT == 1
-	JUEL:7 -= C
+	JUEL:習得 -= C
 ELSEIF RESULT == 20
 	CALL AUT_RYOURI_0
 ELSEIF RESULT == 21
@@ -141,11 +141,11 @@ J = 0
 Z = 0
 
 ;生活の珠で上げる
-SIF JUEL:16 < A
+SIF JUEL:生活 < A
 	I |= 1
 
 ;習得の珠で上げる
-SIF JUEL:7 < C
+SIF JUEL:習得 < C
 	J |= 1
 
 IF EXP:家事経験 < B

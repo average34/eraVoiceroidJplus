@@ -78,9 +78,9 @@ SIF RESULT < 20
 	ABL:レズ中毒 += 1
 
 IF RESULT == 0
-	JUEL:0 -= B
-	JUEL:5 -= A
-	JUEL:6 -= A
+	JUEL:快Ｃ -= B
+	JUEL:欲情 -= A
+	JUEL:屈服 -= A
 ELSEIF RESULT == 20
 	CALL AUT_REZUTYUUDOKU_0
 ENDIF
@@ -121,13 +121,13 @@ IF ABL:奉仕精神 < ABL:レズ中毒 + 1
 ENDIF
 
 ;快Ｃの珠で上げる
-SIF JUEL:0 < B
+SIF JUEL:快Ｃ < B
 	I |= 1
 ;欲情の珠で上げる
-SIF JUEL:5 < A
+SIF JUEL:欲情 < A
 	I |= 1
 ;充実の珠で上げる
-SIF JUEL:6 < A
+SIF JUEL:屈服 < A
 	I |= 1
 ;レズ経験が必要
 SIF EXP:レズ経験 < C

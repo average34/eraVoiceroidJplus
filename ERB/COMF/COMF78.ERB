@@ -164,23 +164,23 @@ ELSE
 	ENDIF
 	IF F > 0 || R > 0
 		;PALAM:潤滑をみる
-		IF PALAM:3 < PALAMLV:1
+		IF PALAM:潤滑 < PALAMLV:1
 			TIMES SOURCE:快Ｖ , 0.10
 			TIMES SOURCE:快Ａ , 0.40
 			SOURCE:痛み += 700
-		ELSEIF PALAM:3 < PALAMLV:2
+		ELSEIF PALAM:潤滑 < PALAMLV:2
 			TIMES SOURCE:快Ｖ , 0.40
 			TIMES SOURCE:快Ａ , 0.80
 			SOURCE:痛み += 400
-		ELSEIF PALAM:3 < PALAMLV:3
+		ELSEIF PALAM:潤滑 < PALAMLV:3
 			TIMES SOURCE:快Ｖ , 1.00
 			TIMES SOURCE:快Ａ , 1.00
 			SOURCE:痛み += 200
-		ELSEIF PALAM:3 < PALAMLV:4
+		ELSEIF PALAM:潤滑 < PALAMLV:4
 			TIMES SOURCE:快Ｖ , 1.40
 			TIMES SOURCE:快Ａ , 1.40
 			SOURCE:痛み += 100
-		ELSEIF PALAM:3 >= PALAMLV:4
+		ELSEIF PALAM:潤滑 >= PALAMLV:4
 			TIMES SOURCE:快Ｖ , 1.80
 			TIMES SOURCE:快Ａ , 1.80
 			SOURCE:痛み += 50
@@ -239,7 +239,7 @@ ELSE
 		TIMES A , 0.60
 	LOSEBASE:体力 += A / 4
 	LOSEBASE:気力 += A / 2
-	UP:10 += A * 8
+	UP:恐怖 += A * 8
 	SOURCE:逸脱 += A * 3
 	IF TFLAG:71 == 1
 		SOURCE:痛み += A
@@ -405,7 +405,7 @@ SIF TALENT:小人体型
 LOSEBASE:体力 += A / 2
 LOSEBASE:気力 += A / 3
 
-UP:10 += A * 5
+UP:恐怖 += A * 5
 SOURCE:不潔 += A * 5
 SOURCE:液体追加 += 1000
 SOURCE:逸脱 += A * 2

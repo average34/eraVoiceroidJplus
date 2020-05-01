@@ -47,26 +47,26 @@ IF FLAG:2 == 1 && (CFLAG:60 & 32) == 0
 		SIF TALENT:恋人
 			A += 10
 		;欲情
-		IF PALAM:5 >= 8000
+		IF PALAM:欲情 >= 8000
 			A += 20
-		ELSEIF PALAM:5 >= 6000
+		ELSEIF PALAM:欲情 >= 6000
 			A += 15
-		ELSEIF PALAM:5 >= 4000
+		ELSEIF PALAM:欲情 >= 4000
 			A += 10
-		ELSEIF PALAM:5 >= 2000
+		ELSEIF PALAM:欲情 >= 2000
 			A += 5
-		ELSEIF PALAM:5 >= 1000
+		ELSEIF PALAM:欲情 >= 1000
 		ENDIF
 		;恐怖
-		IF PALAM:10 >= 4000
+		IF PALAM:恐怖 >= 4000
 			A += 20
-		ELSEIF PALAM:10 >= 3000
+		ELSEIF PALAM:恐怖 >= 3000
 			A += 15
-		ELSEIF PALAM:10 >= 2000
+		ELSEIF PALAM:恐怖 >= 2000
 			A += 10
-		ELSEIF PALAM:10 >= 1000
+		ELSEIF PALAM:恐怖 >= 1000
 			A += 5
-		ELSEIF PALAM:10 >= 500
+		ELSEIF PALAM:恐怖 >= 500
 		ENDIF
 		;最高値150
 		;最低値10
@@ -90,7 +90,7 @@ IF TEQUIP:2 == 5
 	IF TALENT:恋慕
 		PRINTFORML %CALLNAME:TARGET%は小さく悲鳴を上げて%CALLNAME:MASTER%の腕に抱きついてきた。
 		;小悪魔もしくは欲情1000以上
-		SIF TALENT:小悪魔 || PALAM:5 >= 1000
+		SIF TALENT:小悪魔 || PALAM:欲情 >= 1000
 			PRINTFORMW 少々わざとらしい気がしたが、悪い気分はしないので何も言わないでおいた。
 	;感情乏しい、もしくは無関心
 	ELSEIF TALENT:無関心 || TALENT:感情乏しい

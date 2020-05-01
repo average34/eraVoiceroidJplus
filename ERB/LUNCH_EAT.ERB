@@ -125,21 +125,21 @@ $LUNCH_EVALUATE
 PRINTL 
 IF L > 0
 	IF ABL:料理技能 >= 10 && TALENT:恋人
-		JUEL:4 += L * 20
-		JUEL:15 += L * 30
+		JUEL:恭順 += L * 20
+		JUEL:好意 += L * 30
 		PRINTFORML %PALAMNAME:4%の珠＋{L*20}
 		PRINTFORML %PALAMNAME:15%の珠＋{L*30}
 	ELSE
-		JUEL:4 += L * 10
-		JUEL:15 += L * 15
+		JUEL:恭順 += L * 10
+		JUEL:好意 += L * 15
 		PRINTFORML %PALAMNAME:4%の珠＋{L*10}
 		PRINTFORML %PALAMNAME:15%の珠＋{L*15}
 	ENDIF
 ENDIF
 PRINTFORML %PALAMNAME:7%の珠＋{Q}
-JUEL:7 += Q
+JUEL:習得 += Q
 PRINTFORML %PALAMNAME:16%の珠＋{ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20}
-JUEL:16 += ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20
+JUEL:生活 += ABL:TARGET:料理技能 * SQRT( ABL:TARGET:料理技能 ) * R * 20
 
 ;恋人持ちかつ食後のイベント発生確定時は愛情経験が入る
 ;また、食後のイベントで押し倒すことを選ぶと奉仕快楽経験が入るようになる

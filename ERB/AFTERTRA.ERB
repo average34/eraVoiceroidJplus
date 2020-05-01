@@ -163,7 +163,7 @@ REPEAT A
 		GOTJUEL:LOCAL += G + EX:Ｍ絶頂 * 1000
 	ELSEIF LOCAL == 11 || LOCAL == 12 || LOCAL == 13
 		;反感、不快、抑鬱のPALAMから否定の珠を取得
-		GOTJUEL:100 += G
+		GOTJUEL:否定 += G
 	ELSE
 		GOTJUEL:LOCAL += G
 	ENDIF
@@ -195,11 +195,11 @@ REPEAT A
 	LOCAL = X:COUNT
 	
 	;否定の宝珠＋取得否定の宝珠がない場合をまず弾く
-	IF LOCAL == 100 && JUEL:100 == 0 && GOTJUEL:100 == 0
+	IF LOCAL == 100 && JUEL:否定 == 0 && GOTJUEL:否定 == 0
 		GOTJUEL:LOCAL = -1
 		CONTINUE
 	;否定の宝珠以外の表示において、相殺がない場合には、新規獲得宝珠のない宝珠は弾く
-	ELSEIF LOCAL != 100 && JUEL:100 == 0 && GOTJUEL:100 == 0 && GOTJUEL:LOCAL == 0
+	ELSEIF LOCAL != 100 && JUEL:否定 == 0 && GOTJUEL:否定 == 0 && GOTJUEL:LOCAL == 0
 		GOTJUEL:LOCAL = -1
 		CONTINUE
 	;否定の宝珠以外で相殺がある場合、宝珠＋取得宝珠がない宝珠を弾く
@@ -235,7 +235,7 @@ SIF LOCAL:1 > 0
 ;否定の珠の打ち消しチェック
 ;-------------------------------------------------
 @DENIAL_CHECK
-SIF JUEL:100 == 0
+SIF JUEL:否定 == 0
 	RETURN 0
 DRAWLINE
 PRINTL 否定の珠と他の珠の打ち消しが発生しています。
@@ -244,31 +244,31 @@ $LABEL_1
 A = RAND:4 + 4
 SIF A == 7
 	A = 15
-B = JUEL:100 / 2
-SIF B == 0 && JUEL:100 > 0
+B = JUEL:否定 / 2
+SIF B == 0 && JUEL:否定 > 0
 	B = 1
 SIF JUEL:A < B
 	B = JUEL:A
 JUEL:A -= B
-JUEL:100 -= B
+JUEL:否定 -= B
 
 SIF B > 0
 	PRINTFORML %PALAMNAME:A%の珠－{B}減少
-SIF JUEL:100 > 0 && (JUEL:4 + JUEL:5 + JUEL:6 + JUEL:15) > 0
+SIF JUEL:否定 > 0 && (JUEL:恭順 + JUEL:欲情 + JUEL:屈服 + JUEL:好意) > 0
 	GOTO LABEL_1
 
 $LABEL_2
 A = RAND:3 + 8
-B = JUEL:100 / 2
-SIF B == 0 && JUEL:100 > 0
+B = JUEL:否定 / 2
+SIF B == 0 && JUEL:否定 > 0
 	B = 1
 SIF JUEL:A < B
 	B = JUEL:A
 JUEL:A -= B
-JUEL:100 -= B
+JUEL:否定 -= B
 SIF B > 0
 	PRINTFORML %PALAMNAME:A%の珠－{B}個減少
-SIF JUEL:100 > 0 && (JUEL:8 + JUEL:9 + JUEL:10) > 0
+SIF JUEL:否定 > 0 && (JUEL:恥情 + JUEL:苦痛 + JUEL:恐怖) > 0
 	GOTO LABEL_2
 
 DRAWLINE

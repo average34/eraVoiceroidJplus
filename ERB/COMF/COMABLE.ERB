@@ -134,7 +134,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナル愛撫はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -263,7 +263,7 @@ SIF TFLAG:44 == 0
 SIF TALENT:オトコ
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -377,7 +377,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合バイブはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -434,7 +434,7 @@ SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:
 SIF ITEM:アナルバイブ == 0 && NOITEM == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナルバイブはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -728,7 +728,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -779,7 +779,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -831,7 +831,7 @@ SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:
 SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;潤滑不足で、従順4以下・レズっ気4以下のASSIの場合アナルセックスはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -930,7 +930,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -981,7 +981,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -1039,7 +1039,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合正常位アナルはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -1105,7 +1105,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合後背位アナルはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -1179,7 +1179,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合対面座位アナルはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -1245,7 +1245,7 @@ IF EXP:Ｖ経験 == 0 && ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合背面座位アナルはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -1336,7 +1336,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;潤滑が高くないとダメ
-SIF PALAM:3 < 2000
+SIF PALAM:潤滑 < 2000
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりじゃないとダメ
 SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0
@@ -2404,7 +2404,7 @@ ENDIF
 SIF (TALENT:MASTER:小人体型 || TALENT:TARGET:小人体型 || TALENT:ASSI:小人体型) && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合二本刺しはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -3120,7 +3120,7 @@ SIF TFLAG:44 == 0
 SIF TALENT:オトコ
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合指挿入れはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -3238,7 +3238,7 @@ SIF TALENT:オトコ
 SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合乱れ牡丹はできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF
@@ -3599,7 +3599,7 @@ IF ASSIPLAY
 		RETURN 0
 ENDIF
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合クスコはできない（サドならＯＫ）
-IF PALAM:3 < PALAMLV:2 && ASSIPLAY
+IF PALAM:潤滑 < PALAMLV:2 && ASSIPLAY
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF

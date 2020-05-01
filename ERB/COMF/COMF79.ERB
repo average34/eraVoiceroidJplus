@@ -91,12 +91,12 @@ ELSE
 	IF NO:TARGET == 24 && NO:TARGET == 78
 		LOSEBASE:体力 += A / 4
 		LOSEBASE:気力 += A / 2
-		UP:10 += A * 20
+		UP:恐怖 += A * 20
 		SOURCE:逸脱 += A * 3
 	ELSE
 		LOSEBASE:体力 += A / 2
 		LOSEBASE:気力 += A
-		UP:10 += A * 30
+		UP:恐怖 += A * 30
 		SOURCE:逸脱 += A * 10
 	ENDIF
 
@@ -154,13 +154,13 @@ ENDIF
 IF NO:TARGET == 24 && NO:TARGET == 78
 	LOSEBASE:体力 += A / 8
 	LOSEBASE:気力 += A / 4
-	UP:10 += A * 20
+	UP:恐怖 += A * 20
 	SOURCE:不潔 += A * 6
 	SOURCE:逸脱 += A * 3
 ELSE
 	LOSEBASE:体力 += A / 4
 	LOSEBASE:気力 += A / 2
-	UP:10 += A * 30
+	UP:恐怖 += A * 30
 	SOURCE:不潔 += A * 10
 	SOURCE:逸脱 += A * 15
 ENDIF
@@ -176,7 +176,7 @@ TIMES SOURCE:屈従 , 1.80
 
 ;何が出るかな？(ランダムでイベントが発生するのもありかな？と思って作ってみた)
 ;基本虫好きキャラ以外で[感情乏しい]、[狂気]を持っていないキャラの恐怖が一定以上溜まった場合低確率で発動
-IF TALENT:感情乏しい == 0 && TALENT:狂気 == 0 && PALAM:10 > PALAMLV:4
+IF TALENT:感情乏しい == 0 && TALENT:狂気 == 0 && PALAM:恐怖 > PALAMLV:4
 	IF RAND:25 == 0
 		L = RAND:10
 		IF L == 0
@@ -243,15 +243,15 @@ IF MAXBASE:PLAYER:耐力 != 0
 	ENDIF
 
 	;PALAM:欲情をみる
-	IF PALAM:5 < PALAMLV:1
+	IF PALAM:欲情 < PALAMLV:1
 		TIMES B , 1.00
-	ELSEIF PALAM:5 < PALAMLV:2
+	ELSEIF PALAM:欲情 < PALAMLV:2
 		TIMES B , 1.10
-	ELSEIF PALAM:5 < PALAMLV:3
+	ELSEIF PALAM:欲情 < PALAMLV:3
 		TIMES B , 1.20
-	ELSEIF PALAM:5 < PALAMLV:4
+	ELSEIF PALAM:欲情 < PALAMLV:4
 		TIMES B , 1.30
-	ELSEIF PALAM:5 < PALAMLV:5
+	ELSEIF PALAM:欲情 < PALAMLV:5
 		TIMES B , 1.40
 	ELSE
 		TIMES B , 1.50

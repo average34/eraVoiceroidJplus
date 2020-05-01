@@ -242,20 +242,20 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:
 		ENDIF
 		;貧乳の場合のボーナス,恥情が入る
 		PRINTFORML %PALAMNAME:8%の珠＋{A:1*30}
-		JUEL:4 += A:1*100
+		JUEL:恭順 += A:1*100
 		IF TALENT:巨乳
-			JUEL:5 += A:1*60
+			JUEL:欲情 += A:1*60
 		ELSE
-			JUEL:5 += A:1*30
+			JUEL:欲情 += A:1*30
 		ENDIF
-		JUEL:6 += A*40
+		JUEL:屈服 += A*40
 		IF TALENT:貧乳 == 0 && TALENT:巨乳 == 0
-			JUEL:7 += A:1*60
+			JUEL:習得 += A:1*60
 		ELSE
-			JUEL:7 += A:1*40
+			JUEL:習得 += A:1*40
 		ENDIF
 		SIF TALENT:貧乳
-			JUEL:8 += A:1*30
+			JUEL:恥情 += A:1*30
 		;カットフラグを戻す
 		CFLAG:99 = LOCAL:100
 		RETURN 1
@@ -370,9 +370,9 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:恋慕 || TALENT:T
 			PRINTFORML %PALAMNAME:1%の珠＋{A:1*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 			PRINTFORMW %PALAMNAME:5%の珠＋{A:1*40}
-			JUEL:1 += A:1*50
-			JUEL:4 += A:1*100
-			JUEL:5 += A:1*40
+			JUEL:快Ｖ += A:1*50
+			JUEL:恭順 += A:1*100
+			JUEL:欲情 += A:1*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -461,9 +461,9 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:恋慕 || TALENT:T
 			PRINTFORML %PALAMNAME:0%の珠＋{A:1*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{A:1*100}
 			PRINTFORMW %PALAMNAME:5%の珠＋{A:1*40}
-			JUEL:0 += A:1*50
-			JUEL:4 += A:1*100
-			JUEL:5 += A:1*40
+			JUEL:快Ｃ += A:1*50
+			JUEL:恭順 += A:1*100
+			JUEL:欲情 += A:1*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -579,9 +579,9 @@ IF ITEM:エプロン == 1 && TALENT:相愛
 			PRINTFORML %PALAMNAME:1%の珠＋{A*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{A*100}
 			PRINTFORMW %PALAMNAME:5%の珠＋{A*40}
-			JUEL:1 += A*50
-			JUEL:4 += A*100
-			JUEL:5 += A*40
+			JUEL:快Ｖ += A*50
+			JUEL:恭順 += A*100
+			JUEL:欲情 += A*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -686,16 +686,16 @@ IF ITEM:エプロン == 1 && TALENT:相愛
 			ENDIF
 			IF A > 0
 				PRINTFORML %PALAMNAME:0%の珠＋{A*50}
-				JUEL:1 += A*50
+				JUEL:快Ｖ += A*50
 			ENDIF
 			IF B > 0
 				PRINTFORML %PALAMNAME:14%の珠＋{B*50}
-				JUEL:14 += B*50
+				JUEL:快Ｂ += B*50
 			ENDIF
 			PRINTFORML %PALAMNAME:4%の珠＋{(A+B)*100}
 			PRINTFORMW %PALAMNAME:5%の珠＋{(A+B)*40}
-			JUEL:4 += (A+B)*100
-			JUEL:5 += (A+B)*40
+			JUEL:恭順 += (A+B)*100
+			JUEL:欲情 += (A+B)*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -789,8 +789,8 @@ IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:恋慕 && TALENT:TA
 		ENDIF
 		PRINTFORML %PALAMNAME:4%の珠＋{A*50}
 		PRINTFORMW %PALAMNAME:7%の珠＋{A*100}
-		JUEL:4 += A*50
-		JUEL:7 += A*100
+		JUEL:恭順 += A*50
+		JUEL:習得 += A*100
 		;カットフラグを戻す
 		CFLAG:99 = LOCAL:100
 		RETURN 1
@@ -886,18 +886,18 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:恋慕 || TALENT:TARGET:�
 			PRINTFORML %PALAMNAME:0%の珠＋{B*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{B*40}
 			PRINTFORMW %PALAMNAME:5%の珠＋{B*100}
-			JUEL:0 += B*50
-			JUEL:4 += B*40
-			JUEL:5 += B*100
+			JUEL:快Ｃ += B*50
+			JUEL:恭順 += B*40
+			JUEL:欲情 += B*100
 			T = TARGET
 			PLAYER = MASTER
 			CALL GET_INITIATIVE_RATE
 			IF R > 0
 				PRINTFORML %PALAMNAME:17%の珠＋{B*100}
-				JUEL:17 += B*100
+				JUEL:優越 += B*100
 			ELSE
 				PRINTFORML %PALAMNAME:8%の珠＋{B*50}
-				JUEL:8 += B*50
+				JUEL:恥情 += B*50
 			ENDIF
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
@@ -992,18 +992,18 @@ IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:恋慕 || TALENT:TARGET:�
 			PRINTFORML %PALAMNAME:0%の珠＋{B*50}
 			PRINTFORML %PALAMNAME:4%の珠＋{B*40}
 			PRINTFORMW %PALAMNAME:5%の珠＋{B*100}
-			JUEL:0 += B*50
-			JUEL:4 += B*40
-			JUEL:5 += B*100
+			JUEL:快Ｃ += B*50
+			JUEL:恭順 += B*40
+			JUEL:欲情 += B*100
 			T = TARGET
 			PLAYER = MASTER
 			CALL GET_INITIATIVE_RATE
 			IF R > 0
 				PRINTFORML %PALAMNAME:17%の珠＋{B*100}
-				JUEL:17 += B*100
+				JUEL:優越 += B*100
 			ELSE
 				PRINTFORML %PALAMNAME:8%の珠＋{B*50}
-				JUEL:8 += B*50
+				JUEL:恥情 += B*50
 			ENDIF
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
@@ -1116,9 +1116,9 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:恋慕 || TALENT:TARGET:�
 			PRINTFORML %PALAMNAME:4%の珠＋{A*100}
 			PRINTFORML %PALAMNAME:6%の珠＋{A*30}
 			PRINTFORMW %PALAMNAME:7%の珠＋{A*40}
-			JUEL:4 += A*100
-			JUEL:6 += A*30
-			JUEL:7 += A*40
+			JUEL:恭順 += A*100
+			JUEL:屈服 += A*30
+			JUEL:習得 += A*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -1199,9 +1199,9 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:恋慕 || TALENT:TARGET:�
 			PRINTFORML %PALAMNAME:4%の珠＋{A*100}
 			PRINTFORML %PALAMNAME:6%の珠＋{A*30}
 			PRINTFORMW %PALAMNAME:7%の珠＋{A*40}
-			JUEL:4 += A*100
-			JUEL:6 += A*30
-			JUEL:7 += A*40
+			JUEL:恭順 += A*100
+			JUEL:屈服 += A*30
+			JUEL:習得 += A*40
 			;カットフラグを戻す
 			CFLAG:99 = LOCAL:100
 			RETURN 1
@@ -1276,7 +1276,7 @@ IF ABL:親密 >= 6 && TALENT:恋慕
 			PRINTFORML そっと揺り起こすと、寝ぼけた%CALLNAME:TARGET%が抱きついてきた
 		ENDIF
 		PRINTFORMW %PALAMNAME:15%の珠＋{A*200}
-		JUEL:15 += A*200
+		JUEL:好意 += A*200
 		CFLAG:2 += A
 		PRINTFORML 好感度上昇:{A}
 		SIF ((FLAG:23 & 1p26) == 0) && FLAG:2 != 1
@@ -1359,12 +1359,12 @@ IF ABL:親密 >= 6 && TALENT:恋慕 && (CFLAG:97 & 4096) == 0
 		PRINTFORML %PALAMNAME:15%の珠＋{B*150}
 		IF R > 0
 			PRINTFORML %PALAMNAME:17%の珠＋{B*100}
-			JUEL:17 += B*100
+			JUEL:優越 += B*100
 		ELSE
 			PRINTFORML %PALAMNAME:8%の珠＋{B*50}
-			JUEL:8 += B*50
+			JUEL:恥情 += B*50
 		ENDIF
-		JUEL:15 += B*150
+		JUEL:好意 += B*150
 		CFLAG:2 += B
 		PRINTFORML 好感度上昇:{B}
 		SIF ((FLAG:23 & 1p26) == 0) && FLAG:2 != 1
@@ -1464,12 +1464,12 @@ IF MARK:反発感情 >= 3
 			IF R > 0
 				PRINTL フライパンとお玉を持って立っていた
 				PRINTFORMW %PALAMNAME:17%の珠＋{B*200}
-				JUEL:17 += B*200
+				JUEL:優越 += B*200
 			;弱気なキャラ
 			ELSE
 				PRINTL 走り去る後ろ姿が見えた
 				PRINTFORMW %PALAMNAME:8%の珠＋{B*200}
-				JUEL:8 += B*200
+				JUEL:恥情 += B*200
 			ENDIF
 		ENDIF
 		;カットフラグを戻す

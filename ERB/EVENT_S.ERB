@@ -624,7 +624,7 @@ SIF TALENT:キス魔
 A = A * A - 2 * A + 11
 ;地の文の整合性のために[サド]と[キス魔]～は同時に起こさない
 ;[サド]：欲望10以上技巧10以上サドっ気6以上、優越が20万以上、主導権を相手に渡してスパンキング/鞭/針を主人に対して三回以上実行
-IF ABL:欲望 >= 10 && ABL:技巧 >= 10 && ABL:サドっ気 >= 6 && TFLAG:61 >= 3 && PALAM:17 >= 200000 && TALENT:サド == 0 && FLAG:62 & 8
+IF ABL:欲望 >= 10 && ABL:技巧 >= 10 && ABL:サドっ気 >= 6 && TFLAG:61 >= 3 && PALAM:優越 >= 200000 && TALENT:サド == 0 && FLAG:62 & 8
 	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 	PRINTFORML %CALLNAME:TARGET%は行為が終わり立ち去ろうとした%CALLNAME:MASTER%を押し倒し、嗜虐的な笑みを浮かべ%CALLNAME:MASTER%を見下ろしている…
 	PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に痛めつけることに快感を得るようになったようだ…
@@ -714,7 +714,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫壷】を得た
 		TALENT:淫壷 = 1
 	;マゾっ気と露出癖が共に6以上、苦痛依存3、緊縛経験と苦痛快楽経験が両方とも150以上、異常経験が100以上、今回調教中にPALAM:苦痛が30000以上でマゾ
-	ELSEIF TALENT:マゾ == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:苦痛快楽経験 >= 150 && EXP:異常経験 >= 100 && EXP:緊縛経験 >= 150 && MARK:苦痛依存 == 3 && PALAM:9 >= 30000
+	ELSEIF TALENT:マゾ == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:苦痛快楽経験 >= 150 && EXP:異常経験 >= 100 && EXP:緊縛経験 >= 150 && MARK:苦痛依存 == 3 && PALAM:苦痛 >= 30000
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にもっと激しく責め立てて欲しいとおねだりしてきた…
@@ -738,7 +738,7 @@ IF EXP:Ｖ経験 == 0
 	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
 		RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合3Pはできない（サドならＯＫ）
-ELSEIF PALAM:3 < PALAMLV:2
+ELSEIF PALAM:潤滑 < PALAMLV:2
 	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
 		RETURN 0
 ENDIF

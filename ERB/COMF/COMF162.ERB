@@ -137,7 +137,7 @@ ELSE
 	PRINTFORML %CALLNAME:TARGET%は荒い息をつきながら爪が腕に食い込む程自分の体をぎゅっと抱きしめている
 	PRINTFORML それでも体の火照りを抑えられなくなったのか%CALLNAME:TARGET%の足元には愛液で出来た水たまりが広がっている……
 	SOURCE:欲情追加 = 7000
-	PALAM:10 += 4000
+	PALAM:恐怖 += 4000
 ENDIF
 WAIT
 
@@ -146,7 +146,7 @@ ITEM:ローション -= 1
 ITEM:媚薬 -= 1
 ITEM:利尿剤 -= 1
 
-PALAM:10 += 1000
+PALAM:恐怖 += 1000
 TEQUIP:75 = 1
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

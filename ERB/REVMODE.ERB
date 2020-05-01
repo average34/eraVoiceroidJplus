@@ -269,7 +269,7 @@ IF PENIS(PLAYER)
 	;正常位させる OR 後背位させる OR 対面座位させる OR 背面座位させる OR 騎乗位する OR キス正常位 OR キス後背位 OR キス対面座位 OR キス背面座位 OR キス騎乗位 OR 挿入Ｇスポ責め OR 挿入子宮口責め
 	CASE 20, 21, 24, 25, 34, 120 TO 124, 255, 256
 		;続行
-		IF !TFLAG:302 || (RAND:100 >= (50 + GETPALAMLV(PALAM:5, 10)))
+		IF !TFLAG:302 || (RAND:100 >= (50 + GETPALAMLV(PALAM:欲情, 10)))
 			FOR LCOUNT, 0, 23
 				LOCAL:LCOUNT *= INRANGE(LCOUNT, 8, 12)
 			NEXT
@@ -287,7 +287,7 @@ IF PENIS(TARGET)
 	;正常位する OR 後背位する OR 騎乗位させる
 	CASE 193 TO 195
 		;続行
-		IF !TFLAG:10 || (RAND:100 >= (50 + GETPALAMLV(PALAM:5, 10)))
+		IF !TFLAG:10 || (RAND:100 >= (50 + GETPALAMLV(PALAM:欲情, 10)))
 			FOR LCOUNT, 0, 23
 				LOCAL:LCOUNT *= INRANGE(LCOUNT, 18, 20)
 			NEXT
@@ -376,11 +376,11 @@ CASE 4
 ;素股
 CASE 5
 	;プレイヤーに男性器がある AND 潤滑2000以上
-	RETURNF (PENIS(PLAYER) && PALAM:3 >= 2000)
+	RETURNF (PENIS(PLAYER) && PALAM:潤滑 >= 2000)
 ;貝あわせ
 CASE 6
 	;プレイヤーに男性器がない AND 潤滑2000以上
-	RETURNF (!PENIS(PLAYER) && PALAM:3 >= 2000)
+	RETURNF (!PENIS(PLAYER) && PALAM:潤滑 >= 2000)
 ;足扱き
 CASE 7
 	;プレイヤーに男性器がある
@@ -388,23 +388,23 @@ CASE 7
 ;正常位させる
 CASE 8
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:潤滑 >= 10000)
 ;後背位させる
 CASE 9
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:潤滑 >= 10000)
 ;対面座位させる
 CASE 10
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:潤滑 >= 10000)
 ;背面座位させる
 CASE 11
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:潤滑 >= 10000)
 ;騎乗位する
 CASE 12
 	;パートナーが処女でない AND プレイヤーに男性器がある AND パートナーがオトコでない AND 潤滑10000以上
-	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:3 >= 10000)
+	RETURNF (!TALENT:TARGET:処女 && PENIS(PLAYER) && !TALENT:TARGET:オトコ && PALAM:潤滑 >= 10000)
 ;顔面騎乗クンニ
 CASE 13
 	;パートナーに男性器がない

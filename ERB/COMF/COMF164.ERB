@@ -120,16 +120,16 @@ IF W == 0
 	SIF TALENT:倒錯的
 		TIMES A, 2.00
 
-	PALAM:11 -= A
-	PALAM:12 -= A
-	PALAM:13 -= A
+	PALAM:反感 -= A
+	PALAM:不快 -= A
+	PALAM:抑鬱 -= A
 
-	SIF PALAM:11 <= 0
-		PALAM:11 = 0
-	SIF PALAM:12 <= 0
-		PALAM:12 = 0
-	SIF PALAM:13 <= 0
-		PALAM:13 = 0
+	SIF PALAM:反感 <= 0
+		PALAM:反感 = 0
+	SIF PALAM:不快 <= 0
+		PALAM:不快 = 0
+	SIF PALAM:抑鬱 <= 0
+		PALAM:抑鬱 = 0
 ELSEIF W == 1 || W == 2
 	;筆クリ責め
 	;ABL:Ｃ感覚をみる

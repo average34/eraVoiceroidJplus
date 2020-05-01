@@ -6,8 +6,8 @@ SIF FLAG:6 == 0
 ;愛撫
 ;--------------------------------------------------------
 IF SELECTCOM == 0
-	A = UP:0
-	B = UP:14
+	A = UP:快Ｃ
+	B = UP:快Ｂ
 	C = A+B
 
 	IF C < 100
@@ -32,7 +32,7 @@ IF SELECTCOM == 0
 ;クンニ
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 1
-	A = UP:0
+	A = UP:快Ｃ
 
 	SIF A < 300
 		PRINTFORML %CALLNAME:TARGET%のそこはまだしっとりと閉じたままだ。快楽を感じるにはもう少しかかるかもしれない。
@@ -65,7 +65,7 @@ ELSEIF SELECTCOM == 1
 ;アナル愛撫
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 2
-	A = UP:2
+	A = UP:快Ａ
 
 	IF A < 300
 		PRINTFORM %CALLNAME:TARGET%は悲鳴を上げて体をよじる。
@@ -109,10 +109,10 @@ ELSEIF SELECTCOM == 2
 ;自慰
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 3
-	A = UP:0
-	B = UP:1
-	C = UP:2
-	D = UP:17
+	A = UP:快Ｃ
+	B = UP:快Ｖ
+	C = UP:快Ａ
+	D = UP:優越
 	E = A+B+C+D
 
 	PRINTFORM %CALLNAME:TARGET%は
@@ -154,7 +154,7 @@ ELSEIF SELECTCOM == 3
 ;胸愛撫
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 5
-	A = UP:14
+	A = UP:快Ｂ
 
 	IF A < 300
 		PRINTFORML %CALLNAME:TARGET%はまだ胸で快楽を感じれるまでには至っていないようだ。
@@ -186,7 +186,7 @@ ELSEIF SELECTCOM == 5
 ;ローター
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 10
-	A = UP:0
+	A = UP:快Ｃ
 
 	IF A < 300
 		PRINTFORML %CALLNAME:TARGET%はまだ大きな快楽を得るには至っていないようだ。
@@ -214,7 +214,7 @@ ELSEIF SELECTCOM == 10
 ;バイブ
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 11
-	A = UP:1
+	A = UP:快Ｖ
 
 	IF TEQUIP:11
 		IF A < 300
@@ -259,7 +259,7 @@ ELSEIF SELECTCOM == 11
 ;Ｅマッサージャ
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 12
-	A = UP:0
+	A = UP:快Ｃ
 
 	IF A < 300
 		PRINTFORML %CALLNAME:TARGET%のクリトリスにマッサージャを押し当ててやったが、振動に耐えるだけで大きな快楽を得るまでにはいたってないようだ。
@@ -283,7 +283,7 @@ ELSEIF SELECTCOM == 12
 ;アナルバイブ
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 13
-	A = UP:2
+	A = UP:快Ａ
 
 	IF TEQUIP:13
 		IF A < 300
@@ -324,7 +324,7 @@ ELSEIF SELECTCOM == 13
 ;電動クリキャップ
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 14
-	A = UP:0
+	A = UP:快Ｃ
 
 	IF A < 300
 		PRINTFORML %CALLNAME:TARGET%はクリトリスへの刺激に目を閉じて耐えている。
@@ -344,7 +344,7 @@ ELSEIF SELECTCOM == 14
 ;騎乗位
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 34
-	A = UP:1
+	A = UP:快Ｖ
 
 	IF A < 299 
 	PRINTFORML %CALLNAME:TARGET%は苦しそうにしながら命令に従って腰を振る。だが、まだ快楽を得るには遠いようだ。
@@ -373,7 +373,7 @@ ELSEIF SELECTCOM == 34
 ;スパンキング、針、鞭
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 40 || SELECTCOM == 41 || SELECTCOM == 42
-	A = UP:9
+	A = UP:苦痛
 
 	IF TFLAG:45 == 0
 	SIF A < 300
@@ -438,10 +438,10 @@ ELSEIF SELECTCOM == 311
 ;300～339のコマンドで別に地の文を表示したい場合はこの分岐の前か、この分岐の条件文からそのコマンドは除く必要あり
 ;--------------------------------------------------------
 ELSEIF SELECTCOM >= 300 && SELECTCOM <= 339 && (SELECTCOM != 323 || TEQUIP:2) && SELECTCOM != 310
-	A = UP:15
+	A = UP:好意
 
 	;現在値が1億を越えたら、もう全部大量入手扱いにする
-	IF PALAM:15 > 100000000
+	IF PALAM:好意 > 100000000
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:PLAYER%に完全に愛情の篭った眼差しを向けている。
 	ELSEIF A < 300
 		IF TALENT:反抗的 || TALENT:気丈 || TALENT:プライド高い || TALENT:生意気 || TALENT:抑圧 || TALENT:抵抗 || TALENT:自制心 || TALENT:無関心 || TALENT:男嫌い && TALENT:PLAYER:オトコ
@@ -475,7 +475,7 @@ ELSEIF SELECTCOM >= 300 && SELECTCOM <= 339 && (SELECTCOM != 323 || TEQUIP:2) &&
 ;キス系コマンド
 ;--------------------------------------------------------
 ELSEIF SELECTCOM >= 340 && SELECTCOM <= 359
-	A = UP:11
+	A = UP:反感
 
 	PRINTFORM %CALLNAME:TARGET%は
 
@@ -496,7 +496,7 @@ ELSEIF SELECTCOM >= 340 && SELECTCOM <= 359
 ;胸愛撫
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 360
-	A = UP:14
+	A = UP:快Ｂ
 
 	IF A > 100000000
 		PRINTFORM %CALLNAME:TARGET%の胸を揉み続けてやると、それだけで身体を跳ねさせ、
@@ -529,7 +529,7 @@ ELSEIF SELECTCOM == 360
 ;愛撫
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 361
-	A = UP:0
+	A = UP:快Ｃ
 
 	IF A > 100000000
 		PRINTFORML %CALLNAME:TARGET%はこちらの愛撫だけで激しく感じ、さらなる刺激を求めてしなだれかかってきた。
@@ -551,7 +551,7 @@ ELSEIF SELECTCOM == 361
 ;着衣ローター
 ;--------------------------------------------------------
 ELSEIF SELECTCOM == 367
-	A = UP:0
+	A = UP:快Ｃ
 
 	;絶頂
 	IF TFLAG:29 > 0
@@ -653,7 +653,7 @@ RETURN 0
 
 @SAMPLE
 ;ELSEIF SELECTCOM == 10
-A = UP:0
+A = UP:快Ｃ
 
 IF A < 300
 	PRINTFORML 
