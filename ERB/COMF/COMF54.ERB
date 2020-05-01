@@ -52,28 +52,28 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:7 += 0
-	SOURCE:10 += 0
+	SOURCE:中毒充足 += 0
+	SOURCE:液体追加 += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:7 += 50
-	SOURCE:10 += 50
+	SOURCE:中毒充足 += 50
+	SOURCE:液体追加 += 50
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:7 += 150
-	SOURCE:10 += 150
+	SOURCE:中毒充足 += 150
+	SOURCE:液体追加 += 150
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:7 += 400
-	SOURCE:10 += 400
+	SOURCE:中毒充足 += 400
+	SOURCE:液体追加 += 400
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:7 += 750
-	SOURCE:10 += 750
+	SOURCE:中毒充足 += 750
+	SOURCE:液体追加 += 750
 	TIMES A, 2.00
 ELSE
-	SOURCE:7 += 175 + (ABL:露出癖 * 225)
-	SOURCE:10 += 175 + (ABL:露出癖 * 225)
+	SOURCE:中毒充足 += 175 + (ABL:露出癖 * 225)
+	SOURCE:液体追加 += 175 + (ABL:露出癖 * 225)
 	A = A * (ABL:露出癖 * 50 + 50) / 100
 ENDIF
 ;ABL:マゾっ気をみる
@@ -105,12 +105,12 @@ SIF TALENT:臆病
 SIF TALENT:恥じらい
 	TIMES B , 2.00
 
-SOURCE:12 += A
-SOURCE:14 += B
-SOURCE:16 += A/2
+SOURCE:露出 += A
+SOURCE:逸脱 += B
+SOURCE:恭順追加 += A/2
 
 UP:8 += A/2
-UP:10 += SOURCE:14/2
+UP:10 += SOURCE:逸脱/2
 
 TEQUIP:54 = 1
 
@@ -120,33 +120,33 @@ IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 300 + (ABL:親密 * 50)
+		SOURCE:受動 += 300 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 600 + (ABL:親密 * 100)
+		SOURCE:受動 += 600 + (ABL:親密 * 100)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 800 + (ABL:親密 * 120)
+		SOURCE:受動 += 800 + (ABL:親密 * 120)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 1000 + (ABL:親密 * 140)
+		SOURCE:受動 += 1000 + (ABL:親密 * 140)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 1200 + (ABL:親密 * 160)
+		SOURCE:受動 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:親密 * 180)
+		SOURCE:受動 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 800
+		SOURCE:征服 = 800
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 1100
+		SOURCE:征服 = 1100
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 1400
+		SOURCE:征服 = 1400
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1800
+		SOURCE:征服 = 1800
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 2300
+		SOURCE:征服 = 2300
 	ELSE
-		SOURCE:20 = 1000 + (ABL:サドっ気 * 350)
+		SOURCE:征服 = 1000 + (ABL:サドっ気 * 350)
 	ENDIF
 ENDIF
 
@@ -155,7 +155,7 @@ A = RAND:10 + 5
 ;合意がないと好感度が下がる
 IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 10
-	SOURCE:15 += 500
+	SOURCE:反感追加 += 500
 ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
@@ -197,28 +197,28 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:7 += 0
-	SOURCE:10 += 0
+	SOURCE:中毒充足 += 0
+	SOURCE:液体追加 += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:7 += 50
-	SOURCE:10 += 50
+	SOURCE:中毒充足 += 50
+	SOURCE:液体追加 += 50
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:7 += 150
-	SOURCE:10 += 150
+	SOURCE:中毒充足 += 150
+	SOURCE:液体追加 += 150
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:7 += 400
-	SOURCE:10 += 400
+	SOURCE:中毒充足 += 400
+	SOURCE:液体追加 += 400
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:7 += 750
-	SOURCE:10 += 750
+	SOURCE:中毒充足 += 750
+	SOURCE:液体追加 += 750
 	TIMES A, 2.00
 ELSE
-	SOURCE:7 += 175 + (ABL:露出癖 * 225)
-	SOURCE:10 += 175 + (ABL:露出癖 * 225)
+	SOURCE:中毒充足 += 175 + (ABL:露出癖 * 225)
+	SOURCE:液体追加 += 175 + (ABL:露出癖 * 225)
 	A = A * (ABL:露出癖 * 50 + 50) / 100
 ENDIF
 ;ABL:マゾっ気をみる
@@ -250,12 +250,12 @@ SIF TALENT:臆病
 SIF TALENT:恥じらい
 	TIMES B , 2.00
 
-SOURCE:12 += A
-SOURCE:14 += B
-SOURCE:16 += A/2
+SOURCE:露出 += A
+SOURCE:逸脱 += B
+SOURCE:恭順追加 += A/2
 
 UP:8 += A/2
-UP:10 += SOURCE:14/2
+UP:10 += SOURCE:逸脱/2
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40

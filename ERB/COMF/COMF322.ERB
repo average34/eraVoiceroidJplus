@@ -201,27 +201,27 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:21 += 0
+	SOURCE:受動 += 0
 	C += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:21 += 50
+	SOURCE:受動 += 50
 	C += 1
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:21 += 100
+	SOURCE:受動 += 100
 	C += 2
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:21 += 200
+	SOURCE:受動 += 200
 	C += 3
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:21 += 400
+	SOURCE:受動 += 400
 	C += 4
 	TIMES A, 2.00
 ELSE
-	SOURCE:21 += 800
+	SOURCE:受動 += 800
 	C += 5
 	TIMES A, 3.00
 ENDIF
@@ -294,9 +294,9 @@ IF TFLAG:18
 	B *= 2
 ENDIF
 
-SOURCE:12 += A/8
-SOURCE:18 += A/4
-SOURCE:23 += B/2
+SOURCE:露出 += A/8
+SOURCE:歓楽 += A/4
+SOURCE:不安 += B/2
 
 UP:7 += A/6
 UP:8 += A/9
@@ -327,21 +327,21 @@ IF C > 60
 	MONEY += T
 	PRINTFORML 所持金 ${T}増加
 	WAIT
-	SOURCE:5 += 1500
-	SOURCE:20 += 3000
+	SOURCE:達成感 += 1500
+	SOURCE:征服 += 3000
 	T = 3 + RAND:4
 	;大成功補正
 	IF TFLAG:18
-		SOURCE:5 += 1500
-		SOURCE:20 += 3000
+		SOURCE:達成感 += 1500
+		SOURCE:征服 += 3000
 		T += 3 + RAND:4
 	ENDIF
 ELSE
-	SOURCE:5 += 500
+	SOURCE:達成感 += 500
 	T = 3 + RAND:4
 	;大成功補正
 	IF TFLAG:18
-		SOURCE:5 += 500
+		SOURCE:達成感 += 500
 		T += 3 + RAND:4
 	ENDIF
 ENDIF
@@ -379,22 +379,22 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:21 += 0
+	SOURCE:受動 += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:21 += 50
+	SOURCE:受動 += 50
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:21 += 100
+	SOURCE:受動 += 100
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:21 += 200
+	SOURCE:受動 += 200
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:21 += 400
+	SOURCE:受動 += 400
 	TIMES A, 2.00
 ELSE
-	SOURCE:21 += 800
+	SOURCE:受動 += 800
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
@@ -431,9 +431,9 @@ SIF TALENT:恥じらい
 SIF TALENT:恥薄い
 	TIMES B , 0.80
 
-SOURCE:12 += A/12
-SOURCE:18 += A/6
-SOURCE:23 += B/3
+SOURCE:露出 += A/12
+SOURCE:歓楽 += A/6
+SOURCE:不安 += B/3
 
 UP:7 += A/12
 UP:8 += A/12

@@ -54,13 +54,13 @@ ELSEIF RAND:3 == 0
 	TFLAG:17 = 14
 	IF PALAM:3 >= PALAMLV:4 && ITEM:25 > 0
 		ITEM:25 -= 1
-		SOURCE:10 += 10000
+		SOURCE:液体追加 += 10000
 	ENDIF
 ELSEIF RAND:2 == 0
 	TFLAG:17 = 15
 	IF PALAM:3 >= PALAMLV:4 && ITEM:25 > 0
 		ITEM:25 -= 1
-		SOURCE:10 += 10000
+		SOURCE:液体追加 += 10000
 	ENDIF
 ELSE
 	TFLAG:17 = 16
@@ -74,88 +74,88 @@ CALL TRAIN_MESSAGE_B
 LOSEBASE:気力 += 70
 
 ;固定で獲得するソース
-SOURCE:18 = 0
-SOURCE:9 = 500
+SOURCE:歓楽 = 0
+SOURCE:接触 = 500
 
 
 ;奉仕精神をみる
 IF ABL:奉仕精神 == 0
-	SOURCE:3 = 10
+	SOURCE:情愛 = 10
 ELSEIF ABL:奉仕精神 == 1
-	SOURCE:3 = 30
+	SOURCE:情愛 = 30
 ELSEIF ABL:奉仕精神 == 2
-	SOURCE:3 = 80
+	SOURCE:情愛 = 80
 ELSEIF ABL:奉仕精神 == 3
-	SOURCE:3 = 150
+	SOURCE:情愛 = 150
 ELSEIF ABL:奉仕精神 == 4
-	SOURCE:3 = 230
+	SOURCE:情愛 = 230
 ELSE
-	SOURCE:3 = 200 + (ABL:奉仕精神 * 20)
+	SOURCE:情愛 = 200 + (ABL:奉仕精神 * 20)
 ENDIF
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
-	SOURCE:9 += (ABL:親密 * 30)
+	SOURCE:接触 += (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 100 + (ABL:親密 * 40)
-	SOURCE:9 += 200 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 100 + (ABL:親密 * 40)
+	SOURCE:接触 += 200 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 400 + (ABL:親密 * 50)
-	SOURCE:9 += 400 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 400 + (ABL:親密 * 50)
+	SOURCE:接触 += 400 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 700 + (ABL:親密 * 60)
-	SOURCE:9 += 600 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 700 + (ABL:親密 * 60)
+	SOURCE:接触 += 600 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1200 + (ABL:親密 * 80)
-	SOURCE:9 += 800 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 1200 + (ABL:親密 * 80)
+	SOURCE:接触 += 800 + (ABL:親密 * 40)
 ELSE
-	SOURCE:18 += 2000 + (ABL:親密 * 50)
-	SOURCE:9 += 1800 + (ABL:親密 * 20)
+	SOURCE:歓楽 += 2000 + (ABL:親密 * 50)
+	SOURCE:接触 += 1800 + (ABL:親密 * 20)
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 500
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 5000
-	SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 == 0
-		SOURCE:21 = 100
+		SOURCE:受動 = 100
 	ELSEIF ABL:親密 == 1
-		SOURCE:21 = 200
+		SOURCE:受動 = 200
 	ELSEIF ABL:親密 == 2
-		SOURCE:21 = 350
+		SOURCE:受動 = 350
 	ELSEIF ABL:親密 == 3
-		SOURCE:21 = 500
+		SOURCE:受動 = 500
 	ELSEIF ABL:親密 == 4
-		SOURCE:21 = 700
+		SOURCE:受動 = 700
 	ELSE
-		SOURCE:21 = 1000 + (ABL:親密 * 100)
+		SOURCE:受動 = 1000 + (ABL:親密 * 100)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 500
+		SOURCE:征服 = 500
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 700
+		SOURCE:征服 = 700
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 900
+		SOURCE:征服 = 900
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1100
+		SOURCE:征服 = 1100
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 1300
+		SOURCE:征服 = 1300
 	ELSE
-		SOURCE:20 = 1000 + (ABL:サドっ気 * 150)
+		SOURCE:征服 = 1000 + (ABL:サドっ気 * 150)
 	ENDIF
 ENDIF
 
@@ -181,11 +181,11 @@ ENDIF
 
 ;連続実行ならパワーうｐでソースを追加
 IF TFLAG:18
-	TIMES SOURCE:18 , 1.20
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:20 , 1.50
-	TIMES SOURCE:21 , 1.50
-	SOURCE:3 += SOURCE:9 / 10
+	TIMES SOURCE:歓楽 , 1.20
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:征服 , 1.50
+	TIMES SOURCE:受動 , 1.50
+	SOURCE:情愛 += SOURCE:接触 / 10
 	A += 2
 ENDIF
 

@@ -73,65 +73,65 @@ ENDIF
 ;ソース
 ;露出癖をみる（露出、屈従、逸脱のソース）
 IF ABL:露出癖 == 0
-	SOURCE:12 = 6000
-	SOURCE:13 = 6000
-	SOURCE:14 = 2000
+	SOURCE:露出 = 6000
+	SOURCE:屈従 = 6000
+	SOURCE:逸脱 = 2000
 ELSEIF ABL:露出癖 == 1
-	SOURCE:12 = 5000
-	SOURCE:13 = 5000
-	SOURCE:14 = 1000
+	SOURCE:露出 = 5000
+	SOURCE:屈従 = 5000
+	SOURCE:逸脱 = 1000
 ELSEIF ABL:露出癖 == 2
-	SOURCE:12 = 4000
-	SOURCE:13 = 4000
-	SOURCE:14 = 500
+	SOURCE:露出 = 4000
+	SOURCE:屈従 = 4000
+	SOURCE:逸脱 = 500
 ELSEIF ABL:露出癖 == 3
-	SOURCE:12 = 3000
-	SOURCE:13 = 3000
-	SOURCE:14 = 100
+	SOURCE:露出 = 3000
+	SOURCE:屈従 = 3000
+	SOURCE:逸脱 = 100
 ELSEIF ABL:露出癖 == 4
-	SOURCE:12 = 2000
-	SOURCE:13 = 2000
-	SOURCE:14 = 50
+	SOURCE:露出 = 2000
+	SOURCE:屈従 = 2000
+	SOURCE:逸脱 = 50
 ELSE
-	SOURCE:12 = 1000
-	SOURCE:13 = 1000
-	SOURCE:14 = 10
+	SOURCE:露出 = 1000
+	SOURCE:屈従 = 1000
+	SOURCE:逸脱 = 10
 ENDIF
 
 ;マゾっ気をみる（露出、欲情追加、液体追加のソース）
 ;マゾッ気Lv3以下の場合、液体追加のソースは夏のみ（蒸れる）
 IF ABL:21 == 0
-	TIMES SOURCE:12 , 0.80
-	SOURCE:11 = 100
+	TIMES SOURCE:露出 , 0.80
+	SOURCE:欲情追加 = 100
 	IF DAY:2 == 1
-		SOURCE:10 = 100
+		SOURCE:液体追加 = 100
 	ENDIF
 ELSEIF ABL:21 == 1
-	TIMES SOURCE:12 , 1.00
-	SOURCE:11 = 200
+	TIMES SOURCE:露出 , 1.00
+	SOURCE:欲情追加 = 200
 	IF DAY:2 == 1
-		SOURCE:10 = 300
+		SOURCE:液体追加 = 300
 	ENDIF
 ELSEIF ABL:21 == 2
-	TIMES SOURCE:12 , 1.20
-	SOURCE:11 = 400
+	TIMES SOURCE:露出 , 1.20
+	SOURCE:欲情追加 = 400
 	IF DAY:2 == 1
-		SOURCE:10 = 700
+		SOURCE:液体追加 = 700
 	ENDIF
 ELSEIF ABL:21 == 3
-	TIMES SOURCE:12 , 1.40
-	SOURCE:11 = 700
+	TIMES SOURCE:露出 , 1.40
+	SOURCE:欲情追加 = 700
 	IF DAY:2 != 1
-		SOURCE:10 = 1200
+		SOURCE:液体追加 = 1200
 	ENDIF
 ELSEIF ABL:21 == 4
-	TIMES SOURCE:12 , 1.50
-	SOURCE:11 = 1100
-	SOURCE:10 = 1800
+	TIMES SOURCE:露出 , 1.50
+	SOURCE:欲情追加 = 1100
+	SOURCE:液体追加 = 1800
 ELSE
-	TIMES SOURCE:12 , 1.70
-	SOURCE:11 = 1500
-	SOURCE:10 = 2500
+	TIMES SOURCE:露出 , 1.70
+	SOURCE:欲情追加 = 1500
+	SOURCE:液体追加 = 2500
 ENDIF
 
 ;
@@ -188,10 +188,10 @@ SIF TALENT:臆病
 	TIMES LOCAL:1 , 1.20
 
 ;逸脱
-SOURCE:14 += LOCAL:1 * 5
+SOURCE:逸脱 += LOCAL:1 * 5
 ;反感追加（反抗的、プライド高いのみ）
 IF TALENT:反抗的 || TALENT:プライド高い
-	SOURCE:15 += LOCAL:1 * 2
+	SOURCE:反感追加 += LOCAL:1 * 2
 ENDIF
 
 RETURN 1
@@ -368,36 +368,36 @@ SIF TALENT:臆病 || TALENT:幼児 || TALENT:幼稚
 
 ;反感追加のソース（反抗的、プライド高いでおもらししてない場合のみ）
 IF TALENT:反抗的 || TALENT:プライド高い || TEQUIP:20 != 2
-	SOURCE:15 += LOCAL * 2
+	SOURCE:反感追加 += LOCAL * 2
 ENDIF
 
 ;不潔のソース（おもらししてる場合のみ、愛撫実行時は倍）
 IF  TEQUIP:20 == 2
 	IF SELECTCOM == 361
-		SOURCE:8 += LOCAL:5 * 2
+		SOURCE:不潔 += LOCAL:5 * 2
 	ELSE
-		SOURCE:8 += LOCAL:5
+		SOURCE:不潔 += LOCAL:5
 	ENDIF
 ENDIF
 
 LOCAL:4 += LOCAL * 5
 
 ;露出のソース
-SOURCE:12 += LOCAL:1
+SOURCE:露出 += LOCAL:1
 ;屈従のソース（おもらししてる場合倍）
 IF  TEQUIP:20 == 2
-	SOURCE:13 += LOCAL:1 * 2
+	SOURCE:屈従 += LOCAL:1 * 2
 ELSE
-	SOURCE:13 += LOCAL:1
+	SOURCE:屈従 += LOCAL:1
 ENDIF
 ;欲情追加のソース
-SOURCE:11 += LOCAL:2
+SOURCE:欲情追加 += LOCAL:2
 ;液体追加のソース（夏かマゾッ気Lv4以上の場合のみ）
 IF DAY:2 == 1 || ABL:21 >= 4
-	SOURCE:10 += LOCAL:3
+	SOURCE:液体追加 += LOCAL:3
 ENDIF
 ;逸脱のソース
-SOURCE:14 += LOCAL:4
+SOURCE:逸脱 += LOCAL:4
 
 ;霧の湖、温泉、海へ行ったら強制解除
 IF TEQUIP:2 == 3 || TEQUIP:2 == 7 ||  TEQUIP:2 == 14

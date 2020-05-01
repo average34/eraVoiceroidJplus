@@ -526,72 +526,72 @@ LOSEBASE:気力 += 60
 
 
 ;固定で獲得するソース、歓楽
-SOURCE:18 = 10
+SOURCE:歓楽 = 10
 
 ;ABL:親密をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += 60 + (ABL:親密 * 10)
+	SOURCE:歓楽 += 60 + (ABL:親密 * 10)
 ELSEIF ABL:親密 <= 2
-	SOURCE:18 += 150 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 150 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 4
-	SOURCE:18 += 400 + (ABL:親密 * 50)
+	SOURCE:歓楽 += 400 + (ABL:親密 * 50)
 ELSEIF ABL:親密 <= 6
-	SOURCE:18 += 600 + (ABL:親密 * 60)
-	SOURCE:9 += 300 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 600 + (ABL:親密 * 60)
+	SOURCE:接触 += 300 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 750 + (ABL:親密 * 70)
-	SOURCE:9 += 450 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 750 + (ABL:親密 * 70)
+	SOURCE:接触 += 450 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 900 + (ABL:親密 * 80)
-	SOURCE:9 += 600 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 900 + (ABL:親密 * 80)
+	SOURCE:接触 += 600 + (ABL:親密 * 40)
 ELSE
-	SOURCE:18 += 1400 + (ABL:親密 * 50)
-	SOURCE:9 += 1000 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 1400 + (ABL:親密 * 50)
+	SOURCE:接触 += 1000 + (ABL:親密 * 30)
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 300
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 3000
-	SOURCE:18 += 500 + (CFLAG:2 - 300) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 300) / 3
 ELSE
-	SOURCE:18 += 1800 + (CFLAG:2 - 3000) / 5
+	SOURCE:歓楽 += 1800 + (CFLAG:2 - 3000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:親密をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 = 100
+		SOURCE:受動 = 100
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 = 200
+		SOURCE:受動 = 200
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 = 350
+		SOURCE:受動 = 350
 	ELSEIF ABL:親密 <= 7
-		SOURCE:21 = 500
+		SOURCE:受動 = 500
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 = 700
+		SOURCE:受動 = 700
 	ELSE
-		SOURCE:21 = 1000 + (ABL:親密 * 100)
+		SOURCE:受動 = 1000 + (ABL:親密 * 100)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;欲望ををみる
 	IF ABL:欲望 == 0
-		SOURCE:20 = 350
+		SOURCE:征服 = 350
 	ELSEIF ABL:欲望 <= 2
-		SOURCE:20 = 400
+		SOURCE:征服 = 400
 	ELSEIF ABL:欲望 <= 4
-		SOURCE:20 = 600
+		SOURCE:征服 = 600
 	ELSEIF ABL:欲望 <= 6
-		SOURCE:20 = 800
+		SOURCE:征服 = 800
 	ELSEIF ABL:欲望 <= 8
-		SOURCE:20 = 1000
+		SOURCE:征服 = 1000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:欲望 * 90)
+		SOURCE:征服 = 1000 + (ABL:欲望 * 90)
 	ENDIF
 ENDIF
 
@@ -600,28 +600,28 @@ A:1 = RAND:5 + 1
 
 ;パワーアップ版ならソースを追加
 IF TFLAG:17 != 0
-	TIMES SOURCE:18 , 1.20
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:20 , 1.50
-	TIMES SOURCE:21 , 1.50
+	TIMES SOURCE:歓楽 , 1.20
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:征服 , 1.50
+	TIMES SOURCE:受動 , 1.50
 	A:1 += 2
 
-	SOURCE:11 += 200 * ABL:欲望 * TFLAG:17
+	SOURCE:欲情追加 += 200 * ABL:欲望 * TFLAG:17
 	
 	;淫乱の場合、くっつくだけで発情する
 	IF TALENT:淫乱 != 0
-		SOURCE:3  = 50 * ABL:奉仕精神 * TFLAG:17
-		SOURCE:10 = 300 * ABL:PLAYER:技巧 * TFLAG:17
-		TIMES SOURCE:11 , 1.20
+		SOURCE:情愛  = 50 * ABL:奉仕精神 * TFLAG:17
+		SOURCE:液体追加 = 300 * ABL:PLAYER:技巧 * TFLAG:17
+		TIMES SOURCE:欲情追加 , 1.20
 	ENDIF
 
 	;強化版2の場合、さらにボーナス
 	IF TFLAG:17 >= 2
-		TIMES SOURCE:18 , 1.10
-		TIMES SOURCE:9 , 1.20
-		TIMES SOURCE:20 , 1.50
-		TIMES SOURCE:21 , 1.20
-		TIMES SOURCE:11 , 1.10
+		TIMES SOURCE:歓楽 , 1.10
+		TIMES SOURCE:接触 , 1.20
+		TIMES SOURCE:征服 , 1.50
+		TIMES SOURCE:受動 , 1.20
+		TIMES SOURCE:欲情追加 , 1.10
 		
 		A:1 += 1
 		;愛情経験も付加
@@ -658,26 +658,26 @@ ENDIF
 TFLAG:30 += A:1
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:9 , 0.50
-	TIMES SOURCE:5 , 0.50
-	TIMES SOURCE:21 , 0.50
-	TIMES SOURCE:3 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:接触 , 0.50
+	TIMES SOURCE:達成感 , 0.50
+	TIMES SOURCE:受動 , 0.50
+	TIMES SOURCE:情愛 , 0.50
 	TFLAG:30 -= 10
 	TFLAG:37 -= 7
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:9 , 1.00
-	TIMES SOURCE:5 , 1.00
-	TIMES SOURCE:21 , 1.00
-	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:接触 , 1.00
+	TIMES SOURCE:達成感 , 1.00
+	TIMES SOURCE:受動 , 1.00
+	TIMES SOURCE:情愛 , 1.00
 	TFLAG:37 += 2 + A:1
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:5 , 2.00
-	TIMES SOURCE:21 , 2.00
-	TIMES SOURCE:3 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:達成感 , 2.00
+	TIMES SOURCE:受動 , 2.00
+	TIMES SOURCE:情愛 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 7 + A:1
 ENDIF

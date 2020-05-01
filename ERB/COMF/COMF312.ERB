@@ -458,87 +458,87 @@ ENDIF
 
 
 ;固定で獲得するソース、接触、歓楽
-SOURCE:9 = 10
-SOURCE:18 = 100
+SOURCE:接触 = 10
+SOURCE:歓楽 = 100
 
 ;ABL:親密をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += 200 + (ABL:親密 * 20)
+	SOURCE:歓楽 += 200 + (ABL:親密 * 20)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 400 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 400 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 500 + (ABL:親密 * 50)
-	SOURCE:9 += 400 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 500 + (ABL:親密 * 50)
+	SOURCE:接触 += 400 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 700 + (ABL:親密 * 60)
-	SOURCE:9 += 600 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 700 + (ABL:親密 * 60)
+	SOURCE:接触 += 600 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1200 + (ABL:親密 * 80)
-	SOURCE:9 += 800 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 1200 + (ABL:親密 * 80)
+	SOURCE:接触 += 800 + (ABL:親密 * 40)
 ELSE
-	SOURCE:18 += 1800 + (ABL:親密 * 50)
-	SOURCE:9 += 1700 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 1800 + (ABL:親密 * 50)
+	SOURCE:接触 += 1700 + (ABL:親密 * 30)
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 300
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 3000
-	SOURCE:18 += 500 + (CFLAG:2 - 300) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 300) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 3000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 3000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:親密をみる
 	IF ABL:親密 == 0
-		SOURCE:21 = 150 + (ABL:親密 * 5)
+		SOURCE:受動 = 150 + (ABL:親密 * 5)
 	ELSEIF ABL:親密 <= 1
-		SOURCE:21 = 300 + (ABL:親密 * 10)
+		SOURCE:受動 = 300 + (ABL:親密 * 10)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 = 400 + (ABL:親密 * 20)
+		SOURCE:受動 = 400 + (ABL:親密 * 20)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 = 550 + (ABL:親密 * 40)
+		SOURCE:受動 = 550 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 7
-		SOURCE:21 = 700 + (ABL:親密 * 50)
+		SOURCE:受動 = 700 + (ABL:親密 * 50)
 	ELSE
-		SOURCE:21 = 1000 + (ABL:親密 * 100)
+		SOURCE:受動 = 1000 + (ABL:親密 * 100)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;奉仕精神ををみる
 	IF ABL:奉仕精神 == 0
-		SOURCE:5 = 150
-		SOURCE:20 = 300
+		SOURCE:達成感 = 150
+		SOURCE:征服 = 300
 	ELSEIF ABL:奉仕精神 <= 2
-		SOURCE:5 = 300
-		SOURCE:20 = 280
+		SOURCE:達成感 = 300
+		SOURCE:征服 = 280
 	ELSEIF ABL:奉仕精神 <= 4
-		SOURCE:5 = 500
-		SOURCE:7 = 100
-		SOURCE:20 = 260
+		SOURCE:達成感 = 500
+		SOURCE:中毒充足 = 100
+		SOURCE:征服 = 260
 	ELSEIF ABL:奉仕精神 <= 6
-		SOURCE:5 = 700
-		SOURCE:7 = 300
-		SOURCE:20 = 240
+		SOURCE:達成感 = 700
+		SOURCE:中毒充足 = 300
+		SOURCE:征服 = 240
 	ELSEIF ABL:奉仕精神 <= 8
-		SOURCE:5 = 900
-		SOURCE:7 = 500
-		SOURCE:20 = 120
+		SOURCE:達成感 = 900
+		SOURCE:中毒充足 = 500
+		SOURCE:征服 = 120
 	ELSE
-		SOURCE:5 = 1000 + (ABL:奉仕精神 * 150)
-		SOURCE:7 = 900
+		SOURCE:達成感 = 1000 + (ABL:奉仕精神 * 150)
+		SOURCE:中毒充足 = 900
 	ENDIF
 	;母性所持の場合、愛情経験を＋
 	IF TALENT:母性
 		EXP:愛情経験 += 1
 		SIF TFLAG:17 == 0
 			PRINTFORML %EXPNAME:23%+1
-		TIMES SOURCE:5, 1.50
+		TIMES SOURCE:達成感, 1.50
 	ENDIF
 ENDIF
 
@@ -547,10 +547,10 @@ A:1 = RAND:7 + 1
 
 ;パワーアップ版ならソースを追加
 IF TFLAG:17 != 0
-	TIMES SOURCE:18 , 1.20
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:5 , 1.50
-	TIMES SOURCE:21 , 1.50
+	TIMES SOURCE:歓楽 , 1.20
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:達成感 , 1.50
+	TIMES SOURCE:受動 , 1.50
 	A:1 += 2
 	;幼児退行or幼稚持ちは更にボーナス
 	SIF (TALENT:幼児 != 0 || TALENT:幼稚 != 0)
@@ -566,7 +566,7 @@ IF TFLAG:17 != 0
 	ELSE
 		;母性所持の場合、愛情経験を＋
 		IF TALENT:母性 != 0
-			TIMES SOURCE:5 , 1.50
+			TIMES SOURCE:達成感 , 1.50
 			PRINTFORML %EXPNAME:23%+2
 			EXP:愛情経験 += 1
 		ENDIF
@@ -601,26 +601,26 @@ ENDIF
 TFLAG:30 += A:1
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:9 , 0.50
-	TIMES SOURCE:5 , 0.50
-	TIMES SOURCE:21 , 0.50
-	TIMES SOURCE:3 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:接触 , 0.50
+	TIMES SOURCE:達成感 , 0.50
+	TIMES SOURCE:受動 , 0.50
+	TIMES SOURCE:情愛 , 0.50
 	TFLAG:30 -= 10
 	TFLAG:37 -= 5
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:9 , 1.00
-	TIMES SOURCE:5 , 1.00
-	TIMES SOURCE:21 , 1.00
-	TIMES SOURCE:3 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:接触 , 1.00
+	TIMES SOURCE:達成感 , 1.00
+	TIMES SOURCE:受動 , 1.00
+	TIMES SOURCE:情愛 , 1.00
 	TFLAG:37 += A:1
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:5 , 2.00
-	TIMES SOURCE:21 , 2.00
-	TIMES SOURCE:3 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:達成感 , 2.00
+	TIMES SOURCE:受動 , 2.00
+	TIMES SOURCE:情愛 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A:1
 ENDIF

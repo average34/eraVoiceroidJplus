@@ -89,17 +89,17 @@ ENDIF
 
 ;ABL:親密をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += (ABL:親密 * 65)
+	SOURCE:歓楽 += (ABL:親密 * 65)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 200 + (ABL:親密 * 70)
+	SOURCE:歓楽 += 200 + (ABL:親密 * 70)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 500 + (ABL:親密 * 70)
+	SOURCE:歓楽 += 500 + (ABL:親密 * 70)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 700 + (ABL:親密 * 80)
+	SOURCE:歓楽 += 700 + (ABL:親密 * 80)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1200 + (ABL:親密 * 85)
+	SOURCE:歓楽 += 1200 + (ABL:親密 * 85)
 ELSE
-	SOURCE:18 += 2000 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 2000 + (ABL:親密 * 40)
 ENDIF
 
 ;主導権をチェック
@@ -107,33 +107,33 @@ IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:親密をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 100 + (ABL:親密 * 20)
+		SOURCE:受動 += 100 + (ABL:親密 * 20)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 200 + (ABL:親密 * 30)
+		SOURCE:受動 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 300 + (ABL:親密 * 40)
+		SOURCE:受動 += 300 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 400 + (ABL:親密 * 50)
+		SOURCE:受動 += 400 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 500 + (ABL:親密 * 60)
+		SOURCE:受動 += 500 + (ABL:親密 * 60)
 	ELSE
-		SOURCE:21 += 600 + (ABL:親密 * 70)
+		SOURCE:受動 += 600 + (ABL:親密 * 70)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 200
+		SOURCE:征服 = 200
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 300
+		SOURCE:征服 = 300
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 400
+		SOURCE:征服 = 400
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 550
+		SOURCE:征服 = 550
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 700
+		SOURCE:征服 = 700
 	ELSE
-		SOURCE:20 = 300 + (ABL:サドっ気 * 100)
+		SOURCE:征服 = 300 + (ABL:サドっ気 * 100)
 	ENDIF
 ENDIF
 
@@ -142,14 +142,14 @@ ENDIF
 IF 0
 ELSE
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
 ENDIF
 
 ;好感度ランダム変化
@@ -158,29 +158,29 @@ TFLAG:30 += A
 
 ;成功度によるボーナス
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:19 , 0.50
-	TIMES SOURCE:20 , 0.50
-	TIMES SOURCE:21 , 0.50
-	TIMES SOURCE:22 , 2.00
-	TIMES SOURCE:23 , 2.00
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:家務 , 0.50
+	TIMES SOURCE:征服 , 0.50
+	TIMES SOURCE:受動 , 0.50
+	TIMES SOURCE:懐疑 , 2.00
+	TIMES SOURCE:不安 , 2.00
 	TFLAG:30 -= 10
 	TFLAG:37 -= 5
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:19 , 1.00
-	TIMES SOURCE:20 , 1.00
-	TIMES SOURCE:21 , 1.00
-	TIMES SOURCE:22 , 1.00
-	TIMES SOURCE:23 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:家務 , 1.00
+	TIMES SOURCE:征服 , 1.00
+	TIMES SOURCE:受動 , 1.00
+	TIMES SOURCE:懐疑 , 1.00
+	TIMES SOURCE:不安 , 1.00
 	TFLAG:37 += A
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:19 , 2.00
-	TIMES SOURCE:20 , 2.00
-	TIMES SOURCE:21 , 2.00
-	TIMES SOURCE:22 , 0.50
-	TIMES SOURCE:23 , 0.50
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:家務 , 2.00
+	TIMES SOURCE:征服 , 2.00
+	TIMES SOURCE:受動 , 2.00
+	TIMES SOURCE:懐疑 , 0.50
+	TIMES SOURCE:不安 , 0.50
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A
 ENDIF
@@ -544,11 +544,11 @@ ENDIF
 ;固定で獲得するソース
 IF TALENT:蓬莱人
 ;	TALENT:蓬莱人 = 0
-	SOURCE:14 = 3000
-	SOURCE:23 += 50000
+	SOURCE:逸脱 = 3000
+	SOURCE:不安 += 50000
 ELSE
-	SOURCE:6 = 20000
-	SOURCE:14 = 500
+	SOURCE:痛み = 20000
+	SOURCE:逸脱 = 500
 ENDIF
 
 ;ビデオカメラがなければ、テープがあっても不可

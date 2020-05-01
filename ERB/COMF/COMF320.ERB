@@ -32,79 +32,79 @@ LOSEBASE:気力 += 200
 MONEY -= 3000
 
 ;固定で獲得するソース
-SOURCE:18 = 500
-SOURCE:19 = 100
+SOURCE:歓楽 = 500
+SOURCE:家務 = 100
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += (ABL:親密 * 100)
-	SOURCE:19 += (ABL:親密 * 30)
+	SOURCE:歓楽 += (ABL:親密 * 100)
+	SOURCE:家務 += (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 300 + (ABL:親密 * 100)
-	SOURCE:19 += 200 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 300 + (ABL:親密 * 100)
+	SOURCE:家務 += 200 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 750 + (ABL:親密 * 100)
-	SOURCE:19 += 400 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 750 + (ABL:親密 * 100)
+	SOURCE:家務 += 400 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 1000 + (ABL:親密 * 120)
-	SOURCE:19 += 600 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 1000 + (ABL:親密 * 120)
+	SOURCE:家務 += 600 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1500 + (ABL:親密 * 120)
-	SOURCE:19 += 800 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 1500 + (ABL:親密 * 120)
+	SOURCE:家務 += 800 + (ABL:親密 * 40)
 ELSE
-	SOURCE:18 += 3000 + (ABL:親密 * 60)
-	SOURCE:19 += 1800 + (ABL:親密 * 20)
+	SOURCE:歓楽 += 3000 + (ABL:親密 * 60)
+	SOURCE:家務 += 1800 + (ABL:親密 * 20)
 ENDIF
 
 ;ABL:金銭感覚をみる
-SOURCE:19 = SOURCE:19 * (ABL:金銭感覚 * 5 + 100) / 100
+SOURCE:家務 = SOURCE:家務 * (ABL:金銭感覚 * 5 + 100) / 100
 
 ;ABL:料理技術をみる
-SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 7 + 100) / 100
+SOURCE:家務 = SOURCE:家務 * (ABL:料理技能 * 7 + 100) / 100
 
 ;好感度をみる
 IF CFLAG:2 <= 500
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 5000
-	SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 == 0
-		SOURCE:21 = 400
+		SOURCE:受動 = 400
 	ELSEIF ABL:親密 == 1
-		SOURCE:21 = 600
+		SOURCE:受動 = 600
 	ELSEIF ABL:親密 == 2
-		SOURCE:21 = 800
+		SOURCE:受動 = 800
 	ELSEIF ABL:親密 == 3
-		SOURCE:21 = 1000
+		SOURCE:受動 = 1000
 	ELSEIF ABL:親密 == 4
-		SOURCE:21 = 1200
+		SOURCE:受動 = 1200
 	ELSE
-		SOURCE:21 = 1000 + (ABL:親密 * 100)
+		SOURCE:受動 = 1000 + (ABL:親密 * 100)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 500
+		SOURCE:征服 = 500
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 700
+		SOURCE:征服 = 700
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 900
+		SOURCE:征服 = 900
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1100
+		SOURCE:征服 = 1100
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 1300
+		SOURCE:征服 = 1300
 	ELSE
-		SOURCE:20 = 1000 + (ABL:サドっ気 * 150)
+		SOURCE:征服 = 1000 + (ABL:サドっ気 * 150)
 	ENDIF
 ENDIF
 
@@ -127,24 +127,24 @@ ELSE
 ENDIF
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:19 , 0.50
-	TIMES SOURCE:20 , 0.50
-	TIMES SOURCE:21 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:家務 , 0.50
+	TIMES SOURCE:征服 , 0.50
+	TIMES SOURCE:受動 , 0.50
 	TFLAG:30 -= 10
 	TFLAG:37 -= 5
 	TFLAG:47 -= 2
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:19 , 1.00
-	TIMES SOURCE:20 , 1.00
-	TIMES SOURCE:21 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:家務 , 1.00
+	TIMES SOURCE:征服 , 1.00
+	TIMES SOURCE:受動 , 1.00
 	TFLAG:37 += A
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:19 , 2.00
-	TIMES SOURCE:20 , 2.00
-	TIMES SOURCE:21 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:家務 , 2.00
+	TIMES SOURCE:征服 , 2.00
+	TIMES SOURCE:受動 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A
 	TFLAG:47 += 5

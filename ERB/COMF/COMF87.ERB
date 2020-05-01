@@ -10,71 +10,71 @@ CALL TRAIN_MESSAGE_B
 LOSEBASE:体力 += 20
 LOSEBASE:気力 += 150
 
-SOURCE:10 += 1000
-SOURCE:12 += 300
-SOURCE:14 += 500
+SOURCE:液体追加 += 1000
+SOURCE:露出 += 300
+SOURCE:逸脱 += 500
 
 A = 500
 
 ;ABL:Ｃ感覚をみる
 IF ABL:Ｃ感覚 == 0
-	SOURCE:0 += 50
+	SOURCE:快Ｃ += 50
 ELSEIF ABL:Ｃ感覚 == 1
-	SOURCE:0 += 260
+	SOURCE:快Ｃ += 260
 ELSEIF ABL:Ｃ感覚 == 2
-	SOURCE:0 += 800
+	SOURCE:快Ｃ += 800
 ELSEIF ABL:Ｃ感覚 == 3
-	SOURCE:0 += 1600
+	SOURCE:快Ｃ += 1600
 ELSEIF ABL:Ｃ感覚 == 4
-	SOURCE:0 += 2500
+	SOURCE:快Ｃ += 2500
 ELSE
-	SOURCE:0 += 1150 + (ABL:Ｃ感覚 * 450)
+	SOURCE:快Ｃ += 1150 + (ABL:Ｃ感覚 * 450)
 ENDIF
 
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:0 += 10
-	SOURCE:10 += 100
-	SOURCE:13 += 800
+	SOURCE:快Ｃ += 10
+	SOURCE:液体追加 += 100
+	SOURCE:屈従 += 800
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:0 += 150
-	SOURCE:10 += 500
-	SOURCE:13 += 700
+	SOURCE:快Ｃ += 150
+	SOURCE:液体追加 += 500
+	SOURCE:屈従 += 700
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 2
-	SOURCE:0 += 300
-	SOURCE:10 += 1000
-	SOURCE:13 += 600
+	SOURCE:快Ｃ += 300
+	SOURCE:液体追加 += 1000
+	SOURCE:屈従 += 600
 	TIMES A, 2.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:0 += 700
-	SOURCE:10 += 1800
-	SOURCE:13 += 500
+	SOURCE:快Ｃ += 700
+	SOURCE:液体追加 += 1800
+	SOURCE:屈従 += 500
 	TIMES A, 3.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:0 += 1200
-	SOURCE:10 += 3000
-	SOURCE:13 += 400
+	SOURCE:快Ｃ += 1200
+	SOURCE:液体追加 += 3000
+	SOURCE:屈従 += 400
 	TIMES A, 4.80
 ELSE
-	SOURCE:0 += 300 + (ABL:露出癖 * 300)
-	SOURCE:10 += ABL:露出癖 * 1000
-	SOURCE:13 += 300
+	SOURCE:快Ｃ += 300 + (ABL:露出癖 * 300)
+	SOURCE:液体追加 += ABL:露出癖 * 1000
+	SOURCE:屈従 += 300
 	A = A * (ABL:露出癖 * 60 + 300) / 100
 ENDIF
 
-SOURCE:12 += A
-SOURCE:13 += A
-SOURCE:16 += A/2
+SOURCE:露出 += A
+SOURCE:屈従 += A
+SOURCE:恭順追加 += A/2
 
 UP:8 += A
 UP:10 += A
 
 ;調教者のTALENT:舌使いをみる
 IF TALENT:PLAYER:舌使い
-	TIMES SOURCE:0 , 2.00
-	SOURCE:16 += SOURCE:0/20
+	TIMES SOURCE:快Ｃ , 2.00
+	SOURCE:恭順追加 += SOURCE:快Ｃ/20
 ENDIF
 
 ;奴隷のＶ⇔調教者の口の汚れが移動

@@ -2057,11 +2057,11 @@ ENDIF
 ;----------------------------------------------------------------
 @ADDITIONAL_SOUCRE
 IF SELECTCOM == 2 && TFLAG:17 == 11
-	SOURCE:2 = 0
-	SOURCE:6 = 0
-	SOURCE:12 = 0
-	SOURCE:13 = 0
-	SOURCE:14 = 0
+	SOURCE:快Ａ = 0
+	SOURCE:痛み = 0
+	SOURCE:露出 = 0
+	SOURCE:屈従 = 0
+	SOURCE:逸脱 = 0
 	EXP:Ａ経験 -= 1
 	EXP:PLAYER:Ａ経験 += 1
 ;-------------------------------------------------
@@ -2132,102 +2132,102 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	SIF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
 		BASE:PLAYER:射精 += B
 
-	SOURCE:8 = 200
+	SOURCE:不潔 = 200
 	;ABL:奉仕精神をみる
 	IF ABL:奉仕精神 == 0
-		SOURCE:4 = 200
-		SOURCE:5 = 50
-		TIMES SOURCE:8 , 4.00
+		SOURCE:性行動 = 200
+		SOURCE:達成感 = 50
+		TIMES SOURCE:不潔 , 4.00
 	ELSEIF ABL:奉仕精神 == 1
-		SOURCE:4 = 250
-		SOURCE:5 = 100
-		TIMES SOURCE:8 , 2.50
+		SOURCE:性行動 = 250
+		SOURCE:達成感 = 100
+		TIMES SOURCE:不潔 , 2.50
 	ELSEIF ABL:奉仕精神 == 2
-		SOURCE:4 = 300
-		SOURCE:5 = 200
-		TIMES SOURCE:8 , 1.50
+		SOURCE:性行動 = 300
+		SOURCE:達成感 = 200
+		TIMES SOURCE:不潔 , 1.50
 	ELSEIF ABL:奉仕精神 == 3
-		SOURCE:4 = 350
-		SOURCE:5 = 300
-		TIMES SOURCE:8 , 1.00
+		SOURCE:性行動 = 350
+		SOURCE:達成感 = 300
+		TIMES SOURCE:不潔 , 1.00
 	ELSEIF ABL:奉仕精神 == 4
-		SOURCE:4 = 450
-		SOURCE:5 = 500
-		TIMES SOURCE:8 , 0.50
+		SOURCE:性行動 = 450
+		SOURCE:達成感 = 500
+		TIMES SOURCE:不潔 , 0.50
 	ELSE
-		SOURCE:4 = 300 + (ABL:奉仕精神 * 25)
-		SOURCE:5 = 125 + (ABL:奉仕精神 * 125)
-		TIMES SOURCE:8 , 0.10
+		SOURCE:性行動 = 300 + (ABL:奉仕精神 * 25)
+		SOURCE:達成感 = 125 + (ABL:奉仕精神 * 125)
+		TIMES SOURCE:不潔 , 0.10
 	ENDIF
 
 
 	;ABL:技巧をみる
 	IF ABL:技巧 == 0
-		TIMES SOURCE:4 , 0.50
-		TIMES SOURCE:5 , 0.50
+		TIMES SOURCE:性行動 , 0.50
+		TIMES SOURCE:達成感 , 0.50
 	ELSEIF ABL:技巧 == 1
-		TIMES SOURCE:4 , 0.80
-		TIMES SOURCE:5 , 0.80
+		TIMES SOURCE:性行動 , 0.80
+		TIMES SOURCE:達成感 , 0.80
 	ELSEIF ABL:技巧 == 2
-		TIMES SOURCE:4 , 1.00
-		TIMES SOURCE:5 , 1.00
+		TIMES SOURCE:性行動 , 1.00
+		TIMES SOURCE:達成感 , 1.00
 	ELSEIF ABL:技巧 == 3
-		TIMES SOURCE:4 , 1.20
-		TIMES SOURCE:5 , 1.20
+		TIMES SOURCE:性行動 , 1.20
+		TIMES SOURCE:達成感 , 1.20
 	ELSEIF ABL:技巧 == 4
-		TIMES SOURCE:4 , 1.50
-		TIMES SOURCE:5 , 1.50
+		TIMES SOURCE:性行動 , 1.50
+		TIMES SOURCE:達成感 , 1.50
 	ELSE
-		SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
-		SOURCE:5 = SOURCE:5 * (ABL:技巧 * 25 + 75) / 100
+		SOURCE:性行動 = SOURCE:性行動 * (ABL:技巧 * 25 + 75) / 100
+		SOURCE:達成感 = SOURCE:達成感 * (ABL:技巧 * 25 + 75) / 100
 	ENDIF
 	
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 1600
+		SOURCE:征服 = 1600
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 2200
+		SOURCE:征服 = 2200
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 2800
+		SOURCE:征服 = 2800
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 3600
+		SOURCE:征服 = 3600
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 4600
+		SOURCE:征服 = 4600
 	ELSE
-		SOURCE:20 = 2000 + (ABL:サドっ気 * 700)
+		SOURCE:征服 = 2000 + (ABL:サドっ気 * 700)
 	ENDIF
 	
 	CALL SAMEN_CHECK
 	
 	IF E >= 1
 	;射精している
-		TIMES SOURCE:4 , 3.00
+		TIMES SOURCE:性行動 , 3.00
 
 		;ABL:精液中毒をみる
 		IF ABL:精液中毒 == 0
-			SOURCE:7 = 0
-			TIMES SOURCE:5 , 2.00
-			TIMES SOURCE:13, 2.00
+			SOURCE:中毒充足 = 0
+			TIMES SOURCE:達成感 , 2.00
+			TIMES SOURCE:屈従, 2.00
 		ELSEIF ABL:精液中毒 == 1
-			SOURCE:7 = 200
-			TIMES SOURCE:5 , 2.50
-			TIMES SOURCE:13, 1.60
+			SOURCE:中毒充足 = 200
+			TIMES SOURCE:達成感 , 2.50
+			TIMES SOURCE:屈従, 1.60
 		ELSEIF ABL:精液中毒 == 2
-			SOURCE:7 = 600
-			TIMES SOURCE:5 , 3.00
-			TIMES SOURCE:13, 1.00
+			SOURCE:中毒充足 = 600
+			TIMES SOURCE:達成感 , 3.00
+			TIMES SOURCE:屈従, 1.00
 		ELSEIF ABL:精液中毒 == 3
-			SOURCE:7 = 1500
-			TIMES SOURCE:5 , 4.00
-			TIMES SOURCE:13, 0.70
+			SOURCE:中毒充足 = 1500
+			TIMES SOURCE:達成感 , 4.00
+			TIMES SOURCE:屈従, 0.70
 		ELSEIF ABL:精液中毒 == 4
-			SOURCE:7 = 3000
-			TIMES SOURCE:5 , 5.00
-			TIMES SOURCE:13, 0.40
+			SOURCE:中毒充足 = 3000
+			TIMES SOURCE:達成感 , 5.00
+			TIMES SOURCE:屈従, 0.40
 		ELSE
-			SOURCE:7 = (ABL:精液中毒 * 1500) - 1000
-			SOURCE:5 = SOURCE:5 * (ABL:精液中毒 * 50 + 350) / 100
-			TIMES SOURCE:13, 0.10
+			SOURCE:中毒充足 = (ABL:精液中毒 * 1500) - 1000
+			SOURCE:達成感 = SOURCE:達成感 * (ABL:精液中毒 * 50 + 350) / 100
+			TIMES SOURCE:屈従, 0.10
 		ENDIF
 		
 		;射精先タイプの設定
@@ -2259,7 +2259,7 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 
 	;調教者がふたなり
 	IF TALENT:PLAYER:ふたなり
-		SOURCE:13 /= 2
+		SOURCE:屈従 /= 2
 	ENDIF
 ENDIF
 ;-------------------------------------------------

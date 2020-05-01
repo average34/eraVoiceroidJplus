@@ -64,52 +64,52 @@ IF TALENT:親愛
 ENDIF
 
 ;固定で獲得するソース
-SOURCE:18 = 50
-SOURCE:19 = 200
+SOURCE:歓楽 = 50
+SOURCE:家務 = 200
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += (ABL:親密 * 10)
-	SOURCE:19 += (ABL:親密 * 35)
+	SOURCE:歓楽 += (ABL:親密 * 10)
+	SOURCE:家務 += (ABL:親密 * 35)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 80 + (ABL:親密 * 10)
-	SOURCE:19 += 200 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 80 + (ABL:親密 * 10)
+	SOURCE:家務 += 200 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 120 + (ABL:親密 * 10)
-	SOURCE:19 += 300 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 120 + (ABL:親密 * 10)
+	SOURCE:家務 += 300 + (ABL:親密 * 40)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 200 + (ABL:親密 * 20)
-	SOURCE:19 += 400 + (ABL:親密 * 60)
+	SOURCE:歓楽 += 200 + (ABL:親密 * 20)
+	SOURCE:家務 += 400 + (ABL:親密 * 60)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 300 + (ABL:親密 * 20)
-	SOURCE:19 += 500 + (ABL:親密 * 60)
+	SOURCE:歓楽 += 300 + (ABL:親密 * 20)
+	SOURCE:家務 += 500 + (ABL:親密 * 60)
 ELSE
-	SOURCE:18 += 500 + (ABL:親密 * 10)
-	SOURCE:19 += 800 + (ABL:親密 * 70)
+	SOURCE:歓楽 += 500 + (ABL:親密 * 10)
+	SOURCE:家務 += 800 + (ABL:親密 * 70)
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 300
-	SOURCE:18 += CFLAG:2 / 3
+	SOURCE:歓楽 += CFLAG:2 / 3
 ELSEIF CFLAG:2 <= 5000
-	SOURCE:18 += 400 + (CFLAG:2 - 500) / 3
+	SOURCE:歓楽 += 400 + (CFLAG:2 - 500) / 3
 ELSE
-	SOURCE:18 += 800 + (CFLAG:2 - 5000) / 5
+	SOURCE:歓楽 += 800 + (CFLAG:2 - 5000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 
 ;ABL:技巧をみる
-SOURCE:19 = SOURCE:19 * (ABL:技巧 * 3 + 100) / 100
+SOURCE:家務 = SOURCE:家務 * (ABL:技巧 * 3 + 100) / 100
 
 ;ABL:料理技術をみる
-SOURCE:18 += ABL:料理技能 * 10
-SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 15 + 100) / 100
+SOURCE:歓楽 += ABL:料理技能 * 10
+SOURCE:家務 = SOURCE:家務 * (ABL:料理技能 * 15 + 100) / 100
 
 ;調合知識を持っていると効果上昇
 IF TALENT:TARGET:調合知識
-	TIMES SOURCE:19 , 2.00
+	TIMES SOURCE:家務 , 2.00
 ENDIF
 
 ;主導権をチェック
@@ -117,33 +117,33 @@ IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 100 + (ABL:親密 * 20)
+		SOURCE:受動 += 100 + (ABL:親密 * 20)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 200 + (ABL:親密 * 30)
+		SOURCE:受動 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 300 + (ABL:親密 * 40)
+		SOURCE:受動 += 300 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 400 + (ABL:親密 * 50)
+		SOURCE:受動 += 400 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 500 + (ABL:親密 * 60)
+		SOURCE:受動 += 500 + (ABL:親密 * 60)
 	ELSE
-		SOURCE:21 += 600 + (ABL:親密 * 70)
+		SOURCE:受動 += 600 + (ABL:親密 * 70)
 	ENDIF
 ELSE
 	;主導権が相手
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 200
+		SOURCE:征服 = 200
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 300
+		SOURCE:征服 = 300
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 400
+		SOURCE:征服 = 400
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 550
+		SOURCE:征服 = 550
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 700
+		SOURCE:征服 = 700
 	ELSE
-		SOURCE:20 = 300 + (ABL:サドっ気 * 100)
+		SOURCE:征服 = 300 + (ABL:サドっ気 * 100)
 	ENDIF
 ENDIF
 
@@ -153,17 +153,17 @@ TFLAG:30 += A
 B = 1
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:19 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:家務 , 0.50
 	TFLAG:30 -= 5
 	TFLAG:37 -= 2
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:19 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:家務 , 1.00
 	TFLAG:37 += 1
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:19 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:家務 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 2 + A
 	B += 1
@@ -1096,7 +1096,7 @@ ELSEIF TFLAG:17 == 2
 	PRINTFORMW 探索の結果、[氷山のカケラ]を手に入れました
 	PRINTFORMW ……不吉なので捨てました
 	;不安のソース追加
-	SOURCE:23 += 100
+	SOURCE:不安 += 100
 ENDIF
 ;彼岸
 @SOZAI_SEARCH_TEQUIP2_24
@@ -1145,10 +1145,10 @@ IF T == 0
 	;実行者が早苗の場合文変更
 	IF NO:PLAYER == 42
 		PRINTFORMW ……%CALLNAME:PLAYER%は箪笥の奥の方にぱんつを入れ直した
-		SOURCE:12 += 500
+		SOURCE:露出 += 500
 	ELSE
 		PRINTFORMW ……箪笥に戻しておいた
-		SOURCE:12 += 150
+		SOURCE:露出 += 150
 	ENDIF
 	TFLAG:18 = 1
 ELSEIF TFLAG:18 == 1

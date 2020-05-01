@@ -55,8 +55,8 @@ IF (SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || 
 	PRINTFORMW %CALLNAME:PLAYER%は童貞を失った
 	TALENT:PLAYER:童貞 = 2
 	;一部の反感に関係するソースを半減
-	SOURCE:14 /= 2
-	SOURCE:15 /= 2
+	SOURCE:逸脱 /= 2
+	SOURCE:反感追加 /= 2
 	;対象のキャラ番号を記憶
 	FLAG:47 = NO:TARGET
 ENDIF
@@ -425,7 +425,7 @@ IF TEQUIP:5 == 1
 		BASE:耐力 += MAXBASE:耐力 / 100
 	ENDIF
 	;痛覚ソースが入るか、気力が0だと解除
-	SIF BASE:気力 <= 0 || SOURCE:6 > 0
+	SIF BASE:気力 <= 0 || SOURCE:痛み > 0
 		TEQUIP:5 = 0
 ;魔法瓶による効果(デート中のみ)
 ELSEIF TEQUIP:5 == 3 && TEQUIP:2
@@ -788,7 +788,7 @@ IF A > 100 && TALENT:オトコ == 0
 		TIMES A , 3.00
 	SIF TALENT:濡れにくい
 		TIMES A , 0.40
-	SOURCE:10 += A
+	SOURCE:液体追加 += A
 ENDIF
 
 ;-------------------------------------------------
@@ -1089,8 +1089,8 @@ B *= LOCAL:7
 M *= LOCAL:7
 
 IF C
-	SOURCE:12 += 500 * C
-	SOURCE:13 += 200 * C
+	SOURCE:露出 += 500 * C
+	SOURCE:屈従 += 200 * C
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
 	IF ABL:Ｃ感覚 > 5 && ABL:Ｃ感覚 <= 15
 		LOSEBASE:体力 += 25 - ABL:Ｃ感覚
@@ -1110,10 +1110,10 @@ IF C
 	ENDIF
 ENDIF
 IF V
-	SOURCE:12 += 700 * V
-	SOURCE:13 += 400 * V
-	SOURCE:11 += 800 * V
-	SOURCE:16 += 500 * V
+	SOURCE:露出 += 700 * V
+	SOURCE:屈従 += 400 * V
+	SOURCE:欲情追加 += 800 * V
+	SOURCE:恭順追加 += 500 * V
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
 	IF ABL:Ｖ感覚 > 5 && ABL:Ｖ感覚 <= 15
 		LOSEBASE:体力 += 50 - (ABL:Ｖ感覚 * 2)
@@ -1137,10 +1137,10 @@ IF V
 	ENDIF
 ENDIF
 IF A
-	SOURCE:12 += 1200 * A
-	SOURCE:13 += 4500 * A
-	SOURCE:11 += 3500 * A
-	SOURCE:16 += 1500 * A
+	SOURCE:露出 += 1200 * A
+	SOURCE:屈従 += 4500 * A
+	SOURCE:欲情追加 += 3500 * A
+	SOURCE:恭順追加 += 1500 * A
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
 	IF ABL:Ａ感覚 > 5 && ABL:Ａ感覚 <= 15
 		LOSEBASE:体力 += 75 - (ABL:Ａ感覚 * 3)
@@ -1158,8 +1158,8 @@ IF A
 		TFLAG:200 = 2
 ENDIF
 IF B
-	SOURCE:12 += 500 * B
-	SOURCE:13 += 200 * B
+	SOURCE:露出 += 500 * B
+	SOURCE:屈従 += 200 * B
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
 	IF ABL:Ｂ感覚 > 5 && ABL:Ｂ感覚 <= 15
 		LOSEBASE:体力 += 25 - ABL:Ｂ感覚
@@ -1179,8 +1179,8 @@ IF B
 	ENDIF
 ENDIF
 IF M
-	SOURCE:3 += 500 * M
-	SOURCE:13 += 200 * M
+	SOURCE:情愛 += 500 * M
+	SOURCE:屈従 += 200 * M
 	;絶頂時の消耗を感覚Lvが高い場合は軽減してみる
 	IF ABL:Ｍ感覚 > 5 && ABL:Ｍ感覚 <= 15
 		LOSEBASE:体力 += 25 - ABL:Ｍ感覚
@@ -1287,56 +1287,56 @@ RETURN C, V, A, B, M
 ;調教ソースの表示（DOWNもここで）
 ;-------------------------------------------------
 @SHOW_SOURCE
-SIF SOURCE:0 > 0
-	PRINTFORM 快Ｃ({SOURCE:0}) 
-SIF SOURCE:1 > 0
-	PRINTFORM 快Ｖ({SOURCE:1}) 
-SIF SOURCE:2 > 0
-	PRINTFORM 快Ａ({SOURCE:2}) 
-SIF SOURCE:17 > 0
-	PRINTFORM 快Ｂ({SOURCE:17}) 
-SIF SOURCE:24 > 0
-	PRINTFORM 快Ｍ({SOURCE:24}) 
-SIF SOURCE:3 > 0
-	PRINTFORM 情愛({SOURCE:3}) 
-SIF SOURCE:4 > 0
-	PRINTFORM 性行動({SOURCE:4}) 
-SIF SOURCE:5 > 0
-	PRINTFORM 達成感({SOURCE:5}) 
-SIF SOURCE:6 > 0
-	PRINTFORM 痛み({SOURCE:6}) 
-SIF SOURCE:7 > 0
-	PRINTFORM 中毒充足({SOURCE:7}) 
-SIF SOURCE:8 > 0
-	PRINTFORM 不潔({SOURCE:8}) 
-SIF SOURCE:10 > 0
-	PRINTFORM 液体追加({SOURCE:10}) 
-SIF SOURCE:11 > 0
-	PRINTFORM 欲情追加({SOURCE:11}) 
-SIF SOURCE:16 > 0
-	PRINTFORM 恭順追加({SOURCE:16}) 
-SIF SOURCE:12 > 0
-	PRINTFORM 露出({SOURCE:12}) 
-SIF SOURCE:13 > 0
-	PRINTFORM 屈従({SOURCE:13}) 
-SIF SOURCE:14 > 0
-	PRINTFORM 逸脱({SOURCE:14}) 
-SIF SOURCE:15 > 0
-	PRINTFORM 反感追加({SOURCE:15}) 
-SIF SOURCE:9 > 0
-	PRINTFORM 接触({SOURCE:9}) 
-SIF SOURCE:18 > 0
-	PRINTFORM 歓楽({SOURCE:18}) 
-SIF SOURCE:19 > 0
-	PRINTFORM 家務({SOURCE:19}) 
-SIF SOURCE:20 > 0
-	PRINTFORM 征服({SOURCE:20}) 
-SIF SOURCE:21 > 0
-	PRINTFORM 受動({SOURCE:21}) 
-SIF SOURCE:22 > 0
-	PRINTFORM 懐疑({SOURCE:22}) 
-SIF SOURCE:23 > 0
-	PRINTFORM 不安({SOURCE:23}) 
+SIF SOURCE:快Ｃ > 0
+	PRINTFORM 快Ｃ({SOURCE:快Ｃ}) 
+SIF SOURCE:快Ｖ > 0
+	PRINTFORM 快Ｖ({SOURCE:快Ｖ}) 
+SIF SOURCE:快Ａ > 0
+	PRINTFORM 快Ａ({SOURCE:快Ａ}) 
+SIF SOURCE:快Ｂ > 0
+	PRINTFORM 快Ｂ({SOURCE:快Ｂ}) 
+SIF SOURCE:快Ｍ > 0
+	PRINTFORM 快Ｍ({SOURCE:快Ｍ}) 
+SIF SOURCE:情愛 > 0
+	PRINTFORM 情愛({SOURCE:情愛}) 
+SIF SOURCE:性行動 > 0
+	PRINTFORM 性行動({SOURCE:性行動}) 
+SIF SOURCE:達成感 > 0
+	PRINTFORM 達成感({SOURCE:達成感}) 
+SIF SOURCE:痛み > 0
+	PRINTFORM 痛み({SOURCE:痛み}) 
+SIF SOURCE:中毒充足 > 0
+	PRINTFORM 中毒充足({SOURCE:中毒充足}) 
+SIF SOURCE:不潔 > 0
+	PRINTFORM 不潔({SOURCE:不潔}) 
+SIF SOURCE:液体追加 > 0
+	PRINTFORM 液体追加({SOURCE:液体追加}) 
+SIF SOURCE:欲情追加 > 0
+	PRINTFORM 欲情追加({SOURCE:欲情追加}) 
+SIF SOURCE:恭順追加 > 0
+	PRINTFORM 恭順追加({SOURCE:恭順追加}) 
+SIF SOURCE:露出 > 0
+	PRINTFORM 露出({SOURCE:露出}) 
+SIF SOURCE:屈従 > 0
+	PRINTFORM 屈従({SOURCE:屈従}) 
+SIF SOURCE:逸脱 > 0
+	PRINTFORM 逸脱({SOURCE:逸脱}) 
+SIF SOURCE:反感追加 > 0
+	PRINTFORM 反感追加({SOURCE:反感追加}) 
+SIF SOURCE:接触 > 0
+	PRINTFORM 接触({SOURCE:接触}) 
+SIF SOURCE:歓楽 > 0
+	PRINTFORM 歓楽({SOURCE:歓楽}) 
+SIF SOURCE:家務 > 0
+	PRINTFORM 家務({SOURCE:家務}) 
+SIF SOURCE:征服 > 0
+	PRINTFORM 征服({SOURCE:征服}) 
+SIF SOURCE:受動 > 0
+	PRINTFORM 受動({SOURCE:受動}) 
+SIF SOURCE:懐疑 > 0
+	PRINTFORM 懐疑({SOURCE:懐疑}) 
+SIF SOURCE:不安 > 0
+	PRINTFORM 不安({SOURCE:不安}) 
 PRINTL 　
 
 ;=============================================================================
@@ -1348,11 +1348,11 @@ PRINTL 　
 @CALC_SOURCE0
 ;Ｃ敏感とＣ鈍感はここで処理
 SIF TALENT:Ｃ鈍感
-	TIMES SOURCE:0 , 0.50
+	TIMES SOURCE:快Ｃ , 0.50
 SIF TALENT:Ｃ敏感
-	TIMES SOURCE:0 , 2.00
+	TIMES SOURCE:快Ｃ , 2.00
 
-A = SOURCE:0
+A = SOURCE:快Ｃ
 
 ;PALAM:欲情をみる
 IF PALAM:5 < PALAMLV:1
@@ -1367,7 +1367,7 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.80
 ENDIF
 
-B = SOURCE:0
+B = SOURCE:快Ｃ
 
 ;ABL:欲望をみる
 SIF ABL:欲望 == 0
@@ -1390,7 +1390,7 @@ ENDIF
 
 ;快感の否定、抑圧、抵抗
 IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
-	C = SOURCE:0 / 3
+	C = SOURCE:快Ｃ / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES C , 1.00
@@ -1433,11 +1433,11 @@ ENDIF
 @CALC_SOURCE1
 ;Ｖ敏感とＶ鈍感はここで処理
 SIF TALENT:Ｖ鈍感
-	TIMES SOURCE:1 , 0.50
+	TIMES SOURCE:快Ｖ , 0.50
 SIF TALENT:Ｖ敏感
-	TIMES SOURCE:1 , 2.00
+	TIMES SOURCE:快Ｖ , 2.00
 
-A = SOURCE:1
+A = SOURCE:快Ｖ
 
 ;PALAM:欲情をみる
 IF PALAM:5 < PALAMLV:1
@@ -1452,7 +1452,7 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 2.00
 ENDIF
 
-B = SOURCE:1
+B = SOURCE:快Ｖ
 
 ;ABL:欲望をみる
 SIF ABL:欲望 == 0
@@ -1475,7 +1475,7 @@ ENDIF
 
 ;快感の否定、抑圧、抵抗
 IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
-	C = SOURCE:1 / 3
+	C = SOURCE:快Ｖ / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES C , 1.00
@@ -1522,11 +1522,11 @@ SIF D
 @CALC_SOURCE2
 ;Ａ敏感とＡ鈍感はここで処理
 SIF TALENT:Ａ鈍感
-	TIMES SOURCE:2 , 0.50
+	TIMES SOURCE:快Ａ , 0.50
 SIF TALENT:Ａ敏感
-	TIMES SOURCE:2 , 2.00
+	TIMES SOURCE:快Ａ , 2.00
 
-A = SOURCE:2
+A = SOURCE:快Ａ
 
 ;PALAM:欲情をみる
 ;快ＡはあまりPALAM:欲情では差が出ない
@@ -1542,7 +1542,7 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.40
 ENDIF
 
-B = SOURCE:2
+B = SOURCE:快Ａ
 
 ;ABL:欲望をみる
 SIF ABL:欲望 == 0
@@ -1567,7 +1567,7 @@ ENDIF
 
 ;快感の否定、抑圧、抵抗
 IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
-	C = SOURCE:2 / 3
+	C = SOURCE:快Ａ / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES C , 1.00
@@ -1604,11 +1604,11 @@ UP:13 += C
 @CALC_SOURCE17
 ;Ｂ敏感とＢ鈍感はここで処理
 SIF TALENT:Ｂ鈍感
-	TIMES SOURCE:17 , 0.50
+	TIMES SOURCE:快Ｂ , 0.50
 SIF TALENT:Ｂ敏感
-	TIMES SOURCE:17 , 2.00
+	TIMES SOURCE:快Ｂ , 2.00
 
-A = SOURCE:17
+A = SOURCE:快Ｂ
 
 ;PALAM:欲情をみる
 IF PALAM:5 < PALAMLV:1
@@ -1623,7 +1623,7 @@ ELSEIF PALAM:5 >= PALAMLV:4
 	TIMES A , 1.80
 ENDIF
 
-B = SOURCE:17
+B = SOURCE:快Ｂ
 
 ;ABL:欲望をみる
 SIF ABL:欲望 == 0
@@ -1646,7 +1646,7 @@ ENDIF
 
 ;快感の否定、抑圧、抵抗
 IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
-	C = SOURCE:17 / 3
+	C = SOURCE:快Ｂ / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES C , 1.00
@@ -1681,17 +1681,17 @@ UP:13 += C
 @CALC_SOURCE24
 ;コンフィグでＭ感覚がOFFになっていたら快Ｍソースを0にして終了
 IF (FLAG:62 & 4194304) == 0
-	SOURCE:24 = 0
+	SOURCE:快Ｍ = 0
 	RETURN 0
 ENDIF
 
 ;Ｍ敏感とＭ鈍感はここで処理
 SIF TALENT:Ｍ鈍感
-	TIMES SOURCE:24 , 0.50
+	TIMES SOURCE:快Ｍ , 0.50
 SIF TALENT:Ｍ敏感
-	TIMES SOURCE:24 , 2.00
+	TIMES SOURCE:快Ｍ , 2.00
 
-A = SOURCE:24
+A = SOURCE:快Ｍ
 B = A
 
 ;PALAM:欲情をみる・欲情による変動が少ない
@@ -1728,7 +1728,7 @@ ENDIF
 
 ;快感の否定、抑圧、抵抗
 IF TALENT:抑圧 || TALENT:抵抗 || TALENT:快感の否定
-	C = SOURCE:24 / 3
+	C = SOURCE:快Ｍ / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES C , 1.00
@@ -1772,7 +1772,7 @@ UP:13 += C
 ;情愛のソース
 ;-------------------------------------------------
 @CALC_SOURCE3
-A = SOURCE:3
+A = SOURCE:情愛
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -1793,7 +1793,7 @@ ELSE
 	ENDIF
 ENDIF
 
-B = SOURCE:3
+B = SOURCE:情愛
 
 IF ABL:欲望 <= 1
 	TIMES B , 0.00
@@ -1820,7 +1820,7 @@ UP:5 += B
 ;性行動のソース
 ;-------------------------------------------------
 @CALC_SOURCE4
-A = SOURCE:4
+A = SOURCE:性行動
 
 ;ABL:奉仕精神をみる
 IF ABL:奉仕精神 <= 1
@@ -1843,7 +1843,7 @@ ENDIF
 
 ;抑圧か抵抗がある場合はPALAM:抑鬱が上がる
 IF TALENT:抑圧 || TALENT:抵抗
-	B = SOURCE:4 / 5
+	B = SOURCE:性行動 / 5
 	;ABL:奉仕精神をみる
 	IF ABL:奉仕精神 <= 1
 		TIMES B , 1.80
@@ -1877,7 +1877,7 @@ UP:13 += B
 ;達成のソース
 ;-------------------------------------------------
 @CALC_SOURCE5
-A = SOURCE:5
+A = SOURCE:達成感
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -1923,9 +1923,9 @@ UP:4 += A
 ;痛覚のソース
 ;-------------------------------------------------
 @CALC_SOURCE6
-A = SOURCE:6
+A = SOURCE:痛み
 
-B = SOURCE:6
+B = SOURCE:痛み
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -1950,7 +1950,7 @@ ELSE
 	ENDIF
 ENDIF
 
-C = SOURCE:6
+C = SOURCE:痛み
 
 IF ABL:親密 <= 1
 	TIMES C , 0.80
@@ -1966,7 +1966,7 @@ ELSE
 	TIMES C , 0.05
 ENDIF
 
-D = SOURCE:6
+D = SOURCE:痛み
 
 IF ABL:マゾっ気 == 0
 	TIMES C , 1.00
@@ -2042,8 +2042,8 @@ UP:5 += D
 ;中毒充足のソース
 ;-------------------------------------------------
 @CALC_SOURCE7
-A = SOURCE:7
-B = SOURCE:7
+A = SOURCE:中毒充足
+B = SOURCE:中毒充足
 
 IF ABL:欲望 <= 1
 	TIMES A , 0.10
@@ -2086,8 +2086,8 @@ UP:5 += B
 ;不潔のソース
 ;-------------------------------------------------
 @CALC_SOURCE8
-A = SOURCE:8
-B = SOURCE:8
+A = SOURCE:不潔
+B = SOURCE:不潔
 
 IF ABL:親密 <= 1
 	TIMES A , 0.60
@@ -2118,12 +2118,12 @@ UP:12 += B
 @CALC_SOURCE9
 ;恥じらいと恥薄いはここで処理
 SIF TALENT:恥じらい
-	TIMES SOURCE:9 , 2.00
+	TIMES SOURCE:接触 , 2.00
 SIF TALENT:恥薄い
-	TIMES SOURCE:9 , 0.50
+	TIMES SOURCE:接触 , 0.50
 
-A = SOURCE:9
-C = SOURCE:9
+A = SOURCE:接触
+C = SOURCE:接触
 
 ;ABL:従順をみる
 IF ABL:親密 == 0
@@ -2234,7 +2234,7 @@ UP:11 += C
 ;液体追加のソース
 ;-------------------------------------------------
 @CALC_SOURCE10
-A = SOURCE:10
+A = SOURCE:液体追加
 
 UP:3 += A
 
@@ -2242,7 +2242,7 @@ UP:3 += A
 ;欲情追加のソース
 ;-------------------------------------------------
 @CALC_SOURCE11
-A = SOURCE:11
+A = SOURCE:欲情追加
 
 UP:5 += A
 
@@ -2253,15 +2253,15 @@ UP:5 += A
 @CALC_SOURCE12
 ;恥じらいと恥薄いはここで処理
 SIF TALENT:恥じらい
-	TIMES SOURCE:12 , 2.00
+	TIMES SOURCE:露出 , 2.00
 SIF TALENT:恥薄い
-	TIMES SOURCE:12 , 0.50
+	TIMES SOURCE:露出 , 0.50
 
 ;潤滑アップの50％を露出のソースに加える
 ;ただし液体追加のソースのぶんは引く
-SOURCE:12 += (UP:3-SOURCE:10) / 2
+SOURCE:露出 += (UP:3-SOURCE:液体追加) / 2
 
-A = SOURCE:12
+A = SOURCE:露出
 
 ;ABL:露出癖をみる
 SIF ABL:露出癖 == 0
@@ -2282,7 +2282,7 @@ IF ABL:露出癖 >= 5
 	ENDIF
 ENDIF
 
-B = SOURCE:12
+B = SOURCE:露出
 
 ;PALAM:恥情をみる
 ;恥ずかしさを感じれば感じるほどあまり恥ずかしくなくなる
@@ -2313,7 +2313,7 @@ ELSE
 	ENDIF
 ENDIF
 
-C = SOURCE:12
+C = SOURCE:露出
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -2360,8 +2360,8 @@ UP:11 += C
 ;屈従のソース
 ;-------------------------------------------------
 @CALC_SOURCE13
-A = SOURCE:13
-B = SOURCE:13
+A = SOURCE:屈従
+B = SOURCE:屈従
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -2397,11 +2397,11 @@ UP:6 += B
 @CALC_SOURCE14
 ;好奇心と保守的はここで処理
 SIF TALENT:好奇心
-	TIMES SOURCE:14 , 0.30
+	TIMES SOURCE:逸脱 , 0.30
 SIF TALENT:保守的
-	TIMES SOURCE:14 , 3.00
+	TIMES SOURCE:逸脱 , 3.00
 
-A = SOURCE:14
+A = SOURCE:逸脱
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
@@ -2443,7 +2443,7 @@ UP:11 += A
 ;反感追加のソース
 ;-------------------------------------------------
 @CALC_SOURCE15
-A = SOURCE:15
+A = SOURCE:反感追加
 
 UP:11 += A
 
@@ -2451,7 +2451,7 @@ UP:11 += A
 ;恭順追加のソース
 ;-------------------------------------------------
 @CALC_SOURCE16
-A = SOURCE:16
+A = SOURCE:恭順追加
 
 UP:4 += A
 
@@ -2459,7 +2459,7 @@ UP:4 += A
 ;歓楽のソース
 ;-------------------------------------------------
 @CALC_SOURCE18
-A = SOURCE:18
+A = SOURCE:歓楽
 
 ;恋慕
 SIF TALENT:恋慕
@@ -2532,8 +2532,8 @@ UP:15 += A
 ;家務のソース
 ;-------------------------------------------------
 @CALC_SOURCE19
-A = SOURCE:19
-B = SOURCE:19
+A = SOURCE:家務
+B = SOURCE:家務
 
 ;ABL:奉仕精神をみる
 IF ABL:奉仕精神 == 0
@@ -2586,7 +2586,7 @@ T = TARGET
 CALL GET_INITIATIVE_RATE
 IF R > 0
 	;強気なキャラ
-	B = SOURCE:20 / 4
+	B = SOURCE:征服 / 4
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES B , 0.10
@@ -2613,7 +2613,7 @@ IF R > 0
 	ENDIF
 ELSE
 	;弱気なキャラ
-	C = SOURCE:20 / 2
+	C = SOURCE:征服 / 2
 	;ABL:従順をみる
 	SIF ABL:親密 == 0
 		TIMES C , 0.10
@@ -2634,7 +2634,7 @@ ELSE
 	ENDIF
 ENDIF
 
-A = SOURCE:20
+A = SOURCE:征服
 ;ABL:サドっ気をみる
 IF ABL:サドっ気 == 0
 	TIMES A , 0.70
@@ -2670,7 +2670,7 @@ T = TARGET
 CALL GET_INITIATIVE_RATE
 IF R > 0
 	;強気なキャラ
-	B = SOURCE:21 / 3
+	B = SOURCE:受動 / 3
 	;ABL:欲望をみる
 	SIF ABL:欲望 == 0
 		TIMES B , 0.30
@@ -2691,7 +2691,7 @@ IF R > 0
 	ENDIF
 ELSE
 	;弱気なキャラ
-	C = SOURCE:21 / 2
+	C = SOURCE:受動 / 2
 	;ABL:奉仕精神をみる
 	SIF ABL:奉仕精神 == 0
 		TIMES C , 0.30
@@ -2712,7 +2712,7 @@ ELSE
 	ENDIF
 ENDIF
 
-A = SOURCE:21
+A = SOURCE:受動
 ;ABL:従順をみる
 IF A < 100000
 	A = A * (ABL:親密 * 10 + 70) / 100
@@ -2728,8 +2728,8 @@ UP:4 += C
 ;懐疑のソース
 ;-------------------------------------------------
 @CALC_SOURCE22
-A = SOURCE:22
-B = SOURCE:22
+A = SOURCE:懐疑
+B = SOURCE:懐疑
 
 ;ABL:従順をみる
 SIF ABL:親密 == 0
@@ -2799,10 +2799,10 @@ UP:12 += B
 
 ;天気:大雨
 SIF TIME:5 == 4
-	SOURCE:23 *= 2
+	SOURCE:不安 *= 2
 
-A = SOURCE:23
-B = SOURCE:23 / 5
+A = SOURCE:不安
+B = SOURCE:不安 / 5
 
 ;臆病(重複前提)
 IF TALENT:臆病

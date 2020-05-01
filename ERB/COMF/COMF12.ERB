@@ -11,27 +11,27 @@ CALL TRAIN_MESSAGE_B
 LOSEBASE:体力 += 30
 LOSEBASE:気力 += 150
 
-SOURCE:12 = 120
-SOURCE:14 = 400
+SOURCE:露出 = 120
+SOURCE:逸脱 = 400
 
 ;ABL:Ｃ感覚をみる
 IF ABL:Ｃ感覚 == 0
-	SOURCE:0 = 2000
+	SOURCE:快Ｃ = 2000
 ELSEIF ABL:Ｃ感覚 == 1
-	SOURCE:0 = 2500
+	SOURCE:快Ｃ = 2500
 ELSEIF ABL:Ｃ感覚 == 2
-	SOURCE:0 = 3000
+	SOURCE:快Ｃ = 3000
 ELSEIF ABL:Ｃ感覚 == 3
-	SOURCE:0 = 3300
+	SOURCE:快Ｃ = 3300
 ELSEIF ABL:Ｃ感覚 == 4
-	SOURCE:0 = 3600
+	SOURCE:快Ｃ = 3600
 ELSE
-	SOURCE:0 = 3300 + (ABL:Ｃ感覚 * 100)
+	SOURCE:快Ｃ = 3300 + (ABL:Ｃ感覚 * 100)
 ENDIF
 
 ;実行者が[淫具知識]を持っているなら効果増
 SIF TALENT:PLAYER:淫具知識
-	TIMES SOURCE:0 , 1.20
+	TIMES SOURCE:快Ｃ , 1.20
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
@@ -51,33 +51,33 @@ IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 300 + (ABL:親密 * 50)
+		SOURCE:受動 += 300 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 600 + (ABL:親密 * 100)
+		SOURCE:受動 += 600 + (ABL:親密 * 100)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 800 + (ABL:親密 * 120)
+		SOURCE:受動 += 800 + (ABL:親密 * 120)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 1000 + (ABL:親密 * 140)
+		SOURCE:受動 += 1000 + (ABL:親密 * 140)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 1200 + (ABL:親密 * 160)
+		SOURCE:受動 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:親密 * 180)
+		SOURCE:受動 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 600
+		SOURCE:征服 = 600
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 900
+		SOURCE:征服 = 900
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 1200
+		SOURCE:征服 = 1200
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1600
+		SOURCE:征服 = 1600
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 2000
+		SOURCE:征服 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
+		SOURCE:征服 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -86,7 +86,7 @@ A = RAND:10 + 5
 ;合意がないと好感度が下がる
 IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 8
-	SOURCE:15 += 300
+	SOURCE:反感追加 += 300
 ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2

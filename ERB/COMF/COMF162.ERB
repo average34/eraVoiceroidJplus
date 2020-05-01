@@ -47,8 +47,8 @@ SIF TALENT:PLAYER:サド
 	PRINT 嗜虐的な笑みを浮かべると、嫌がる
 PRINTFORML %CALLNAME:TARGET%を組み伏せ、怪しげな液体を注入した
 
-SOURCE:14 = 7000
-SOURCE:15 = 1500
+SOURCE:逸脱 = 7000
+SOURCE:反感追加 = 1500
 
 B = 1000
 C = 5000
@@ -57,23 +57,23 @@ A = RAND:16
 IF A == 0
 	PRINTFORM %CALLNAME:TARGET%は一瞬苦しそうな表情を浮かべていたが、次の瞬間強烈な疼きが体の芯から滲み出てきた
 	PRINTFORM %CALLNAME:TARGET%はあらゆる性感帯を一度に刺激された錯覚に陥った
-	SOURCE:0 = C
-	SOURCE:1 = C
-	SOURCE:2 = C
-	SOURCE:11 = C
-	SOURCE:12 = C
-	SOURCE:17 = C
+	SOURCE:快Ｃ = C
+	SOURCE:快Ｖ = C
+	SOURCE:快Ａ = C
+	SOURCE:欲情追加 = C
+	SOURCE:露出 = C
+	SOURCE:快Ｂ = C
 ELSEIF A >= 1 && A < 3
 	PRINTFORM %CALLNAME:TARGET%は
 	SIF TALENT:処女
 		PRINT 処女であるにもかかわらず
 	PRINTL 子宮の奥が疼き始めた
 	IF ABL:Ｖ感覚 <= 2
-		SOURCE:1 = B
-		SOURCE:12 = B
+		SOURCE:快Ｖ = B
+		SOURCE:露出 = B
 	ELSE
-		SOURCE:1 = C
-		SOURCE:12 = C
+		SOURCE:快Ｖ = C
+		SOURCE:露出 = C
 	ENDIF
 ELSEIF A >= 3 && A < 5
 	PRINTFORM %CALLNAME:TARGET%は
@@ -81,11 +81,11 @@ ELSEIF A >= 3 && A < 5
 		PRINT 今まで後ろの穴を弄られたことがなかったにもかかわらず
 	PRINTL 急激に菊門をほじって貰いたい衝動に襲われた
 	IF ABL:Ａ感覚 <= 2
-		SOURCE:2 = B
-		SOURCE:12 = B
+		SOURCE:快Ａ = B
+		SOURCE:露出 = B
 	ELSE
-		SOURCE:2 = C
-		SOURCE:12 = C
+		SOURCE:快Ａ = C
+		SOURCE:露出 = C
 	ENDIF
 ELSEIF A >= 5 && A < 8
 	PRINTFORM %CALLNAME:TARGET%の
@@ -98,11 +98,11 @@ ELSEIF A >= 5 && A < 8
 	ENDIF
 	PRINTL いきなり尖り始めた
 	IF ABL:Ａ感覚 <= 2
-		SOURCE:17 = B
-		SOURCE:12 = B
+		SOURCE:快Ｂ = B
+		SOURCE:露出 = B
 	ELSE
-		SOURCE:17 = C
-		SOURCE:12 = C
+		SOURCE:快Ｂ = C
+		SOURCE:露出 = C
 	ENDIF
 ELSEIF A >= 8 && A < 11
 	PRINTFORM %CALLNAME:TARGET%の
@@ -110,11 +110,11 @@ ELSEIF A >= 8 && A < 11
 		PRINT 可愛らしい小さな
 	PRINTL 陰核は剥き出しの状態になった
 	IF ABL:Ａ感覚 <= 2
-		SOURCE:0 = B
-		SOURCE:12 = B
+		SOURCE:快Ｃ = B
+		SOURCE:露出 = B
 	ELSE
-		SOURCE:0 = C
-		SOURCE:12 = C
+		SOURCE:快Ｃ = C
+		SOURCE:露出 = C
 	ENDIF
 ELSEIF A == 15 && TALENT:動物耳 == 0
 	PRINTFORM %CALLNAME:TARGET%の頭に突如
@@ -136,7 +136,7 @@ ELSEIF A == 15 && TALENT:動物耳 == 0
 ELSE
 	PRINTFORML %CALLNAME:TARGET%は荒い息をつきながら爪が腕に食い込む程自分の体をぎゅっと抱きしめている
 	PRINTFORML それでも体の火照りを抑えられなくなったのか%CALLNAME:TARGET%の足元には愛液で出来た水たまりが広がっている……
-	SOURCE:11 = 7000
+	SOURCE:欲情追加 = 7000
 	PALAM:10 += 4000
 ENDIF
 WAIT

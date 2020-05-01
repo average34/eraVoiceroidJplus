@@ -58,8 +58,8 @@ B = CFLAG:10
 LOSEBASE:体力 += 50 + (50 * (16-A) / (B+1))
 LOSEBASE:気力 += 30 + (30 * (16-A) / (B+1))
 
-SOURCE:6 = 3000
-SOURCE:14 = 8000
+SOURCE:痛み = 3000
+SOURCE:逸脱 = 8000
 
 SIF TEQUIP:74 == 0
 	TEQUIP:74 = 1
@@ -112,7 +112,7 @@ LOSEBASE:体力 += 100
 LOSEBASE:気力 += 90
 
 A = (CFLAG:10 / 10) + 1
-SOURCE:6 += 2500 / A
+SOURCE:痛み += 2500 / A
 
 CFLAG:10 -= RAND:5
 

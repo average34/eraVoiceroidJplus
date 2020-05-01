@@ -26,10 +26,10 @@ SIF P != MASTER
 CALL COUNTER_EJAC_DAMAGE
 
 ;ソース追加
-;SOURCE:3  情愛(恭順、欲情) 
-;SOURCE:4  性行動(習得、抑鬱)
-;SOURCE:5  達成感(恭順)
-;SOURCE:13 屈従(屈服、抑鬱)
+;SOURCE:情愛  情愛(恭順、欲情) 
+;SOURCE:性行動  性行動(習得、抑鬱)
+;SOURCE:達成感  達成感(恭順)
+;SOURCE:屈従 屈従(屈服、抑鬱)
 VARSET LOCAL, 0
 ;情愛の計算
 ;親密を見る
@@ -88,10 +88,10 @@ IF TFLAG:302 > 1
 	LOCAL:13 = LOCAL:13 * (10 + TFLAG:302) / 10
 ENDIF
 
-SOURCE:3 += LOCAL:3
-SOURCE:4 += LOCAL:4
-SOURCE:5 += LOCAL:5
-SOURCE:13 += LOCAL:13
+SOURCE:情愛 += LOCAL:3
+SOURCE:性行動 += LOCAL:4
+SOURCE:達成感 += LOCAL:5
+SOURCE:屈従 += LOCAL:13
 
 RETURN 0
 

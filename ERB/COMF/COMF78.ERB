@@ -85,105 +85,105 @@ ELSE
 	IF F > 0
 		;ABL:Ｖ感覚をみる
 		IF ABL:Ｖ感覚 == 0
-			SOURCE:1 = 50
+			SOURCE:快Ｖ = 50
 		ELSEIF ABL:Ｖ感覚 == 1
-			SOURCE:1 = 200
+			SOURCE:快Ｖ = 200
 		ELSEIF ABL:Ｖ感覚 == 2
-			SOURCE:1 = 400
+			SOURCE:快Ｖ = 400
 		ELSEIF ABL:Ｖ感覚 == 3
-			SOURCE:1 = 800
+			SOURCE:快Ｖ = 800
 		ELSEIF ABL:Ｖ感覚 == 4
-			SOURCE:1 = 1200
+			SOURCE:快Ｖ = 1200
 		ELSE
-			SOURCE:1 = 1600
+			SOURCE:快Ｖ = 1600
 		ENDIF
 	;EXP:Ｖ経験をみる
 		IF EXP:Ｖ経験 < EXPLV:1
-			TIMES SOURCE:1 , 0.20
-			SOURCE:6 += 5000
+			TIMES SOURCE:快Ｖ , 0.20
+			SOURCE:痛み += 5000
 			EXP:異常経験 += 1
 			PRINTFORML %EXPNAME:50%＋１
 		ELSEIF EXP:Ｖ経験 < EXPLV:2
-			TIMES SOURCE:1 , 0.60
-			SOURCE:6 += 200
+			TIMES SOURCE:快Ｖ , 0.60
+			SOURCE:痛み += 200
 		ELSEIF EXP:Ｖ経験 < EXPLV:3
-			TIMES SOURCE:1 , 1.00
-			SOURCE:6 += 50
+			TIMES SOURCE:快Ｖ , 1.00
+			SOURCE:痛み += 50
 		ELSEIF EXP:Ｖ経験 < EXPLV:4
-			TIMES SOURCE:1 , 1.20
-			SOURCE:6 += 10
+			TIMES SOURCE:快Ｖ , 1.20
+			SOURCE:痛み += 10
 		ELSEIF EXP:Ｖ経験 < EXPLV:5
-			TIMES SOURCE:1 , 1.40
-			SOURCE:6 += 0
+			TIMES SOURCE:快Ｖ , 1.40
+			SOURCE:痛み += 0
 		ELSE
-			TIMES SOURCE:1 , 1.60
-			SOURCE:6 += 0
+			TIMES SOURCE:快Ｖ , 1.60
+			SOURCE:痛み += 0
 		ENDIF
 	ENDIF
 	IF R > 0
 		;ABL:Ａ感覚をみる
 		IF ABL:Ａ感覚 == 0
-			SOURCE:2 = 50
-			SOURCE:13 = 200
+			SOURCE:快Ａ = 50
+			SOURCE:屈従 = 200
 		ELSEIF ABL:Ａ感覚 == 1
-			SOURCE:2 = 200
-			SOURCE:13 = 600
+			SOURCE:快Ａ = 200
+			SOURCE:屈従 = 600
 		ELSEIF ABL:Ａ感覚 == 2
-			SOURCE:2 = 400
-			SOURCE:13 = 1000
+			SOURCE:快Ａ = 400
+			SOURCE:屈従 = 1000
 		ELSEIF ABL:Ａ感覚 == 3
-			SOURCE:2 = 800
-			SOURCE:13 = 1400
+			SOURCE:快Ａ = 800
+			SOURCE:屈従 = 1400
 		ELSEIF ABL:Ａ感覚 == 4
-			SOURCE:2 = 1200
-			SOURCE:13 = 1800
+			SOURCE:快Ａ = 1200
+			SOURCE:屈従 = 1800
 		ELSE
-			SOURCE:2 = 1600
-			SOURCE:13 = 2100
+			SOURCE:快Ａ = 1600
+			SOURCE:屈従 = 2100
 		ENDIF
 		;EXP:Ａ経験をみる
 		IF EXP:Ａ経験 < EXPLV:1
-			TIMES SOURCE:2 , 0.50
-			SOURCE:6 += 1500
+			TIMES SOURCE:快Ａ , 0.50
+			SOURCE:痛み += 1500
 		ELSEIF EXP:Ａ経験 < EXPLV:2
-			TIMES SOURCE:2 , 1.00
-			SOURCE:6 += 200
+			TIMES SOURCE:快Ａ , 1.00
+			SOURCE:痛み += 200
 		ELSEIF EXP:Ａ経験 < EXPLV:3
-			TIMES SOURCE:2 , 1.10
-			SOURCE:6 += 50
+			TIMES SOURCE:快Ａ , 1.10
+			SOURCE:痛み += 50
 		ELSEIF EXP:Ａ経験 < EXPLV:4
-			TIMES SOURCE:2 , 1.20
-			SOURCE:6 += 10
+			TIMES SOURCE:快Ａ , 1.20
+			SOURCE:痛み += 10
 		ELSEIF EXP:Ａ経験 < EXPLV:5
-			TIMES SOURCE:2 , 1.40
-			SOURCE:6 += 0
+			TIMES SOURCE:快Ａ , 1.40
+			SOURCE:痛み += 0
 		ELSE
-			TIMES SOURCE:2 , 1.60
-			SOURCE:6 += 0
+			TIMES SOURCE:快Ａ , 1.60
+			SOURCE:痛み += 0
 		ENDIF
 	ENDIF
 	IF F > 0 || R > 0
 		;PALAM:潤滑をみる
 		IF PALAM:3 < PALAMLV:1
-			TIMES SOURCE:1 , 0.10
-			TIMES SOURCE:2 , 0.40
-			SOURCE:6 += 700
+			TIMES SOURCE:快Ｖ , 0.10
+			TIMES SOURCE:快Ａ , 0.40
+			SOURCE:痛み += 700
 		ELSEIF PALAM:3 < PALAMLV:2
-			TIMES SOURCE:1 , 0.40
-			TIMES SOURCE:2 , 0.80
-			SOURCE:6 += 400
+			TIMES SOURCE:快Ｖ , 0.40
+			TIMES SOURCE:快Ａ , 0.80
+			SOURCE:痛み += 400
 		ELSEIF PALAM:3 < PALAMLV:3
-			TIMES SOURCE:1 , 1.00
-			TIMES SOURCE:2 , 1.00
-			SOURCE:6 += 200
+			TIMES SOURCE:快Ｖ , 1.00
+			TIMES SOURCE:快Ａ , 1.00
+			SOURCE:痛み += 200
 		ELSEIF PALAM:3 < PALAMLV:4
-			TIMES SOURCE:1 , 1.40
-			TIMES SOURCE:2 , 1.40
-			SOURCE:6 += 100
+			TIMES SOURCE:快Ｖ , 1.40
+			TIMES SOURCE:快Ａ , 1.40
+			SOURCE:痛み += 100
 		ELSEIF PALAM:3 >= PALAMLV:4
-			TIMES SOURCE:1 , 1.80
-			TIMES SOURCE:2 , 1.80
-			SOURCE:6 += 50
+			TIMES SOURCE:快Ｖ , 1.80
+			TIMES SOURCE:快Ａ , 1.80
+			SOURCE:痛み += 50
 		ENDIF
 	ENDIF
 	A = 100
@@ -202,35 +202,35 @@ ELSE
 	ENDIF
 	;ABL:Ｃ感覚をみる
 	IF ABL:Ｃ感覚 == 0
-		SOURCE:0 = 30
+		SOURCE:快Ｃ = 30
 	ELSEIF ABL:Ｃ感覚 == 1
-		SOURCE:0 = 150
+		SOURCE:快Ｃ = 150
 	ELSEIF ABL:Ｃ感覚 == 2
-		SOURCE:0 = 600
+		SOURCE:快Ｃ = 600
 	ELSEIF ABL:Ｃ感覚 == 3
-		SOURCE:0 = 1200
+		SOURCE:快Ｃ = 1200
 	ELSEIF ABL:Ｃ感覚 == 4
-		SOURCE:0 = 1800
+		SOURCE:快Ｃ = 1800
 	ELSE
-		SOURCE:0 = 2500
+		SOURCE:快Ｃ = 2500
 	ENDIF
 	;ABL:Ｂ感覚をみる
 	IF ABL:Ｂ感覚 == 0
-		SOURCE:17 = 20
+		SOURCE:快Ｂ = 20
 	ELSEIF ABL:Ｂ感覚 == 1
-		SOURCE:17 = 100
+		SOURCE:快Ｂ = 100
 	ELSEIF ABL:Ｂ感覚 == 2
-		SOURCE:17 = 500
+		SOURCE:快Ｂ = 500
 	ELSEIF ABL:Ｂ感覚 == 3
-		SOURCE:17 = 1000
+		SOURCE:快Ｂ = 1000
 	ELSEIF ABL:Ｂ感覚 == 4
-		SOURCE:17 = 1500
+		SOURCE:快Ｂ = 1500
 	ELSE
-		SOURCE:17 = 2000
+		SOURCE:快Ｂ = 2000
 	ENDIF
 	;小柄体型
 	SIF TALENT:小柄体型
-		TIMES SOURCE:6 , 1.20
+		TIMES SOURCE:痛み , 1.20
 	;臆病
 	SIF TALENT:臆病
 		TIMES A , 2.00
@@ -240,15 +240,15 @@ ELSE
 	LOSEBASE:体力 += A / 4
 	LOSEBASE:気力 += A / 2
 	UP:10 += A * 8
-	SOURCE:14 += A * 3
+	SOURCE:逸脱 += A * 3
 	IF TFLAG:71 == 1
-		SOURCE:6 += A
-		SOURCE:10 += A * 2
-		SOURCE:12 = A
+		SOURCE:痛み += A
+		SOURCE:液体追加 += A * 2
+		SOURCE:露出 = A
 	ELSEIF TFLAG:72 == 1
-		SOURCE:7 = A
-		SOURCE:10 += A * 2
-		SOURCE:11 += A
+		SOURCE:中毒充足 = A
+		SOURCE:液体追加 += A * 2
+		SOURCE:欲情追加 += A
 	ENDIF
 	
 	IF R > 0
@@ -318,7 +318,7 @@ IF F > 0 || TFLAG:75 == 1
 	SIF TFLAG:75 == 1 && F == 0
 		TIMES B , 0.80
 	
-	SOURCE:1 += B
+	SOURCE:快Ｖ += B
 ENDIF
 IF R > 0 || TFLAG:76 == 1
 	;ABL:Ａ感覚をみる
@@ -339,37 +339,37 @@ IF R > 0 || TFLAG:76 == 1
 	SIF TFLAG:76 == 1 && R == 0
 		TIMES C , 0.80
 	
-	SOURCE:2 += C
-	SOURCE:13 += C
+	SOURCE:快Ａ += C
+	SOURCE:屈従 += C
 ENDIF
 
 ;ABL:Ｃ感覚をみる
 IF ABL:Ｃ感覚 == 0
-	SOURCE:0 += 30
+	SOURCE:快Ｃ += 30
 ELSEIF ABL:Ｃ感覚 == 1
-	SOURCE:0 += 50
+	SOURCE:快Ｃ += 50
 ELSEIF ABL:Ｃ感覚 == 2
-	SOURCE:0 += 100
+	SOURCE:快Ｃ += 100
 ELSEIF ABL:Ｃ感覚 == 3
-	SOURCE:0 += 200
+	SOURCE:快Ｃ += 200
 ELSEIF ABL:Ｃ感覚 == 4
-	SOURCE:0 += 400
+	SOURCE:快Ｃ += 400
 ELSE
-	SOURCE:0 += 800
+	SOURCE:快Ｃ += 800
 ENDIF
 ;ABL:Ｂ感覚をみる
 IF ABL:Ｂ感覚 == 0
-	SOURCE:17 += 20
+	SOURCE:快Ｂ += 20
 ELSEIF ABL:Ｂ感覚 == 1
-	SOURCE:17 += 40
+	SOURCE:快Ｂ += 40
 ELSEIF ABL:Ｂ感覚 == 2
-	SOURCE:17 += 80
+	SOURCE:快Ｂ += 80
 ELSEIF ABL:Ｂ感覚 == 3
-	SOURCE:17 += 160
+	SOURCE:快Ｂ += 160
 ELSEIF ABL:Ｂ感覚 == 4
-	SOURCE:17 += 320
+	SOURCE:快Ｂ += 320
 ELSE
-	SOURCE:17 += 640
+	SOURCE:快Ｂ += 640
 ENDIF
 
 A = 100
@@ -406,23 +406,23 @@ LOSEBASE:体力 += A / 2
 LOSEBASE:気力 += A / 3
 
 UP:10 += A * 5
-SOURCE:8 += A * 5
-SOURCE:10 += 1000
-SOURCE:14 += A * 2
+SOURCE:不潔 += A * 5
+SOURCE:液体追加 += 1000
+SOURCE:逸脱 += A * 2
 IF TFLAG:71 == 1
-	SOURCE:6 += A
-	SOURCE:12 += A
-	SOURCE:10 += A * 2
+	SOURCE:痛み += A
+	SOURCE:露出 += A
+	SOURCE:液体追加 += A * 2
 ELSEIF TFLAG:72 == 1
-	SOURCE:7 += A
-	SOURCE:10 += A * 2
-	SOURCE:11 += A
+	SOURCE:中毒充足 += A
+	SOURCE:液体追加 += A * 2
+	SOURCE:欲情追加 += A
 ENDIF
 
 STAIN:手 = 0
 STAIN:ペニス = 2
 
-TIMES SOURCE:6 , 1.20
+TIMES SOURCE:痛み , 1.20
 IF F > 0
 	EXP:Ｖ経験 += 2
 	PRINTL Ｖ経験＋１

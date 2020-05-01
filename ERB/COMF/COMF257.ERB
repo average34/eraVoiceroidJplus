@@ -118,13 +118,13 @@ IF TFLAG:45 == 0
 
 	;PALAM:潤滑を見てSOURCE:痛み
 	IF PALAM:3 < PALAMLV:1
-		SOURCE:6 = 600
+		SOURCE:痛み = 600
 	ELSEIF PALAM:3 < PALAMLV:2
-		SOURCE:6 = 250
+		SOURCE:痛み = 250
 	ELSEIF PALAM:3 < PALAMLV:3
-		SOURCE:6 = 100
+		SOURCE:痛み = 100
 	ELSEIF PALAM:3 < PALAMLV:4
-		SOURCE:6 = 30
+		SOURCE:痛み = 30
 	ENDIF
 
 	LOCAL:1 = 500
@@ -160,20 +160,20 @@ IF TFLAG:45 == 0
 	ENDIF
 
 	;中毒充足
-	SOURCE:7 += LOCAL:1
+	SOURCE:中毒充足 += LOCAL:1
 	;欲情追加
-	SOURCE:11 += LOCAL:1
+	SOURCE:欲情追加 += LOCAL:1
 	;露出
-	SOURCE:12 += LOCAL:1
+	SOURCE:露出 += LOCAL:1
 	;逸脱
-	SOURCE:14 += 1500
+	SOURCE:逸脱 += 1500
 
 	;;小柄体型、小人体型以外
 	;SIF TALENT:蓬莱人 == 0 && TALENT:具現 == 0
-	;	TIMES SOURCE:12 , 2.50
+	;	TIMES SOURCE:露出 , 2.50
 
 	;小柄体型、小人体型はcom_ableで弾いてる
-	TIMES SOURCE:12, 2.50
+	TIMES SOURCE:露出, 2.50
 
 	;[パイパン]付加
 	IF TALENT:TARGET:パイパン == 0
@@ -206,19 +206,19 @@ ELSE
 	LOSEBASE:気力 += 50
 
 	;ABL:サドっ気 サドっ気
-	;SOURCE:20 征服
+	;SOURCE:征服 征服
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 800
+		SOURCE:征服 = 800
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 1350
+		SOURCE:征服 = 1350
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 2000
+		SOURCE:征服 = 2000
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 3000
+		SOURCE:征服 = 3000
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 4000
+		SOURCE:征服 = 4000
 	ELSE
-		SOURCE:20 = 2500 + (ABL:サドっ気 * 500)
+		SOURCE:征服 = 2500 + (ABL:サドっ気 * 500)
 	ENDIF
 
 	;[パイパン]付加

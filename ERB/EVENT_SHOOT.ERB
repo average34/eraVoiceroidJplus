@@ -210,8 +210,8 @@ SIF BASE:P:射精 >= EJAC
 IF E == 2
 	;騎乗位
 	IF SELECTCOM == 34
-		TIMES SOURCE:7 , 1.50
-		TIMES SOURCE:5 , 1.20
+		TIMES SOURCE:中毒充足 , 1.50
+		TIMES SOURCE:達成感 , 1.20
 	ENDIF
 ENDIF
 
@@ -242,8 +242,8 @@ SIF SELECTCOM == 36
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -255,8 +255,8 @@ S = 1 + ((TFLAG:302 - 1) * 2)
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -268,8 +268,8 @@ S = 3 + ((TFLAG:302 - 1) * 3)
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 1.50
-	TIMES SOURCE:5 , 1.20
+	TIMES SOURCE:中毒充足 , 1.50
+	TIMES SOURCE:達成感 , 1.20
 ENDIF
 
 ;精液量
@@ -281,7 +281,7 @@ S = TFLAG:302
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:10 , 1.50
+	TIMES SOURCE:液体追加 , 1.50
 ;通常の射精
 ELSEIF E == 1
 	;精液汚れ
@@ -304,8 +304,8 @@ S = 1 + ((TFLAG:302 - 1) * 3)
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -317,8 +317,8 @@ S = TFLAG:302
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -330,8 +330,8 @@ S = TFLAG:302
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -343,8 +343,8 @@ S = 1 + ((TFLAG:302 - 1) * 2)
 
 ;大量射精
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量
@@ -390,8 +390,8 @@ SIF TALENT:T:妊娠 == 0 && (FLAG:62 & 1) && TFLAG:L == 1
 ;奴隷がアナルに射精で射精の時の処理
 
 IF E == 2
-	TIMES SOURCE:7 , 2.00
-	TIMES SOURCE:5 , 1.50
+	TIMES SOURCE:中毒充足 , 2.00
+	TIMES SOURCE:達成感 , 1.50
 ENDIF
 
 ;精液量

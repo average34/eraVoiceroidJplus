@@ -83,36 +83,36 @@ ENDIF
 ;Ｃ敏感ならABL:Ｃ感覚をみる
 IF TALENT:TARGET:Ｃ敏感
 	IF ABL:Ｃ感覚 == 0
-		SOURCE:0 = 20
+		SOURCE:快Ｃ = 20
 	ELSEIF ABL:Ｃ感覚 == 1
-		SOURCE:0 = 50
+		SOURCE:快Ｃ = 50
 	ELSEIF ABL:Ｃ感覚 == 2
-		SOURCE:0 = 100
+		SOURCE:快Ｃ = 100
 	ELSEIF ABL:Ｃ感覚 == 3
-		SOURCE:0 = 150
+		SOURCE:快Ｃ = 150
 	ELSEIF ABL:Ｃ感覚 == 4
-		SOURCE:0 = 300
+		SOURCE:快Ｃ = 300
 	ELSE
-		SOURCE:0 = 200 + (ABL:Ｃ感覚 * 30)
+		SOURCE:快Ｃ = 200 + (ABL:Ｃ感覚 * 30)
 	ENDIF
 ENDIF
 ;Ｂ敏感ABL:Ｂ感覚をみる
 IF TALENT:TARGET:Ｂ敏感
 	IF ABL:Ｂ感覚 == 0
-		SOURCE:17 = 50
+		SOURCE:快Ｂ = 50
 	ELSEIF ABL:Ｂ感覚 == 1
-		SOURCE:17 = 100
+		SOURCE:快Ｂ = 100
 	ELSEIF ABL:Ｂ感覚 == 2
-		SOURCE:17 = 200
+		SOURCE:快Ｂ = 200
 	ELSEIF ABL:Ｂ感覚 == 3
-		SOURCE:17 = 400
+		SOURCE:快Ｂ = 400
 	ELSEIF ABL:Ｂ感覚 == 4
-		SOURCE:17 = 800
+		SOURCE:快Ｂ = 800
 	ELSE
-		SOURCE:17 = 350 + (ABL:Ｂ感覚 * 250)
+		SOURCE:快Ｂ = 350 + (ABL:Ｂ感覚 * 250)
 	ENDIF
 ENDIF
-SOURCE:6 = 200
+SOURCE:痛み = 200
 
 ;場所をみる
 IF TEQUIP:54
@@ -187,9 +187,9 @@ ENDIF
 
 	UP:10 += A * 12
 	UP:11 += A * 6
-	SOURCE:6 += A
-	SOURCE:12 += B
-	SOURCE:14 += (A*4)+B
+	SOURCE:痛み += A
+	SOURCE:露出 += B
+	SOURCE:逸脱 += (A*4)+B
 
 
 

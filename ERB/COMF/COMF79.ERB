@@ -85,19 +85,19 @@ ELSE
 		SIF A <= 8
 			A = 8
 	ELSE
-		SOURCE:15 = 25000
+		SOURCE:反感追加 = 25000
 	ENDIF
 
 	IF NO:TARGET == 24 && NO:TARGET == 78
 		LOSEBASE:体力 += A / 4
 		LOSEBASE:気力 += A / 2
 		UP:10 += A * 20
-		SOURCE:14 += A * 3
+		SOURCE:逸脱 += A * 3
 	ELSE
 		LOSEBASE:体力 += A / 2
 		LOSEBASE:気力 += A
 		UP:10 += A * 30
-		SOURCE:14 += A * 10
+		SOURCE:逸脱 += A * 10
 	ENDIF
 
 	
@@ -148,30 +148,30 @@ IF 0
 	SIF A <= 8
 		A = 8
 ELSE
-	SOURCE:15 += 5000
+	SOURCE:反感追加 += 5000
 ENDIF
 
 IF NO:TARGET == 24 && NO:TARGET == 78
 	LOSEBASE:体力 += A / 8
 	LOSEBASE:気力 += A / 4
 	UP:10 += A * 20
-	SOURCE:8 += A * 6
-	SOURCE:14 += A * 3
+	SOURCE:不潔 += A * 6
+	SOURCE:逸脱 += A * 3
 ELSE
 	LOSEBASE:体力 += A / 4
 	LOSEBASE:気力 += A / 2
 	UP:10 += A * 30
-	SOURCE:8 += A * 10
-	SOURCE:14 += A * 15
+	SOURCE:不潔 += A * 10
+	SOURCE:逸脱 += A * 15
 ENDIF
 
-SOURCE:10 += 1000
+SOURCE:液体追加 += 1000
 
-TIMES SOURCE:0 , 2.00
-TIMES SOURCE:1 , 2.00
-TIMES SOURCE:2 , 2.00
-TIMES SOURCE:17 , 2.00
-TIMES SOURCE:13 , 1.80
+TIMES SOURCE:快Ｃ , 2.00
+TIMES SOURCE:快Ｖ , 2.00
+TIMES SOURCE:快Ａ , 2.00
+TIMES SOURCE:快Ｂ , 2.00
+TIMES SOURCE:屈従 , 1.80
 
 
 ;何が出るかな？(ランダムでイベントが発生するのもありかな？と思って作ってみた)
@@ -277,7 +277,7 @@ IF MAXBASE:PLAYER:耐力 != 0
 		PRINTL 精液経験＋３
 		T += 1
 
-		SOURCE:11 += EJAC*2
+		SOURCE:欲情追加 += EJAC*2
 
 		BASE:PLAYER:耐力 -= EJAC*2
 		SIF BASE:PLAYER:耐力 >= EJAC
@@ -290,7 +290,7 @@ IF MAXBASE:PLAYER:耐力 != 0
 		PRINTL 精液経験＋１
 		T += 1
 
-		SOURCE:11 += EJAC
+		SOURCE:欲情追加 += EJAC
 
 		BASE:PLAYER:耐力 -= EJAC
 		SIF BASE:PLAYER:耐力 >= EJAC

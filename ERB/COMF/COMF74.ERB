@@ -121,33 +121,33 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:7 += 0
-	SOURCE:10 += 0
+	SOURCE:中毒充足 += 0
+	SOURCE:液体追加 += 0
 	C += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:7 += 50
-	SOURCE:10 += 50
+	SOURCE:中毒充足 += 50
+	SOURCE:液体追加 += 50
 	C += 1
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:7 += 100
-	SOURCE:10 += 100
+	SOURCE:中毒充足 += 100
+	SOURCE:液体追加 += 100
 	C += 2
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:7 += 200
-	SOURCE:10 += 200
+	SOURCE:中毒充足 += 200
+	SOURCE:液体追加 += 200
 	C += 3
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:7 += 400
-	SOURCE:10 += 400
+	SOURCE:中毒充足 += 400
+	SOURCE:液体追加 += 400
 	C += 4
 	TIMES A, 2.00
 ELSE
-	SOURCE:7 += 800
-	SOURCE:10 += 800
+	SOURCE:中毒充足 += 800
+	SOURCE:液体追加 += 800
 	C += 5
 	TIMES A, 3.00
 ENDIF
@@ -214,13 +214,13 @@ SIF TALENT:鼓舞
 SIF TALENT:人気
 	C += 30
 
-SOURCE:12 += A/2
-SOURCE:13 += A/4
-SOURCE:14 += B
+SOURCE:露出 += A/2
+SOURCE:屈従 += A/4
+SOURCE:逸脱 += B
 
 UP:7 += A/3
 UP:8 += A/4
-UP:10 += SOURCE:14/2
+UP:10 += SOURCE:逸脱/2
 
 ;TEQUIPごとにC加算し、レイプ派生判定や経験加算に使用する
 IF TEQUIP:43
@@ -273,7 +273,7 @@ IF C > 60
 	TFLAG:18 = 1
 	CALL COM74_CHAOS
 ELSE
-	SOURCE:5 += 7500
+	SOURCE:達成感 += 7500
 ENDIF
 
 T += 1 + RAND:5
@@ -315,28 +315,28 @@ ELSEIF PALAM:5 >= PALAMLV:4
 ENDIF
 ;ABL:露出癖をみる
 IF ABL:露出癖 == 0
-	SOURCE:7 += 0
-	SOURCE:10 += 0
+	SOURCE:中毒充足 += 0
+	SOURCE:液体追加 += 0
 	TIMES A, 1.00
 ELSEIF ABL:露出癖 == 1
-	SOURCE:7 += 50
-	SOURCE:10 += 50
+	SOURCE:中毒充足 += 50
+	SOURCE:液体追加 += 50
 	TIMES A, 1.20
 ELSEIF ABL:露出癖 == 2
-	SOURCE:7 += 100
-	SOURCE:10 += 100
+	SOURCE:中毒充足 += 100
+	SOURCE:液体追加 += 100
 	TIMES A, 1.40
 ELSEIF ABL:露出癖 == 3
-	SOURCE:7 += 200
-	SOURCE:10 += 200
+	SOURCE:中毒充足 += 200
+	SOURCE:液体追加 += 200
 	TIMES A, 1.60
 ELSEIF ABL:露出癖 == 4
-	SOURCE:7 += 400
-	SOURCE:10 += 400
+	SOURCE:中毒充足 += 400
+	SOURCE:液体追加 += 400
 	TIMES A, 2.00
 ELSE
-	SOURCE:7 += 800
-	SOURCE:10 += 800
+	SOURCE:中毒充足 += 800
+	SOURCE:液体追加 += 800
 	TIMES A, 3.00
 ENDIF
 ;ABL:歌唱技能をみる
@@ -373,13 +373,13 @@ SIF TALENT:恥じらい
 SIF TALENT:恥薄い
 	TIMES B , 0.80
 
-SOURCE:12 += A/2
-SOURCE:13 += A/4
-SOURCE:14 += B
+SOURCE:露出 += A/2
+SOURCE:屈従 += A/4
+SOURCE:逸脱 += B
 
 UP:7 += A/3
 UP:8 += A/4
-UP:10 += SOURCE:14/2
+UP:10 += SOURCE:逸脱/2
 
 C = RAND:5
 
@@ -536,22 +536,22 @@ IF D > 0
 ENDIF
 EXP:フェラ経験 += F
 PRINTFORML フェラ経験＋{F}
-SOURCE:6 += 150 * N
-SOURCE:14 += 150 * N
-SOURCE:16 += 150 * N
-SOURCE:4 += 310 * N
-SOURCE:5 += 370 * N
+SOURCE:痛み += 150 * N
+SOURCE:逸脱 += 150 * N
+SOURCE:恭順追加 += 150 * N
+SOURCE:性行動 += 310 * N
+SOURCE:達成感 += 370 * N
 STAIN:口 |= 2
 STAIN:口 |= 4
 IF (D+E+F)/2 > 0
 	EXP:精液経験 += (D+E+F)/2
 	PRINTFORML 精液経験＋{(D+E+F)/2}
 ENDIF
-SOURCE:0 += C
-SOURCE:1 += V
-SOURCE:2 += A
-SOURCE:17 += B
-SOURCE:13 += 750 * O
+SOURCE:快Ｃ += C
+SOURCE:快Ｖ += V
+SOURCE:快Ａ += A
+SOURCE:快Ｂ += B
+SOURCE:屈従 += 750 * O
 UP:10 += 330 * O
 
 RETURN 1

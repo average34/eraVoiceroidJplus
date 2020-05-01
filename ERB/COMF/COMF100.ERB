@@ -114,7 +114,7 @@ LOSEBASE:体力 += A
 LOSEBASE:気力 += A * 2
 
 UP:10 += A * 20
-SOURCE:14 += A * 5
+SOURCE:逸脱 += A * 5
 
 ;---------------------------------------------------------
 ;触手変身
@@ -182,15 +182,15 @@ ENDIF
 ;触手の共通ソース
 CALL T_SOURCE
 
-SOURCE:8 += A * 10
-SOURCE:10 += 2000
+SOURCE:不潔 += A * 10
+SOURCE:液体追加 += 2000
 
-TIMES SOURCE:0 , 2.00
-TIMES SOURCE:1 , 2.00
-TIMES SOURCE:2 , 2.00
-TIMES SOURCE:17 , 2.00
-TIMES SOURCE:24 , 2.00
-TIMES SOURCE:13 , 1.80
+TIMES SOURCE:快Ｃ , 2.00
+TIMES SOURCE:快Ｖ , 2.00
+TIMES SOURCE:快Ａ , 2.00
+TIMES SOURCE:快Ｂ , 2.00
+TIMES SOURCE:快Ｍ , 2.00
+TIMES SOURCE:屈従 , 1.80
 
 ;-------------------------------------------------
 ;射精チェック
@@ -454,50 +454,50 @@ LOSEBASE:気力 += 100
 
 ;Ｍ感覚を設定している場合快Ｍソース取得
 CALL SOURCE_M_COM108
-SOURCE:24 += M
+SOURCE:快Ｍ += M
 
 ;ABL:奉仕精神をみる
 IF ABL:奉仕精神 == 0
-	SOURCE:4 += 200
+	SOURCE:性行動 += 200
 	 A = 100
 ELSEIF ABL:奉仕精神 == 1
-	SOURCE:4 += 300
+	SOURCE:性行動 += 300
 	A = 200
 ELSEIF ABL:奉仕精神 == 2
-	SOURCE:4 += 400
+	SOURCE:性行動 += 400
 	A = 400
 ELSEIF ABL:奉仕精神 == 3
-	SOURCE:4 += 500
+	SOURCE:性行動 += 500
 	A = 600
 ELSEIF ABL:奉仕精神 == 4
-	SOURCE:4 += 600
+	SOURCE:性行動 += 600
 	A = 800
 ELSE
-	SOURCE:4 += 300 + (ABL:奉仕精神 * 100)
+	SOURCE:性行動 += 300 + (ABL:奉仕精神 * 100)
 	A = 350 + (ABL:奉仕精神 * 150)
 ENDIF
 
 ;ABL:技巧をみる
 IF ABL:技巧 == 0
-	TIMES SOURCE:4 , 0.50
+	TIMES SOURCE:性行動 , 0.50
 ELSEIF ABL:技巧 == 1
-	TIMES SOURCE:4 , 0.80
+	TIMES SOURCE:性行動 , 0.80
 ELSEIF ABL:技巧 == 2
-	TIMES SOURCE:4 , 1.00
+	TIMES SOURCE:性行動 , 1.00
 ELSEIF ABL:技巧 == 3
-	TIMES SOURCE:4 , 1.20
+	TIMES SOURCE:性行動 , 1.20
 ELSEIF ABL:技巧 == 4
-	TIMES SOURCE:4 , 1.50
+	TIMES SOURCE:性行動 , 1.50
 ELSE
-	IF SOURCE:4 < 100000
-		SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
-	ELSEIF SOURCE:4 < 100000000
-		SOURCE:4 = SOURCE:4 / 100 * (ABL:技巧 * 25 + 75)
+	IF SOURCE:性行動 < 100000
+		SOURCE:性行動 = SOURCE:性行動 * (ABL:技巧 * 25 + 75) / 100
+	ELSEIF SOURCE:性行動 < 100000000
+		SOURCE:性行動 = SOURCE:性行動 / 100 * (ABL:技巧 * 25 + 75)
 	ENDIF
 ENDIF
 
-SOURCE:13 += A
-SOURCE:16 += A
+SOURCE:屈従 += A
+SOURCE:恭順追加 += A
 
 ;触手の抜き挿し
 IF TEQUIP:98
@@ -529,50 +529,50 @@ LOSEBASE:気力 += 100
 
 ;Ｍ感覚を設定している場合快Ｍソース取得
 CALL SOURCE_M_COM108
-SOURCE:24 += M / 10
+SOURCE:快Ｍ += M / 10
 
 ;ABL:奉仕精神をみる
 IF ABL:奉仕精神 == 0
-	SOURCE:4 += 200
+	SOURCE:性行動 += 200
 	 A = 100
 ELSEIF ABL:奉仕精神 == 1
-	SOURCE:4 += 300
+	SOURCE:性行動 += 300
 	A = 200
 ELSEIF ABL:奉仕精神 == 2
-	SOURCE:4 += 400
+	SOURCE:性行動 += 400
 	A = 400
 ELSEIF ABL:奉仕精神 == 3
-	SOURCE:4 += 500
+	SOURCE:性行動 += 500
 	A = 600
 ELSEIF ABL:奉仕精神 == 4
-	SOURCE:4 += 600
+	SOURCE:性行動 += 600
 	A = 800
 ELSE
-	SOURCE:4 += 300 + (ABL:奉仕精神 * 100)
+	SOURCE:性行動 += 300 + (ABL:奉仕精神 * 100)
 	A = 350 + (ABL:奉仕精神 * 150)
 ENDIF
 
 ;ABL:技巧をみる
 IF ABL:技巧 == 0
-	TIMES SOURCE:4 , 0.50
+	TIMES SOURCE:性行動 , 0.50
 ELSEIF ABL:技巧 == 1
-	TIMES SOURCE:4 , 0.80
+	TIMES SOURCE:性行動 , 0.80
 ELSEIF ABL:技巧 == 2
-	TIMES SOURCE:4 , 1.00
+	TIMES SOURCE:性行動 , 1.00
 ELSEIF ABL:技巧 == 3
-	TIMES SOURCE:4 , 1.20
+	TIMES SOURCE:性行動 , 1.20
 ELSEIF ABL:技巧 == 4
-	TIMES SOURCE:4 , 1.50
+	TIMES SOURCE:性行動 , 1.50
 ELSE
-	IF SOURCE:4 < 100000
-		SOURCE:4 = SOURCE:4 * (ABL:技巧 * 25 + 75) / 100
-	ELSEIF SOURCE:4 < 100000000
-		SOURCE:4 = SOURCE:4 / 100 * (ABL:技巧 * 25 + 75)
+	IF SOURCE:性行動 < 100000
+		SOURCE:性行動 = SOURCE:性行動 * (ABL:技巧 * 25 + 75) / 100
+	ELSEIF SOURCE:性行動 < 100000000
+		SOURCE:性行動 = SOURCE:性行動 / 100 * (ABL:技巧 * 25 + 75)
 	ENDIF
 ENDIF
 
-SOURCE:13 += A
-SOURCE:16 += A
+SOURCE:屈従 += A
+SOURCE:恭順追加 += A
 
 EXP:フェラ経験 += 1
 PRINTL フェラ経験＋１

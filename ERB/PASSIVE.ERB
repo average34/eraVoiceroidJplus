@@ -473,8 +473,8 @@ ENDIF
 SKIPDISP 0
 
 ;胸愛撫選択時に快Bソース無い場合(背面座位の快Bソースを参考）
-IF SOURCE:17 == 0 && ARG:1 == 3
-	SOURCE:17 += (ABL:PLAYER:技巧 * 100) * 2 + (ABL:Ｂ感覚 * 30)
+IF SOURCE:快Ｂ == 0 && ARG:1 == 3
+	SOURCE:快Ｂ += (ABL:PLAYER:技巧 * 100) * 2 + (ABL:Ｂ感覚 * 30)
 ENDIF
 
 SELECTCASE ARG:1
@@ -510,73 +510,73 @@ SIF TALENT:親愛
 	LOSEBASE:気力 -= 90
 
 ;固定で獲得するソース
-SOURCE:18 = 100
-SOURCE:9 = 50
+SOURCE:歓楽 = 100
+SOURCE:接触 = 50
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += (ABL:親密 * 20)
-	SOURCE:9 += (ABL:親密 * 10)
+	SOURCE:歓楽 += (ABL:親密 * 20)
+	SOURCE:接触 += (ABL:親密 * 10)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 200 + (ABL:親密 * 40)
-	SOURCE:9 += 100 + (ABL:親密 * 15)
+	SOURCE:歓楽 += 200 + (ABL:親密 * 40)
+	SOURCE:接触 += 100 + (ABL:親密 * 15)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 500 + (ABL:親密 * 50)
-	SOURCE:9 += 200 + (ABL:親密 * 20)
+	SOURCE:歓楽 += 500 + (ABL:親密 * 50)
+	SOURCE:接触 += 200 + (ABL:親密 * 20)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 700 + (ABL:親密 * 80)
-	SOURCE:9 += 300 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 700 + (ABL:親密 * 80)
+	SOURCE:接触 += 300 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1200 + (ABL:親密 * 100)
-	SOURCE:9 += 400 + (ABL:親密 * 35)
+	SOURCE:歓楽 += 1200 + (ABL:親密 * 100)
+	SOURCE:接触 += 400 + (ABL:親密 * 35)
 ELSE
-	SOURCE:18 += 2000 + (ABL:親密 * 130)
-	SOURCE:9 += 800 + (ABL:親密 * 40)
+	SOURCE:歓楽 += 2000 + (ABL:親密 * 130)
+	SOURCE:接触 += 800 + (ABL:親密 * 40)
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 500
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 5000
-	SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 300 + (ABL:親密 * 50)
+		SOURCE:受動 += 300 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 600 + (ABL:親密 * 100)
+		SOURCE:受動 += 600 + (ABL:親密 * 100)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 800 + (ABL:親密 * 120)
+		SOURCE:受動 += 800 + (ABL:親密 * 120)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 1000 + (ABL:親密 * 140)
+		SOURCE:受動 += 1000 + (ABL:親密 * 140)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 1200 + (ABL:親密 * 160)
+		SOURCE:受動 += 1200 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 1500 + (ABL:親密 * 180)
+		SOURCE:受動 += 1500 + (ABL:親密 * 180)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 600
+		SOURCE:征服 = 600
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 900
+		SOURCE:征服 = 900
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 1200
+		SOURCE:征服 = 1200
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1600
+		SOURCE:征服 = 1600
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 2000
+		SOURCE:征服 = 2000
 	ELSE
-		SOURCE:20 = 1000 + (ABL:サドっ気 * 300)
+		SOURCE:征服 = 1000 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -585,10 +585,10 @@ A = RAND:6 - 1
 TFLAG:30 += A
 B = 0
 
-TIMES SOURCE:18 , 2.00
-TIMES SOURCE:9 , 2.00
-TIMES SOURCE:20 , 2.00
-TIMES SOURCE:21 , 2.00
+TIMES SOURCE:歓楽 , 2.00
+TIMES SOURCE:接触 , 2.00
+TIMES SOURCE:征服 , 2.00
+TIMES SOURCE:受動 , 2.00
 TFLAG:30 += 2
 TFLAG:37 += 5 + A * 4
 B = 25
@@ -596,24 +596,24 @@ EXP:デート経験 += B
 
 ;恋慕
 IF TALENT:恋慕
-	TIMES SOURCE:18 , 1.10
-	TIMES SOURCE:9 , 1.30
-	TIMES SOURCE:20 , 1.10
-	TIMES SOURCE:21 , 1.20
+	TIMES SOURCE:歓楽 , 1.10
+	TIMES SOURCE:接触 , 1.30
+	TIMES SOURCE:征服 , 1.10
+	TIMES SOURCE:受動 , 1.20
 ENDIF
 ;恋人
 IF TALENT:恋人
-	TIMES SOURCE:18 , 1.20
-	TIMES SOURCE:9 , 1.50
-	TIMES SOURCE:20 , 1.20
-	TIMES SOURCE:21 , 1.10
+	TIMES SOURCE:歓楽 , 1.20
+	TIMES SOURCE:接触 , 1.50
+	TIMES SOURCE:征服 , 1.20
+	TIMES SOURCE:受動 , 1.10
 ENDIF
 ;親愛
 IF TALENT:親愛
-	TIMES SOURCE:18 , 1.50
-	TIMES SOURCE:9 , 2.00
-	TIMES SOURCE:20 , 1.50
-	TIMES SOURCE:21 , 1.50
+	TIMES SOURCE:歓楽 , 1.50
+	TIMES SOURCE:接触 , 2.00
+	TIMES SOURCE:征服 , 1.50
+	TIMES SOURCE:受動 , 1.50
 ENDIF
 
 

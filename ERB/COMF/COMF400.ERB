@@ -43,7 +43,7 @@ A = RAND:5 + 5
 ;合意がないと好感度が下がる、おまけ程度の反感
 IF TALENT:合意 == 0 && TFLAG:48 == 0
 	A -= 5
-	SOURCE:15 += 50
+	SOURCE:反感追加 += 50
 ENDIF
 TFLAG:30 += A
 TFLAG:37 += A / 2
@@ -79,62 +79,62 @@ TEQUIP:23 -= 1
 LOSEBASE:体力 += LOSEBASE:気力 * 4 / 5
 LOSEBASE:気力 += 20
 
-SOURCE:5 += 300
-SOURCE:14 += 200
+SOURCE:達成感 += 300
+SOURCE:逸脱 += 200
 IF (SELECTCOM >= 30 && SELECTCOM <= 37) || (SELECTCOM >= 60 && SELECTCOM <= 69) || SELECTCOM == 201
 	PRINTFORMW 妖夢は半霊と一緒に奉仕をしている…
-	SOURCE:0 *= 8
-	SOURCE:0 /= 5
-	SOURCE:3 *= 9
-	SOURCE:3 /= 5
-	SOURCE:4 *= 9
-	SOURCE:4 /= 5
-	SOURCE:5 *= 2
-	SOURCE:6 *= 6
-	SOURCE:6 /= 5
-	SOURCE:7 *= 9
-	SOURCE:7 /= 5
-	SOURCE:8 *= 6
-	SOURCE:8 /= 5
-	SOURCE:9 *= 9
-	SOURCE:9 /= 5
-	SOURCE:10 *= 3
-	SOURCE:10 /= 2
-	SOURCE:14 *= 9
-	SOURCE:14 /= 5
-	SOURCE:16 *= 7
-	SOURCE:16 /= 5
-	SOURCE:17 *= 9
-	SOURCE:17 /= 5
-	SOURCE:20 *= 8
-	SOURCE:20 /= 5
-	SOURCE:23 *= 6
-	SOURCE:23 /= 5
+	SOURCE:快Ｃ *= 8
+	SOURCE:快Ｃ /= 5
+	SOURCE:情愛 *= 9
+	SOURCE:情愛 /= 5
+	SOURCE:性行動 *= 9
+	SOURCE:性行動 /= 5
+	SOURCE:達成感 *= 2
+	SOURCE:痛み *= 6
+	SOURCE:痛み /= 5
+	SOURCE:中毒充足 *= 9
+	SOURCE:中毒充足 /= 5
+	SOURCE:不潔 *= 6
+	SOURCE:不潔 /= 5
+	SOURCE:接触 *= 9
+	SOURCE:接触 /= 5
+	SOURCE:液体追加 *= 3
+	SOURCE:液体追加 /= 2
+	SOURCE:逸脱 *= 9
+	SOURCE:逸脱 /= 5
+	SOURCE:恭順追加 *= 7
+	SOURCE:恭順追加 /= 5
+	SOURCE:快Ｂ *= 9
+	SOURCE:快Ｂ /= 5
+	SOURCE:征服 *= 8
+	SOURCE:征服 /= 5
+	SOURCE:不安 *= 6
+	SOURCE:不安 /= 5
 ELSEIF SELECTCOM == 300
 	PRINTFORML 妖夢は半霊と一緒に攻撃してきた
 	PRINTFORMW 戦闘経験+2
 		EXP:戦闘経験 += 2
-	SOURCE:5 *= 2
-	SOURCE:18 *= 8
-	SOURCE:18 /= 5
-	SOURCE:20 *= 2
-	SOURCE:21 *= 9
-	SOURCE:21 /= 5
+	SOURCE:達成感 *= 2
+	SOURCE:歓楽 *= 8
+	SOURCE:歓楽 /= 5
+	SOURCE:征服 *= 2
+	SOURCE:受動 *= 9
+	SOURCE:受動 /= 5
 ELSEIF SELECTCOM == 308
 	PRINTFORML 妖夢は半霊と一緒に家事をこなしている…
 	PRINTFORMW %EXPNAME:90%+2
 		EXP:家事経験 += 2
-	SOURCE:5 *= 2
-	SOURCE:18 *= 6
-	SOURCE:18 /= 5
-	SOURCE:19 *= 2
-	SOURCE:20 *= 2
-	SOURCE:21 *= 9
-	SOURCE:21 /= 5
+	SOURCE:達成感 *= 2
+	SOURCE:歓楽 *= 6
+	SOURCE:歓楽 /= 5
+	SOURCE:家務 *= 2
+	SOURCE:征服 *= 2
+	SOURCE:受動 *= 9
+	SOURCE:受動 /= 5
 ELSE
-	SOURCE:22 += 200
-	SOURCE:22 *= 3
-	SOURCE:22 /= 2
+	SOURCE:懐疑 += 200
+	SOURCE:懐疑 *= 3
+	SOURCE:懐疑 /= 2
 ENDIF
 
 SIF TEQUIP:23 == 0

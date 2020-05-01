@@ -148,12 +148,12 @@ ELSEIF TFLAG:70 > 0 && TFLAG:70 <= K
 		TIMES C , 1.70
 
 
-	SOURCE:10 += A
-	SOURCE:12 += B
-	SOURCE:14 += C
+	SOURCE:液体追加 += A
+	SOURCE:露出 += B
+	SOURCE:逸脱 += C
 
 	UP:5 += A
-	UP:10 += SOURCE:14
+	UP:10 += SOURCE:逸脱
 
 	EXP:異常経験 += 1
 	PRINTL 異常経験＋１

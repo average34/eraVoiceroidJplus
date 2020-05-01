@@ -411,7 +411,7 @@ ELSEIF SELECTCOM == 303 || (TFLAG:45 == 0 && SELECTCOM == 306) || (TFLAG:45 == 0
 	A = 1
 	B = 0
 	;現在の好感度か歓楽ソースが0以下かつ大成功でないなら感じていない口上へ
-	IF (TFLAG:30<= 0 || SOURCE:18 <= 0) && TFLAG:18 != 1
+	IF (TFLAG:30<= 0 || SOURCE:歓楽 <= 0) && TFLAG:18 != 1
 		C = 0
 	ELSE
 		C = 1
@@ -466,21 +466,21 @@ ENDIF
 ;どれくらい感じてるかチェック
 ;ソースに対応した感覚が2以上なら1、4以上なら2。高い方を優先
 IF A
-	SIF SOURCE:0 && ABL:Ｃ感覚 > 1
+	SIF SOURCE:快Ｃ && ABL:Ｃ感覚 > 1
 		C = 1
-	SIF SOURCE:0 && ABL:Ｃ感覚 > 3
+	SIF SOURCE:快Ｃ && ABL:Ｃ感覚 > 3
 		C = 2
-	SIF SOURCE:1 && ABL:Ｖ感覚 > 1 && C == 0
+	SIF SOURCE:快Ｖ && ABL:Ｖ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:1 && ABL:Ｖ感覚 > 3
+	SIF SOURCE:快Ｖ && ABL:Ｖ感覚 > 3
 		C = 2
-	SIF SOURCE:2 && ABL:Ａ感覚 > 1 && C == 0
+	SIF SOURCE:快Ａ && ABL:Ａ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:2 && ABL:Ａ感覚 > 3
+	SIF SOURCE:快Ａ && ABL:Ａ感覚 > 3
 		C = 2
-	SIF SOURCE:17 && ABL:Ｂ感覚 > 1 && C == 0
+	SIF SOURCE:快Ｂ && ABL:Ｂ感覚 > 1 && C == 0
 		C = 1
-	SIF SOURCE:17 && ABL:Ｂ感覚 > 3
+	SIF SOURCE:快Ｂ && ABL:Ｂ感覚 > 3
 		C = 2
 	;感じていない口上へ
 	IF C == 0
@@ -563,7 +563,7 @@ RETURN 0
 PRINT 「
 
 ;お尻判定
-IF SOURCE:2 && SELECTCOM != 3
+IF SOURCE:快Ａ && SELECTCOM != 3
 	P = RAND:3
 	SIF P == 0
 		PRINT 後ろ……？　
@@ -679,7 +679,7 @@ RETURN 0
 PRINT 「
 
 ;お尻判定
-IF SOURCE:2 && SELECTCOM != 3
+IF SOURCE:快Ａ && SELECTCOM != 3
 	P = RAND:3
 	SIF P == 0
 		PRINT そ、そっちは違っ、
@@ -701,9 +701,9 @@ SIF A < 1
 			PRINT 何……
 		SIF P == 3
 			PRINT ふう……
-		SIF P == 4 && SOURCE:6
+		SIF P == 4 && SOURCE:痛み
 			PRINT 痛っ……
-		SIF P == 4 && SOURCE:6 == 0
+		SIF P == 4 && SOURCE:痛み == 0
 			PRINT ……
 	REND
 ;セリフの締め
@@ -718,11 +718,11 @@ SIF A < 1
 		PRINT んっ
 	SIF P == 3 && A > 2
 		PRINT まだ……？
-	SIF P == 4 && SOURCE:6
+	SIF P == 4 && SOURCE:痛み
 		PRINT ん、あ、痛っ
-	SIF P == 4 && SOURCE:6 == 0 && TFLAG:44 == 1
+	SIF P == 4 && SOURCE:痛み == 0 && TFLAG:44 == 1
 		PRINT ぬるって……
-	SIF P == 4 && SOURCE:6 == 0 && TFLAG:44 == 0
+	SIF P == 4 && SOURCE:痛み == 0 && TFLAG:44 == 0
 		PRINT ううっ……
 PRINTW 」
 A = 0

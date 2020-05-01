@@ -45,68 +45,68 @@ CALL TRAIN_MESSAGE_B
 LOSEBASE:気力 += 60
 
 ;固定で獲得するソース
-SOURCE:18 = 0
-SOURCE:9 = 0
+SOURCE:歓楽 = 0
+SOURCE:接触 = 0
 
 ;ABL:従順をみる
 IF ABL:親密 <= 1
-	SOURCE:18 += (ABL:親密 * 25)
+	SOURCE:歓楽 += (ABL:親密 * 25)
 ELSEIF ABL:親密 <= 3
-	SOURCE:18 += 150 + (ABL:親密 * 25)
+	SOURCE:歓楽 += 150 + (ABL:親密 * 25)
 ELSEIF ABL:親密 <= 5
-	SOURCE:18 += 300 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 300 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 8
-	SOURCE:18 += 600 + (ABL:親密 * 30)
+	SOURCE:歓楽 += 600 + (ABL:親密 * 30)
 ELSEIF ABL:親密 <= 11
-	SOURCE:18 += 1000 + (ABL:親密 * 35)
+	SOURCE:歓楽 += 1000 + (ABL:親密 * 35)
 ELSE
-	SOURCE:18 += 1600 + (ABL:親密 * 25)
+	SOURCE:歓楽 += 1600 + (ABL:親密 * 25)
 ENDIF
 
 
 ;好感度をみる
 IF CFLAG:2 <= 500
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 5000
-	SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;主導権をチェック
 IF TFLAG:45 == 0
 	;主導権が主人公側
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 300 + (ABL:親密 * 20)
+		SOURCE:受動 += 300 + (ABL:親密 * 20)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 300 + (ABL:親密 * 30)
+		SOURCE:受動 += 300 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 500 + (ABL:親密 * 40)
+		SOURCE:受動 += 500 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 600 + (ABL:親密 * 50)
+		SOURCE:受動 += 600 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 800 + (ABL:親密 * 60)
+		SOURCE:受動 += 800 + (ABL:親密 * 60)
 	ELSE
-		SOURCE:21 += 1000 + (ABL:親密 * 70)
+		SOURCE:受動 += 1000 + (ABL:親密 * 70)
 	ENDIF
 ELSE
 	;主導権が相手側
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 600
+		SOURCE:征服 = 600
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 800
+		SOURCE:征服 = 800
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 1200
+		SOURCE:征服 = 1200
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 1600
+		SOURCE:征服 = 1600
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 2000
+		SOURCE:征服 = 2000
 	ELSE
-		SOURCE:20 = 1500 + (ABL:サドっ気 * 300)
+		SOURCE:征服 = 1500 + (ABL:サドっ気 * 300)
 	ENDIF
 ENDIF
 
@@ -115,17 +115,17 @@ A = RAND:6 - 1
 TFLAG:30 += A
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:16 , 0.10
-	TIMES SOURCE:20 , 0.50
-	TIMES SOURCE:21 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:恭順追加 , 0.10
+	TIMES SOURCE:征服 , 0.50
+	TIMES SOURCE:受動 , 0.50
 	TFLAG:30 -= 10
 	TFLAG:37 -= 5
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:16 , 1.00
-	TIMES SOURCE:20 , 1.00
-	TIMES SOURCE:21 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:恭順追加 , 1.00
+	TIMES SOURCE:征服 , 1.00
+	TIMES SOURCE:受動 , 1.00
 	TFLAG:37 += A
 	;恋慕または恋人ありで愛情経験追加
 	IF TALENT:恋慕 || TALENT:恋人
@@ -133,10 +133,10 @@ ELSEIF TFLAG:18 == 0
 		PRINTFORML %EXPNAME:23%+2
 	ENDIF
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:16 , 2.00
-	TIMES SOURCE:20 , 2.00
-	TIMES SOURCE:21 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:恭順追加 , 2.00
+	TIMES SOURCE:征服 , 2.00
+	TIMES SOURCE:受動 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A
 	;愛情経験追加
@@ -151,11 +151,11 @@ ENDIF
 
 ;手櫛補正
 IF TFLAG:17 == 0
-	SOURCE:9 += 400
-	TIMES SOURCE:18 , 1.20
-	TIMES SOURCE:16 , 1.20
-	TIMES SOURCE:20 , 1.20
-	TIMES SOURCE:21 , 1.20
+	SOURCE:接触 += 400
+	TIMES SOURCE:歓楽 , 1.20
+	TIMES SOURCE:恭順追加 , 1.20
+	TIMES SOURCE:征服 , 1.20
+	TIMES SOURCE:受動 , 1.20
 	TFLAG:30 += 5
 	TFLAG:37 += 7
 ENDIF

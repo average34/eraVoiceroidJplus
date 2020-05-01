@@ -446,7 +446,7 @@ ELSEIF TEQUIP:65 == 5
 		UP:8 += A/8
 	;巨乳だと痛い
 	SIF TALENT:巨乳
-		SOURCE:6 = 100
+		SOURCE:痛み = 100
 ELSEIF TEQUIP:65 == 6
 	;PRINTL ＜コスプレ中[スク水（白）]＞
 	IF TEQUIP:58 ||(TEQUIP:54 && (TIME:5 == 3 || TIME:5 == 4 || TIME:5 == 5 || TIME:5 == 7 || TIME:5 == 8))
@@ -469,7 +469,7 @@ ELSEIF TEQUIP:65 == 6
 		UP:8 += A/8
 	;巨乳だと痛い
 	SIF TALENT:巨乳
-		SOURCE:6 = 100
+		SOURCE:痛み = 100
 ELSEIF TEQUIP:65 == 7
 	;PRINTL ＜コスプレ中[白衣]＞
 	;露出度低
@@ -495,7 +495,7 @@ ELSEIF TEQUIP:65 == 10
 		TIMES C , 1.50
 	ENDIF
 	;征服
-	SOURCE:20 += A/2
+	SOURCE:征服 += A/2
 	;貧乳だと恥かしい
 	SIF TALENT:貧乳
 		UP:8 += A/8
@@ -529,16 +529,16 @@ ELSEIF TEQUIP:65 == 15
 	TIMES A , 0.50
 	TIMES C , 1.30
 	;家務
-	SOURCE:16 += A/8
+	SOURCE:恭順追加 += A/8
 ELSEIF TEQUIP:65 == 16
 	;PRINTL ＜コスプレ中[メイド服（秋）]＞
 	;露出度中
 	TIMES A , 1.20
 	TIMES C , 1.60
 	;家務
-	SOURCE:16 += A/6
+	SOURCE:恭順追加 += A/6
 	;達成感
-	SOURCE:5 += A/12
+	SOURCE:達成感 += A/12
 ELSEIF TEQUIP:65 == 17
 	;PRINTL ＜コスプレ中[裸リボン]＞
 	;露出度超
@@ -648,14 +648,14 @@ ELSEIF TEQUIP:65 == 255
 	TIMES B , 1.50
 	TIMES C , 0.20
 	;そして屈辱的である
-	SOURCE:13 += A/20
+	SOURCE:屈従 += A/20
 ENDIF
 
-SOURCE:12 += A/20
-SOURCE:13 += A/40
-SOURCE:14 += B+(A/60)
-SOURCE:18 += C/20
-SOURCE:10 += (A/30)+(C/60)
+SOURCE:露出 += A/20
+SOURCE:屈従 += A/40
+SOURCE:逸脱 += B+(A/60)
+SOURCE:歓楽 += C/20
+SOURCE:液体追加 += (A/30)+(C/60)
 RETURN 1
 
 ;-------------------------------------------------

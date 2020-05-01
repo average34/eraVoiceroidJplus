@@ -269,92 +269,92 @@ ELSEIF RESULT == 101
 	ENDCATCH
 	
 	;固定で獲得するソース
-	SOURCE:18 += 10
-	SOURCE:19 += 100
+	SOURCE:歓楽 += 10
+	SOURCE:家務 += 100
 	;成功していると達成感も
 	SIF TFLAG:18 > -1
-		SOURCE:5 += 150
+		SOURCE:達成感 += 150
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 5)
-		SOURCE:19 += (ABL:親密 * 20)
-		SOURCE:5 += (ABL:親密 * 30)
+		SOURCE:歓楽 += (ABL:親密 * 5)
+		SOURCE:家務 += (ABL:親密 * 20)
+		SOURCE:達成感 += (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 50 + (ABL:親密 * 5)
-		SOURCE:19 += 100 + (ABL:親密 * 30)
-		SOURCE:5 += 100 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 50 + (ABL:親密 * 5)
+		SOURCE:家務 += 100 + (ABL:親密 * 30)
+		SOURCE:達成感 += 100 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 100 + (ABL:親密 * 5)
-		SOURCE:19 += 200 + (ABL:親密 * 30)
-		SOURCE:5 += 150 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 100 + (ABL:親密 * 5)
+		SOURCE:家務 += 200 + (ABL:親密 * 30)
+		SOURCE:達成感 += 150 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 150 + (ABL:親密 * 10)
-		SOURCE:19 += 250 + (ABL:親密 * 40)
-		SOURCE:5 += 200 + (ABL:親密 * 50)
+		SOURCE:歓楽 += 150 + (ABL:親密 * 10)
+		SOURCE:家務 += 250 + (ABL:親密 * 40)
+		SOURCE:達成感 += 200 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 200 + (ABL:親密 * 10)
-		SOURCE:19 += 300 + (ABL:親密 * 50)
-		SOURCE:5 += 300 + (ABL:親密 * 50)
+		SOURCE:歓楽 += 200 + (ABL:親密 * 10)
+		SOURCE:家務 += 300 + (ABL:親密 * 50)
+		SOURCE:達成感 += 300 + (ABL:親密 * 50)
 	ELSE
-		SOURCE:18 += 300 + (ABL:親密 * 10)
-		SOURCE:19 += 400 + (ABL:親密 * 60)
-		SOURCE:5 += 500 + (ABL:親密 * 60)
+		SOURCE:歓楽 += 300 + (ABL:親密 * 10)
+		SOURCE:家務 += 400 + (ABL:親密 * 60)
+		SOURCE:達成感 += 500 + (ABL:親密 * 60)
 	ENDIF
 	;好感度をみる
 	IF CFLAG:2 <= 300
-		SOURCE:18 += CFLAG:2 / 3
+		SOURCE:歓楽 += CFLAG:2 / 3
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 400 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 400 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 800 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 800 + (CFLAG:2 - 5000) / 5
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
 
 	;ABL:技巧をみる
-	SOURCE:19 = SOURCE:19 * (ABL:技巧 * 5 + 100) / 100
-	SOURCE:5 = SOURCE:5 * (ABL:技巧 * 5 + 100) / 100
+	SOURCE:家務 = SOURCE:家務 * (ABL:技巧 * 5 + 100) / 100
+	SOURCE:達成感 = SOURCE:達成感 * (ABL:技巧 * 5 + 100) / 100
 	;ABL:料理技術をみる
-	SOURCE:18 += ABL:料理技能 * 10
-	SOURCE:19 = SOURCE:19 * (ABL:料理技能 * 10 + 100) / 100
-	SOURCE:5 = SOURCE:5 * (ABL:料理技能 * 20 + 100) / 100
+	SOURCE:歓楽 += ABL:料理技能 * 10
+	SOURCE:家務 = SOURCE:家務 * (ABL:料理技能 * 10 + 100) / 100
+	SOURCE:達成感 = SOURCE:達成感 * (ABL:料理技能 * 20 + 100) / 100
 	;調合知識を持っていると効果上昇
 	IF TALENT:TARGET:調合知識
-		TIMES SOURCE:19 , 2.00
-		TIMES SOURCE:5 , 2.00
+		TIMES SOURCE:家務 , 2.00
+		TIMES SOURCE:達成感 , 2.00
 	ENDIF
 	;主導権をチェック
 	IF TFLAG:45 == 0
 	;主導権が主人公側
 		;ABL:従順をみる
 		IF ABL:親密 <= 1
-			SOURCE:21 += 100 + (ABL:親密 * 20)
+			SOURCE:受動 += 100 + (ABL:親密 * 20)
 		ELSEIF ABL:親密 <= 3
-			SOURCE:21 += 200 + (ABL:親密 * 30)
+			SOURCE:受動 += 200 + (ABL:親密 * 30)
 		ELSEIF ABL:親密 <= 5
-			SOURCE:21 += 300 + (ABL:親密 * 40)
+			SOURCE:受動 += 300 + (ABL:親密 * 40)
 		ELSEIF ABL:親密 <= 8
-			SOURCE:21 += 400 + (ABL:親密 * 50)
+			SOURCE:受動 += 400 + (ABL:親密 * 50)
 		ELSEIF ABL:親密 <= 11
-			SOURCE:21 += 500 + (ABL:親密 * 60)
+			SOURCE:受動 += 500 + (ABL:親密 * 60)
 		ELSE
-			SOURCE:21 += 600 + (ABL:親密 * 70)
+			SOURCE:受動 += 600 + (ABL:親密 * 70)
 		ENDIF
 	ELSE
 	;主導権が相手
 		;ABL:サドっ気をみる
 		IF ABL:サドっ気 == 0
-			SOURCE:20 += 200
+			SOURCE:征服 += 200
 		ELSEIF ABL:サドっ気 == 1
-			SOURCE:20 += 300
+			SOURCE:征服 += 300
 		ELSEIF ABL:サドっ気 == 2
-			SOURCE:20 += 400
+			SOURCE:征服 += 400
 		ELSEIF ABL:サドっ気 == 3
-			SOURCE:20 += 550
+			SOURCE:征服 += 550
 		ELSEIF ABL:サドっ気 == 4
-			SOURCE:20 += 700
+			SOURCE:征服 += 700
 		ELSE
-			SOURCE:20 += 300 + (ABL:サドっ気 * 100)
+			SOURCE:征服 += 300 + (ABL:サドっ気 * 100)
 		ENDIF
 	ENDIF
 
@@ -362,19 +362,19 @@ ELSEIF RESULT == 101
 	TFLAG:30 += RAND:5 - 2
 	;	B = 1
 	IF TFLAG:18 == -1
-		TIMES SOURCE:18 , 0.10
-		TIMES SOURCE:19 , 0.50
+		TIMES SOURCE:歓楽 , 0.10
+		TIMES SOURCE:家務 , 0.50
 		TFLAG:30 -= 5
 		TFLAG:37 -= 2
 	ELSEIF TFLAG:18 == 0
-		TIMES SOURCE:18 , 1.00
-		TIMES SOURCE:19 , 1.00
-		TIMES SOURCE:5 , 1.00
+		TIMES SOURCE:歓楽 , 1.00
+		TIMES SOURCE:家務 , 1.00
+		TIMES SOURCE:達成感 , 1.00
 		TFLAG:37 += 1
 	ELSE
-		TIMES SOURCE:18 , 2.00
-		TIMES SOURCE:19 , 2.00
-		TIMES SOURCE:5 , 2.00
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:家務 , 2.00
+		TIMES SOURCE:達成感 , 2.00
 		TFLAG:30 += 2
 		;ELSEに分岐することはないようですが変数Aを使用しているため一応コメントアウトし代わりを設定
 		TFLAG:37 += 2
@@ -2298,7 +2298,7 @@ CASE 1
 		S += 2000 + (CFLAG:2 - 5000) / 5
 	ENDIF
 	;情愛ソース
-	SOURCE:3 += S
+	SOURCE:情愛 += S
 ;売却
 CASE -1
 	M += 3000
@@ -2439,9 +2439,9 @@ CASE 1
 		S = 10000
 	;主導権で分岐、諏訪子だと絶対に怖がらない
 	IF TFLAG:45 == 1 || NO:TARGET == 44
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ELSE
-		SOURCE:23 += S
+		SOURCE:不安 += S
 	ENDIF
 ;売却
 CASE -1
@@ -2505,7 +2505,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 好感度+{U}
-	SOURCE:3 += S
+	SOURCE:情愛 += S
 	CFLAG:TARGET:2 += U
 	TFLAG:37 += U - 5
 ;売却
@@ -2542,9 +2542,9 @@ CASE 1
 		;氷、甘味、食物ボーナス
 		CALL TYOGO_BONUS
 		
-		SOURCE:3 += 1000 + S
-		SOURCE:18 += 800 + S
-		SOURCE:9 += 800 + S
+		SOURCE:情愛 += 1000 + S
+		SOURCE:歓楽 += 800 + S
+		SOURCE:接触 += 800 + S
 		PRINTFORMW 好感度+{U}
 		CFLAG:TARGET:2 += U
 	;それ以外
@@ -2703,7 +2703,7 @@ CASE 1
 	;2回ランダムで追加
 	S += RAND:998
 	S += RAND:998
-	SOURCE:18 += S
+	SOURCE:歓楽 += S
 ;売却
 CASE -1
 	M += 2000
@@ -2738,7 +2738,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 好感度+{U}
-	SOURCE:3 += S
+	SOURCE:情愛 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -2760,9 +2760,9 @@ CASE 1
 	S += 600
 	;主導権で分岐
 	IF TFLAG:45 == 1
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ELSE
-		SOURCE:23 += S
+		SOURCE:不安 += S
 	ENDIF
 ;売却
 CASE -1
@@ -3485,7 +3485,7 @@ CASE 1
 	;アクセサリー
 	CASE 1
 		CLEARLINE 1
-		;調合のソースとの衝突を避けるため変数に変換（SOURCE:18をCに、SOURCE:21をDに、SOURCE:20をEに）
+		;調合のソースとの衝突を避けるため変数に変換（SOURCE:歓楽をCに、SOURCE:受動をDに、SOURCE:征服をEに）
 		;固定で獲得するソース
 		C = 200
 		;ABL:従順をみる
@@ -3574,9 +3574,9 @@ CASE 1
 			TIMES D , 1.20
 			A += RAND:8 + 6
 		ENDIF
-		SOURCE:18 += C
-		SOURCE:20 += E
-		SOURCE:21 += D
+		SOURCE:歓楽 += C
+		SOURCE:征服 += E
+		SOURCE:受動 += D
 
 		;好感度変化
 		TFLAG:30 += A
@@ -3623,17 +3623,17 @@ CASE 1
 	S += 1200
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 500 + (CFLAG:2 - 500) / 5
+		SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 5
 	ELSE
-		SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 10
+		SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 10
 	ENDIF
 	;主導権で分岐
 	IF TFLAG:45 == 1
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ELSE
-		SOURCE:23 += S
+		SOURCE:不安 += S
 	ENDIF
 ;売却
 CASE -1
@@ -3692,7 +3692,7 @@ CASE 1
 	;衣玖、屠自古の場合
 	IF NO:TARGET == 62 || NO:TARGET == 104
 		;遊びに行くを同程度
-		;ソースを変数に変換(SOURCE:18をC、SOURCE:9をD、SOURCE:21をE、SOURCE:20をFに変換)
+		;ソースを変数に変換(SOURCE:歓楽をC、SOURCE:接触をD、SOURCE:受動をE、SOURCE:征服をFに変換)
 		;固定で獲得するソース
 		C = 300
 		D = 0
@@ -3770,20 +3770,20 @@ CASE 1
 		D += S
 		E += S
 		F += S
-		SOURCE:18 += C
-		SOURCE:9 += D
-		SOURCE:21 += E
-		SOURCE:20 += F
+		SOURCE:歓楽 += C
+		SOURCE:接触 += D
+		SOURCE:受動 += E
+		SOURCE:征服 += F
 	;それ以外
 	ELSE
 		;海水なし（スパンキングと同程度）
 		IF TFLAG:947 == 0
 			S += 800
-			SOURCE:6 += S
+			SOURCE:痛み += S
 		;海水あり（鞭と同程度）
 		ELSE
 			S += 2200
-			SOURCE:6 += S
+			SOURCE:痛み += S
 		ENDIF
 	ENDIF
 ;売却
@@ -3992,7 +3992,7 @@ CASE 1
 	SIF TFLAG:916 == 1
 		BASE:TARGET:気力 += S
 	PRINTFORMW 痛み+{B}
-	SOURCE:6 += B
+	SOURCE:痛み += B
 ;売却
 CASE -1
 	M += 5000
@@ -4121,9 +4121,9 @@ CASE 1
 	ELSE
 		S += 2000 + (CFLAG:2 - 5000) / 10
 	ENDIF
-	SOURCE:20 += 1200 + S
-	SOURCE:21 += 1200 + S
-	SOURCE:23 += 600 + S
+	SOURCE:征服 += 1200 + S
+	SOURCE:受動 += 1200 + S
+	SOURCE:不安 += 600 + S
 	TFLAG:37 += 15 + U
 ;売却
 CASE -1
@@ -4233,8 +4233,8 @@ CASE 1
 	U += 10
 	PRINTFORMW 好感度+{U}
 	PRINTFORMW ムードがちょっと上がりました
-	SOURCE:18 += 200 + S
-	SOURCE:21 += 200 + S
+	SOURCE:歓楽 += 200 + S
+	SOURCE:受動 += 200 + S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -4329,7 +4329,7 @@ CASE 1
 	;本来動物耳を持っているTARGETがいる時
 	CASE 1
 		PRINTFORMW 好感度-20
-		SOURCE:6 += 400 + S
+		SOURCE:痛み += 400 + S
 		CFLAG:TARGET:2 -= 20
 	;何も起こらない
 	CASE 2
@@ -5364,12 +5364,12 @@ CASE 1
 		
 		U += 15
 		CFLAG:TARGET:2 += U
-		SOURCE:3 += 900
-		SOURCE:18 += 900
-		SOURCE:9 += 800
-		SOURCE:3 += S
-		SOURCE:18 += S
-		SOURCE:9 += S
+		SOURCE:情愛 += 900
+		SOURCE:歓楽 += 900
+		SOURCE:接触 += 800
+		SOURCE:情愛 += S
+		SOURCE:歓楽 += S
+		SOURCE:接触 += S
 	ELSE
 		;氷、桃、食物ボーナス
 		CALL TYOGO_BONUS
@@ -5447,9 +5447,9 @@ CASE 1
 		S = 10000
 	;主導権で分岐
 	IF TFLAG:45 == 1
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ELSE
-		SOURCE:23 += S
+		SOURCE:不安 += S
 	ENDIF
 ;売却
 CASE -1
@@ -5476,46 +5476,46 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	SOURCE:18 += 500
-	SOURCE:19 += 100
+	SOURCE:歓楽 += 500
+	SOURCE:家務 += 100
 	
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 100)
-		SOURCE:19 += (ABL:親密 * 30)
+		SOURCE:歓楽 += (ABL:親密 * 100)
+		SOURCE:家務 += (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 300 + (ABL:親密 * 100)
-		SOURCE:19 += 200 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 300 + (ABL:親密 * 100)
+		SOURCE:家務 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 750 + (ABL:親密 * 100)
-		SOURCE:19 += 400 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 750 + (ABL:親密 * 100)
+		SOURCE:家務 += 400 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 1000 + (ABL:親密 * 120)
-		SOURCE:19 += 600 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1000 + (ABL:親密 * 120)
+		SOURCE:家務 += 600 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 1500 + (ABL:親密 * 120)
-		SOURCE:19 += 800 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1500 + (ABL:親密 * 120)
+		SOURCE:家務 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3000 + (ABL:親密 * 60)
-		SOURCE:19 += 1800 + (ABL:親密 * 20)
+		SOURCE:歓楽 += 3000 + (ABL:親密 * 60)
+		SOURCE:家務 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 500 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 500 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2000 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2000 + (CFLAG:2 - 5000) / 5
 	ENDIF
 	;夜の時効果倍増
 	IF TIME == 1
-		TIMES SOURCE:18 , 2.00
-		TIMES SOURCE:19 , 2.00
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:家務 , 2.00
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
-	SOURCE:18 += S
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
+	SOURCE:歓楽 += S
 	
 	;恋慕キャラ全員の好感度上昇
 	;好感度上昇値の基本設定
@@ -5559,46 +5559,46 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	SOURCE:18 += 600
-	SOURCE:19 += 100
+	SOURCE:歓楽 += 600
+	SOURCE:家務 += 100
 	
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 110)
-		SOURCE:19 += (ABL:親密 * 30)
+		SOURCE:歓楽 += (ABL:親密 * 110)
+		SOURCE:家務 += (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 300 + (ABL:親密 * 110)
-		SOURCE:19 += 200 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 300 + (ABL:親密 * 110)
+		SOURCE:家務 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 750 + (ABL:親密 * 110)
-		SOURCE:19 += 400 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 750 + (ABL:親密 * 110)
+		SOURCE:家務 += 400 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 1000 + (ABL:親密 * 140)
-		SOURCE:19 += 600 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1000 + (ABL:親密 * 140)
+		SOURCE:家務 += 600 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 1500 + (ABL:親密 * 140)
-		SOURCE:19 += 800 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1500 + (ABL:親密 * 140)
+		SOURCE:家務 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3000 + (ABL:親密 * 65)
-		SOURCE:19 += 1800 + (ABL:親密 * 20)
+		SOURCE:歓楽 += 3000 + (ABL:親密 * 65)
+		SOURCE:家務 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 600 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 600 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2200 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2200 + (CFLAG:2 - 5000) / 5
 	ENDIF
 	;夜の時効果倍増
 	IF TIME == 1
-		TIMES SOURCE:18 , 2.00
-		TIMES SOURCE:19 , 2.00
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:家務 , 2.00
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
-	SOURCE:18 += S
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
+	SOURCE:歓楽 += S
 		
 	;恋慕キャラ全員の好感度上昇
 	;好感度上昇値の基本設定
@@ -5642,46 +5642,46 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	SOURCE:18 += 750
-	SOURCE:19 += 100
+	SOURCE:歓楽 += 750
+	SOURCE:家務 += 100
 
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 110)
-		SOURCE:19 += (ABL:親密 * 30)
+		SOURCE:歓楽 += (ABL:親密 * 110)
+		SOURCE:家務 += (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 400 + (ABL:親密 * 110)
-		SOURCE:19 += 200 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 400 + (ABL:親密 * 110)
+		SOURCE:家務 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 850 + (ABL:親密 * 110)
-		SOURCE:19 += 400 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 850 + (ABL:親密 * 110)
+		SOURCE:家務 += 400 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 1200 + (ABL:親密 * 140)
-		SOURCE:19 += 600 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1200 + (ABL:親密 * 140)
+		SOURCE:家務 += 600 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 1800 + (ABL:親密 * 140)
-		SOURCE:19 += 800 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1800 + (ABL:親密 * 140)
+		SOURCE:家務 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3500 + (ABL:親密 * 65)
-		SOURCE:19 += 1800 + (ABL:親密 * 20)
+		SOURCE:歓楽 += 3500 + (ABL:親密 * 65)
+		SOURCE:家務 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 800 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 800 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2500 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2500 + (CFLAG:2 - 5000) / 5
 	ENDIF
 	;夜の時効果倍増
 	IF TIME == 1
-		TIMES SOURCE:18 , 2.00
-		TIMES SOURCE:19 , 2.00
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:家務 , 2.00
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
-	SOURCE:18 += S
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
+	SOURCE:歓楽 += S
 	
 	;恋慕キャラ全員の好感度上昇
 	;好感度上昇値の基本設定
@@ -5725,46 +5725,46 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	SOURCE:18 += 900
-	SOURCE:19 += 100
+	SOURCE:歓楽 += 900
+	SOURCE:家務 += 100
 	
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 110)
-		SOURCE:19 += (ABL:親密 * 30)
+		SOURCE:歓楽 += (ABL:親密 * 110)
+		SOURCE:家務 += (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 400 + (ABL:親密 * 120)
-		SOURCE:19 += 200 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 400 + (ABL:親密 * 120)
+		SOURCE:家務 += 200 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 850 + (ABL:親密 * 120)
-		SOURCE:19 += 400 + (ABL:親密 * 30)
+		SOURCE:歓楽 += 850 + (ABL:親密 * 120)
+		SOURCE:家務 += 400 + (ABL:親密 * 30)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 1200 + (ABL:親密 * 150)
-		SOURCE:19 += 600 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1200 + (ABL:親密 * 150)
+		SOURCE:家務 += 600 + (ABL:親密 * 40)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 1800 + (ABL:親密 * 150)
-		SOURCE:19 += 800 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 1800 + (ABL:親密 * 150)
+		SOURCE:家務 += 800 + (ABL:親密 * 40)
 	ELSE
-		SOURCE:18 += 3500 + (ABL:親密 * 70)
-		SOURCE:19 += 1800 + (ABL:親密 * 20)
+		SOURCE:歓楽 += 3500 + (ABL:親密 * 70)
+		SOURCE:家務 += 1800 + (ABL:親密 * 20)
 	ENDIF
 	
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 800 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 800 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2500 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2500 + (CFLAG:2 - 5000) / 5
 	ENDIF
 	;夜の時効果倍増
 	IF TIME == 1
-		TIMES SOURCE:18 , 2.00
-		TIMES SOURCE:19 , 2.00
+		TIMES SOURCE:歓楽 , 2.00
+		TIMES SOURCE:家務 , 2.00
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
-	SOURCE:18 += S
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
+	SOURCE:歓楽 += S
 	
 	;恋慕キャラ全員の好感度上昇
 	;好感度上昇値の基本設定
@@ -5874,7 +5874,7 @@ CASE 1
 		BASE:TARGET:耐力 += B
 	ENDIF
 	PRINTFORMW %CALLNAME:TARGET%は漠然とした不安に襲われた…
-	SOURCE:23 += S
+	SOURCE:不安 += S
 ;売却
 CASE -1
 	M += 6000
@@ -6080,67 +6080,67 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;固定で獲得するソース
-	SOURCE:18 = 400
+	SOURCE:歓楽 = 400
 	
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:18 += (ABL:親密 * 70)
+		SOURCE:歓楽 += (ABL:親密 * 70)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:18 += 200 + (ABL:親密 * 70)
+		SOURCE:歓楽 += 200 + (ABL:親密 * 70)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:18 += 500 + (ABL:親密 * 70)
+		SOURCE:歓楽 += 500 + (ABL:親密 * 70)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:18 += 750 + (ABL:親密 * 85)
+		SOURCE:歓楽 += 750 + (ABL:親密 * 85)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:18 += 1000 + (ABL:親密 * 85)
+		SOURCE:歓楽 += 1000 + (ABL:親密 * 85)
 	ELSE
-		SOURCE:18 += 2000 + (ABL:親密 * 40)
+		SOURCE:歓楽 += 2000 + (ABL:親密 * 40)
 	ENDIF
 	
 	;好感度をみる
 	IF CFLAG:2 <= 500
-		SOURCE:18 += CFLAG:2
+		SOURCE:歓楽 += CFLAG:2
 	ELSEIF CFLAG:2 <= 5000
-		SOURCE:18 += 600 + (CFLAG:2 - 500) / 3
+		SOURCE:歓楽 += 600 + (CFLAG:2 - 500) / 3
 	ELSE
-		SOURCE:18 += 2200 + (CFLAG:2 - 5000) / 5
+		SOURCE:歓楽 += 2200 + (CFLAG:2 - 5000) / 5
 	ENDIF
-	SIF SOURCE:18 < 0
-		SOURCE:18 = 0
+	SIF SOURCE:歓楽 < 0
+		SOURCE:歓楽 = 0
 	;アクセサリ　割と仲良くなっておかないと変に思われる。かなりの効果を発揮
 	;好感度が一定値以下なら効果減少と共に懐疑のソースが入る
 	IF CFLAG:2 < 400
-		TIMES SOURCE:18 , 0.70
-		TIMES SOURCE:20 , 9.00
-		TIMES SOURCE:21 , 0.70
-		SOURCE:22 = 1800
+		TIMES SOURCE:歓楽 , 0.70
+		TIMES SOURCE:征服 , 9.00
+		TIMES SOURCE:受動 , 0.70
+		SOURCE:懐疑 = 1800
 		A -= RAND:10 + 5
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
 	ELSEIF CFLAG:2 > 1000
-		TIMES SOURCE:18 , 7.00
-		TIMES SOURCE:20 , 7.00
-		TIMES SOURCE:21 , 7.00
+		TIMES SOURCE:歓楽 , 7.00
+		TIMES SOURCE:征服 , 7.00
+		TIMES SOURCE:受動 , 7.00
 		A = RAND:8 + 6
 		TFLAG:49 = 2
 	ELSE
-		TIMES SOURCE:18 , 5.00
-		TIMES SOURCE:20 , 5.00
-		TIMES SOURCE:21 , 5.00
+		TIMES SOURCE:歓楽 , 5.00
+		TIMES SOURCE:征服 , 5.00
+		TIMES SOURCE:受動 , 5.00
 		A = RAND:6 + 4
 	ENDIF
 	;魔理沙効果上昇
 	IF NO:TARGET == 2
 		PRINTFORML 流星ボーナス＋
-		TIMES SOURCE:18 , 1.20
-		TIMES SOURCE:20 , 1.20
-		TIMES SOURCE:21 , 1.20
+		TIMES SOURCE:歓楽 , 1.20
+		TIMES SOURCE:征服 , 1.20
+		TIMES SOURCE:受動 , 1.20
 		U += 5
 	ENDIF
 
-	SOURCE:18 += S
-	SOURCE:20 += S
-	SOURCE:21 += S
+	SOURCE:歓楽 += S
+	SOURCE:征服 += S
+	SOURCE:受動 += S
 	;好感度変化
 	TFLAG:30 += A
 	U += 10
@@ -6584,7 +6584,7 @@ CASE 1
 		TIMES A , 0.80
 		TIMES B , 15.00
 		TIMES C , 0.80
-		SOURCE:22 = 3500
+		SOURCE:懐疑 = 3500
 		D -= RAND:15 + 10
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -6629,9 +6629,9 @@ CASE 1
 		D += RAND:8 + 6
 	ENDIF
 	
-	SOURCE:18 = A
-	SOURCE:20 = B
-	SOURCE:21 = C
+	SOURCE:歓楽 = A
+	SOURCE:征服 = B
+	SOURCE:受動 = C
 	TFLAG:30 += D
 	U += 15
 	PRINTFORMW 好感度+{U}
@@ -6728,7 +6728,7 @@ CASE 1
 		TIMES A , 0.80
 		TIMES B , 15.00
 		TIMES C , 0.80
-		SOURCE:22 = 3500
+		SOURCE:懐疑 = 3500
 		D -= RAND:15 + 10
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -6773,9 +6773,9 @@ CASE 1
 		D += RAND:8 + 6
 	ENDIF
 
-	SOURCE:18 += A
-	SOURCE:20 += B
-	SOURCE:21 += C
+	SOURCE:歓楽 += A
+	SOURCE:征服 += B
+	SOURCE:受動 += C
 	TFLAG:30 += D
 	U += 15
 	PRINTFORMW 好感度+{U}
@@ -6872,7 +6872,7 @@ CASE 1
 		TIMES A , 0.80
 		TIMES B , 15.00
 		TIMES C , 0.80
-		SOURCE:22 = 3500
+		SOURCE:懐疑 = 3500
 		D -= RAND:15 + 10
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -6916,9 +6916,9 @@ CASE 1
 		TIMES C , 1.20
 		D += RAND:8 + 6
 	ENDIF
-	SOURCE:18 += A
-	SOURCE:20 += B
-	SOURCE:21 += C
+	SOURCE:歓楽 += A
+	SOURCE:征服 += B
+	SOURCE:受動 += C
 	TFLAG:30 += D
 	U += 15
 	PRINTFORMW 好感度+{U}
@@ -6973,7 +6973,7 @@ CASE 1
 	SIF A < 0
 		A = 0
 	S += CFLAG:TARGET:2
-	SOURCE:11 += S
+	SOURCE:欲情追加 += S
 	PALAM:12 += A
 ;売却
 CASE -1
@@ -7975,27 +7975,27 @@ CASE 1
 	;飲む
 	CASE 1
 		;固定で獲得するソース
-		SOURCE:18 += 1000
-		SOURCE:19 += 500
+		SOURCE:歓楽 += 1000
+		SOURCE:家務 += 500
 		;ABL:従順をみる
 		IF ABL:親密 <= 1
-			SOURCE:18 += (ABL:親密 * 100)
-			SOURCE:19 += (ABL:親密 * 30)
+			SOURCE:歓楽 += (ABL:親密 * 100)
+			SOURCE:家務 += (ABL:親密 * 30)
 		ELSEIF ABL:親密 <= 3
-			SOURCE:18 += 300 + (ABL:親密 * 100)
-			SOURCE:19 += 200 + (ABL:親密 * 30)
+			SOURCE:歓楽 += 300 + (ABL:親密 * 100)
+			SOURCE:家務 += 200 + (ABL:親密 * 30)
 		ELSEIF ABL:親密 <= 5
-			SOURCE:18 += 750 + (ABL:親密 * 100)
-			SOURCE:19 += 400 + (ABL:親密 * 30)
+			SOURCE:歓楽 += 750 + (ABL:親密 * 100)
+			SOURCE:家務 += 400 + (ABL:親密 * 30)
 		ELSEIF ABL:親密 <= 8
-			SOURCE:18 += 1000 + (ABL:親密 * 120)
-			SOURCE:19 += 600 + (ABL:親密 * 40)
+			SOURCE:歓楽 += 1000 + (ABL:親密 * 120)
+			SOURCE:家務 += 600 + (ABL:親密 * 40)
 		ELSEIF ABL:親密 <= 11
-			SOURCE:18 += 1500 + (ABL:親密 * 120)
-			SOURCE:19 += 800 + (ABL:親密 * 40)
+			SOURCE:歓楽 += 1500 + (ABL:親密 * 120)
+			SOURCE:家務 += 800 + (ABL:親密 * 40)
 		ELSE
-			SOURCE:18 += 3000 + (ABL:親密 * 60)
-			SOURCE:19 += 1800 + (ABL:親密 * 20)
+			SOURCE:歓楽 += 3000 + (ABL:親密 * 60)
+			SOURCE:家務 += 1800 + (ABL:親密 * 20)
 		ENDIF
 		;ほろ酔い値＋
 		;酒豪もちの場合効果上昇
@@ -8018,7 +8018,7 @@ CASE 1
 		CASE 1
 			;歓楽上昇
 			S += 1000
-			SOURCE:18 += S
+			SOURCE:歓楽 += S
 		;話芸
 		CASE 2
 			;一定確率で金銭感覚の上昇
@@ -8026,7 +8026,7 @@ CASE 1
 				ABL:金銭感覚 += 1
 			ELSE
 				S += 1000
-				SOURCE:19 += S
+				SOURCE:家務 += S
 			ENDIF
 		ENDSELECT
 		SELECTCASE RAND:3
@@ -8637,7 +8637,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	;固定で獲得するソース
-	;SOURCE:18 = C、SOURCE:20 = D、SOURCE:21 = E
+	;SOURCE:歓楽 = C、SOURCE:征服 = D、SOURCE:受動 = E
 	C = 400
 
 	;ABL:従順をみる
@@ -8707,7 +8707,7 @@ CASE 1
 		TIMES C , 0.70
 		TIMES D , 9.00
 		TIMES E , 0.70
-		SOURCE:22 = 1800
+		SOURCE:懐疑 = 1800
 		A -= RAND:10 + 5
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -8748,9 +8748,9 @@ CASE 1
 	C += S
 	D += S
 	E += S
-	SOURCE:18 += C
-	SOURCE:20 += D
-	SOURCE:21 += E
+	SOURCE:歓楽 += C
+	SOURCE:征服 += D
+	SOURCE:受動 += E
 	;好感度変化
 	TFLAG:30 += A
 ;売却
@@ -8813,8 +8813,8 @@ CASE 1
 	;欲情の上昇値の半分反感が上がる
 	U = S / 2
 
-	SOURCE:11 += S
-	SOURCE:15 += U
+	SOURCE:欲情追加 += S
+	SOURCE:反感追加 += U
 ;売却
 CASE -1
 	M += 5000
@@ -8846,10 +8846,10 @@ CASE 1
 			S += 500
 		ENDSELECT
 		;痛みプラス
-		SOURCE:6 += S
+		SOURCE:痛み += S
 		;好感度500以下or恋人なしor恋慕なしで反感プラス
 		SIF CFLAG:2 <= 500 || TALENT:TARGET:恋慕 == 0 || TALENT:TARGET:恋人 == 0
-			SOURCE:15 += S
+			SOURCE:反感追加 += S
 	;主導権が相手側
 	ELSE
 		SELECTCASE NO:TARGET
@@ -8865,7 +8865,7 @@ CASE 1
 		ENDSELECT
 		;実行者の体力マイナス、相手の優越プラス
 		BASE:PLAYER:体力 -= S
-		SOURCE:20 += S
+		SOURCE:征服 += S
 	ENDIF
 ;売却
 CASE -1
@@ -8915,7 +8915,7 @@ CASE 1
 	PRINTFORML 
 	S += 800
 	U += 4
-	SOURCE:18 += S
+	SOURCE:歓楽 += S
 	PRINTFORMW 好感度+{U}
 	CFLAG:2 += U
 ;売却
@@ -8938,10 +8938,10 @@ CASE 1
 	;メディスン・雛・アリスなら歓楽
 	IF NO:TARGET == 14 || NO:TARGET == 33 || NO:TARGET == 39
 		S += 900
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ELSE
 		S += 500
-		SOURCE:23 += S
+		SOURCE:不安 += S
 	ENDIF
 ;売却
 CASE -1
@@ -8968,8 +8968,8 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	S += 400
 	;不安と歓楽プラス
-	SOURCE:18 += S
-	SOURCE:23 += S
+	SOURCE:歓楽 += S
+	SOURCE:不安 += S
 ;売却
 CASE -1
 	M += 1500
@@ -9003,7 +9003,7 @@ CASE 1
 		PRINTFORML 好感度+{U}
 		PRINTFORMW %CALLNAME:PLAYER%の気力-300
 		CFLAG:TARGET:2 += U
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 		BASE:PLAYER:気力 -= 300
 	;ジュラシックパーク
 	CASE 1
@@ -9011,8 +9011,8 @@ CASE 1
 		U += 5
 		PRINTFORML 好感度+{U}
 		CFLAG:TARGET:2 += U
-		SOURCE:18 += S
-		SOURCE:23 += 100
+		SOURCE:歓楽 += S
+		SOURCE:不安 += 100
 	ENDSELECT
 ;売却
 CASE -1
@@ -9047,26 +9047,26 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	SOURCE:12 += 120
-	SOURCE:14 += 70
+	SOURCE:露出 += 120
+	SOURCE:逸脱 += 70
 
 	;ABL:Ｃ感覚をみる
 	IF ABL:Ｃ感覚 == 0
-		SOURCE:0 = 200
+		SOURCE:快Ｃ = 200
 	ELSEIF ABL:Ｃ感覚 == 1
-		SOURCE:0 = 400
+		SOURCE:快Ｃ = 400
 	ELSEIF ABL:Ｃ感覚 == 2
-		SOURCE:0 = 900
+		SOURCE:快Ｃ = 900
 	ELSEIF ABL:Ｃ感覚 == 3
-		SOURCE:0 = 1600
+		SOURCE:快Ｃ = 1600
 	ELSEIF ABL:Ｃ感覚 == 4
-		SOURCE:0 = 2400
+		SOURCE:快Ｃ = 2400
 	ELSE
-		SOURCE:0 = 1500 + (ABL:Ｃ感覚 * 300)
+		SOURCE:快Ｃ = 1500 + (ABL:Ｃ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
 	IF TALENT:合意 == 0
-		SOURCE:15 += 400
+		SOURCE:反感追加 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
 	ELSE
@@ -9090,7 +9090,7 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	S += 3000
-	SOURCE:23 += S
+	SOURCE:不安 += S
 ;売却
 CASE -1
 	M += 4500
@@ -9143,7 +9143,7 @@ CASE 1
 	
 	TFLAG:37 = A
 	S += 1000
-	SOURCE:11 += S
+	SOURCE:欲情追加 += S
 ;売却
 CASE -1
 	M += 3500
@@ -9313,7 +9313,7 @@ CASE 1
 	PRINTFORML %CALLNAME:TARGET%の気力が{S}回復し、ムードが良くなりました
 	PRINTFORMW 好感度＋{U}
 	;ひそかに歓楽も
-	SOURCE:18 += S
+	SOURCE:歓楽 += S
 	CFLAG:2 += U
 ;売却
 CASE -1
@@ -9480,7 +9480,7 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	;SOURCE:18 = C、SOURCE:20 = D、SOURCE:21 = E
+	;SOURCE:歓楽 = C、SOURCE:征服 = D、SOURCE:受動 = E
 	C = 600
 	
 	;ABL:従順をみる
@@ -9550,7 +9550,7 @@ CASE 1
 		TIMES C , 0.70
 		TIMES D , 9.00
 		TIMES E , 0.70
-		SOURCE:22 = 2500
+		SOURCE:懐疑 = 2500
 		A -= RAND:20 + 10
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -9591,9 +9591,9 @@ CASE 1
 	C += S
 	D += S
 	E += S
-	SOURCE:18 += C
-	SOURCE:20 += D
-	SOURCE:21 += E
+	SOURCE:歓楽 += C
+	SOURCE:征服 += D
+	SOURCE:受動 += E
 	;好感度変化
 	TFLAG:30 += A
 ;売却
@@ -9617,26 +9617,26 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	SOURCE:12 += 120
-	SOURCE:14 += 70
+	SOURCE:露出 += 120
+	SOURCE:逸脱 += 70
 
 	;ABL:Ｂ感覚をみる
 	IF ABL:Ｂ感覚 == 0
-		SOURCE:17 = 150
+		SOURCE:快Ｂ = 150
 	ELSEIF ABL:Ｂ感覚 == 1
-		SOURCE:17 = 360
+		SOURCE:快Ｂ = 360
 	ELSEIF ABL:Ｂ感覚 == 2
-		SOURCE:17 = 840
+		SOURCE:快Ｂ = 840
 	ELSEIF ABL:Ｂ感覚 == 3
-		SOURCE:17 = 1500
+		SOURCE:快Ｂ = 1500
 	ELSEIF ABL:Ｂ感覚 == 4
-		SOURCE:17 = 2200
+		SOURCE:快Ｂ = 2200
 	ELSE
-		SOURCE:17 = 2200 + (ABL:Ｂ感覚 * 300)
+		SOURCE:快Ｂ = 2200 + (ABL:Ｂ感覚 * 300)
 	ENDIF
 	;合意がないと好感度が下がる
 	IF TALENT:合意 == 0
-		SOURCE:15 += 400
+		SOURCE:反感追加 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
 	ELSE
@@ -9784,10 +9784,10 @@ CASE 1
 	ELSE
 		TFLAG:47 += 10
 	ENDIF
-	SOURCE:18 += A
-	SOURCE:19 += B
-	SOURCE:20 += C
-	SOURCE:21 += D
+	SOURCE:歓楽 += A
+	SOURCE:家務 += B
+	SOURCE:征服 += C
+	SOURCE:受動 += D
 	;以上「宴会に参加」ソース
 ;売却
 CASE -1
@@ -9813,7 +9813,7 @@ CASE 1
 	;虎ボーナス
 	CALL TYOGO_BONUS
 	
-	SOURCE:20 += S
+	SOURCE:征服 += S
 ;売却
 CASE -1
 	M += 1500
@@ -9836,8 +9836,8 @@ CASE 1
 	S += 500
 	U += 5
 	PRINTFORMW 好感度+{U}
-	SOURCE:3 += S
-	SOURCE:18 += S
+	SOURCE:情愛 += S
+	SOURCE:歓楽 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -9885,12 +9885,12 @@ CASE 1
 	CASE 2
 		CLEARLINE 1
 		S += 500
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	;それ以外（歓楽ソース＋200）
 	CASE 3
 		CLEARLINE 1
 		S += 200
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	ENDSELECT
 ;売却
 CASE -1
@@ -9985,7 +9985,7 @@ CASE 1
 		CLEARLINE 1
 		;屈従ソース＋
 		U += 1000
-		SOURCE:13 += 1000
+		SOURCE:屈従 += 1000
 	CASE 2
 		;戦闘経験/10だけ＋
 		C = EXP:戦闘経験 / 10
@@ -10038,11 +10038,11 @@ CASE 1
 		U += 5
 		
 		S += 2000
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 	;地霊殿組以外
 	ELSE
 		S += 2000
-		SOURCE:6 += S
+		SOURCE:痛み += S
 	ENDIF
 ;売却
 CASE -1
@@ -10080,7 +10080,7 @@ CASE 1
 	
 	;既成事実が2以上の時、情愛ソースが付く
 	IF MARK:既成事実 > 1
-		SOURCE:3 += MARK:既成事実 * ABL:親密 * 5 + S
+		SOURCE:情愛 += MARK:既成事実 * ABL:親密 * 5 + S
 	ENDIF
 ;売却
 CASE -1
@@ -10152,7 +10152,7 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	;固定で獲得するソース
-	;SOURCE:18 = C、SOURCE:20 = D、SOURCE:21 = E
+	;SOURCE:歓楽 = C、SOURCE:征服 = D、SOURCE:受動 = E
 	C = 200
 
 	;ABL:従順をみる
@@ -10220,7 +10220,7 @@ CASE 1
 		TIMES C , 0.70
 		TIMES D , 9.00
 		TIMES E , 0.70
-		SOURCE:22 += 1800
+		SOURCE:懐疑 += 1800
 		A -= RAND:10 + 5
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -10268,9 +10268,9 @@ CASE 1
 	C += S
 	D += S
 	E += S
-	SOURCE:18 += C
-	SOURCE:20 += D
-	SOURCE:21 += E
+	SOURCE:歓楽 += C
+	SOURCE:征服 += D
+	SOURCE:受動 += E
 	;好感度変化
 	TFLAG:30 += A
 ;売却
@@ -10476,8 +10476,8 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW 好感度+{U}
-	SOURCE:3 += S
-	SOURCE:18 += S
+	SOURCE:情愛 += S
+	SOURCE:歓楽 += S
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -10623,7 +10623,7 @@ CASE 1
 		TIMES A , 0.80
 		TIMES B , 15.00
 		TIMES C , 0.80
-		SOURCE:22 = 3500
+		SOURCE:懐疑 = 3500
 		D -= RAND:15 + 10
 		TFLAG:49 = 1
 	;好感度が一定値以上なら効果増加
@@ -10667,13 +10667,13 @@ CASE 1
 		TIMES B , 1.50
 		TIMES C , 1.50
 		D += RAND:8 + 6
-		SIF SOURCE:22 > 0
-			SOURCE:22 -= 3000
+		SIF SOURCE:懐疑 > 0
+			SOURCE:懐疑 -= 3000
 	ENDIF
 	
-	SOURCE:18 = A
-	SOURCE:20 = B
-	SOURCE:21 = C
+	SOURCE:歓楽 = A
+	SOURCE:征服 = B
+	SOURCE:受動 = C
 	TFLAG:30 += D
 	U += 10
 	PRINTFORMW 好感度+{U}
@@ -10760,8 +10760,8 @@ CASE 1
 		U = 1
 	PRINTFORMW ちょっとムードが良くなった
 	TFLAG:37 += U
-	SOURCE:18 += A
-	SOURCE:20 += A
+	SOURCE:歓楽 += A
+	SOURCE:征服 += A
 ;売却
 CASE -1
 	M += 4900
@@ -10854,10 +10854,10 @@ CASE 1
 	;船長ボーナス
 	CALL TYOGO_BONUS
 
-	SOURCE:18 += C
-	SOURCE:9 += D
-	SOURCE:21 += E
-	SOURCE:20 += F
+	SOURCE:歓楽 += C
+	SOURCE:接触 += D
+	SOURCE:受動 += E
+	SOURCE:征服 += F
 ;売却
 CASE -1
 	M += 8000
@@ -10930,7 +10930,7 @@ CASE 1
 	;計算
 	S += (ABL:技巧 + ABL:金銭感覚 + ABL:料理技能) * A
 	
-	SOURCE:19 += S
+	SOURCE:家務 += S
 	PRINTFORML 家事経験＋{U}
 	EXP:TARGET:家事経験 += U
 ;売却
@@ -11295,7 +11295,7 @@ CASE 1
 	IF NO:TARGET == 39
 		S += 891
 		U += 10
-		SOURCE:18 += S
+		SOURCE:歓楽 += S
 		TFLAG:37 += U
 		CFLAG:TARGET:2 += U
 		;ひそかに回復
@@ -11620,7 +11620,7 @@ CASE 1
 	CALL TYOGO_BONUS
 	
 	PRINTFORML ちょっとムードが良くなった
-	SOURCE:18 += S
+	SOURCE:歓楽 += S
 	TFLAG:37 += U
 	CFLAG:TARGET:2 += U
 ;売却
@@ -11843,9 +11843,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -11904,9 +11904,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -11965,9 +11965,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12026,9 +12026,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12087,9 +12087,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12148,9 +12148,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12209,9 +12209,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12270,9 +12270,9 @@ CASE 1
 		ENDSELECT
 		TFLAG:30 += A
 		TFLAG:37 += A / 2
-		SOURCE:18 += B
-		SOURCE:20 += C
-		SOURCE:21 += D
+		SOURCE:歓楽 += B
+		SOURCE:征服 += C
+		SOURCE:受動 += D
 		
 		PRINTFORMW ちょっとムードが良くなった
 	ENDIF
@@ -12319,7 +12319,7 @@ CASE 1
 		CALL TRAIN_MESSAGE_B
 		
 		FOR LCOUNT:1, 0, 6
-			SOURCE:0 = 0
+			SOURCE:快Ｃ = 0
 			IF LCOUNT:1 > 0
 				A = RAND:6
 				B = RAND:9
@@ -12329,38 +12329,38 @@ CASE 1
 				IF A < 2
 					;強気だと若干出にくい
 					IF (TFLAG:45 == 0 && B < 4) || (TFLAG:45 == 1 && B < 2)
-						SOURCE:0 += 300
+						SOURCE:快Ｃ += 300
 					;弱気だと若干出にくい
 					ELSEIF B < 6
-						SOURCE:0 += 100
+						SOURCE:快Ｃ += 100
 					ELSE
-						SOURCE:0 += 200
+						SOURCE:快Ｃ += 200
 					ENDIF
 				ENDIF
 			ENDIF
 			
 			;ABL:Ｃ感覚をみる
 			IF ABL:Ｃ感覚 == 0
-				SOURCE:0 += 200
+				SOURCE:快Ｃ += 200
 			ELSEIF ABL:Ｃ感覚 == 1
-				SOURCE:0 += 400
+				SOURCE:快Ｃ += 400
 			ELSEIF ABL:Ｃ感覚 == 2
-				SOURCE:0 += 900
+				SOURCE:快Ｃ += 900
 			ELSEIF ABL:Ｃ感覚 == 3
-				SOURCE:0 += 1600
+				SOURCE:快Ｃ += 1600
 			ELSEIF ABL:Ｃ感覚 == 4
-				SOURCE:0 += 2400
+				SOURCE:快Ｃ += 2400
 			ELSE
-				SOURCE:0 += 1500 + (ABL:Ｃ感覚 * 300)
+				SOURCE:快Ｃ += 1500 + (ABL:Ｃ感覚 * 300)
 			ENDIF
 			;付加価値を見る
-			SOURCE:0 *= (S + U + 100) / 100
+			SOURCE:快Ｃ *= (S + U + 100) / 100
 			;C絶頂済で倍
 			SIF LOCAL:2 > 0
-				SOURCE:0 *= (LOCAL:2 + 1)
+				SOURCE:快Ｃ *= (LOCAL:2 + 1)
 			;噴乳で2割増
 			SIF LOCAL:4 > 0
-				TIMES SOURCE:0, 1.20
+				TIMES SOURCE:快Ｃ, 1.20
 			;快楽
 			CALL CALC_SOURCE0
 			A = UP:0
@@ -12372,7 +12372,7 @@ CASE 1
 					TIMES A , 3.00
 				SIF TALENT:濡れにくい
 					TIMES A , 0.40
-				SOURCE:10 += A
+				SOURCE:液体追加 += A
 			ENDIF
 			CALL CALC_SOURCE10
 			
@@ -12427,7 +12427,7 @@ CASE 1
 	NEXT
 	;合意がないと好感度が下がる
 	IF TALENT:合意 == 0
-		SOURCE:15 += 400 * LCOUNT:0
+		SOURCE:反感追加 += 400 * LCOUNT:0
 		PRINTL 
 		PRINTFORML 好感度-{20*LCOUNT:0}
 		CFLAG:2 -= 20 * LCOUNT:0
@@ -12569,27 +12569,27 @@ CASE 1
 	SELECTCASE TFLAG:91
 	;慈しむ
 	CASE 0
-		SOURCE:3 += 2500
+		SOURCE:情愛 += 2500
 		;鳥類ボーナス
 		CALL TYOGO_BONUS
 		;付加価値を見る
-		SOURCE:3 *= (S + U + 100) / 100
+		SOURCE:情愛 *= (S + U + 100) / 100
 		;恋人
 		SIF TALENT:恋人
-			TIMES SOURCE:3, 1.30
+			TIMES SOURCE:情愛, 1.30
 		;恋慕
 		SIF TALENT:恋慕
-			TIMES SOURCE:3, 1.30
+			TIMES SOURCE:情愛, 1.30
 		;親愛
 		SIF TALENT:親愛
-			TIMES SOURCE:3, 1.50
+			TIMES SOURCE:情愛, 1.50
 		;相愛
 		SIF TALENT:相愛
-			TIMES SOURCE:3, 2.00
+			TIMES SOURCE:情愛, 2.00
 		;妊娠
 		;コウノトリさんの精神を反映
 		IF TALENT:妊娠
-			TIMES SOURCE:3, 3.00
+			TIMES SOURCE:情愛, 3.00
 			S += 500
 			PRINTFORML %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 			BASE:TARGET:体力 += S
@@ -12631,65 +12631,65 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	CALL TRAIN_MESSAGE_B
-	SOURCE:2 += 175 + (ABL:Ａ感覚 * 100)
-	SOURCE:13 = 150 + (ABL:Ａ感覚 * 100)
-	SOURCE:12 = 250
-	SOURCE:14 = 400
+	SOURCE:快Ａ += 175 + (ABL:Ａ感覚 * 100)
+	SOURCE:屈従 = 150 + (ABL:Ａ感覚 * 100)
+	SOURCE:露出 = 250
+	SOURCE:逸脱 = 400
 	;EXP:Ａ経験をみる
 	IF EXP:Ａ経験 < EXPLV:1
-		SOURCE:6 = 700
+		SOURCE:痛み = 700
 	ELSEIF EXP:Ａ経験 < EXPLV:2
-		SOURCE:6 = 600
+		SOURCE:痛み = 600
 	ELSEIF EXP:Ａ経験 < EXPLV:3
-		SOURCE:6 = 500
+		SOURCE:痛み = 500
 	ELSEIF EXP:Ａ経験 < EXPLV:4
-		TIMES SOURCE:2 , 1.20
-		TIMES SOURCE:13, 1.20
-		SOURCE:6 = 400
+		TIMES SOURCE:快Ａ , 1.20
+		TIMES SOURCE:屈従, 1.20
+		SOURCE:痛み = 400
 	ELSEIF EXP:Ａ経験 < EXPLV:5
-		TIMES SOURCE:2 , 1.60
-		TIMES SOURCE:13, 1.60
-		SOURCE:6 = 200
+		TIMES SOURCE:快Ａ , 1.60
+		TIMES SOURCE:屈従, 1.60
+		SOURCE:痛み = 200
 	ELSE
-		TIMES SOURCE:2 , 1.80
-		TIMES SOURCE:13, 1.80
-		SOURCE:6 = 100
+		TIMES SOURCE:快Ａ , 1.80
+		TIMES SOURCE:屈従, 1.80
+		SOURCE:痛み = 100
 	ENDIF
 	;PALAM:欲情をみる
 	IF PALAM:5 < PALAMLV:3
-		TIMES SOURCE:2 , 1.00
-		TIMES SOURCE:13, 1.00
+		TIMES SOURCE:快Ａ , 1.00
+		TIMES SOURCE:屈従, 1.00
 	ELSEIF PALAM:5 < PALAMLV:4
-		TIMES SOURCE:2 , 1.30
-		TIMES SOURCE:13, 1.30
+		TIMES SOURCE:快Ａ , 1.30
+		TIMES SOURCE:屈従, 1.30
 	ELSEIF PALAM:5 >= PALAMLV:4
-		TIMES SOURCE:2 , 1.60
-		TIMES SOURCE:13, 1.60
+		TIMES SOURCE:快Ａ , 1.60
+		TIMES SOURCE:屈従, 1.60
 	ENDIF
 	;ABL:従順をみる
 	IF ABL:親密 <= 1
-		SOURCE:21 += 150 + (ABL:親密 * 50)
+		SOURCE:受動 += 150 + (ABL:親密 * 50)
 	ELSEIF ABL:親密 <= 3
-		SOURCE:21 += 300 + (ABL:親密 * 100)
+		SOURCE:受動 += 300 + (ABL:親密 * 100)
 	ELSEIF ABL:親密 <= 5
-		SOURCE:21 += 400 + (ABL:親密 * 120)
+		SOURCE:受動 += 400 + (ABL:親密 * 120)
 	ELSEIF ABL:親密 <= 8
-		SOURCE:21 += 500 + (ABL:親密 * 140)
+		SOURCE:受動 += 500 + (ABL:親密 * 140)
 	ELSEIF ABL:親密 <= 11
-		SOURCE:21 += 600 + (ABL:親密 * 160)
+		SOURCE:受動 += 600 + (ABL:親密 * 160)
 	ELSE
-		SOURCE:21 += 750 + (ABL:親密 * 180)
+		SOURCE:受動 += 750 + (ABL:親密 * 180)
 	ENDIF
 	;Ａ敏感、鈍感をみる
 	;快Ａ自体のチェックは後でまとめてやる
 	IF TALENT:Ａ鈍感
-		TIMES SOURCE:6 , 1.50
-		TIMES SOURCE:13 , 1.50
-		TIMES SOURCE:14 , 1.50
+		TIMES SOURCE:痛み , 1.50
+		TIMES SOURCE:屈従 , 1.50
+		TIMES SOURCE:逸脱 , 1.50
 	ELSEIF TALENT:Ａ敏感
-		TIMES SOURCE:6 , 0.60
-		TIMES SOURCE:13 , 0.60
-		TIMES SOURCE:14 , 0.60
+		TIMES SOURCE:痛み , 0.60
+		TIMES SOURCE:屈従 , 0.60
+		TIMES SOURCE:逸脱 , 0.60
 	ENDIF
 	EXP:Ａ経験 += 1
 	PRINTL Ａ経験+1
@@ -12698,7 +12698,7 @@ CASE 1
 	PRINTFORML 
 	;合意がないと好感度が下がる
 	IF TALENT:合意 == 0
-		SOURCE:15 += 400
+		SOURCE:反感追加 += 400
 		PRINTFORMW 好感度-20
 		CFLAG:2 -= 20
 	ELSE
@@ -12709,7 +12709,7 @@ CASE 1
 	;苦痛を潤滑に変える
 	UP:3 += UP:9
 	UP:9 = 0
-	SOURCE:6 = 0
+	SOURCE:痛み = 0
 ;売却
 CASE -1
 	M += 7000
@@ -12751,7 +12751,7 @@ CASE 1
 	
 	LOCAL:11 = PALAM:10
 	FOR LOCAL, 0, 10
-		SOURCE:0 = 0
+		SOURCE:快Ｃ = 0
 		IF LOCAL > 0
 			REPEAT 10
 				A:COUNT = LOCAL:COUNT
@@ -12767,41 +12767,41 @@ CASE 1
 		
 		;ABL:Ｂ感覚をみる
 		IF ABL:Ｂ感覚 == 0
-			SOURCE:17 = 50
+			SOURCE:快Ｂ = 50
 		ELSEIF ABL:Ｂ感覚 == 1
-			SOURCE:17 = 100
+			SOURCE:快Ｂ = 100
 		ELSEIF ABL:Ｂ感覚 == 2
-			SOURCE:17 = 250
+			SOURCE:快Ｂ = 250
 		ELSEIF ABL:Ｂ感覚 == 3
-			SOURCE:17 = 600
+			SOURCE:快Ｂ = 600
 		ELSEIF ABL:Ｂ感覚 == 4
-			SOURCE:17 = 1000
+			SOURCE:快Ｂ = 1000
 		ELSE
-			SOURCE:17 = 400 + (ABL:Ｂ感覚 * 200)
+			SOURCE:快Ｂ = 400 + (ABL:Ｂ感覚 * 200)
 		ENDIF
 		;5回目から絶頂してない場合触手がちょっとやる気出す
 		IF LOCAL:0 > 4 && LOCAL:10 == 0
 			TFLAG:94 = 2
 			CALL TRAIN_MESSAGE_B
-			SOURCE:17 += 150
-			SOURCE:17 += RAND:100
+			SOURCE:快Ｂ += 150
+			SOURCE:快Ｂ += RAND:100
 		ENDIF
 		;付加価値を見る
 		IF (S + U) < 1
 			S = 1
 			U = 1
 		ENDIF
-		SOURCE:17 += S + U
-		SOURCE:17 *= (S + U + 100) / 100
+		SOURCE:快Ｂ += S + U
+		SOURCE:快Ｂ *= (S + U + 100) / 100
 		;巨乳だと快感が増えます（触れる面積が増えるため）
 		IF TALENT:巨乳
-			TIMES SOURCE:17, 1.50
+			TIMES SOURCE:快Ｂ, 1.50
 		;貧乳だと減ります（触れる面積が…）
 		ELSEIF TALENT:貧乳
-			TIMES SOURCE:17, 0.70
+			TIMES SOURCE:快Ｂ, 0.70
 		ENDIF
 		;B絶頂、噴乳で倍増
-		SOURCE:17 *= (LOCAL:4 + LOCAL:6 + 1)
+		SOURCE:快Ｂ *= (LOCAL:4 + LOCAL:6 + 1)
 		
 		;触手経験による恐怖パラ
 		UP:10 += 60
@@ -12831,7 +12831,7 @@ CASE 1
 				TIMES A , 3.00
 			SIF TALENT:濡れにくい
 				TIMES A , 0.40
-			SOURCE:10 += A
+			SOURCE:液体追加 += A
 		ENDIF
 		CALL CALC_SOURCE10
 		;絶頂処理

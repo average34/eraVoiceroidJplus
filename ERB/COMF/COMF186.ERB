@@ -208,42 +208,42 @@ ELSEIF TFLAG:17 == TARGET
 	A = 0
 	;恋慕、恋人だと情愛追加
 	IF TALENT:恋慕 || TALENT:恋人
-		SOURCE:3 = 300
+		SOURCE:情愛 = 300
 		A = 1
 	ENDIF
 
 	;親愛だと情愛追加
 	IF TALENT:親愛
-		SOURCE:3 += 700
+		SOURCE:情愛 += 700
 		A = 1
 	ENDIF
 
 	;相愛だと情愛追加
 	IF TALENT:相愛
-		SOURCE:3 += 800
+		SOURCE:情愛 += 800
 		A = 1
 	ENDIF
 
 ;	IF TALENT:服従 || TALENT:烙印
-;		SOURCE:16 = 2000
+;		SOURCE:恭順追加 = 2000
 ;		A = 1
 ;	ENDIF
 
 	;淫乱さんだと欲情
 	IF TALENT:淫乱
-		SOURCE:11 = 1800
+		SOURCE:欲情追加 = 1800
 		A = 1
 	ENDIF
 
 	;親密Lv5以上(JはLv99まであるので以上に変更)、既成事実Lv3、反発刻印なし
 	IF A == 0 && ABL:親密 >= 5 && MARK:既成事実 == 3 && MARK:反発感情 == 0
-		SOURCE:13 = 1000
+		SOURCE:屈従 = 1000
 		UP:10 += 100
 		A = 1
 	ENDIF
 
 	IF A == 0
-		SOURCE:15 = 1000
+		SOURCE:反感追加 = 1000
 		B = 400
 		SIF ABL:親密 == 0
 			TIMES B , 6.0
@@ -255,7 +255,7 @@ ELSEIF TFLAG:17 == TARGET
 			TIMES B , 3.0
 		SIF ABL:親密 == 4
 			TIMES B , 2.0
-		SOURCE:15 += B
+		SOURCE:反感追加 += B
 		C = 500
 		SIF MARK:反発感情 == 0
 			TIMES C , 4.0
@@ -263,10 +263,10 @@ ELSEIF TFLAG:17 == TARGET
 			TIMES D , 3.0
 		SIF MARK:反発感情 == 2
 			TIMES E , 2.0
-		SOURCE:15 += C
+		SOURCE:反感追加 += C
 		UP:10 += 1000
 	ELSE
-		SOURCE:10 = 1500
+		SOURCE:液体追加 = 1500
 	ENDIF
 
 	SIF CFLAG:109 == 0

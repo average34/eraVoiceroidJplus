@@ -79,7 +79,7 @@ LOSEBASE:体力 += 0
 LOSEBASE:気力 += 50
 
 ;固定で獲得するソース、達成感
-SOURCE:5 = 10
+SOURCE:達成感 = 10
 
 ;初期化
 L = 0
@@ -101,8 +101,8 @@ IF TFLAG:17 == 0
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:5 += 100 + L
-	SOURCE:18 += 500 + L
+	SOURCE:達成感 += 100 + L
+	SOURCE:歓楽 += 500 + L
 ;デート先に博麗神社を選択
 ELSEIF TFLAG:17 == 1 && TEQUIP:2 == 2
 	L = 5 - TFLAG:18
@@ -125,8 +125,8 @@ ELSEIF TFLAG:17 == 1 && TEQUIP:2 == 2
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:18 += 10 + L
-	SOURCE:5 += 100 + L
+	SOURCE:歓楽 += 10 + L
+	SOURCE:達成感 += 100 + L
 ;守矢神社を選択(TFLAGは初期化されるので判定不可)
 ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 	L = 7 - TFLAG:18
@@ -157,8 +157,8 @@ ELSEIF TFLAG:17 == 1 && (TEQUIP:2 == 26 && TEQUIP:6 == 1)
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:18 += 20 + L
-	SOURCE:5 += 100 + L
+	SOURCE:歓楽 += 20 + L
+	SOURCE:達成感 += 100 + L
 ;七夕
 ELSEIF TFLAG:17 == 2
 	L = 3 - TFLAG:18
@@ -172,8 +172,8 @@ ELSEIF TFLAG:17 == 2
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:5 += 100 + L
-	SOURCE:18 += 300 + L
+	SOURCE:達成感 += 100 + L
+	SOURCE:歓楽 += 300 + L
 ;流星雨を観測中
 ELSEIF TFLAG:17 == 3
 	L = 3 - TFLAG:18
@@ -187,8 +187,8 @@ ELSEIF TFLAG:17 == 3
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:5 += 200 + L
-	SOURCE:18 += 400 + L
+	SOURCE:達成感 += 200 + L
+	SOURCE:歓楽 += 400 + L
 ;流星を観測中
 ELSEIF TFLAG:17 == 4
 	L = 5 - TFLAG:18
@@ -202,26 +202,26 @@ ELSEIF TFLAG:17 == 4
 			PRINTFORMW 気力の上限値が{L}上がった
 		ENDIF
 	ENDIF
-	SOURCE:5 += 20 + L
-	SOURCE:18 += 100 + L
+	SOURCE:達成感 += 20 + L
+	SOURCE:歓楽 += 100 + L
 ENDIF
 
 ;好感度をみる
 IF CFLAG:2 <= 300
-	SOURCE:18 += CFLAG:2
+	SOURCE:歓楽 += CFLAG:2
 ELSEIF CFLAG:2 <= 3000
-	SOURCE:18 += 500 + (CFLAG:2 - 300) / 3
+	SOURCE:歓楽 += 500 + (CFLAG:2 - 300) / 3
 ELSE
-	SOURCE:18 += 2000 + (CFLAG:2 - 3000) / 5
+	SOURCE:歓楽 += 2000 + (CFLAG:2 - 3000) / 5
 ENDIF
-SIF SOURCE:18 < 0
-	SOURCE:18 = 0
+SIF SOURCE:歓楽 < 0
+	SOURCE:歓楽 = 0
 
 ;巫女ボーナス(神社でのみ有効)
 SIF (NO:MASTER == 1 || NO:MASTER == 42) && TFLAG:17 <= 1
-	SOURCE:5 += 200
+	SOURCE:達成感 += 200
 SIF (NO:TARGET == 1 || NO:TARGET == 42) && TFLAG:17 <= 1
-	SOURCE:19 += 200
+	SOURCE:家務 += 200
 
 ;好感度ランダム変化
 A:1 = RAND:5 + 1
@@ -253,17 +253,17 @@ ENDIF
 TFLAG:30 += A:1
 
 IF TFLAG:18 == -1
-	TIMES SOURCE:18 , 0.10
-	TIMES SOURCE:5 , 0.50
+	TIMES SOURCE:歓楽 , 0.10
+	TIMES SOURCE:達成感 , 0.50
 	TFLAG:30 -= 10
 	TFLAG:37 -= 5
 ELSEIF TFLAG:18 == 0
-	TIMES SOURCE:18 , 1.00
-	TIMES SOURCE:5 , 1.00
+	TIMES SOURCE:歓楽 , 1.00
+	TIMES SOURCE:達成感 , 1.00
 	TFLAG:37 += A:1
 ELSE
-	TIMES SOURCE:18 , 2.00
-	TIMES SOURCE:5 , 2.00
+	TIMES SOURCE:歓楽 , 2.00
+	TIMES SOURCE:達成感 , 2.00
 	TFLAG:30 += 2
 	TFLAG:37 += 5 + A:1
 ENDIF

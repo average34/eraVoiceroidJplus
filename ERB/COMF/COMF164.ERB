@@ -27,10 +27,10 @@ W = RAND:7
 LOSEBASE:体力 += 40
 LOSEBASE:気力 += 60
 
-SOURCE:4 = 120
-SOURCE:12 = 200
-SOURCE:13 = 200
-SOURCE:14 = 100
+SOURCE:性行動 = 120
+SOURCE:露出 = 200
+SOURCE:屈従 = 200
+SOURCE:逸脱 = 100
 
 IF W == 0
 	;筆ヘソ責め
@@ -80,22 +80,22 @@ IF W == 0
 	;ABL:マゾっ気をみる
 	IF ABL:マゾっ気 == 0
 		TIMES A, 0.50
-		SOURCE:7 = 40
+		SOURCE:中毒充足 = 40
 	ELSEIF ABL:マゾっ気 == 1
 		TIMES A, 0.75
-		SOURCE:7 = 80
+		SOURCE:中毒充足 = 80
 	ELSEIF ABL:マゾっ気 == 2
 		TIMES A, 1.00
-		SOURCE:7 = 160
+		SOURCE:中毒充足 = 160
 	ELSEIF ABL:マゾっ気 == 3
 		TIMES A, 1.20
-		SOURCE:7 = 320
+		SOURCE:中毒充足 = 320
 	ELSEIF ABL:マゾっ気 == 4
 		TIMES A, 1.50
-		SOURCE:7 = 650
+		SOURCE:中毒充足 = 650
 	ELSE
 		TIMES A, 2.00
-		SOURCE:7 = 1500
+		SOURCE:中毒充足 = 1500
 	ENDIF
 
 	;プライド高い
@@ -134,101 +134,101 @@ ELSEIF W == 1 || W == 2
 	;筆クリ責め
 	;ABL:Ｃ感覚をみる
 	IF ABL:Ｃ感覚 == 0
-		SOURCE:0 = 50
-		SOURCE:3 = 50
+		SOURCE:快Ｃ = 50
+		SOURCE:情愛 = 50
 	ELSEIF ABL:Ｃ感覚 == 1
-		SOURCE:0 = 100
-		SOURCE:3 = 100
+		SOURCE:快Ｃ = 100
+		SOURCE:情愛 = 100
 	ELSEIF ABL:Ｃ感覚 == 2
-		SOURCE:0 = 500
-		SOURCE:3 = 150
+		SOURCE:快Ｃ = 500
+		SOURCE:情愛 = 150
 	ELSEIF ABL:Ｃ感覚 == 3
-		SOURCE:0 = 1500
-		SOURCE:3 = 250
+		SOURCE:快Ｃ = 1500
+		SOURCE:情愛 = 250
 	ELSEIF ABL:Ｃ感覚 == 4
-		SOURCE:0 = 2500
-		SOURCE:3 = 400
+		SOURCE:快Ｃ = 2500
+		SOURCE:情愛 = 400
 	ELSE
-		SOURCE:0 = 3000
-		SOURCE:3 = 600
+		SOURCE:快Ｃ = 3000
+		SOURCE:情愛 = 600
 	ENDIF
 
 	;Ｃ鈍感
 	SIF TALENT:Ｃ鈍感
-		TIMES SOURCE:0, 0.75
+		TIMES SOURCE:快Ｃ, 0.75
 	;Ｃ敏感
 	SIF TALENT:Ｃ敏感
-		TIMES SOURCE:0, 1.50
+		TIMES SOURCE:快Ｃ, 1.50
 ELSEIF W == 3 || W == 4
 	;筆バスト責め
 	;ABL:Ｂ感覚をみる
 	IF ABL:Ｂ感覚 == 0
-		SOURCE:3 = 50
-		SOURCE:17 = 50
+		SOURCE:情愛 = 50
+		SOURCE:快Ｂ = 50
 	ELSEIF ABL:Ｂ感覚 == 1
-		SOURCE:3 = 100
-		SOURCE:17 = 100
+		SOURCE:情愛 = 100
+		SOURCE:快Ｂ = 100
 	ELSEIF ABL:Ｂ感覚 == 2
-		SOURCE:3 = 150
-		SOURCE:17 = 200
+		SOURCE:情愛 = 150
+		SOURCE:快Ｂ = 200
 	ELSEIF ABL:Ｂ感覚 == 3
-		SOURCE:3 = 250
-		SOURCE:17 = 600
+		SOURCE:情愛 = 250
+		SOURCE:快Ｂ = 600
 	ELSEIF ABL:Ｂ感覚 == 4
-		SOURCE:3 = 400
-		SOURCE:17 = 1500
+		SOURCE:情愛 = 400
+		SOURCE:快Ｂ = 1500
 	ELSE
-		SOURCE:3 = 600
-		SOURCE:17 = 2100
+		SOURCE:情愛 = 600
+		SOURCE:快Ｂ = 2100
 	ENDIF
 
 	;Ｂ鈍感
 	SIF TALENT:Ｂ鈍感
-		TIMES SOURCE:17, 0.75
+		TIMES SOURCE:快Ｂ, 0.75
 	;Ｂ敏感
 	SIF TALENT:Ｂ敏感
-		TIMES SOURCE:17, 1.50
+		TIMES SOURCE:快Ｂ, 1.50
 	;貧乳
 	SIF TALENT:貧乳
-		TIMES SOURCE:17, 2.00
+		TIMES SOURCE:快Ｂ, 2.00
 	;巨乳
 	SIF TALENT:巨乳
-		TIMES SOURCE:17, 0.75
+		TIMES SOURCE:快Ｂ, 0.75
 ELSE
 	;筆アナル責め
 	;ABL:Ａ感覚をみる
 	IF ABL:Ａ感覚 == 0
-		SOURCE:2 = 20
+		SOURCE:快Ａ = 20
 		A = 150
 	ELSEIF ABL:Ａ感覚 == 1
-		SOURCE:2 = 80
+		SOURCE:快Ａ = 80
 		A = 250
 	ELSEIF ABL:Ａ感覚 == 2
-		SOURCE:2 = 240
+		SOURCE:快Ａ = 240
 		A = 400
 	ELSEIF ABL:Ａ感覚 == 3
-		SOURCE:2 = 500
+		SOURCE:快Ａ = 500
 		A = 650
 	ELSEIF ABL:Ａ感覚 == 4
-		SOURCE:2 = 1400
+		SOURCE:快Ａ = 1400
 		A = 1000
 	ELSE
-		SOURCE:2 = 2100
+		SOURCE:快Ａ = 2100
 		A = 1500
 	ENDIF
 
 	;尻穴狂い
 	SIF TALENT:尻穴狂い
-		TIMES SOURCE:2, 2.00
+		TIMES SOURCE:快Ａ, 2.00
 	;Ａ鈍感
 	SIF TALENT:Ａ鈍感
-		TIMES SOURCE:2, 0.75
+		TIMES SOURCE:快Ａ, 0.75
 	;Ａ敏感
 	SIF TALENT:Ａ敏感
-		TIMES SOURCE:2, 1.50
+		TIMES SOURCE:快Ａ, 1.50
 
-	SOURCE:13 += A
-	SOURCE:14 += A/2
+	SOURCE:屈従 += A
+	SOURCE:逸脱 += A/2
 ENDIF
 
 CALL TRAIN_MESSAGE_B

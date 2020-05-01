@@ -16,148 +16,148 @@ IF TFLAG:45 == 0
 	LOSEBASE:体力 += 5
 	LOSEBASE:気力 += 150
 	
-	SOURCE:12 = 1000
-	SOURCE:13 = 1200
-	SOURCE:14 = 300
-	SOURCE:15 = 100
+	SOURCE:露出 = 1000
+	SOURCE:屈従 = 1200
+	SOURCE:逸脱 = 300
+	SOURCE:反感追加 = 100
 	
 
 	;PALAM:潤滑
 	IF PALAM:3 < PALAMLV:1
-		SOURCE:12 += 0
+		SOURCE:露出 += 0
 	ELSEIF PALAM:3 < PALAMLV:2
-		SOURCE:12 += 100
+		SOURCE:露出 += 100
 	ELSEIF PALAM:3 < PALAMLV:3
-		SOURCE:12 += 200
+		SOURCE:露出 += 200
 	ELSEIF PALAM:3 < PALAMLV:4
-		SOURCE:12 += 400
+		SOURCE:露出 += 400
 	ELSEIF PALAM:3 < PALAMLV:5
-		SOURCE:12 += 650
+		SOURCE:露出 += 650
 	ELSE
-		SOURCE:12 += 1000
+		SOURCE:露出 += 1000
 	ENDIF
 
 	;PALAM:欲情
 	IF PALAM:5 < PALAMLV:1
-		SOURCE:12 += 0
+		SOURCE:露出 += 0
 	ELSEIF PALAM:5 < PALAMLV:2
-		SOURCE:12 += 100
+		SOURCE:露出 += 100
 	ELSEIF PALAM:5 < PALAMLV:3
-		SOURCE:12 += 200
+		SOURCE:露出 += 200
 	ELSEIF PALAM:5 < PALAMLV:4
-		SOURCE:12 += 350
+		SOURCE:露出 += 350
 	ELSEIF PALAM:5 < PALAMLV:5
-		SOURCE:12 += 550
+		SOURCE:露出 += 550
 	ELSE
-		SOURCE:12 += 800
+		SOURCE:露出 += 800
 	ENDIF
 	
 	;ABL:マゾっ気をみる
 	IF ABL:マゾっ気 == 0
-		SOURCE:5 = 150
-		SOURCE:11 = 0
+		SOURCE:達成感 = 150
+		SOURCE:欲情追加 = 0
 	ELSEIF ABL:マゾっ気 == 1
-		SOURCE:5 = 300
-		SOURCE:11 = 100
+		SOURCE:達成感 = 300
+		SOURCE:欲情追加 = 100
 	ELSEIF ABL:マゾっ気 == 2
-		SOURCE:5 = 600
-		SOURCE:11 = 150
+		SOURCE:達成感 = 600
+		SOURCE:欲情追加 = 150
 	ELSEIF ABL:マゾっ気 == 3
-		SOURCE:5 = 900
-		SOURCE:11 = 250
+		SOURCE:達成感 = 900
+		SOURCE:欲情追加 = 250
 	ELSEIF ABL:マゾっ気 == 4
-		SOURCE:5 = 1500
-		SOURCE:11 = 500
+		SOURCE:達成感 = 1500
+		SOURCE:欲情追加 = 500
 	ELSE
-		SOURCE:5 = 700 + (ABL:マゾっ気 * 300)
-		SOURCE:11 = ABL:マゾっ気 * 200
+		SOURCE:達成感 = 700 + (ABL:マゾっ気 * 300)
+		SOURCE:欲情追加 = ABL:マゾっ気 * 200
 	ENDIF
 	
 	;TALENT:反抗的をみる
 	IF TALENT:反抗的 == 1
-		TIMES SOURCE:13 , 1.50
-		TIMES SOURCE:15 , 2.50
+		TIMES SOURCE:屈従 , 1.50
+		TIMES SOURCE:反感追加 , 2.50
 	ENDIF
 	
 	;TALENT:気丈をみる
 	IF TALENT:気丈 == 1
-		TIMES SOURCE:13 , 2.50
-		TIMES SOURCE:15 , 1.50
+		TIMES SOURCE:屈従 , 2.50
+		TIMES SOURCE:反感追加 , 1.50
 	ENDIF
 	
 	;TALENT:プライド高いをみる
 	IF TALENT:プライド高い == 1
-		TIMES SOURCE:13 , 2.00
-		TIMES SOURCE:15 , 2.00
+		TIMES SOURCE:屈従 , 2.00
+		TIMES SOURCE:反感追加 , 2.00
 	ENDIF
 
 	;TALENT:生意気をみる
 	IF TALENT:生意気 == 1
-		TIMES SOURCE:13 , 1.75
-		TIMES SOURCE:15 , 1.75
+		TIMES SOURCE:屈従 , 1.75
+		TIMES SOURCE:反感追加 , 1.75
 	ENDIF
 	
 	;TALENT:プライド低いをみる
 	IF TALENT:プライド低い == 1
-		TIMES SOURCE:13 , 0.75
-		TIMES SOURCE:15 , 0.75
+		TIMES SOURCE:屈従 , 0.75
+		TIMES SOURCE:反感追加 , 0.75
 	ENDIF
 	
 	;TALENT:感情乏しいをみる
 	IF TALENT:感情乏しい == 1
-		TIMES SOURCE:5 , 0.50
-		TIMES SOURCE:13 , 0.50
-		TIMES SOURCE:14 , 0.50
-		TIMES SOURCE:15 , 0.50
+		TIMES SOURCE:達成感 , 0.50
+		TIMES SOURCE:屈従 , 0.50
+		TIMES SOURCE:逸脱 , 0.50
+		TIMES SOURCE:反感追加 , 0.50
 	ENDIF
 
 
 	;バイブ挿入中のとき効果上昇
 	IF TEQUIP:11
-		SOURCE:12 += 200
+		SOURCE:露出 += 200
 	ENDIF
 	;アナルバイブ挿入中のとき効果上昇
 	IF TEQUIP:13
-		SOURCE:12 += 300
+		SOURCE:露出 += 300
 	ENDIF
 	;クリキャップ中のとき効果上昇
 	IF TEQUIP:14
-		SOURCE:12 += 100
+		SOURCE:露出 += 100
 	ENDIF
 	;ニプルキャップ中のとき効果上昇
 	IF TEQUIP:15
-		SOURCE:12 += 100
+		SOURCE:露出 += 100
 	ENDIF
 	;アイマスク中のとき効果上昇
 	IF TEQUIP:43
-		SOURCE:12 += 100
+		SOURCE:露出 += 100
 	ENDIF
 	;縄で緊縛中のとき効果上昇
 	IF TEQUIP:44
-		TIMES SOURCE:13 , 1.50
-		SOURCE:12 += 300
+		TIMES SOURCE:屈従 , 1.50
+		SOURCE:露出 += 300
 	ENDIF
 	;ボールギャグ装着中のとき効果上昇
 	IF TEQUIP:45
-		TIMES SOURCE:13 , 1.75
-		SOURCE:12 += 300
+		TIMES SOURCE:屈従 , 1.75
+		SOURCE:露出 += 300
 	ENDIF
 
 
 
 	;ABL:サドっ気をみる
 	IF ABL:PLAYER:サドっ気 == 0
-		TIMES SOURCE:13 , 1.00
+		TIMES SOURCE:屈従 , 1.00
 	ELSEIF ABL:PLAYER:サドっ気 == 1
-		TIMES SOURCE:13 , 1.05
+		TIMES SOURCE:屈従 , 1.05
 	ELSEIF ABL:PLAYER:サドっ気 == 2
-		TIMES SOURCE:13 , 1.10
+		TIMES SOURCE:屈従 , 1.10
 	ELSEIF ABL:PLAYER:サドっ気 == 3
-		TIMES SOURCE:13 , 1.20
+		TIMES SOURCE:屈従 , 1.20
 	ELSEIF ABL:PLAYER:サドっ気 == 4
-		TIMES SOURCE:13 , 1.30
+		TIMES SOURCE:屈従 , 1.30
 	ELSE
-		SOURCE:13 = SOURCE:13 * (ABL:PLAYER:サドっ気 * 5 + 125) / 100
+		SOURCE:屈従 = SOURCE:屈従 * (ABL:PLAYER:サドっ気 * 5 + 125) / 100
 	ENDIF
 	
 
@@ -179,47 +179,47 @@ ELSE
 	LOSEBASE:体力 += 5
 	LOSEBASE:気力 += 100
 	
-	SOURCE:14 = 500
+	SOURCE:逸脱 = 500
 	
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
-		SOURCE:20 = 500
-		SOURCE:22 = 1500
+		SOURCE:征服 = 500
+		SOURCE:懐疑 = 1500
 	ELSEIF ABL:サドっ気 == 1
-		SOURCE:20 = 1000
-		SOURCE:22 = 1200
+		SOURCE:征服 = 1000
+		SOURCE:懐疑 = 1200
 	ELSEIF ABL:サドっ気 == 2
-		SOURCE:20 = 1500
-		SOURCE:22 = 800
+		SOURCE:征服 = 1500
+		SOURCE:懐疑 = 800
 	ELSEIF ABL:サドっ気 == 3
-		SOURCE:20 = 2000
-		SOURCE:22 = 500
+		SOURCE:征服 = 2000
+		SOURCE:懐疑 = 500
 	ELSEIF ABL:サドっ気 == 4
-		SOURCE:20 = 2500
-		SOURCE:22 = 300
+		SOURCE:征服 = 2500
+		SOURCE:懐疑 = 300
 	ELSE
-		SOURCE:20 = 1500 + (ABL:サドっ気 * 300)
-		SOURCE:22 = 350 - (ABL:サドっ気 * 50)
-		SIF SOURCE:22 < 0
-			SOURCE:22 = 0
+		SOURCE:征服 = 1500 + (ABL:サドっ気 * 300)
+		SOURCE:懐疑 = 350 - (ABL:サドっ気 * 50)
+		SIF SOURCE:懐疑 < 0
+			SOURCE:懐疑 = 0
 	ENDIF
 
 	;反発感情が高いほど熱が入る
 	IF MARK:反発感情 == 1
-		SOURCE:20 += 500
+		SOURCE:征服 += 500
 	ELSEIF MARK:反発感情 == 2
-		SOURCE:20 += 1200
+		SOURCE:征服 += 1200
 	ELSEIF MARK:反発感情 >= 3
-		SOURCE:20 += 2500
+		SOURCE:征服 += 2500
 	ENDIF
 	
 	;サド持ちは懐疑1/4
 	SIF TALENT:サド
-		TIMES SOURCE:22 , 0.25
+		TIMES SOURCE:懐疑 , 0.25
 
 	;小悪魔持ちは懐疑1/2
 	SIF TALENT:小悪魔
-		TIMES SOURCE:22 , 0.50
+		TIMES SOURCE:懐疑 , 0.50
 	
 	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		PRINTS EXPNAME:40
