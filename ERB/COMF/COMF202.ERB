@@ -41,7 +41,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-	SIF ITEM:13 == 0 && NOITEM == 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 RETURN 1

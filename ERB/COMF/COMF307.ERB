@@ -8,7 +8,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 1
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:51 == 0 && NOITEM == 0
+SIF ITEM:櫛 == 0 && NOITEM == 0
 	RETURN 0
 ;親密3以上or好感度300以上or恋人が必要
 SIF ABL:親密 < 3 && CFLAG:2 < 300 && TALENT:恋人 == 0

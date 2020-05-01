@@ -14,7 +14,7 @@ SIF TEQUIP:PLAYER:85 || TEQUIP:85
 SIF (TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ || TALENT:TARGET:ふたなり || TALENT:TARGET:オトコ) == 0
 	RETURN 0
 ;アイテムを持っていないとダメ
-SIF (ITEM:29 == 0) && (NOITEM == 0)
+SIF (ITEM:コンドーム == 0) && (NOITEM == 0)
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -35,7 +35,7 @@ RETURN 1
 PRINTL コンドーム
 STR:0 = コンドーム
 
-PRINTFORML 誰にコンドームを使用しますか？(残:{ITEM:29})
+PRINTFORML 誰にコンドームを使用しますか？(残:{ITEM:コンドーム})
 PRINTFORML （既に装着している対象を選んだ場合、コンドームを外します）
 IF TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 	PRINTFORM [0] %CALLNAME:PLAYER% 
@@ -96,14 +96,14 @@ IF TFLAG:17 == 1
 		TEQUIP:PLAYER:85 = 0
 	ELSE
 		TEQUIP:PLAYER:85 = 1
-		ITEM:29 -= 1
+		ITEM:コンドーム -= 1
 	ENDIF
 ELSEIF TFLAG:17 == 2
 	IF TEQUIP:85 != 0
 		TEQUIP:85 = 0
 	ELSE
 		TEQUIP:85 = 1
-		ITEM:29 -= 1
+		ITEM:コンドーム -= 1
 	ENDIF
 ENDIF
 

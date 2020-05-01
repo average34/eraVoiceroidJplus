@@ -20,7 +20,7 @@ SIF TEQUIP:72 || TEQUIP:73 || TEQUIP:78 || TEQUIP:92
 SIF TEQUIP:MASTER:44
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定で無いとダメ
-SIF ITEM:14 == 0 && NOITEM == 0
+SIF ITEM:縄 == 0 && NOITEM == 0
 	RETURN 0
 ;パートナーの技巧が3無いとできない
 SIF ABL:TARGET:技巧 <= 2

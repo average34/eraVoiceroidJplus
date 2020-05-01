@@ -256,7 +256,7 @@ REPEAT 30
 		PRINTLC [118] - キャラソート      
 	ELSEIF COUNT == 16 && (CHARANUM - T) > 2
 		PRINTLC [119] - キャラ検索        
-	ELSEIF COUNT == 17 && TARGET > 0 && ITEM:45 > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:恋慕 || ABL:親密 >= 5)
+	ELSEIF COUNT == 17 && TARGET > 0 && ITEM:マイク > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:恋慕 || ABL:親密 >= 5)
 		PRINTLC [130] - 野外ライブを開く  
 	ELSEIF COUNT == 18 && TALENT:MASTER:結界操作
 		CONTINUE
@@ -501,7 +501,7 @@ ELSEIF RESULT == 119 && (CHARANUM - T) > 2
 
 ELSEIF RESULT == 130
 	IF TARGET > 0
-		IF ITEM:45 > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:恋慕 || ABL:親密 >= 5)
+		IF ITEM:マイク > 0 && TFLAG:79 == 0 && ABL:露出癖 >= 4 && (TALENT:恋慕 || ABL:親密 >= 5)
 			CALL CONCERT
 			RETURN 1
 		ENDIF

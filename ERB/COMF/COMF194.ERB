@@ -16,7 +16,7 @@ SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:
 	RETURN 0
 ;オトコ、半人半妖、ふたなりでない場合、ペニスバンドがないとダメ
 IF (TALENT:TARGET:半人半妖 || TALENT:TARGET:ふたなり || TALENT:TARGET:オトコ) == 0
-	SIF ITEM:4 == 0 && NOITEM == 0
+	SIF ITEM:ペニスバンド == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 ;オナホール使用中はダメ
@@ -27,7 +27,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF (ITEM:13 == 0) && (NOITEM == 0)
+SIF (ITEM:プレイマット == 0) && (NOITEM == 0)
 	RETURN 0
 ENDIF
 ;新妻プレイ中はダメ

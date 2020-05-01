@@ -26,7 +26,7 @@ SIF (FLAG:61 & 1) == 0
 SIF TEQUIP:20
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:35 == 0 && NOITEM == 0
+SIF ITEM:オムツ == 0 && NOITEM == 0
 	RETURN 0
 RETURN 1
 
@@ -67,7 +67,7 @@ IF TEQUIP:20
 	TEQUIP:20 = 0
 ELSE
 	TEQUIP:20 = 1
-	ITEM:35 -= 1
+	ITEM:オムツ -= 1
 ENDIF
 
 ;ソース

@@ -376,8 +376,8 @@ PRINTL
 PRINTW ………
 PRINTL 
 ;霊夢様が挿入可能部位を持っている場合、ｱｯｰｰｰｰｰ!!(肉棒、角、ペニスバンド)…角持つ可能性ありませんが一応判定
-IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:4 == 1
-	IF ITEM:14
+IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:ペニスバンド == 1
+	IF ITEM:縄
 		PRINTFORML %EXPNAME:51%＋5 (%CALLNAME:MASTER%)
 		PRINTW 
 	ENDIF
@@ -552,14 +552,14 @@ ELSE
 ENDIF
 
 ;ビデオカメラがなければ、テープがあっても不可
-SIF ITEM:6
+SIF ITEM:ビデオカメラ
 	K = ITEM:28
 
 ;しかしそれは巧妙な罠だった
 ;霊夢様が挿入可能部位を持っている場合、ｱｯｰｰｰｰｰ!!(肉棒、角、ペニスバンド)…角持つ可能性ありませんが一応判定
-IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:4 == 1
+IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ || TALENT:ASSI:半人半妖 || ITEM:ペニスバンド == 1
 	;縄があれば緊縛経験、異常経験を＋
-	IF ITEM:14
+	IF ITEM:縄
 		A += 1
 		EXP:MASTER:緊縛経験 += 5
 	ENDIF

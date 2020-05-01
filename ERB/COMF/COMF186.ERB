@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 SIF (FLAG:62 & 1) == 0
 	RETURN 0
 ;アイテムを持っていないとダメ
-SIF ITEM:33 == 0
+SIF ITEM:排卵誘発剤 == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -154,7 +154,7 @@ SIF TALENT:薬毒耐性
 SIF TALENT:オトコ
 	J |= 4
 
-PRINTFORML 誰に排卵誘発剤を使いますか？(残:{ITEM:33})
+PRINTFORML 誰に排卵誘発剤を使いますか？(残:{ITEM:排卵誘発剤})
 SIF (J & 1) == 0
 	PRINTFORML [0] %CALLNAME:MASTER%
 SIF (J & 2) == 0
@@ -180,7 +180,7 @@ ENDIF
 
 CALL TRAIN_MESSAGE_B
 
-ITEM:33 -= 1
+ITEM:排卵誘発剤 -= 1
 
 IF TFLAG:17 == MASTER
 	TEQUIP:MASTER:86 = 1

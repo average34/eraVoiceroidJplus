@@ -66,8 +66,8 @@ IF RESULT == 0
 	;髪を梳かすに派生
 	IF V - A < 6
 		PRINTW 髪に触ろうとすると、櫛を手渡された…
-		IF NOITEM == 0 && ITEM:51 == 0
-			ITEM:51 = 1
+		IF NOITEM == 0 && ITEM:櫛 == 0
+			ITEM:櫛 = 1
 		ENDIF
 		PRINTL  
 		PRINTL 髪を梳かす

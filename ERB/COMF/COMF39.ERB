@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 SIF PALAM:3 < 500
 	RETURN 0
 ;オナホール所持してないと無理
-SIF ITEM:12 == 0
+SIF ITEM:オナホール == 0
 	RETURN 0
 ;調教者がオトコか半人半妖かふたなりでないと無理
 SIF TALENT:PLAYER:半人半妖 == 0 || TALENT:PLAYER:ふたなり == 0 || TALENT:PLAYER:オトコ == 0

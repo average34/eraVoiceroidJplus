@@ -94,9 +94,9 @@ SIF N >= 6
 IF N == 0
 	;最低ランク
 	LOCAL:2 = RAND:3
-	IF LOCAL:2 == 0 && ITEM:25 < 99
+	IF LOCAL:2 == 0 && ITEM:ローション < 99
 		R = 25
-	ELSEIF LOCAL:2 == 1 && ITEM:26 < 99
+	ELSEIF LOCAL:2 == 1 && ITEM:媚薬 < 99
 		R = 26
 	ELSE
 		R = 0
@@ -349,32 +349,32 @@ ELSEIF RESULT == 10
 	PRINTFORML %ITEMNAME:510%を使用しました
 	PRINTFORMW %CALLNAME:TARGET%の好感度が50上昇しました
 	CFLAG:2 += 50
-	ITEM:510 -= 1
+	ITEM:惚れ薬ホレールＡ -= 1
 ELSEIF RESULT == 11
 	PRINTFORML %ITEMNAME:511%を使用しました
 	PRINTFORMW %CALLNAME:TARGET%の好感度が200上昇しました
 	CFLAG:2 += 200
-	ITEM:511 -= 1
+	ITEM:惚れ薬シチリンＸ -= 1
 ELSEIF RESULT == 12
 	PRINTFORML %ITEMNAME:512%を使用しました
 	PRINTFORMW %CALLNAME:TARGET%の好感度が2000上昇しました
 	CFLAG:2 += 2000
-	ITEM:512 -= 1
+	ITEM:惚れ薬ヤゴコロＺ -= 1
 ELSEIF RESULT == 13
 	PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:513%を飲ませました
 	TFLAG:47 += 20
-	ITEM:513 -= 1
+	ITEM:銘酒「月世界」 -= 1
 ELSEIF RESULT == 14
 	PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:514%を飲ませました
 	TFLAG:47 += 40
-	ITEM:514 -= 1
+	ITEM:銘酒「鬼殺し」 -= 1
 ELSEIF RESULT == 15
 	PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:515%を飲ませました
 	TFLAG:47 += 100
-	ITEM:515 -= 1
+	ITEM:スピリタス -= 1
 ELSEIF RESULT == 16
 	PRINTFORML %ITEMNAME:516%を使用しました
-	ITEM:516 -= 1
+	ITEM:お天気ママさん -= 1
 	IF (TIME:5 == 0 || TIME:5 == 1 || TIME:5 == 2)
 		IF RAND:3 == 0
 			IF TIME:5 == 2
@@ -421,7 +421,7 @@ ELSEIF RESULT == 17
 	PRINTFORMW 体力・気力が完全回復しました
 	BASE:体力 = MAXBASE:体力
 	BASE:気力 = MAXBASE:気力
-	ITEM:517 -= 1
+	ITEM:秘仙丹 -= 1
 ELSEIF RESULT == 18
 	PRINTFORML %CALLNAME:TARGET%に%ITEMNAME:518%を食べさせました
 	PRINTFORMW 体力・気力上限が＋１００されました
@@ -429,7 +429,7 @@ ELSEIF RESULT == 18
 	MAXBASE:気力 += 100
 	BASE:体力 += 100
 	BASE:気力 += 100
-	ITEM:518 -= 1
+	ITEM:天界の桃 -= 1
 ELSEIF RESULT >= 19 && RESULT <= 21 && TEQUIP:40 & 7
 	PRINTFORMW 複数のエキスを併用することはできません
 	RESTART
@@ -449,7 +449,7 @@ ELSEIF RESULT == 19
 		ELSE
 			TEQUIP:40 |= 2
 		ENDIF
-		ITEM:519 -= 1
+		ITEM:新芽のエキス -= 1
 		TALENT:貧乳 = 1
 	ENDIF
 ELSEIF RESULT == 20
@@ -469,7 +469,7 @@ ELSEIF RESULT == 20
 			TALENT:巨乳 = 0
 			TEQUIP:40 |= 4
 		ENDIF
-		ITEM:520 -= 1
+		ITEM:若木のエキス -= 1
 	ENDIF
 ELSEIF RESULT == 21
 	;素質発覚（隠し様がないね）
@@ -488,7 +488,7 @@ ELSEIF RESULT == 21
 			TEQUIP:40 |= 2
 		ENDIF
 		TALENT:巨乳 = 1
-		ITEM:521 -= 1
+		ITEM:大樹のエキス -= 1
 	ENDIF
 ELSEIF (RESULT == 22 || RESULT == 23) && TEQUIP:40 & 24
 	PRINTFORMW 複数回の体型変化は出来ません
@@ -501,7 +501,7 @@ ELSEIF RESULT == 22
 		PRINTFORMW 一時的に小柄体型になりました
 		TEQUIP:40 |= 8
 		TALENT:小柄体型 = 1
-		ITEM:522 -= 1
+		ITEM:朝の雫 -= 1
 	ENDIF
 ELSEIF RESULT == 23
 	IF TALENT:小柄体型 == 0
@@ -512,7 +512,7 @@ ELSEIF RESULT == 23
 		PRINTFORMW 一時的に大人体型になりました
 		TEQUIP:40 |= 16
 		TALENT:小柄体型 = 0
-		ITEM:523 -= 1
+		ITEM:夜の雫 -= 1
 	ENDIF
 ELSEIF RESULT == 24
 	IF TALENT:濡れやすい && TALENT:Ｃ敏感 && TALENT:Ｖ敏感 && TALENT:Ａ敏感 && TALENT:Ｂ敏感
@@ -557,7 +557,7 @@ ELSEIF RESULT == 24
 			TEQUIP:40 |= 1p17
 			TALENT:Ｍ鈍感 = 0
 		ENDIF
-		ITEM:524 -= 1
+		ITEM:紫色の秘薬 -= 1
 	ENDIF
 ELSEIF RESULT == 25
 	IF TALENT:動物耳
@@ -570,7 +570,7 @@ ELSEIF RESULT == 25
 	ELSE
 		TEQUIP:40 |= 32
 		TALENT:動物耳 = 1
-		ITEM:525 -= 1
+		ITEM:満月の秘薬 -= 1
 		TFLAG:17 = RESULT
 		TFLAG:600 = 42
 		CALL KOJO_JUN
@@ -613,7 +613,7 @@ ELSEIF RESULT == 26
 		PRINTFORMW 一時的に魔性のテクニックを得ました
 		TEQUIP:40 |= 4096
 		ABL:技巧 += 10
-		ITEM:526 -= 1
+		ITEM:娼婦の秘薬 -= 1
 	ENDIF
 ELSEIF RESULT == 27
 	IF TEQUIP:41
@@ -623,13 +623,13 @@ ELSEIF RESULT == 27
 		PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:527%を飲ませました
 		PRINTFORMW 一時的に体力の上限がなくなりました
 		TEQUIP:41 = 1
-		ITEM:527 -= 1
+		ITEM:赤色の秘薬 -= 1
 	ENDIF
 ELSEIF RESULT == 28
 	;桃色の秘薬使用
 	PRINTFORMW %CALLNAME:TARGET%に%ITEMNAME:528%を飲ませました
 	TEQUIP:28 += 1
-	ITEM:528 -= 1
+	ITEM:桃色の秘薬 -= 1
 	;使用した時点で押し倒されるかどうか判定
 	CALL PUSH_OVER_RATE
 	IF A >= 220
@@ -654,7 +654,7 @@ ELSEIF RESULT == 29
 		PRINTFORMW 一時的に羽が生えました
 		TEQUIP:40 |= 1p15
 		TALENT:羽 = 1
-		ITEM:529 -= 1
+		ITEM:空色の秘薬 -= 1
 	ENDIF
 ELSEIF RESULT == 30
 	;黒猫の秘薬使用　猫になる
@@ -677,7 +677,7 @@ ELSEIF RESULT == 30
 		;しっぽ
 		TEQUIP:40 |= 1p16
 		TALENT:しっぽ = 1
-		ITEM:530 -= 1
+		ITEM:黒猫の秘薬 -= 1
 	ENDIF
 ENDIF
 TFLAG:17 = RESULT

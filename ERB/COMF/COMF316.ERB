@@ -197,7 +197,7 @@ S = 0
 
 ;櫛が無くアイテム有り設定なら手櫛オンリー
 V = 25
-SIF ITEM:51 == 0 && NOITEM == 0
+SIF ITEM:櫛 == 0 && NOITEM == 0
 	GOTO SKIP
 ;有れば手櫛と櫛を選択
 $INPUT_LOOP

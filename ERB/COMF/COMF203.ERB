@@ -14,7 +14,7 @@ SIF TFLAG:44 == 0
 SIF TALENT:MASTER:オトコ
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:40 == 0 && NOITEM == 0
+SIF ITEM:クスコ == 0 && NOITEM == 0
 	RETURN 0
 ;マスターが処女だとダメ
 SIF TALENT:MASTER:処女 == 1

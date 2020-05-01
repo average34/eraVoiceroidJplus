@@ -11,7 +11,7 @@ SIF TFLAG:44 == 0
 SIF (FLAG:62 & 1) == 0
 	RETURN 0
 ;アイテムを持っていないとダメ
-SIF ITEM:34 == 0
+SIF ITEM:緊急避妊薬 == 0
 	RETURN 0
 ;すでに使用中なら使えない
 SIF TEQUIP:87
@@ -148,7 +148,7 @@ SIF TALENT:薬毒耐性
 SIF TALENT:オトコ
 	I |= 4
 
-PRINTFORML 誰に緊急避妊薬を使いますか？(残:{ITEM:34})
+PRINTFORML 誰に緊急避妊薬を使いますか？(残:{ITEM:緊急避妊薬})
 SIF (I & 1) == 0
 	PRINTFORML [0] %CALLNAME:MASTER%
 SIF (I & 2) == 0
@@ -202,7 +202,7 @@ ENDIF
 ;用意するだけなので基本的には何も変動はしなくていいかも
 ;（多少の反発や恐怖は発生してもいいかもしれないけど）
 
-ITEM:34 -= 1
+ITEM:緊急避妊薬 -= 1
 ;TEQUIP:87 = 1
 
 ;IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

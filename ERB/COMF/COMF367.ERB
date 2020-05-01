@@ -5,7 +5,7 @@ CALL COM_ABLE_COMMON, SELECTCOM
 SIF RESULT == 0
 	RETURN 0
 ;ローターがないと無理
-SIF ITEM:0 == 0
+SIF ITEM:ローター == 0
 	RETURN 0
 ;ウフフ中は無理
 SIF TFLAG:44 == 1

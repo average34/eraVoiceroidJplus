@@ -331,7 +331,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:0 == 0 && NOITEM == 0
+SIF ITEM:ローター == 0 && NOITEM == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -369,7 +369,7 @@ SIF TALENT:オトコ
 SIF TALENT:小人体型 && TALENT:MASTER:禁断の知識 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:1 == 0 && NOITEM == 0
+SIF ITEM:バイブ == 0 && NOITEM == 0
 	RETURN 0
 ;処女で、従順4以下・レズっ気4以下のASSIの場合バイブはできない（サドならＯＫ）
 IF EXP:Ｖ経験 == 0 && ASSIPLAY
@@ -431,7 +431,7 @@ SIF TEQUIP:13
 SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:3 == 0 && NOITEM == 0
+SIF ITEM:アナルバイブ == 0 && NOITEM == 0
 	RETURN 0
 ;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合アナルバイブはできない（サドならＯＫ）
 IF PALAM:3 < PALAMLV:2 && ASSIPLAY
@@ -597,7 +597,7 @@ SIF TEQUIP:17
 SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:12 == 0 && NOITEM == 0
+SIF ITEM:オナホール == 0 && NOITEM == 0
 	RETURN 0
 ;オトコやふたなりじゃないとダメ
 SIF TALENT:ふたなり == 0 && TALENT:オトコ == 0
@@ -666,7 +666,7 @@ SIF TEQUIP:19
 SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:20 == 0 && NOITEM == 0
+SIF ITEM:アナルビーズ == 0 && NOITEM == 0
 	RETURN 0
 ;アナルバイブ使用中は不可
 SIF TEQUIP:13
@@ -737,7 +737,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -788,7 +788,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -843,7 +843,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;クスコ挿入中はダメ
@@ -877,7 +877,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -911,7 +911,7 @@ SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PL
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -962,7 +962,7 @@ SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PL
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1048,7 +1048,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -1114,7 +1114,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -1160,7 +1160,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1226,7 +1226,7 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -1358,7 +1358,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -1399,7 +1399,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -1417,7 +1417,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:58 == 0
 	RETURN 0
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;シャワー中はダメ
@@ -1533,7 +1533,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -1567,7 +1567,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:10 == 0 && NOITEM == 0
+SIF ITEM:鞭 == 0 && NOITEM == 0
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1598,7 +1598,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:11 == 0 && NOITEM == 0
+SIF ITEM:針 == 0 && NOITEM == 0
 	RETURN 0
 ;異常経験フィルタ
 SIF (FLAG:61 & 1) == 0
@@ -1632,7 +1632,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:43
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:5 == 0 && NOITEM == 0
+SIF ITEM:アイマスク == 0 && NOITEM == 0
 	RETURN 0
 ;主導権が主人にないとダメ
 SIF TFLAG:45
@@ -1661,7 +1661,7 @@ SIF TEQUIP:72 || TEQUIP:73 || TEQUIP:78 || TEQUIP:92
 SIF TEQUIP:44 && TEQUIP:69 == 0
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定で無いとダメ
-SIF ITEM:14 == 0 && NOITEM == 0
+SIF ITEM:縄 == 0 && NOITEM == 0
 	RETURN 0
 ;調教者の技巧が3無いとできない
 SIF ABL:PLAYER:技巧 <= 2
@@ -1698,7 +1698,7 @@ SIF TEQUIP:45
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:9 == 0 && NOITEM == 0
+SIF ITEM:ボールギャグ == 0 && NOITEM == 0
 	RETURN 0
 ;ASSIの場合、技巧3以上じゃないと使えない。
 IF ASSIPLAY
@@ -1736,7 +1736,7 @@ SIF (FLAG:61 & 1) == 0
 SIF TALENT:小人体型 && (TALENT:MASTER:禁断の知識 == 0 && TALENT:PLAYER:小人体型 == 0)
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:15 == 0 && NOITEM == 0
+SIF ITEM:浣腸器具一式 == 0 && NOITEM == 0
 	RETURN 0
 ;アナルバイブ使用中は不可
 SIF TEQUIP:13
@@ -1927,7 +1927,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:25 == 0 && NOITEM == 0
+SIF ITEM:ローション == 0 && NOITEM == 0
 	RETURN 0
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -1950,7 +1950,7 @@ SIF TFLAG:44 == 0
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定か触手調教中でないとダメ
-SIF ITEM:26 == 0 && NOITEM == 0 && TEQUIP:90 == 0
+SIF ITEM:媚薬 == 0 && NOITEM == 0 && TEQUIP:90 == 0
 	RETURN 0
 ;薬毒耐性だとダメ
 SIF TALENT:薬毒耐性
@@ -1967,7 +1967,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定か触手調教中でないとダメ
-SIF ITEM:27 == 0 && NOITEM == 0 && TEQUIP:90 == 0
+SIF ITEM:利尿剤 == 0 && NOITEM == 0 && TEQUIP:90 == 0
 	RETURN 0
 ;薬毒耐性の場合、直接注入以外ダメ
 SIF TALENT:薬毒耐性 && TEQUIP:90 == 0
@@ -1993,7 +1993,7 @@ SIF TEQUIP:53
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;カメラのアイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:6 == 0 && NOITEM == 0
+SIF ITEM:ビデオカメラ == 0 && NOITEM == 0
 	RETURN 0
 RETURN 1
 
@@ -2013,7 +2013,7 @@ SIF TEQUIP:54 && TEQUIP:69 == 0
 SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;アイテム｢首輪｣を持っているか、アイテムなし設定でないとダメ
-SIF ITEM:18 == 0 && NOITEM == 0
+SIF ITEM:首輪 == 0 && NOITEM == 0
 	RETURN 0
 ;従順10かマゾっ気が3以上ないとダメ
 SIF ABL:親密 < 10 && ABL:マゾっ気 <= 2
@@ -2078,7 +2078,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-	SIF ITEM:13 == 0 && NOITEM == 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 ;クスコ挿入中はダメ
@@ -2107,7 +2107,7 @@ SIF TEQUIP:57
 	RETURN 1
 ;調教者が映姫様以外のときはアイテム｢大鏡｣を持っているか、アイテムなし設定でないとダメ
 IF NAME_CSV(NO:PLAYER, 0) != "四季映姫"
-	SIF ITEM:16 == 0 && NOITEM == 0
+	SIF ITEM:大鏡 == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 ;従順が5以上ないとダメ
@@ -2179,7 +2179,7 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:59
 	RETURN 1
 ;アイテム｢エプロン｣を持っているか、アイテムなし設定でないとダメ
-SIF ITEM:19 == 0 && NOITEM == 0
+SIF ITEM:エプロン == 0 && NOITEM == 0
 	RETURN 0
 ;助手じゃダメ
 SIF ASSIPLAY
@@ -2285,7 +2285,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -2326,7 +2326,7 @@ SIF TEQUIP:61
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 RETURN 1
@@ -2449,7 +2449,7 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-	SIF ITEM:13 == 0 && NOITEM == 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 RETURN 1
@@ -2576,7 +2576,7 @@ SIF TEQUIP:61
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;調教者がボールギャグ中だとダメ
@@ -2644,7 +2644,7 @@ SIF TALENT:オトコ
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;触手調教中はダメ
@@ -2733,7 +2733,7 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-	SIF ITEM:13 == 0 && NOITEM == 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
 		RETURN 0
 ENDIF
 ;鰻風呂入浴中はダメ
@@ -2795,7 +2795,7 @@ SIF ABL:露出癖 < A
 SIF ABL:露出癖 < 5 && TALENT:恋慕 == 0
 	RETURN 0
 ;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
-SIF ITEM:45 == 0 && NOITEM == 0
+SIF ITEM:マイク == 0 && NOITEM == 0
 	RETURN 0
 ;一度公開野外ライブを実行しているとダメ
 SIF TFLAG:79
@@ -2947,7 +2947,7 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -3018,7 +3018,7 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -3099,7 +3099,7 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:13 == 0 && NOITEM == 0
+SIF ITEM:プレイマット == 0 && NOITEM == 0
 	RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
@@ -3398,7 +3398,7 @@ SIF TEQUIP:90 && TEQUIP:89
 SIF TALENT:PLAYER:禁断の知識 == 0
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:24 == 0 && NOITEM == 0
+SIF ITEM:触手使役術 == 0 && NOITEM == 0
 	RETURN 0
 ;道具使用中はダメ
 SIF TEQUIP:90 == 0 && (TEQUIP:11 || TEQUIP:13 || TEQUIP:14 || TEQUIP:15 || TEQUIP:16 || TEQUIP:17 || TEQUIP:19 || TEQUIP:44 || TEQUIP:46|| TEQUIP:47 || TEQUIP:48 || TEQUIP:49 || TEQUIP:54 || TEQUIP:61 || TEQUIP:69 || TEQUIP:70 || TEQUIP:71 || TEQUIP:72 || TEQUIP:79)
@@ -3588,7 +3588,7 @@ SIF TEQUIP:61
 SIF TALENT:オトコ
 	RETURN 0
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:40 == 0 && NOITEM == 0
+SIF ITEM:クスコ == 0 && NOITEM == 0
 	RETURN 0
 ;処女だとダメ
 SIF EXP:Ｖ経験 == 0
@@ -3635,7 +3635,7 @@ ENDIF
 SIF TEQUIP:90
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:26 == 0 && NOITEM == 0
+SIF ITEM:媚薬 == 0 && NOITEM == 0
 	RETURN 0
 SIF ITEM:41 == 0 && NOITEM == 0
 	RETURN 0
@@ -3675,7 +3675,7 @@ ENDIF
 SIF TEQUIP:90
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:26 == 0 && NOITEM == 0
+SIF ITEM:媚薬 == 0 && NOITEM == 0
 	RETURN 0
 SIF ITEM:41 == 0 && NOITEM == 0
 	RETURN 0
@@ -3730,7 +3730,7 @@ ENDIF
 SIF TEQUIP:90
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:26 == 0 && NOITEM == 0
+SIF ITEM:媚薬 == 0 && NOITEM == 0
 	RETURN 0
 SIF ITEM:41 == 0 && NOITEM == 0
 	RETURN 0
@@ -3769,7 +3769,7 @@ ENDIF
 SIF TEQUIP:90
 	RETURN 1
 ;アイテムを持っているか、アイテムなし設定でないとダメ
-SIF ITEM:26 == 0 && NOITEM == 0
+SIF ITEM:媚薬 == 0 && NOITEM == 0
 	RETURN 0
 SIF ITEM:41 == 0 && NOITEM == 0
 	RETURN 0

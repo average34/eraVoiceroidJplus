@@ -1363,7 +1363,7 @@ ELSE
 	CASE 28
 		PRINTFORMW %CALLNAME:ARG%の部屋から物音が聞こえる……
 		;縄練習(縄必要)
-		IF RAND:3 == 0 && ITEM:14
+		IF RAND:3 == 0 && ITEM:縄
 			PRINTFORMW 縄を勝手に持ち出して縛り方の研究をしているらしい
 ;			PRINTFORMW 丸めた布団を人間に見立てて 手際よく縛り上げていく……
 ;			;異常経験
@@ -1373,9 +1373,9 @@ ELSE
 ;				PRINTFORMW あっという間に雁字搦めにされた布団を見下ろしながら、%CALLNAME:ARG%は満足げだ……
 ;			ENDIF
 		;アナル責め練習(オナホール必要)
-		ELSEIF RAND:2 == 0 && ITEM:12
+		ELSEIF RAND:2 == 0 && ITEM:オナホール
 			;アナルバイブを購入済み
-			IF ITEM:3 && RAND:2 == 0
+			IF ITEM:アナルバイブ && RAND:2 == 0
 				PRINTFORMW オナホールを勝手に持ち出してアナル責めの練習をしているらしい
 				PRINTFORMW アナルバイブをペロリと舐めると オナホールに挿しこんだ……
 ;				;異常経験
@@ -1397,7 +1397,7 @@ ELSE
 		;鞭練習
 		ELSE
 			;鞭を購入済み
-			IF ITEM:10 && RAND:2 == 0
+			IF ITEM:鞭 && RAND:2 == 0
 				PRINTFORMW 鞭を勝手に持ち出して素振りしているらしい
 ;				;異常経験
 ;				IF EXP:ARG:異常経験 >= 100 && RAND:2 == 0

@@ -355,7 +355,7 @@ ELSEIF K == 6 || K == 10
 	;ハンバーグ
 	N = 150
 ELSE
-	IF ITEM:26 > 0 && TALENT:淫乱
+	IF ITEM:媚薬 > 0 && TALENT:淫乱
 		;甘い香りがする桜色のおにぎり
 		N = 65
 	ELSE
@@ -700,8 +700,8 @@ ELSEIF K == 5 || K == 11
 ELSEIF K == 6 || K == 10
 	TSTR:1 = ハンバーグ
 ELSE
-	IF ITEM:26 > 0 && TALENT:淫乱 == 1
-		ITEM:26 -= 1
+	IF ITEM:媚薬 > 0 && TALENT:淫乱 == 1
+		ITEM:媚薬 -= 1
 		TFLAG:14 = 1
 		TSTR:1 = 甘い香りがする桜色のおにぎり
 	ELSE

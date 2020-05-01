@@ -14,7 +14,7 @@ SIF TFLAG:44 == 0
 SIF TALENT:PLAYER:サド == 0 && TALENT:PLAYER:禁断の知識 == 0
 	RETURN 0
 ;ローション、媚薬、利尿剤全てを最低1つずつ持っているか、アイテムなし設定じゃないとダメ
-SIF ITEM:25 == 0 && ITEM:26 == 0 && ITEM:27 == 0 && NOITEM == 0
+SIF ITEM:ローション == 0 && ITEM:媚薬 == 0 && ITEM:利尿剤 == 0 && NOITEM == 0
 	RETURN 0
 ;薬毒耐性だとダメ
 SIF TALENT:薬毒耐性
@@ -142,9 +142,9 @@ ENDIF
 WAIT
 
 ;ローション、媚薬、利尿剤を1つずつ消費
-ITEM:25 -= 1
-ITEM:26 -= 1
-ITEM:27 -= 1
+ITEM:ローション -= 1
+ITEM:媚薬 -= 1
+ITEM:利尿剤 -= 1
 
 PALAM:10 += 1000
 TEQUIP:75 = 1

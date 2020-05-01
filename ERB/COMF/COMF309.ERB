@@ -830,11 +830,11 @@ ENDIF
 ;繁華街
 @SOZAI_SEARCH_TEQUIP2_13
 IF T <= 19
-	ITEM:26 += 1
+	ITEM:媚薬 += 1
 	PRINTFORMW 探索の結果、[媚薬]を手に入れました
 	TFLAG:17 = 4
 ELSEIF T <= 59
-	ITEM:25 += 1
+	ITEM:ローション += 1
 	PRINTFORMW 探索の結果、[ローション]を手に入れました
 	TFLAG:17 = 3
 ELSEIF T <= 89
@@ -1049,7 +1049,7 @@ ENDIF
 ;実行者の技巧5以上かつ相手の技巧7以上(映画ジャンルで分岐)
 IF ABL:TARGET:技巧 >= 7 && ABL:PLAYER:技巧 >= 5 
 	IF T <= 29
-		ITEM:29 += 1
+		ITEM:コンドーム += 1
 		PRINTFORMW 探索の結果、[コンドーム]を手に入れました
 		TFLAG:18 = 1
 	ELSEIF T <= 84

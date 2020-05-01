@@ -24,25 +24,25 @@ ITEMSALES:31 = 1
 ITEMSALES:33 = 1
 ITEMSALES:34 = 1
 ITEMSALES:35 = 1
-SIF ITEM:25 >= 99
+SIF ITEM:ローション >= 99
 	ITEMSALES:25 = 0
-SIF ITEM:26 >= 99
+SIF ITEM:媚薬 >= 99
 	ITEMSALES:26 = 0
-SIF ITEM:27 >= 99
+SIF ITEM:利尿剤 >= 99
 	ITEMSALES:27 = 0
 SIF ITEM:28 >= 99
 	ITEMSALES:28 = 0
-SIF ITEM:29 >= 99
+SIF ITEM:コンドーム >= 99
 	ITEMSALES:29 = 0
 SIF ITEM:30 >= 99
 	ITEMSALES:30 = 0
 SIF ITEM:31 >= 99
 	ITEMSALES:31 = 0
-SIF ITEM:33 >= 99
+SIF ITEM:排卵誘発剤 >= 99
 	ITEMSALES:33 = 0
-SIF ITEM:34 >= 99
+SIF ITEM:緊急避妊薬 >= 99
 	ITEMSALES:34 = 0
-SIF ITEM:35 >= 99
+SIF ITEM:オムツ >= 99
 	ITEMSALES:35 = 0
 
 ;コンフィグで妊娠機能オンじゃないとダメ
@@ -170,7 +170,7 @@ ITEMSALES:85 = 0
 
 ;赤い首輪（奴隷エンド条件はここで処理）
 ITEMSALES:86 = 0
-IF TARGET > 0 && ASSI < 0 && FLAG:5 != 9 && ITEM:85 == 0 && ITEM:86 == 0
+IF TARGET > 0 && ASSI < 0 && FLAG:5 != 9 && ITEM:85 == 0 && ITEM:赤い首輪 == 0
 	SIF TALENT:淫乱 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && CFLAG:2 >= 2500 && MARK:既成事実 >= 3 && MARK:反発感情 == 0 && (ABL:親密+ABL:欲望+ABL:奉仕精神 >= 15) && (ABL:技巧+ABL:マゾっ気+ABL:精液中毒 >= 13) && (EXP:Ｖ経験+EXP:Ａ経験 >= 200) && EXP:強制自慰経験 >= 150 && EXP:フェラ経験 >= 150 && EXP:レズ経験 < 500
 		ITEMSALES:86 = 1
 ENDIF
@@ -187,7 +187,7 @@ ENDIF
 
 ;触手使役術
 ITEMSALES:24 = 0
-SIF F == 1 && ITEM:24 == 0
+SIF F == 1 && ITEM:触手使役術 == 0
 	ITEMSALES:24 = 1
 
 ;元気になる薬
@@ -234,11 +234,11 @@ SIF ABL:MASTER:技巧 < 9999
 
 ;撮影技能
 ITEMSALES:61 = 0
-SIF ITEM:6 && ABL:MASTER:撮影技能 < 9999
+SIF ITEM:ビデオカメラ && ABL:MASTER:撮影技能 < 9999
 	ITEMSALES:61 = 1
 ;編集機材
 ITEMSALES:59 = 0
-SIF ITEM:6 && ITEM:59 == 0
+SIF ITEM:ビデオカメラ && ITEM:59 == 0
 	ITEMSALES:59 = 1
 
 ;プラカード
@@ -1151,7 +1151,7 @@ IF BOUGHT == 86
 	IF FLAG:1 == 9
 		;FLAG:1が9のときは特殊ハーレムエンドへ。
 		;“IF FLAG:1 == 9”を奴隷エンドと分けることは可能
-		;烙印9＋赤い首輪のハーレムエンドはIF ITEM:86で仕分けすればいけるか？
+		;烙印9＋赤い首輪のハーレムエンドはIF ITEM:赤い首輪で仕分けすればいけるか？
 		CALL SLAVE_ENDING
 	ELSE
 		CALL SINGLE_ENDING
@@ -1168,7 +1168,7 @@ ENDIF
 
 ;烙印
 IF BOUGHT == 87
-	ITEM:87 = 0
+	ITEM:隷属の証 = 0
 	PRINTFORMW ※注意！　%NAME:TARGET%に烙印を押すと二度と別れられなくなります。
 	PRINTW それでもいいですか？
 	DRAWLINE

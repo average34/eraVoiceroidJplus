@@ -59,7 +59,7 @@ SIF A > 5
 SIF ABL:露出癖 < A
 	RETURN 0
 ;アイテム｢マイク｣を持っているか、アイテムなし設定でないとダメ
-SIF ITEM:45 == 0 && NOITEM == 0
+SIF ITEM:マイク == 0 && NOITEM == 0
 	RETURN 0
 ;一度ストリートライブを実行しているとダメ
 SIF TFLAG:79
