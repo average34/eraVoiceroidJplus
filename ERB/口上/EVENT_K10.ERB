@@ -2171,7 +2171,7 @@ IF TFLAG:13 == 20
 			PRINTFORMW 
 			PRINTFORMW 
 		;反発感情Lv2以上
-		ELSEIF MARK:T:3 >= 2
+		ELSEIF MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -2180,7 +2180,7 @@ IF TFLAG:13 == 20
 	;助手→パートナー
 	ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕もしくは恋人
 		ELSEIF TALENT:恋慕
@@ -2195,7 +2195,7 @@ IF TFLAG:13 == 20
 		IF TALENT:恋慕
 			PRINTFORMW 
 		;反発感情LV2以上
-		ELSEIF MARK:3 >= 2
+		ELSEIF MARK:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -2204,7 +2204,7 @@ IF TFLAG:13 == 20
 	;パートナー→助手(助手を妊娠させた)
 	ELSEIF CFLAG:T:104 == 3 && T == ASSI
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -2219,7 +2219,7 @@ IF TFLAG:13 == 94
 	;助手の時にパートナーに妊娠させられた(パートナーはZで参照可能。TARGETでは参照できません)
 	IF CFLAG:T:104 == 3
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -2231,7 +2231,7 @@ IF TFLAG:13 == 94
 	;助手の時にパートナーを妊娠させた(パートナーはZで参照可能。TARGETでは参照できません)
 	ELSEIF CFLAG:T:104 == 2
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -2476,7 +2476,7 @@ ENDIF
 ;-------------------------------------------------
 @K10_KOJO2
 ;反発感情Lv1以上
-IF MARK:3 >= 1 && FLAG:7 == 2
+IF MARK:反発感情 >= 1 && FLAG:7 == 2
 	DRAWLINE
 	;午後
 	IF TIME
@@ -2537,7 +2537,7 @@ ENDIF
 ;パートナーと一旦別れる
 ;--------------------------------------------------
 ;反発感情Lv1以上
-IF MARK:3 >= 1
+IF MARK:反発感情 >= 1
 	DRAWLINE
 	CALL PRINTFORMW2T , @"「……そろそろゲームに戻りますね」"
 	CALL PRINTFORMW2T , @"「それでは」"
@@ -2823,7 +2823,7 @@ ENDIF
 IF SELECTCOM == 301
 	PRINTFORML
 ;反発2以上
-	IF MARK:3 > 1
+	IF MARK:反発感情 > 1
 		PRINTFORMW きりたんはふてくされたような表情のまま、一言も口を利かない……
 		PRINTFORMW それでも、仲直りへの道だと信じて、あなたは一人で喋り続けた
 	;初めて
@@ -3619,7 +3619,7 @@ IF SELECTCOM == 314 && TEQUIP:7 == 1
 	;二回目以降
 	ELSE
 		;反発感情が付いてる
-		IF MARK:3 > 0
+		IF MARK:反発感情 > 0
 			PRINTFORMW 
 		;親愛もしくは相愛
 		ELSEIF (TALENT:親愛 == 1 || TALENT:相愛 == 1) && (CFLAG:540 < 4 || FLAG:7 == 2)
@@ -3647,7 +3647,7 @@ IF SELECTCOM == 314 && TEQUIP:7 == 0
 	;二回目以降
 	ELSE
 		;反発感情が付いてる
-		IF MARK:3 > 0
+		IF MARK:反発感情 > 0
 			PRINTFORMW 
 		;親愛もしくは相愛
 		ELSEIF (TALENT:親愛 == 1 || TALENT:相愛 == 1) && (CFLAG:541 < 4 || FLAG:7 == 2)
@@ -5185,7 +5185,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 					ENDIF
 				ENDIF
 			;反発付き
-			ELSEIF MARK:3 >= 2
+			ELSEIF MARK:反発感情 >= 2
 				;主人公が童貞
 				IF TALENT:MASTER:童貞 == 1
 					PRINTFORMW 
@@ -5245,7 +5245,7 @@ IF SELECTCOM == 25 && TEQUIP:57
 					PRINTFORMW 
 				ENDIF
 			;反発付き
-			ELSEIF MARK:3 >= 2
+			ELSEIF MARK:反発感情 >= 2
 				PRINTFORMW 
 				;セックスでの初射精
 				IF CFLAG:353 == 0 && (TFLAG:2 == 1 || TFLAG:2 == 2)
@@ -5668,7 +5668,7 @@ IF SELECTCOM == 37
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 > 1 && (CFLAG:536 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 > 1 && (CFLAG:536 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:536 = 6
 		;恋慕+サドッ気Lv5以上
@@ -6577,7 +6577,7 @@ ENDIF
 ;				PRINTFORMW 
 ;			CFLAG:471 = 5
 ;			;反発Lv2以上
-;			ELSEIF MARK:3 >= 2 && (CFLAG:471 < 4 || FLAG:7 == 2)
+;			ELSEIF MARK:反発感情 >= 2 && (CFLAG:471 < 4 || FLAG:7 == 2)
 ;				PRINTFORMW 
 ;			CFLAG:471 = 4
 ;			;合意or恋人or恋慕
@@ -6596,7 +6596,7 @@ ENDIF
 ;				PRINTFORMW 
 ;			CFLAG:471 = 5
 ;			;反発Lv2以上
-;			ELSEIF MARK:3 >= 2 && (CFLAG:471 < 4 || FLAG:7 == 2)
+;			ELSEIF MARK:反発感情 >= 2 && (CFLAG:471 < 4 || FLAG:7 == 2)
 ;				PRINTFORMW 
 ;			CFLAG:471 = 4
 ;			;合意or恋人or恋慕
@@ -7294,7 +7294,7 @@ IF SELECTCOM == 70
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:496 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:496 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:496 = 6
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
@@ -7329,16 +7329,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7350,16 +7350,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7370,16 +7370,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7395,16 +7395,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7417,16 +7417,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7439,16 +7439,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7461,16 +7461,16 @@ IF SELECTCOM == 71
 			IF TALENT:処女 == 1
 				PRINTFORMW 
 			;破瓜の血がついてる
-			ELSEIF STAIN:TARGET:3 & 32
+			ELSEIF STAIN:TARGET:ヴァギナ & 32
 				;さらに精液がついてる時
-				IF STAIN:TARGET:3 & 36
+				IF STAIN:TARGET:ヴァギナ & 36
 					PRINTFORMW 
 				;破瓜の血のみ
 				ELSE
 					PRINTFORMW 
 				ENDIF
 			;ヴァギナに精液が付着している時
-			ELSEIF STAIN:TARGET:3 & 4
+			ELSEIF STAIN:TARGET:ヴァギナ & 4
 				PRINTFORMW 
 			;付着してない場合
 			ELSE 
@@ -7808,7 +7808,7 @@ IF SELECTCOM == 186 && TFLAG:17 == TARGET
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:508 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:508 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:508 = 6
 		;恋慕+淫乱
@@ -7847,7 +7847,7 @@ IF SELECTCOM == 186 && TFLAG:17 != TARGET
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:509 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:509 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:509 = 6
 		;恋慕+マゾ所有もしくはマゾッ気Lv5以上
@@ -7891,7 +7891,7 @@ IF SELECTCOM == 187
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:510 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:510 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:510 = 6
 		;恋慕+淫乱
@@ -7943,7 +7943,7 @@ IF SELECTCOM == 191
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:512 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:512 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:512 = 6
 		;恋慕+淫乱
@@ -8028,7 +8028,7 @@ IF SELECTCOM == 70
 	;二回目以降
 	ELSE
 		;反発Lv2以上
-		IF MARK:3 >= 2 && (CFLAG:521 < 6 || FLAG:7 == 2)
+		IF MARK:反発感情 >= 2 && (CFLAG:521 < 6 || FLAG:7 == 2)
 			PRINTFORMW 
 			;射精する
 			IF TFLAG:2 == 1 || TFLAG:2 == 2
@@ -8266,7 +8266,7 @@ SIF TEQUIP:45
 ;-------------------------------------------------
 ;初めてC絶頂 CFLAG347
 ;-------------------------------------------------
-IF NOWEX:0 > 0 && CFLAG:347 == 0
+IF NOWEX:Ｃ絶頂 > 0 && CFLAG:347 == 0
 	;恋慕
 	IF TALENT:TARGET:恋慕 == 1
 ;		PRINTFORMW 
@@ -8280,7 +8280,7 @@ ENDIF
 ;-------------------------------------------------
 ;初めてV絶頂 CFLAG348
 ;-------------------------------------------------
-IF NOWEX:1 > 0 && CFLAG:348 == 0
+IF NOWEX:Ｖ絶頂 > 0 && CFLAG:348 == 0
 	;恋慕
 	IF TALENT:TARGET:恋慕 == 1
 ;		PRINTFORMW 
@@ -8295,7 +8295,7 @@ ENDIF
 ;-------------------------------------------------
 ;初めてA絶頂 CFLAG349
 ;-------------------------------------------------
-IF NOWEX:2 > 0 && CFLAG:349 == 0
+IF NOWEX:Ａ絶頂 > 0 && CFLAG:349 == 0
 	;恋慕
 	IF TALENT:TARGET:恋慕 == 1
 ;		PRINTFORMW 
@@ -8309,7 +8309,7 @@ ENDIF
 ;-------------------------------------------------
 ;初めてB絶頂 CFLAG350
 ;-------------------------------------------------
-IF NOWEX:3 > 0 && CFLAG:350 == 0
+IF NOWEX:Ｂ絶頂 > 0 && CFLAG:350 == 0
 	;恋慕
 	IF TALENT:TARGET:恋慕 == 1
 ;		PRINTFORMW 
@@ -8653,10 +8653,10 @@ SIF D > 0
 	RETURN 0
 
 ;各部位に絶頂があったかを確認して、CVABに結果を代入（0or1）
-C = (NOWEX:0 > 0)
-V = (NOWEX:1 > 0)
-A = (NOWEX:2 > 0)
-B = (NOWEX:3 > 0)
+C = (NOWEX:Ｃ絶頂 > 0)
+V = (NOWEX:Ｖ絶頂 > 0)
+A = (NOWEX:Ａ絶頂 > 0)
+B = (NOWEX:Ｂ絶頂 > 0)
 
 ;CVABの合計をDに代入（何重絶頂だったかを表す値になる）
 D = C + V + A + B
@@ -8693,7 +8693,7 @@ IF C && D == 1
 	;恋慕
 	ELSEIF TALENT:恋慕
 		;C強絶頂以上
-		IF NOWEX:0 > 1
+		IF NOWEX:Ｃ絶頂 > 1
 			CALL PRINTFORMW2T , @"「はぁっ、あっ、いいっ、くるっ、」"
 			CALL PRINTFORMW2T , @"「きちゃう、すごいっ、%CSTR:1%っ、ああっ──！」」"
 		ELSE
@@ -8725,7 +8725,7 @@ ELSEIF V && D == 1
 	;恋慕
 	ELSEIF TALENT:恋慕
 		;V強絶頂以上
-		IF NOWEX:1 > 1
+		IF NOWEX:Ｖ絶頂 > 1
 			CALL PRINTFORMW2T , @"「あっ、あっ、あっ、あっ……%CSTR:1%っ、好きです、」"
 			CALL PRINTFORMW2T , @"「んっ、んん──！」"
 			PRINTFORML きりたんは腰をブリッジさせ、Ｇスポットを強く押し付け絶頂した

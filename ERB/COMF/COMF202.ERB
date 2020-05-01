@@ -11,10 +11,10 @@ SIF TFLAG:44 == 0
 SIF TFLAG:92 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
+SIF STAIN:ヴァギナ & 14 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で親密3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-IF STAIN:3 & 14 && ASSIPLAY
+IF STAIN:ヴァギナ & 14 && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
@@ -52,14 +52,14 @@ RETURN 1
 
 PRINTL ワカメ酒
 STR:0 = ワカメ酒
-SIF TALENT:巨乳 || (STAIN:5 & 14 && TALENT:PLAYER:汚れ無視)
+SIF TALENT:巨乳 || (STAIN:胸 & 14 && TALENT:PLAYER:汚れ無視)
 	PRINTL [0] 胸で
 PRINTL [1] 正座させて
 PRINTL [2] 仰向けで
 $INPUT_LOOP
 INPUT
 W = RESULT
-IF (W < 0 || W > 2) || (W == 0 && TALENT:巨乳 == 0) || (W == 0 && STAIN:5 & 14 && TALENT:PLAYER:汚れ無視 == 0)
+IF (W < 0 || W > 2) || (W == 0 && TALENT:巨乳 == 0) || (W == 0 && STAIN:胸 & 14 && TALENT:PLAYER:汚れ無視 == 0)
 	PRINTL 正しい値を入力してください
 	GOTO INPUT_LOOP
 ENDIF
@@ -172,12 +172,12 @@ SIF TALENT:薬毒耐性
 ;汚れ移動
 IF W == 0
 	;パートナーのB⇔調教者の口の汚れが移動
-	STAIN:5 |= STAIN:PLAYER:0
-	STAIN:PLAYER:0 |= STAIN:5
+	STAIN:胸 |= STAIN:PLAYER:口
+	STAIN:PLAYER:口 |= STAIN:胸
 ELSE
 	;パートナーのＶ⇔調教者の口の汚れが移動
-	STAIN:3 |= STAIN:PLAYER:0
-	STAIN:PLAYER:0 |= STAIN:3
+	STAIN:ヴァギナ |= STAIN:PLAYER:口
+	STAIN:PLAYER:口 |= STAIN:ヴァギナ
 ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
@@ -200,9 +200,9 @@ IF W == 0
 	PRINTFORMW 酒の刺激なのか%CALLNAME:TARGET%の顔は仄かに紅みを帯びている……
 	PRINTL 
 	PRINTFORM 十分酒が馴染んだ頃、%CALLNAME:PLAYER%は
-	IF (TALENT:母乳体質 && EX:4 > 0) && PALAM:3 >= PALAMLV:5
+	IF (TALENT:母乳体質 && EX:噴乳 > 0) && PALAM:3 >= PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%の唾液と母乳が混ざった酒を
-	ELSEIF TALENT:母乳体質 && EX:4 > 0
+	ELSEIF TALENT:母乳体質 && EX:噴乳 > 0
 		PRINTFORML 母乳が混ざり、マイルドな味になった酒を
 	ELSEIF PALAM:3 >= PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%の唾液がたっぷり混ざった酒を

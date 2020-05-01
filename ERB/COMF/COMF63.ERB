@@ -144,8 +144,8 @@ ENDIF
 
 
 ;奴隷のＶ⇔調教者のＶの汚れが移動
-STAIN:3 |= STAIN:PLAYER:3
-STAIN:PLAYER:3 |= STAIN:3
+STAIN:ヴァギナ |= STAIN:PLAYER:ヴァギナ
+STAIN:PLAYER:ヴァギナ |= STAIN:ヴァギナ
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
@@ -231,8 +231,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 1
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 2
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 2
 ENDIF
 
 
@@ -284,15 +284,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:3 & 1
+SIF STAIN:PLAYER:ヴァギナ & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:3 & 4
+SIF STAIN:PLAYER:ヴァギナ & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:3 & 8
+SIF STAIN:PLAYER:ヴァギナ & 8
 	Y += 7
-SIF STAIN:PLAYER:3 & 16
+SIF STAIN:PLAYER:ヴァギナ & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -368,11 +368,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 2,')
 		S = 1
 	ENDIF
 
@@ -449,15 +449,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:3 & 1
+	SIF STAIN:PLAYER:ヴァギナ & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:3 & 4
+	SIF STAIN:PLAYER:ヴァギナ & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:3 & 8
+	SIF STAIN:PLAYER:ヴァギナ & 8
 		Y += 7
-	SIF STAIN:PLAYER:3 & 16
+	SIF STAIN:PLAYER:ヴァギナ & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

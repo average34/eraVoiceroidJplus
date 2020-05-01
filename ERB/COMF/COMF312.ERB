@@ -98,10 +98,10 @@ ELSEIF ABL:親密 >= 4 || CFLAG:2 >= 150
 		A:3 = 1
 	ENDIF
 	;反発感情
-	IF MARK:3 != 0
+	IF MARK:反発感情 != 0
 		PRINT  - 
-		A:1 -= MARK:3 * 6
-		PRINTFORM %MARKNAME:3%LV{MARK:3}({MARK:3 * 6})
+		A:1 -= MARK:反発感情 * 6
+		PRINTFORM %MARKNAME:3%LV{MARK:反発感情}({MARK:反発感情 * 6})
 		A:3 = 1
 	ENDIF
 	
@@ -588,11 +588,11 @@ ELSEIF CFLAG:2 <= 150
 	A:1 -= 1
 ENDIF
 ;反発があると好感度低下
-IF MARK:3 >= 3
+IF MARK:反発感情 >= 3
 	A:1 -= 3
-ELSEIF MARK:3 >= 2
+ELSEIF MARK:反発感情 >= 2
 	A:1 -= 2
-ELSEIF MARK:3 >= 1
+ELSEIF MARK:反発感情 >= 1
 	A:1 -= 1
 ENDIF
 

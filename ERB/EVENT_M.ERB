@@ -35,7 +35,7 @@ ENDIF
 
 ;愛撫
 @TRAIN_MESSAGE_COM0
-SIF (STAIN:0 < 2 || STAIN:0 == 16 || STAIN:0 == 17 || TALENT:MASTER:汚れ無視 || ASSIPLAY) && TEQUIP:45 == 0 && TEQUIP:90 == 0 && TALENT:キス未経験 == 0
+SIF (STAIN:口 < 2 || STAIN:口 == 16 || STAIN:口 == 17 || TALENT:MASTER:汚れ無視 || ASSIPLAY) && TEQUIP:45 == 0 && TEQUIP:90 == 0 && TALENT:キス未経験 == 0
 	PRINT キスをしながら
 
 PRINTFORM %CALLNAME:TARGET%の

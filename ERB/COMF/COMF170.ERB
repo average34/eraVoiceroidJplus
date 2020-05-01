@@ -89,20 +89,20 @@ A = 700
 B = (ABL:PLAYER:欲望 * 2) + (ABL:PLAYER:奉仕精神 * 3) + (ABL:PLAYER:レズっ気 * 3) + (ABL:PLAYER:レズ中毒 * 2)
 C = 1 + RAND:10
 ;MARK:反発刻印を見る
-IF MARK:3 < 2
+IF MARK:反発感情 < 2
 	TIMES A, 1.00
-ELSEIF MARK:3 == 2
+ELSEIF MARK:反発感情 == 2
 	TIMES A, 0.75
 ELSE
 	TIMES A, 0.50
 ENDIF
 
 ;MARK:既成事実を見る
-IF MARK:2 > 2
+IF MARK:既成事実 > 2
 	TIMES A, 1.25
-ELSEIF MARK:2 == 2
+ELSEIF MARK:既成事実 == 2
 	TIMES A, 1.00
-ELSEIF MARK:2 == 1
+ELSEIF MARK:既成事実 == 1
 	TIMES A, 0.75
 ELSE
 	TIMES A, 0.50
@@ -110,11 +110,11 @@ ENDIF
 
 
 ;MARK:苦痛刻印を見る
-IF MARK:0 > 2
+IF MARK:苦痛依存 > 2
 	TIMES A, 1.20
-ELSEIF MARK:0 == 2
+ELSEIF MARK:苦痛依存 == 2
 	TIMES A, 1.00
-ELSEIF MARK:0 == 1
+ELSEIF MARK:苦痛依存 == 1
 	TIMES A, 0.80
 ELSE
 	TIMES A, 0.60

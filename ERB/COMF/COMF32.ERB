@@ -97,11 +97,11 @@ IF TEQUIP:45 == 0 && (FLAG:62 & 4194304)
 	ENDIF
 
 	;好感度（既成事実で代用）を見る
-	IF MARK:2 == 1
+	IF MARK:既成事実 == 1
 		TIMES SOURCE:24 , 1.00
-	ELSEIF MARK:2 == 2
+	ELSEIF MARK:既成事実 == 2
 		TIMES SOURCE:24 , 1.20
-	ELSEIF TALENT:恋慕== 0 && MARK:2 == 3
+	ELSEIF TALENT:恋慕== 0 && MARK:既成事実 == 3
 		TIMES SOURCE:24 , 1.40
 	ELSEIF TALENT:恋慕 && CFLAG:2 < 3500
 		TIMES SOURCE:24 , 1.60
@@ -290,7 +290,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋９
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC*2
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -305,7 +305,7 @@ ENDIF
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋３
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -319,12 +319,12 @@ PRINTFORML %EXPNAME:22%＋１
 EXP:フェラ経験 += 1
 
 ;奴隷の口⇔調教者のＰの汚れが移動
-STAIN:0 |= STAIN:PLAYER:2
-STAIN:PLAYER:2 |= STAIN:0
+STAIN:口 |= STAIN:PLAYER:ペニス
+STAIN:PLAYER:ペニス |= STAIN:口
 
 ;奉仕精神ＬＶ２以上、技巧ＬＶ２以上なら汚れをなめ取る
 IF ABL:奉仕精神 >= 2 && ABL:技巧 >= 2
-	STAIN:PLAYER:2 = 2
+	STAIN:PLAYER:ペニス = 2
 	SIF E >= 1
 		TFLAG:8 = 1
 ENDIF
@@ -345,8 +345,8 @@ SIF ASSIPLAY == 0 && EXP:フェラ経験 >= EXPLV:3
 	TFLAG:30 += 1
 
 ;奴隷のＢ⇔調教者のＰの汚れが移動
-STAIN:5 |= STAIN:PLAYER:2
-STAIN:PLAYER:2 |= STAIN:5
+STAIN:胸 |= STAIN:PLAYER:ペニス
+STAIN:PLAYER:ペニス |= STAIN:胸
 
 TFLAG:100 = 1
 
@@ -384,8 +384,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 1
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 1
 ENDIF
 
 
@@ -443,15 +443,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -523,11 +523,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 
@@ -618,15 +618,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

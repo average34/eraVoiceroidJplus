@@ -183,10 +183,10 @@ IF TALENT:感情乏しい == 0 && TALENT:狂気 == 0 && PALAM:10 > PALAMLV:4
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に理性のタガが外れてしまった……
 			PRINTFORMW %CALLNAME:TARGET%は発狂した
 			TALENT:TARGET:狂気 = 1
-		ELSEIF (L == 1 || L == 2) && MARK:3 > 2
+		ELSEIF (L == 1 || L == 2) && MARK:反発感情 > 2
 			PRINTFORML %CALLNAME:TARGET%はあまりの恐怖に反抗する気力を失ったようだ……
 			PRINTW 反発刻印がLV2に下がった
-			MARK:3 = 2
+			MARK:反発感情 = 2
 		ELSEIF (L > 2 && L < 6) && BASE:体力 >= 500
 			PRINTFORM %CALLNAME:TARGET%はあまりの恐怖に気力が一気に消耗したようだ……
 			BASE:気力 = 0

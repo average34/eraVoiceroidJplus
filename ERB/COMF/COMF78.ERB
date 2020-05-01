@@ -257,7 +257,7 @@ ELSE
 		PRINTFORML %CALLNAME:TARGET%は反射的にお尻に力を入れ、異物の侵入に抗おうとするも
 		PRINTL 結局は無駄に終わってしまう……
 		TFLAG:76 = 1
-		STAIN:4 = 8
+		STAIN:アナル = 8
 	ENDIF
 	IF F > 0
 		PRINTL 　
@@ -271,10 +271,10 @@ ELSE
 			PRINTFORML %CALLNAME:TARGET%は鰻が膣壁や子宮口を小突いていく感触に目を白黒させている……
 		ENDIF
 		TFLAG:75 = 1
-		STAIN:3 = 1
+		STAIN:ヴァギナ = 1
 	ENDIF
-	STAIN:1 = 0
-	STAIN:2 = 2
+	STAIN:手 = 0
+	STAIN:ペニス = 2
 	PRINTL 　
 	IF EXP:異常経験 > 5
 		EXP:異常経験 += 2
@@ -419,19 +419,19 @@ ELSEIF TFLAG:72 == 1
 	SOURCE:11 += A
 ENDIF
 
-STAIN:1 = 0
-STAIN:2 = 2
+STAIN:手 = 0
+STAIN:ペニス = 2
 
 TIMES SOURCE:6 , 1.20
 IF F > 0
 	EXP:Ｖ経験 += 2
 	PRINTL Ｖ経験＋１
-	STAIN:3 = 1
+	STAIN:ヴァギナ = 1
 ENDIF
 IF R > 0
 	EXP:Ａ経験 += 2
 	PRINTL Ａ経験＋１
-	STAIN:4 = 8
+	STAIN:アナル = 8
 ENDIF
 
 RETURN 1

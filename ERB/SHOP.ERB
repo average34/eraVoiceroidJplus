@@ -963,7 +963,7 @@ ELSE
 		SELECTCASE ARG:1
 			;刻印系表示
 			CASE 2
-				PRINTFORML     苦痛依存：{MARK:T:0, 2, LEFT}  快楽依存：{MARK:T:1, 2, LEFT}  既成事実：{MARK:T:2, 2, LEFT}  反発感情：{MARK:T:3, 2, LEFT}  
+				PRINTFORML     苦痛依存：{MARK:T:苦痛依存, 2, LEFT}  快楽依存：{MARK:T:快楽依存, 2, LEFT}  既成事実：{MARK:T:既成事実, 2, LEFT}  反発感情：{MARK:T:反発感情, 2, LEFT}  
 				IF FLAG:5 == 10 && CFLAG:T:17
 					PRINTFORML   ×
 				ELSEIF FLAG:5 == 10

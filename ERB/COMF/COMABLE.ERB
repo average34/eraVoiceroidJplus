@@ -100,10 +100,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:3 & 14 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
+SIF STAIN:ヴァギナ & 14 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-IF STAIN:3 & 14 && ASSIPLAY
+IF STAIN:ヴァギナ & 14 && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
@@ -175,10 +175,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合フェラするはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
-SIF STAIN:2 & 12 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
+SIF STAIN:ペニス & 12 && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合フェラはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
-IF STAIN:2 & 12 && ASSIPLAY
+IF STAIN:ペニス & 12 && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
@@ -223,7 +223,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;口が汚れているとダメ（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:0 & 14 && TALENT:PLAYER:汚れ無視 == 0
+SIF STAIN:口 & 14 && TALENT:PLAYER:汚れ無視 == 0
 	RETURN 0
 ;対象か調教者が猫舌だとできない
 SIF  TALENT:猫舌 || TALENT:PLAYER:猫舌
@@ -282,7 +282,7 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;アナルが汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-IF STAIN:4 & 14 && ASSIPLAY
+IF STAIN:アナル & 14 && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
@@ -3189,10 +3189,10 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:57 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-SIF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
+SIF STAIN:ヴァギナ >= 2 && (STAIN:ヴァギナ != 16 && STAIN:ヴァギナ != 17) && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合クンニはできない（調教者が汚れ無視か愛液、母乳のよごれならＯＫ）
-IF STAIN:3 >= 2 && (STAIN:3 != 16 && STAIN:3 != 17) && ASSIPLAY
+IF STAIN:ヴァギナ >= 2 && (STAIN:ヴァギナ != 16 && STAIN:ヴァギナ != 17) && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF

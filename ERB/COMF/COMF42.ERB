@@ -88,11 +88,11 @@ ELSE
 	ENDIF
 
 	;反発感情が高いほど熱が入る
-	IF MARK:3 == 1
+	IF MARK:反発感情 == 1
 		SOURCE:20 += 500
-	ELSEIF MARK:3 == 2
+	ELSEIF MARK:反発感情 == 2
 		SOURCE:20 += 1200
-	ELSEIF MARK:3 >= 3
+	ELSEIF MARK:反発感情 >= 3
 		SOURCE:20 += 2500
 	ENDIF
 	

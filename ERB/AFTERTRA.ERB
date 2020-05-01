@@ -148,19 +148,19 @@ REPEAT A
 	
 	IF LOCAL == 0
 		;快Ｃの珠取得
-		GOTJUEL:LOCAL += G + EX:0 * 1000
+		GOTJUEL:LOCAL += G + EX:Ｃ絶頂 * 1000
 	ELSEIF LOCAL == 1
 		;快Ｖの珠取得
-		GOTJUEL:LOCAL += G + EX:1 * 1000
+		GOTJUEL:LOCAL += G + EX:Ｖ絶頂 * 1000
 	ELSEIF LOCAL == 2
 		;快Ａの珠取得
-		GOTJUEL:LOCAL += G + EX:2 * 1000
+		GOTJUEL:LOCAL += G + EX:Ａ絶頂 * 1000
 	ELSEIF LOCAL == 14
 		;快Ｂの珠取得
-		GOTJUEL:LOCAL += G + EX:3 * 1000
+		GOTJUEL:LOCAL += G + EX:Ｂ絶頂 * 1000
 	ELSEIF LOCAL == 18
 		;快Ｍの珠取得
-		GOTJUEL:LOCAL += G + EX:6 * 1000
+		GOTJUEL:LOCAL += G + EX:Ｍ絶頂 * 1000
 	ELSEIF LOCAL == 11 || LOCAL == 12 || LOCAL == 13
 		;反感、不快、抑鬱のPALAMから否定の珠を取得
 		GOTJUEL:100 += G

@@ -172,7 +172,7 @@ ENDIF
 CALL IN_VAGINA_CHECK_T
 
 ;Ｐに精液汚れ
-STAIN:2 |= 4
+STAIN:ペニス |= 4
 
 BASE:射精 -= EJAC
 SIF BASE:射精 >= EJAC
@@ -180,8 +180,8 @@ SIF BASE:射精 >= EJAC
 
 ;調教対象が射精フラグ
 TFLAG:10 = 1
-NOWEX:5 += 1
-EX:5 += 1
+NOWEX:射精 += 1
+EX:射精 += 1
 
 ;-------------------------------------------------
 ;調教対象の噴乳チェック
@@ -295,7 +295,7 @@ IF E == 2
 	PRINTL 噴乳経験＋2
 
 	;マスターとの子供であり、恋慕あり、又は恋慕が無くても恋人で反発２未満なら妊娠中・育児中は異常経験がつかない
-	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
+	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:反発感情 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
 	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
@@ -316,11 +316,11 @@ IF E == 2
 			PRINTFORML そして母乳が漏れ出ないようにしっかりと蓋をした後、それを%CALLNAME:MASTER%に手渡した
 		ENDIF
 	ENDIF
-	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
+	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:反発感情 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		CFLAG:25 += 2
 	EXP:噴乳経験 += 2
 	;Ｂに母乳汚れ
-	STAIN:5 |= 16
+	STAIN:胸 |= 16
 
 	BASE:母乳 -= EJAC*2
 	SIF BASE:母乳 >= EJAC
@@ -332,8 +332,8 @@ IF E == 2
 	SIF TEQUIP:16
 		TFLAG:35 += 2
 
-	NOWEX:4 += 1
-	EX:4 += 1
+	NOWEX:噴乳 += 1
+	EX:噴乳 += 1
 ;通常の噴乳
 ELSEIF E == 1
 	LOSEBASE:気力 += 40
@@ -362,7 +362,7 @@ ELSEIF E == 1
 	PRINTL 噴乳経験＋1
 
 	;マスターとの子供であり、恋慕あり、又は恋慕が無くても恋人で反発２未満なら妊娠中・育児中は異常経験がつかない
-	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
+	IF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:反発感情 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		PRINTL 
 	;それ以外の時にお乳が初めて出たら異常経験が付く
 	ELSEIF (EXP:噴乳経験 - CFLAG:25) == 0
@@ -383,11 +383,11 @@ ELSEIF E == 1
 			PRINTFORML そして母乳が漏れ出ないようにしっかりと蓋をした後、それを%CALLNAME:MASTER%に手渡した
 		ENDIF
 	ENDIF
-	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:3 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
+	SIF CFLAG:111 == NO:MASTER && (TALENT:恋慕 || (TALENT:恋慕 == 0 && TALENT:恋人 && MARK:反発感情 < 2)) && (TALENT:妊娠 || TALENT:育児中 || TALENT:母性)
 		CFLAG:25 += 1
 	EXP:噴乳経験 += 1
 	;Ｂに母乳汚れ
-	STAIN:5 |= 16
+	STAIN:胸 |= 16
 
 	BASE:母乳 -= EJAC
 	SIF BASE:母乳 >= EJAC
@@ -399,8 +399,8 @@ ELSEIF E == 1
 	SIF TEQUIP:16
 		TFLAG:35 += 1
 
-	NOWEX:4 += 1
-	EX:4 += 1
+	NOWEX:噴乳 += 1
+	EX:噴乳 += 1
 ENDIF
 
 ;-------------------------------------------------
@@ -1201,15 +1201,15 @@ IF FLAG:5 == 3 || FLAG:5 == 4 || FLAG:5 == 10
 ENDIF
 
 ;反発感情
-IF MARK:3 == 3
+IF MARK:反発感情 == 3
 	TIMES UP:4 , 0.10
 	TIMES UP:15 , 0.33
 	TIMES UP:17 , 2.00
-ELSEIF MARK:3 == 2
+ELSEIF MARK:反発感情 == 2
 	TIMES UP:4 , 0.40
 	TIMES UP:15 , 0.66
 	TIMES UP:17 , 1.70
-ELSEIF MARK:3 == 1
+ELSEIF MARK:反発感情 == 1
 	TIMES UP:4 , 0.70
 	TIMES UP:15 , 0.80
 	TIMES UP:17 , 1.50
@@ -1284,7 +1284,7 @@ ENDIF
 
 ;反発感情取得
 IF LOCAL > 0
-	MARK:3 = LOCAL
+	MARK:反発感情 = LOCAL
 	MARK:4 = LOCAL
 	TFLAG:21 = LOCAL
 	PRINTFORML 反発感情LV{LOCAL}を取得
@@ -1309,26 +1309,26 @@ TFLAG:150 = 0
 ;苦痛依存
 ;-------------------------------------------------
 VARSET LOCAL, 0
-IF UP:9 >= 500 && UP:9 < 1500 && MARK:0 <= 0
+IF UP:9 >= 500 && UP:9 < 1500 && MARK:苦痛依存 <= 0
 	LOCAL = 1
 	LOCAL:1 = 1
-ELSEIF UP:9 >= 1500 && UP:9 < 3000 && MARK:0 <= 1
+ELSEIF UP:9 >= 1500 && UP:9 < 3000 && MARK:苦痛依存 <= 1
 	LOCAL = 2
 	LOCAL:1 = 3
-ELSEIF UP:9 >= 3000 && MARK:0 <= 2
+ELSEIF UP:9 >= 3000 && MARK:苦痛依存 <= 2
 	LOCAL = 3
 	LOCAL:1 = 5
 ENDIF
 
 ;苦痛依存取得
 IF LOCAL > 0
-	MARK:0 = LOCAL
+	MARK:苦痛依存 = LOCAL
 	TFLAG:22 = LOCAL
 	PRINTFORML 苦痛依存LV{LOCAL}を取得
 ENDIF
 
 ;マゾっ気LVが取得する苦痛依存LV以上かつ、気丈・感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && ABL:マゾっ気 >= LOCAL && TALENT:気丈 == 0 && TALENT:感情乏しい == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && ABL:マゾっ気 >= LOCAL && TALENT:気丈 == 0 && TALENT:感情乏しい == 0 && MARK:反発感情 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF
@@ -1355,26 +1355,26 @@ SIF LOCAL > 0
 VARSET LOCAL, 0
 A = UP:0 + UP:1 + UP:2 + UP:14 + UP:18
 
-IF A >= 500 && A < 1500 && MARK:1 <= 0
+IF A >= 500 && A < 1500 && MARK:快楽依存 <= 0
 	LOCAL = 1
 	LOCAL:1 = 1
-ELSEIF A >= 1500 && A < 3000 && MARK:1 <= 1
+ELSEIF A >= 1500 && A < 3000 && MARK:快楽依存 <= 1
 	LOCAL = 2
 	LOCAL:1 = 3
-ELSEIF A >= 3000 && MARK:1 <= 2
+ELSEIF A >= 3000 && MARK:快楽依存 <= 2
 	LOCAL = 3
 	LOCAL:1 = 5
 ENDIF
 
 ;快楽依存取得
 IF LOCAL > 0
-	MARK:1 = LOCAL
+	MARK:快楽依存 = LOCAL
 	TFLAG:23 = LOCAL
 	PRINTFORML 快楽依存LV{LOCAL}を取得
 ENDIF
 
 ;自制心・感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && TALENT:自制心 == 0 && TALENT:感情乏しい == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && TALENT:自制心 == 0 && TALENT:感情乏しい == 0 && MARK:反発感情 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF
@@ -1386,26 +1386,26 @@ SIF LOCAL > 0
 ;既成事実
 ;-------------------------------------------------
 VARSET LOCAL, 0
-IF TFLAG:200 == 1 && MARK:2 <= 0
+IF TFLAG:200 == 1 && MARK:既成事実 <= 0
 	LOCAL = 1
 	LOCAL:1 = 3
-ELSEIF TFLAG:200 == 2 && MARK:2 <= 1
+ELSEIF TFLAG:200 == 2 && MARK:既成事実 <= 1
 	LOCAL = 2
 	LOCAL:1 = 5
-ELSEIF TFLAG:200 == 3 && MARK:2 <= 2
+ELSEIF TFLAG:200 == 3 && MARK:既成事実 <= 2
 	LOCAL = 3
 	LOCAL:1 = 8
 ENDIF
 
 ;既成事実取得
 IF LOCAL > 0
-	MARK:2 = LOCAL
+	MARK:既成事実 = LOCAL
 	TFLAG:24 = LOCAL
 	PRINTFORML 既成事実LV{LOCAL}を取得
 ENDIF
 
 ;感情乏しいがなく、反発感情がない場合は親密アップ
-IF ABL:親密 < LOCAL:1 && TALENT:感情乏しい == 0 && MARK:3 == 0
+IF ABL:親密 < LOCAL:1 && TALENT:感情乏しい == 0 && MARK:反発感情 == 0
 	ABL:親密 = LOCAL:1
 	PRINTFORML そして親密がLV{ABL:親密}になった
 ENDIF

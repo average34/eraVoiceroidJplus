@@ -145,8 +145,8 @@ IF TEQUIP:90
 		TEQUIP:13 = 0
 	ELSE
 		TEQUIP:13 = 1
-		STAIN:4 |= 2
-		STAIN:4 |= 4
+		STAIN:アナル |= 2
+		STAIN:アナル |= 4
 	ENDIF
 	T = 0
 ELSE
@@ -440,8 +440,8 @@ ENDIF
 IF ABL:精液中毒
 	A += ABL:精液中毒 * 1
 ENDIF
-IF MARK:1
-	A += MARK:1 * 3
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 3
 ENDIF
 
 ;PALAM:潤滑（の不足）
@@ -553,11 +553,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 1,')
 		S = 1
 	ENDIF
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 3,')
 		S = 1
 	ENDIF
 

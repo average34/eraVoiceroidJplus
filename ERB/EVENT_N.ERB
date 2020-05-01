@@ -348,7 +348,7 @@ IF CFLAG:T:104 == 1
 		ENDIF
 		CALL N_TALENT_R
 	;反発感情Lv2以上なら壊れる
-	ELSEIF MARK:T:3 >= 2
+	ELSEIF MARK:T:反発感情 >= 2
 		PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 		PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 		CALL N_TALENT_K
@@ -358,7 +358,7 @@ IF CFLAG:T:104 == 1
 ;助手→パートナー
 ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 	;恋慕無しで反発感情Lv2以上なら壊れる
-	IF TALENT:T:恋慕 == 0 && MARK:T:3 >= 2
+	IF TALENT:T:恋慕 == 0 && MARK:T:反発感情 >= 2
 		PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 		PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 		CALL N_TALENT_K
@@ -373,7 +373,7 @@ ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 ;パートナー→助手
 ELSEIF CFLAG:T:104 == 3 && ASSI >= 0 && T == ASSI
 	;恋慕無しで反発感情Lv2以上なら壊れる
-	IF TALENT:T:恋慕 == 0 && MARK:T:3 >= 2
+	IF TALENT:T:恋慕 == 0 && MARK:T:反発感情 >= 2
 		PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 		PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 		CALL N_TALENT_K
@@ -394,7 +394,7 @@ ELSEIF CFLAG:T:104 == 3 && T == MASTER
 			PRINT 困惑しながらも
 		PRINTFORMW %CALLNAME:MASTER%との間に子供が出来た喜びに表情を緩ませている
 	;反発感情LV2以上
-	ELSEIF MARK:3 >= 2
+	ELSEIF MARK:反発感情 >= 2
 		PRINTFORMW しかし、%CALLNAME:TARGET%は興味なさそうだ…
 	ELSE
 		IF TALENT:TARGET:オトコ

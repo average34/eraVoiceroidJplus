@@ -1900,7 +1900,7 @@ CASE 1
 		PRINTFORMW %CALLNAME:TARGET%は[蓬莱人]を得ました
 		PRINTFORMW 反発感情Lv3取得
 		TALENT:TARGET:蓬莱人 = 1
-		MARK:TARGET:3 = 3
+		MARK:TARGET:反発感情 = 3
 		;種族変更
 		L = TARGET
 		CALL GET_STRAINCORRECT
@@ -4821,7 +4821,7 @@ CASE 1
 	PALAM:12 = 0
 	PALAM:13 = 0
 	JUEL:100 = 0
-	MARK:3 = 0
+	MARK:反発感情 = 0
 	CFLAG:TARGET:2 += U
 ;売却
 CASE -1
@@ -9391,7 +9391,7 @@ CASE 1
 	IF CFLAG:TARGET:2 < 3500 || (TALENT:恋慕 == 0 || TALENT:恋人 == 0) && TALENT:親愛 == 0 && TALENT:相愛 == 0
 		PRINTFORML 
 		PRINTFORML 反発感情Lv3を取得
-		MARK:TARGET:3 = 3
+		MARK:TARGET:反発感情 = 3
 		PRINTFORMW 親密Lv-3
 		;eramakerだと負数の比較が出来ない場合が多いので0になる場合は直接0を代入
 		IF ABL:TARGET:親密 < 3
@@ -9422,18 +9422,18 @@ CASE 1
 	PRINTFORML 
 	PRINTFORMW …なにか清められた気がする
 	;汚れを無くす　うふふ状態じゃないからあんまメリットないけどな！
-	STAIN:TARGET:0 = 0
-	STAIN:TARGET:1 = 0
-	STAIN:TARGET:2 = 2
-	STAIN:TARGET:3 = 1
-	STAIN:TARGET:4 = 8
-	STAIN:TARGET:5 = 0
-	STAIN:PLAYER:0 = 0
-	STAIN:PLAYER:1 = 0
-	STAIN:PLAYER:2 = 2
-	STAIN:PLAYER:3 = 1
-	STAIN:PLAYER:4 = 8
-	STAIN:PLAYER:5 = 0
+	STAIN:TARGET:口 = 0
+	STAIN:TARGET:手 = 0
+	STAIN:TARGET:ペニス = 2
+	STAIN:TARGET:ヴァギナ = 1
+	STAIN:TARGET:アナル = 8
+	STAIN:TARGET:胸 = 0
+	STAIN:PLAYER:口 = 0
+	STAIN:PLAYER:手 = 0
+	STAIN:PLAYER:ペニス = 2
+	STAIN:PLAYER:ヴァギナ = 1
+	STAIN:PLAYER:アナル = 8
+	STAIN:PLAYER:胸 = 0
 ;売却
 CASE -1
 	M += 800
@@ -10071,16 +10071,16 @@ CASE 1
 	PRINTFORML 
 	A = 5
 	;既成事実が2以上の時、係数を下げる
-	SIF MARK:2 > 1
-		A -= MARK:2 - 1
+	SIF MARK:既成事実 > 1
+		A -= MARK:既成事実 - 1
 	LIMIT U +(ABL:親密 * A),1,150
 	B = RESULT
 	PRINTFORML 好感度+{B}
 	CFLAG:2 += B
 	
 	;既成事実が2以上の時、情愛ソースが付く
-	IF MARK:2 > 1
-		SOURCE:3 += MARK:2 * ABL:親密 * 5 + S
+	IF MARK:既成事実 > 1
+		SOURCE:3 += MARK:既成事実 * ABL:親密 * 5 + S
 	ENDIF
 ;売却
 CASE -1

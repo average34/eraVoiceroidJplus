@@ -70,10 +70,10 @@ IF BASE:ARG:体力 <= 1000
 		PRINTFORMW ふと窓の外から見える屋根のてっぺんに、%CALLNAME:ARG%がいるのが見えた
 		PRINTFORMW 月を見上げている……
 		;反発感情Lv3
-		IF MARK:ARG:3 == 3
+		IF MARK:ARG:反発感情 == 3
 			PRINTFORMW こちらに気付いて、姿を隠した……
 		;既成事実Lv2以上
-		ELSEIF MARK:ARG:2 >= 2 && RAND:2 == 0
+		ELSEIF MARK:ARG:既成事実 >= 2 && RAND:2 == 0
 			PRINTFORMW こちらに気付いて、微笑んでみせた……
 		;それ以外
 		ELSE
@@ -92,7 +92,7 @@ IF BASE:ARG:体力 <= 1000
 	IF (TALENT:ARG:吸血鬼 && TIME == 0) || (TALENT:ARG:月光浴 && TIME == 1)
 		PRINTL 
 	;反発感情Lv3の時
-	ELSEIF MARK:ARG:3 == 3
+	ELSEIF MARK:ARG:反発感情 == 3
 		;臆病or悲観的のとき
 		IF TALENT:ARG:臆病 || TALENT:ARG:悲観的
 			PRINTFORMW その表情は悲しげだ……
@@ -124,7 +124,7 @@ IF BASE:ARG:体力 <= 1000
 			PRINTFORMW かすかに寝言で%CALLNAME:MASTER%を呼んだ……
 		ENDIF
 	;既成事実Lv2以上
-	ELSEIF MARK:ARG:2 >= 2
+	ELSEIF MARK:ARG:既成事実 >= 2
 		;生意気or小悪魔の時
 		IF (TALENT:ARG:生意気 || TALENT:ARG:小悪魔) && RAND:7 == 0
 			PRINTFORMW 眠りながらニヤニヤしている……
@@ -146,7 +146,7 @@ IF BASE:ARG:体力 <= 1000
 ;			PRINTFORMW よっぽど疲れてしまったらしい
 		ENDIF
 	;既成事実Lv1以下
-	ELSEIF MARK:ARG:2 <= 1
+	ELSEIF MARK:ARG:既成事実 <= 1
 		IF RAND:3 == 0
 			PRINTFORMW 身を守るように毛布をかぶっている
 ;			PRINTFORMW まだここの生活に慣れていない感じがした
@@ -200,7 +200,7 @@ ELSE
 	SIF (TALENT:ARG:無関心 || TALENT:ARG:感情乏しい)
 		LOCALS += "12/"
 	;目立ちたがりのとき、踊る
-	SIF TALENT:ARG:目立ちたがり && MARK:ARG:3 != 3 && STRCOUNT(LLIST, "/") >= 1
+	SIF TALENT:ARG:目立ちたがり && MARK:ARG:反発感情 != 3 && STRCOUNT(LLIST, "/") >= 1
 		LOCALS += "13/"
 	;猫舌の時、木に昇るorマタタビ酒で酔っ払う
 ;	SIF TALENT:ARG:猫舌
@@ -224,7 +224,7 @@ ELSE
 	SIF (TALENT:ARG:習得遅い || TALENT:ARG:幼稚)
 		LOCALS += "20/"
 	;習得早いが練習しているor習得遅いもちに何か教える…
-	SIF TALENT:ARG:習得早い && MARK:ARG:3 != 3
+	SIF TALENT:ARG:習得早い && MARK:ARG:反発感情 != 3
 		LOCALS += "21/"
 	;楽観的が、鼻歌を歌うor悲観的を慰めている…
 	SIF TALENT:ARG:楽観的
@@ -233,7 +233,7 @@ ELSE
 	SIF TALENT:ARG:悲観的
 		LOCALS += "23/"
 	;従順Lv3以上のとき、料理をつくる・いろいろ分岐
-	SIF ABL:ARG:親密 >= 7 && MARK:ARG:3 != 3
+	SIF ABL:ARG:親密 >= 7 && MARK:ARG:反発感情 != 3
 		LOCALS += "24/"
 	;季節ネタ
 	SIF DAY:2 == 3 && GROUPMATCH(TIME:5, 5, 6)
@@ -297,7 +297,7 @@ ELSE
 		PRINTFORMW 覗いてみると、%CALLNAME:ARG%が唯の壁に向かって%RAND_SPLIT("手を振って/談笑して/何かぶつぶつ言って")%いる
 ;		PRINTFORMW ……怖い
 ;		PRINTFORM ふとこちらに気付いた%CALLNAME:ARG%
-;		IF MARK:ARG:3 == 3
+;		IF MARK:ARG:反発感情 == 3
 ;			PRINTFORMW が、今度は睨みながら悪口のようなものを壁と話し始めた
 ;			PRINTFORMW ……やっぱり怖い
 ;		ELSEIF TALENT:ARG:恋慕
@@ -392,7 +392,7 @@ ELSE
 	;本を読む
 	CASE 5
 		PRINTFORMW 図書室に来てみると、%CALLNAME:ARG%が本を読んでいた
-		IF MARK:ARG:3 == 3
+		IF MARK:ARG:反発感情 == 3
 			PRINTFORMW %CALLNAME:ARG%は入ってきた%CALLNAME:MASTER%に気付くと、本をそのままに何も言わずどこかに行ってしまった
 			PRINTFORMW 本のタイトルは『%RAND_SPLIT("復讐者/監獄からの脱出/殺さずに苦しませる方法")%』だった……
 		ELSEIF TALENT:ARG:恋慕
@@ -459,7 +459,7 @@ ELSE
 	;日向ぼっこ
 	CASE 7
 		PRINTFORMW 庭で%CALLNAME:ARG%が日向ぼっこをしているところに通りすがりました
-		IF MARK:ARG:3 == 3
+		IF MARK:ARG:反発感情 == 3
 			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%を見つけると、直ぐに固い表情でその場を立ち去った……
 		ELSEIF TALENT:ARG:動物耳
 			PRINTFORMW %CALLNAME:ARG%は日差しの中で気持ち良さそうに目を細めている……
@@ -508,7 +508,7 @@ ELSE
 	CASE 9
 		PRINTFORMW 通りすがりに%RAND_SPLIT(@"台所/%CALLNAME:ARG%の部屋")%で%CALLNAME:ARG%が縫い物をしているのが見えた
 ;		PRINTFORMW さすが器用に針を操っている
-;		IF MARK:ARG:3 == 3
+;		IF MARK:ARG:反発感情 == 3
 ;			PRINTFORMW ふと嫌な予感がして身をかわすと、風切る音と共に、カッと何かが刺さる乾いた音
 ;			PRINTFORMW 後ろを振り向くと、壁に針が刺さっている……
 ;			PRINTFORMW 舌打ちをする%CALLNAME:ARG%を置いて、ひとまずそこを離れた……
@@ -546,7 +546,7 @@ ELSE
 				ENDIF
 			ENDIF
 			PRINTFORMW 掃除をしているところに通りすがった……
-			IF MARK:ARG:3 == 3
+			IF MARK:ARG:反発感情 == 3
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
 				;PRINTFORMW …………おい。
 			ELSEIF TALENT:ARG:恋慕
@@ -581,7 +581,7 @@ ELSE
 			CASEELSE
 				PRINTFORMW あなたの分も一緒に洗濯しているようだ
 			ENDSELECT
-			IF MARK:ARG:3 == 3
+			IF MARK:ARG:反発感情 == 3
 				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:ARG%に気が付くと、やりかけのまま固い表情でどこかにいってしまった
 ;				PRINTFORMW …………おい。
 ;			ELSEIF TALENT:ARG:恋慕 && (TALENT:ARG:保守的 || TALENT:ARG:貞操観念 || TALENT:ARG:恥じらい) && RAND:2 == 0
@@ -627,7 +627,7 @@ ELSE
 	;お祈り
 	CASE 11
 		PRINTFORMW 庭の陽だまりに来てみると、%CALLNAME:ARG%が祈りを捧げていた
-		IF MARK:ARG:3 == 3
+		IF MARK:ARG:反発感情 == 3
 			PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気付くと、少し涙を浮かべ再び祈りに入った。
 			PRINTFORM %CALLNAME:ARG%の祈っていたことはと言うと
 			IF RAND:3 == 0
@@ -691,7 +691,7 @@ ELSE
 ;		ENDIF
 	;踊る
 	CASE 13
-		IF MARK:ARG:2 >= 2
+		IF MARK:ARG:既成事実 >= 2
 			PRINTFORMW 廊下を歩いていると、%CALLNAME:ARG%が寄ってきて、食堂まで引っ張られた
 		ELSE
 			PRINTFORMW ふと食堂に通りかかると、%CALLNAME:ARG%の姿が見える……
@@ -847,7 +847,7 @@ ELSE
 ;			ELSE
 ;				PRINTFORMW てんとうむしと……にらめっこをしている？
 ;			ENDIF
-;			IF MARK:ARG:3 == 3
+;			IF MARK:ARG:反発感情 == 3
 ;				PRINTFORMW %CALLNAME:ARG%は%CALLNAME:MASTER%に気がつくと、あっかんべーをしてどこかに飛んで行った……
 ;			ELSEIF TALENT:ARG:恋慕
 ;				PRINTFORMW %CALLNAME:MASTER%に気がつくと、一緒に遊ぼうと誘ってきました
@@ -907,7 +907,7 @@ ELSE
 	CASE 19
 		PRINTFORMW 食堂に来てみると、%CALLNAME:ARG%が何かを熱心に見つめている
 		PRINTFORMW その視線の先にあるのは%RAND_SPLIT("小さな振り子時計/入れ子人形/古びた水差し/木彫りのクマ")%だ……
-;		IF MARK:ARG:3 == 3
+;		IF MARK:ARG:反発感情 == 3
 ;			PRINTFORMW %CALLNAME:ARG%はしばらく眺めていたが、%CALLNAME:MASTER%の存在に気が付くと足早にその場を立ち去った……
 ;		ELSEIF TALENT:ARG:反抗的
 ;			PRINTFORMW 頂戴オーラを発していたのでプレゼントしようとしたが、%CALLNAME:ARG%は慌てて拒絶する
@@ -926,7 +926,7 @@ ELSE
 	CASE 20
 		IF RAND:2 == 0
 			PRINTFORMW 図書室に来てみると、%CALLNAME:ARG%が妙にしゃちほこばって本を読んでいるのを見つけた
-			IF MARK:ARG:3 == 3
+			IF MARK:ARG:反発感情 == 3
 				PRINTFORMW %CALLNAME:MASTER%に気付くと、ぷいっと横を向いて図書室を出て行った……
 ;			ELSE
 ;				PRINTFORMW %CALLNAME:MASTER%に気付くと得意げににかっとしてみせてからまた本を読み始めた
@@ -936,7 +936,7 @@ ELSE
 ;					PRINTFORMW もう飽きてしまったのだろうか？
 ;					E = 63
 ;					CALL DAILY_LIFE_D
-;					IF B > 0 && MARK:B:3 != 3 && RAND:2 == 0
+;					IF B > 0 && MARK:B:反発感情 != 3 && RAND:2 == 0
 ;						PRINTFORMW ………………
 ;						PRINTFORMW 帰りがけに%CALLNAME:ARG%が散らかした机を片付けていると、いつの間にかそばに居た%CALLNAME:B%が整理を手伝ってくれた……
 ;					ENDIF
@@ -992,7 +992,7 @@ ELSE
 	CASE 22
 ;		E = 26
 ;		CALL DAILY_LIFE_D
-;		IF B > 0 && MARK:B:3 != 3 && RAND:3 >= 1
+;		IF B > 0 && MARK:B:反発感情 != 3 && RAND:3 >= 1
 ;			PRINTFORMW %CALLNAME:B%の部屋で、%CALLNAME:ARG%と%CALLNAME:B%が何かしているようだ
 ;			PRINTFORMW %CALLNAME:ARG%が、何だか悲しそうな表情の%CALLNAME:B%を慰めているらしい
 ;			PRINTFORMW %CALLNAME:B%の表情は冴えない……
@@ -1328,9 +1328,9 @@ ELSE
 	CASE 26
 		PRINTFORMW ふと窓の外から見える屋根のてっぺんに、%CALLNAME:ARG%がいるのが見えた
 		PRINTFORMW 月を見上げて、全身に青白いを浴び、この世のものではないように見える……
-		IF MARK:ARG:3 == 3
+		IF MARK:ARG:反発感情 == 3
 			PRINTFORMW こちらに気付いて、姿を隠した……
-		ELSEIF MARK:ARG:2 >= 2 && RAND:2 == 0
+		ELSEIF MARK:ARG:既成事実 >= 2 && RAND:2 == 0
 			PRINTFORMW こちらに気付いて、妖しく神秘的な微笑み浮かべ、また月を見上げた……
 		ELSE
 			PRINTFORMW こちらに気付いて、妖しい笑みを浮かべ、また月を見上げた……
@@ -1416,7 +1416,7 @@ ELSE
 ;				ENDIF
 			ENDIF
 		ENDIF
-;		IF MARK:ARG:3 == 3
+;		IF MARK:ARG:反発感情 == 3
 ;			PRINTFORMW ふと目が合うと、残忍な笑顔を浮かべて手招きしてきた……
 ;		ELSEIF TALENT:ARG:恋慕
 ;			PRINTFORMW ふと目が合うと、悪戯っ子のように無邪気な笑顔を浮かべて手招きしてきた……
@@ -1452,7 +1452,7 @@ ELSE
 ;				PRINTFORMW 腰の周りを入念にチェックしているようだ
 ;			ENDIF
 ;		ENDIF
-;		IF MARK:ARG:3 == 3
+;		IF MARK:ARG:反発感情 == 3
 ;			PRINTFORMW と、%CALLNAME:MASTER%に気がついた%CALLNAME:ARG%が振り返り、つかつかと冷たい表情で歩いてきて、扉を強く閉めた……
 ;			PRINTFORMW 肩をすくめてそこを立ち去った……
 ;		ELSEIF TALENT:ARG:保守的 || TALENT:ARG:恥じらい

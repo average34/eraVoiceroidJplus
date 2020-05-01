@@ -8,10 +8,10 @@ SIF RESULT == 0
 SIF TFLAG:44 == 0
 	RETURN 0
 ;性器が汚れているとMASTERの場合パイズリするはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
-SIF (STAIN:2 >= 4) && ((STAIN:2 != 18) && (STAIN:2 != 19)) && (ASSIPLAY == 0) && (TALENT:MASTER:汚れ無視 == 0)
+SIF (STAIN:ペニス >= 4) && ((STAIN:ペニス != 18) && (STAIN:ペニス != 19)) && (ASSIPLAY == 0) && (TALENT:MASTER:汚れ無視 == 0)
 	RETURN 0
 ;性器が汚れており、汚臭敏感で従順3以下のASSIの場合パイズリはできない（調教者が汚れ無視か愛液、Ｐ、母乳のよごれならＯＫ）
-IF (STAIN:2 >= 4) && ((STAIN:2 != 18) && (STAIN:2 != 19)) && ASSIPLAY
+IF (STAIN:ペニス >= 4) && ((STAIN:ペニス != 18) && (STAIN:ペニス != 19)) && ASSIPLAY
 	SIF ABL:ASSI:親密 <= 3 && TALENT:ASSI:汚臭敏感 && TALENT:ASSI:汚れ無視 == 0
 		RETURN 0
 ENDIF
@@ -70,8 +70,8 @@ ELSE
 ENDIF
 
 ;奴隷のＰ⇔調教者の口の汚れが移動
-STAIN:2 |= STAIN:PLAYER:0
-STAIN:PLAYER:0 |= STAIN:2
+STAIN:ペニス |= STAIN:PLAYER:口
+STAIN:PLAYER:口 |= STAIN:ペニス
 
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

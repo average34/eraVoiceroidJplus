@@ -213,7 +213,7 @@ IF FLAG:6 == 1 && CFLAG:99 == 0
 	IF NO:TARGET == 5 && NO:TARGET == 12
 		PRINTFORML %CALLNAME:TARGET%は熱さに負けて逃げ出した…
 	;反発感情が1以上
-	ELSEIF MARK:3 > 0
+	ELSEIF MARK:反発感情 > 0
 		PRINTFORML %CALLNAME:TARGET%一人が炬燵でぬくぬくしてます…
 	ELSE
 		PRINTFORML %CALLNAME:TARGET%と炬燵でぬくぬくしてます…
@@ -331,7 +331,7 @@ IF TEQUIP:7 == 0
 	ELSE
 		PRINTFORMW %CALLNAME:TARGET%は炬燵を設置した
 	ENDIF
-	IF MARK:3 > 0
+	IF MARK:反発感情 > 0
 		PRINTFORMW %CALLNAME:TARGET%は一人で炬燵を占拠していた…
 	;狭いし密着度アップさ
 	ELSEIF TALENT:恋慕 == 1 || TALENT:恋人 == 1

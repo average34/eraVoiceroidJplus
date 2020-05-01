@@ -142,7 +142,7 @@ SIF TALENT:淫乱 == 0 && TFLAG:53 >= 31
 SIF TALENT:恋慕 == 0 && TFLAG:53 == 15
 	RETURN 0
 ;汚れ無視がなく、性器に我慢できない汚れが付いている場合は顔面騎乗クンニ、胸を舌で愛撫させる、ぱふぱふはダメ
-SIF STAIN:3 & 14 && TALENT:MASTER:汚れ無視 == 0 && (TFLAG:53 == 41 || TFLAG:53 == 45 || TFLAG:53 == 46)
+SIF STAIN:ヴァギナ & 14 && TALENT:MASTER:汚れ無視 == 0 && (TFLAG:53 == 41 || TFLAG:53 == 45 || TFLAG:53 == 46)
 	RETURN 0
 ;調教者がオトコで、秘裂愛撫系コマンドはダメ
 SIF TALENT:PLAYER:オトコ && TFLAG:53 >= 35 && TFLAG:53 <= 38

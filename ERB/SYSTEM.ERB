@@ -396,7 +396,7 @@ IF BASE:体力 <= 0 && TALENT:蓬莱人
 	PRINTL 異常経験＋３
 	BASE:体力 = 1
 	IF MARK:4 <= 1
-		MARK:3 = 2
+		MARK:反発感情 = 2
 		MARK:4 = 2
 		TFLAG:21 = 2
 		PRINTL 反発感情LV2を取得
@@ -420,7 +420,7 @@ IF BASE:体力 <= 0 && TALENT:蓬莱人
 ELSEIF BASE:体力 <= 0
 	BASE:体力 = 1
 	IF MARK:4 <= 2
-		MARK:3 = 3
+		MARK:反発感情 = 3
 		MARK:4 = 3
 		TFLAG:21 = 3
 		PRINTL 反発感情LV3を取得

@@ -57,13 +57,13 @@ ELSEIF ABL:Ｃ感覚 == 2
 	TIMES SOURCE:0 , 3.00
 ELSEIF ABL:Ｃ感覚 == 3
 	TIMES SOURCE:0 , 4.00
-	EX:0 += 1
+	EX:Ｃ絶頂 += 1
 ELSEIF ABL:Ｃ感覚 == 4
 	TIMES SOURCE:0 , 5.00
-	EX:0 += 3
+	EX:Ｃ絶頂 += 3
 ELSE
 	TIMES SOURCE:0 , 6.00
-	EX:0 += 5
+	EX:Ｃ絶頂 += 5
 ENDIF
 
 
@@ -132,13 +132,13 @@ IF TALENT:Ｃ鈍感
 		TIMES SOURCE:0 , 0.75
 	ELSEIF ABL:Ｃ感覚 == 3
 		TIMES SOURCE:0 , 0.75
-		EX:0 -= 1
+		EX:Ｃ絶頂 -= 1
 	ELSEIF ABL:Ｃ感覚 == 4
 		TIMES SOURCE:0 , 0.75
-		EX:0 -= 1
+		EX:Ｃ絶頂 -= 1
 	ELSE
 		TIMES SOURCE:0 , 0.75
-		EX:0 -= 1
+		EX:Ｃ絶頂 -= 1
 	ENDIF
 ENDIF
 
@@ -152,13 +152,13 @@ IF TALENT:Ｃ敏感
 		TIMES SOURCE:0 , 2.00
 	ELSEIF ABL:Ｃ感覚 == 3
 		TIMES SOURCE:0 , 2.00
-		EX:0 += 1
+		EX:Ｃ絶頂 += 1
 	ELSEIF ABL:Ｃ感覚 == 4
 		TIMES SOURCE:0 , 2.00
-		EX:0 += 2
+		EX:Ｃ絶頂 += 2
 	ELSE
 		TIMES SOURCE:0 , 2.00
-		EX:0 += 3
+		EX:Ｃ絶頂 += 3
 	ENDIF
 ENDIF
 

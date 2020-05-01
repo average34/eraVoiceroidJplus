@@ -65,7 +65,7 @@ RETURN 1
 ;角アナル挿入
 
 ;調教対象が緊縛していない反発刻印3のキモけーねだった場合、逆襲される可能性大
-IF NAME_CSV(NO:TARGET, 0) == "慧音" && TEQUIP:1 && MARK:3 >= 3 && TEQUIP:44 == 0
+IF NAME_CSV(NO:TARGET, 0) == "慧音" && TEQUIP:1 && MARK:反発感情 >= 3 && TEQUIP:44 == 0
 	IF RAND:4 > 0 && TFLAG:69 == 0
 		TFLAG:69 = 3
 		JUMP CAVED

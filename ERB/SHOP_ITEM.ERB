@@ -171,7 +171,7 @@ ITEMSALES:85 = 0
 ;赤い首輪（奴隷エンド条件はここで処理）
 ITEMSALES:86 = 0
 IF TARGET > 0 && ASSI < 0 && FLAG:5 != 9 && ITEM:85 == 0 && ITEM:86 == 0
-	SIF TALENT:淫乱 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && CFLAG:2 >= 2500 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:親密+ABL:欲望+ABL:奉仕精神 >= 15) && (ABL:技巧+ABL:マゾっ気+ABL:精液中毒 >= 13) && (EXP:Ｖ経験+EXP:Ａ経験 >= 200) && EXP:強制自慰経験 >= 150 && EXP:フェラ経験 >= 150 && EXP:レズ経験 < 500
+	SIF TALENT:淫乱 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && CFLAG:2 >= 2500 && MARK:既成事実 >= 3 && MARK:反発感情 == 0 && (ABL:親密+ABL:欲望+ABL:奉仕精神 >= 15) && (ABL:技巧+ABL:マゾっ気+ABL:精液中毒 >= 13) && (EXP:Ｖ経験+EXP:Ａ経験 >= 200) && EXP:強制自慰経験 >= 150 && EXP:フェラ経験 >= 150 && EXP:レズ経験 < 500
 		ITEMSALES:86 = 1
 ENDIF
 
@@ -180,7 +180,7 @@ ITEMSALES:87 = 0
 IF TARGET > 0 && ASSI < 0 && FLAG:1 < 9
 	IF TALENT:MASTER:オトコ && EXP:レズ経験 >= 1500
 		ITEMSALES:87 = 0
-	ELSEIF TALENT:淫乱 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && MARK:2 >= 3 && MARK:3 == 0 && (ABL:親密+ABL:欲望 >= 8) && (ABL:技巧+ABL:奉仕精神 >= 7) && (ABL:マゾっ気 >= 2 && ABL:自慰中毒 >= 2 && ABL:精液中毒 >= 2) && (EXP:Ｖ経験+EXP:Ａ経験 >= 100) && EXP:強制自慰経験 >= 50 && EXP:フェラ経験 >= 50
+	ELSEIF TALENT:淫乱 && TALENT:恋慕 && TALENT:相愛 == 0 && TALENT:服従 == 0 && MARK:既成事実 >= 3 && MARK:反発感情 == 0 && (ABL:親密+ABL:欲望 >= 8) && (ABL:技巧+ABL:奉仕精神 >= 7) && (ABL:マゾっ気 >= 2 && ABL:自慰中毒 >= 2 && ABL:精液中毒 >= 2) && (EXP:Ｖ経験+EXP:Ａ経験 >= 100) && EXP:強制自慰経験 >= 50 && EXP:フェラ経験 >= 50
 		ITEMSALES:87 = 1
 	ENDIF
 ENDIF
@@ -822,10 +822,10 @@ IF BOUGHT == 98
 	TALENT:TARGET:キス魔 = TALENT:R:キス魔
 	TALENT:TARGET:マゾ = TALENT:R:マゾ
 	TALENT:TARGET:サド = TALENT:R:サド
-	MARK:TARGET:0 = MARK:R:0
-	MARK:TARGET:1 = MARK:R:1
-	MARK:TARGET:2 = MARK:R:2
-	MARK:TARGET:3 = MARK:R:3
+	MARK:TARGET:苦痛依存 = MARK:R:苦痛依存
+	MARK:TARGET:快楽依存 = MARK:R:快楽依存
+	MARK:TARGET:既成事実 = MARK:R:既成事実
+	MARK:TARGET:反発感情 = MARK:R:反発感情
 
 	;融通が利くように口上はここに
 	TFLAG:600 = 59
@@ -844,10 +844,10 @@ IF BOUGHT == 98
 	TALENT:TARGET:キス魔 = 0
 	TALENT:TARGET:マゾ = 0
 	TALENT:TARGET:サド = 0
-	MARK:TARGET:0 = 0
-	MARK:TARGET:1 = 0
-	MARK:TARGET:2 = 0
-	MARK:TARGET:3 = 0
+	MARK:TARGET:苦痛依存 = 0
+	MARK:TARGET:快楽依存 = 0
+	MARK:TARGET:既成事実 = 0
+	MARK:TARGET:反発感情 = 0
 
 	;汎用キャラは保存素質追加
 	IF NO:TARGET == 99
@@ -1048,16 +1048,16 @@ IF BOUGHT == 98
 	SIF TALENT:R:サド
 		CFLAG:TARGET:32 |= 2048
 	;苦痛依存Lv3
-	SIF MARK:R:0 == 3
+	SIF MARK:R:苦痛依存 == 3
 		CFLAG:TARGET:32 |= 4096
 	;快楽依存Lv3
-	SIF MARK:R:1 == 3
+	SIF MARK:R:快楽依存 == 3
 		CFLAG:TARGET:32 |= 8192
 	;既成事実Lv3
-	SIF MARK:R:2 == 3
+	SIF MARK:R:既成事実 == 3
 		CFLAG:TARGET:32 |= 16384
 	;反発感情Lv3
-	SIF MARK:R:3 == 3
+	SIF MARK:R:反発感情 == 3
 		CFLAG:TARGET:32 |= 32768
 	DELCHARA R
 	TARGET = CHARANUM-1

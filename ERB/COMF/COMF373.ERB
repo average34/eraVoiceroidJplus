@@ -263,12 +263,12 @@ PRINTFORML %EXPNAME:22%+1
 EXP:フェラ経験 += 1
 
 ;奴隷の口⇔調教者のＰの汚れが移動
-STAIN:0 |= STAIN:MASTER:2
-STAIN:MASTER:2 |= STAIN:0
+STAIN:口 |= STAIN:MASTER:ペニス
+STAIN:MASTER:ペニス |= STAIN:口
 
 ;精液中毒Lv2以上、技巧Lv10以上、ペニス以外の汚れがある時なら汚れをなめ取ってくれる
-IF ABL:精液中毒 >= 2 && ABL:技巧 >= 10 && (STAIN:MASTER:2 & 29)
-	STAIN:MASTER:2 = 2
+IF ABL:精液中毒 >= 2 && ABL:技巧 >= 10 && (STAIN:MASTER:ペニス & 29)
+	STAIN:MASTER:ペニス = 2
 ;	TFLAG:8 = 1
 ENDIF
 
@@ -437,8 +437,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 4
 ENDIF
 ;快楽依存
-IF MARK:1
-	A += MARK:1
+IF MARK:快楽依存
+	A += MARK:快楽依存
 ENDIF
 
 
@@ -487,15 +487,15 @@ SIF TALENT:MASTER:ふたなり
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:MASTER:2 & 1
+SIF STAIN:MASTER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:MASTER:2 & 4
+SIF STAIN:MASTER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:MASTER:2 & 8
+SIF STAIN:MASTER:ペニス & 8
 	Y += 7
-SIF STAIN:MASTER:2 & 16
+SIF STAIN:MASTER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -562,11 +562,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 
@@ -657,15 +657,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:MASTER:2 & 1
+	SIF STAIN:MASTER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:MASTER:2 & 4
+	SIF STAIN:MASTER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:MASTER:2 & 8
+	SIF STAIN:MASTER:ペニス & 8
 		Y += 7
-	SIF STAIN:MASTER:2 & 16
+	SIF STAIN:MASTER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

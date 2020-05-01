@@ -1264,18 +1264,18 @@ IF ABL:欲望 < L
 ENDIF
 
 ;NOWEXにデータを入れる（絶頂時口上に使う）
-NOWEX:0 = C
-NOWEX:1 = V
-NOWEX:2 = A
-NOWEX:3 = B
-NOWEX:6 = M
+NOWEX:Ｃ絶頂 = C
+NOWEX:Ｖ絶頂 = V
+NOWEX:Ａ絶頂 = A
+NOWEX:Ｂ絶頂 = B
+NOWEX:Ｍ絶頂 = M
 
 ;絶頂回数を増やす
-EX:0 += C
-EX:1 += V
-EX:2 += A
-EX:3 += B
-EX:6 += M
+EX:Ｃ絶頂 += C
+EX:Ｖ絶頂 += V
+EX:Ａ絶頂 += A
+EX:Ｂ絶頂 += B
+EX:Ｍ絶頂 += M
 
 ;実績判定
 CALL TROPHY_CHECK_201, LOCAL:5, LOCAL:30

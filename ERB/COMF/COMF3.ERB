@@ -497,20 +497,20 @@ IF TEQUIP:53
 ENDIF
 
 ;奴隷の指⇔奴隷のＢの汚れが移動
-STAIN:1 |= STAIN:5
-STAIN:5 |= STAIN:1
+STAIN:手 |= STAIN:胸
+STAIN:胸 |= STAIN:手
 
 ;奴隷の指⇔奴隷のＶの汚れが移動
-STAIN:1 |= STAIN:3
-STAIN:3 |= STAIN:1
+STAIN:手 |= STAIN:ヴァギナ
+STAIN:ヴァギナ |= STAIN:手
 
 
 ;シャワーオナニーの場合汚れをリセット、潤滑更に半分。
 IF TEQUIP:18 == 1
-	STAIN:1 = 0
-	STAIN:2 = 2
-	STAIN:3 = 1
-	STAIN:4 = 8
+	STAIN:手 = 0
+	STAIN:ペニス = 2
+	STAIN:ヴァギナ = 1
+	STAIN:アナル = 8
 	PALAM:3 /= 2
 ENDIF
 
@@ -627,8 +627,8 @@ IF ABL:自慰中毒
 	A += ABL:自慰中毒 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 3
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 3
 ENDIF
 
 
@@ -736,11 +736,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 3,')
 		S = 1
 	ENDIF
 

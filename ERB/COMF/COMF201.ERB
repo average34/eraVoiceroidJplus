@@ -159,8 +159,8 @@ TFLAG:30 += A
 TFLAG:37 += A / 2
 
 ;奴隷の口⇔調教者の手の汚れが移動
-STAIN:0 |= STAIN:PLAYER:1
-STAIN:PLAYER:1 |= STAIN:0
+STAIN:口 |= STAIN:PLAYER:手
+STAIN:PLAYER:手 |= STAIN:口
 
 PRINTFORML %EXPNAME:22%＋１
 EXP:フェラ経験 += 1
@@ -251,8 +251,8 @@ IF ABL:奉仕精神
 ENDIF
 
 ;快楽刻印
-IF MARK:1
-	S = MARK:1
+IF MARK:快楽依存
+	S = MARK:快楽依存
 	A += S * 2
 ENDIF
 
@@ -304,15 +304,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:1 & 1
+SIF STAIN:PLAYER:手 & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:1 & 4
+SIF STAIN:PLAYER:手 & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:1 & 8
+SIF STAIN:PLAYER:手 & 8
 	Y += 7
-SIF STAIN:PLAYER:1 & 16
+SIF STAIN:PLAYER:手 & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -372,10 +372,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快楽刻印
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
-		S = MARK:1
+		S = MARK:快楽依存
 		PRINTFORM %MARKNAME:1%LV{S}({S * 2})
 	ENDIF
 
@@ -444,15 +444,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:1 & 1
+	SIF STAIN:PLAYER:手 & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:1 & 4
+	SIF STAIN:PLAYER:手 & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:1 & 8
+	SIF STAIN:PLAYER:手 & 8
 		Y += 7
-	SIF STAIN:PLAYER:1 & 16
+	SIF STAIN:PLAYER:手 & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

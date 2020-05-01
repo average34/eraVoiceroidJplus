@@ -36,42 +36,42 @@ IF W == 0
 	;筆ヘソ責め
 	A = 500
 	;MARK:反発感情を見る
-	IF MARK:3 < 2
+	IF MARK:反発感情 < 2
 		TIMES A, 1.25
-	ELSEIF MARK:3 == 2
+	ELSEIF MARK:反発感情 == 2
 		TIMES A, 1.00
 	ELSE
 		TIMES A, 0.75
 	ENDIF
 
 	;MARK:既成事実を見る
-	IF MARK:2 > 2
+	IF MARK:既成事実 > 2
 		TIMES A, 1.25
-	ELSEIF MARK:2 == 2
+	ELSEIF MARK:既成事実 == 2
 		TIMES A, 1.00
-	ELSEIF MARK:2 == 1
+	ELSEIF MARK:既成事実 == 1
 		TIMES A, 0.75
 	ELSE
 		TIMES A, 0.50
 	ENDIF
 
 	;MARK:快楽刻印を見る
-	IF MARK:1 > 2
+	IF MARK:快楽依存 > 2
 		TIMES A, 1.50
-	ELSEIF MARK:1 == 2
+	ELSEIF MARK:快楽依存 == 2
 		TIMES A, 1.25
-	ELSEIF MARK:1 == 1
+	ELSEIF MARK:快楽依存 == 1
 		TIMES A, 1.00
 	ELSE
 		TIMES A, 0.75
 	ENDIF
 
 	;MARK:苦痛刻印を見る
-	IF MARK:0 > 2
+	IF MARK:苦痛依存 > 2
 		TIMES A, 1.30
-	ELSEIF MARK:0 == 2
+	ELSEIF MARK:苦痛依存 == 2
 		TIMES A, 1.00
-	ELSEIF MARK:0 == 1
+	ELSEIF MARK:苦痛依存 == 1
 		TIMES A, 0.70
 	ELSE
 		TIMES A, 0.30

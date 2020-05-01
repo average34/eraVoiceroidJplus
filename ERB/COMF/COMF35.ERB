@@ -238,7 +238,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋３
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC*2
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -255,7 +255,7 @@ ENDIF
 ;	PRINTL 精液経験＋１
 ;
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -277,27 +277,27 @@ ELSEIF TALENT:オトコ == 1 && TALENT:PLAYER:オトコ == 1
 	EXP:PLAYER:ＢＬ経験 += 7
 ENDIF
 
-STAIN:0 = 0
-STAIN:1 = 0
-STAIN:2 = 2
-STAIN:3 = 1
-STAIN:4 = 8
-STAIN:5 = 0
+STAIN:口 = 0
+STAIN:手 = 0
+STAIN:ペニス = 2
+STAIN:ヴァギナ = 1
+STAIN:アナル = 8
+STAIN:胸 = 0
 
 IF ASSIPLAY == 0
-	STAIN:MASTER:0 = 0
-	STAIN:MASTER:1 = 0
-	STAIN:MASTER:2 = 2
-	STAIN:MASTER:3 = 1
-	STAIN:MASTER:4 = 8
-	STAIN:MASTER:0 = 0
+	STAIN:MASTER:口 = 0
+	STAIN:MASTER:手 = 0
+	STAIN:MASTER:ペニス = 2
+	STAIN:MASTER:ヴァギナ = 1
+	STAIN:MASTER:アナル = 8
+	STAIN:MASTER:口 = 0
 ELSEIF ASSIPLAY
-	STAIN:ASSI:0 = 0
-	STAIN:ASSI:1 = 0
-	STAIN:ASSI:2 = 2
-	STAIN:ASSI:3 = 1
-	STAIN:ASSI:4 = 8
-	STAIN:ASSI:0 = 0
+	STAIN:ASSI:口 = 0
+	STAIN:ASSI:手 = 0
+	STAIN:ASSI:ペニス = 2
+	STAIN:ASSI:ヴァギナ = 1
+	STAIN:ASSI:アナル = 8
+	STAIN:ASSI:口 = 0
 ENDIF
 
 SIF ASSIPLAY == 0 && EXP:フェラ経験 >= EXPLV:3
@@ -339,8 +339,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 1
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 1
 ENDIF
 
 
@@ -398,15 +398,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -473,11 +473,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 
@@ -568,15 +568,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

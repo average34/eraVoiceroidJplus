@@ -664,11 +664,11 @@ IF TFLAG:600 == 5
 	;二回目以降
 	ELSE
 		;恋慕&恋人&既成事実Lv3
-		IF (TALENT:恋人 && TALENT:恋慕) && MARK:2 == 3 && (CFLAG:224 < 5 || FLAG:7 == 2)
+		IF (TALENT:恋人 && TALENT:恋慕) && MARK:既成事実 == 3 && (CFLAG:224 < 5 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:224 = 5
 		;反発感情Lv2以上
-		ELSEIF MARK:3 >= 2 && (CFLAG:224 < 4 || FLAG:7 == 2)
+		ELSEIF MARK:反発感情 >= 2 && (CFLAG:224 < 4 || FLAG:7 == 2)
 			PRINTFORMW 
 			CFLAG:224 = 4
 		;恋人
@@ -895,16 +895,16 @@ ENDIF
 IF TALENT:処女
 	PRINTFORMW 
 ;破瓜の血がついてる
-ELSEIF STAIN:3 & 32
+ELSEIF STAIN:ヴァギナ & 32
 	;さらに精液がついてる時
-	IF STAIN:3 & 36
+	IF STAIN:ヴァギナ & 36
 		PRINTFORMW 
 	;破瓜の血のみ
 	ELSE
 		PRINTFORMW 
 	ENDIF
 ;ヴァギナに精液が付着している時
-ELSEIF STAIN:3 & 4
+ELSEIF STAIN:ヴァギナ & 4
 	PRINTFORMW 
 ;付着してない場合
 ELSE

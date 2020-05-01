@@ -191,7 +191,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋１
 	;精液汚れ
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 
 ;	BASE:MASTER:射精 -= EJAC*2
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -204,7 +204,7 @@ ENDIF
 ;	EXP:MASTER:射精経験 += 1
 ;	PRINTL 射精
 	;精液汚れ
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 
 ;	BASE:MASTER:射精 -= EJAC
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -216,8 +216,8 @@ ENDIF
 
 IF TALENT:MASTER:半人半妖 || TALENT:MASTER:オトコ || TALENT:MASTER:ふたなり
 	;主人のＰ⇔助手のＶの汚れが移動
-	STAIN:MASTER:2 |= STAIN:ASSI:3
-	STAIN:ASSI:3 |= STAIN:MASTER:2
+	STAIN:MASTER:ペニス |= STAIN:ASSI:ヴァギナ
+	STAIN:ASSI:ヴァギナ |= STAIN:MASTER:ペニス
 ENDIF
 
 IF TALENT:MASTER:オトコ == 0 && TALENT:ASSI:オトコ == 0
@@ -260,8 +260,8 @@ IF ABL:奉仕精神
 	A += ABL:奉仕精神 * 4
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 2
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 2
 ENDIF
 
 
@@ -351,11 +351,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 2,')
 		S = 1
 	ENDIF
 

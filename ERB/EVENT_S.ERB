@@ -13,15 +13,15 @@ TFLAG:29 = C + V + A + B + M
 ;絶頂
 TFLAG:29 += TFLAG:10 + TFLAG:11
 Q = 0
-SIF NOWEX:0 > 0
+SIF NOWEX:Ｃ絶頂 > 0
 	Q += 1
-SIF NOWEX:1 > 0
+SIF NOWEX:Ｖ絶頂 > 0
 	Q += 1
-SIF NOWEX:2 > 0
+SIF NOWEX:Ａ絶頂 > 0
 	Q += 1
-SIF NOWEX:3 > 0
+SIF NOWEX:Ｂ絶頂 > 0
 	Q += 1
-SIF NOWEX:6 > 0
+SIF NOWEX:Ｍ絶頂 > 0
 	Q += 1
 SIF TFLAG:10 > 0
 	Q += 1
@@ -305,7 +305,7 @@ CALL EVENTCHECK_TALENT_CHANGE
 ;従順10以上、好感度が3000以上で恋慕
 ;欲望10以上、異常経験100以上で淫乱、ただし、初期状態から最低でも10以上増えていないとダメ(好感度は必要なし)
 IF TARGET >= 0
-	IF MARK:3 == 0
+	IF MARK:反発感情 == 0
 		IF  ABL:親密 >= 15 && ABL:奉仕精神 >= 15 && TALENT:恋人 && TALENT:恋慕 && CFLAG:2 >= 10000 && (EXP:異常経験 - CFLAG:22) <= 0 && TALENT:TARGET:親愛 == 0
 				PRINTFORMW %CALLNAME:TARGET%のこちらを見る目が変わった…
 				PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%に心からの愛情を感じているようだ…
@@ -503,7 +503,7 @@ SIF TARGET < 0
 SIF (FLAG:62 & 8388608) == 0
 	RETURN 0
 ;反発感情あったらRETURN
-SIF MARK:3
+SIF MARK:反発感情
 	RETURN 0
 
 ;親密7以上または好感度2000以上
@@ -574,7 +574,7 @@ ENDIF
 
 ;Ｍ感覚関係
 ;Ｍ感覚8以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
-IF TALENT:Ｍ敏感 == 0 && ABL:Ｍ感覚 >= 8 && EXP:キス経験 >= 300 && EX:6 >= 50
+IF TALENT:Ｍ敏感 == 0 && ABL:Ｍ感覚 >= 8 && EXP:キス経験 >= 300 && EX:Ｍ絶頂 >= 50
 	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 	IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 		PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にキスして欲しいとねだってきた…
@@ -588,7 +588,7 @@ IF TALENT:Ｍ敏感 == 0 && ABL:Ｍ感覚 >= 8 && EXP:キス経験 >= 300 && EX:
 	TALENT:Ｍ鈍感 = 0
 	TALENT:Ｍ敏感 = 1
 ;親密10以上、奉仕精神10以上、Ｍ感覚8以上、奉仕快楽経験250以上、愛情経験100以上、キス経験300以上、今回調教中にＭ絶頂50回以上でＭ敏感
-ELSEIF TALENT:蕩唇 == 0 && ABL:親密 >= 10 && ABL:奉仕精神 >= 10 && ABL:Ｍ感覚 >= 8 && EXP:奉仕快楽経験 >= 250 && EXP:愛情経験 >= 100 && EXP:キス経験 >= 300 && EX:6 >= 50
+ELSEIF TALENT:蕩唇 == 0 && ABL:親密 >= 10 && ABL:奉仕精神 >= 10 && ABL:Ｍ感覚 >= 8 && EXP:奉仕快楽経験 >= 250 && EXP:愛情経験 >= 100 && EXP:キス経験 >= 300 && EX:Ｍ絶頂 >= 50
 	PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 	IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 		PRINTFORML %CALLNAME:TARGET%は%CALLNAME:MASTER%を抱き寄せて熱いキスを交わし始めた…
@@ -654,7 +654,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %CALLNAME:TARGET%は【キス魔】を得た
 		TALENT:キス魔 = 1
 	;Ａ感覚4以上、Ａ経験150以上、Ａ快楽経験300以上、今回調教中にA絶頂30回以上で尻穴狂い
-	ELSEIF TALENT:尻穴狂い == 0 && ABL:Ａ感覚 >= 4 && EXP:Ａ経験 >= 150 && EXP:Ａ快楽経験 >= 300 && EX:2 >= 30
+	ELSEIF TALENT:尻穴狂い == 0 && ABL:Ａ感覚 >= 4 && EXP:Ａ経験 >= 150 && EXP:Ａ快楽経験 >= 300 && EX:Ａ絶頂 >= 30
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にお尻をいじめて欲しいと懇願してきた…
@@ -666,7 +666,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【尻穴狂い】を得た
 		TALENT:尻穴狂い = 1
 	;Ｂ感覚8以上、自慰中毒・露出癖4以上、今回調教中にＢ絶頂50回以上で淫乳
-	ELSEIF TALENT:淫乳 == 0 && ABL:Ｂ感覚 >= 8 && ABL:露出癖 >= 4 && ABL:自慰中毒 >= 4 && EX:3 >= 50
+	ELSEIF TALENT:淫乳 == 0 && ABL:Ｂ感覚 >= 8 && ABL:露出癖 >= 4 && ABL:自慰中毒 >= 4 && EX:Ｂ絶頂 >= 50
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に胸を弄って欲しいとねだってきた…
@@ -678,7 +678,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫乳】を得た
 		TALENT:淫乳 = 1
 	;Ｃ感覚8以上、自慰中毒・露出癖4以上、今回調教中にＣ絶頂50回以上で淫核
-	ELSEIF TALENT:淫核 == 0 && ABL:Ｃ感覚 >= 8 && ABL:露出癖 >= 4 && ABL:自慰中毒 >= 4 && EX:0 >= 50
+	ELSEIF TALENT:淫核 == 0 && ABL:Ｃ感覚 >= 8 && ABL:露出癖 >= 4 && ABL:自慰中毒 >= 4 && EX:Ｃ絶頂 >= 50
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORM %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に
@@ -702,7 +702,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫核】を得た
 		TALENT:淫核 = 1
 	;Ｖ感覚8以上、Ｖ経験300以上、主人がオトコかふたなり、今回調教中にＶ絶頂50回以上で淫壷
-	ELSEIF TALENT:淫壷 == 0 && ABL:Ｖ感覚 >= 8 && EXP:Ｖ経験 >= 300 && TALENT:オトコ == 0 && (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && EX:1 >= 50
+	ELSEIF TALENT:淫壷 == 0 && ABL:Ｖ感覚 >= 8 && EXP:Ｖ経験 >= 300 && TALENT:オトコ == 0 && (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && EX:Ｖ絶頂 >= 50
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%に子宮の渇きを癒してほしいと縋りついてきた…
@@ -714,7 +714,7 @@ ELSEIF ABL:欲望 >= A
 		PRINTFORMW %NAME:TARGET%は【淫壷】を得た
 		TALENT:淫壷 = 1
 	;マゾっ気と露出癖が共に6以上、苦痛依存3、緊縛経験と苦痛快楽経験が両方とも150以上、異常経験が100以上、今回調教中にPALAM:苦痛が30000以上でマゾ
-	ELSEIF TALENT:マゾ == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:苦痛快楽経験 >= 150 && EXP:異常経験 >= 100 && EXP:緊縛経験 >= 150 && MARK:0 == 3 && PALAM:9 >= 30000
+	ELSEIF TALENT:マゾ == 0 && ABL:露出癖 >= 6 && ABL:マゾっ気 >= 6 && EXP:苦痛快楽経験 >= 150 && EXP:異常経験 >= 100 && EXP:緊縛経験 >= 150 && MARK:苦痛依存 == 3 && PALAM:9 >= 30000
 		PRINTFORMW %CALLNAME:TARGET%のこちらを見る目がおかしい…
 		IF TALENT:恋慕 == 1 || TALENT:淫乱 == 1
 			PRINTFORML %CALLNAME:TARGET%は行為が終わった後にもかかわらず、%CALLNAME:MASTER%にもっと激しく責め立てて欲しいとおねだりしてきた…

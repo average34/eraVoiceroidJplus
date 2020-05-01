@@ -37,8 +37,8 @@ EXP:Ａ経験 += 1
 PRINTL Ａ経験＋１
 
 ;奴隷のＡ⇔調教者の口の汚れが移動
-STAIN:4 |= STAIN:PLAYER:0
-STAIN:PLAYER:0 |= STAIN:4
+STAIN:アナル |= STAIN:PLAYER:口
+STAIN:PLAYER:口 |= STAIN:アナル
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40

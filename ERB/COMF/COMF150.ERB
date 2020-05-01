@@ -245,8 +245,8 @@ IF ABL:マゾっ気
 ENDIF
 
 ;既成事実
-IF MARK:2
-	A += MARK:1 * 1
+IF MARK:既成事実
+	A += MARK:快楽依存 * 1
 ENDIF
 
 ;PALAM:欲情
@@ -381,11 +381,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;既成事実
-	IF MARK:2
+	IF MARK:既成事実
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 

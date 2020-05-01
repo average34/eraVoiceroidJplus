@@ -161,8 +161,8 @@ EXP:Ｖ経験 += 1
 PRINTL Ｖ経験＋１
 
 ;奴隷のＶ⇔調教者の口の汚れが移動
-	STAIN:3 |= STAIN:PLAYER:0
-	STAIN:PLAYER:0 |= STAIN:3
+	STAIN:ヴァギナ |= STAIN:PLAYER:口
+	STAIN:PLAYER:口 |= STAIN:ヴァギナ
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40

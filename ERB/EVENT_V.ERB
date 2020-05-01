@@ -86,7 +86,7 @@ IF RAND:998 < A
 		PRINTFORMW %CALLNAME:V%に吸血鬼になった事を伝えた
 		IF TALENT:V:恋慕
 			PRINTFORMW %CALLNAME:V%は申し訳なさそうな顔をしながらも、どこか嬉しそうだ
-		ELSEIF MARK:V:3 >= 2
+		ELSEIF MARK:V:反発感情 >= 2
 			PRINTFORMW しかし、%CALLNAME:V%は興味なさそうだ…
 		ELSE
 			PRINTFORMW %CALLNAME:V%は申し訳なさそうにしている
@@ -120,7 +120,7 @@ IF RAND:998 < A
 				PRINTFORMW 吸血鬼になれたことを喜んでいるようだ
 			ENDIF
 		;反発感情Lv2以上なら壊れる
-		ELSEIF MARK:T:3 >= 2
+		ELSEIF MARK:T:反発感情 >= 2
 			PRINTFORML %CALLNAME:T%は幽鬼のような表情をしている
 			PRINTFORMW %CALLNAME:T%の中で何かが壊れてしまったようだ
 			CALL N_TALENT_K
@@ -128,7 +128,7 @@ IF RAND:998 < A
 		ELSE
 			PRINTFORMW %CALLNAME:T%は吸血鬼にされた事に憤りを感じているようだ…
 			IF MARK:T:4 <= 2
-				MARK:T:3 = 3
+				MARK:T:反発感情 = 3
 				MARK:T:4 = 3
 				TFLAG:21 = 3
 				PRINTL 反発感情LV3を取得

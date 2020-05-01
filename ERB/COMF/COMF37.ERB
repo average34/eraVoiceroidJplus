@@ -256,12 +256,12 @@ ENDIF
 
 ;奴隷の指⇔調教者のＰの汚れが移動
 ;IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
-;	STAIN:1 |= STAIN:PLAYER:2
-;	STAIN:PLAYER:2 |= STAIN:1
+;	STAIN:手 |= STAIN:PLAYER:ペニス
+;	STAIN:PLAYER:ペニス |= STAIN:手
 ;奴隷の指⇔調教者のＶの汚れが移動
 ;ELSE
-;	STAIN:3 |= STAIN:PLAYER:2
-;	STAIN:PLAYER:2 |= STAIN:3
+;	STAIN:ヴァギナ |= STAIN:PLAYER:ペニス
+;	STAIN:PLAYER:ペニス |= STAIN:ヴァギナ
 ;ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
@@ -320,8 +320,8 @@ IF ABL:サドっ気
 ENDIF
 
 ;快楽刻印
-IF MARK:1
-	S = MARK:1
+IF MARK:快楽依存
+	S = MARK:快楽依存
 	A += S
 ENDIF
 
@@ -400,15 +400,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -491,10 +491,10 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;快楽刻印
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
-		S = MARK:1
+		S = MARK:快楽依存
 		PRINTFORM %MARKNAME:1%LV{S}({S})
 	ENDIF
 
@@ -596,15 +596,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

@@ -95,8 +95,8 @@ ELSE
 ENDIF
 
 ;刻印チェック
-IF MARK:0
-	A += MARK:0 * 5
+IF MARK:苦痛依存
+	A += MARK:苦痛依存 * 5
 ENDIF
 
 IF TALENT:プライド高い
@@ -107,11 +107,11 @@ ELSE
 	T = 2
 ENDIF
 
-IF MARK:2
-	A += MARK:2 * 3 * T
+IF MARK:既成事実
+	A += MARK:既成事実 * 3 * T
 ENDIF
-IF MARK:3
-	A -= MARK:3 * 2 * T
+IF MARK:反発感情
+	A -= MARK:反発感情 * 2 * T
 ENDIF
 
 ;PALAM:恭順
@@ -395,11 +395,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 	ENDIF
 
 	;刻印チェック
-	IF MARK:0
+	IF MARK:苦痛依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:0
-		PRINTV 'LV,MARK:0,'(,MARK:0 * 5,')
+		PRINTV 'LV,MARK:苦痛依存,'(,MARK:苦痛依存 * 5,')
 		S = 1
 	ENDIF
 
@@ -411,17 +411,17 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		T = 2
 	ENDIF
 
-	IF MARK:2
+	IF MARK:既成事実
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:2
-		PRINTV 'LV,MARK:2,'(,MARK:2 * 3 * T,')
+		PRINTV 'LV,MARK:既成事実,'(,MARK:既成事実 * 3 * T,')
 		S = 1
 	ENDIF
-	IF MARK:3
+	IF MARK:反発感情
 		PRINT  - 
 		PRINTS MARKNAME:3
-		PRINTV 'LV,MARK:3,'(,MARK:3 * 2 * T,')
+		PRINTV 'LV,MARK:反発感情,'(,MARK:反発感情 * 2 * T,')
 		S = 1
 	ENDIF
 

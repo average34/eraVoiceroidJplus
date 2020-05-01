@@ -291,8 +291,8 @@ EXP:PLAYER:Ｖ経験 += 1
 
 IF TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ
 	;奴隷のＰ⇔調教者のＶの汚れが移動
-	STAIN:2 |= STAIN:PLAYER:3
-	STAIN:PLAYER:3 |= STAIN:2
+	STAIN:ペニス |= STAIN:PLAYER:ヴァギナ
+	STAIN:PLAYER:ヴァギナ |= STAIN:ペニス
 ENDIF
 
 
@@ -384,8 +384,8 @@ IF ABL:欲望
 	A += ABL:欲望 * 2
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 2
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 2
 ENDIF
 
 ;PALAM:欲情
@@ -500,11 +500,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 2,')
 		S = 1
 	ENDIF
 

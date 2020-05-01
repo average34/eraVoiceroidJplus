@@ -577,9 +577,9 @@ RETURN 0
 SIF CFLAG:98 & 8
 	RETURN 0
 ;反発感情あり、夜でない、体力５００以下の場合はだめ
-SIF MARK:TARGET:3 >= 1 || TIME == 0 || BASE:体力 < 500
+SIF MARK:TARGET:反発感情 >= 1 || TIME == 0 || BASE:体力 < 500
 	RETURN 0
-IF (MARK:TARGET:2 >= 1 && CFLAG:2 >= 500) || (TALENT:TARGET:酒豪 == 1 && CFLAG:2 >= 200)
+IF (MARK:TARGET:既成事実 >= 1 && CFLAG:2 >= 500) || (TALENT:TARGET:酒豪 == 1 && CFLAG:2 >= 200)
 	S = 10
 	;酒豪なら効果上昇
 	SIF TALENT:TARGET:酒豪

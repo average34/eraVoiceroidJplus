@@ -67,12 +67,12 @@ IF TIME == 0 && S > 3
 ENDIF
 
 ;反発感情があると実行しにくくなる。また、恋慕なし反発3では発生せず
-IF MARK:3 && S
-	IF MARK:3 >= 3 && TALENT:恋慕 == 0
+IF MARK:反発感情 && S
+	IF MARK:反発感情 >= 3 && TALENT:恋慕 == 0
 		S = 0
 	ELSE
-		S /= 1+MARK:3
-		S -= MARK:3
+		S /= 1+MARK:反発感情
+		S -= MARK:反発感情
 	ENDIF
 ENDIF
 
@@ -269,8 +269,8 @@ ELSE
 	SIF TALENT:快感の否定
 		S -= 2
 	;反発感情
-	SIF MARK:3
-		S -= MARK:3
+	SIF MARK:反発感情
+		S -= MARK:反発感情
 	S /= 5
 	S -= 3
 	SIF TFLAG:14 == 2

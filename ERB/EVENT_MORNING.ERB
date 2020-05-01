@@ -7,7 +7,7 @@ TRYCALL SPELL_NAME_CHANGE
 IF TARGET > -1
 	IF TFLAG:121
 		;朝イベントスキップ
-	ELSEIF MARK:3 >= 3
+	ELSEIF MARK:反発感情 >= 3
 		;騒音で起こされる
 		CALL EVENT_NEWDAY_OTO
 	ELSEIF TALENT:恋慕 == 0 && TALENT:淫乱 == 0
@@ -131,7 +131,7 @@ SIF CFLAG:97 & 1
 SIF TALENT:オトコ
 	RETURN 0
 ;反発感情があるとダメ
-SIF MARK:3 > 0
+SIF MARK:反発感情 > 0
 	RETURN 0
 ;パイズリで起こされる
 ;欲望8以上奉仕精神8以上精液中毒1以上で発生、奉仕精神と精液中毒で回数判定
@@ -323,7 +323,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:恋慕 || TALENT:T
 		SIF TALENT:淫壷
 			A += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		
 		A:1 = A
@@ -418,7 +418,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && (TALENT:TARGET:恋慕 || TALENT:T
 		SIF TALENT:淫核
 			A += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		
 		A:1 = A
@@ -530,7 +530,7 @@ IF ITEM:19 == 1 && TALENT:相愛
 		SIF TALENT:淫壷
 			A += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		
 		A:1 = A
@@ -644,7 +644,7 @@ IF ITEM:19 == 1 && TALENT:相愛
 		SIF TALENT:淫乳
 			B += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		
 		IF A > 0 || B > 0
@@ -748,7 +748,7 @@ IF ABL:奉仕精神 >= 6 && ABL:親密 >= 6 && TALENT:TARGET:恋慕 && TALENT:TA
 	SIF TALENT:キス魔
 		A += 2
 	;反発感情があるとダメ
-	SIF MARK:3 > 0
+	SIF MARK:反発感情 > 0
 		RETURN 0
 	
 	IF A > 0
@@ -814,7 +814,7 @@ SIF (TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ) == 0
 IF ABL:欲望 >= 8 && ABL:サドっ気 >= 4 && (TALENT:恋慕 || TALENT:TARGET:淫乱)
 	A = RAND:2
 	;セックス
-	IF TALENT:MASTER:処女 == 0 && A && TALENT:童貞 == 0 && MARK:2 >= 3 && (CFLAG:97 & 64) == 0
+	IF TALENT:MASTER:処女 == 0 && A && TALENT:童貞 == 0 && MARK:既成事実 >= 3 && (CFLAG:97 & 64) == 0
 		;朝から凄いなぁ……
 		IF ABL:欲望 + ABL:サドっ気 < 5
 			B = 1
@@ -1072,7 +1072,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:恋慕 || TALENT:TARGET:�
 		SIF TALENT:恋慕
 			A += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		IF A > 0
 			DRAWLINE
@@ -1169,7 +1169,7 @@ IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 6 && (TALENT:恋慕 || TALENT:TARGET:�
 		SIF TALENT:恋慕
 			A += 1
 		;反発感情があるとダメ
-		SIF MARK:3 > 0
+		SIF MARK:反発感情 > 0
 			RETURN 0
 		IF A > 0
 			DRAWLINE
@@ -1253,7 +1253,7 @@ IF ABL:親密 >= 6 && TALENT:恋慕
 	SIF TALENT:相愛
 		A += 3
 	;反発感情があるとダメ
-	SIF MARK:3 > 0
+	SIF MARK:反発感情 > 0
 		RETURN 0
 	IF A > 0
 		DRAWLINE
@@ -1325,7 +1325,7 @@ IF ABL:親密 >= 6 && TALENT:恋慕 && (CFLAG:97 & 4096) == 0
 	SIF TALENT:相愛
 		B += 3
 	;反発感情があるとダメ
-	SIF MARK:3 > 0
+	SIF MARK:反発感情 > 0
 		RETURN 0
 	IF B > 0
 		DRAWLINE
@@ -1385,8 +1385,8 @@ SIF CFLAG:97 & 8192
 	RETURN 0
 ;騒音で起こされる
 ;反発感情LV3以上で発生
-IF MARK:3 >= 3
-	B = MARK:3 * MARK:3
+IF MARK:反発感情 >= 3
+	B = MARK:反発感情 * MARK:反発感情
 	IF ABL:サドっ気 == 1
 		B += 1
 	ELSEIF ABL:サドっ気 == 2

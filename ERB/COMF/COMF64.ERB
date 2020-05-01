@@ -489,7 +489,7 @@ IF E
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋20
 ;	;Ｐに精液汚れ
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 ;
 ;	BASE:MASTER:射精 -= EJAC*2
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -508,7 +508,7 @@ IF E
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋10
 ;	EXP:MASTER:射精経験 += 1
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 ;
 ;	BASE:MASTER:射精 -= EJAC
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -555,7 +555,7 @@ IF E
 ;	PRINTL 大量射精（助手）
 ;	PRINTL 精液経験＋10
 ;	;Ｐに精液汚れ
-;	STAIN:ASSI:2 |= 4
+;	STAIN:ASSI:ペニス |= 4
 ;
 ;	BASE:ASSI:射精 -= EJAC*2
 ;	SIF BASE:ASSI:射精 >= EJAC
@@ -570,7 +570,7 @@ IF E
 ;	EXP:精液経験 += 5
 ;	PRINTL 射精（助手）
 ;	PRINTL 精液経験＋5
-;	STAIN:ASSI:2 |= 4
+;	STAIN:ASSI:ペニス |= 4
 ;
 ;	BASE:ASSI:射精 -= EJAC
 ;	SIF BASE:ASSI:射精 >= EJAC
@@ -588,40 +588,40 @@ ENDIF
 IF TFLAG:41 == 1
 	;奴隷のＶ⇔助手のＰの汚れが移動
 	IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
-		STAIN:3 |= STAIN:ASSI:2
-		STAIN:ASSI:2 |= STAIN:3
+		STAIN:ヴァギナ |= STAIN:ASSI:ペニス
+		STAIN:ASSI:ペニス |= STAIN:ヴァギナ
 	ENDIF
 ELSEIF TFLAG:41 == 2
 	;奴隷のＡ⇔助手のＰの汚れが移動
 	IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
-		STAIN:4 |= STAIN:ASSI:2
-		STAIN:ASSI:2 |= STAIN:4
+		STAIN:アナル |= STAIN:ASSI:ペニス
+		STAIN:ASSI:ペニス |= STAIN:アナル
 	ENDIF
 ELSEIF TFLAG:41 == 3
 	;奴隷の口⇔助手のＰの汚れが移動
 	IF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
-		STAIN:0 |= STAIN:ASSI:2
-		STAIN:ASSI:2 |= STAIN:0
+		STAIN:口 |= STAIN:ASSI:ペニス
+		STAIN:ASSI:ペニス |= STAIN:口
 	ENDIF
 ENDIF
 
 IF TFLAG:40 == 1
 	;奴隷のＶ⇔主人のＰの汚れが移動
 	IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
-		STAIN:3 |= STAIN:MASTER:2
-		STAIN:MASTER:2 |= STAIN:3
+		STAIN:ヴァギナ |= STAIN:MASTER:ペニス
+		STAIN:MASTER:ペニス |= STAIN:ヴァギナ
 	ENDIF
 ELSEIF TFLAG:40 == 2
 	;奴隷のＡ⇔主人のＰの汚れが移動
 	IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
-		STAIN:4 |= STAIN:MASTER:2
-		STAIN:MASTER:2 |= STAIN:4
+		STAIN:アナル |= STAIN:MASTER:ペニス
+		STAIN:MASTER:ペニス |= STAIN:アナル
 	ENDIF
 ELSEIF TFLAG:40 == 3
 	;奴隷の口⇔主人のＰの汚れが移動
 	IF TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ
-		STAIN:0 |= STAIN:MASTER:2
-		STAIN:MASTER:2 |= STAIN:0
+		STAIN:口 |= STAIN:MASTER:ペニス
+		STAIN:MASTER:ペニス |= STAIN:口
 	ENDIF
 ENDIF
 
@@ -688,8 +688,8 @@ ENDIF
 IF ABL:精液中毒
 	A += ABL:精液中毒 * 1
 ENDIF
-IF MARK:1
-	A += MARK:1 * 3
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 3
 ENDIF
 
 ;PALAM:潤滑（の不足）
@@ -798,11 +798,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		PRINTV 'LV,ABL:精液中毒,'(,ABL:精液中毒 * 1,')
 		S = 1
 	ENDIF
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 3,')
 		S = 1
 	ENDIF
 

@@ -239,7 +239,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋４
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC*2
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -254,7 +254,7 @@ ENDIF
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋１
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -265,8 +265,8 @@ ENDIF
 ;ENDIF
 
 ;奴隷の口⇔調教者のＡの汚れが移動
-STAIN:0 |= STAIN:PLAYER:4
-STAIN:PLAYER:4 |= STAIN:0
+STAIN:口 |= STAIN:PLAYER:アナル
+STAIN:PLAYER:アナル |= STAIN:口
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
@@ -302,8 +302,8 @@ IF ABL:奉仕精神
 	A += ABL:奉仕精神 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 2
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 2
 ENDIF
 
 ;恥じらい
@@ -347,15 +347,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:4 & 1
+SIF STAIN:PLAYER:アナル & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:4 & 4
+SIF STAIN:PLAYER:アナル & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:4 & 8
+SIF STAIN:PLAYER:アナル & 8
 	Y += 7
-SIF STAIN:PLAYER:4 & 16
+SIF STAIN:PLAYER:アナル & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -389,11 +389,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 2,')
 		S = 1
 	ENDIF
 
@@ -470,15 +470,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:4 & 1
+	SIF STAIN:PLAYER:アナル & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:4 & 4
+	SIF STAIN:PLAYER:アナル & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:4 & 8
+	SIF STAIN:PLAYER:アナル & 8
 		Y += 7
-	SIF STAIN:PLAYER:4 & 16
+	SIF STAIN:PLAYER:アナル & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

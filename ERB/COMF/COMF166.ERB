@@ -22,7 +22,7 @@ RETURN 1
 ;角愛撫
 
 ;調教対象が緊縛していない反発感情3のキモけーねだった場合、逆襲される可能性大
-IF NAME_CSV(NO:TARGET, 0) == "慧音" && TEQUIP:1 && MARK:3 >= 3 && TEQUIP:44 == 0
+IF NAME_CSV(NO:TARGET, 0) == "慧音" && TEQUIP:1 && MARK:反発感情 >= 3 && TEQUIP:44 == 0
 	IF RAND:4 > 0 && TFLAG:69 == 0
 		TFLAG:69 = 1
 		JUMP CAVED
@@ -74,7 +74,7 @@ ELSE
 	SOURCE:12 = 1500
 ENDIF
 
-IF STAIN:PLAYER:0
+IF STAIN:PLAYER:口
 ;主人の口の汚れがあると不潔追加
 	SOURCE:8 = 300
 	;汚臭鈍感

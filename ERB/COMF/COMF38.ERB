@@ -289,7 +289,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋２
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC*2
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -304,7 +304,7 @@ ENDIF
 ;	PRINTL 射精
 ;	PRINTL 精液経験＋１
 ;	;精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -315,8 +315,8 @@ ENDIF
 ;ENDIF
 
 ;奴隷のA⇔調教者のＰの汚れが移動
-STAIN:4 |= STAIN:PLAYER:2
-STAIN:PLAYER:2 |= STAIN:4
+STAIN:アナル |= STAIN:PLAYER:ペニス
+STAIN:PLAYER:ペニス |= STAIN:アナル
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40
@@ -391,7 +391,7 @@ ELSE
 	SIF TALENT:小柄体型 && TALENT:貧乳
 		PRINT 肉付きの薄い
 	PRINTFORML %CALLNAME:TARGET%のお尻に挟んで激しく擦った
-	IF TALENT:恋慕 == 0 && TALENT:親愛 == 0 && TALENT:相愛 == 0 && MARK:3 > 1
+	IF TALENT:恋慕 == 0 && TALENT:親愛 == 0 && TALENT:相愛 == 0 && MARK:反発感情 > 1
 		PRINTFORML %CALLNAME:TARGET%はあまりの屈辱に、目に涙を浮かべていた…
 	ELSEIF ASSIPLAY == 0 && TALENT:MASTER:虜 && TALENT:主人 && PALAM:5 > PALAMLV:5
 		PRINTFORML %CALLNAME:TARGET%は巧みに腰を操り、%CALLNAME:PLAYER%の射精感を引き出した…
@@ -429,8 +429,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 1
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 2
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 2
 ENDIF
 
 
@@ -482,15 +482,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -566,11 +566,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 2,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 2,')
 		S = 1
 	ENDIF
 
@@ -647,15 +647,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

@@ -317,8 +317,8 @@ IF ABL:自慰中毒
 	A += ABL:自慰中毒 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 3
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 3
 ENDIF
 
 
@@ -396,11 +396,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 3,')
 		S = 1
 	ENDIF
 

@@ -232,7 +232,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験+9
 ;	;精液汚れ
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 ;
 ;	BASE:MASTER:射精 -= EJAC*2
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -247,7 +247,7 @@ ENDIF
 ;	PRINTL 射精
 ;	PRINTL 精液経験+3
 ;	;精液汚れ
-;	STAIN:MASTER:2 |= 4
+;	STAIN:MASTER:ペニス |= 4
 ;
 ;	BASE:MASTER:射精 -= EJAC
 ;	SIF BASE:MASTER:射精 >= EJAC
@@ -272,25 +272,25 @@ PRINTFORML %EXPNAME:22%+1
 EXP:フェラ経験 += 1
 
 ;奴隷の口⇔調教者のＰの汚れが移動
-STAIN:0 |= STAIN:MASTER:2
-STAIN:MASTER:2 |= STAIN:0
+STAIN:口 |= STAIN:MASTER:ペニス
+STAIN:MASTER:ペニス |= STAIN:口
 
 ;助手の口⇔調教者のＰの汚れが移動
-STAIN:ASSI:0 |= STAIN:MASTER:2
-STAIN:MASTER:2 |= STAIN:ASSI:0
+STAIN:ASSI:口 |= STAIN:MASTER:ペニス
+STAIN:MASTER:ペニス |= STAIN:ASSI:口
 
 
 ;奉仕精神ＬＶ２以上、技巧ＬＶ２以上なら汚れをなめ取る
 IF ABL:奉仕精神 >= 2 && ABL:技巧 >= 2
-	STAIN:MASTER:2 = 2
+	STAIN:MASTER:ペニス = 2
 	SIF E >= 1
 		TFLAG:8 = 2
 ENDIF
 
 ;奴隷と助手が共に女性でどちらかが精液中毒を持っているとき、奴隷の口⇔助手の口の汚れが移動
 IF TALENT:オトコ == 0 && TALENT:ASSI:オトコ == 0 && (ABL:精液中毒 >= 1 || ABL:ASSI:精液中毒 >= 1)
-	STAIN:0 |= STAIN:ASSI:2
-	STAIN:ASSI:0 |= STAIN:0
+	STAIN:口 |= STAIN:ASSI:ペニス
+	STAIN:ASSI:口 |= STAIN:口
 	SIF E >= 1
 		TFLAG:8 = 3
 ENDIF
@@ -355,8 +355,8 @@ IF ABL:精液中毒
 	A += ABL:精液中毒 * 3
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 1
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 1
 ENDIF
 
 
@@ -414,15 +414,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:MASTER:2 & 1
+SIF STAIN:MASTER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:MASTER:2 & 4
+SIF STAIN:MASTER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:MASTER:2 & 8
+SIF STAIN:MASTER:ペニス & 8
 	Y += 7
-SIF STAIN:MASTER:2 & 16
+SIF STAIN:MASTER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -497,11 +497,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 
@@ -592,15 +592,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:MASTER:2 & 1
+	SIF STAIN:MASTER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:MASTER:2 & 4
+	SIF STAIN:MASTER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:MASTER:2 & 8
+	SIF STAIN:MASTER:ペニス & 8
 		Y += 7
-	SIF STAIN:MASTER:2 & 16
+	SIF STAIN:MASTER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

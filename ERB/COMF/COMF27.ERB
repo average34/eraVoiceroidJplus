@@ -292,7 +292,7 @@ ENDIF
 ;	PRINTL 大量射精
 ;	PRINTL 精液経験＋１
 ;	;Ｐに精液汚れ
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;
 ;	BASE:PLAYER:射精 -= EJAC*2
 ;	SIF BASE:PLAYER:射精 >= EJAC
@@ -305,7 +305,7 @@ ENDIF
 ;	EXP:PLAYER:射精経験 += 1
 ;	;Ｐに精液汚れ
 ;	PRINTL 射精
-;	STAIN:PLAYER:2 |= 4
+;	STAIN:PLAYER:ペニス |= 4
 ;	BASE:PLAYER:射精 -= EJAC
 ;	SIF BASE:PLAYER:射精 >= EJAC
 ;		BASE:PLAYER:射精 = EJAC-1
@@ -315,8 +315,8 @@ ENDIF
 ;ENDIF
 
 ;奴隷のＡ⇔調教者のＰの汚れが移動
-STAIN:4 |= STAIN:PLAYER:2
-STAIN:PLAYER:2 |= STAIN:4
+STAIN:アナル |= STAIN:PLAYER:ペニス
+STAIN:PLAYER:ペニス |= STAIN:アナル
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 	PRINTS EXPNAME:40

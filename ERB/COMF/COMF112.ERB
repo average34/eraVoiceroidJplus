@@ -57,13 +57,13 @@ ELSEIF ABL:Ｖ感覚 == 2
 	TIMES SOURCE:1 , 3.00
 ELSEIF ABL:Ｖ感覚 == 3
 	TIMES SOURCE:1 , 4.00
-	EX:1 += 1
+	EX:Ｖ絶頂 += 1
 ELSEIF ABL:Ｖ感覚 == 4
 	TIMES SOURCE:1 , 5.00
-	EX:1 += 3
+	EX:Ｖ絶頂 += 3
 ELSE
 	TIMES SOURCE:1 , 6.00
-	EX:1 += 5
+	EX:Ｖ絶頂 += 5
 ENDIF
 
 
@@ -116,9 +116,9 @@ SIF TALENT:抵抗
 ;クスコ使用中に絶頂回数増加
 IF TEQUIP:61
 	IF ABL:Ｖ感覚 >= 5
-		EX:1 += 3
+		EX:Ｖ絶頂 += 3
 	ELSEIF ABL:Ｖ感覚 == 4
-		EX:1 += 2
+		EX:Ｖ絶頂 += 2
 	ELSE
 		TIMES SOURCE:1 , 1.50
 	ENDIF
@@ -142,13 +142,13 @@ IF TALENT:Ｖ鈍感
 		TIMES SOURCE:1 , 0.75
 	ELSEIF ABL:Ｖ感覚 == 3
 		TIMES SOURCE:1 , 0.75
-		EX:1 -= 1
+		EX:Ｖ絶頂 -= 1
 	ELSEIF ABL:Ｖ感覚 == 4
 		TIMES SOURCE:1 , 0.75
-		EX:1 -= 1
+		EX:Ｖ絶頂 -= 1
 	ELSE
 		TIMES SOURCE:1 , 0.75
-		EX:1 -= 1
+		EX:Ｖ絶頂 -= 1
 	ENDIF
 ENDIF
 
@@ -162,13 +162,13 @@ IF TALENT:Ｖ敏感
 		TIMES SOURCE:1 , 2.00
 	ELSEIF ABL:Ｖ感覚 == 3
 		TIMES SOURCE:1 , 2.00
-		EX:1 += 1
+		EX:Ｖ絶頂 += 1
 	ELSEIF ABL:Ｖ感覚 == 4
 		TIMES SOURCE:1 , 2.00
-		EX:1 += 2
+		EX:Ｖ絶頂 += 2
 	ELSE
 		TIMES SOURCE:1 , 2.00
-		EX:1 += 3
+		EX:Ｖ絶頂 += 3
 	ENDIF
 ENDIF
 

@@ -55,7 +55,7 @@ IF TEQUIP:65
 	TIMES SOURCE:17 , 0.80
 ENDIF
 
-IF (STAIN:0 >= 2 && (STAIN:0 != 16 || STAIN:0 != 17) && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0) || TEQUIP:45 || TALENT:キス未経験
+IF (STAIN:口 >= 2 && (STAIN:口 != 16 || STAIN:口 != 17) && ASSIPLAY == 0 && TALENT:MASTER:汚れ無視 == 0) || TEQUIP:45 || TALENT:キス未経験
 ;奴隷の口の汚れがあるときキスはない（愛液と母乳よごれはＯＫ、汚れ無視か助手調教時は問題なし）
 ;ボールギャグ使用中もなし
 ;キス未経験でもなし
@@ -82,15 +82,15 @@ ELSE
 		SOURCE:3 *= 2
 		SOURCE:8 /= 10
 	ENDIF
-	IF STAIN:PLAYER:0
+	IF STAIN:PLAYER:口
 	;主人の口の汚れがあると不潔150%
 		SOURCE:8 *= 3
 		SOURCE:8 /= 2
 	ENDIF
 
 	;奴隷の口⇔調教者の口の汚れが移動
-	STAIN:0 |= STAIN:PLAYER:0
-	STAIN:PLAYER:0 |= STAIN:0
+	STAIN:口 |= STAIN:PLAYER:口
+	STAIN:PLAYER:口 |= STAIN:口
 
 	PRINTFORML %EXPNAME:96%＋１
 	EXP:キス経験 += 1
@@ -103,18 +103,18 @@ ENDIF
 
 IF TEQUIP:90
 	;奴隷に触手の汚れがつく
-	STAIN:1 |= 2
-	STAIN:1 |= 4
-	STAIN:5 |= 2
-	STAIN:5 |= 4
+	STAIN:手 |= 2
+	STAIN:手 |= 4
+	STAIN:胸 |= 2
+	STAIN:胸 |= 4
 ELSE
 	;奴隷のＶ⇔調教者の指の汚れが移動
-	STAIN:3 |= STAIN:PLAYER:1
-	STAIN:PLAYER:1 |= STAIN:3
+	STAIN:ヴァギナ |= STAIN:PLAYER:手
+	STAIN:PLAYER:手 |= STAIN:ヴァギナ
 
 	;奴隷のＢ⇔調教者の指の汚れが移動
-	STAIN:5 |= STAIN:PLAYER:1
-	STAIN:PLAYER:1 |= STAIN:5
+	STAIN:胸 |= STAIN:PLAYER:手
+	STAIN:PLAYER:手 |= STAIN:胸
 ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

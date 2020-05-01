@@ -451,7 +451,7 @@ IF TFLAG:13 == 100 && TFLAG:17 == 0
 	;二回目以降
 	ELSE
 		;反発感情つき
-		IF MARK:3 > 0
+		IF MARK:反発感情 > 0
 			PRINTFORMW 
 		;親愛or相愛
 		ELSEIF (TALENT:親愛 == 1 || TALENT:相愛 == 1) && (CFLAG:542 > 4 || FLAG:キャラ口上の表示頻度 == 2)
@@ -480,7 +480,7 @@ IF TFLAG:13 == 100 && TFLAG:17 == 1
 	;二回目以降
 	ELSE
 		;反発感情つき
-		IF MARK:3 > 0
+		IF MARK:反発感情 > 0
 			PRINTFORMW 
 		;親愛or相愛
 		ELSEIF (TALENT:親愛 == 1 || TALENT:相愛 == 1) && (CFLAG:543 > 4 || FLAG:キャラ口上の表示頻度 == 2)
@@ -836,7 +836,7 @@ IF TFLAG:13 == 20
 		ELSEIF TALENT:恋人
 			PRINTFORMW 
 		;反発感情Lv2以上
-		ELSEIF MARK:T:3 >= 2
+		ELSEIF MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -845,7 +845,7 @@ IF TFLAG:13 == 20
 	;助手→パートナー
 	ELSEIF CFLAG:T:104 == 2 && ASSI >= 0 && T == TARGET
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕もしくは恋人
 		ELSEIF TALENT:恋慕
@@ -860,7 +860,7 @@ IF TFLAG:13 == 20
 		IF TALENT:恋慕
 			PRINTFORMW 
 		;反発感情LV2以上
-		ELSEIF MARK:3 >= 2
+		ELSEIF MARK:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -869,7 +869,7 @@ IF TFLAG:13 == 20
 	;パートナー→助手(助手を妊娠させた)
 	ELSEIF CFLAG:T:104 == 3 && T == ASSI
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -884,7 +884,7 @@ IF TFLAG:13 == 94
 	;助手の時にパートナーに妊娠させられた(パートナーはZで参照可能。TARGETでは参照できません)
 	IF CFLAG:T:104 == 3
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -896,7 +896,7 @@ IF TFLAG:13 == 94
 	;助手の時にパートナーを妊娠させた(パートナーはZで参照可能。TARGETでは参照できません)
 	ELSEIF CFLAG:T:104 == 2
 		;恋慕無しで反発感情Lv2以上
-		IF TALENT:恋慕 == 0 && MARK:T:3 >= 2
+		IF TALENT:恋慕 == 0 && MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;恋慕
 		ELSEIF TALENT:恋慕
@@ -920,7 +920,7 @@ IF TFLAG:13 == 81
 		IF TALENT:V:恋慕
 			PRINTFORMW 
 		;反発感情LV2以上
-		ELSEIF MARK:V:3 >= 2
+		ELSEIF MARK:V:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -938,7 +938,7 @@ IF TFLAG:13 == 81
 				PRINTFORMW 
 			ENDIF
 		;反発感情LV2以上
-		ELSEIF MARK:T:3 >= 2
+		ELSEIF MARK:T:反発感情 >= 2
 			PRINTFORMW 
 		;それ以外
 		ELSE
@@ -4490,7 +4490,7 @@ ENDIF
 ;-------------------------------------------------
 ;Ｃ感覚Lv5でＣ絶頂50以上 CFLAG:359
 ;-------------------------------------------------
-IF ABL:Ｃ感覚 > 4 && EX:0 >= 50 && NOWEX:0 > 0
+IF ABL:Ｃ感覚 > 4 && EX:Ｃ絶頂 >= 50 && NOWEX:Ｃ絶頂 > 0
 	;初めて
 	IF CFLAG:359 == 0
 		PRINTFORMW 
@@ -4514,7 +4514,7 @@ ENDIF
 ;-------------------------------------------------
 ;Ｖ感覚Lv5でＶ絶頂50以上 CFLAG:360
 ;-------------------------------------------------
-IF ABL:Ｖ感覚 > 4 && EX:1 >= 50 && NOWEX:1 > 0
+IF ABL:Ｖ感覚 > 4 && EX:Ｖ絶頂 >= 50 && NOWEX:Ｖ絶頂 > 0
 	;初めて
 	IF CFLAG:360 == 0
 		PRINTFORMW 
@@ -4538,7 +4538,7 @@ ENDIF
 ;-------------------------------------------------
 ;Ａ感覚Lv5でＡ絶頂50以上 CFLAG:361
 ;-------------------------------------------------
-IF ABL:Ａ感覚 > 4 && EX:2 >= 50 && NOWEX:2 > 0
+IF ABL:Ａ感覚 > 4 && EX:Ａ絶頂 >= 50 && NOWEX:Ａ絶頂 > 0
 	;初めて
 	IF CFLAG:361 == 0
 		PRINTFORMW 
@@ -4562,7 +4562,7 @@ ENDIF
 ;-------------------------------------------------
 ;Ｂ感覚Lv5でＢ絶頂50以上 CFLAG:362
 ;-------------------------------------------------
-IF ABL:Ｂ感覚 > 4 && EX:3 >= 50 && NOWEX:3 > 0
+IF ABL:Ｂ感覚 > 4 && EX:Ｂ絶頂 >= 50 && NOWEX:Ｂ絶頂 > 0
 	;初めて
 	IF CFLAG:362 == 0
 		PRINTFORMW 
@@ -4586,7 +4586,7 @@ ENDIF
 ;-------------------------------------------------
 ;Ｍ感覚Lv5でＭ絶頂50以上 CFLAG:379
 ;-------------------------------------------------
-IF ABL:Ｍ感覚 > 4 && EX:6 >= 50 && NOWEX:6 > 0
+IF ABL:Ｍ感覚 > 4 && EX:Ｍ絶頂 >= 50 && NOWEX:Ｍ絶頂 > 0
 	;初めて
 	IF CFLAG:379 == 0
 			PRINTFORMW 

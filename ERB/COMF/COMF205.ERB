@@ -178,12 +178,12 @@ ENDIF
 
 ;調教者の指⇔調教者のＰの汚れが移動
 IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:オトコ  || TALENT:PLAYER:ふたなり
-	STAIN:PLAYER:1 |= STAIN:PLAYER:2
-	STAIN:PLAYER:2 |= STAIN:PLAYER:1
+	STAIN:PLAYER:手 |= STAIN:PLAYER:ペニス
+	STAIN:PLAYER:ペニス |= STAIN:PLAYER:手
 ;調教者の指⇔調教者のＶの汚れが移動
 ELSE
-	STAIN:PLAYER:3 |= STAIN:PLAYER:2
-	STAIN:PLAYER:2 |= STAIN:PLAYER:3
+	STAIN:PLAYER:ヴァギナ |= STAIN:PLAYER:ペニス
+	STAIN:PLAYER:ペニス |= STAIN:PLAYER:ヴァギナ
 ENDIF
 
 ;レズ・BL経験関連
@@ -229,7 +229,7 @@ IF NAME_CSV(NO:TARGET, 0) == "さとり" && TALENT:恋慕
 	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に見せ付けるように目の前で自慰を行った
 	PRINTFORML 自慰行為で盛り上がる%CALLNAME:PLAYER%の欲情に当てられて%CALLNAME:TARGET%もさらに激しく欲情していくのであった…
 ;反発Lv2以上持ちだが欲情が跳ね上がってる[解放][快感に素直]を持たない相手に
-ELSEIF MARK:3 > 1 && PALAM:5 >= PALAMLV:3 && TALENT:解放 == 0 && TALENT:快感に素直 == 0
+ELSEIF MARK:反発感情 > 1 && PALAM:5 >= PALAMLV:3 && TALENT:解放 == 0 && TALENT:快感に素直 == 0
 	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に見せ付けるように目の前で自慰を行った
 	PRINTFORML 自慰行為で盛り上がる%CALLNAME:PLAYER%を、苦々しく見ている%CALLNAME:TARGET%であったが、
 	PRINTL その身体が激しく欲情していることは隠しようがなかった…
@@ -238,7 +238,7 @@ ELSEIF ABL:自慰中毒 > 0 && TALENT:自慰しやすい
 	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に見せ付けるように目の前で自慰を行った
 	PRINTFORML %CALLNAME:TARGET%は、自慰行為で盛り上がる%CALLNAME:PLAYER%を羨ましそうにみていた…
 ;反発Lv2以上
-ELSEIF MARK:3 > 1
+ELSEIF MARK:反発感情 > 1
 	PRINTFORML %CALLNAME:PLAYER%は%CALLNAME:TARGET%に見せ付けるように目の前で自慰を行った
 	PRINTFORML しかし、自慰行為で盛り上がる%CALLNAME:PLAYER%に%CALLNAME:TARGET%は興味はなさそうだった…
 ;その他
@@ -268,8 +268,8 @@ IF ABL:自慰中毒
 	A += ABL:自慰中毒 * 1
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 1
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 1
 ENDIF
 
 
@@ -323,15 +323,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -400,11 +400,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 1,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 1,')
 		S = 1
 	ENDIF
 
@@ -479,15 +479,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

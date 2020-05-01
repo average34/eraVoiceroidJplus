@@ -19,10 +19,10 @@ SIF ABL:露出癖
 SIF ABL:歌唱技能
 	A += ABL:歌唱技能 * 3
 
-SIF MARK:1
-	A += MARK:1 * 2
-SIF MARK:3
-	A -= MARK:3 * 5
+SIF MARK:快楽依存
+	A += MARK:快楽依存 * 2
+SIF MARK:反発感情
+	A -= MARK:反発感情 * 5
 
 ;PALAM:欲情
 IF PALAM:5 < PALAMLV:1
@@ -525,14 +525,14 @@ IF E > 0
 		PRINTFORML 異常経験＋3
 	ENDIF
 	PRINTFORML Ｖ経験＋{E}
-	STAIN:3 |= 2
-	STAIN:3 |= 4
+	STAIN:ヴァギナ |= 2
+	STAIN:ヴァギナ |= 4
 ENDIF
 IF D > 0
 	EXP:Ａ経験 += D
 	PRINTFORML Ａ経験＋{D}
-	STAIN:4 |= 2
-	STAIN:4 |= 4
+	STAIN:アナル |= 2
+	STAIN:アナル |= 4
 ENDIF
 EXP:フェラ経験 += F
 PRINTFORML フェラ経験＋{F}
@@ -541,8 +541,8 @@ SOURCE:14 += 150 * N
 SOURCE:16 += 150 * N
 SOURCE:4 += 310 * N
 SOURCE:5 += 370 * N
-STAIN:0 |= 2
-STAIN:0 |= 4
+STAIN:口 |= 2
+STAIN:口 |= 4
 IF (D+E+F)/2 > 0
 	EXP:精液経験 += (D+E+F)/2
 	PRINTFORML 精液経験＋{(D+E+F)/2}

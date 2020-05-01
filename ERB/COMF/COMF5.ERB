@@ -49,14 +49,14 @@ ENDIF
 
 IF TEQUIP:90
 	;奴隷のＢに触手の汚れがつく
-	STAIN:5 |= 2
-	STAIN:5 |= 4
+	STAIN:胸 |= 2
+	STAIN:胸 |= 4
 ELSE
 	;着衣中でかつコンフィグがONだと性能低下
 	SIF TEQUIP:65
 		TIMES SOURCE:17 , 0.80
 	;奴隷の胸の汚れがなければ口をつかう（愛液と母乳よごれはＯＫ、汚れ無視か助手調教時は問題なし）
-	IF STAIN:5 < 2 || STAIN:5 == 16 || STAIN:5 == 17 || ASSIPLAY == 1 || TALENT:MASTER:汚れ無視 == 1
+	IF STAIN:胸 < 2 || STAIN:胸 == 16 || STAIN:胸 == 17 || ASSIPLAY == 1 || TALENT:MASTER:汚れ無視 == 1
 		;調教者のTALENT:舌使いをみる
 		IF TALENT:PLAYER:舌使い
 			TIMES SOURCE:17 , 1.40
@@ -64,13 +64,13 @@ ELSE
 		ENDIF
 
 		;奴隷のＢ⇔調教者の口の汚れが移動
-		STAIN:5 |= STAIN:PLAYER:0
-		STAIN:PLAYER:0 |= STAIN:5
+		STAIN:胸 |= STAIN:PLAYER:口
+		STAIN:PLAYER:口 |= STAIN:胸
 	ENDIF
 
 	;奴隷のＢ⇔調教者の指の汚れが移動
-	STAIN:5 |= STAIN:PLAYER:1
-	STAIN:PLAYER:1 |= STAIN:5
+	STAIN:胸 |= STAIN:PLAYER:手
+	STAIN:PLAYER:手 |= STAIN:胸
 ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

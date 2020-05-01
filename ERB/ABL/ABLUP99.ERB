@@ -9,7 +9,7 @@
 ;-------------------------------------------------
 @ABLUP99
 DRAWLINE
-IF MARK:3 <= 0
+IF MARK:反発感情 <= 0
 	PRINTW 反発感情はありません
 	RETURN 0
 ENDIF
@@ -19,7 +19,7 @@ ENDIF
 CALL ISABLUP99
 
 ;反発感情Lvと同じLvの既成事実が必要
-PRINTFORM %MARKNAME:2%{MARK:3}LV以上（現在{MARK:2}）かつ、
+PRINTFORM %MARKNAME:2%{MARK:反発感情}LV以上（現在{MARK:既成事実}）かつ、
 
 ;反発感情Lv*3Lvの従順が必要
 PRINTFORML %ABLNAME:0%{B}LV以上
@@ -65,7 +65,7 @@ ELSEIF RESULT == 100
 	RETURN 0
 ENDIF
 
-MARK:3 -= 1
+MARK:反発感情 -= 1
 
 IF RESULT == 0
 	JUEL:6 -= A
@@ -75,7 +75,7 @@ ENDIF
 
 PRINTS MARKNAME:3
 PRINT のレベルが
-PRINTV MARK:3
+PRINTV MARK:反発感情
 PRINTW になりました。
 
 
@@ -91,7 +91,7 @@ J = 0
 Z = 0
 
 ;LV0ならリターン
-IF MARK:3 <= 0
+IF MARK:反発感情 <= 0
 	CALL ISABLUP_LIMIT
 	RETURN 0
 ENDIF
@@ -106,7 +106,7 @@ IF B > ABL:親密
 ENDIF
 
 ;反発感情Lvと同じLvの既成事実が必要
-IF MARK:3 > MARK:2
+IF MARK:反発感情 > MARK:既成事実
 	I |= 2
 	J |= 2
 ENDIF
@@ -138,13 +138,13 @@ ENDIF
 ;反発感情を消去するのに必要なコストを計算
 ;-------------------------------------------------
 @COSTABLUP99
-IF MARK:3 == 1
+IF MARK:反発感情 == 1
 	A = 5000
 	C = 10000
-ELSEIF MARK:3 == 2
+ELSEIF MARK:反発感情 == 2
 	A = 10000
 	C = 25000
-ELSEIF MARK:3 == 3
+ELSEIF MARK:反発感情 == 3
 	A = 50000
 	C = 100000
 ENDIF
@@ -180,4 +180,4 @@ IF TALENT:親愛
 ENDIF
 
 ;反発感情Lv*3Lvの従順が必要
-B = MARK:3 * 3
+B = MARK:反発感情 * 3

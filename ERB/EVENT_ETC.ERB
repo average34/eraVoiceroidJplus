@@ -57,10 +57,10 @@ IF TARGET >= 0
 	ENDIF
 
 	;反発感情３があり、かつ[幼稚]である時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が５以上になる
-	IF TALENT:TARGET:幼稚 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:異常経験 >= 5
+	IF TALENT:TARGET:幼稚 && MARK:反発感情 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && EXP:TARGET:異常経験 >= 5
 		CALL EVENT_YOUJI
 	;反発感情３があり、かつ[幼稚]でなく、蓬莱人がない時に欲望が5かつ従順が5かつマゾっ気が5以上かつ異常経験が７以上に加え露出５とおもらし癖がつく
-	ELSEIF TALENT:TARGET:蓬莱人 == 0 && TALENT:TARGET:幼稚 == 0 && MARK:3 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:異常経験 >= 7 && TALENT:おもらし癖 == 1
+	ELSEIF TALENT:TARGET:蓬莱人 == 0 && TALENT:TARGET:幼稚 == 0 && MARK:反発感情 == 3 && ABL:TARGET:欲望 >= 5 && ABL:TARGET:親密 >= 5 && ABL:TARGET:マゾっ気 >= 5 && ABL:TARGET:露出癖 >= 5 && EXP:TARGET:異常経験 >= 7 && TALENT:おもらし癖 == 1
 		CALL EVENT_YOUJI
 	ENDIF
 ENDIF
@@ -230,7 +230,7 @@ PRINTFORMW %CALLNAME:TARGET%は過酷な調教に耐え切れず、[幼児退行
 	SIF TALENT:TARGET:抵抗
 		TALENT:TARGET:抵抗 = 0
 TALENT:TARGET:幼児 = 1
-MARK:TARGET:3 = 0
+MARK:TARGET:反発感情 = 0
 
 
 

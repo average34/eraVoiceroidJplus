@@ -128,8 +128,8 @@ IF TEQUIP:90
 		TEQUIP:11 = 0
 	ELSE
 		TEQUIP:11 = 1
-		STAIN:3 |= 2
-		STAIN:3 |= 4
+		STAIN:ヴァギナ |= 2
+		STAIN:ヴァギナ |= 4
 	ENDIF
 	T = 0
 ELSE
@@ -430,8 +430,8 @@ IF ABL:奉仕精神
 	A += ABL:奉仕精神 * 4
 ENDIF
 
-IF MARK:1
-	A += MARK:1 * 3
+IF MARK:快楽依存
+	A += MARK:快楽依存 * 3
 ENDIF
 
 ;PALAM:潤滑（の不足）
@@ -488,15 +488,15 @@ ENDIF
 
 Y = 0
 ;愛液の汚れ
-SIF STAIN:PLAYER:2 & 1
+SIF STAIN:PLAYER:ペニス & 1
 	Y += 1
 ;精液の汚れ
-SIF STAIN:PLAYER:2 & 4
+SIF STAIN:PLAYER:ペニス & 4
 	Y += 3
 ;アナルの汚れ
-SIF STAIN:PLAYER:2 & 8
+SIF STAIN:PLAYER:ペニス & 8
 	Y += 7
-SIF STAIN:PLAYER:2 & 16
+SIF STAIN:PLAYER:ペニス & 16
 	Y += 15
 
 SIF TALENT:汚臭鈍感
@@ -561,11 +561,11 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 		S = 1
 	ENDIF
 
-	IF MARK:1
+	IF MARK:快楽依存
 		SIF S
 			PRINT  + 
 		PRINTS MARKNAME:1
-		PRINTV 'LV,MARK:1,'(,MARK:1 * 3,')
+		PRINTV 'LV,MARK:快楽依存,'(,MARK:快楽依存 * 3,')
 		S = 1
 	ENDIF
 
@@ -640,15 +640,15 @@ IF ((FLAG:23 & 1p27) == 0) && FLAG:2 != 1
 
 	Y = 0
 	;愛液の汚れ
-	SIF STAIN:PLAYER:2 & 1
+	SIF STAIN:PLAYER:ペニス & 1
 		Y += 1
 	;精液の汚れ
-	SIF STAIN:PLAYER:2 & 4
+	SIF STAIN:PLAYER:ペニス & 4
 		Y += 3
 	;アナルの汚れ
-	SIF STAIN:PLAYER:2 & 8
+	SIF STAIN:PLAYER:ペニス & 8
 		Y += 7
-	SIF STAIN:PLAYER:2 & 16
+	SIF STAIN:PLAYER:ペニス & 16
 		Y += 15
 
 	SIF TALENT:汚臭鈍感

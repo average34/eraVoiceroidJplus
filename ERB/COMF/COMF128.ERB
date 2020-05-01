@@ -157,12 +157,12 @@ PRINTFORML %EXPNAME:50%＋１
 
 IF TEQUIP:90
 	;奴隷のＶに触手の汚れがつく
-	STAIN:3 |= 2
-	STAIN:3 |= 4
+	STAIN:ヴァギナ |= 2
+	STAIN:ヴァギナ |= 4
 ELSE
 	;奴隷のＶ⇔調教者の指の汚れが移動
-	STAIN:3 |= STAIN:PLAYER:1
-	STAIN:PLAYER:1 |= STAIN:3
+	STAIN:ヴァギナ |= STAIN:PLAYER:手
+	STAIN:PLAYER:手 |= STAIN:ヴァギナ
 ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
@@ -246,7 +246,7 @@ RETURN 1
 PRINTFORM %CALLNAME:TARGET%の
 IF TEQUIP:61
 	PRINT クスコで拡げられた膣内に
-ELSEIF STAIN:3 & 4 && TFLAG:2 > 0
+ELSEIF STAIN:ヴァギナ & 4 && TFLAG:2 > 0
 	PRINT 精液で満たされた膣内に
 ELSEIF ABL:Ｖ感覚 >= 4
 	PRINT 指で押し広げた膣内に

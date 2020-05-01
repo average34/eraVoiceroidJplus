@@ -2696,7 +2696,7 @@ IF TFLAG:9 > 0
 	;恋慕
 	IF TALENT:恋慕 && (CFLAG:366 <= 2 || FLAG:キャラ口上の表示頻度 == 2)
 		;一緒に絶頂
-		IF NOWEX:0 > 0
+		IF NOWEX:Ｃ絶頂 > 0
 			PRINTFORMW 
 		;一人だけ絶頂
 		ELSE
@@ -2707,7 +2707,7 @@ IF TFLAG:9 > 0
 	ELSEIF CFLAG:366 <= 0 || FLAG:キャラ口上の表示頻度 == 2
 		PRINTFORMW 
 		;一緒に絶頂
-		IF NOWEX:0 > 0
+		IF NOWEX:Ｃ絶頂 > 0
 			PRINTFORMW 
 		;一人だけ絶頂
 		ELSE
@@ -2887,7 +2887,7 @@ IF TFLAG:10 > 0 && (SELECTCOM == 193 || SELECTCOM == 194 || SELECTCOM == 195 || 
 			;合意&恋慕または恋人
 			IF TALENT:合意 && (TALENT:恋慕 || TALENT:恋人)
 				;調教者と同時絶頂
-				IF NOWEX:PLAYER:1
+				IF NOWEX:PLAYER:Ｖ絶頂
 					PRINTFORMW 
 				;調教対象だけ絶頂
 				ELSE
@@ -2988,10 +2988,10 @@ SIF FLAG:キャラ口上の表示頻度 < 2
 D = 0
 
 ;各部位に絶頂があったかを確認して、CVABに結果を代入（0or1）
-C = (NOWEX:0 > 0)
-V = (NOWEX:1 > 0)
-A = (NOWEX:2 > 0)
-B = (NOWEX:3 > 0)
+C = (NOWEX:Ｃ絶頂 > 0)
+V = (NOWEX:Ｖ絶頂 > 0)
+A = (NOWEX:Ａ絶頂 > 0)
+B = (NOWEX:Ｂ絶頂 > 0)
 
 ;CVABの合計をDに代入（何重絶頂だったかを表す値になる）
 D = C + V + A + B
@@ -3023,7 +3023,7 @@ IF C && D == 1
 		;恋慕
 		ELSEIF TALENT:恋慕
 			;C強絶頂以上
-			IF NOWEX:0 > 1
+			IF NOWEX:Ｃ絶頂 > 1
 				PRINTFORMW 
 			ELSE
 				PRINTFORMW 
@@ -3052,7 +3052,7 @@ ELSEIF V && D == 1
 		;恋慕
 		ELSEIF TALENT:恋慕
 			;V強絶頂以上
-			IF NOWEX:1 > 1
+			IF NOWEX:Ｖ絶頂 > 1
 				PRINTFORMW 
 			ELSE
 				PRINTFORMW 

@@ -126,12 +126,12 @@ PRINTL Ｖ経験＋１
 
 IF TEQUIP:90
 	;奴隷のＶに触手の汚れがつく
-	STAIN:3 |= 2
-	STAIN:3 |= 4
+	STAIN:ヴァギナ |= 2
+	STAIN:ヴァギナ |= 4
 ELSE
 	;奴隷のＶ⇔調教者の指の汚れが移動
-	STAIN:3 |= STAIN:PLAYER:1
-	STAIN:PLAYER:1 |= STAIN:3
+	STAIN:ヴァギナ |= STAIN:PLAYER:手
+	STAIN:PLAYER:手 |= STAIN:ヴァギナ
 ENDIF
 
 IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0

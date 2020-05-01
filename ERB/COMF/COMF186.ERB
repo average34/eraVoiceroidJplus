@@ -236,7 +236,7 @@ ELSEIF TFLAG:17 == TARGET
 	ENDIF
 
 	;親密Lv5以上(JはLv99まであるので以上に変更)、既成事実Lv3、反発刻印なし
-	IF A == 0 && ABL:親密 >= 5 && MARK:2 == 3 && MARK:3 == 0
+	IF A == 0 && ABL:親密 >= 5 && MARK:既成事実 == 3 && MARK:反発感情 == 0
 		SOURCE:13 = 1000
 		UP:10 += 100
 		A = 1
@@ -257,11 +257,11 @@ ELSEIF TFLAG:17 == TARGET
 			TIMES B , 2.0
 		SOURCE:15 += B
 		C = 500
-		SIF MARK:3 == 0
+		SIF MARK:反発感情 == 0
 			TIMES C , 4.0
-		SIF MARK:3 == 1
+		SIF MARK:反発感情 == 1
 			TIMES D , 3.0
-		SIF MARK:3 == 2
+		SIF MARK:反発感情 == 2
 			TIMES E , 2.0
 		SOURCE:15 += C
 		UP:10 += 1000
@@ -312,7 +312,7 @@ ELSE
 	ELSEIF TALENT:淫乱
 		;【淫乱】
 		PRINTFORMW 今すぐにでも中出ししてほしいかのようにあそこを指で開いてこちらに見せつけている……
-	ELSEIF  TALENT:合意 && MARK:3 == 0
+	ELSEIF  TALENT:合意 && MARK:反発感情 == 0
 		;合意かつ反発刻印Lv0
 		PRINTFORMW 苦笑しつつも股を開き、%CALLNAME:PLAYER%の次の行為を待っている……
 	ELSE

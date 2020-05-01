@@ -172,10 +172,10 @@ RETURNF RESULT
 ;-------------------------------------------------
 @GET_EX(ARGS)
 #FUNCTION
-LOCAL = NOWEX:0
-LOCAL:1 = NOWEX:1
-LOCAL:2 = NOWEX:2
-LOCAL:3 = NOWEX:3
+LOCAL = NOWEX:Ｃ絶頂
+LOCAL:1 = NOWEX:Ｖ絶頂
+LOCAL:2 = NOWEX:Ａ絶頂
+LOCAL:3 = NOWEX:Ｂ絶頂
 ;4重絶頂
 IF LOCAL:0 > 0 && LOCAL:1 > 0 && LOCAL:2 > 0 && LOCAL:3 > 0
 	LOCAL:0 /= 8
@@ -401,28 +401,28 @@ RETURNF LOCALS
 ;-------------------------------------------------
 ;NOWEX調整関数
 ;NOWEXの同時絶頂による回数補正を消して、純粋な絶頂回数に調整する
-;例えば、クンニで絶頂と強絶頂を条件として分岐させる際、通常だと強絶頂とバイブをつかってのVCの同時絶頂は共にNOWEX:0 == 2であり
+;例えば、クンニで絶頂と強絶頂を条件として分岐させる際、通常だと強絶頂とバイブをつかってのVCの同時絶頂は共にNOWEX:Ｃ絶頂 == 2であり
 ;区別することができないが、この関数を利用することで、後者のNOWEXを1にできるので、二つを簡単に区別できるようになる
 ;-------------------------------------------------
 @ADJUST_NOWEX
 ;4重絶頂
-IF NOWEX:0 > 0 && NOWEX:1 > 0 && NOWEX:2 > 0 && NOWEX:3 > 0
-	NOWEX:0 /= 8
-	NOWEX:1 /= 8
-	NOWEX:2 /= 8
-	NOWEX:3 /= 8
+IF NOWEX:Ｃ絶頂 > 0 && NOWEX:Ｖ絶頂 > 0 && NOWEX:Ａ絶頂 > 0 && NOWEX:Ｂ絶頂 > 0
+	NOWEX:Ｃ絶頂 /= 8
+	NOWEX:Ｖ絶頂 /= 8
+	NOWEX:Ａ絶頂 /= 8
+	NOWEX:Ｂ絶頂 /= 8
 ;3重絶頂
-ELSEIF (NOWEX:0 > 0 && NOWEX:1 > 0 && NOWEX:2 > 0) || (NOWEX:0 > 0 && NOWEX:1 > 0 && NOWEX:3 > 0) || (NOWEX:0 > 0 && NOWEX:2 > 0 && NOWEX:3 > 0) || (NOWEX:1 > 0 && NOWEX:2 > 0 && NOWEX:3 > 0)
-	NOWEX:0 /= 4
-	NOWEX:1 /= 4
-	NOWEX:2 /= 4
-	NOWEX:3 /= 4
+ELSEIF (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ｖ絶頂 > 0 && NOWEX:Ａ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ｖ絶頂 > 0 && NOWEX:Ｂ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ａ絶頂 > 0 && NOWEX:Ｂ絶頂 > 0) || (NOWEX:Ｖ絶頂 > 0 && NOWEX:Ａ絶頂 > 0 && NOWEX:Ｂ絶頂 > 0)
+	NOWEX:Ｃ絶頂 /= 4
+	NOWEX:Ｖ絶頂 /= 4
+	NOWEX:Ａ絶頂 /= 4
+	NOWEX:Ｂ絶頂 /= 4
 ;2重絶頂
-ELSEIF (NOWEX:0 > 0 && NOWEX:1 > 0) || (NOWEX:0 > 0 && NOWEX:2 > 0) || (NOWEX:0 > 0 && NOWEX:3 > 0) || (NOWEX:0 > 1 && NOWEX:2 > 0) || (NOWEX:0 > 1 && NOWEX:3 > 0) || (NOWEX:0 > 2 && NOWEX:3 > 0)
-	NOWEX:0 /= 2
-	NOWEX:1 /= 2
-	NOWEX:2 /= 2
-	NOWEX:3 /= 2
+ELSEIF (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ｖ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ａ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 0 && NOWEX:Ｂ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 1 && NOWEX:Ａ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 1 && NOWEX:Ｂ絶頂 > 0) || (NOWEX:Ｃ絶頂 > 2 && NOWEX:Ｂ絶頂 > 0)
+	NOWEX:Ｃ絶頂 /= 2
+	NOWEX:Ｖ絶頂 /= 2
+	NOWEX:Ａ絶頂 /= 2
+	NOWEX:Ｂ絶頂 /= 2
 ENDIF
 ;----------------------------------------------------------------
 ;地の文カット関数
@@ -2240,8 +2240,8 @@ IF SELECTCOM == 2 && TFLAG:17 == 11
 	ENDIF
 
 ;奴隷の指⇔調教者のAの汚れが移動
-	STAIN:1 |= STAIN:PLAYER:2
-	STAIN:PLAYER:4 |= STAIN:1
+	STAIN:手 |= STAIN:PLAYER:ペニス
+	STAIN:PLAYER:アナル |= STAIN:手
 
 	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		PRINTS EXPNAME:40
