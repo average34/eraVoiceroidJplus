@@ -15,7 +15,7 @@ CALL COM_ABLE_COMMON, SELECTCOM
 SIF RESULT == 0
 	RETURN 0
 
-;恋慕か合意＆恋人が必要
+;恋慕と、合意または恋人が必要
 SIF TALENT:恋慕 == 0 && (TALENT:合意 == 0 || TALENT:恋人 == 0)
 	RETURN 0
 
@@ -64,9 +64,9 @@ SIF TALENT:TARGET:小人体型
 ;一度剃った後、ある程度伸びないうちはダメ
 SIF BASE:TARGET:陰毛 < _COMF257_ENABLE_SHAVING()
 	RETURN 0
-;技巧 3 + 酩酊度 / 20 以上
-;[酒豪]持ってると技巧 3 + 酩酊度 / 25
-SIF ABL:PLAYER:技巧 < (3 + TFLAG:47 / (TALENT:PLAYER:酒豪 ? 25 # 20))
+;技巧 1 + 酩酊度 / 20 以上
+;[酒豪]持ってると技巧 1 + 酩酊度 / 25
+SIF ABL:PLAYER:技巧 < (1 + TFLAG:47 / (TALENT:PLAYER:酒豪 ? 25 # 20))
 	RETURN 0
 RETURN 1
 

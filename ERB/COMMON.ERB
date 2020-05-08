@@ -1208,28 +1208,31 @@ ENDIF
 ;-------------------------------------------------
 @GET_BASE8(ARG)
 ;陰毛なし
-;ショウタ、アイ、きりたん、ウナ、ヒメ、ミコト
-IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 81, 82, 83)
-	BASE:ARG:陰毛 = 0
-	MAXBASE:ARG:陰毛 = 0
-	TALENT:ARG:パイパン = 1
+;ショウタ、アイ、きりたん、ついな、ウナ、ヒメ、ミコト
+;IF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 1, 2, 10, 14, 81, 82, 83)
+;	BASE:ARG:陰毛 = 0
+;	MAXBASE:ARG:陰毛 = 0
+;	TALENT:ARG:パイパン = 1
 ;陰毛通常
 ;コウ、セイカ、イタコ、そら、タカハシ、ギャラ子
-ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 12, 13, 52, 80)
-	BASE:ARG:陰毛 = 1000
-	MAXBASE:ARG:陰毛 = 1000
-	TALENT:ARG:パイパン = 0
+;ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 8, 9, 12, 13, 52, 80)
+;	BASE:ARG:陰毛 = 1000
+;	MAXBASE:ARG:陰毛 = 1000
+;	TALENT:ARG:パイパン = 0
 ;陰毛少なめ
-;マキ、ゆかり、ずん子、茜、葵、あかり、ついな、ささら、つづみ、ＯＮＥ、ＩＡ、flower
-ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 14, 50, 51, 53, 54, 84)
-	BASE:ARG:陰毛 = 300
-	MAXBASE:ARG:陰毛 = 300
-	TALENT:ARG:パイパン = 0
+;マキ、ゆかり、ずん子、茜、葵、あかり、ささら、つづみ、ＯＮＥ、ＩＡ、flower
+;ELSEIF CFLAG:ARG:0 == 0 && GROUPMATCH(NO:ARG, 3, 4, 5, 6, 7, 11, 50, 51, 53, 54, 84)
+;	BASE:ARG:陰毛 = 300
+;	MAXBASE:ARG:陰毛 = 300
+;	TALENT:ARG:パイパン = 0
 ;マキ様, ゆかり様
-ELSEIF CFLAG:ARG:0 && GROUPMATCH(NO:ARG, 3, 4)
-	BASE:ARG:陰毛 = 300
-	MAXBASE:ARG:陰毛 = 300
-	TALENT:ARG:パイパン = 0
+;ELSEIF CFLAG:ARG:0 && GROUPMATCH(NO:ARG, 3, 4)
+;	BASE:ARG:陰毛 = 300
+;	MAXBASE:ARG:陰毛 = 300
+;	TALENT:ARG:パイパン = 0
+
+;もう設定してあるキャラには何もしない
+IF GROUPMATCH(NO:ARG, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 50, 51, 52, 53, 54, 80,81,82,83,84)
 ;その他のキャラ
 ELSE
 	;小人体型は陰毛上限0、[パイパン]
