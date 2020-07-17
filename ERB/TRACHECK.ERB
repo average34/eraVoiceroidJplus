@@ -100,6 +100,8 @@ IF E == 4
 
 	EXP:精液経験 += 2
 	EXP:射精経験 += 4
+	;調教対象が超大量射精
+	TFLAG:10 = 3
 ;大量射精
 ELSEIF E == 2
 	LOSEBASE:体力 += 20
@@ -132,6 +134,8 @@ ELSEIF E == 2
 
 	EXP:精液経験 += 1
 	EXP:射精経験 += 2
+	;調教対象が大量射精
+	TFLAG:10 = 2
 ;通常の射精
 ELSEIF E == 1
 	LOSEBASE:気力 += 40
@@ -160,6 +164,8 @@ ELSEIF E == 1
 	PRINTL 射精
 	PRINTL 射精経験＋1
 	EXP:射精経験 += 1
+	;調教対象が射精
+	TFLAG:10 = 1
 ENDIF
 
 ;射精経験0かつオトコ、不思議な根、具現を持ってない場合は射精すると異常経験+5
@@ -179,7 +185,6 @@ SIF BASE:射精 >= EJAC
 	BASE:射精 = EJAC-1
 
 ;調教対象が射精フラグ
-TFLAG:10 = 1
 NOWEX:射精 += 1
 EX:射精 += 1
 
