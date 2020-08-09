@@ -239,7 +239,7 @@ ELSEIF RESULT == 92
 ELSEIF RESULT == 93
 	CALL PRINT_ALL_FLAG, 0
 ELSEIF RESULT == 94
-	CALL EDIT_GAME_ROOT
+	CALL EDIT_GAME_ROUTE
 ELSEIF RESULT == 95
 	CALL BOSS_CHOICE
 ELSEIF RESULT == 96
@@ -2088,7 +2088,7 @@ NEXT
 ;--------------------------------------------------
 ;ルート変更
 ;--------------------------------------------------
-@EDIT_GAME_ROOT
+@EDIT_GAME_ROUTE
 #DIMS CONST DIFFICULTY, 11 = "EASY", "NORMAL", "HARD", "LUNATIC", "S-LUNATIC", "", "", "", "", "EXTRA", "PHANTASM"
 #DIMS CONST ROUTE, 4 = "東北邸Easy", "東北邸Normal", "東北邸Hard", "東北邸Luna"
 

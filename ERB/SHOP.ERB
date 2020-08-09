@@ -2189,7 +2189,7 @@ IF FLAG:5 >= 0 && FLAG:5 <= 4
 	ENDIF
 ENDIF
 ;攻略ルート選択(デフォルトでは選択不可能。選択可能にしたい場合はSYSTEM_DEBUG.ERBの該当関数参照。)
-CALL EDIT_GAME_ROOT
+CALL EDIT_GAME_ROUTE
 ;エンゲージリングを渡している場合
 REPEAT CHARANUM
 	IF TALENT:COUNT:相愛
