@@ -2089,48 +2089,26 @@ NEXT
 ;ルート変更
 ;--------------------------------------------------
 @EDIT_GAME_ROOT
+#DIMS CONST DIFFICULTY, 11 = "EASY", "NORMAL", "HARD", "LUNATIC", "S-LUNATIC", "", "", "", "", "EXTRA", "PHANTASM"
+#DIMS CONST ROUTE, 4 = "東北邸Easy", "東北邸Normal", "東北邸Hard", "東北邸Luna"
+
 IF TALENT:MASTER:Debug == 0
 	;この直後のRETURN 0を削除すると、ルート変更可能
 	RETURN 0
 ENDIF
 
-VARSET LOCALS, ""
-LOCALS:0 = EASY
-LOCALS:1 = NORMAL
-LOCALS:2 = HARD
-LOCALS:3 = LUNATIC
-LOCALS:4 = S-LUNATIC
-LOCALS:9 = EXTRA
-LOCALS:10 = PHANTASM
-
 ;EXとPHではルート変更できず
-IF FLAG:5 == 9 || FLAG:5 == 10
-	PRINTFORMW 難易度:%LOCALS:(FLAG:5)%ではルート変更できません
+IF FLAG:難易度 == 9 || FLAG:難易度 == 10
+	PRINTFORMW 難易度:%DIFFICULTY:(FLAG:難易度)%ではルート変更できません
 	RETURN 0
 ENDIF
 
-VARSET TSTR, ""
-VARSET LOCAL, 0
-VARSET A, 0
-TSTR:0 = 東北邸Easy
-TSTR:1 = 東北邸Normal
-TSTR:2 = 東北邸Hard
-TSTR:3 = 東北邸Luna
-TSTR:11 = 風神録
-TSTR:12 = 地霊殿
-TSTR:13 = 星蓮船・魔界
-;TSTR:14 = 神霊廟
-
-PRINTFORML 現在、%TSTR:(FLAG:3)%ルート、難易度:%LOCALS:(FLAG:5)%で攻略中です
+PRINTFORML 現在、%ROUTE:(FLAG:攻略ルート)%ルート、難易度:%DIFFICULTY:(FLAG:難易度)%で攻略中です
 PRINTFORML 変更したいルートを選択してください
-FOR LOCAL, 0, 20
-	SIF TSTR:LOCAL == ""
-		CONTINUE
-	PRINTFORM [{LOCAL,2}] %TSTR:LOCAL%ルート
-	SIF LOCAL == FLAG:3
-		PRINTFORM (現在のルート)
-	PRINTL 
-	A:LOCAL = 1
+FOR LOCAL, 0, VARSIZE("ROUTE")
+	; SIF ROUTE:LOCAL == ""
+	; 	CONTINUE
+	PRINTFORML [{LOCAL,2}] %ROUTE:LOCAL%ルート\@LOCAL == FLAG:攻略ルート ? (現在のルート) # \@
 NEXT
 PRINTL [100] 変更しない
 $INPUT_ROOT
@@ -2139,12 +2117,12 @@ INPUT
 IF RESULT == 100
 	PRINTW 変更しませんでした
 	RETURN 0
-ELSEIF A:RESULT == 0 
+ELSEIF RESULT < 0 || RESULT >= VARSIZE("ROUTE")
 	PRINTFORML 正しい値を入力してください
 	GOTO INPUT_ROOT
 ENDIF
-FLAG:3 = RESULT
-PRINTFORMW 攻略ルートを%TSTR:(FLAG:3)%ルートに変更しました
+FLAG:攻略ルート = RESULT
+PRINTFORMW 攻略ルートを%ROUTE:(FLAG:攻略ルート)%ルートに変更しました
 
 ;=============================================================================
 ;デバッグ用全フラグ表示関数（ただし、デバッグモードのON/OFFと無関係に稼動する）
