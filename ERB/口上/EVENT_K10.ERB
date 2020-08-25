@@ -117,6 +117,8 @@ ELSEIF RESULT >= 1 && RESULT <= 8
 	CSTR:1 = %NAME:MASTER%さん
 	ENDIF
 	PRINTFORMW %CSTR:1%に設定しました
+	;いつCSTR:1が壊されてもいいように、CSTR:3にも保存
+	CSTR:3 = %CSTR:1%
 ELSE
 	GOTO INPUT_LOOP	
 ENDIF
@@ -2528,8 +2530,8 @@ SIF FLAG:7 <= 0
 SIF NO:TARGET != 10
 	RETURN 0
 	;
-IF CSTR:2 != ""
-	CSTR:1 = %CSTR:2%
+IF CSTR:2 != "" && CFLAG:698 == 1
+	CSTR:1 = %CSTR:3%
 	CSTR:2 = ""
 ENDIF
 
@@ -6052,8 +6054,8 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 59 && TEQUIP:59 == 0
 	;呼び方もとに戻す
-	CSTR:1 = %CSTR:2%
-	CSTR:2 = ""
+	CSTR:1 = %CSTR:3%
+	;CSTR:2 = ""
 	;恋慕+恋人
 	IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:456 < 3 || FLAG:7 == 2)
 		CALL PRINTFORMW2T , @"「あれ、もうエプロンは終わりですか？」"
