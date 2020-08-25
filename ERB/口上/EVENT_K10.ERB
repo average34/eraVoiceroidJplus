@@ -165,13 +165,20 @@ IF RESULT == 0
 	CSTR:1 = %RESULTS%
 	;名前登録フラグを立てる
 	CFLAG:698 = 1
-	PRINTFORML 
+	PRINTFORMW %CSTR:1%に設定しました
+	;いつCSTR:1が壊されてもいいように、CSTR:3にも保存
+	CSTR:3 = %CSTR:1%
 ELSEIF RESULT == 1
 	RESTART
 ELSE
 	GOTO INPUT_LOOP_3
 ENDIF
 
+
+@NAME_RELOCATION_K10
+IF CSTR:1 == "" && CFLAG:698 == 1
+	CSTR:1 = %CSTR:3%
+ENDIF
 
 ;--------------------------------------------------
 ;純愛イベント口上　 CFLAG221
@@ -314,6 +321,7 @@ ENDIF
 ;朝になったとき CFLAG221
 ;-------------------------------------------------
 IF TFLAG:600 == 38
+	CALL NAME_RELOCATION_K10
 	;デート後一回目
 	IF EXP:デート経験 > 0 && CFLAG:221 < 1
 		CALL PRINTFORMW2T , @"「ふぁー、おはようございます、%CSTR:1%」"
@@ -492,6 +500,8 @@ ENDIF
 ;攻略開始
 ;-------------------------------------------------
 IF TFLAG:600 == 34
+	CALL NAME_RELOCATION_K10
+
 ;	IF CFLAG:24 == 4 || CFLAG:459 == 5 || CFLAG:459 == 6
 		CALL PRINTFORMW2T , @"「今日もはりきって、ずんねえさまを探しましょう！」"
 ;		CALL CONFLICT2
