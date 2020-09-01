@@ -87,7 +87,7 @@ ELSE
 ENDIF
 ;攻略ルート選択(デフォルトでは選択不可能。選択可能にしたい場合はSYSTEM_DEBUG.ERBの該当関数参照。)
 SIF TALENT:MASTER:Debug == 0
-	CALL EDIT_GAME_ROOT
+	CALL EDIT_GAME_ROUTE
 
 ;日付を1日に設定
 DAY:1 = 1
