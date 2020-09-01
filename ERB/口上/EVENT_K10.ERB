@@ -62,7 +62,7 @@ SIF FLAG:7 == 0
 	FLAG:7 = 2
 
 ;きりたんとの会話開始時に名前が設定されていなければ設定
-SIF NO:TARGET == 10 && CSTR:1 == 
+SIF NO:TARGET == 10 && CSTR:1 == ""
 	CALL NAME_SET_K10
 
 
@@ -137,7 +137,7 @@ IF RESULT > 10
 	PRINTFORML 名前が長すぎます
 	RESTART
 ;空白はデフォルトの名前
-ELSEIF RESULTS == 
+ELSEIF RESULTS == ""
 	RESULTS = %NAME:MASTER%
 ELSE
 	;きりたん・ずん子・イタコは弾くように　それ以外はいいんじゃないっすかね
@@ -176,7 +176,7 @@ ENDIF
 
 
 @NAME_RELOCATION_K10
-IF CFLAG:698 == 1 && CSTR:1 == 
+IF CFLAG:698 == 1 && CSTR:1 == ""
 	CSTR:1 = %CSTR:3%
 ENDIF
 
@@ -284,7 +284,7 @@ IF TFLAG:600 == 28
 	CALL PRINTFORMW2T , @"「これから『%CSTR:1%』、とお呼びしてよろしいでしょうか」"
 	IF CSTR:1 == CALLNAME:MASTER
 		PRINTFORMW 改めてそう呼ばれるとすこし気恥かしいが、構わない、と伝えた
-	ELSEIF CSTR:1 == "%CSTR:1%" || CSTR:1 == "マスター"
+	ELSEIF CSTR:1 == "あにさま" || CSTR:1 == "マスター"
 		PRINTFORMW 随分と珍しい呼ばれ方に少し驚いたが、構わない、と伝えた
 	ELSE
 		PRINTFORMW 構わない、と伝えた
@@ -2540,7 +2540,7 @@ SIF FLAG:7 <= 0
 SIF NO:TARGET != 10
 	RETURN 0
 	;
-IF CFLAG:698 == 1 && CSTR:2 != 
+IF CFLAG:698 == 1 && CSTR:2 != ""
 	CSTR:1 = %CSTR:3%
 	CSTR:2 '= ""
 ENDIF

@@ -638,8 +638,8 @@ SIF TEQUIP:16
 	RETURN 0
 ;吸血鬼や動物耳には従順10がないと使用不可（サドならＯＫ）
 IF TALENT:吸血鬼 || TALENT:動物耳
-SIF ABL:親密 < 10 && TALENT:PLAYER:サド == 0
-	RETURN 0
+	SIF ABL:親密 < 10 && TALENT:PLAYER:サド == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -737,8 +737,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -788,8 +788,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -843,8 +843,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;クスコ挿入中はダメ
 SIF TEQUIP:61
@@ -877,8 +877,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
 SIF TEQUIP:59
@@ -911,8 +911,8 @@ SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PL
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -962,8 +962,8 @@ SIF ((FLAG:61 & 1) == 0) && (EXP:Ｖ経験 < EXPLV:1) && (ASSIPLAY && (TALENT:PL
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -1048,8 +1048,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -1114,8 +1114,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -1160,8 +1160,8 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -1226,8 +1226,8 @@ SIF (FLAG:61 & 1) == 0
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -1358,8 +1358,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -1399,8 +1399,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -1417,8 +1417,8 @@ SIF TFLAG:44 == 0
 SIF TEQUIP:58 == 0
 	RETURN 0
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;シャワー中はダメ
 SIF TEQUIP:18
@@ -1533,8 +1533,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -2285,8 +2285,8 @@ SIF TEQUIP:90
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -2326,8 +2326,8 @@ SIF TEQUIP:61
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -2576,8 +2576,8 @@ SIF TEQUIP:61
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;調教者がボールギャグ中だとダメ
 SIF TEQUIP:PLAYER:45
@@ -2644,8 +2644,8 @@ SIF TALENT:オトコ
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;触手調教中はダメ
 SIF TEQUIP:90
@@ -2845,8 +2845,8 @@ IF CFLAG:15 == 0 || CFLAG:15 == 2
 	SIF TALENT:サド || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
 		RETURN 1
 ;調教者がボールギャグ中だとダメ
-SIF TEQUIP:PLAYER:45
-	RETURN 0
+	SIF TEQUIP:PLAYER:45
+		RETURN 0
 ENDIF
 RETURN 0
 
@@ -2929,8 +2929,8 @@ SIF TALENT:オトコ
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
 	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
-	RETURN 0
-	ENDIF
+		RETURN 0
+ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
 IF TALENT:小柄体型
 	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
@@ -2947,8 +2947,8 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
 SIF TEQUIP:59
@@ -2982,8 +2982,8 @@ SIF TEQUIP:46
 ;ASSIの場合、従順3以上かサドじゃないとできない。
 IF ASSIPLAY
 	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
-	RETURN 0
-	ENDIF
+		RETURN 0
+ENDIF
 ;小柄体型なら従順が12以上かつマゾっ気が4以上じゃないと実行できない
 IF TALENT:小柄体型
 	SIF ABL:親密 <= 11 || ABL:マゾっ気 <= 3
@@ -3018,8 +3018,8 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
 SIF TEQUIP:59
@@ -3077,7 +3077,7 @@ SIF TALENT:オトコ
 ;一定のＶ・Ａ経験が必要
 IF EXP:Ｖ経験 < 300 || EXP:Ａ経験 < 300
 	RETURN 0
-	ENDIF
+ENDIF
 ;ASSIの場合、従順4以上かサドじゃないとできない。
 IF ASSIPLAY
 	SIF ABL:ASSI:親密 < 4 && TALENT:ASSI:サド == 0
@@ -3099,8 +3099,8 @@ SIF TEQUIP:18
 	RETURN 0
 ;お風呂場プレイ中はプレイマットが無いとダメ
 IF TEQUIP:58
-SIF ITEM:プレイマット == 0 && NOITEM == 0
-	RETURN 0
+	SIF ITEM:プレイマット == 0 && NOITEM == 0
+		RETURN 0
 ENDIF
 ;新妻プレイ中はダメ
 SIF TEQUIP:59
@@ -3149,8 +3149,8 @@ SIF TEQUIP:22 == 0 && TALENT:おもらし癖 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
-SIF ABL:親密 < 10
-	RETURN 0
+	SIF ABL:親密 < 10
+		RETURN 0
 ENDIF
 RETURN 1
 
@@ -3168,8 +3168,8 @@ SIF TEQUIP:22 == 0 && TALENT:おもらし癖 == 0
 	RETURN 0
 ;従順10以上でないとダメ（お風呂場ならＯＫ）
 IF TEQUIP:58 == 0
-SIF ABL:親密 < 10
-	RETURN 0
+	SIF ABL:親密 < 10
+		RETURN 0
 ENDIF
 ;おもらし癖ありで利尿剤が無いまたはおもらし癖なしかつ従順４以上欲望３以上マゾっ気３以上でないとダメ
 SIF (TALENT:おもらし癖 == 0 && (ABL:親密 <= 3 || ABL:欲望 <= 2 || ABL:マゾっ気 <= 2)) || (TALENT:おもらし癖 && TEQUIP:22 == 1)

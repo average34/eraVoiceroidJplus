@@ -20,13 +20,13 @@ CALL ABL_SORT
 REPEAT (A:0 - 3)
 	;CALL ABL_SORTで取得したX:COUNT（並べ直したABL）をLOCALに代入
 	LOCAL = X:COUNT
-	
+
 	;オトコ、女でそれぞれ不要なABLを表示しない
 	SIF LOCAL == 13 && TALENT:オトコ == 0
 		CONTINUE
 	SIF (LOCAL == 4 || LOCAL == 9 || LOCAL == 12) && TALENT:オトコ
 		CONTINUE
-	
+
 	;以下行数合わせ処理を含んだもの
 	PRINTFORM [{COUNT,2}]%ABLNAME:LOCAL%
 
@@ -41,7 +41,7 @@ REPEAT (A:0 - 3)
 	ELSE
 		PRINT -
 	ENDIF
-	
+
 	;ISABLUPのRESULTが1なら半角スペース1個と*、以外なら半角スペース2個
 	CALLFORM ISABLUP{LOCAL}
 	IF RESULT == 1
