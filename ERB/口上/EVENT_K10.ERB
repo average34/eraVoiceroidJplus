@@ -62,7 +62,7 @@ SIF FLAG:7 == 0
 	FLAG:7 = 2
 
 ;きりたんとの会話開始時に名前が設定されていなければ設定
-SIF CSTR:1 == "" && NO:TARGET == 10
+SIF NO:TARGET == 10 && CSTR:1 == 
 	CALL NAME_SET_K10
 
 
@@ -137,7 +137,7 @@ IF RESULT > 10
 	PRINTFORML 名前が長すぎます
 	RESTART
 ;空白はデフォルトの名前
-ELSEIF RESULTS == ""
+ELSEIF RESULTS == 
 	RESULTS = %NAME:MASTER%
 ELSE
 	;きりたん・ずん子・イタコは弾くように　それ以外はいいんじゃないっすかね
@@ -321,6 +321,7 @@ ENDIF
 ;朝になったとき CFLAG221
 ;-------------------------------------------------
 IF TFLAG:600 == 38
+	CALL NAME_RELOCATION_K10
 	;デート後一回目
 	IF EXP:デート経験 > 0 && CFLAG:221 < 1
 		CALL PRINTFORMW2T , @"「ふぁー、おはようございます、%CSTR:1%」"
@@ -499,6 +500,8 @@ ENDIF
 ;攻略開始
 ;-------------------------------------------------
 IF TFLAG:600 == 34
+	CALL NAME_RELOCATION_K10
+
 ;	IF CFLAG:24 == 4 || CFLAG:459 == 5 || CFLAG:459 == 6
 	CALL PRINTFORMW2T , @"「今日もはりきって、ずんねえさまを探しましょう！」"
 ;		CALL CONFLICT2
@@ -6061,8 +6064,8 @@ ENDIF
 ;-------------------------------------------------
 IF SELECTCOM == 59 && TEQUIP:59 == 0
 	;呼び方もとに戻す
-	CSTR:1 = %CSTR:2%
-	CSTR:2 '= ""
+	CSTR:1 = %CSTR:3%
+	;CSTR:2 = ""
 	;恋慕+恋人
 	IF TALENT:恋慕 == 1 && TALENT:恋人 == 1 && (CFLAG:456 < 3 || FLAG:7 == 2)
 		CALL PRINTFORMW2T , @"「あれ、もうエプロンは終わりですか？」"
