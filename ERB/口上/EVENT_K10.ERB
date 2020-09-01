@@ -1056,7 +1056,7 @@ IF TFLAG:600 == 19
 		PRINTFORMW 
 		CFLAG:242 = 3
 	;恋慕または恋人
-	ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:242 < 2 || FLAG:7 == 2)
+	ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:242 < 2 || FLAG:7 == 2)
 		PRINTFORMW 
 		CFLAG:242 = 2
 	;それ以外
@@ -1132,7 +1132,7 @@ IF TFLAG:600 == 21
 		CALL PRINTFORMW2T , @"「今日は疲れてるし、休憩しましょう」"
 		CFLAG:244 = 3
 	;恋慕または恋人
-	ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:244 < 2 || FLAG:キャラ口上の表示頻度 == 2)
+	ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:244 < 2 || FLAG:キャラ口上の表示頻度 == 2)
 		CALL PRINTFORMW2T , @"「今日は疲れましたし、お休みしましょう」"
 		CFLAG:244 = 2
 	;それ以外
@@ -2513,7 +2513,7 @@ ELSEIF TALENT:恋慕 && TALENT:恋人
 	CALL PRINTFORMW2T , @"「今日は何して過ごしましょう？」"
 	RETURN 1
 ;恋慕または恋人
-ELSEIF TALENT:恋慕 || TALENT:恋人
+ELSEIF TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000
 	CALL PRINTFORMW2T , @"「今日は何をしましょうか？」"
 	RETURN 1
 ;関係なし
@@ -2908,7 +2908,7 @@ IF SELECTCOM == 301
 				CFLAG:402 = 300
 			ENDIF
 		;恋人か恋慕のどちらか一方のみ
-		ELSEIF TALENT:恋慕 || TALENT:恋人
+		ELSEIF TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000 || CFLAG:好感度 >= 3000
 			IF CFLAG:402 == 200 || CFLAG:402 < 200
 				CALL PRINTFORMW2T , @"「最近でもないですけど、ポテトガンっていうじゃがいもの砲がネットで流行りみたいですね」"
 				CALL PRINTFORMW2T , @"「きりたん砲も流行らないかなー」"
@@ -3108,12 +3108,12 @@ IF SELECTCOM == 303
 	PRINTFORML
 	;初めて
 	IF CFLAG:405 == 0
-		;恋慕または恋人
-		IF TALENT:恋慕 || TALENT:恋人
+		;恋慕または恋人または好感度3000以上
+		IF TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000 
 			CALL PRINTFORMW2T , @"「ひゃっ！？」"
 			CALL PRINTFORMW2T , @"「いきなりなんですか……」"
 		;好感度が低い
-		ELSEIF CFLAG:2 < 100
+		ELSEIF CFLAG:好感度 < 100
 			CALL PRINTFORMW2T , @"「うわっ！？」"
 			PRINTFORMW きりたんを触ったらいきなり突き飛ばされてしまった
 			CALL PRINTFORMW2T , @"「ご、ごめんなさい、びっくりしてしまって……」"
@@ -3133,7 +3133,7 @@ IF SELECTCOM == 303
 			CALL PRINTFORMW2T , @"「えへへ……」"
 			CALL PRINTFORMW2T , @"「%CSTR:1%は何人くらい、子供欲しいですか？」"
 		;恋慕または恋人
-		ELSEIF TALENT:恋慕 || TALENT:恋人
+		ELSEIF TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000
 			LOCAL = RAND:9
 			IF LOCAL == 0
 				PRINTFORMW きりたんのほっぺをむにむにと触ってみた
@@ -3901,7 +3901,7 @@ IF SELECTCOM == 323 && TEQUIP:2 > 0 && 0
 			CALL PRINTFORMW2T , @"「こうして、一緒に遊びに行くのも、なんだか慣れちゃいましたね」"
 			CFLAG:407 = 4
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:407 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:407 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:407 = 3
 		;それ以外
@@ -4341,7 +4341,7 @@ IF SELECTCOM == 0
 			ENDIF
 			CFLAG:416 = 4
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:416 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:416 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			A = RAND:3
 			IF A == 0
 				CALL PRINTFORMW2T , @"「んあっ…ひゃっ」"
@@ -4400,7 +4400,7 @@ IF SELECTCOM == 1 && TEQUIP:57 == 0
 			ENDIF
 			CFLAG:417 = 4
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:417 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:417 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			LOCAL = RAND:4
 			IF LOCAL == 0
 				CALL PRINTFORMW2T , @"「ぁ……」"
@@ -4539,7 +4539,7 @@ IF SELECTCOM == 3 && TEQUIP:18 && TEQUIP:53 == 0
 			PRINTFORMW 
 			CFLAG:420 = 5
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:420 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:420 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			PRINTFORMW 
 			CFLAG:420 = 3
 		;それ以外
@@ -4570,7 +4570,7 @@ IF SELECTCOM == 5
 			CALL PRINTFORMW2T , @"「これっ、おかしっ、ちくび、すごっ」"
 			CFLAG:421 = 5
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:421 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:421 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			CALL PRINTFORMW2T , @"「うーん、たしかにじわじわ感じるようにはなってきましたが…」"
 			CFLAG:421 = 3
 		;それ以外
@@ -4637,7 +4637,7 @@ IF SELECTCOM == 7 && 0
 			PRINTFORMW きりたんはこちらにしなだれ、露骨に誘ってくる
 			CFLAG:419 = 4
 		;恋慕または恋人
-		ELSEIF (TALENT:恋慕 || TALENT:恋人) && (CFLAG:419 < 3 || FLAG:キャラ口上の表示頻度 == 2)
+		ELSEIF (TALENT:恋慕 || TALENT:恋人 || CFLAG:好感度 >= 3000) && (CFLAG:419 < 3 || FLAG:キャラ口上の表示頻度 == 2)
 			CALL PRINTFORMW2T , @"「ふぅ……休憩しましょう」"
 			CFLAG:419 = 3
 			CFLAG:423 = 3
