@@ -13,10 +13,10 @@ IF TFLAG:45 == 0
 
 	LOSEBASE:体力 += 80
 	LOSEBASE:気力 += 40
-	
+
 	SOURCE:露出 = 200
 	SOURCE:逸脱 = 500
-	
+
 	;PALAM:苦痛をみる
 	IF PALAM:苦痛 < PALAMLV:1
 		SOURCE:痛み = 300
@@ -29,7 +29,7 @@ IF TFLAG:45 == 0
 	ELSEIF PALAM:苦痛 >= PALAMLV:4
 		SOURCE:痛み = 1800
 	ENDIF
-	
+
 	;ABL:サドっ気をみる
 	IF ABL:PLAYER:サドっ気 == 0
 		TIMES SOURCE:痛み , 1.00
@@ -44,7 +44,7 @@ IF TFLAG:45 == 0
 	ELSE
 		SOURCE:痛み = SOURCE:痛み * (ABL:PLAYER:サドっ気 * 5 + 125) / 100
 	ENDIF
-	
+
 	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		PRINTS EXPNAME:40
 		PRINTL +2
@@ -56,7 +56,7 @@ IF TFLAG:45 == 0
 		EXP:ＢＬ経験 += 2
 		EXP:PLAYER:ＢＬ経験 += 2
 	ENDIF
-	
+
 	SIF ASSIPLAY == 0 && ABL:マゾっ気 >= 1
 		TFLAG:30 += 1
 
@@ -64,9 +64,8 @@ ELSE
 	;主導権が相手側
 	LOSEBASE:体力 += 10
 	LOSEBASE:気力 += 80
-	
 	SOURCE:逸脱 = 500
-	
+
 	;ABL:サドっ気をみる
 	IF ABL:サドっ気 == 0
 		SOURCE:征服 = 500
@@ -106,7 +105,7 @@ ELSE
 	;小悪魔持ちは懐疑1/2
 	SIF TALENT:小悪魔
 		TIMES SOURCE:懐疑 , 0.50
-	
+
 	IF TALENT:オトコ == 0 && TALENT:PLAYER:オトコ == 0
 		PRINTS EXPNAME:40
 		PRINTL +2
@@ -118,15 +117,15 @@ ELSE
 		EXP:ＢＬ経験 += 2
 		EXP:PLAYER:ＢＬ経験 += 2
 	ENDIF
-	
+
 	SIF ASSIPLAY == 0 && ABL:サドっ気 >= 1
 		TFLAG:30 += 1
-	
+
 	;[サド]取得用カウント
 	SIF ASSIPLAY == 0
 		TFLAG:61 += 1
 ENDIF
 
-	
+
 RETURN 1
 
