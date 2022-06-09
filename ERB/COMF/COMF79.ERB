@@ -88,7 +88,8 @@ ELSE
 		SOURCE:反感追加 = 25000
 	ENDIF
 
-	IF NO:TARGET == 24 && NO:TARGET == 78
+	;IF NO:TARGET == 24 && NO:TARGET == 78
+	IF 0
 		LOSEBASE:体力 += A / 4
 		LOSEBASE:気力 += A / 2
 		UP:恐怖 += A * 20
@@ -151,7 +152,8 @@ ELSE
 	SOURCE:反感追加 += 5000
 ENDIF
 
-IF NO:TARGET == 24 && NO:TARGET == 78
+;IF NO:TARGET == 24 && NO:TARGET == 78
+IF 0
 	LOSEBASE:体力 += A / 8
 	LOSEBASE:気力 += A / 4
 	UP:恐怖 += A * 20

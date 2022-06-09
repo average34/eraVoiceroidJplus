@@ -134,17 +134,17 @@ SIF TALENT:オトコ
 SIF MARK:反発感情 > 0
 	RETURN 0
 ;パイズリで起こされる
-;欲望8以上奉仕精神8以上精液中毒1以上で発生、奉仕精神と精液中毒で回数判定
+;欲望8以上奉仕精神8以上精液経験1以上で発生、奉仕精神と精液中毒で回数判定
 IF ABL:欲望 >= 8 && ABL:奉仕精神 >= 8 && ABL:精液中毒 >= 1 && (TALENT:MASTER:半人半妖 || TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:TARGET:恋慕
-	IF ABL:奉仕精神 + ABL:精液中毒 < 6
+	IF ABL:奉仕精神+ABL:精液中毒 < 6
 		A = 1
-	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 12
+	ELSEIF ABL:奉仕精神+ABL:精液中毒 < 12
 		A = 2
-	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 18
+	ELSEIF ABL:奉仕精神+ABL:精液中毒 < 18
 		A = 3
-	ELSEIF ABL:奉仕精神 + ABL:精液中毒 < 24
+	ELSEIF ABL:奉仕精神+ABL:精液中毒 < 24
 		A = 4
-	ELSEIF ABL:奉仕精神 + ABL:精液中毒 >= 24
+	ELSEIF ABL:奉仕精神+ABL:精液中毒 >= 24
 		A = 2 + (ABL:奉仕精神 / 6) + (ABL:精液中毒 / 4)
 	ENDIF
 	

@@ -50,6 +50,34 @@ ENDIF
 RETURN 1
 
 @COM120
+
+;前回の調教が3Pかつ口が開いているときキス3Pへ
+TFLAG:42 = 0
+IF PREVCOM == 64 && (TFLAG:40 != 3 && TFLAG:41 != 3)
+	CALL COMABLE_3P
+	IF RESULT == 1
+		TFLAG:42 = 2
+		JUMP COM125
+	ENDIF
+;前回の調教がキス3Pのときキス3Pへ
+ELSEIF PREVCOM == 125
+	CALL COMABLE_3P
+	IF RESULT == 1
+		TFLAG:42 = 2
+		JUMP COM125
+	ENDIF
+;調教者が前回:助手で今回:主人か、前回:主人で今回:助手のとき
+ELSEIF (ASSIPLAY && TFLAG:50 == 0) || (ASSIPLAY == 0 && TFLAG:50)
+	;前回の調教がアナルセックスか後背位アナルのときはキス3Pへ
+	IF PREVCOM == 22 || PREVCOM == 27
+		CALL COMABLE_3P
+		SIF RESULT == 1
+			JUMP COM125
+	ENDIF
+ENDIF
+
+
+
 ;キス正常位
 
 PRINTL キス正常位

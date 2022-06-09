@@ -670,6 +670,83 @@ ELSEIF NO:TARGET == 81
 	TSTR:1 = 『はやくそれになりたい！』
 	N -= 10
 	N += RAND:71
+ELSEIF NO:TARGET == 100
+	;ずんだもん
+	P = RAND:3
+	IF P == 0
+		;公式デモソング
+		TSTR:1 = 『スイートグリーン』
+		N += 15
+		N += RAND:70
+	ELSEIF P == 1
+		TSTR:1 = 『ずんだもんなのだ』
+		N += 5
+		N += RAND:72
+	ELSE
+		;ハム太郎の口調とイントネーションが似てるだけ
+		;とりあえずこれ歌わせとけ感がすごい
+		TSTR:1 = 『ハム太郎とっとこうた』
+		N -= 15
+		N += RAND:72
+	ENDIF
+ELSEIF NO:TARGET == 101
+	;めたん
+	P = RAND:3
+	IF P == 0
+		TSTR:1 = 『乙女のモットー』
+		N += 15
+		N += RAND:75
+	ELSEIF P == 1
+		TSTR:1 = 『magnet』
+		N += 5
+		N += RAND:70
+	ELSE
+		TSTR:1 = 『私、漆黒のめたんが相談に乗りましょう！』
+		N -= 10
+		N += RAND:75
+	ENDIF
+ELSEIF NO:TARGET == 102
+	;つむぎ
+	P = RAND:3
+	IF P == 0
+		;「春日部市の歌」として制定されているらしい
+		TSTR:1 = 『心の空』
+		N += 15
+		N += RAND:70
+	ELSEIF P == 1
+		;実写映画版「翔んで埼玉」の主題歌
+		TSTR:1 = 『埼玉県のうた』
+		N += 5
+		N += RAND:70
+	ELSE
+		;Flash黄金時代に作られた、「キングゲイナー・オーバー！」の替え歌
+		TSTR:1 = 『さいたまOVER』
+		N -= 10
+		N += RAND:80
+	ENDIF
+ELSEIF NO:TARGET == 103
+	;はう
+	;とりあえずこれ歌わせとけ感がすごい
+	TSTR:1 = 『愛のメディスン』
+	N += RAND:80
+ELSEIF NO:TARGET == 104
+	;リツ
+	P = RAND:3
+	;元々がオリジナル曲の多数有るUTAUな為、オリジナル曲で固めました
+	IF P == 0
+		;波音リツと言えばやっぱりコレというイメージが強い
+		TSTR:1 = 『Ｅ．Ｆ．Ｂ～恒久の氷結～』
+		N += 20
+		N += RAND:70
+	ELSEIF P == 1
+		TSTR:1 = 『タイムリープヒーロー』
+		N += 10
+		N += RAND:72
+	ELSE
+		TSTR:1 = 『Ｂ．Ｒ．Ｄ～叛逆の劫焔～』
+		N -= 10
+		N += RAND:80
+	ENDIF
 ELSE
 	;一応例外設定
 	;とりあえずこれ歌わせとけ感がすごい

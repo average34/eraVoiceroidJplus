@@ -658,18 +658,263 @@ IF K == 0
 		N += 70
 	ELSEIF NO:TARGET == 82
 		;ヒメ
-		TSTR:1 = 日の丸弁当
-		N += 70
+		;太宰府天満宮（福岡県太宰府市）の御神木「飛梅（とびうめ）」が
+		;デザインのモチーフとなっている為、福岡の郷土料理も追加。
+		;「そういうのは九州そらに任せておけばいいのよ！！」とか言ってはいけない
+		P = RAND:9
+		IF P == 0
+			TSTR:1 = 特製ラーメン
+			N += 100
+		ELSEIF P == 1
+			;博多うどん
+			TSTR:1 = 特製うどん
+			N += 80
+		ELSEIF P == 2
+			;博多天ぷら
+			TSTR:1 = 特製天ぷら
+			N += 80
+		ELSEIF P == 3
+			;福岡に限らず九州で広く食される郷土料理。
+			;小麦粉で作った小さな団子を味噌汁等に入れたもの。
+			TSTR:1 = だご汁
+			N += 50
+		ELSEIF P == 4
+			;福岡県太宰府市の名物。梅が入っているわけではない。
+			;小豆餡を薄い餅の生地でくるみ、梅の花の刻印が入った鉄板で焼く焼餅。
+			TSTR:1 = 梅が枝餅
+			N += 100
+		ELSEIF P == 5
+			TSTR:1 = 明太子スパゲッティ
+			N += 30
+		ELSEIF P == 6
+			;福岡の郷土料理。多くの野菜を寄せ集めて煮たもの。
+			;名前の由来は、博多弁の「がめくりこむ（寄せ集める）」からきているという説が有力。
+			TSTR:1 = がめ煮
+			N += 50
+		ELSEIF P == 7
+			;細かく刻んだ鶏肉を始めとする様々な具材を用いた炊き込みご飯。
+			;「かしわ」は九州地方において鶏肉のことを指す。
+			TSTR:1 = かしわ飯
+			N += 50
+		ELSE
+			TSTR:1 = 日の丸弁当
+			N += 70
+		ENDIF
 	ELSEIF NO:TARGET == 83
 		;ミコト
-		TSTR:1 = 日の丸弁当
-		N += 70
+		P = RAND:9
+		IF P == 0
+			TSTR:1 = 特製ラーメン
+			N += 100
+		ELSEIF P == 1
+			TSTR:1 = 特製うどん
+			N += 80
+		ELSEIF P == 2
+			TSTR:1 = 特製天ぷら
+			N += 80
+		ELSEIF P == 3
+			TSTR:1 = だご汁
+			N += 50
+		ELSEIF P == 4
+			TSTR:1 = 梅が枝餅
+			N += 100
+		ELSEIF P == 5
+			TSTR:1 = 明太子スパゲッティ
+			N += 30
+		ELSEIF P == 6
+			TSTR:1 = がめ煮
+			N += 50
+		ELSEIF P == 7
+			TSTR:1 = かしわ飯
+			N += 50
+		ELSE
+			TSTR:1 = 日の丸弁当
+			N += 70
+		ENDIF
 	ELSEIF NO:TARGET == 84
 		;flower
 		TSTR:1 = エディブルフラワーのサラダ
 		N += 70
-	
-		
+	ELSEIF NO:TARGET == 100
+		;ずんだもん
+		;ずん子から一部引用し、下方修正。
+		P = RAND:11
+		IF P == 0
+			TSTR:1 = ずんだ大福
+			N += 60
+		ELSEIF P == 1
+			TSTR:1 = ずんだ煎餅
+			N += 20
+		ELSEIF P == 2
+			TSTR:1 = ずんだアイスクリーム
+			N += 80
+		ELSEIF P == 3
+			TSTR:1 = ずんだ団子
+			N += 60
+		ELSEIF P == 4
+			TSTR:1 = ずんだ春巻き
+			N += 30
+		ELSEIF P == 5
+			TSTR:1 = ずんだプリン
+			N += 80
+		ELSEIF P == 6
+			TSTR:1 = ずんだサブレ
+			N += 80
+		ELSEIF P == 7
+			TSTR:1 = ずんだまんじゅう
+			N += 60
+		ELSEIF P == 8
+			TSTR:1 = ずんだ羊羹
+			N += 60
+		ELSEIF P == 9
+			TSTR:1 = ずんだクレープ
+			N += 80
+		ELSE
+			TSTR:1 = 特製ずんだ餅
+			N += 50
+		ENDIF
+	ELSEIF NO:TARGET == 101
+		;めたん
+		P = RAND:8
+		IF P == 0
+			TSTR:1 = 特製うどん
+			N += 100
+		ELSEIF P == 1
+			;香川蕎麦のことも忘れないであげて下さい
+			TSTR:1 = 特製蕎麦
+			N += 100
+		ELSEIF P == 2
+			;実在する商品。香川県の名物。
+			TSTR:1 = うどんバーガー
+			N += 30
+		ELSEIF P == 3
+			TSTR:1 = 鰹のたたき
+			N += 30
+		ELSEIF P == 4
+			TSTR:1 = 鍋焼きうどん
+			N += 60
+		ELSEIF P == 5
+			TSTR:1 = 鍋焼きラーメン
+			N += 60
+		ELSEIF P == 6
+			;愛媛県今治市の名物。
+			;ご飯にスライスした焼豚と目玉焼きをのせ、タレをかけて完成。
+			TSTR:1 = 焼豚玉子飯
+			N += 80
+		ELSE
+			;香川県の名物。「かっしゃ」とは「かしわ（鶏肉という意味）」が訛ったもの。
+			;名前の通り、タコ焼きのタコ部分が味付けされた鶏肉となっているような料理。
+			TSTR:1 = かっしゃ焼
+			N += 70
+		ENDIF
+	ELSEIF NO:TARGET == 102
+		;つむぎ
+		P = RAND:23
+		IF P == 0
+			;クワイは野菜の一種であり、オモダカの栽培品種。
+			;日本での主な産地は埼玉県越谷市や広島県福山市、石川県金沢市等。
+			TSTR:1 = クワイの煮物
+			N += 30
+		ELSEIF P == 1
+			TSTR:1 = カレー
+			N += 50
+		ELSEIF P == 2
+			TSTR:1 = ずんだカレー
+			N += 40
+		ELSEIF P == 3
+			TSTR:1 = ドライカレー
+			N += 30
+		ELSEIF P == 4
+			TSTR:1 = カレーラーメン
+			N += 40
+		ELSEIF P == 5
+			TSTR:1 = トマトカレー
+			N += 100
+		ELSEIF P == 6
+			TSTR:1 = カレーうどん
+			N += 40
+		ELSEIF P == 7
+			TSTR:1 = カレードリア
+			N += 100
+		ELSEIF P == 8
+			TSTR:1 = カレーコロッケ
+			N += 30
+		ELSEIF P == 9
+			TSTR:1 = さば寿司
+			N += 70
+		ELSEIF P == 10
+			TSTR:1 = カレーパン
+			N += 50
+		ELSEIF P == 11
+			;インド料理の一種で、肉を使わない豆カレー。
+			TSTR:1 = ダール・タドカ
+			N += 50
+		ELSEIF P == 12
+			;インド料理の一種で、ヨーグルトやナッツ類をベースに作られるマイルドなカレー。
+			TSTR:1 = コルマ
+			N += 50
+		ELSEIF P == 13
+			TSTR:1 = スープカレー
+			N += 30
+		ELSEIF P == 14
+			TSTR:1 = あんかけ焼きそば
+			N += 60
+		ELSEIF P == 15
+			TSTR:1 = カレーチャーハン
+			N += 50
+		ELSEIF P == 16
+			TSTR:1 = カレーチキンソテー
+			N += 50
+		ELSEIF P == 17
+			TSTR:1 = カレースパゲッティ
+			N += 40
+		ELSEIF P == 18
+			TSTR:1 = カレーチーズトースト
+			N += 50
+		ELSEIF P == 19
+			;天体戦士サンレッドの1コーナー「ヴァンプ将軍のさっと一品」で紹介されたカレー。
+			TSTR:1 = 早くてカンタン野菜炒めカレー
+			N += 60
+		ELSEIF P == 20
+			TSTR:1 = カレーパイ
+			N += 50
+		ELSEIF P == 21
+			TSTR:1 = カレークッキー
+			N += 20
+		ELSE
+			TSTR:1 = 特製カレーライス
+			N += 100
+		ENDIF
+	ELSEIF NO:TARGET == 103
+		;はう
+		TSTR:1 = ラーメン
+		N += 50
+	ELSEIF NO:TARGET == 104
+		;リツ
+		P = RAND:6
+		IF P == 0
+			TSTR:1 = ミントチョコクリスピー
+			N += 50
+		ELSEIF P == 1
+			;中の人（くるみ餅さん）が料理動画で作っていた。
+			TSTR:1 = 特製クッキー
+			N += 50
+		ELSEIF P == 2
+			;中の人（くるみ餅さん）が料理動画で作っていた。
+			TSTR:1 = 特製ケーキ
+			N += 50
+		ELSEIF P == 3
+			;中の人（くるみ餅さん）が料理動画で作っていた。
+			TSTR:1 = 緑野菜チャーハン
+			N += 20
+		ELSEIF P == 4
+			;中の人（くるみ餅さん）が料理動画で作っていた。
+			TSTR:1 = 七色チャーハン
+			N += 50
+		ELSE
+			TSTR:1 = 特製チョコクリスピー
+			N += 80
+		ENDIF
 	;テンプレ用
 ;	ELSEIF NO:TARGET == 
 ;		;キャラ
@@ -680,11 +925,10 @@ IF K == 0
 		TSTR:1 = お弁当
 		N += 50
 	ENDIF
-;固有料理の条件を満たさなくてもずん子はずんだ
-ELSEIF NO:TARGET == 5
+;固有料理の条件を満たさなくてもずん子とずんだもんはずんだ
+ELSEIF NO:TARGET == 5 || NO:TARGET == 100
 	TSTR:1 = ずんだ餅
 	N += 50
-	
 ELSEIF K == 1 || K == 15
 	TSTR:1 = 蕎麦
 ELSEIF K == 2 || K == 14

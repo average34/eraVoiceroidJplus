@@ -1,8 +1,80 @@
-﻿@COM75
+﻿@COM_ABLE75
+;言葉責め実行判定
+;COM_ABLE共通判定
+CALL COM_ABLE_COMMON, SELECTCOM
+SIF RESULT == 0
+	RETURN 0
+;ウフフ中じゃないと無理
+SIF TFLAG:44 == 0
+	RETURN 0
+;気力が残ってないと無理
+SIF BASE:気力 <= 0
+	RETURN 0
+
+
+CALL COM_ABLE75_PLAYER_MAIN
+SIF RESULT != 0
+	RETURN 1
+
+CALL COM_ABLE75_TARGET_MAIN
+SIF RESULT != 0
+	RETURN 1
+
+RETURN 0
+
+@COM_ABLE75_PLAYER_MAIN
+;PLAYER主導権時の実行判定
+;
+;PLAYERがボールギャグ中だとダメ
+SIF TEQUIP:PLAYER:45
+	RETURN 0
+;PLAYERが触手口辱中だとダメ(恐らくない)
+SIF TEQUIP:PLAYER:98
+	RETURN 0
+;他に口が塞がるor喋れなくなるコマンドがあればここに追記
+
+;こっちがサド持ちかサドっ気3以上、もしくは相手がマゾっ気3以上が必要
+SIF TALENT:PLAYER:サド || ABL:PLAYER:サドっ気 >= 3 || ABL:マゾっ気 >= 3
+	RETURN 1
+RETURN 0
+
+@COM_ABLE75_TARGET_MAIN
+;TARGET主導権時の実行判定
+;
+;TARGETがボールギャグ中だとダメ
+SIF TEQUIP:TARGET:45
+	RETURN 0
+;TARGETが触手口辱中だとダメ
+SIF TEQUIP:TARGET:98
+	RETURN 0
+;他に口が塞がるor喋れなくなるコマンドがあればここに追記
+
+;相手側がサド持ちかサドっ気3以上、もしくはこっちがマゾっ気3以上が必要
+SIF TALENT:サド || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
+	RETURN 1
+RETURN 0
+
+
+@COM75
 ;言葉責め
 
-PRINTL 言葉責め
-STR:0 = 言葉責め
+;プレイヤーに主導権がある時にPLAYER主導権時の実行ができない場合はパートナーに主導権が移る
+CALL COM_ABLE75_PLAYER_MAIN
+SIF  TFLAG:45 == 0 && RESULT == 0
+	TFLAG:45 = 1
+
+;パートナーに主導権がある時にTARGET主導権時の実行ができない場合はプレイヤーに主導権が移る
+CALL COM_ABLE75_TARGET_MAIN
+SIF  TFLAG:45 == 1 && RESULT == 0
+	TFLAG:45 = 0
+
+IF TFLAG:45 == 0
+	PRINTL 言葉責め
+	STR:0 = 言葉責め
+ELSE
+	PRINTL 言葉責め
+	STR:0 = 言葉責め
+ENDIF
 CALL TRAIN_MESSAGE_B
 
 ;-------------------------------------------------

@@ -218,9 +218,24 @@ SIF SELECTCOM == 41 && TFLAG:45
 SIF SELECTCOM == 42 && TFLAG:45
 	LOCALS = 針で刺される
 ;言葉責め
-SIF SELECTCOM == 75 && TFLAG:45
-	LOCALS = 言葉責めされる
+IF SELECTCOM == 75
+	;PLAYER主導権時の実行判定
+	CALL COM_ABLE75_PLAYER_MAIN
+	LOCAL:0 = RESULT
 
+	;TARGET主導権時の実行判定
+	CALL COM_ABLE75_TARGET_MAIN
+	LOCAL:1 = RESULT
+
+	;下記1及び2を満たすとき「言葉責めされる」になるため名前変更
+	;
+	;1. TARGET主導権時の「言葉責めされる」を実行可能
+	;2. 次のaかbのどちらかに該当する
+	;  a) TARGETが主導権をもっている
+	;  b) PLAYER主導権時の「言葉責め」を実行できない
+	SIF LOCAL:1 && (TFLAG:45 || LOCAL:0 == 0)
+		LOCALS = 言葉責めされる
+ENDIF
 ;剃毛プレイ
 IF SELECTCOM == 257
 	;PLAYER主導権時の実行判定

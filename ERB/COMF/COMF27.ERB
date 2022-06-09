@@ -9,6 +9,13 @@ IF PREVCOM == 64
 		TFLAG:42 = 1
 		JUMP COM64
 	ENDIF
+;前回の調教がキス3Pのときキス3Pへ
+ELSEIF PREVCOM == 125
+	CALL COMABLE_3P
+	IF RESULT == 1
+		TFLAG:42 = 2
+		JUMP COM125
+	ENDIF
 ;調教者が前回:助手で今回:主人か、前回:主人で今回:助手のとき
 ELSEIF (ASSIPLAY && TFLAG:50 == 0) || (ASSIPLAY == 0 && TFLAG:50)
 	;前回の調教が正常位か後背位かフェラチオかイラマチオのときは3Pへ
@@ -16,6 +23,11 @@ ELSEIF (ASSIPLAY && TFLAG:50 == 0) || (ASSIPLAY == 0 && TFLAG:50)
 		CALL COMABLE_3P
 		SIF RESULT == 1
 			JUMP COM64
+	;前回の調教がキス正常位かキス後背位のときはキス3Pへ
+	ELSEIF PREVCOM == 120 || PREVCOM == 121
+			CALL COMABLE_3P
+		SIF RESULT == 1
+			JUMP COM125
 	ENDIF
 ENDIF
 

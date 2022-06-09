@@ -46,7 +46,7 @@ IF TEQUIP:58
 		RETURN 0
 ENDIF
 ;前回コマンドが正常位・後背位・対面座位・背面座位・騎乗位・乱れ牡丹・挿入Ｇスポ責め・挿入子宮口責めでないとダメ
-SIF PREVCOM != 20 && PREVCOM != 21 && PREVCOM != 24 && PREVCOM != 25 && PREVCOM != 34 && PREVCOM != 88 && PREVCOM != 255 && PREVCOM != 256
+SIF PREVCOM != 20 && PREVCOM != 21 && PREVCOM != 24 && PREVCOM != 25 && PREVCOM != 34 && PREVCOM != 88 && PREVCOM != 255 && PREVCOM != 256 && PREVCOM != 120 && PREVCOM != 121 && PREVCOM != 122 && PREVCOM != 123 && PREVCOM != 124
 	RETURN 0
 ;調教者の技巧3以上かつ前回コマンド実行者が今回も実行していないとダメ
 IF ABL:PLAYER:技巧 > 2 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
@@ -60,7 +60,7 @@ RETURN 1
 ;挿入子宮口責め
 
 TFLAG:42 = 0
-IF SELECTCOM == 34
+IF INSERT_POSITION() == 34
 	PRINTL 騎乗子宮口責め
 	STR:0 = 騎乗子宮口責め
 ELSE
@@ -68,9 +68,7 @@ ELSE
 	STR:0 = 挿入子宮口責め
 ENDIF
 
-;派生元コマンドをPREVCOMに登録、SELECTCOMをこのコマンド番号に変更してからCALL TRAIN_MESSAGE_B
-SIF SELECTCOM != 256
-	PREVCOM = SELECTCOM
+;SELECTCOMをこのコマンド番号に変更してからCALL TRAIN_MESSAGE_B
 SELECTCOM = 256
 
 CALL TRAIN_MESSAGE_B
@@ -393,7 +391,7 @@ RETURN 1
 
 @TRAIN_MESSAGE_COM256
 ;騎乗位
-IF PREVCOM == 34
+IF INSERT_POSITION() == 34
 	PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%の胸に手を衝き、ペニスを根元まで飲み込んだ…
 	IF EXP:Ｖ経験 <= 30
 		PRINTFORMW %CALLNAME:TARGET%はそのまま腰を前後に揺すっている…
@@ -412,18 +410,18 @@ IF PREVCOM == 34
 	ENDIF
 ELSE
 	;正常位
-	SIF PREVCOM == 20
+	SIF INSERT_POSITION() == 20
 		PRINTFORMW 腰を掴んで深く突き、%CALLNAME:TARGET%の子宮をコツンと叩いた…
 	;後背位
-	SIF PREVCOM == 21
+	SIF INSERT_POSITION() == 21
 		PRINTFORMW 尻を掴んで深く突き、%CALLNAME:TARGET%の子宮をコツンと叩いた…
 	;対面座位
-	SIF PREVCOM == 24
+	SIF INSERT_POSITION() == 24
 		PRINTFORMW 腰の括れを深く抱いて、%CALLNAME:TARGET%の子宮をグリグリと刺激した…
 	;背面座位・乱れ牡丹
-	SIF PREVCOM == 25 || PREVCOM == 88
+	SIF INSERT_POSITION() == 25
 		PRINTFORMW 腰を前に押すようにして、%CALLNAME:TARGET%の深奥まで突き上げた…
-	IF EXP:Ｖ経験 <= 30 || (EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && (PREVCOM == 21 || PREVCOM == 25 || PREVCOM == 88))
+	IF EXP:Ｖ経験 <= 30 || (EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && (INSERT_POSITION() == 21 || INSERT_POSITION() == 25))
 		PRINTFORMW %CALLNAME:TARGET%は異物感が強いのか、苦しそうにしている…
 	ELSEIF EXP:Ｖ経験 >= 31 && EXP:Ｖ経験 <= 50 && TALENT:ふたなり
 		PRINTFORMW %CALLNAME:TARGET%は陰毛と臍の窪みにペニスを嬲られ、鼻声を漏らしている…

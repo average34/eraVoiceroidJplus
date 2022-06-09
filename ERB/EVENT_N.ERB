@@ -746,8 +746,8 @@ PRINTW 出産経験＋１
 IF TALENT:C:母乳体質 == 0
 	PRINTFORMW %CALLNAME:C%は母乳が出るようになった
 	PRINTFORMW 　
-	TALENT:C:母乳体質 = 1
 ENDIF
+TALENT:C:母乳体質 =+ 1
 
 ;妊娠時に減った体力の最大値が回復
 MAXBASE:C:体力 += 500
@@ -909,14 +909,16 @@ PRINTFORMW %CALLNAME:C%の育てていた子供が親離れしました
 
 ;子育て終了で母乳体質、回復遅い消失(元々持ってる場合は消失しない)
 
-PRINTFORM %CALLNAME:C%は
-SIF TALENT:C:回復遅い && CFLAG:C:96 != 2
-	PRINTFORM [%TALENTNAME:112%]
-SIF TALENT:C:母乳体質
-	PRINTFORM [%TALENTNAME:130%]
-PRINTFORMW を失いました
+IF (TALENT:C:回復遅い && CFLAG:C:96 != 2) || TALENT:C:母乳体質 == 1
+	PRINTFORM %CALLNAME:C%は
+	SIF TALENT:C:回復遅い && CFLAG:C:96 != 2
+		PRINTFORM [回復遅い]
+	SIF TALENT:C:母乳体質
+		PRINTFORM [母乳体質]
+	PRINTFORMW を失いました
+ENDIF
 TALENT:C:回復遅い = 0
-TALENT:C:母乳体質 = 0
+TALENT:C:母乳体質 =- 1
 ;回復遅い系の素質復帰
 IF CFLAG:C:96 == 1
 	;元々回復早い持ち

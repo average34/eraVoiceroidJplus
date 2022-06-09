@@ -140,6 +140,14 @@ ELSE
 	ELSEIF TEQUIP:13 && TEQUIP:61
 		PRINT ヴァギナをクスコで開かれたままアナルバイブを自ら抜き挿ししながら
 	ELSEIF TEQUIP:13
+		IF TALENT:オトコ || TALENT:ふたなり
+			SIF PALAM:欲情 >= PALAMLV:3
+				PRINT 硬く勃起した
+			PRINT ペニスを
+			SIF TEQUIP:17
+				PRINT オナホールで
+			PRINT 扱きつつ
+		ENDIF
 		PRINT 突っ込まれているアナルバイブを自ら抜き挿ししながら
 	ELSEIF TEQUIP:61
 		PRINT クスコで開かれたヴァギナを自らの指で撫で回しながら
@@ -147,6 +155,10 @@ ELSE
 		SIF PALAM:欲情 >= PALAMLV:3
 			PRINT 硬く勃起した
 		PRINT ペニスをオナホールで扱きながら
+	ELSEIF TALENT:オトコ
+		SIF PALAM:欲情 >= PALAMLV:3
+			PRINT 硬く勃起した
+		PRINT ペニスを扱きながら
 	ELSE
 		PRINT 秘所を自らの指で弄りながら
 	ENDIF
@@ -353,10 +365,74 @@ PRINTW だ…
 	ENDIF
 	RETURNF 0
 
+;最後にセットされた体位を調べる
+@INSERT_POSITION(ARG_COM = __INT_MIN__)
+;挿入系コマンド番号を引数にとり、キスハメ系などを通常のコマンド番号に変換する。
+;引数を省略した場合や引数が挿入Gスポットor子宮口責めコマンドの場合には以前にセットされた体位を返す。
+;入れっぱなしの地の文の選択などの為に
+#FUNCTION
+#DIM ARG_COM
+#DIM STATIC POSITION ;実はemueraのerabasicではDYNAMICを付けずに定義したローカル変数はSTATICになるのでわざわざ指定する意味はない。
+	IF ARG_COM == __INT_MIN__
+		;引数を省略した場合内部の状態を返す
+
+	ELSEIF (ARG_COM == 255) || (ARG_COM == 256)
+		;挿入派生コマンドは変更しない
+
+	ELSEIF (ARG_COM >= 20) && (ARG_COM <= 29)
+		;セックス系コマンド
+		POSITION = ARG_COM
+
+	ELSEIF (ARG_COM == 34) || (ARG_COM == 36)
+		;騎乗位(VprA)
+		POSITION = ARG_COM
+	
+	
+	ELSEIF (ARG_COM == 56)
+		;助手を犯す
+		POSITION = ARG_COM
+	
+	ELSEIF (ARG_COM == 363) || (ARG_COM == 365) || (ARG_COM == 366) || (ARG_COM == 368) || (ARG_COM == 369) 
+		;着衣性交系
+		POSITION = ARG_COM
+
+	ELSEIF (ARG_COM == 88)
+		;乱れ牡丹は背面座位
+		POSITION = 25
+
+	;キスハメ系
+	ELSEIF (ARG_COM == 120)
+		;キス正常位は正常位
+		POSITION = 20
+	
+	ELSEIF (ARG_COM == 121)
+		;キス後背位は後背位
+		POSITION = 21
+	
+	ELSEIF (ARG_COM == 122)
+		;キス対面座位は対面座位
+		POSITION = 24
+	
+	ELSEIF (ARG_COM == 123)
+		;キス背面座位は背面座位
+		POSITION = 25
+	
+	ELSEIF (ARG_COM == 124)
+		;キス騎乗位は騎乗位
+		POSITION = 34
+
+	ELSE
+		;それ以外のコマンドは-1にリセット
+		POSITION = -1
+	ENDIF
+RETURNF POSITION
+
+
+RETURNF 0
 ;正常位
 @TRAIN_MESSAGE_COM20
 ;前回と今回の調教者が同じで、前回の調教が正常位であり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 20
+IF INSERT_CONTINUEABLE() && INSERT_POSITION()
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 		PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
@@ -367,7 +443,7 @@ IF INSERT_CONTINUEABLE() && PREVCOM == 20
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に前回の調教が後背位か騎乗位の場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 21 || PREVCOM == 24 || PREVCOM == 25 || PREVCOM == 34)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 21 || INSERT_POSITION() == 24 || INSERT_POSITION() == 25 || INSERT_POSITION() == 34)
 	PRINTFORMW 膣内から抜き去ることなく%CALLNAME:TARGET%を仰向けに寝かせ、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
@@ -388,7 +464,7 @@ ENDIF
 ;後背位
 @TRAIN_MESSAGE_COM21
 ;前回と今回の調教者が同じで、前回の調教が後背位であり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 21
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 21
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 		PRINTFORMW %CALLNAME:TARGET%の膣内の感触を味わいながら、再び腰を動かし始めた…
@@ -399,12 +475,12 @@ IF INSERT_CONTINUEABLE() && PREVCOM == 21
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が正常位である場合
-ELSEIF INSERT_CONTINUEABLE() && PREVCOM == 20
+ELSEIF INSERT_CONTINUEABLE() && INSERT_POSITION() == 20
 	PRINTFORMW 膣内から抜き去ることなく%CALLNAME:TARGET%の後ろに回り、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が対面座位、背面座位、騎乗位である場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 24 || PREVCOM == 25 || PREVCOM == 34)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 24 || INSERT_POSITION() == 25 || INSERT_POSITION(PREVCOM) == 34)
 	PRINTFORMW 挿入したまま%CALLNAME:TARGET%を寝かせて四つん這いにし、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
@@ -426,12 +502,12 @@ ENDIF
 ;アナルセックス
 @TRAIN_MESSAGE_COM22
 ;前回と今回の調教者が同じで、前回の調教がアナルセックスであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && (PREVCOM == 22 || PREVCOM == 26)
+IF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 22 || INSERT_POSITION() == 26)
 	PRINTFORMW %CALLNAME:TARGET%のアヌスに根元まで埋め込んだまま、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に前回の調教が後背位の場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 27 || PREVCOM == 28 || PREVCOM == 29)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 27 || INSERT_POSITION() == 28 || INSERT_POSITION() == 29)
 	PRINTFORMW アヌスから抜き去ることなく%CALLNAME:TARGET%を仰向けに寝かせ、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
@@ -449,6 +525,15 @@ ENDIF
 ;前回と今回の調教者が同じで、前回の調教が逆レイプであり、抜かないフラグがある場合
 IF TFLAG:60 && PREVCOM == 23 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
 	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニスをきつく食い締めたまま、執拗に腰を振りたてた…
+;前回と今回の調教者が同じで、前回の調教が騎乗位するであり、抜かないフラグがある場合
+ELSEIF TFLAG:60 && PREVCOM == 195 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
+	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニスをきつく食い締めたまま、突然激しく腰を振りたてた…
+;前回と今回の調教者が同じで、前回の調教が正常位させるであり、抜かないフラグがある場合
+ELSEIF TFLAG:60 && PREVCOM == 193 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
+	PRINTFORMW %CALLNAME:PLAYER%は急に起き上がると%CALLNAME:TARGET%を押し倒し、ペニスをきつく食い締めたまま、執拗に腰を振りたてた…
+;前回と今回の調教者が同じで、前回の調教が後背位させるであり、抜かないフラグがある場合
+ELSEIF TFLAG:60 && PREVCOM == 194 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
+	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%に向き直るとそのまま押し倒し、ペニスをきつく食い締めたまま、執拗に腰を振りたてた…
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニスを強引に、
 	SIF EXP:PLAYER:Ｖ経験 == 0
@@ -458,19 +543,19 @@ ENDIF
 ;対面座位
 @TRAIN_MESSAGE_COM24
 ;前回と今回の調教者が同じで、前回の調教が対面座位であり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 24
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 24
 	PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%とキスをし、舌を絡めながら再び腰を揺すり始めた…
 ;同様に前回の調教が正常位、騎乗位の場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 20 || PREVCOM == 34)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 20 || INSERT_POSITION() == 34)
 	PRINTFORM 膣内からペニスを抜き去ることなく%CALLNAME:TARGET%の身体を
-	IF PREVCOM == 20
+	IF INSERT_POSITION() == 20
 		PRINT 抱き上げ、
 	ELSE
 		PRINT ぎゅっと抱き寄せ、
 	ENDIF
 	PRINTFORMW 腰を揺すり始めた…
 ;同様に前回の調教が後背位、背面座位の場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 21 || PREVCOM == 25)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 21 || INSERT_POSITION() == 25)
 	PRINTFORM 挿入したまま身体をこちらに向かせ
 	IF PREVCOM == 21
 		PRINT て抱き上げると、
@@ -492,13 +577,13 @@ ENDIF
 ;背面座位
 @TRAIN_MESSAGE_COM25
 ;羞恥プレイ中で前回と今回の調教者が同じで、前回の調教が背面座位であり、抜かないフラグがある場合
-IF TEQUIP:57 && INSERT_CONTINUEABLE() && PREVCOM == 88
+IF TEQUIP:57 && INSERT_CONTINUEABLE() && INSERT_POSITION() == 88
 	PRINTFORML %CALLNAME:TARGET%の結合部と胸に再び手を這わせ、見せ付けるように腰を動かした…
 ;同様に、前回の調教が後背位か騎乗位である場合
-ELSEIF TEQUIP:57 && INSERT_CONTINUEABLE() && (PREVCOM == 21 || PREVCOM == 34)
+ELSEIF TEQUIP:57 && INSERT_CONTINUEABLE() && (INSERT_POSITION() == 21 || INSERT_POSITION() == 34)
 	PRINTFORML 膣内からペニスを抜き去ることなく%CALLNAME:TARGET%の身体を背中から抱き寄せ、脚を大きく開かせた…
 ;同様に、前回の調教が正常位か対面座位である場合
-ELSEIF TEQUIP:57 && INSERT_CONTINUEABLE() && (PREVCOM == 20 || PREVCOM == 24)
+ELSEIF TEQUIP:57 && INSERT_CONTINUEABLE() && (INSERT_POSITION() == 20 || INSERT_POSITION() == 24)
 	PRINTFORM 挿入したまま反対を向かせた%CALLNAME:TARGET%の身体を
 	IF PREVCOM == 20
 		PRINT 抱き上げ、
@@ -508,13 +593,13 @@ ELSEIF TEQUIP:57 && INSERT_CONTINUEABLE() && (PREVCOM == 20 || PREVCOM == 24)
 	ENDIF
 	PRINTFORML 脚を大きく開かせた…	
 ;前回と今回の調教者が同じで、前回の調教が背面座位であり、抜かないフラグがある場合
-ELSEIF INSERT_CONTINUEABLE() && PREVCOM == 25
+ELSEIF INSERT_CONTINUEABLE() && INSERT_POSITION() == 25
 	PRINTFORMW %CALLNAME:TARGET%を背後から抱きしめ、再び%CALLNAME:TARGET%の身体を揺らし始めた…
 ;同様に、前回の調教が後背位か騎乗位である場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 21 || PREVCOM == 34)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 21 || INSERT_POSITION() == 34)
 	PRINTFORMW 膣内からペニスを抜き去ることなく%CALLNAME:TARGET%の身体を背中から抱き寄せ、身体を揺さぶり始めた…
 ;同様に、前回の調教が正常位か対面座位である場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 20 || PREVCOM == 24)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 20 || INSERT_POSITION() == 24)
 	PRINTFORM 挿入したまま反対を向かせた%CALLNAME:TARGET%の身体を
 	IF PREVCOM == 20
 		PRINT 抱き上げ、
@@ -558,7 +643,7 @@ ENDIF
 ;正常位アナル
 @TRAIN_MESSAGE_COM26
 ;前回と今回の調教者が同じで、前回の調教が正常位アナルであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 22)
+IF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 26 || INSERT_POSITION() == 22)
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 		PRINTFORMW %CALLNAME:TARGET%の菊穴の感触を味わいながら、再び腰を動かし始めた…
@@ -567,7 +652,7 @@ IF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 22)
 		PRINTFORMW %CALLNAME:TARGET%の腸内から抜かずに、再び腰を動かし始めた…
 	ENDIF
 ;同様に前回の調教が後背位アナルか対面座位アナルか背面座位アナルか騎乗位アナルの場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 27 || PREVCOM == 28 || PREVCOM == 29 || PREVCOM == 36)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 27 || INSERT_POSITION() == 28 || INSERT_POSITION() == 29 || INSERT_POSITION() == 36)
 	PRINTFORMW 腸内から抜き去ることなく%CALLNAME:TARGET%を仰向けに寝かせ、再び腰を動かし始めた…
 ELSE
 	SIF TFLAG:263
@@ -580,7 +665,7 @@ ENDIF
 ;後背位アナル
 @TRAIN_MESSAGE_COM27
 ;前回と今回の調教者が同じで、前回の調教が後背位アナルであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 27
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 27
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
 		PRINTFORMW %CALLNAME:TARGET%のアヌスの感触を味わいながら、再び腰を動かし始めた…
@@ -591,12 +676,12 @@ IF INSERT_CONTINUEABLE() && PREVCOM == 27
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が正常位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && PREVCOM == 26
+ELSEIF INSERT_CONTINUEABLE() && INSERT_POSITION() == 26
 	PRINTFORMW 腸内から抜き去ることなく%CALLNAME:TARGET%の後ろに回り、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が対面座位アナル、背面座位アナル、騎乗位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 28 || PREVCOM == 29 || PREVCOM == 36)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 28 || INSERT_POSITION() == 29 || INSERT_POSITION() == 36)
 	PRINTFORMW 挿入したまま%CALLNAME:TARGET%を寝かせて四つん這いにし、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
@@ -609,10 +694,10 @@ ENDIF
 ;対面座位アナル
 @TRAIN_MESSAGE_COM28
 ;前回と今回の調教者が同じで、前回の調教が対面座位アナルであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 28
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 28
 	PRINTFORMW %CALLNAME:TARGET%は%CALLNAME:PLAYER%とキスをし、舌を絡めながら再び腰を揺すり始めた…
 ;同様に前回の調教が正常位アナル、騎乗位アナルの場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 36)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 26 || INSERT_POSITION() == 36)
 	PRINTFORM 腸内から
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
@@ -622,7 +707,7 @@ ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 36)
 	ENDIF
 	PRINTFORMW 抜き去ることなく%CALLNAME:TARGET%の身体をぎゅっと抱き寄せ、腰を揺すり始めた…
 ;同様に前回の調教が後背位アナル、背面座位アナルの場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 27 || PREVCOM == 29)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 27 || INSERT_POSITION() == 29)
 	PRINTFORM 挿入したまま身体をこちらに向かせ
 	IF PREVCOM == 21
 		PRINT て抱き上げると、
@@ -639,10 +724,10 @@ ENDIF
 ;背面座位アナル
 @TRAIN_MESSAGE_COM29
 ;前回と今回の調教者が同じで、前回の調教が背面座位アナルであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 29
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 29
 	PRINTFORMW %CALLNAME:TARGET%を背後から抱きしめ、再び%CALLNAME:TARGET%の身体を揺らし始めた…
 ;同様に、前回の調教が後背位アナルか騎乗位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 27 || PREVCOM == 36)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 27 || INSERT_POSITION() == 36)
 	PRINTFORM 腸内から
 	;調教者がオトコか半人半妖かふたなりである
 	IF TALENT:PLAYER:半人半妖 || TALENT:PLAYER:ふたなり || TALENT:PLAYER:オトコ
@@ -652,9 +737,9 @@ ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 27 || PREVCOM == 36)
 	ENDIF
 	PRINTFORMW 抜き去ることなく%CALLNAME:TARGET%の身体を背中から抱き寄せ、身体を揺さぶり始めた…
 ;同様に、前回の調教が正常位アナルか対面座位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 28)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 26 || INSERT_POSITION() == 28)
 	PRINTFORM 挿入したまま反対を向かせた%CALLNAME:TARGET%の身体を
-	IF PREVCOM == 20
+	IF INSERT_POSITION() == 20
 		PRINT 抱き上げ、
 	ELSE
 		;PREVCOM == 24
@@ -739,17 +824,17 @@ PRINTW ペニスに擦りつけている…
 ;騎乗位
 @TRAIN_MESSAGE_COM34
 ;前回と今回の調教者が同じで、前回の調教が騎乗位であり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 34
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 34
 	PRINTFORMW %CALLNAME:TARGET%は挿入されたままのペニスを締め付け、再び腰を動かし始めた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が正常位か後背位である場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 20 || PREVCOM == 21)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 20 || INSERT_POSITION() == 21)
 	PRINTFORMW %CALLNAME:MASTER%は挿入したまま横になり、%CALLNAME:TARGET%を腰に乗せて下から突き上げた…
 	SIF TFLAG:31
 		TFLAG:31 = 2
 ;同様に、前回の調教が対面座位か背面座位である場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 24 || PREVCOM == 25)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 24 || INSERT_POSITION() == 25)
 	PRINTFORMW %CALLNAME:MASTER%は挿入したまま横になり、下から腰を突き上げた…
 ELSE
 	PRINTFORM %CALLNAME:TARGET%は%CALLNAME:PLAYER%の上にまたがり、ゆっくりと腰を下ろし
@@ -787,13 +872,13 @@ PRINTW 愛撫した…
 ;騎乗位アナル
 @TRAIN_MESSAGE_COM36
 ;前回と今回の調教者が同じで、前回の調教が騎乗位アナルであり、抜かないフラグがある場合
-IF INSERT_CONTINUEABLE() && PREVCOM == 36
+IF INSERT_CONTINUEABLE() && INSERT_POSITION() == 36
 	PRINTFORMW %CALLNAME:TARGET%は挿入されたままのペニスを締め付け、再び腰を動かし始めた…
 ;同様に、前回の調教が正常位アナルか後背位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 26 || PREVCOM == 27)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 26 || INSERT_POSITION() == 27)
 	PRINTFORMW %CALLNAME:MASTER%は挿入したまま横になり、%CALLNAME:TARGET%を腰に乗せて下から突き上げた…
 ;同様に、前回の調教が対面座位アナルか背面座位アナルである場合
-ELSEIF INSERT_CONTINUEABLE() && (PREVCOM == 28 || PREVCOM == 29)
+ELSEIF INSERT_CONTINUEABLE() && (INSERT_POSITION() == 28 || INSERT_POSITION() == 29)
 	PRINTFORMW %CALLNAME:MASTER%は挿入したまま横になり、下から腰を突き上げた…
 ELSE
 	PRINTFORM %CALLNAME:TARGET%は%CALLNAME:PLAYER%の上にまたがると、
@@ -1058,11 +1143,73 @@ IF TFLAG:45
 	ENDIF
 ELSE
 	;主人公主導
-	PRINTFORM %CALLNAME:TARGET%の
-	SIF TEQUIP:11 || TEQUIP:13
-		PRINTFORM バイブを咥え
-	SIF TEQUIP:44
-		PRINTFORM 縛られ
+	IF TEQUIP:57
+		PRINTFORM %CALLNAME:TARGET%に鏡に映る自分の痴態をよく見るように言うと
+	ELSE
+		PRINTFORM %CALLNAME:TARGET%の
+	ENDIF
+	IF TEQUIP:90
+		;触手プレイ中
+		IF TEQUIP:44
+			PRINT 触手に全身を締め上げられ
+			SIF TEQUIP:11 || TEQUIP:13 || TEQUIP:46 || (TEQUIP:16 && TALENT:母乳体質)
+				PRINT つつ
+
+			IF TEQUIP:11 && (TEQUIP:13 || TEQUIP:46) && TEQUIP:98
+				PRINT 穴という穴を犯され
+			ELSEIF TEQUIP:11 && (TEQUIP:13 || TEQUIP:46) 
+				PRINT 前後の穴を同時に穿られ
+			ELSEIF TEQUIP:11
+				PRINT 犯され
+			ELSEIF TEQUIP:13
+				PRINT 後にもねじ込まれ
+			ELSEIF TEQUIP:46
+				PRINT 腸内に流し込まれた体液を堰き止められ
+			ENDIF
+
+			SIF TEQUIP:16 && TALENT:母乳体質
+				PRINT 母乳を搾り取られ
+		ELSEIF TEQUIP:11 || TEQUIP:13 || TEQUIP:46
+			IF TEQUIP:11 && (TEQUIP:13 || TEQUIP:46) && TEQUIP:98
+				PRINT 触手に穴という穴を犯され
+			ELSEIF TEQUIP:11 && (TEQUIP:13 || TEQUIP:46) 
+				IF PALAM:欲情 >= PALAMLV:4
+					PRINT 触手を前後の穴で咥え込み
+				ELSE
+					PRINT 触手に前後の穴を同時に穿られ
+				ENDIF
+			ELSEIF TEQUIP:11 
+				IF TALENT:淫壷
+					PRINT 触手を蜜壺に咥え込み
+				ELSEIF PALAM:欲情 >= PALAMLV:4
+					PRINT 触手を膣で咥え込み
+				ELSE
+					PRINT 触手に膣をを犯され
+				ENDIF
+			ELSEIF TEQUIP:13 
+				IF TALENT:尻穴狂い
+					PRINT 触手を肛内に迎え入れ
+				ELSEIF PALAM:欲情 >= PALAMLV:4
+					PRINT 触手を尻穴で咥え込み
+				ELSE
+					PRINT 触手に菊門をを犯され
+				ENDIF
+			ELSEIF TEQUIP:46 
+				PRINT 触手に腸内に流し込まれた体液を堰き止められ
+
+			ENDIF
+		ELSE
+			PRINT 触手に絡みつかれ
+		ENDIF
+
+		SIF TEQUIP:16 && TALENT:母乳体質
+			PRINT 母乳を搾り取られ
+	ELSE
+		SIF (TEQUIP:11 || TEQUIP:13 )
+			PRINTFORM バイブを咥え
+		SIF TEQUIP:44
+			PRINTFORM 縛られ
+	ENDIF
 	IF TEQUIP:11 || TEQUIP:13 || TEQUIP:44
 		IF PALAM:潤滑 >= PALAMLV:3 || PALAM:欲情 >= PALAMLV:4
 			PRINTFORM ながら
@@ -1618,7 +1765,8 @@ SIF FLAG:6 == 0
 	RETURN 0
 
 TFLAG:60 = 0
-IF SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 22 || SELECTCOM == 23 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 26 || SELECTCOM == 27 || SELECTCOM == 28 || SELECTCOM == 29 || SELECTCOM == 34 || SELECTCOM == 36 || SELECTCOM == 56 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366 || SELECTCOM == 368 || SELECTCOM == 369
+IF SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 22 || SELECTCOM == 23 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 26 || SELECTCOM == 27 || SELECTCOM == 28 || SELECTCOM == 29 || SELECTCOM == 34 || SELECTCOM == 36 || SELECTCOM == 56 || SELECTCOM == 363 || SELECTCOM == 365 || SELECTCOM == 366 || SELECTCOM == 368 || SELECTCOM == 369 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123 || SELECTCOM == 124 || SELECTCOM == 193 || SELECTCOM == 194 || SELECTCOM == 195 || SELECTCOM == 255 || SELECTCOM == 256 
+	CALLF INSERT_POSITION(SELECTCOM)
 	SIF TFLAG:2 == 0 || PALAM:欲情 >= PALAMLV:4
 		TFLAG:60 = 1
 ENDIF

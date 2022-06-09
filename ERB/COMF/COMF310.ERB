@@ -1947,7 +1947,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	S += 250
-	;食物ボーナス
+	;食物、カレーボーナス
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
@@ -2172,7 +2172,7 @@ CASE 1
 	PRINTFORML 
 	S += 150
 	U += 10
-	;食物ボーナス
+	;食物、カレーボーナス
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
@@ -2231,7 +2231,8 @@ CASE 1
 	PRINTFORMW ちょっとムードが良くなった
 	U += 3
 	;諏訪子・早苗だと効果上昇（ムード＋10、好感度＋20）
-	IF NO:TARGET == 44 || NO:TARGET == 42
+	;IF NO:TARGET == 44 || NO:TARGET == 42
+	IF 0
 		U += 7
 		B = U + 10
 		PRINTFORMW 好感度+{B}
@@ -2346,8 +2347,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-10
 		CFLAG:TARGET:2 -= 10
 	ELSE
@@ -2370,8 +2372,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_17
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[ローストチキン]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[ローストチキン]を食べてみた…
@@ -2386,8 +2389,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-10
 		CFLAG:TARGET:2 -= 10
 	ELSE
@@ -2410,8 +2414,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_18
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[ネギま]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[ネギま]を食べてみた…
@@ -3322,9 +3327,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	;空は温泉卵食べてるので平気
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-10
 		CFLAG:TARGET:2 -= 10
 	ELSE
@@ -3353,9 +3358,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_46
-;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-;空は温泉卵食べてるので平気
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[卵サラダ]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[卵サラダ]を食べてみた…
@@ -3567,8 +3572,9 @@ CASE 1
 		D += S
 		E += S
 		A += U
-		;にとり効果上昇
-		IF NO:TARGET == 40
+		;アダマンタイトをアクセサリーにして喜ぶようなキャラってソフトウェアトーク界隈に居たっけ……？
+		;IF NO:TARGET == 40
+		IF 0
 			TIMES C , 1.20
 			TIMES E , 1.20
 			TIMES D , 1.20
@@ -3689,8 +3695,8 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;衣玖、屠自古の場合
-	IF NO:TARGET == 62 || NO:TARGET == 104
+	;ウナの場合
+	IF NO:TARGET == 81
 		;遊びに行くを同程度
 		;ソースを変数に変換(SOURCE:歓楽をC、SOURCE:接触をD、SOURCE:受動をE、SOURCE:征服をFに変換)
 		;固定で獲得するソース
@@ -3793,8 +3799,8 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_53
-;衣玖、屠自古の場合
-IF NO:TARGET == 62 || NO:TARGET == 104
+;ウナの場合
+IF NO:TARGET == 81
 	PRINTFORMW %CALLNAME:TARGET%は[電気ウナギ]に触れてみた
 	PRINTFORMW どうやら気が合ったらしく%CALLNAME:TARGET%はしばらく戯れていた…
 ;それ以外
@@ -3925,9 +3931,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;温泉卵ありの場合でミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	;空は温泉卵食べてるので平気
-	IF TFLAG:928 == 1 && GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;温泉卵ありの場合で鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF TFLAG:928 == 1 && GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-10
 		CFLAG:TARGET:2 -= 10
 	ELSE
@@ -3936,7 +3942,7 @@ CASE 1
 		;温泉卵あり
 		SIF TFLAG:928 == 1
 			S += 50
-		;スカーレット、食物ボーナス
+		;食物、カレーボーナス
 		CALL TYOGO_BONUS
 		
 		PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
@@ -3952,9 +3958,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_58
-;温泉卵ありの場合でミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-;空は温泉卵食べてるので平気
-IF TFLAG:928 == 1 && GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;温泉卵ありの場合で鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF TFLAG:928 == 1 && GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[華麗なるスカーレットカレーマイルド]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は出来上がったカレーを食べてみた…
@@ -3976,7 +3982,7 @@ CASE 1
 		B -= 273
 		A += 100
 	ENDIF
-	;スカーレットボーナス
+	;食物、カレーボーナス
 	CALL TYOGO_BONUS
 	
 	A += S
@@ -4015,13 +4021,14 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-50
 		CFLAG:TARGET:2 -= 50
 	ELSE
 		S += 200
-		;食物ボーナス
+		;食物、カレーボーナス
 		CALL TYOGO_BONUS
 		
 		A = S + 100
@@ -4039,8 +4046,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_60
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[チキン＆エッグカレー]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[チキン＆エッグカレー]を食べてみた…
@@ -4493,8 +4501,10 @@ CASE 1
 	BASE:TARGET:体力 += S
 	BASE:TARGET:気力 += S
 	BASE:TARGET:耐力 += S
-	;レミリア、フラン、萃香、勇儀、くるみ以外は好感度上昇
-	IF !GROUPMATCH(NO:TARGET, 10, 11, 23, 73, 80)
+	;吸血鬼と鬼以外は好感度上昇（まだ居ないので偽にしておきます）
+	;ついなちゃんは寧ろ鬼を狩る側で人間な為除外
+	;IF !GROUPMATCH(NO:TARGET, 10, 11, 23, 73, 80)
+	IF 0
 		PRINTFORMW 好感度+{U}
 		CFLAG:TARGET:2 += U
 	ENDIF
@@ -4517,7 +4527,7 @@ CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
 	S += 200
-	;食物ボーナス
+	;食物、カレーボーナス
 	CALL TYOGO_BONUS
 	
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力が{S}ずつ回復しました
@@ -4532,7 +4542,9 @@ ENDSELECT
 @TRAIN_MESSAGE_COM310_75
 PRINTFORMW %CALLNAME:TARGET%は[キーマカレー]を食べてみた…
 
+;---------------------------------------------------------
 ;[豆饅頭]
+;---------------------------------------------------------
 @COM310_76
 SELECTCASE SIGN(TFLAG:17)
 ;使用
@@ -4543,9 +4555,9 @@ CASE 1
 	U += 10
 	;和菓子、甘味、食物ボーナス
 	CALL TYOGO_BONUS
-	;萃香と勇儀は好感度上昇軽減
-	SIF NO:TARGET == 23 || NO:TARGET == 80
-		U -= 3
+	;鬼は好感度上昇軽減（まだ居ないのでコメントアウト）
+	;SIF NO:TARGET == 23 || NO:TARGET == 80
+	;	U -= 3
 	PRINTFORMW %CALLNAME:TARGET%の気力と体力と耐力が{S}ずつ回復しました
 	PRINTFORMW 好感度+{U}
 	BASE:TARGET:体力 += S
@@ -4570,8 +4582,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;萃香、勇儀、レミリア、フラン、くるみは拒否
-	IF GROUPMATCH(NO:TARGET, 23, 80, 10, 11, 73)
+	;鬼と吸血鬼は拒否（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 23, 80, 10, 11, 73)
+	IF 0
 		PRINTFORMW 好感度-50
 		CFLAG:TARGET:2 -= 50
 	ELSE
@@ -4597,8 +4610,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_77
-;萃香、勇儀、レミリア、フラン、くるみは拒否
-IF GROUPMATCH(NO:TARGET, 23, 80, 10, 11, 73)
+;鬼と吸血鬼は拒否（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 23, 80, 10, 11, 73)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[炒り豆]を食べることを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[炒り豆]を食べてみた…
@@ -4676,8 +4690,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		;まぁあれだ、鳥妖怪に鳥鍋食わせるのは「人肉饅頭」みたいなものでしょ。知らない人はググるな
 		PRINTFORMW 好感度-150
 		CFLAG:TARGET:2 -= 150
@@ -4732,8 +4747,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_80
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[鳥鍋]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[鳥鍋]を食べてみた…
@@ -4748,8 +4764,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		;許るさーん！(byギース)
 		PRINTFORMW 好感度-150
 		CFLAG:TARGET:2 -= 150
@@ -4798,8 +4815,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_81
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[鳥の丸焼き]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[鳥の丸焼き]を食べてみた…
@@ -6129,8 +6147,8 @@ CASE 1
 		TIMES SOURCE:受動 , 5.00
 		A = RAND:6 + 4
 	ENDIF
-	;魔理沙効果上昇
-	IF NO:TARGET == 2
+	;あかり効果上昇
+	IF NO:TARGET == 11
 		PRINTFORML 流星ボーナス＋
 		TIMES SOURCE:歓楽 , 1.20
 		TIMES SOURCE:征服 , 1.20
@@ -6621,8 +6639,8 @@ CASE 1
 		TIMES C , 1.00
 		TFLAG:37 += D
 	ENDIF
-	;レミリア、フラン、アリス、リリカ、メルラン、ルナサ、メディスン、雛、さとり効果上昇
-	IF NO:TARGET == 10 || NO:TARGET == 11 || NO:TARGET == 14 || NO:TARGET == 16 || NO:TARGET == 17 || NO:TARGET == 18 || NO:TARGET == 33 || NO:TARGET == 39 || NO:TARGET == 81
+	;茜、葵、めたん効果上昇
+	IF NO:TARGET == 6 || NO:TARGET == 7 || NO:TARGET == 101
 		TIMES A , 1.20
 		TIMES B , 1.20
 		TIMES C , 1.20
@@ -6765,8 +6783,8 @@ CASE 1
 		TIMES C , 1.00
 		TFLAG:37 += D
 	ENDIF
-	;衣玖、星、青娥効果上昇
-	IF NO:TARGET == 62 || NO:TARGET == 95 || NO:TARGET == 103
+	;ヒメ、ミコト効果上昇
+	IF NO:TARGET == 82 || NO:TARGET == 83
 		TIMES A , 1.20
 		TIMES B , 1.20
 		TIMES C , 1.20
@@ -6909,8 +6927,8 @@ CASE 1
 		TIMES C , 1.00
 		TFLAG:37 += D
 	ENDIF
-	;霊夢、幽々子、輝夜、早苗、キスメ効果上昇（和服が似合いそうなキャラ）
-	IF GROUPMATCH(NO:TARGET, 1, 20, 30, 42, 77)
+	;ゆかり、ずん子、きりたん、イタコ、ついな、つづみ、IA効果上昇（和服が似合いそうなキャラ）
+	IF GROUPMATCH(NO:TARGET, 4, 5, 10, 12, 14, 51, 54)
 		TIMES A , 1.20
 		TIMES B , 1.20
 		TIMES C , 1.20
@@ -7089,8 +7107,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;諏訪子、早苗だと食べると好感度減少
-	IF NO:TARGET == 44 || NO:TARGET == 42
+	;カエルモチーフのキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF NO:TARGET == 44 || NO:TARGET == 42
+	IF 0
 		;ディアボロ風！？ この悪魔…！！
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
@@ -7118,8 +7137,9 @@ CASE -1
 	CALL COM310_SELL
 ENDSELECT
 @TRAIN_MESSAGE_COM310_133
-;諏訪子、早苗だと食べると好感度減少
-IF NO:TARGET == 44 || NO:TARGET == 42
+;カエルモチーフのキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF NO:TARGET == 44 || NO:TARGET == 42
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[ディアボロ風カエル焼き]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[ディアボロ風カエル焼き]を食べてみた…
@@ -7134,8 +7154,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-10
 		CFLAG:TARGET:2 -= 10
 	ELSE
@@ -7162,8 +7183,9 @@ CASE -1
 	CALL COM310_SELL
 ENDSELECT
 @TRAIN_MESSAGE_COM310_134
-;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[地獄茹で卵]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[地獄茹で卵]を食べてみた…
@@ -7410,8 +7432,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-20
 		CFLAG:TARGET:2 -= 20
 	ELSE
@@ -7432,8 +7455,9 @@ CASE -1
 	CALL COM310_SELL
 ENDSELECT
 @TRAIN_MESSAGE_COM310_140
-;ミスティア、文、椛、朱鷺子、はたてだと好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[黄身時雨]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:TARGET%は[黄身時雨]を食べてみた…
@@ -7448,8 +7472,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;鶏肉を使っていて、ミスティア、文、椛、空、朱鷺子、はたてだと好感度減少
-	IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鶏肉を使っていて、鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
@@ -7477,8 +7502,9 @@ CASE -1
 	CALL COM310_SELL
 ENDSELECT
 @TRAIN_MESSAGE_COM310_141
-;鶏肉を使っていて、ミスティア、文、椛、空、朱鷺子、はたてだと好感度減少
-IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鶏肉を使っていて、鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[麻婆豆腐]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:TARGET%は[麻婆豆腐]を食べてみた…
@@ -7525,12 +7551,13 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
-		;食物ボーナス
+		;食物、カレーボーナス
 		CALL TYOGO_BONUS
 		A = U
 		B = U
@@ -7565,15 +7592,16 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_143
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF (TFLAG:936 == 1 || TFLAG:959 == 1) && GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[マーボカレー]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:TARGET%は[マーボカレー]を食べてみた…
 ENDIF
 
 ;---------------------------------------------------------
-;[アイスクリーム]パチュリーのみ[ラクトアイス]
+;[アイスクリーム]ずん子のみ[ラクトアイス]
 ;---------------------------------------------------------
 @COM310_144
 SELECTCASE SIGN(TFLAG:17)
@@ -7603,7 +7631,7 @@ ENDSELECT
 
 @TRAIN_MESSAGE_COM310_144
 PRINTFORM %CALLNAME:PLAYER%と%CALLNAME:TARGET%は
-IF NO:TARGET == 8 || NO:PLAYER == 8
+IF NO:TARGET == 5 || NO:PLAYER == 5
 	PRINTFORMW [ラクトアイス]を食べてみた…
 ELSE
 	PRINTFORMW [アイスクリーム]を食べてみた…
@@ -7618,8 +7646,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-15
 		CFLAG:TARGET:2 -= 15
 	ELSE
@@ -7645,8 +7674,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_145
-;ミスティア、文、椛、朱鷺子、はたてだと好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[プリン]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[プリン]を食べてみた…
@@ -7667,8 +7697,8 @@ CASE 1
 	IF DAY:2 == 1
 		PRINTFORML 季節ボーナス＋
 		S += 50
-	;冬効果減少（チルノ、レティ除く）
-	ELSEIF DAY:2 == 3 && (NO:TARGET != 5 && NO:TARGET != 12)
+	;冬効果減少（東北勢除く）
+	ELSEIF DAY:2 == 3 && (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12)
 		PRINTFORML 季節ボーナス－
 		S -= 50
 	ENDIF
@@ -7697,8 +7727,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
@@ -7723,8 +7754,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_147
-;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[う巻き]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[う巻き]を食べてみた…
@@ -8321,8 +8353,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;諏訪子・早苗だと好感度減少
-	IF NO:TARGET == 44 || NO:TARGET == 42
+	;カエルモチーフのキャラは好感度減少（まだ居ないので偽にしておきます）
+	;IF NO:TARGET == 44 || NO:TARGET == 42
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
@@ -8337,8 +8370,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_156
-;諏訪子・早苗だと好感度減少
-IF NO:TARGET == 44 || NO:TARGET == 42
+;カエルモチーフのキャラは好感度減少（まだ居ないので偽にしておきます）
+;IF NO:TARGET == 44 || NO:TARGET == 42
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は出来上がった[冷凍カエル]を見て愕然としている…！
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%は[冷凍カエル]を飾ってみた…
@@ -8472,8 +8506,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-20
 		CFLAG:TARGET:2 -= 20
 	ELSE
@@ -8504,8 +8539,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_162
-;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[ホットケーキ]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[ホットケーキ]を食べてみた…
@@ -8835,11 +8871,11 @@ CASE 1
 	;主導権が主人公側
 	IF TFLAG:45 == 0
 		SELECTCASE NO:TARGET
-		;調教主がチルノ・レティ(氷)・咲夜さん・妖夢・里香(鋼)・幽々子・メディスン・幽香・静葉・穣子･神奈子(草)・リグル・ヤマメ(虫)
-		CASE 5, 9, 12, 19, 20, 24, 33, 34, 37, 38, 43, 64, 78
+		;調教主がずん子、きりたん、ヒメ、ミコト
+		CASE 5, 10, 82, 83
 			S += 1000
-		;調教主が大妖精・小町・にとり・諏訪子・小傘・ムラサ(水)・萃香・天子(岩)・妹紅・サニー・お燐・お空(火)
-		CASE 4, 23, 31, 35, 40, 44, 45, 63, 82, 83, 92, 94
+		;調教主がウナ、はう
+		CASE 81, 103
 			S += 100
 		;それ以外
 		CASEELSE
@@ -8853,11 +8889,11 @@ CASE 1
 	;主導権が相手側
 	ELSE
 		SELECTCASE NO:TARGET
-		;調教主がチルノ・レティ(氷)・咲夜さん・妖夢・里香(鋼)・幽々子・メディスン・幽香・静葉・穣子･神奈子(草)・リグル・ヤマメ(虫)
-		CASE 5, 9, 12, 19, 20, 24, 33, 34, 37, 38, 43, 64, 78
+		;調教主がずん子、きりたん、ヒメ、ミコト
+		CASE 5, 10, 82, 83
 			S += 800
-		;調教主が大妖精・小町・にとり・諏訪子・小傘・ムラサ(水)・萃香・天子(岩)・妹紅・サニー・お燐・お空(火)
-		CASE 4, 23, 31, 35, 40, 44, 45, 63, 82, 83, 92, 94
+		;調教主がウナ、はう
+		CASE 81, 103
 			S += 100
 		;それ以外
 		CASEELSE
@@ -8878,11 +8914,11 @@ ENDSELECT
 IF TFLAG:45 == 0
 	PRINTFORMW %CALLNAME:MASTER%の「かえんぐるま」！
 	SELECTCASE NO:TARGET
-	;相手がチルノ・レティ(氷)・咲夜さん・妖夢・里香(鋼)・幽々子・メディスン・幽香・静葉・穣子･神奈子(草)・リグル・ヤマメ(虫)
-	CASE 5, 9, 12, 19, 20, 24, 33, 34, 37, 38, 43, 64, 78
+	;相手がずん子、きりたん、ヒメ、ミコト
+	CASE 5, 10, 82, 83
 		PRINTFORMW こうかは　ばつぐんだ！
-	;相手が大妖精・小町・にとり・諏訪子・小傘・ムラサ(水)・萃香・天子(岩)・妹紅・サニー・お燐・お空(火)
-	CASE 4, 23, 31, 35, 40, 44, 45, 63, 82, 83, 92, 94
+	;相手がウナ、はう
+	CASE 81, 103
 		PRINTFORMW こうかは　いまひとつのようだ
 	;それ以外
 	CASEELSE
@@ -8892,11 +8928,11 @@ IF TFLAG:45 == 0
 ELSE
 	PRINTFORMW %CALLNAME:TARGET%の「かえんぐるま」！
 	SELECTCASE NO:TARGET
-	;調教主がチルノ・レティ(氷)・咲夜さん・妖夢・里香(鋼)・幽々子・メディスン・幽香・静葉・穣子･神奈子(草)・リグル・ヤマメ(虫)
-	CASE 5, 9, 12, 19, 20, 24, 33, 34, 37, 38, 43, 64, 78
+	;相手がずん子、きりたん、ヒメ、ミコト
+	CASE 5, 10, 82, 83
 		PRINTFORMW こうかは　ばつぐんだ！
-	;調教主が大妖精・小町・にとり・諏訪子・小傘・ムラサ(水)・萃香・天子(岩)・妹紅・サニー・お燐・お空(火)
-	CASE 4, 23, 31, 35, 40, 44, 45, 63, 82, 83, 92, 94
+	;相手がウナ、はう
+	CASE 81, 103
 		PRINTFORMW こうかは　いまひとつのようだ
 	;それ以外
 	CASEELSE
@@ -8935,8 +8971,8 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	CALL TRAIN_MESSAGE_B
-	;メディスン・雛・アリスなら歓楽
-	IF NO:TARGET == 14 || NO:TARGET == 33 || NO:TARGET == 39
+	;ずん子、きりたん、イタコ、ついななら歓楽
+	IF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12 || NO:TARGET == 14
 		S += 900
 		SOURCE:歓楽 += S
 	ELSE
@@ -8950,8 +8986,8 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_171
-;メディスン・雛・アリスなら歓楽
-IF NO:TARGET == 14 || NO:TARGET == 33 || NO:TARGET == 39
+;ずん子、きりたん、イタコ、ついななら歓楽
+IF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12 || NO:TARGET == 14
 	PRINTFORMW なんと%CALLNAME:TARGET%は[古びた日本人形]と談笑している…
 ELSE
 	PRINTFORMW 突然[古びた日本人形]の髪が伸びてきた…！
@@ -10032,14 +10068,14 @@ SELECTCASE SIGN(TFLAG:17)
 ;使用
 CASE 1
 	CALL TRAIN_MESSAGE_B
-	;キスメ、ヤマメ、パルスィ、勇儀、さとり、お燐、お空、こいし効果上昇
-	IF GROUPMATCH(NO:TARGET, 77, 78, 79, 80, 81, 82, 83, 84)
+	;イタコ、ついな効果上昇
+	IF GROUPMATCH(NO:TARGET, 12, 14)
 		S += 30
 		U += 5
 		
 		S += 2000
 		SOURCE:歓楽 += S
-	;地霊殿組以外
+	;それ以外
 	ELSE
 		S += 2000
 		SOURCE:痛み += S
@@ -10051,10 +10087,10 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_198
-;キスメ、ヤマメ、パルスィ、勇儀、さとり、お燐、お空、こいし効果上昇
-IF GROUPMATCH(NO:TARGET, 77, 78, 79, 80, 81, 82, 83, 84)
+;イタコ、ついな効果上昇
+IF GROUPMATCH(NO:TARGET, 12, 14)
 	PRINTFORML %CALLNAME:TARGET%は[プチ地獄]を楽しんでいる…
-;地霊殿組以外
+;それ以外
 ELSE
 	PRINTFORML [プチ地獄]から溢れる苦痛の波動が、%CALLNAME:TARGET%を包み込む…
 	PRINTFORML %CALLNAME:TARGET%は苦悶の表情で身悶えた
@@ -10376,8 +10412,8 @@ CASE 1
 	CASE 2
 		B += 400
 		B += S
-		;地霊殿組は耐体消費なし（キスメ、ヤマメ、パルスィ、勇儀、さとり、お燐、お空、こいし）
-		IF GROUPMATCH(NO:TARGET, 77, 78, 79, 80, 81, 82, 83, 84)
+		;イタコ、ついなは耐体消費なし
+		IF GROUPMATCH(NO:TARGET, 12, 14)
 			PRINTFORML 地獄ボーナス＋
 			PRINTFORMW %CALLNAME:TARGET%の気力が{B}回復しました
 		;それ以外は耐体-200で気力+600に
@@ -10660,8 +10696,9 @@ CASE 1
 		TIMES C , 1.00
 		TFLAG:37 += D
 	ENDIF
-	;ナズ、一輪、ムラサ、星、白蓮、響子効果上昇＆懐疑ソース減少
-	IF GROUPMATCH(NO:TARGET, 91, 93, 94, 95, 96, 101)
+	;仏教関連のキャラは効果上昇＆懐疑ソース減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 91, 93, 94, 95, 96, 101)
+	IF 0
 		PRINTFORML 仏門ボーナス＋
 		TIMES A , 1.50
 		TIMES B , 1.50
@@ -10876,15 +10913,16 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
 		A += 400
 		B += 350
 		U += 10
-		;船長、食物ボーナス
+		;カレー、食物ボーナス
 		CALL TYOGO_BONUS
 		A += S
 		B += S
@@ -10902,8 +10940,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_216
-;ミスティア、文、椛、空、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 83, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[海軍カレー]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は出来上がった[海軍カレー]を食べてみた…
@@ -11545,8 +11584,9 @@ SELECTCASE SIGN(TFLAG:17)
 CASE 1
 	CALL TRAIN_MESSAGE_B
 	PRINTFORML 
-	;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-	IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+	;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+	IF 0
 		PRINTFORMW 好感度-30
 		CFLAG:TARGET:2 -= 30
 	ELSE
@@ -11570,8 +11610,9 @@ CASE -1
 ENDSELECT
 
 @TRAIN_MESSAGE_COM310_232
-;ミスティア、文、椛、朱鷺子、はたてだと食べると好感度減少
-IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+;鳥ないし天狗関連のキャラが食べると好感度減少（まだ居ないので偽にしておきます）
+;IF GROUPMATCH(NO:TARGET, 25, 32, 41, 86, 98)
+IF 0
 	PRINTFORMW %CALLNAME:TARGET%は[ベーコンエッグ]を食べるのを拒否した…
 ELSE
 	PRINTFORMW %CALLNAME:TARGET%は[ベーコンエッグ]を食べてみた
@@ -13072,7 +13113,7 @@ ENDSELECT
 PRINTFORMW %CALLNAME:PLAYER%と%CALLNAME:TARGET%は[奇跡の薬]を飲んでみた…
 
 ;---------------------------------------------------------
-;各レシピのキャラ毎のボーナス　2013/ 3/11追加
+;各レシピのキャラ毎のボーナス　2022/ 3/13追加
 ;該当キャラ(NO:TARGET)と該当レシピ（TFLAG:17）で照らし合わせている
 ;該当レシピに番号を追加することで、その番号のレシピにボーナスが反映される
 ;レシピによって効果を変える場合、CASE XXXもしくはELSEIF TFLAG:17 == XXXを追加すればOK
@@ -13100,8 +13141,8 @@ IF NO:TARGET == 11
 	SIF TFLAG:17 == 72
 		C += 1
 ENDIF
-;甘味ボーナス（対象：マキ、ゆかり、ずん子、茜、葵、きりたん、あかり、ささら、つづみ）
-IF GROUPMATCH(NO:TARGET, 3, 4, 5, 6, 7, 10, 11, 50, 51)
+;甘味ボーナス（対象：マキ、ゆかり、ずん子、茜、葵、きりたん、あかり、ささら、つづみ、ずんだもん）
+IF GROUPMATCH(NO:TARGET, 3, 4, 5, 6, 7, 10, 11, 50, 51, 100)
 	;該当するレシピ番号列挙
 	SELECTCASE TFLAG:17
 		CASE 22,57,61,62,76,87,88,89,95,96,140,144,145,162,182,210,213
@@ -13123,8 +13164,8 @@ IF GROUPMATCH(NO:TARGET, 3, 4, 6, 7, 11, 50, 53, 54)
 		U += 7
 	ENDSELECT
 ENDIF
-;和菓子ボーナス（対象：マキ、ゆかり、ずん子、茜、葵、きりたん、あかり、ささら、つづみ）
-IF GROUPMATCH(NO:TARGET, 3, 4, 5, 6, 7, 10, 11, 50, 51)
+;和菓子ボーナス（対象：マキ、ゆかり、ずん子、茜、葵、きりたん、あかり、ささら、つづみ、ずんだもん）
+IF GROUPMATCH(NO:TARGET, 3, 4, 5, 6, 7, 10, 11, 50, 51, 100)
 	;該当レシピ
 	SELECTCASE TFLAG:17
 		CASE 76,87,89,90,140,208,213
@@ -13157,15 +13198,14 @@ IF 0
 		U -= 3
 	ENDIF
 ENDIF
-;音楽ボーナス（対象：リリカ、メルラン、ルナサ、ミスティア、響子）
-IF NO:TARGET == 16 || NO:TARGET == 17 || NO:TARGET == 18 || NO:TARGET == 25 || NO:TARGET == 101
+;音楽ボーナス（対象：大抵が当てはまりそうだけどどうしようかな）
+IF 0
 	;対象レシピ
 	IF TFLAG:17 == 71
 		PRINTFORML 音楽ボーナス＋
 		U += 4
 	ENDIF
 ENDIF
-
 ;銃弾ボーナス（対象：そら）
 IF NO:TARGET == 13
 	IF TFLAG:17 == 79
@@ -13173,6 +13213,16 @@ IF NO:TARGET == 13
 		U += 15
 	ENDIF
 ENDIF
+;カレーボーナス（対象：つむぎ）
+IF NO:TARGET == 102
+	SELECTCASE TFLAG:17
+		CASE 3, 11, 58, 59, 6, 75, 143, 216
+			PRINTFORML カレーボーナス＋
+			S += 30
+			U += 5
+	ENDSELECT
+ENDIF
+
 
 
 
@@ -13664,8 +13714,8 @@ STR:2140 = 黄身時雨
 STR:2141 = 麻婆豆腐
 STR:2142 = 湯豆腐
 STR:2143 = マーボカレー
-;パチュリーの時名称変更
-IF TARGET > O && (NO:TARGET == 8 || NO:PLAYER == 8)
+;ずん子の時名称変更
+IF TARGET > O && (NO:TARGET == 5 || NO:PLAYER == 5)
 	STR:2144 = ラクトアイス
 ELSE
 	STR:2144 = アイスクリーム

@@ -2821,35 +2821,6 @@ SIF TEQUIP:69
 RETURN 1
 
 
-@COM_ABLE75
-;言葉責め実行判定
-;COM_ABLE共通判定
-CALL COM_ABLE_COMMON, SELECTCOM
-SIF RESULT == 0
-	RETURN 0
-;ウフフ中じゃないと無理
-SIF TFLAG:44 == 0
-	RETURN 0
-;気力が残ってないと無理
-SIF BASE:気力 <= 0
-	RETURN 0
-;相手を責める場合
-IF CFLAG:15 == 0 || CFLAG:15 == 1
-	;こっちがサド持ちかサドっ気3以上、もしくは相手がマゾっ気3以上が必要
-	SIF TALENT:PLAYER:サド || ABL:PLAYER:サドっ気 >= 3 || ABL:マゾっ気 >= 3
-		RETURN 1
-ENDIF
-;こっちを責める場合
-IF CFLAG:15 == 0 || CFLAG:15 == 2
-	;相手側がサド持ちかサドっ気3以上、もしくはこっちがマゾっ気3以上が必要
-	SIF TALENT:サド || ABL:サドっ気 >= 3 || ABL:PLAYER:マゾっ気 >= 3
-		RETURN 1
-;調教者がボールギャグ中だとダメ
-	SIF TEQUIP:PLAYER:45
-		RETURN 0
-ENDIF
-RETURN 0
-
 @COM_ABLE77
 ;ビデオ鑑賞
 ;COM_ABLE共通判定

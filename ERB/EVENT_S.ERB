@@ -733,14 +733,25 @@ ENDIF
 ;-------------------------------------------------
 @COMABLE_3P
 ;派生コマンドなので実際には意味はないが、念のため
-;処女で、従順4以下・レズっ気4以下のASSIの場合3Pはできない（サドならＯＫ）
-IF EXP:Ｖ経験 == 0
-	SIF (ABL:ASSI:親密 <= 4 || ABL:ASSI:レズっ気 <= 4) && TALENT:ASSI:サド == 0
-		RETURN 0
-;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合3Pはできない（サドならＯＫ）
-ELSEIF PALAM:潤滑 < PALAMLV:2
-	SIF (ABL:ASSI:親密 <= 3 || ABL:ASSI:レズっ気 <= 3) && TALENT:ASSI:サド == 0
-		RETURN 0
+;サドなら無条件でＯＫ
+IF TALENT:ASSI:サド == 0
+	;処女で、従順4以下・レズっ気4以下のASSIの場合3Pはできない（サドならＯＫ）
+	IF EXP:Ｖ経験 == 0 && TALENT:オトコ == 0
+		SIF ABL:ASSI:親密 <= 4
+			RETURN 0
+		SIF ((TALENT:オトコ == 0 && TALENT:ASSI:オトコ == 0) || ABL:ASSI:レズっ気 <= 4) 
+			RETURN 0
+		SIF ((TALENT:オトコ && TALENT:ASSI:オトコ) || ABL:ASSI:ＢＬっ気 <= 4) 
+			RETURN 0
+	;潤滑不足で、従順3以下・レズっ気3以下のASSIの場合3Pはできない（サドならＯＫ）
+	ELSEIF PALAM:潤滑 < PALAMLV:2
+		SIF ABL:ASSI:親密 <= 3
+			RETURN 0
+		SIF ((TALENT:オトコ == 0 && TALENT:ASSI:オトコ == 0) || ABL:ASSI:レズっ気 <= 3) 
+			RETURN 0
+		SIF ((TALENT:オトコ && TALENT:ASSI:オトコ) || ABL:ASSI:ＢＬっ気 <= 3) 
+			RETURN 0
+	ENDIF
 ENDIF
 A = 0
 ;MASTERがオトコ、半人半妖、ふたなり
@@ -785,17 +796,17 @@ CALL START_CHARA_SHOW
 $INPUT_LOOP
 INPUT
 IF RESULT == 1
-	;前のページ　0ページ以下にはならないようにする
+	;前のページ　0ページ未満にはならないようにする
 	TFLAG:100 -= 1
 	SIF TFLAG:100 <= 0
 		TFLAG:100 = 0
 	CALL START_CHARA_SHOW
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 9
-	;後のページ 最終ページ以上にはならないようにする
+	;後のページ 最終ページを越えないようにする
 	TFLAG:100 += 1
-	SIF TFLAG:100 >= 5
-		TFLAG:100 = 4
+	SIF TFLAG:100 > CHARA_LIST_LASTPAGE()
+		TFLAG:100 = CHARA_LIST_LASTPAGE()
 
 	CALL START_CHARA_SHOW
 	GOTO INPUT_LOOP
@@ -847,8 +858,8 @@ ELSE
 	PRINT                
 ENDIF
 PRINTC [0]変更しない
-;1ページまでしかない
-SIF TFLAG:100 < 1
+;最終ページは表示しない
+SIF TFLAG:100 < CHARA_LIST_LASTPAGE()
 	PRINTC [9]後のページ
 PRINTL 
 
@@ -863,17 +874,17 @@ CALL START_PARTNER_SHOW
 $INPUT_LOOP
 INPUT
 IF RESULT == 1
-	;前のページ　0ページ以下にはならないようにする
+	;前のページ　0ページ未満にはならないようにする
 	TFLAG:100 -= 1
 	SIF TFLAG:100 <= 0
 		TFLAG:100 = 0
 	CALL START_PARTNER_SHOW
 	GOTO INPUT_LOOP
 ELSEIF RESULT == 9
-	;後のページ 最終ページ以上にはならないようにする
+	;後のページ 最終ページを越えないようにする
 	TFLAG:100 += 1
-	SIF TFLAG:100 >= 2
-		TFLAG:100 = 1
+	SIF TFLAG:100 > CHARA_LIST_LASTPAGE()
+		TFLAG:100 = CHARA_LIST_LASTPAGE()
 
 	CALL START_PARTNER_SHOW
 	GOTO INPUT_LOOP
@@ -925,8 +936,8 @@ ELSE
 	PRINT                
 ENDIF
 PRINTC                
-;1ページまでしかない
-SIF TFLAG:100 < 1
+;最終ページは表示しない
+SIF TFLAG:100 < CHARA_LIST_LASTPAGE()
 	PRINTC [9]後のページ
 PRINTL 
 
@@ -1004,3 +1015,28 @@ IF RESULT == 0
 	TALENT:ツンデレ = 1
 ENDIF
 
+
+;-------------------------------------------------
+;初期キャラ選択画面の最終ページ番号を返す関数
+;-------------------------------------------------
+@CHARA_LIST_LASTPAGE
+#FUNCTION
+#DIM MAXPAGE = 0
+#DIM LOOPCOUNT
+#DIM MAXEXISTCHARA
+
+;二回目からは保存した値を返すだけ
+SIF MAXPAGE
+	RETURNF MAXPAGE -1
+
+LOOPCOUNT = 0
+FOR LOOPCOUNT, 0, 200
+	SIF FLAG:(999 + LOOPCOUNT)
+		MAXEXISTCHARA = LOOPCOUNT
+NEXT
+
+MAXPAGE = MAXEXISTCHARA / 49
+SIF MAXEXISTCHARA % 49
+	++MAXPAGE
+
+RETURNF MAXPAGE -1

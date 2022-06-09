@@ -480,8 +480,8 @@ ELSE
 ENDIF
 
 
-;鳥、昆虫、両生類、爬虫類以外のキャラで異常経験5以下、あるいは親愛、相愛、服従なしだとランダムで狂気が付く
-IF NO:TARGET != 24 && NO:TARGET != 25 && NO:TARGET != 32 && NO:TARGET != 43 && NO:TARGET != 44 && NO:TARGET != 78
+;卵生生物モチーフ以外のキャラで異常経験5以下、あるいは親愛、相愛、服従なしだとランダムで狂気が付く
+IF NO:TARGET != 81
 	IF EXP:異常経験 < 6 && (TALENT:親愛 == 0 || TALENT:相愛 == 0 || TALENT:服従 == 0) && TALENT:狂気 == 0 && RAND:3 != 0
 		PRINTFORMW %NAME:TARGET%は発狂してしまった
 		TALENT:狂気 = 1

@@ -37,7 +37,7 @@ TFLAG:15 = 0
 SIF (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:処女 == 0 && TALENT:オトコ == 0
 	TFLAG:15 |= 1
 ;マスターに挿入
-SIF (TALENT:ふたなり || TALENT:オトコ) && TALENT:MASTER:処女 == 0
+SIF (TALENT:ふたなり || TALENT:オトコ) && TALENT:MASTER:処女 == 0 && TALENT:MASTER:オトコ == 0
 	TFLAG:15 |= 2
 ;両方出来るならランダムで決定
 SIF TFLAG:15 == 3
@@ -687,10 +687,10 @@ ENDIF
 TFLAG:15 = 0
 
 ;ターゲットに挿入
-SIF (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:処女 == 0
+SIF (TALENT:MASTER:ふたなり || TALENT:MASTER:オトコ) && TALENT:処女 == 0 && TALENT:オトコ == 0
 	TFLAG:15 |= 1
 ;マスターに挿入
-SIF (TALENT:ふたなり || TALENT:オトコ) && TALENT:MASTER:処女 == 0
+SIF (TALENT:ふたなり || TALENT:オトコ) && TALENT:MASTER:処女 == 0 && TALENT:MASTER:オトコ == 0
 	TFLAG:15 |= 2
 ;両方出来るならランダムで決定
 SIF TFLAG:15 == 3
@@ -742,9 +742,9 @@ IF S > 0
 	IF CFLAG:99 & 1
 ;		TFLAG:13 = 5
 		CALL SELF_KOJO
-	ELSE
+	ELSE 
 		PRINTFORML %CALLNAME:TARGET%と別れ、%CALLNAME:MASTER%が床に就こうとしたとき、突然%CALLNAME:TARGET%が部屋を訪ねてきた
-		PRINTFORM そのまま彼女は%CALLNAME:MASTER%を押し倒し、
+		PRINTFORM そのまま\@TALENT:オトコ?彼#彼女\@は%CALLNAME:MASTER%を押し倒し、
 		IF TFLAG:15 & 1
 			PRINTFORML 蜜壷でペニスを咥え込み激しく腰を打ち付け始めた
 		ELSEIF TFLAG:15 & 2

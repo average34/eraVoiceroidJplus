@@ -1,7 +1,8 @@
 ﻿@COM_ABLE152
 ;半霊を犯す
 ;やるならイタコさんのＮＨＫ犯すとかになるのかなあ
-;でも需要なさそうなので実行不可
+;↑イタコさんの背後にあるアレ、厳密にはＮＨＫではないそうです
+;↑知らなかった そんなの…
 RETURN 0
 
 CALL COM_ABLE_COMMON, SELECTCOM
@@ -10,8 +11,8 @@ SIF RESULT == 0
 ;ウフフ中じゃないと無理
 SIF TFLAG:44 == 0
 	RETURN 0
-;調教対象が妖夢でないとダメ
-SIF NO:TARGET != 19
+;調教対象がイタコでないとダメ
+SIF NO:TARGET != 12
 	RETURN 0
 ;調教者がオトコ、半人半妖、ふたなり、もしくはペニスバンドがないとダメ
 SIF TALENT:PLAYER:半人半妖 == 0 && TALENT:PLAYER:ふたなり == 0 && TALENT:PLAYER:オトコ == 0 && ITEM:PBAND == 0

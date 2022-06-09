@@ -459,7 +459,7 @@ SAVESTR:6 =
 SAVESTR:7 = 
 ;キャラ固有のデート先取得(1)
 ;東北邸
-IF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12
+IF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12 || NO:TARGET == 100 || NO:TARGET == 101
 	SAVESTR:7 = 東北邸
 ELSE
 ;そうじゃなければおうち
@@ -656,7 +656,7 @@ REPEAT 43
 		
 		;キャラ固有デート先(1)
 		;東北邸の場合はクリア後でないとだめ
-		ELSEIF COUNT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+		ELSEIF COUNT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12 && NO:TARGET != 100 && NO:TARGET != 101))
 		
 		;カジノ
 		ELSEIF COUNT == 36 && MONEY >= 5500
@@ -746,13 +746,13 @@ ELSEIF (RESULT == 6 || RESULT == 9 || RESULT == 19 || RESULT == 36 || RESULT == 
 		PRINTFORML %CALLNAME:TARGET%は一緒に温泉に入るのを恥ずかしがっているようです
 		GOTO INPUT_LOOP0
 	;キャラ固有デート先(1)
-	ELSEIF RESULT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+	ELSEIF RESULT == 19 && ABL:親密 >= 10 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12 && NO:TARGET != 100 && NO:TARGET != 101))
 			TEQUIP:2 = 37
 			
-	ELSEIF RESULT == 19 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+	ELSEIF RESULT == 19 && ( GET_TOHOKUABLE() == 1 || (NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12 && NO:TARGET != 100 && NO:TARGET != 101))
 		PRINTFORML %CALLNAME:TARGET%の親密が不足しています
 		GOTO INPUT_LOOP0
-	ELSEIF RESULT == 19 && ( GET_TOHOKUABLE() == 0 && !(NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12))
+	ELSEIF RESULT == 19 && ( GET_TOHOKUABLE() == 0 && !(NO:TARGET != 5 && NO:TARGET != 10 && NO:TARGET != 12 && NO:TARGET != 100 && NO:TARGET != 101))
 		PRINTFORML ストーリーを進めてください
 		GOTO INPUT_LOOP0
 	;カジノ
@@ -1851,8 +1851,8 @@ ELSEIF NO:TARGET == 4 && CFLAG:0
 	;ゆかり様
 	;カジノ
 	TEQUIP:2 = 16
-ELSEIF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12
-	;ずん子、きりたん、イタコ
+ELSEIF NO:TARGET == 5 || NO:TARGET == 10 || NO:TARGET == 12 || NO:TARGET == 100 || NO:TARGET == 101
+	;ずん子、きりたん、イタコ、ずんだもん、めたん
 	;キャラ固有デート先(1)
 	TEQUIP:2 = 37
 ELSEIF NO:TARGET == 6 || NO:TARGET == 7
@@ -1929,6 +1929,18 @@ ELSEIF NO:TARGET == 84
 	;flower
 	;花畑
 	TEQUIP:2 = 4
+ELSEIF NO:TARGET == 102
+	;つむぎ
+	;ゲームセンター
+	TEQUIP:2 = 15
+ELSEIF NO:TARGET == 103
+	;はう
+	;繁華街
+	TEQUIP:2 = 13
+ELSEIF NO:TARGET == 104
+	;リツ
+	;恋愛映画
+	TEQUIP:2 = 21
 ELSE
 	;一応例外設定
 	;街

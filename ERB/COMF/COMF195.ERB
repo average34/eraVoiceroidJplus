@@ -320,6 +320,9 @@ IF TFLAG:60 && PREVCOM == 195 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TF
 ;同様に前回の調教が正常位させるか後背位させるの場合
 ELSEIF TFLAG:60 && (PREVCOM == 193 || PREVCOM == 194) && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
 	PRINTFORMW %CALLNAME:TARGET%は、膣内から抜き去ることなく%CALLNAME:PLAYER%を抱き上げ、下から腰を突き上げた…
+;同様に前回の調教が逆レイプであり、抜かないフラグがある場合
+ELSEIF TFLAG:60 && PREVCOM == 23 && ((ASSIPLAY && TFLAG:50) || (ASSIPLAY == 0 && TFLAG:50 == 0))
+	PRINTFORMW %CALLNAME:PLAYER%は%CALLNAME:TARGET%のペニス\@ TALENT:半人半妖 || TALENT:ふたなり || TALENT:オトコ ? # バンド \@をきつく締めつけたまま、一転して%CALLNAME:TARGET%をいたわるように優しく腰を振りたてた…
 ELSE
 	PRINTFORM %CALLNAME:PLAYER%は%CALLNAME:TARGET%を仰向けに寝かせると、
 	SIF EXP:PLAYER:Ｖ経験 == 0

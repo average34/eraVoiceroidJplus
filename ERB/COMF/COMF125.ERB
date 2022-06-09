@@ -1,23 +1,19 @@
-﻿@COM64
-;3P
+﻿@COM125
+;キス3P
 
 ;直接コマンドを指定した場合
 IF SELECTCOM == 64
 	TFLAG:40 = 1
 	TFLAG:41 = 2
 ELSE
-	SIF SELECTCOM == 20 || SELECTCOM == 21 || SELECTCOM == 24 || SELECTCOM == 25 || SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123
+	SIF SELECTCOM == 120 || SELECTCOM == 121 || SELECTCOM == 122 || SELECTCOM == 123
 		A = 1
 	SIF SELECTCOM == 22 || SELECTCOM == 26 || SELECTCOM == 27 || SELECTCOM == 28 || SELECTCOM == 29
 		A = 2
-	SIF SELECTCOM == 31 || SELECTCOM == 80
-		A = 3
-	SIF PREVCOM == 20 || PREVCOM == 21 || PREVCOM == 24 || PREVCOM == 25 || PREVCOM == 120 || PREVCOM == 121 || PREVCOM == 122 || PREVCOM == 123
+	SIF PREVCOM == 120 || PREVCOM == 121 || PREVCOM == 122 || PREVCOM == 123
 		B = 1
 	SIF PREVCOM == 22 || PREVCOM == 26 || PREVCOM == 27 || PREVCOM == 28 || PREVCOM == 29
 		B = 2
-	SIF PREVCOM == 31 || PREVCOM == 80
-		B = 3
 	;前回コマンドが3Pでない
 	IF TFLAG:42 == 0
 		;今回調教者が助手=前回調教者が主人
@@ -34,20 +30,32 @@ ELSE
 		;今回調教者が助手=前回調教者が主人
 		IF ASSIPLAY
 			;助手の使用部位が前回の主人と同じ場合
-			SIF A == TFLAG:40
+			IF A == TFLAG:40
+				;部位入れ替えする+今回キスはめしない(Aコマンド)場合は3Pへ
+				IF A == 2
+					TFLAG:42 = 1
+					JUMP COM64
+				ENDIF 
 				TFLAG:40 = TFLAG:41
+			ENDIF
 			TFLAG:41 = A
 		ELSE
 			;主人の使用部位が前回の助手と同じ場合
-			SIF A == TFLAG:41
+			IF A == TFLAG:41
+				;部位入れ替えする+今回キスはめしない(Aコマンド)場合は3Pへ
+				IF A == 2
+					TFLAG:42 = 1
+					JUMP COM64
+				ENDIF 
 				TFLAG:41 = TFLAG:40
+			ENDIF
 			TFLAG:40 = A
 		ENDIF
 	ENDIF
 ENDIF
 
-PRINTL 3P
-SELECTCOM = 64
+PRINTL キス3P
+SELECTCOM = 125
 
 ;-------------------------------------------------
 ;実行できるかの判定
@@ -56,11 +64,11 @@ CALL COM_ORDER_COMMON
 SIF RESULT == 0
 	RETURN 0
 
-STR:0 = 3P
+STR:0 = キス3P
 CALL TRAIN_MESSAGE_B
 
 ;V経験を伴うコマンドのフラグ(処女膜再生対応)
-SIF TFLAG:40 == 1 || TFLAG:41 == 1
+;SIF TFLAG:40 == 1 || TFLAG:41 == 1
 	TFLAG:19 = 1
 
 SIF TALENT:恋慕 && ASSIPLAY == 0 && EXP:Ｖ経験 == 0 && TFLAG:40 == 1
@@ -81,8 +89,19 @@ SIF TALENT:ASSI:ふたなり || TALENT:ASSI:オトコ
 ;-------------------------------------------------
 ;ソースの計算
 ;-------------------------------------------------
-LOSEBASE:体力 += 160
+LOSEBASE:体力 += 170
 LOSEBASE:気力 += 350
+
+;キス経験で気力消費軽減（何度もキスしたがる、の再現だとでも脳内補完）
+IF EXP:キス経験 < 100
+	LOSEBASE:気力 += 50
+ELSEIF EXP:キス経験 < 500
+	LOSEBASE:気力 += 40
+ELSE
+	LOSEBASE:気力 += 25
+ENDIF
+
+
 
 SOURCE:接触 = 2800
 SOURCE:欲情追加 = 1500
@@ -97,159 +116,116 @@ SOURCE:達成感 = 0
 SOURCE:痛み = 0
 SOURCE:屈従 = 0
 
-IF TFLAG:40 == 1 || TFLAG:41 == 1
-	;ABL:Ｖ感覚をみる
-	IF ABL:Ｖ感覚 == 0
-		SOURCE:快Ｖ = 40
-		SOURCE:情愛 += 50
-	ELSEIF ABL:Ｖ感覚 == 1
-		SOURCE:快Ｖ = 150
-		SOURCE:情愛 += 150
-	ELSEIF ABL:Ｖ感覚 == 2
-		SOURCE:快Ｖ = 400
-		SOURCE:情愛 += 250
-	ELSEIF ABL:Ｖ感覚 == 3
-		SOURCE:快Ｖ = 1000
-		SOURCE:情愛 += 350
-	ELSEIF ABL:Ｖ感覚 == 4
-		SOURCE:快Ｖ = 1700
-		SOURCE:情愛 += 600
-	ELSE
-		SOURCE:快Ｖ = 950 + (ABL:Ｖ感覚 * 250)
-		SOURCE:情愛 += 225 + (ABL:Ｖ感覚 * 125)
-	ENDIF
+;Ｍ感覚を設定している場合快Ｍソース等取得
+SIF FLAG:62 & 4194304
+	CALL SOURCE_M_COM125
+;口はキスで塞がっているので3Pは下の両穴に入っているはず
+;ABL:Ｖ感覚をみる
+IF ABL:Ｖ感覚 == 0
+	SOURCE:快Ｖ = 20
+	SOURCE:情愛 += 50
+ELSEIF ABL:Ｖ感覚 == 1
+	SOURCE:快Ｖ = 100
+	SOURCE:情愛 += 150
+ELSEIF ABL:Ｖ感覚 == 2
+	SOURCE:快Ｖ = 200
+	SOURCE:情愛 += 250
+ELSEIF ABL:Ｖ感覚 == 3
+	SOURCE:快Ｖ = 500
+	SOURCE:情愛 += 350
+ELSEIF ABL:Ｖ感覚 == 4
+	SOURCE:快Ｖ = 100
+	SOURCE:情愛 += 600
+ELSE
+	SOURCE:快Ｖ = 500 + (ABL:Ｖ感覚 * 200)
+	SOURCE:情愛 += 225 + (ABL:Ｖ感覚 * 125)
+ENDIF
 
-	;EXP:Ｖ経験をみる
-	IF EXP:Ｖ経験 < EXPLV:1
-		TIMES SOURCE:快Ｖ , 0.20
-		SOURCE:痛み += 20000
-		SOURCE:欲情追加 += 2000
+;EXP:Ｖ経験をみる
+IF EXP:Ｖ経験 < EXPLV:1
+	TIMES SOURCE:快Ｖ , 0.20
+	SOURCE:痛み += 20000
+	SOURCE:欲情追加 += 2000
 
-		IF TALENT:MASTER:オトコ == 0
-			EXP:異常経験 += 2
-			IF TALENT:ASSI:オトコ == 0
-				EXP:異常経験 += 1
-				PRINTFORML %EXPNAME:50%+3
-			ELSE
-				PRINTFORML %EXPNAME:50%+2
-			ENDIF
+	IF TALENT:MASTER:オトコ == 0
+		EXP:異常経験 += 2
+		IF TALENT:ASSI:オトコ == 0
+			EXP:異常経験 += 1
+			PRINTFORML %EXPNAME:50%+3
+		ELSE
+			PRINTFORML %EXPNAME:50%+2
 		ENDIF
-	ELSEIF EXP:Ｖ経験 < EXPLV:2
-		TIMES SOURCE:快Ｖ , 0.60
-		SOURCE:痛み += 300
-	ELSEIF EXP:Ｖ経験 < EXPLV:3
-		TIMES SOURCE:快Ｖ , 1.00
-		SOURCE:痛み += 50
-	ELSEIF EXP:Ｖ経験 < EXPLV:4
-		TIMES SOURCE:快Ｖ , 1.20
-		SOURCE:痛み += 10
-	ELSEIF EXP:Ｖ経験 < EXPLV:5
-		TIMES SOURCE:快Ｖ , 1.40
-		SOURCE:痛み += 0
-	ELSE
-		TIMES SOURCE:快Ｖ , 1.60
-		SOURCE:痛み = 0
 	ENDIF
+ELSEIF EXP:Ｖ経験 < EXPLV:2
+	TIMES SOURCE:快Ｖ , 0.60
+	SOURCE:痛み += 300
+ELSEIF EXP:Ｖ経験 < EXPLV:3
+	TIMES SOURCE:快Ｖ , 1.00
+	SOURCE:痛み += 50
+ELSEIF EXP:Ｖ経験 < EXPLV:4
+	TIMES SOURCE:快Ｖ , 1.20
+	SOURCE:痛み += 10
+ELSEIF EXP:Ｖ経験 < EXPLV:5
+	TIMES SOURCE:快Ｖ , 1.40
+	SOURCE:痛み += 0
+ELSE
+	TIMES SOURCE:快Ｖ , 1.60
+	SOURCE:痛み = 0
 ENDIF
 
-IF TFLAG:40 == 2 || TFLAG:41 == 2
-	;ABL:Ａ感覚をみる
-	IF ABL:Ａ感覚 == 0
-		SOURCE:快Ａ = 10
-		SOURCE:情愛 += 10
-		SOURCE:屈従 = 100
-	ELSEIF ABL:Ａ感覚 == 1
-		SOURCE:快Ａ = 30
-		SOURCE:情愛 += 30
-		SOURCE:屈従 = 700
-	ELSEIF ABL:Ａ感覚 == 2
-		SOURCE:快Ａ = 500
-		SOURCE:情愛 += 100
-		SOURCE:屈従 = 1500
-	ELSEIF ABL:Ａ感覚 == 3
-		SOURCE:快Ａ = 1000
-		SOURCE:情愛 += 200
-		SOURCE:屈従 = 3000
-	ELSEIF ABL:Ａ感覚 == 4
-		SOURCE:快Ａ = 1700
-		SOURCE:情愛 += 450
-		SOURCE:屈従 = 5000
-	ELSE
-		SOURCE:快Ａ = 950 + (ABL:Ａ感覚 * 250)
-		SOURCE:情愛 += ABL:Ａ感覚 * 150
-		SOURCE:屈従 = 500 + (ABL:Ａ感覚 * 1500)
-	ENDIF
-
-	;EXP:Ａ経験をみる
-	IF EXP:Ａ経験 < EXPLV:1
-		TIMES SOURCE:快Ａ , 0.10
-		SOURCE:痛み += 5000
-		SOURCE:欲情追加 += 1000
-	ELSEIF EXP:Ａ経験 < EXPLV:2
-		TIMES SOURCE:快Ａ , 0.30
-		SOURCE:痛み += 2000
-		SOURCE:欲情追加 += 1000
-	ELSEIF EXP:Ａ経験 < EXPLV:3
-		TIMES SOURCE:快Ａ , 0.50
-		SOURCE:痛み += 2000
-		SOURCE:欲情追加 += 1000
-	ELSEIF EXP:Ａ経験 < EXPLV:4
-		TIMES SOURCE:快Ａ , 1.00
-		SOURCE:痛み += 2000
-		SOURCE:欲情追加 += 1000
-	ELSEIF EXP:Ａ経験 < EXPLV:5
-		TIMES SOURCE:快Ａ , 1.40
-		SOURCE:痛み += 1000
-		SOURCE:欲情追加 += 200
-	ELSE
-		TIMES SOURCE:快Ｖ , 1.60
-		SOURCE:痛み += 600
-	ENDIF
+;ABL:Ａ感覚をみる
+IF ABL:Ａ感覚 == 0
+	SOURCE:快Ａ = 10
+	SOURCE:情愛 += 10
+	SOURCE:屈従 = 100
+ELSEIF ABL:Ａ感覚 == 1
+	SOURCE:快Ａ = 30
+	SOURCE:情愛 += 30
+	SOURCE:屈従 = 700
+ELSEIF ABL:Ａ感覚 == 2
+	SOURCE:快Ａ = 500
+	SOURCE:情愛 += 100
+	SOURCE:屈従 = 1500
+ELSEIF ABL:Ａ感覚 == 3
+	SOURCE:快Ａ = 1000
+	SOURCE:情愛 += 200
+	SOURCE:屈従 = 3000
+ELSEIF ABL:Ａ感覚 == 4
+	SOURCE:快Ａ = 1700
+	SOURCE:情愛 += 450
+	SOURCE:屈従 = 5000
+ELSE
+	SOURCE:快Ａ = 950 + (ABL:Ａ感覚 * 250)
+	SOURCE:情愛 += ABL:Ａ感覚 * 150
+	SOURCE:屈従 = 500 + (ABL:Ａ感覚 * 1500)
 ENDIF
 
-IF TFLAG:40 == 3 || TFLAG:41 == 3
-	;ABL:奉仕精神をみる
-	IF ABL:奉仕精神 == 0
-		SOURCE:性行動 = 420
-		SOURCE:達成感 = 150
-	ELSEIF ABL:奉仕精神 == 1
-		SOURCE:性行動 = 500
-		SOURCE:達成感 = 300
-	ELSEIF ABL:奉仕精神 == 2
-		SOURCE:性行動 = 580
-		SOURCE:達成感 = 600
-	ELSEIF ABL:奉仕精神 == 3
-		SOURCE:性行動 = 660
-		SOURCE:達成感 = 900
-	ELSEIF ABL:奉仕精神 == 4
-		SOURCE:性行動 = 740
-		SOURCE:達成感 = 1500
-	ELSE
-		SOURCE:性行動 = 620 + (ABL:奉仕精神 * 40)
-		SOURCE:達成感 = 450 + (ABL:奉仕精神 * 350)
-	ENDIF
-
-	;ABL:技巧をみる
-	IF ABL:技巧 == 0
-		TIMES SOURCE:性行動 , 0.50
-		TIMES SOURCE:達成感 , 0.50
-	ELSEIF ABL:技巧 == 1
-		TIMES SOURCE:性行動 , 0.80
-		TIMES SOURCE:達成感 , 0.80
-	ELSEIF ABL:技巧 == 2
-		TIMES SOURCE:性行動 , 1.00
-		TIMES SOURCE:達成感 , 1.00
-	ELSEIF ABL:技巧 == 3
-		TIMES SOURCE:性行動 , 1.20
-		TIMES SOURCE:達成感 , 1.20
-	ELSEIF ABL:技巧 == 4
-		TIMES SOURCE:性行動 , 1.50
-		TIMES SOURCE:達成感 , 1.50
-	ELSE
-		SOURCE:性行動 = SOURCE:性行動 * (ABL:技巧 * 25 + 75) / 100
-		SOURCE:達成感 = SOURCE:達成感 * (ABL:技巧 * 25 + 75) / 100
-	ENDIF
+;EXP:Ａ経験をみる
+IF EXP:Ａ経験 < EXPLV:1
+	TIMES SOURCE:快Ａ , 0.10
+	SOURCE:痛み += 5000
+	SOURCE:欲情追加 += 1000
+ELSEIF EXP:Ａ経験 < EXPLV:2
+	TIMES SOURCE:快Ａ , 0.30
+	SOURCE:痛み += 2000
+	SOURCE:欲情追加 += 1000
+ELSEIF EXP:Ａ経験 < EXPLV:3
+	TIMES SOURCE:快Ａ , 0.50
+	SOURCE:痛み += 2000
+	SOURCE:欲情追加 += 1000
+ELSEIF EXP:Ａ経験 < EXPLV:4
+	TIMES SOURCE:快Ａ , 1.00
+	SOURCE:痛み += 2000
+	SOURCE:欲情追加 += 1000
+ELSEIF EXP:Ａ経験 < EXPLV:5
+	TIMES SOURCE:快Ａ , 1.40
+	SOURCE:痛み += 1000
+	SOURCE:欲情追加 += 200
+ELSE
+	TIMES SOURCE:快Ｖ , 1.60
+	SOURCE:痛み += 600
 ENDIF
+
 
 
 ;PALAM:潤滑をみる
@@ -398,6 +374,30 @@ IF TFLAG:40 == 1 || TFLAG:41 == 1
 
 	EXP:Ｖ経験 += 1
 	PRINTL Ｖ経験+1
+ENDIF
+
+PRINTFORML %EXPNAME:96%＋１
+EXP:キス経験 += 1
+IF TFLAG:40 == 1
+	EXP:MASTER:キス経験 += 1
+	IF TALENT:MASTER:キス未経験
+		PRINTFORMW %CALLNAME:MASTER%は【キス未経験】を失いました
+		TALENT:MASTER:キス未経験 = 0
+	ENDIF
+ELSE
+	EXP:ASSI:キス経験 += 1
+	IF TALENT:ASSI:キス未経験
+		PRINTFORMW %CALLNAME:ASSI%は【キス未経験】を失いました
+		TALENT:ASSI:キス未経験 = 0
+	ENDIF
+ENDIF
+
+IF TALENT:キス未経験
+	TFLAG:600 = 1
+	CALL KOJO_JUN
+	TALENT:キス未経験 = 0
+	PRINTFORMW %CALLNAME:TARGET%は【キス未経験】を失いました
+	TFLAG:38 = 1
 ENDIF
 
 
@@ -666,10 +666,156 @@ TFLAG:200 = 2
 
 RETURN 1
 
+
+
+;3P
+@TRAIN_MESSAGE_COM125
+IF ASSIPLAY
+	IF TFLAG:40 == 1
+		PRINTFORM %CALLNAME:TARGET%と口づけを交わしつつ秘唇に挿入しながら、
+	ELSEIF TFLAG:40 == 2
+		PRINTFORM %CALLNAME:TARGET%のアナルに埋め込みながら、
+
+	ENDIF
+	IF TFLAG:41 == 1
+		PRINTFORMW %CALLNAME:ASSI%に秘唇を貫かせた…
+	ELSEIF TFLAG:41 == 2
+		PRINTFORMW %CALLNAME:ASSI%にアナルに突き入れさせた…
+	ENDIF
+ELSE
+	IF TFLAG:41 == 1
+		PRINTFORM %CALLNAME:ASSI%に秘唇を貫かせながら、
+	ELSEIF TFLAG:41 == 2
+		PRINTFORM %CALLNAME:ASSI%にアナルに突き入れさせながら、
+	ENDIF
+	IF TFLAG:40 == 1
+		PRINTFORMW %CALLNAME:TARGET%に口づけつつ秘唇に挿入した…
+	ELSEIF TFLAG:40 == 2
+		PRINTFORMW %CALLNAME:TARGET%のアナルに埋め込んだ…
+	ENDIF
+ENDIF
+SIF TFLAG:41 == 1
+	PRINTFORM %CALLNAME:ASSI%は%CALLNAME:TARGET%と口づけを交わしている…
+
+;-------------------------------------------------
+;Ｍ感覚を設定している場合快Ｍソース等取得
+;-------------------------------------------------
+@SOURCE_M_COM125
+VARSET LOCAL, 0
+
+;屈従・反感ソース
+LOCAL:13 += 100
+LOCAL:14 += 10
+
+;ABL:Ｍ感覚をみる
+IF ABL:Ｍ感覚 == 0
+	LOCAL:24 += 5
+ELSEIF ABL:Ｍ感覚 == 1
+	LOCAL:24 += 40
+ELSEIF ABL:Ｍ感覚 == 2
+	LOCAL:24 += 160
+ELSEIF ABL:Ｍ感覚 == 3
+	LOCAL:24 += 480
+ELSEIF ABL:Ｍ感覚 == 4
+	LOCAL:24 += 800
+ELSE
+	LOCAL:24 += 300 + (ABL:Ｍ感覚 * 150)
+ENDIF
+
+;相手の技巧を見る
+IF TFLAG:40 == 1
+	SIF ABL:MASTER:技巧 >= 2
+		LOCAL:24 = LOCAL:24 * (100 + (ABL:MASTER:技巧 / 2)) / 100
+ELSE
+	SIF ABL:ASSI:技巧 >= 2
+		LOCAL:24 = LOCAL:24 * (100 + (ABL:ASSI:技巧 / 2)) / 100
+ENDIF
+
+;技巧を見る
+SIF ABL:TARGET:技巧 >= 2
+	LOCAL:24 = LOCAL:24 * (100 + (ABL:TARGET:技巧 / 2)) / 100
+
+;EXP:キス経験をみる
+IF EXP:キス経験 < 1
+	TIMES LOCAL:24 , 1.00
+ELSEIF EXP:キス経験 < 4
+	TIMES LOCAL:14 , 0.95
+	TIMES LOCAL:24 , 1.05
+ELSEIF EXP:キス経験 < 20
+	TIMES LOCAL:14 , 0.90
+	TIMES LOCAL:24 , 1.10
+ELSEIF EXP:キス経験 < 50
+	TIMES LOCAL:14 , 0.85
+	TIMES LOCAL:24 , 1.15
+ELSEIF EXP:キス経験 < 200
+	TIMES LOCAL:14 , 0.80
+	TIMES LOCAL:24 , 1.20
+ELSEIF EXP:キス経験 < 400
+	TIMES LOCAL:14 , 0.75
+	TIMES LOCAL:24 , 1.25
+ELSEIF EXP:キス経験 < 700
+	TIMES LOCAL:14 , 0.70
+	TIMES LOCAL:24 , 1.30
+ELSEIF EXP:キス経験 < 1000
+	TIMES LOCAL:14 , 0.65
+	TIMES LOCAL:24 , 1.35
+ELSEIF EXP:キス経験 < 1500
+	TIMES LOCAL:14 , 0.60
+	TIMES LOCAL:24 , 1.40
+ELSEIF EXP:キス経験 < 2000
+	TIMES LOCAL:14 , 0.55
+	TIMES LOCAL:24 , 1.45
+ELSEIF EXP:キス経験 < 3000
+	TIMES LOCAL:14 , 0.50
+	TIMES LOCAL:24 , 1.50
+ELSEIF EXP:キス経験 < 5000
+	TIMES LOCAL:14 , 0.45
+	TIMES LOCAL:24 , 1.55
+ELSEIF EXP:キス経験 < 10000
+	TIMES LOCAL:14 , 0.40
+	TIMES LOCAL:24 , 1.60
+ELSE
+	TIMES LOCAL:14 , 0.45
+	TIMES LOCAL:24 , 1.65
+ENDIF
+
+;ABL:親密をみる
+LOCAL:24 = LOCAL:24 * (85 + ABL:親密) / 100
+
+;TALENT:恋慕をみる
+SIF TALENT:恋慕
+	TIMES LOCAL:24 , 1.50
+;TALENT:恋人をみる
+SIF TALENT:恋人
+	TIMES LOCAL:24 , 1.50
+;TALENT:親愛をみる
+SIF TALENT:親愛
+	TIMES LOCAL:24 , 2.00
+;TALENT:相愛をみる
+SIF TALENT:相愛
+	TIMES LOCAL:24 , 2.00
+
+;反発感情をみる
+IF MARK:反発感情 == 1
+	TIMES LOCAL:24 , 0.50
+	TIMES LOCAL:13 , 1.15
+ELSEIF MARK:反発感情 == 2
+	TIMES LOCAL:24 , 0.25
+	TIMES LOCAL:13 , 1.45
+ELSEIF MARK:反発感情 == 3
+	TIMES LOCAL:24 , 0.10
+	TIMES LOCAL:13 , 1.90
+ENDIF
+
+SOURCE:屈従 += LOCAL:13
+SOURCE:逸脱 += LOCAL:14
+SOURCE:快Ｍ += LOCAL:24
+
+
 ;-------------------------------------------------
 ;固有の実行判定
 ;-------------------------------------------------
-@COM_ORDER_64
+@COM_ORDER_125
 A = 0
 S = 0
 V = 150

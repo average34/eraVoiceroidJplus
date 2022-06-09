@@ -121,12 +121,12 @@ IF TEQUIP:7 == 0
 	CALL GET_EXISTANCE
 	SIF E
 		B += 1
-	;にとりor夢美が居ると熱源が電気式が動くようになります(普通は練炭、木炭、豆炭等)
+	;技術者キャラが居ると熱源が電気式が動くようになります(普通は練炭、木炭、豆炭等)
 	;修理したものを使ってもらえたので効果アップ
 	IF B > 0
-		;にとり、夢美がパートナーなら効果アップ
-		SIF NO:TARGET == 40 || NO:TARGET == 71
-			A:1 += RAND:3+1
+		;技術者キャラがパートナーなら効果アップ（居ないのでコメントアウト）
+		;SIF NO:TARGET == 40 || NO:TARGET == 71
+		;	A:1 += RAND:3+1
 		TFLAG:18 = 1
 	ELSE
 		;性能が高いので凶悪なトラップ付き
@@ -151,9 +151,9 @@ RETURN 1
 PRINTL 
 PRINTL ＜炬燵でぬくぬく中＞
 PRINTL 
-;4分の1の確率で舟を漕ぐ(チルノとレティは除く)
+;4分の1の確率で舟を漕ぐ(イタコ、ついな、リツは除く)
 ;炬燵かがりor炬燵隠れだと眠らない
-IF RAND:4 == 0 && NO:TARGET != 5 && NO:TARGET != 12 && SELECTCOM != 368 && SELECTCOM != 369
+IF RAND:4 == 0 && NO:TARGET != 12 && NO:TARGET != 13 && NO:TARGET != 104 && SELECTCOM != 368 && SELECTCOM != 369
 	TFLAG:13 = 100
 	IF RAND:2 == 0
 		TFLAG:17 = 1
@@ -209,8 +209,8 @@ ENDIF
 
 ;地の文表示
 IF FLAG:6 == 1 && CFLAG:99 == 0
-	;チルノとレティの場合、苦しみます
-	IF NO:TARGET == 5 && NO:TARGET == 12
+	;リツの場合、苦しみます
+	IF NO:TARGET == 104
 		PRINTFORML %CALLNAME:TARGET%は熱さに負けて逃げ出した…
 	;反発感情が1以上
 	ELSEIF MARK:反発感情 > 0
@@ -220,8 +220,8 @@ IF FLAG:6 == 1 && CFLAG:99 == 0
 	ENDIF
 ENDIF
 
-;チルノとレティの場合、苦しみます
-IF NO:TARGET == 5 || NO:TARGET == 12
+;リツの場合、苦しみます
+IF NO:TARGET == 104
 	LOSEBASE:体力 += 55
 	LOSEBASE:気力 += 100
 
@@ -268,14 +268,14 @@ ELSE
 	CALL GET_EXISTANCE
 	SIF E
 		B += 1
-	;にとりor夢美が居ると熱源が電気式が動くようになります(普通は練炭、木炭、豆炭等)
+	;技術者キャラが居ると熱源が電気式が動くようになります(普通は練炭、木炭、豆炭等)
 	;発電方法は、色々あるので口上作者様の発想に依存
 	IF B > 0
-		;衣玖、空が実行者なら効果アップ
-		IF NO:PLAYER == 62 || NO:PLAYER == 83
+		;ウナが実行者なら効果アップ
+		IF NO:PLAYER == 81
 				TIMES A:1 , 1.25
-		;衣玖、空がパートナーなら効果アップ
-		ELSEIF NO:TARGET == 62 || NO:TARGET == 83
+		;ウナがパートナーなら効果アップ
+		ELSEIF NO:TARGET == 81
 				TIMES A:1 , 1.20
 		ELSEIF (ASSI+1) != 0
 			;衣玖、空が助手に居ると効果アップ
